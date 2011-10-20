@@ -1,0 +1,5 @@
+Bliss (BLiss IS SagaA) is a lightweight SAGA implementation for Python. Bliss is a partial implementation of the OGF SAGA standard (GFD.90) written 100% in Python. The emphasis of Bliss is on usability and easy deployment.
+
+Please refer to the Bliss wiki for installation instructions, user guide, etc.:
+
+  https://github.com/oweidner/bliss/wiki/

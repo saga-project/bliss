@@ -1,0 +1,4 @@
+include *.py
+include bliss/*.py
+include MANIFEST.in README LICENSE CHANGES
+
