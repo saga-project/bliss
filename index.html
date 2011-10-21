@@ -1,1 +1,193 @@
-My GitHub Page
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+
+  <head>
+    <title>Bliss &mdash; BLiss IS Saga</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="dc.creator" content="Rémi Prévost - http://remiprevost.com" />
+
+    <link rel="shortcut icon" href="./images/A_48.ico" />
+    <link rel="apple-touch-icon" href="./images/A_114.png" />
+
+    <link rel="stylesheet" href="./css/screen.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="./css/fonts/ballpark/ballpark_weiner_webfont.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="./css/lightbox.css" type="text/css" media="screen" />
+
+    <script type="text/javascript" src="./js/prototype.js"></script>
+    <script type="text/javascript" src="./js/scriptaculous.js?load=effects,builder"></script>
+    <script type="text/javascript" src="./js/lightbox.js"></script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26088719-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+    </script>
+
+  </head>
+  <body>
+    <div id="wrap">
+      <div id="header">
+        <h1><a href="./">Bliss</a></h1>
+        <p id="subtitle"><strong>A Pragmatic Saga Implementation for Python</strong></p>
+      </div>
+
+      <div id="informations">
+        <ul>
+          <li>
+            <div class="group row">
+              <p>Bliss (<i>BLiss IS Saga</i>) is a pragmatic and lightweight implementation of the OGF SAGA standard GFD.90. Bliss is written 100% in Python and focuses on usability and easy deployment rather than on feature completeness.
+ <!--Air  tries to follow the unix philosophy:</p>
+<p style="padding-left : 4.6em; padding-right : 4.6em; padding-top : 0.6em; 0.6em; padding-bottom: 0.6em; line-height: 18px"><i style="font-size:14px;"> &nbsp;&nbsp;"Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface."  <a href="http://www.cs.dartmouth.edu/~doug/">Doug McIlroy</a></i>--></p>
+              <p>The <a href="https://github.com/oweidner/air/wiki/Command-Line-Tools#wiki-air_run">air-run</a> process wrapper captures application metrics, output streams and logs, as well as environmental resource statistics:</p>
+              <pre><code><span style="color: #e3d796;">$</span> air-run --proc-id=ecoli01 "blastall -p blastn -d ecoli_nn -i ref01.fa -o ecoli01.out"</code></pre>
+              
+              <p>The <a href="https://github.com/oweidner/air/wiki/Command-Line-Tools#wiki-air_flow">air-flow</a> tool allows you to connect to the data streams of your remote processes: </p>
+              <pre><code><span style="color: #e3d796;">$</span> air-flow proc.ecoli01.*</code></pre>
+                        <br></div>
+          </li>
+          <!--li>
+            <div class="group row">
+              <div class="col-1">
+                <p>Packages are installed into their own isolated prefixes and then symlinked into <code>/usr/local</code>.</p>
+              </div>
+              <div class="col-2">
+                <pre><code><span style="color: #e3d796;">$</span> cd /usr/local
+<span style="color: #e3d796;">$</span> find Cellar
+Cellar/wget/1.12
+Cellar/wget/1.12/bin/wget
+Cellar/wget/1.12/share/man/man1/wget.1
+
+<span style="color: #e3d796;">$</span> ls -l bin
+bin/wget -&gt; ../Cellar/wget/1.12/bin/wget</code></pre>
+
+              </div>
+            </div>
+          </li-->
+
+
+  <li>
+            <div class="group row">
+              <div class="col-1">
+                <p>Air installs in seconds with Python pip:<br><i><a href="http://wiki.github.com/oweidner/air/installation">Installation instructions</a></i></p>
+              </div>
+              <div class="col-2">
+                <pre><code><span style="color: #e3d796;">$ </span>pip install air</code></pre>
+              </div>
+            </div>
+          </li>
+
+
+          <li>
+            <div class="group row">
+<p>With Air you can capture a lot of things. Many of them are great for application profiling and monitoring, but of course it is up to you to decide what you want to use the captured data for. (<i>Adaptive execution anyone?</i>) Here are some of the more useful data points that Air can capture by default:</p>
+              <div class="col-2">
+                             <ul style="list-style-type:circle">
+                  <li style="margin-left: 3em">
+                    Resource filesystem utilisation
+                  </li>
+                  <li style="margin-left: 3em">
+                    Resource memory utilisation
+                  </li>
+                  <li style="margin-left: 3em">
+                    Resource cpu utilisation
+                  </li>
+                  <li style="margin-left: 3em">
+                    Resource network utilisation
+                  </li>
+                  <li style="margin-left: 3em">
+                    Resource queueing system utilisation <a href="#"><sup>[1]</sup></a>
+                  </li>
+                </ul> 
+             </div>
+              <div class="col-1">
+                <ul style="list-style-type:circle">
+                  <li style="margin-left: 3em">
+                    Process stdout/stderr streams
+                  </li>
+                  <li style="margin-left: 3em">
+                    Process status and exit code
+                  </li>
+                  <li style="margin-left: 3em">
+                    Process memory consumption over time
+                  </li>
+                  <li style="margin-left: 3em">
+                    Process cpu utilisation over time
+                  </li>
+                  <li style="margin-left: 3em">
+                    Process network utilisation over time
+                  </li>
+                  <li style="margin-left: 3em">
+                    Process open files and i/o over time
+                  </li>
+                </ul>
+                <!--p class="button"><a href="http://wiki.github.com/oweidner/air/installation">Start Using Air Today!</a></p-->
+              </div>
+            </div>
+          </li>
+                  <!--li>
+            <div class="group row">
+              <div class="col-1">
+                <p>Easily adapt Homebrew formula to your needs. And since it's all Git underneath your changes are merged automatically with upstream updates.</p>
+              </div>
+              <div class="col-2">
+                <pre><code><span style="color: #e3d796;">$</span> brew edit wget <span style="color: #666;"># opens in TextMate!</span></code></pre>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="group row">
+              <div class="col-1">
+                <p>Homebrew formula are simple Ruby scripts:</p>
+              </div>
+              <div class="col-2">
+                <pre><code><span style="color: #8a9597;">require</span> <span style="color: #c2c98f;">'</span><span style="color: #a2a96f;">formula</span><span style="color: #c2c98f;">'</span>
+
+<span style="color: #8a9597;">class</span> <span style="color: #e3d796;"><em>Wget</em></span> &lt; Formula
+  homepage <span style="color: #c2c98f;">'</span><span style="color: #a2a96f;">http://www.gnu.org/wget/</span><span style="color: #c2c98f;">'</span>
+  url <span style="color: #c2c98f;">'</span><span style="color: #a2a96f;">http://ftp.gnu.org/wget-1.12.tar.gz</span><span style="color: #c2c98f;">'</span>
+  md5 <span style="color: #c2c98f;">'</span><span style="color: #a2a96f;">308a5476fc096a8a525d07279a6f6aa3</span><span style="color: #c2c98f;">'</span>
+
+  <span style="color: #8a9597;">def</span> <span style="color: #a999ac;">install</span>
+    system <span style="color: #c2c98f;">"</span><span style="color: #a2a96f;">./configure</span><span style="color: #c2c98f;"> </span><span style="color: #a2a96f;">--prefix=</span><span style="color: #c2c98f;">#{</span>prefix<span style="color: #c2c98f;">}</span><span style="color: #c2c98f;">"</span>
+    system <span style="color: #c2c98f;">'</span><span style="color: #a2a96f;">make install</span><span style="color: #c2c98f;">'</span>
+  <span style="color: #8a9597;">end</span>
+<span style="color: #8a9597;">end</span></code></pre>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="group row">
+              <div class="col-1">
+                <p>Homebrew complements OS X. Install your gems with gem, and their dependencies with brew.</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row group button button-large">
+              <p><a href="http://wiki.github.com/mxcl/homebrew">Please oh please tell me more!</a></p>
+            </div>
+          </li>
+          <li>
+            <div class="group row quote">
+              <blockquote>
+                <span>“</span>
+                Homebrew is the bee’s knees, friends. So far it’s a perfect replacement for MacPorts.
+                <span>”</span>
+              </blockquote>
+              <cite>— <a href="http://twitter.com/thillerson/status/6688848379">@thillerson</a></cite>
+            </div>
+          </li-->
+        </ul>
+      </div>
+    </div>
+    <a href="http://github.com/oweidner/bliss"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub" /></a>
+  </body>
+</html>
