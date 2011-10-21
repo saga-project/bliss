@@ -85,7 +85,10 @@ setup_args = {
         ],
 
     'packages': [
-        "bliss"
+        "bliss",
+        "bliss.saga",
+        "bliss.runtime",
+        "bliss.plugins"
     ],
     'scripts': scripts,
     # mention data_files, even if empty, so install_data is called and
