@@ -7,6 +7,8 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
+import logging
+
 from bliss.plugins.pluginbase import _PluginBase
 from bliss.plugins.pluginbase import _api_type_saga_job
 
@@ -18,18 +20,22 @@ class _JobPluginBase(_PluginBase):
     def __init__(self, name):
         '''Class constructor'''
         _PluginBase.__init__(self, name=name)
+        self.logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')') 
     
     @classmethod
     def supported_api(self):
         '''Implements interface from _PluginBase'''
         return _api_type_saga_job
 
-    def create_job(self, job_description):
-       raise exception.Exception(NotImplemented, "{!s}: create_job is not implemented".format(repr(self))) 
+    def create_job(self, job_description):     
+       self.logger.error("Not implemented plugin method called: create_job()")
+       raise exception.Exception(NotImplemented, "{!s}: create_job() is not implemented".format(repr(self))) 
 
     def get_job(self, job_id):
-       raise exception.Exception(NotImplemented, "{!s}: get_job is not implemented".format(repr(self))) 
+       self.logger.error("Not implemented plugin method called: get_job()")
+       raise exception.Exception(NotImplemented, "{!s}: get_job() is not implemented".format(repr(self))) 
 
     def list(self):
-       raise exception.Exception(NotImplemented, "{!s}: list_jobs is not implemented".format(repr(self)))  
+       self.logger.error("Not implemented plugin method called: list()")
+       raise exception.Exception(NotImplemented, "{!s}: list_jobs() is not implemented".format(repr(self)))  
  

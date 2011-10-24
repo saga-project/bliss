@@ -9,3 +9,4 @@ __license__   = "MIT"
 
 from service import Service
 from job import Job
+from job_description import Description

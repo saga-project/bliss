@@ -7,6 +7,12 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.exception import Exception
+from bliss.saga.object import Object
 from bliss.saga.url import Url
-from bliss.saga import job  
+
+
+class Description(Object):
+    '''Represents a SAGA job description as defined in GFD.90'''
+    def __init__(self):
+        Object.__init__(self, Object.type_saga_job_description)        
+

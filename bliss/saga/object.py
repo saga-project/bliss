@@ -12,34 +12,34 @@ from bliss.saga import exception
 from bliss.runtime import _Runtime
 
 class Object :
-    '''Represents a SAGA object as defined in GFD.90'''
+    '''Loosely resembles a SAGA object as defined in GFD.90'''
+
+    type_saga_job_job         = "saga.job.Job"
+    type_saga_job_service     = "saga.job.Service"
+    type_saga_job_description = "saga.job.Description"
+
     __shared_state = {}
     __shared_state["runtime_initialized"] = False
-    def __init__(self):
+    def __init__(self, objtype):
         '''Construct a new object'''
-        self.__dict__ = self.__shared_state
-        if not self.__dict__["runtime_initialized"]:
+        #self.__dict__ = self.__shared_state
+        if not self.__shared_state["runtime_initialized"]:
             # initialize runtime
             self._init_runtime()
-            self.__dict__["runtime_initialized"] = True
+            self.__shared_state["runtime_initialized"] = True
 
+        self.type = objtype
         self.logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')') 
-
 
     def _init_runtime(self):
         '''Registers available plugins and so on'''
-        self.__dict__["runtime_instance"] = _Runtime()
-
-    def _set_data(self, key, value):
-        self.__dict__[key] = value
-
-    def _get_data(self, key):
-        return self.__dict__[key]
+        if not self.__shared_state["runtime_initialized"]: 
+            self.__shared_state["runtime_instance"] = _Runtime()
 
     def _get_plugin(self):
         '''Bind an object to the runtime'''
         try:
-            return self.__dict__["runtime_instance"].get_plugin_for_url(self.url) 
+            return self.__shared_state["runtime_instance"].get_plugin_for_url(self.url) 
         except Exception, ex:
             error = ("Can't instantiate {!s} object because: {!r}.".format(self.__class__.__name__, str(ex)))
             self.logger.error(error)
