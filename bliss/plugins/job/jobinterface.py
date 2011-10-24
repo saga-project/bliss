@@ -15,7 +15,7 @@ class _JobPluginBase(_PluginBase):
     
     def __init__(self, name):
         '''Class constructor'''
-        _PluginBase.__init__(name=name)
+        _PluginBase.__init__(self, name=name)
     
     @classmethod
     def supported_api(self):

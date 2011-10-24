@@ -7,6 +7,8 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
+import logging
+from bliss.saga import exception
 from bliss.runtime import _Runtime
 
 class Object :
@@ -21,6 +23,9 @@ class Object :
             self._init_runtime()
             self.__dict__["runtime_initialized"] = True
 
+        self.logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')') 
+
+
     def _init_runtime(self):
         '''Registers available plugins and so on'''
         self.__dict__["runtime_instance"] = _Runtime()
@@ -31,8 +36,12 @@ class Object :
     def _get_data(self, key):
         return self.__dict__[key]
 
-    def _register_job_service_object(self, obj):
-        '''Register a job service object with the runtime'''
-
-    def _register_job_job_object(self, obj):
-        ''''Register a job object with the runtime'''
+    def _bind_object(self):
+        '''Bind an object to the runtime'''
+        try:
+            self.__dict__["runtime_instance"].find_plugin_for_url(self.url) 
+        except Exception, ex:
+            error = ("Can't instantiate {!s} object because: {!r}.".format(self.__class__.__name__, str(ex)))
+            self.logger.error(error)
+            raise exception.Exception(exception.Error.NoSuccess, error)
+        

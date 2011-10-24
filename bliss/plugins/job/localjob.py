@@ -14,7 +14,7 @@ class LocalJobPlugin(_JobPluginBase):
     
     def __init__(self):
         '''Class constructor'''
-        _JobPluginBase.__init__(name="saga.plugin.job.local")
+        _JobPluginBase.__init__(self, name="saga.plugin.job.local")
     
     @classmethod
     def supported_schemas(self):
