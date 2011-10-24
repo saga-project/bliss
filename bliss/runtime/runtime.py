@@ -18,7 +18,8 @@ class _Runtime():
                     	    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         self.logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')') 
         self.logger.info("BLISS runtime instance created at {!r}".format(str(hex(id(self)))))
-        self.plugin_list = {}
+        self.plugin_class_list = {}
+        self.plugin_instance_list = {}
         
         #iterate thrugh plugin registry
         for plugin in registry._registry:
@@ -28,24 +29,29 @@ class _Runtime():
                 plugin["class"].sanity_check()
                 self.logger.info("Plugin {!r} internal sanity check passed".format(plugin["name"]))
                 # passed. add it to the list
-                self.plugin_list[str(plugin["schemas"][0])] = plugin["class"]
+                self.plugin_class_list[str(plugin["schemas"][0])] = plugin["class"]
                 self.logger.info("Plugin {!r} add to list as handler for Url schema {!r}".format(plugin["name"], str(plugin["schemas"][0])))
 
 
             except Exception, ex:
                 self.logger.error("Plugin {!r} sanity check failed: {!s}. Disabled.".format(plugin["name"], str(ex)))
 
-    def find_plugin_for_url(self, url):
-        '''Returns a plugin object for a given url'''
-        
-        # see if we can find a plugin  that works
-        if url.scheme in self.plugin_list:                          
-            self.logger.info("Found a plugin for url scheme {!r}: {!s}".format(str(url.scheme), self.plugin_list[url.scheme]))
-            plugin_obj = self.plugin_list[url.scheme]
-            return plugin_obj()
+    def get_plugin_for_url(self, url):
+        '''Returns a plugin instance for a given url or throws'''
+        # first let's check if there's already a plugin-instance active that can handle this url scheme
+        if url.scheme in self.plugin_instance_list:
+            self.logger.info("Found an existing plugin instance for url scheme {!r}: {!s}".format(str(url.scheme), self.plugin_instance_list[url.scheme]))
+            return self.plugin_instance_list[url.scheme]
+
+        elif url.scheme in self.plugin_class_list:                          
+            plugin_obj = self.plugin_class_list[url.scheme]()            
+            self.logger.info("Instantiated a new plugin for url scheme {!r}: {!s}".format(str(url.scheme), repr(plugin_obj)))
+            self.plugin_instance_list[url.scheme] = plugin_obj
+            return plugin_obj
         else:
-            self.logger.error("Couldn't find a plugin for url scheme {!r}".format(url.scheme))
-            raise Exception("No Plugin available for Url scheme {!r}".format(url.scheme))
+            error = ("Couldn't find a plugin for url scheme {!r}".format(url.scheme))
+            self.logger.error(error)
+            raise Exception(error)
 
 
         

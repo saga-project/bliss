@@ -22,14 +22,18 @@ class Service(Object):
             Object.url = url
 
         Object.__init__(self)
-        Object._bind_object(self) #tries to bind to an adaptor
+        self.plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
+        self.logger.info("Bound to plugin instance {!s}".format(repr(self.plugin)))
 
     def create_job(self, job_description):
         '''Create a new job object from the given job description'''
+        return self.plugin.create_job(job_description)
 
     def get_job(self, job_id):
         '''Return the job object from the given job id'''
+        return self.plugin.get_job(job_id)
 
     def list(self):
         '''List all jobs known or managed by this service'''
+        return self.plugin.list()
 

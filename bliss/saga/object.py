@@ -36,10 +36,10 @@ class Object :
     def _get_data(self, key):
         return self.__dict__[key]
 
-    def _bind_object(self):
+    def _get_plugin(self):
         '''Bind an object to the runtime'''
         try:
-            self.__dict__["runtime_instance"].find_plugin_for_url(self.url) 
+            return self.__dict__["runtime_instance"].get_plugin_for_url(self.url) 
         except Exception, ex:
             error = ("Can't instantiate {!s} object because: {!r}.".format(self.__class__.__name__, str(ex)))
             self.logger.error(error)
