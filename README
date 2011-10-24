@@ -1,6 +1,6 @@
-Bliss (BLiss IS SagaA) is a pragmatic and lightweight implementation of the OGF 
-SAGA standard (GFD.90). Bliss is written 100% in Python and focuses on usability 
-and easy deployment rather than on feature completeness.
+Bliss (BLiss IS SagaA) is a pragmatic 'laissez-faire' implementation of the 
+OGF SAGA standard (GFD.90). Bliss is written 100% in Python and focuses on 
+usability and ease of deployment rather than feature completeness.
 
 Please refer to the Bliss wiki for installation instructions, user guide, etc:
 
