@@ -24,18 +24,18 @@ class Service(Object):
 
         Object.__init__(self, Object.type_saga_job_service)
         self.plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
-        self.logger.info("Object bound to plugin {!s}".format(repr(self.plugin)))
-
+        self.logger.info("Bound to plugin {!s}".format(repr(self.plugin)))
         self.plugin.register_service_object(self)
 
     def __del__(self):
-        self.plugin.unregister_service_object(self)
+        if self.plugin is not None:
+            self.plugin.unregister_service_object(self)
 
     def create_job(self, job_description):
         '''Create a new job object from the given job description'''
         if job_description.type != Object.type_saga_job_description:
             raise exception.Exception(exception.Error.BadParameter, "create_job() expects "+Object.type_saga_job_description)
-        return self.plugin.create_job(self.url, job_description)
+        return self.plugin.create_job(self, job_description)
           
     def get_job(self, job_id):
         '''Return the job object from the given job id'''

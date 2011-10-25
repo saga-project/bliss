@@ -18,11 +18,22 @@ def main():
         jd.executable = "/bin/date"
 
         j1 = z.create_job(jd)
+        j2 = z.create_job(jd)
+        j3 = z.create_job(jd)
+        j4 = z.create_job(jd)
+
+
+        j1 = a.create_job(jd)
+        j2 = a.create_job(jd)
+        j3 = a.create_job(jd)
+        j4 = a.create_job(jd)
+
         b.create_job(jd)
         c.create_job(jd)
 
+
         print j1._get_runtime_info()
-        print c._get_runtime_info()
+        #print c._get_runtime_info()
 
         del a, b, c 
 

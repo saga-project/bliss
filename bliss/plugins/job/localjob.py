@@ -8,7 +8,9 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.plugins.job.jobinterface import _JobPluginBase
+from bliss.saga import exception
 import bliss.saga.job
+
 
 class LocalJobPlugin(_JobPluginBase):
     '''Implments a job plugin that can submit jobs to the local machine'''
@@ -24,9 +26,7 @@ class LocalJobPlugin(_JobPluginBase):
     def __init__(self, url):
         '''Class constructor'''
         _JobPluginBase.__init__(self, name=self._name, schemas=self._schemas)
-
-        self.service_objects = []
-        self.job_objects = []
+        self.objects = {}
     
     @classmethod
     def sanity_check(self):
@@ -39,8 +39,8 @@ class LocalJobPlugin(_JobPluginBase):
 
     def get_runtime_info(self): 
         '''Implements interface from _PluginBase'''
-        str = "Plugin: {!r}. Registered job.service objects: {!r}. Registered job.job objects: {!r}".format(
-               self.name, len(self.service_objects), len(self.job_objects))
+        str = "Plugin: {!r}. Registered job.service objects: {!r}.\n{!r}".format(
+               self.name, len(self.objects), repr(self.objects))
         return str
        
 
@@ -52,7 +52,7 @@ class LocalJobPlugin(_JobPluginBase):
         if service_obj.url.host != "localhost":
             self.log_error_and_raise(exception.Error.BadParameter, "Only 'localhost' can be used as hostname")        
 
-        self.service_objects.append(service_obj) 
+        self.objects[hex(id(service_obj))] = {'instance' : service_obj, 'jobs' : []} 
         self.log_info("Registered new service object {!r}".format(repr(service_obj))) 
    
 
@@ -63,18 +63,24 @@ class LocalJobPlugin(_JobPluginBase):
         ##         shouldn't throw an exception here, since this method is called
         ##         by the destructor!
         try:
-            self.service_objects.remove(service_obj) 
+            self.objects.remove((hex(id(service_obj))))
         except Exception:
             pass
 
  
-    def register_job_object(self, job_obj):
+    def register_job_object(self, job_obj, service_obj):
         '''Implements interface from _JobPluginBase'''
         ## Step 6: Implement register_job_object. This method is called if 
         ##         a job object is instantiated with a url schema that matches 
         ##         this adaptor. You can still reject it by throwing an exception.
-        self.job_objects.append(job_obj)
-        self.log_info("Registered new job object {!r}".format(repr(job_obj))) 
+        service_id = hex(id(service_obj))  
+ 
+        try:
+            self.objects[service_id]['jobs'].append(job_obj)
+            self.log_info("Registered new job object {!r}".format(repr(job_obj))) 
+        except Exception, ex:
+            self.log_error_and_raise(exception.Error.NoSuccess, "Can't register job: {!r}".format(ex))        
+
 
 
     def unregister_job_object(self, job_obj):

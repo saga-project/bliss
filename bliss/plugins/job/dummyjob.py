@@ -65,7 +65,7 @@ class DummyJobPlugin(_JobPluginBase):
             pass
 
  
-    def register_job_object(self, job_obj):
+    def register_job_object(self, job_obj, service_obj):
         '''Implements interface from _JobPluginBase'''
         ## Step 6: Implement register_job_object. This method is called if 
         ##         a job object is instantiated with a url schema that matches 

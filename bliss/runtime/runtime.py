@@ -49,7 +49,7 @@ class _Runtime():
             self.plugin_instance_list[url.scheme] = plugin_obj
             return plugin_obj
         else:
-            error = ("Couldn't find a plugin for url scheme {!r}".format(url.scheme))
+            error = ("Couldn't find a plugin for url scheme '{!s}://'".format(url.scheme))
             self.logger.error(error)
             raise Exception(error)
 

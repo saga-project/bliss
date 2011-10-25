@@ -28,6 +28,7 @@ class Object :
             self._init_runtime()
             self.__shared_state["runtime_initialized"] = True
 
+        self.plugin = None
         self.type = objtype
         self.logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')') 
 
@@ -41,8 +42,7 @@ class Object :
         try:
             return self.__shared_state["runtime_instance"].get_plugin_for_url(self.url) 
         except Exception, ex:
-            error = ("Can't instantiate {!s} object because: {!r}.".format(self.__class__.__name__, str(ex)))
-            self.logger.error(error)
+            error = ("{!s}".format(str(ex)))
             raise exception.Exception(exception.Error.NoSuccess, error)
 
     def _get_runtime_info(self):

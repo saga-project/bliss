@@ -11,16 +11,17 @@ from bliss.saga.object import Object
 
 class Job(Object):
     '''Represents a SAGA job as defined in GFD.90'''
-    def __init__(self, url, job_description):
+    def __init__(self, service_obj, job_desc):
         '''Constructor'''
-        self.url = url
-        self.job_description = job_description
+        self.service = service_obj
+        self.url = service_obj.url
+        self.job_description = job_desc
 
         Object.__init__(self, Object.type_saga_job_job)
         self.plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
         self.logger.info("Object bound to plugin {!s}".format(repr(self.plugin)))
 
-        self.plugin.register_job_object(self)
+        self.plugin.register_job_object(job_obj=self, service_obj=self.service)
 
     def __del__(self):
         self.plugin.unregister_job_object(self)
