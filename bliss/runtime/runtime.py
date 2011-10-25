@@ -44,7 +44,7 @@ class _Runtime():
             return self.plugin_instance_list[url.scheme]
 
         elif url.scheme in self.plugin_class_list:                          
-            plugin_obj = self.plugin_class_list[url.scheme]()            
+            plugin_obj = self.plugin_class_list[url.scheme](url)            
             self.logger.info("Instantiated a new plugin for url scheme {!r}: {!s}".format(str(url.scheme), repr(plugin_obj)))
             self.plugin_instance_list[url.scheme] = plugin_obj
             return plugin_obj

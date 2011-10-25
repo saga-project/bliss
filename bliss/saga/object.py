@@ -44,4 +44,7 @@ class Object :
             error = ("Can't instantiate {!s} object because: {!r}.".format(self.__class__.__name__, str(ex)))
             self.logger.error(error)
             raise exception.Exception(exception.Error.NoSuccess, error)
+
+    def _get_runtime_info(self):
+        return self.plugin.get_runtime_info()
         

@@ -13,6 +13,8 @@ from bliss.plugins.pluginbase import _PluginBase
 from bliss.plugins.pluginbase import _api_type_saga_job
 
 from bliss.saga import exception
+import bliss.saga.job
+
 
 class _JobPluginBase(_PluginBase):
     '''Abstract base class for all job plugins'''
@@ -27,15 +29,24 @@ class _JobPluginBase(_PluginBase):
         '''Implements interface from _PluginBase'''
         return _api_type_saga_job
 
-    def create_job(self, job_description):     
-       self.logger.error("Not implemented plugin method called: create_job()")
-       raise exception.Exception(NotImplemented, "{!s}: create_job() is not implemented".format(repr(self))) 
+    def create_job(self, js_url, job_description):     
+        '''Implement interface from _JobPluginBase'''
+        job = bliss.saga.job.Job(js_url, job_description)
+        return job
+
+    def register_service_object(self, service_obj):
+        '''This method is called upon instantiation of a new service object'''
+        raise exception.Exception(NotImplemented, "{!s}: register_service_object() is not implemented".format(repr(self))) 
+
+    def register_job_object(self, job_obj):
+        '''This method is called upon instatiation of a new job object'''
+        raise exception.Exception(NotImplemented, "{!s}: register_job_object() is not implemented".format(repr(self))) 
 
     def get_job(self, job_id):
-       self.logger.error("Not implemented plugin method called: get_job()")
-       raise exception.Exception(NotImplemented, "{!s}: get_job() is not implemented".format(repr(self))) 
+        self.logger.error("Not implemented plugin method called: get_job()")
+        raise exception.Exception(NotImplemented, "{!s}: get_job() is not implemented".format(repr(self))) 
 
     def list(self):
-       self.logger.error("Not implemented plugin method called: list()")
-       raise exception.Exception(NotImplemented, "{!s}: list_jobs() is not implemented".format(repr(self)))  
- 
+        self.logger.error("Not implemented plugin method called: list()")
+        raise exception.Exception(NotImplemented, "{!s}: list_jobs() is not implemented".format(repr(self)))  
+

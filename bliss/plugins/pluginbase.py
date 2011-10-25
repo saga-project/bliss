@@ -10,11 +10,16 @@ __license__   = "MIT"
 _api_type_saga_job = "saga.job"
 _api_type_saga_file = "saga.file"
 
+import logging
+from bliss.saga import exception
+
 class _PluginBase:
     '''Abstract base class for all plugins'''
     
     def __init__(self, name):
         '''Class constructor'''
+        self.name = name
+        self.logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')') 
     
     @classmethod
     def supported_schemas(self):
@@ -35,3 +40,8 @@ class _PluginBase:
     def sanity_check(self):
         '''Called upon registring. If an excpetion is thrown, plugin will be disabled.'''
         raise Exception("Requires implementation!")
+
+    def get_runtime_info(self):
+        '''This method is used to reveal some runtime information for this plugin'''
+        raise exception.Exception(NotImplemented, "{!s}: get_runtime_info() is not supported by this plugin".format(repr(self))) 
+
