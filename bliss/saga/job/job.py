@@ -23,6 +23,5 @@ class Job(Object):
         self.plugin.register_job_object(self)
 
     def __del__(self):
-        print "good night"
         self.plugin.unregister_job_object(self)
 

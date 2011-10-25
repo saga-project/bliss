@@ -29,7 +29,6 @@ class Service(Object):
         self.plugin.register_service_object(self)
 
     def __del__(self):
-        print "good night"
         self.plugin.unregister_service_object(self)
 
     def create_job(self, job_description):

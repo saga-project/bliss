@@ -16,26 +16,49 @@ from bliss.saga import exception
 class _PluginBase:
     '''Abstract base class for all plugins'''
     
-    def __init__(self, name):
+    def __init__(self, name, schemas):
         '''Class constructor'''
         self.name = name
-        self.logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')') 
+        self.schemas = schemas
+        self.__logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')')
+
+    def log_error_and_raise(self, error, message):
+        '''Writes an ERROR to the plugin log and raises an exception'''
+        msg = "[{!r}] {!r}".format(self.name, message)
+        self.__logger.error(message)
+        raise exception.Exception(error, msg)
+
+    def log_info(self, message):
+        '''Writes an INFO to the plugin log'''
+        self.__logger.info(message)
     
-    @classmethod
-    def supported_schemas(self):
-        '''Return a list of all url schemas supported by this plugin'''
-        raise Exception("Requires implementation!")
-        
+    def log_warning(self, message):
+        '''Writes a WARNING to the plugin log'''
+        self.__logger.warning(message)
+
+
+    def log_error(self, message):
+        '''Writes an ERROR to the plugin log'''
+        self.__logger.error(message)
+
+
+  
     @classmethod
     def supported_api(self):
         '''Return the api package this plugin supports'''
         raise Exception("Requires implementation!")
-        
+       
+
+    @classmethod
+    def supported_schemas(self):
+        '''Implements interface from _PluginBase'''
+        return self._schemas
+
     @classmethod
     def plugin_name(self):
-        '''Return the name of this plugin'''
-        raise Exception("Requires implementation!")
-        
+        '''Implements interface from _PluginBase'''
+        return self._name
+
     @classmethod
     def sanity_check(self):
         '''Called upon registring. If an excpetion is thrown, plugin will be disabled.'''

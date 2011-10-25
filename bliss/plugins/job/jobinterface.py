@@ -19,10 +19,9 @@ import bliss.saga.job
 class _JobPluginBase(_PluginBase):
     '''Abstract base class for all job plugins'''
     
-    def __init__(self, name):
+    def __init__(self, name, schemas):
         '''Class constructor'''
-        _PluginBase.__init__(self, name=name)
-        self.logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')') 
+        _PluginBase.__init__(self, name=name, schemas=schemas)
     
     @classmethod
     def supported_api(self):
@@ -35,18 +34,29 @@ class _JobPluginBase(_PluginBase):
         return job
 
     def register_service_object(self, service_obj):
-        '''This method is called upon instantiation of a new service object'''
-        raise exception.Exception(NotImplemented, "{!s}: register_service_object() is not implemented".format(repr(self))) 
+        self.log_error("Not implemented plugin method called: register_service_object()")
+        self.log_error_and_raise(NotImplemented, errormsg) 
 
     def register_job_object(self, job_obj):
-        '''This method is called upon instatiation of a new job object'''
-        raise exception.Exception(NotImplemented, "{!s}: register_job_object() is not implemented".format(repr(self))) 
+        '''This method is called upon instantiation of a new job object'''
+        self.log_error("Not implemented plugin method called: register_job_object()")
+        self.log_error_and_raise(NotImplemented, errormsg) 
+
+    def unregister_service_object(self, service_obj):
+        '''This method is called upon deletion of a new service object'''
+        self.log_error("Not implemented plugin method called: unregister_service_object()")
+        # don't throw -- destructor context
+
+    def unregister_job_object(self, job_obj):
+        '''This method is called upon deletion of a new job object'''
+        self.log_error("Not implemented plugin method called: unregister_job_object()")
+        # don't throw -- destructor context
 
     def get_job(self, job_id):
-        self.logger.error("Not implemented plugin method called: get_job()")
-        raise exception.Exception(NotImplemented, "{!s}: get_job() is not implemented".format(repr(self))) 
+        errormsg = "Not implemented plugin method called: get_job()"
+        self.log_error_and_raise(NotImplemented, errormsg)
 
     def list(self):
-        self.logger.error("Not implemented plugin method called: list()")
-        raise exception.Exception(NotImplemented, "{!s}: list_jobs() is not implemented".format(repr(self)))  
+        errormsg = "Not implemented plugin method called: list()"
+        self.log_error_and_raise(NotImplemented, errormsg) 
 

@@ -9,8 +9,8 @@ def main():
         #s = saga.job.Service(u)
         z = saga.job.Service(u)
         a = saga.job.Service(u)
-        b = saga.job.Service(u)
-        c = saga.job.Service(u)
+        b = saga.job.Service("dummy://localhost")
+        c = saga.job.Service("dummy://localhost")
 
         z = saga.job.Service(u)
 
@@ -18,8 +18,11 @@ def main():
         jd.executable = "/bin/date"
 
         j1 = z.create_job(jd)
+        b.create_job(jd)
+        c.create_job(jd)
 
         print j1._get_runtime_info()
+        print c._get_runtime_info()
 
         del a, b, c 
 

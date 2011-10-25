@@ -50,8 +50,8 @@ class our_sdist(sdist):
 setup_args = {
     'name': "bliss",
     'version': version,
-    'description': "A lightweight implementation of a subset of the OGF SAGA standard (GFD.90).",
-    'long_description': "Bliss (BLiss IS Saga) is a lightweight implementation of a subset of the OGF SAGA standard (GFD.90). It is written 100% in Python. The emphasis of Bliss is on usability and simple deployment.",
+    'description': "A lightweight, 'laissez-faire' implementation of a subset of the OGF SAGA standard (GFD.90).",
+    'long_description': "Bliss (BLiss IS SagaA) is a lightweight , 'laissez-faire' implementation of the OGF SAGA standard (GFD.90). Bliss is written 100% in Python and focuses on usability and ease of deployment rather than on feature completeness or blind standard obedience. ",
     'author': "Ole Christian Weidner",
     'author_email': "ole.weidner@me.com",
     'maintainer': "Ole Christian Weidner",
