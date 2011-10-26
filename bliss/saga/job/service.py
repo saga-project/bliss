@@ -23,25 +23,37 @@ class Service(Object):
             self.url = url
 
         Object.__init__(self, Object.type_saga_job_service)
-        self.plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
-        self.logger.info("Bound to plugin {!s}".format(repr(self.plugin)))
-        self.plugin.register_service_object(self)
+        self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
+        self._plugin.register_service_object(self)
+        self._logger.info("Bound to plugin {!s}".format(repr(self._plugin)))
 
     def __del__(self):
-        if self.plugin is not None:
-            self.plugin.unregister_service_object(self)
+        if self._plugin is not None:
+            self._plugin.unregister_service_object(self)
 
     def create_job(self, job_description):
         '''Create a new job object from the given job description'''
-        if job_description.type != Object.type_saga_job_description:
-            raise exception.Exception(exception.Error.BadParameter, "create_job() expects "+Object.type_saga_job_description)
-        return self.plugin.create_job(self, job_description)
+        if self._plugin is not None:
+            if job_description._type != Object.type_saga_job_description:
+                raise exception.Exception(exception.Error.BadParameter, "create_job() expects "+Object.type_saga_job_description)
+            return self._plugin.create_job(self, job_description)
+        else:
+            raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
+
           
     def get_job(self, job_id):
         '''Return the job object from the given job id'''
-        return self.plugin.get_job(job_id)
+        if self._plugin is not None:
+            return self.plugin.get_job(job_id)
+        else:
+            raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
+
 
     def list(self):
         '''List all jobs known or managed by this service'''
-        return self.plugin.list()
+        if self._plugin is not None:
+            return self.plugin.list()
+        else:
+            raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
+
 

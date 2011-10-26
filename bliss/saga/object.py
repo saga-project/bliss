@@ -28,9 +28,9 @@ class Object :
             self._init_runtime()
             self.__shared_state["runtime_initialized"] = True
 
-        self.plugin = None
-        self.type = objtype
-        self.logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')') 
+        self._plugin = None
+        self._type = objtype
+        self._logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')') 
 
     def _init_runtime(self):
         '''Registers available plugins and so on'''

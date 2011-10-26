@@ -9,7 +9,7 @@ __license__   = "MIT"
 
 
 from bliss.plugins.job.jobinterface import _JobPluginBase
-import bliss.saga.job
+#from bliss.saga import job
 from bliss.saga import exception
 
 
@@ -84,6 +84,10 @@ class DummyJobPlugin(_JobPluginBase):
             self.job_objects.remove(job_obj) 
         except Exception:
             pass
+
+    def job_get_state(self, job_obj):
+        #return job.Job.New
+        return None
 
 
     def get_runtime_info(self): 

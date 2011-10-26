@@ -66,5 +66,5 @@ class _PluginBase:
 
     def get_runtime_info(self):
         '''This method is used to reveal some runtime information for this plugin'''
-        raise exception.Exception(NotImplemented, "{!s}: get_runtime_info() is not supported by this plugin".format(repr(self))) 
+        raise exception.Exception(exception.Error.NotImplemented, "{!s}: get_runtime_info() is not supported by this plugin".format(repr(self))) 
 

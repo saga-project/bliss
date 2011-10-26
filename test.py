@@ -29,10 +29,29 @@ def main():
         j4 = a.create_job(jd)
 
         b.create_job(jd)
-        c.create_job(jd)
+        k = c.create_job(jd)
+        
+        try: 
+            k.get_stdout()
+        except saga.Exception, ex:
+            assert(ex.error == saga.Error.NotImplemented)
 
+        try: 
+            k.get_stderr()
+        except saga.Exception, ex:
+            assert(ex.error == saga.Error.NotImplemented)
 
-        print j1._get_runtime_info()
+        assert(repr(jd) == repr(k.get_description()))
+ 
+        try: 
+            j = saga.job.Job()
+            j.get_state()
+        except saga.Exception, ex:
+            assert(ex.error == saga.Error.NoSuccess)
+
+        k.get_state()
+
+        #print j1._get_runtime_info()
         #print c._get_runtime_info()
 
         del a, b, c 

@@ -81,7 +81,8 @@ class LocalJobPlugin(_JobPluginBase):
         except Exception, ex:
             self.log_error_and_raise(exception.Error.NoSuccess, "Can't register job: {!r}".format(ex))        
 
-
+    def job_get_state(self, job_obj):
+        return saga.job.Job.New
 
     def unregister_job_object(self, job_obj):
         '''Implements interface from _JobPluginBase'''

@@ -18,7 +18,7 @@ class Error:
     IncorrectState = 'IncorrectState'
     IncorrectURL = 'IncorrectURL'
     NoSuccess = 'NoSuccess'
-    NotImlemented = 'NotImplemented'
+    NotImplemented = 'NotImplemented'
     PermissionDenied = 'PermissionDenied'
     Timeout =  'Timeout'
 
