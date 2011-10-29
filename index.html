@@ -36,23 +36,27 @@
     <div id="wrap">
       <div id="header">
         <h1><a href="./">Bliss</a></h1>
-        <p id="subtitle"><strong>A Pragmatic Saga Implementation for Python</strong></p>
+        <p id="subtitle"><strong>A Pragmatic SAGA Implementation for Python</strong></p>
       </div>
 
       <div id="informations">
         <ul>
           <li>
             <div class="group row">
-              <p>Bliss (<i>BLiss IS Saga</i>) is a pragmatic and lightweight implementation of the OGF SAGA standard GFD.90. Bliss is written 100% in Python and focuses on usability and easy deployment rather than on feature completeness.
+              <p>Bliss (<i>BLiss IS Saga</i>) is partial and rather 'laissez-faire' implementation of the  <a href="http://www.ogf.org/documents/GFD.90.pdf">OGF GFD.90</a> <i>SAGA</i> standard. Bliss is written 100% in Python and focuses on 
+usability and ease of deployment rather than feature completeness or blind standard obedience.</p>
+
+<p>SAGA defines a high-level API for uniform access to the building-blocks of distributed computing: (1) <i>job execution and managegment</i>, (2) <i>file and data management</i> and (3) <i>distributed coordination and orchestration</i>. Bliss is a native Python implementation of this API.</p>
+
  <!--Air  tries to follow the unix philosophy:</p>
-<p style="padding-left : 4.6em; padding-right : 4.6em; padding-top : 0.6em; 0.6em; padding-bottom: 0.6em; line-height: 18px"><i style="font-size:14px;"> &nbsp;&nbsp;"Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface."  <a href="http://www.cs.dartmouth.edu/~doug/">Doug McIlroy</a></i>--></p>
+<p style="padding-left : 4.6em; padding-right : 4.6em; padding-top : 0.6em; 0.6em; padding-bottom: 0.6em; line-height: 18px"><i style="font-size:14px;"> &nbsp;&nbsp;"Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface."  <a href="http://www.cs.dartmouth.edu/~doug/">Doug McIlroy</a></i></p>
               <p>The <a href="https://github.com/oweidner/air/wiki/Command-Line-Tools#wiki-air_run">air-run</a> process wrapper captures application metrics, output streams and logs, as well as environmental resource statistics:</p>
-              <pre><code><span style="color: #e3d796;">$</span> air-run --proc-id=ecoli01 "blastall -p blastn -d ecoli_nn -i ref01.fa -o ecoli01.out"</code></pre>
+              <pre><code><span style="color: #e3d796;">$</span> air-run proc-id=ecoli01 "blastall -p blastn -d ecoli_nn -i ref01.fa -o ecoli01.out"</code></pre>
               
               <p>The <a href="https://github.com/oweidner/air/wiki/Command-Line-Tools#wiki-air_flow">air-flow</a> tool allows you to connect to the data streams of your remote processes: </p>
               <pre><code><span style="color: #e3d796;">$</span> air-flow proc.ecoli01.*</code></pre>
                         <br></div>
-          </li>
+          </li-->
           <!--li>
             <div class="group row">
               <div class="col-1">
@@ -76,16 +80,16 @@ bin/wget -&gt; ../Cellar/wget/1.12/bin/wget</code></pre>
   <li>
             <div class="group row">
               <div class="col-1">
-                <p>Air installs in seconds with Python pip:<br><i><a href="http://wiki.github.com/oweidner/air/installation">Installation instructions</a></i></p>
+                <p>Bliss installs in seconds with Python pip:<br><i><a href="http://wiki.github.com/oweidner/bliss/installation">Installation instructions</a></i></p>
               </div>
               <div class="col-2">
-                <pre><code><span style="color: #e3d796;">$ </span>pip install air</code></pre>
+                <pre><code><span style="color: #e3d796;">$ </span>pip install bliss</code></pre>
               </div>
             </div>
           </li>
 
 
-          <li>
+          <!--li>
             <div class="group row">
 <p>With Air you can capture a lot of things. Many of them are great for application profiling and monitoring, but of course it is up to you to decide what you want to use the captured data for. (<i>Adaptive execution anyone?</i>) Here are some of the more useful data points that Air can capture by default:</p>
               <div class="col-2">
@@ -131,7 +135,7 @@ bin/wget -&gt; ../Cellar/wget/1.12/bin/wget</code></pre>
                 <!--p class="button"><a href="http://wiki.github.com/oweidner/air/installation">Start Using Air Today!</a></p-->
               </div>
             </div>
-          </li>
+          </li-->
                   <!--li>
             <div class="group row">
               <div class="col-1">

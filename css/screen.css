@@ -30,7 +30,7 @@ body {
 
 p,ul,ol,dl,table,pre { margin-bottom: 1em; }
 ul { margin-left: 20px; }
-a { text-decoration: none; cursor: pointer; color:  #a1804c; font-weight: normal; }
+a { text-decoration: none; cursor: pointer; color:  #365c80; font-weight: normal; }
 a:focus { outline: 1px dotted; }
 a:visited {  }
 a:hover, a:focus { color: #d3a459; text-decoration: none; }
@@ -59,13 +59,13 @@ h1 {
 
 h1 a,
 h1 a:hover {
-	color: #b93030;
+	color: #7d100a;
 	font-weight: normal;
 	text-decoration: none;
 }
 
 #subtitle {
-	color: #a1804c;
+	color: #365c80;
 }
 
 #wrap {
