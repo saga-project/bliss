@@ -59,7 +59,7 @@ setup_args = {
     'url': "http://oweidner.github.com/bliss/",
     'license': "MIT",
     'classifiers': [
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
         'Environment :: No Input/Output (Daemon)',
         'Intended Audience :: Developers',
         'Programming Language :: Python',
