@@ -13,7 +13,8 @@ def main():
         z = saga.job.Service(u)
 
         jd = saga.job.Description()
-        #:jd.executable = "/bin/date"
+        jd.executable = "/bin/sleep"
+        jd.arguments = ["10"]
 
         j1 = z.create_job(jd)
         j2 = z.create_job(jd)
@@ -40,7 +41,7 @@ def main():
             assert(ex.error == saga.Error.NotImplemented)
 
         assert(repr(jd) == repr(k.get_description()))
-        #:assert(jd.executable == "/bin/date")
+        assert(jd.executable == "/bin/sleep")
  
         try: 
             j = saga.job.Job()
@@ -50,9 +51,40 @@ def main():
 
         print j1.get_state()
         j1.run()
+        print j1.get_job_id()
         print j1.get_state()
-        j1.cancel()
+        j1.wait()         
         print j1.get_state()
+
+        js = saga.job.Service("fork://localhost")
+        jd = saga.job.Description()
+        jd.executable = "/usr/bin/false"
+        myjob = js.create_job(jd)
+        print myjob.get_state()
+        myjob.run()
+        print myjob.get_state()
+        myjob.wait()
+        print myjob.get_state()
+
+        jd = saga.job.Description()
+        jd.executable = "/usr/bin/true"
+        myjob = js.create_job(jd)
+        print myjob.get_state()
+        myjob.run()
+        print myjob.get_state()
+        myjob.wait()
+        print myjob.get_state()
+        print myjob.get_job_id()
+
+        print j1.get_state()
+        j1.run()
+        print j1.get_job_id()
+        print j1.get_state()
+        j1.cancel()         
+        print j1.get_state()
+
+#        j1.cancel()
+#        print j1.get_state()
 
 
         #print j1._get_runtime_info()

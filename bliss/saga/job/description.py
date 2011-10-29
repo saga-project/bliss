@@ -18,8 +18,7 @@ class Description(Object):
 
         self.executable  = ""
         self.arguments    = []
-        self.environment  = []
-
+        self.environment  = {}
 
     @property
     def executable(self):

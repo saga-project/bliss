@@ -65,6 +65,10 @@ class _JobPluginBase(_PluginBase):
         errormsg = "Not implemented plugin method called: job.get_state()"
         self.log_error_and_raise(exception.Error.NotImplemented, errormsg) 
 
+    def job_get_job_id(self, job_obj):
+        errormsg = "Not implemented plugin method called: job.get_job_id()"
+        self.log_error_and_raise(exception.Error.NotImplemented, errormsg) 
+
     def job_run(self, job_obj):
         errormsg = "Not implemented plugin method called: job.run()"
         self.log_error_and_raise(exception.Error.NotImplemented, errormsg) 

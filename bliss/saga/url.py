@@ -22,8 +22,8 @@ class Url:
         self.fragment = self._urlobj.fragment
 
         # legacy support
-        self.url      = str(self._urlobj.geturl())
+        self.url      = self._urlobj.geturl()
 
     def __str__(self):
         '''String representation'''
-        return str(self._urlobj.geturl())
+        return self._urlobj.geturl()

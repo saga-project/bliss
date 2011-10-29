@@ -7,7 +7,9 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.plugins.job.jobinterface import _JobPluginBase
+from bliss.plugins.job.jobinterface  import _JobPluginBase
+from bliss.plugins.job.local.process import LocalJobProcess
+
 from bliss.saga import exception
 import bliss.saga.job
 
@@ -18,8 +20,10 @@ class LocalJobPlugin(_JobPluginBase):
     ##
     class BookKeeper:
         '''Keeps track of job and service objects'''
-        def __init__(self):
+        def __init__(self, parent):
             self.objects = {}
+            self.processes = {}
+            self.parent = parent
         
         def add_service_object(self, service_obj):
             self.objects[hex(id(service_obj))] = {'instance' : service_obj, 'jobs' : []}
@@ -32,21 +36,35 @@ class LocalJobPlugin(_JobPluginBase):
 
         def add_job_object(self, job_obj, service_obj):
             service_id = hex(id(service_obj))  
+            job_id = hex(id(job_obj))
             try:
                 self.objects[service_id]['jobs'].append(job_obj)
+                self.processes[job_id] = LocalJobProcess(executable=job_obj.get_description().executable,
+                                                         arguments=job_obj.get_description().arguments,
+                                                         environment=job_obj.get_description().environment)
             except Exception, ex:
-                #self.log_error_and_raise(exception.Error.NoSuccess, "Can't register job: {!r}".format(ex))        
-                pass
+                self.parent.log_error_and_raise(exception.Error.NoSuccess, "Can't register job: {!r}".format(ex))   
 
         def del_job_object(self, job_obj):
             pass
 
         def get_service_for_job(self, job_obj):
-            '''Returns the service object the job is registered with'''
+            '''Return the service object the job is registered with'''
             for key in self.objects.keys():
                 if job_obj in self.objects[key]['jobs']:
                     return self.objects[key]['instance']
-            return None
+            self.parrent.log_error_and_raise(exception.Error.NoSuccess, 
+            "INTERNAL ERROR: Job object {!r} is not known by this plugin".format(job))   
+
+
+        def get_process_for_job(self, job_obj):
+            '''Return the local process object for a given job'''
+            try: 
+                return self.processes[hex(id(job_obj))]
+            except Exception, ex:
+                self.parrent.log_error_and_raise(exception.Error.NoSuccess, 
+                "INTERNAL ERROR: Job object {!r} is not associated with a process".format(job_obj))   
+
     ##
     ########################################
 
@@ -62,7 +80,7 @@ class LocalJobPlugin(_JobPluginBase):
     def __init__(self, url):
         '''Class constructor'''
         _JobPluginBase.__init__(self, name=self._name, schemas=self._schemas)
-        self.bookkeeper = self.BookKeeper()
+        self.bookkeeper = self.BookKeeper(self)
 
     @classmethod
     def sanity_check(self):
@@ -115,39 +133,56 @@ class LocalJobPlugin(_JobPluginBase):
         self.bookkeeper.del_job_object(job_obj)
         self.log_info("Unegisteredjob object {!r}".format(repr(job_obj))) 
 
-    def job_get_state(self, job_obj):
+    def job_get_state(self, job):
         '''Implements interface from _JobPluginBase'''
-        service = self.bookkeeper.get_service_for_job(job_obj)
-        if service is None:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Job object {!r} is not known by this plugin".format(job_obj))        
+        service = self.bookkeeper.get_service_for_job(job)
 
-        return bliss.saga.job.Job.New
+        try:
+            return self.bookkeeper.get_process_for_job(job).getstate()  
+        except Exception, ex:
+            self.log_error_and_raise(exception.Error.NoSuccess, "Coudln't get job state because: {!s} ".format(str(ex)))
+
+
+    def job_get_job_id(self, job):
+        '''Implements interface from _JobPluginBase'''
+        service = self.bookkeeper.get_service_for_job(job)
+        try:
+            pid = self.bookkeeper.get_process_for_job(job).getpid()  
+            return "[{!s}]-[{!s}]".format(str(service.url), pid)
+            self.log_info("Started local process: {!r} {!r}".format(job.get_description().executable, job.get_description().arguments)) 
+        except Exception, ex:
+            self.log_error_and_raise(exception.Error.NoSuccess, "Coudln't get job id because: {!s} ".format(str(ex)))
+
 
     def job_run(self, job):
         '''Implements interface from _JobPluginBase'''
         ## Step X: implement job.run()
         service = self.bookkeeper.get_service_for_job(job)
-        if service is None:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Job object {!r} is not known by this plugin".format(job))   
         if job.get_description().executable == "":   
-            self.log_error_and_raise(exception.Error.BadParameter, "No executable defined in job description".format(job))   
-        print "RUN!!"
+            self.log_error_and_raise(exception.Error.BadParameter, "No executable defined in job description")
+        try:
+            self.bookkeeper.get_process_for_job(job).run()  
+            self.log_info("Started local process: {!r} {!r}".format(job.get_description().executable, job.get_description().arguments)) 
+        except Exception, ex:
+            self.log_error_and_raise(exception.Error.NoSuccess, "Coudln't run job because: {!s} ".format(str(ex)))
 
 
-    def job_cancel(self, job_obj, timeout):
+    def job_cancel(self, job, timeout):
         '''Implements interface from _JobPluginBase'''
         ## Step X: implement job.cancel()
-        service = self.bookkeeper.get_service_for_job(job_obj)
-        if service is None:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Job object {!r} is not known by this plugin".format(job_obj))        
-        print "CANCEL!!"
+        try:
+            self.bookkeeper.get_process_for_job(job).terminate()  
+            self.log_info("Terminated local process: {!r} {!r}".format(job.get_description().executable, job.get_description().arguments)) 
+        except Exception, ex:
+            self.log_error_and_raise(exception.Error.NoSuccess, "Coudln't cancel job because: {!s} (already finished?)".format(str(ex)))
 
  
-    def job_wait(self, job_obj, timeout):
+    def job_wait(self, job, timeout):
         '''Implements interface from _JobPluginBase'''
         ## Step X: implement job.wait()
-        service = self.bookkeeper.get_service_for_job(job_obj)
-        if service is None:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Job object {!r} is not known by this plugin".format(job_obj))        
-        print "CANCEL!!"
-   
+        service = self.bookkeeper.get_service_for_job(job)
+        try:
+            self.bookkeeper.get_process_for_job(job).wait()   
+        except Exception, ex:
+            self.log_error_and_raise(exception.Error.NoSuccess, "Coudln't wait for the job because: {!s} ".format(str(ex)))
+

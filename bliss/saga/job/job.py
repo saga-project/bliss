@@ -42,18 +42,25 @@ class Job(Object):
         self._logger.info("Object bound to plugin {!s}".format(repr(self._plugin)))
 
     def __del__(self):
+        '''Tear down the object in a more or less civilised fashion.'''
         if self._plugin is not None:
             self._plugin.unregister_job_object(self)
         else:
             pass # can't throw here
 
     def get_stderr(self):
-        '''B{Not Implemented:} Bliss finds this method unnecessary and generally poorly supported by backends - use U{Air<http://oweidner.github.com/air/>} instead for scalable output streaming and much more.'''
+        '''B{Not Implemented:} Bliss finds this method unnecessary and generally poorly \
+           supported by distributed middelware - use U{Air<http://oweidner.github.com/air/>} \
+           instead for scalable output streaming and much more.
+        '''
 
         raise exception.Exception(exception.Error.NotImplemented, "Bliss doesn't suppport get_stderr()")
 
     def get_stdout(self):
-        '''B{Not Implemented:} Bliss finds this method unnecessary and generally poorly supported by backends - use U{Air<http://oweidner.github.com/air/>} instead for scalable output streaming and much more.'''
+        '''B{Not Implemented:} Bliss finds this method unnecessary and generally poorly \
+           supported by distributed middleware - use U{Air<http://oweidner.github.com/air/>}  \
+           instead for scalable output streaming and much more.
+        '''
         raise exception.Exception(exception.Error.NotImplemented, "Bliss doesn't suppport get_stdout()")
 
     def get_description(self):
@@ -72,20 +79,19 @@ class Job(Object):
             raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
 
     def get_job_id(self):
-        '''Returns the identifier for the job (B{I{not officially part of GFD.90}}).
+        '''Return the identifier for the job (B{I{not officially part of GFD.90}}).
 
            Job identifier I{should} follow the folling scheme::
               [backend url]-[native jobid]
         '''
         if self._plugin is not None:
-            return self._plugin.job_get_state(self)
-            return None
+            return self._plugin.job_get_job_id(self)
         else:
             raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
 
 
     def run(self):
-        '''Execute the job using the associated job service.'''
+        '''Execute the job via the associated job service.'''
         if self._plugin is not None:
             return self._plugin.job_run(self)
             return None
@@ -102,7 +108,7 @@ class Job(Object):
         else:
             raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
 
-    def wait(self, timeout=0):
+    def wait(self, timeout=-1):
         '''Wait for a running job to finish execution.
            @param timeout: Timeout in seconds.
         '''
