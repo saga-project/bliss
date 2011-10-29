@@ -123,12 +123,14 @@ class LocalJobPlugin(_JobPluginBase):
 
         return bliss.saga.job.Job.New
 
-    def job_run(self, job_obj):
+    def job_run(self, job):
         '''Implements interface from _JobPluginBase'''
         ## Step X: implement job.run()
-        service = self.bookkeeper.get_service_for_job(job_obj)
+        service = self.bookkeeper.get_service_for_job(job)
         if service is None:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Job object {!r} is not known by this plugin".format(job_obj))        
+            self.log_error_and_raise(exception.Error.NoSuccess, "Job object {!r} is not known by this plugin".format(job))   
+        if job.get_description().executable == "":   
+            self.log_error_and_raise(exception.Error.BadParameter, "No executable defined in job description".format(job))   
         print "RUN!!"
 
 

@@ -13,7 +13,7 @@ def main():
         z = saga.job.Service(u)
 
         jd = saga.job.Description()
-        jd.executable = "/bin/date"
+        #:jd.executable = "/bin/date"
 
         j1 = z.create_job(jd)
         j2 = z.create_job(jd)
@@ -40,7 +40,7 @@ def main():
             assert(ex.error == saga.Error.NotImplemented)
 
         assert(repr(jd) == repr(k.get_description()))
-        assert(jd.executable == "/bin/date")
+        #:assert(jd.executable == "/bin/date")
  
         try: 
             j = saga.job.Job()
