@@ -87,6 +87,7 @@ setup_args = {
     'packages': [
         "bliss",
         "bliss.saga",
+        "bliss.saga",
         "bliss.runtime",
         "bliss.plugins"
     ],

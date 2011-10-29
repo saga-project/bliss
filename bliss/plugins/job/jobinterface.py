@@ -31,7 +31,7 @@ class _JobPluginBase(_PluginBase):
     def create_job(self, service_obj, job_description):     
         '''Implement interface from _JobPluginBase'''
         job = bliss.saga.job.Job()
-        job._init_from_service__(service_obj=service_obj, job_desc=job_description)
+        job._Job__init_from_service(service_obj=service_obj, job_desc=job_description)
         return job
 
     def register_service_object(self, service_obj):
@@ -65,3 +65,14 @@ class _JobPluginBase(_PluginBase):
         errormsg = "Not implemented plugin method called: job.get_state()"
         self.log_error_and_raise(exception.Error.NotImplemented, errormsg) 
 
+    def job_run(self, job_obj):
+        errormsg = "Not implemented plugin method called: job.run()"
+        self.log_error_and_raise(exception.Error.NotImplemented, errormsg) 
+
+    def job_wait(self, job_obj, timeout):
+        errormsg = "Not implemented plugin method called: job.wait()"
+        self.log_error_and_raise(exception.Error.NotImplemented, errormsg)
+
+    def job_cancel(self, job_obj, timeout):
+        errormsg = "Not implemented plugin method called: job.cancel()"
+        self.log_error_and_raise(exception.Error.NotImplemented, errormsg)  

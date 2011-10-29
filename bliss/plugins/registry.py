@@ -7,7 +7,7 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.plugins.job import localjob
+from bliss.plugins.job.localjob import localjob
 from bliss.plugins.job import dummyjob
 
 # Here is where the plugins are registered

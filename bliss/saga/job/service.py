@@ -12,10 +12,12 @@ from bliss.saga import exception
 from bliss.saga.url import Url
 
 class Service(Object):
-    '''Represents a SAGA job service as defined in GFD.90'''
+    '''Loosely represents a SAGA job service as defined in GFD.90'''
     def __init__(self, url):
-        '''Construct a new job service object'''
-        
+        '''Construct a new job service object
+           @param url: Url of the (remote) job manager.
+           @type  url: L{Url} 
+        '''
         if(type(url) == str):
             self.url = Url(str(url))
         else:
@@ -28,11 +30,16 @@ class Service(Object):
         self._logger.info("Bound to plugin {!s}".format(repr(self._plugin)))
 
     def __del__(self):
+        '''Destructor.
+        '''
         if self._plugin is not None:
             self._plugin.unregister_service_object(self)
 
     def create_job(self, job_description):
-        '''Create a new job object from the given job description'''
+        '''Create a new job object.
+           @param job_description: The description for the new job.
+           @type  job_description: L{Description} 
+        '''
         if self._plugin is not None:
             if job_description._type != Object.type_saga_job_description:
                 raise exception.Exception(exception.Error.BadParameter, "create_job() expects "+Object.type_saga_job_description)
@@ -42,15 +49,17 @@ class Service(Object):
 
           
     def get_job(self, job_id):
-        '''Return the job object from the given job id'''
+        '''Return the job object for the given job id.
+           @param job_id: The job id.
+        '''
         if self._plugin is not None:
             return self.plugin.get_job(job_id)
         else:
             raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
 
-
     def list(self):
-        '''List all jobs known or managed by this service'''
+        '''List all jobs managed by this service.
+        '''
         if self._plugin is not None:
             return self.plugin.list()
         else:

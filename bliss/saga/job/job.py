@@ -11,23 +11,27 @@ import copy
 from bliss.saga.object import Object
 from bliss.saga import exception
 
-
 class Job(Object):
-
-    # possible job states
+    '''Loosely represents a SAGA job as defined in GFD.90'''
+    
     Canceled = "Canceled"
+    '''Indicates that the job has been canceled either by the user or the system'''
     Done     = "Done"
+    '''Indicates that the job has successfully executed''' 
     Failed   = "Failed"
+    '''Indicates that the execution of the job has failed'''
     New      = "New"
+    '''Indicates that the job hasn't been started yet'''
     Running  = "Running"
+    '''Indicates that the job is executing'''
     Unknown  = "Unknown"
+    '''Indicates that the job is in an unexpected state'''
 
-    '''Represents a SAGA job as defined in GFD.90'''
     def __init__(self):
-        '''[NOT IMPLEMENTED] Constructor'''
+        '''Constructor - not to be called directly'''
         Object.__init__(self, Object.type_saga_job_job)
 
-    def _init_from_service__(self, service_obj, job_desc):
+    def __init_from_service(self, service_obj, job_desc):
         '''Constructor'''
         self.service = service_obj
         self.url = service_obj.url
@@ -37,7 +41,6 @@ class Job(Object):
         self._plugin.register_job_object(job_obj=self, service_obj=self.service)
         self._logger.info("Object bound to plugin {!s}".format(repr(self._plugin)))
 
-
     def __del__(self):
         if self._plugin is not None:
             self._plugin.unregister_job_object(self)
@@ -45,26 +48,67 @@ class Job(Object):
             pass # can't throw here
 
     def get_stderr(self):
-        '''[NOT IMPLEMENTED] Return a file object representing the stderr stream of the spawned job'''
+        '''B{Not Implemented:} Bliss finds this method unnecessary and generally poorly supported by backends - use U{Air<http://oweidner.github.com/air/>} instead for scalable output streaming and much more.'''
+
         raise exception.Exception(exception.Error.NotImplemented, "Bliss doesn't suppport get_stderr()")
 
     def get_stdout(self):
-        '''[NOT IMPLEMENTED] Return a file object representing the stdout stream of the spawned job'''
+        '''B{Not Implemented:} Bliss finds this method unnecessary and generally poorly supported by backends - use U{Air<http://oweidner.github.com/air/>} instead for scalable output streaming and much more.'''
         raise exception.Exception(exception.Error.NotImplemented, "Bliss doesn't suppport get_stdout()")
 
     def get_description(self):
-        '''Return the job description this job was created from'''
+        '''Return the job description this job was created from.'''
         if self._plugin is not None:
             return self._job_description
         else:
             raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
 
     def get_state(self):
-        '''Return the current state of the job'''
+        '''Return the current state of the job.'''
         if self._plugin is not None:
             return self._plugin.job_get_state(self)
             return None
         else:
             raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
 
+    def get_job_id(self):
+        '''Returns the identifier for the job (B{I{not officially part of GFD.90}}).
+
+           Job identifier I{should} follow the folling scheme::
+              [backend url]-[native jobid]
+        '''
+        if self._plugin is not None:
+            return self._plugin.job_get_state(self)
+            return None
+        else:
+            raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
+
+
+    def run(self):
+        '''Execute the job using the associated job service.'''
+        if self._plugin is not None:
+            return self._plugin.job_run(self)
+            return None
+        else:
+            raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
+
+    def cancel(self, timeout=0):
+        '''Cancel the execution of the job.
+           @param timeout: Timeout in seconds.
+        '''
+        if self._plugin is not None:
+            return self._plugin.job_cancel(self, timeout)
+            return None
+        else:
+            raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
+
+    def wait(self, timeout=0):
+        '''Wait for a running job to finish execution.
+           @param timeout: Timeout in seconds.
+        '''
+        if self._plugin is not None:
+            return self._plugin.job_wait(self, timeout)
+            return None
+        else:
+            raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
 

@@ -1,6 +1,4 @@
-from bliss import saga
-
-
+import bliss.saga as saga
 
 def main():
     try:
@@ -42,6 +40,7 @@ def main():
             assert(ex.error == saga.Error.NotImplemented)
 
         assert(repr(jd) == repr(k.get_description()))
+        assert(jd.executable == "/bin/date")
  
         try: 
             j = saga.job.Job()
@@ -49,7 +48,12 @@ def main():
         except saga.Exception, ex:
             assert(ex.error == saga.Error.NoSuccess)
 
-        k.get_state()
+        print j1.get_state()
+        j1.run()
+        print j1.get_state()
+        j1.cancel()
+        print j1.get_state()
+
 
         #print j1._get_runtime_info()
         #print c._get_runtime_info()
