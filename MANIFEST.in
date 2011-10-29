@@ -8,7 +8,7 @@ include bliss/runtime/*.py
 
 include bliss/plugins/*.py
 include bliss/plugins/job/*.py
-include bliss/plugins/local/*.py
+include bliss/plugins/job/local/*.py
 
 include MANIFEST.in README LICENSE CHANGES
 
