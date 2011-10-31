@@ -8,15 +8,26 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 import logging
-from bliss.saga import exception
-from bliss.runtime import _Runtime
+
+from bliss.saga.exception  import Exception as SException
+from bliss.saga.exception  import Error as SError
+from bliss.runtime.runtime import Runtime
 
 class Object :
     '''Loosely resembles a SAGA object as defined in GFD.90'''
 
-    type_saga_job_job         = "saga.job.Job"
-    type_saga_job_service     = "saga.job.Service"
-    type_saga_job_description = "saga.job.Description"
+    Url            = "saga.Url"
+    '''saga.Url object type.'''
+    Session        = "saga.Session"
+    '''saga.Session object type.'''
+    Context        = "saga.Context"
+    '''saga.Context object type.'''
+    Job            = "saga.job.Job"
+    '''saga.job.Job object typ.e'''
+    JobService     = "saga.job.Service"
+    '''saga.job.Service object type.'''
+    JobDescription = "saga.job.Description"
+    '''saga.job.Description object type.'''
 
     __shared_state = {}
     __shared_state["runtime_initialized"] = False
@@ -30,12 +41,13 @@ class Object :
 
         self._plugin = None
         self._type = objtype
-        self._logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')') 
+        self._logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')')
+        self._session = None 
 
     def _init_runtime(self):
         '''Registers available plugins and so on'''
         if not self.__shared_state["runtime_initialized"]: 
-            self.__shared_state["runtime_instance"] = _Runtime()
+            self.__shared_state["runtime_instance"] = Runtime()
 
     def _get_plugin(self):
         '''Bind an object to the runtime'''
@@ -43,8 +55,21 @@ class Object :
             return self.__shared_state["runtime_instance"].get_plugin_for_url(self.url) 
         except Exception, ex:
             error = ("{!s}".format(str(ex)))
-            raise exception.Exception(exception.Error.NoSuccess, error)
+            raise SException(SError.NoSuccess, error)
 
     def _get_runtime_info(self):
         return self.plugin.get_runtime_info()
-        
+
+    def get_session(self):
+        '''Return the object's session.'''
+        if self._session is None:
+            pass # return default session
+
+    def get_type(self):
+        '''Return the object type.'''
+        return self._type
+
+    def get_id(self):
+        '''Return the object identifier.'''
+        return repr(self) 
+

@@ -10,7 +10,7 @@ __license__   = "MIT"
 import logging
 from bliss.plugins import registry
 
-class _Runtime():
+class Runtime():
     '''Implements the Bliss runtime system'''
     def __init__(self):
         '''Constructs a runtime object'''

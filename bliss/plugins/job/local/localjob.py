@@ -9,9 +9,10 @@ __license__   = "MIT"
 
 from bliss.plugins.job.jobinterface  import _JobPluginBase
 from bliss.plugins.job.local.process import LocalJobProcess
+from bliss.plugins import utils
 
 from bliss.saga import exception
-import bliss.saga.job
+#import bliss.saga.job
 
 class LocalJobPlugin(_JobPluginBase):
     '''Implements a job plugin that can submit jobs to the local machine'''
@@ -43,7 +44,8 @@ class LocalJobPlugin(_JobPluginBase):
                                                          arguments=job_obj.get_description().arguments,
                                                          environment=job_obj.get_description().environment)
             except Exception, ex:
-                self.parent.log_error_and_raise(exception.Error.NoSuccess, "Can't register job: {!r}".format(ex))   
+                self.parent.log_error_and_raise(exception.Error.NoSuccess, 
+                  "Can't register job: {!r} {!s}".format(ex, utils.get_traceback()))   
 
         def del_job_object(self, job_obj):
             pass
@@ -54,7 +56,7 @@ class LocalJobPlugin(_JobPluginBase):
                 if job_obj in self.objects[key]['jobs']:
                     return self.objects[key]['instance']
             self.parrent.log_error_and_raise(exception.Error.NoSuccess, 
-            "INTERNAL ERROR: Job object {!r} is not known by this plugin".format(job))   
+              "INTERNAL ERROR: Job object {!r} is not known by this plugin {!s}".format(job, utils.get_traceback())) 
 
 
         def get_process_for_job(self, job_obj):
@@ -63,7 +65,7 @@ class LocalJobPlugin(_JobPluginBase):
                 return self.processes[hex(id(job_obj))]
             except Exception, ex:
                 self.parrent.log_error_and_raise(exception.Error.NoSuccess, 
-                "INTERNAL ERROR: Job object {!r} is not associated with a process".format(job_obj))   
+                "INTERNAL ERROR: Job object {!r} is not associated with a process {!s}".format(job_obj, utils.get_traceback()))   
 
     ##
     ########################################
@@ -131,7 +133,7 @@ class LocalJobPlugin(_JobPluginBase):
         ## Step 6: Implement register_job_object. This method is called if 
         ##         a job object is instantiated with a url schema that matches 
         ##         this adaptor. You can still reject it by throwing an exception.
-        self.bookkeeper.add_job_object(job_obj, service_obj)        
+        self.bookkeeper.add_job_object(job_obj, service_obj)   
         self.log_info("Registered new job object {!r}".format(repr(job_obj))) 
 
     def unregister_job_object(self, job_obj):
@@ -188,7 +190,7 @@ class LocalJobPlugin(_JobPluginBase):
         ## Step X: implement job.wait()
         service = self.bookkeeper.get_service_for_job(job)
         try:
-            self.bookkeeper.get_process_for_job(job).wait()   
+            self.bookkeeper.get_process_for_job(job).wait(timeout)   
         except Exception, ex:
             self.log_error_and_raise(exception.Error.NoSuccess, "Coudln't wait for the job because: {!s} ".format(str(ex)))
 

@@ -10,7 +10,7 @@ __license__   = "MIT"
 
 from bliss.plugins.job.jobinterface import _JobPluginBase
 #from bliss.saga import job
-from bliss.saga import exception
+#from bliss.saga import exception
 
 
 class DummyJobPlugin(_JobPluginBase):

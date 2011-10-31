@@ -11,7 +11,7 @@ _api_type_saga_job = "saga.job"
 _api_type_saga_file = "saga.file"
 
 import logging
-from bliss.saga import exception
+#from bliss.saga import exception
 
 class _PluginBase:
     '''Abstract base class for all plugins'''
@@ -26,7 +26,7 @@ class _PluginBase:
         '''Writes an ERROR to the plugin log and raises an exception'''
         msg = "[{!r}] {!r}".format(self.name, message)
         self.__logger.error(message)
-        raise exception.Exception(error, msg)
+ #       raise exception.Exception(error, msg)
 
     def log_info(self, message):
         '''Writes an INFO to the plugin log'''
@@ -40,9 +40,8 @@ class _PluginBase:
     def log_error(self, message):
         '''Writes an ERROR to the plugin log'''
         self.__logger.error(message)
-
-
-  
+ 
+ 
     @classmethod
     def supported_api(self):
         '''Return the api package this plugin supports'''
@@ -66,5 +65,5 @@ class _PluginBase:
 
     def get_runtime_info(self):
         '''This method is used to reveal some runtime information for this plugin'''
-        raise exception.Exception(exception.Error.NotImplemented, "{!s}: get_runtime_info() is not supported by this plugin".format(repr(self))) 
+  #      raise exception.Exception(exception.Error.NotImplemented, "{!s}: get_runtime_info() is not supported by this plugin".format(repr(self))) 
 

@@ -14,7 +14,7 @@ from bliss.saga.url import Url
 class Description(Object):
     '''Loosely represents a SAGA job description as defined in GFD.90'''
     def __init__(self):
-        Object.__init__(self, Object.type_saga_job_description)
+        Object.__init__(self, Object.JobDescription)
 
         self.executable  = ""
         self.arguments    = []

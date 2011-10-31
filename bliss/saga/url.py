@@ -9,10 +9,16 @@ __license__   = "MIT"
 
 from urlparse import urlparse
 
-class Url:
-    '''Defines a SAGA Url class'''
+from bliss.saga.object import Object as SAGAObject
+
+
+class Url(SAGAObject):
+    '''Looesely defines a SAGA Url class as defined in GFD.90.'''
+
     def __init__(self, urlstring=''):
         '''Construct a new Url from a string'''
+        SAGAObject.__init__(self, SAGAObject.Url)
+
         self._urlobj  = urlparse(urlstring)
         self.scheme   = self._urlobj.scheme
         self.host     = self._urlobj.netloc
@@ -27,3 +33,63 @@ class Url:
     def __str__(self):
         '''String representation'''
         return self._urlobj.geturl()
+
+    @property
+    def scheme(self):
+        '''The scheme part of the Url.'''
+
+        def fget(self):
+            return self.scheme
+
+        def fset(self, scheme):
+            self.scheme = scheme
+
+    @property
+    def host(self):
+        '''The host part of the Url (Warning: currenlty returns "url.netloc")'''
+
+        def fget(self):
+            return self.host
+
+        def fset(self, host):
+            self.host = host
+
+    @property
+    def path(self):
+        '''The path part of the Url.'''
+
+        def fget(self):
+            return self.path
+
+        def fset(self, path):
+            self.path = path
+
+    @property
+    def params(self):
+        '''The params part of the Url.'''
+
+        def fget(self):
+            return self.params
+
+        def fset(self, params):
+            self.params = params
+
+    @property
+    def query(self):
+        '''The query part of the Url.'''
+
+        def fget(self):
+            return self.query
+
+        def fset(self, query):
+            self.query = query
+
+    @property
+    def fragment(self):
+        '''The fragment part of the Url.'''
+
+        def fget(self):
+            return self.fragment
+
+        def fset(self, fragment):
+            self.fragment = fragment

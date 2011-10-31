@@ -9,7 +9,7 @@ __license__   = "MIT"
 
 import copy
 import subprocess
-import bliss.saga.job
+import bliss.saga
 
 
 class LocalJobProcess():
@@ -56,6 +56,18 @@ class LocalJobProcess():
         self.state = bliss.saga.job.Job.Canceled
 
 
-    def wait(self):
-        self.prochandle.wait()
+    def wait(self, timeout):
+        if timeout == -1:
+            self.prochandle.wait()
+        else:
+            t_beginning = time.time()
+            seconds_passed = 0
+            while True:
+                if self.prochandle.poll() is not None:
+                    break
+                seconds_passed = time.time() - t_beginning
+                if timeout and seconds_passed > timeout:
+                    break
+                time.sleep(0.1)
+
     

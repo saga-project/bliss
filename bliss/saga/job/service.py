@@ -7,11 +7,12 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.object import Object
+import bliss.saga
+from bliss.saga.object import Object as SAGAObject
 from bliss.saga import exception
 from bliss.saga.url import Url
 
-class Service(Object):
+class Service(SAGAObject):
     '''Loosely represents a SAGA job service as defined in GFD.90'''
     def __init__(self, url):
         '''Construct a new job service object
@@ -24,8 +25,8 @@ class Service(Object):
             # assume it's a URL object
             self.url = url
 
-        Object.__init__(self, Object.type_saga_job_service)
-        self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
+        SAGAObject.__init__(self, SAGAObject.JobService)
+        self._plugin = SAGAObject._get_plugin(self) # throws 'NoSuccess' on error
         self._plugin.register_service_object(self)
         self._logger.info("Bound to plugin {!s}".format(repr(self._plugin)))
 
@@ -41,13 +42,16 @@ class Service(Object):
            @type  job_description: L{Description} 
         '''
         if self._plugin is not None:
-            if job_description._type != Object.type_saga_job_description:
+            if job_description.get_type() != SAGAObject.JobDescription:
                 raise exception.Exception(exception.Error.BadParameter, "create_job() expects "+Object.type_saga_job_description)
-            return self._plugin.create_job(self, job_description)
+
+            job = bliss.saga.job.Job()
+            job._Job__init_from_service(service_obj=self, job_desc=job_description)
+            return job
+
         else:
             raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
 
-          
     def get_job(self, job_id):
         '''Return the job object for the given job id.
            @param job_id: The job id.

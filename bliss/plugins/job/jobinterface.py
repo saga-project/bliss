@@ -12,9 +12,8 @@ import logging
 from bliss.plugins.pluginbase import _PluginBase
 from bliss.plugins.pluginbase import _api_type_saga_job
 
-from bliss.saga import exception
-import bliss.saga.job
-
+#from bliss.saga import exception
+#import bliss.saga.job
 
 class _JobPluginBase(_PluginBase):
     '''Abstract base class for all job plugins'''
@@ -28,11 +27,11 @@ class _JobPluginBase(_PluginBase):
         '''Implements interface from _PluginBase'''
         return _api_type_saga_job
 
-    def create_job(self, service_obj, job_description):     
-        '''Implement interface from _JobPluginBase'''
-        job = bliss.saga.job.Job()
-        job._Job__init_from_service(service_obj=service_obj, job_desc=job_description)
-        return job
+#    def create_job(self, service_obj, job_description):     
+#        '''Implement interface from _JobPluginBase'''
+#        #job = bliss.saga.job.Job()
+#        #job._Job__init_from_service(service_obj=service_obj, job_desc=job_description)
+#        #return job
 
     def register_service_object(self, service_obj):
         self.log_error("Not implemented plugin method called: register_service_object()")

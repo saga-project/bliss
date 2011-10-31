@@ -12,6 +12,12 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
+# Base "look-and-feel packages"
 from bliss.saga.exception import Exception, Error
+from bliss.saga.object    import Object
 from bliss.saga.url       import Url
+from bliss.saga.session   import Session
+from bliss.saga.context   import Context
+
+# API packages
 from bliss.saga           import job  

@@ -29,7 +29,7 @@ class Job(Object):
 
     def __init__(self):
         '''Constructor - not to be called directly'''
-        Object.__init__(self, Object.type_saga_job_job)
+        Object.__init__(self, Object.Job)
 
     def __init_from_service(self, service_obj, job_desc):
         '''Constructor'''
