@@ -19,7 +19,18 @@ class Url(SAGAObject):
         SAGAObject.__init__(self, SAGAObject.Url)
 
         self._urlobj  = urlparse(urlstring)
+        
+        # retarded workaround for older urlparse implementations
+        # that support only a fixed set of schemes (e.g., no 'fork://')
+        if oldscheme != "http":
+            oldscheme = self._urlobj.scheme        
+            self._urlobj.scheme = "http"
+            self._urlobj = urlparse(str(self._urlobj))
+            self._urlobj.scheme = oldscheme
+        
         self.scheme   = self._urlobj.scheme
+        assert(self.scheme == oldscheme)
+
         self.host     = self._urlobj.netloc
         self.path     = self._urlobj.path
         self.params   = self._urlobj.params
