@@ -22,7 +22,7 @@ class Url(SAGAObject):
         
         # retarded workaround for older urlparse implementations
         # that support only a fixed set of schemes (e.g., no 'fork://')
-        if oldscheme != "http":
+        if self._urljob.scheme != "http":
             oldscheme = self._urlobj.scheme        
             self._urlobj.scheme = "http"
             self._urlobj = urlparse(str(self._urlobj))
