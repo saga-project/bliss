@@ -17,87 +17,89 @@ urlparse.uses_fragment.append("fork")
 class Url(SAGAObject):
     '''Looesely defines a SAGA Url class as defined in GFD.90.'''
 
+    __slots__ = ('_urlobj', 'scheme', 'host', 'port', 'path', 'params', 'query', 'fragment', 'url')
+
     def __init__(self, urlstring=''):
         '''Construct a new Url from a string'''
 
         SAGAObject.__init__(self, SAGAObject.Url)
 
         self._urlobj  = urlparse.urlparse(urlstring)
+        
+        if self._urlobj.netloc.find(":") > 0:
+            (host,port) = self._urlobj.netloc.split(":")
+        else:
+            host = self._urlobj.netloc
+            port = ""
+
         self.scheme   = self._urlobj.scheme
-        self.host     = self._urlobj.netloc
+        '''The scheme part of the Url.'''
+        self.host     = host
+        '''The host part of the Url.'''
+        self.port     = port
+        '''The port part of the Url.'''
         self.path     = self._urlobj.path
+        '''The path part of the Url.'''
         self.params   = self._urlobj.params
-        self.quey     = self._urlobj.query
+        '''The params part of the Url.'''
+        self.query    = self._urlobj.query
+        '''The query part of the Url.'''
         self.fragment = self._urlobj.fragment
-        self.url = self._urlobj.geturl()
-
-
-
-
+        '''The fragment part of the Url.'''
+        self.url      = self._urlobj.geturl()
+        '''The Url as string (same as __str__).'''
 
     def __del__(self):
         '''Destructor (tear-down the Url object).'''
 
     def __str__(self):
-        '''String representation'''
+        '''Return Url as string.'''
         return self.url
 
-    @property
-    def scheme(self):
-        '''The scheme part of the Url.'''
+    def get_scheme(self):
+        '''Legacy method: return the 'scheme' property.'''
+        return self.scheme
 
-        def fget(self):
-            return self.scheme
+    def set_scheme(self, val):
+        '''Legacy method: set the 'scheme' property.'''
+        self.scheme = val
 
-        def fset(self, scheme):
-            self.scheme = scheme
+    def get_host(self):
+        '''Legacy method: return the 'host' property.'''
+        return self.scheme
 
-    @property
-    def host(self):
-        '''The host part of the Url (Warning: currenlty returns "url.netloc")'''
+    def set_host(self, val):
+        '''Legacy method: set the 'host' property.'''
+        self.host = val
 
-        def fget(self):
-            return self.host
+    def get_port(self):
+        '''Legacy method: return the 'port' property.'''
+        return self.port
 
-        def fset(self, host):
-            self.host = host
+    def set_port(self, port):
+        '''Legacy method: set the 'port' property.'''
+        self.port = val
 
-    @property
-    def path(self):
-        '''The path part of the Url.'''
+    def get_fragment(self):
+        '''Legacy method: return the 'fragment' property.'''
+        return self.fragment
 
-        def fget(self):
-            return self.path
+    def set_fragment(self, val):
+        '''Legacy method: set the 'fragment' property.'''
+        self.fragment = val
 
-        def fset(self, path):
-            self.path = path
+    def get_path(self):
+        '''Legacy method: return the 'path' property.'''
+        return self.path
 
-    @property
-    def params(self):
-        '''The params part of the Url.'''
+    def set_path(self, val):
+        '''Legacy method: set the 'path' property.'''
+        self.path = val
 
-        def fget(self):
-            return self.params
+    def get_query(self):
+        '''Legacy method: return the 'query' property.'''
+        return self.quey
 
-        def fset(self, params):
-            self.params = params
-
-    @property
-    def query(self):
-        '''The query part of the Url.'''
-
-        def fget(self):
-            return self.query
-
-        def fset(self, query):
-            self.query = query
-
-    @property
-    def fragment(self):
-        '''The fragment part of the Url.'''
-
-        def fget(self):
-            return self.fragment
-
-        def fset(self, fragment):
-            self.fragment = fragment
+    def set_query(self, query):
+        '''Legacy method: set the 'query' property.'''
+        self.query = val

@@ -11,7 +11,7 @@ import logging
 import bliss.saga
 import bliss.runtime
 
-class Object() :
+class Object(object) :
     '''Loosely resembles a SAGA object as defined in GFD.90'''
 
     Url            = "saga.Url"
@@ -29,6 +29,8 @@ class Object() :
 
     __shared_state = {}
     __shared_state["runtime_initialized"] = False
+
+    __slots__ = ("_plugin", "_type", "_logger", "_session")
 
     def __init__(self, objtype, session=None):
         '''Construct a new object'''

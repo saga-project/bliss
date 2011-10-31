@@ -14,7 +14,9 @@ def main():
         jd = saga.job.Description()
         jd.set_attribute('Executable', '/bin/sleep')
         jd.set_vector_attribute('Arguments', ["10"])
-        
+
+        xx = saga.Url("fork://localhost:8080")
+        jd.arguments = ['100'] 
         for att in jd.list_attributes():
             print "%s %s %s %s" % (att, jd.attribute_is_vector(att), jd.attribute_is_readonly(att), jd.attribute_is_writeable(att))
             
