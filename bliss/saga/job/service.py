@@ -33,8 +33,8 @@ class Service(SAGAObject):
     def __del__(self):
         '''Destructor.
         '''
-        if self._plugin is not None:
-            self._plugin.unregister_service_object(self)
+        #if self._plugin is not None:
+        #    self._plugin.unregister_service_object(self)
 
     def create_job(self, job_description):
         '''Create a new job object.
