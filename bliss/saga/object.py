@@ -59,7 +59,7 @@ class Object :
         try:
             return self.__shared_state["runtime_instance"].get_plugin_for_url(self.url) 
         except Exception, ex:
-            error = ("{!s}".format(str(ex)))
+            error = ("%s" % (str(ex)))
             raise SException(SError.NoSuccess, error)
 
     def _get_runtime_info(self):

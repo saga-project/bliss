@@ -39,7 +39,7 @@ class Job(Object):
 
         self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
         self._plugin.register_job_object(job_obj=self, service_obj=self.service)
-        self._logger.info("Object bound to plugin {!s}".format(repr(self._plugin)))
+        self._logger.info("Object bound to plugin %s" % (repr(self._plugin)))
 
     def __del__(self):
         '''Tear down the object in a more or less civilised fashion.'''

@@ -38,7 +38,7 @@ class LocalJobProcess():
         self.state = bliss.saga.job.Job.Running
 
     def getpid(self, serviceurl):
-        return "[{!s}]-[{!s}]".format(str(serviceurl), self.pid)
+        return "[%s]-[%s]" % (serviceurl, self.pid)
 
     def getstate(self):
         if self.state == bliss.saga.job.Job.Running:

@@ -45,7 +45,7 @@ class LocalJobPlugin(_JobPluginBase):
                                                          environment=job_obj.get_description().environment)
             except Exception, ex:
                 self.parent.log_error_and_raise(exception.Error.NoSuccess, 
-                  "Can't register job: {!r} {!s}".format(ex, utils.get_traceback()))   
+                  "Can't register job: %s %s" % (ex, utils.get_traceback()))   
 
         def del_job_object(self, job_obj):
             pass
@@ -56,7 +56,7 @@ class LocalJobPlugin(_JobPluginBase):
                 if job_obj in self.objects[key]['jobs']:
                     return self.objects[key]['instance']
             self.parrent.log_error_and_raise(exception.Error.NoSuccess, 
-              "INTERNAL ERROR: Job object {!r} is not known by this plugin {!s}".format(job, utils.get_traceback())) 
+              "INTERNAL ERROR: Job object %s is not known by this plugin %s" % (job, utils.get_traceback())) 
 
         def get_job_for_jobid(self, service_obj, job_id):
             '''Return the job object associated with the given job id'''
@@ -79,7 +79,7 @@ class LocalJobPlugin(_JobPluginBase):
                 return self.processes[hex(id(job_obj))]
             except Exception, ex:
                 self.parrent.log_error_and_raise(exception.Error.NoSuccess, 
-                "INTERNAL ERROR: Job object {!r} is not associated with a process {!s}".format(job_obj, utils.get_traceback()))   
+                "INTERNAL ERROR: Job object %s is not associated with a process %s" % (job_obj, utils.get_traceback()))   
     ##
     ########################################
 
@@ -114,7 +114,7 @@ class LocalJobPlugin(_JobPluginBase):
 
     def get_runtime_info(self): 
         '''Implements interface from _PluginBase'''
-        #str = "Plugin: {!r}. Registered job.service objects: {!r}.\n{!r}".format(
+        #str = "Plugin: %s. Registered job.service objects: %s.\n%s".format(
         #       self.name, len(self.objects), repr(self.objects))
         #return str
        
@@ -128,7 +128,7 @@ class LocalJobPlugin(_JobPluginBase):
             self.log_error_and_raise(exception.Error.BadParameter, "Only 'localhost' can be used as hostname")        
       
         self.bookkeeper.add_service_object(service_obj)
-        self.log_info("Registered new service object {!r}".format(repr(service_obj))) 
+        self.log_info("Registered new service object %s" % (repr(service_obj))) 
    
 
     def unregister_service_object(self, service_obj):
@@ -138,7 +138,7 @@ class LocalJobPlugin(_JobPluginBase):
         ##         shouldn't throw an exception here, since this method is called
         ##         by the destructor!
         self.bookkeeper.del_service_object(service_obj)
-        self.log_info("Unegistered new service object {!r}".format(repr(service_obj))) 
+        self.log_info("Unegistered new service object %s" % (repr(service_obj))) 
 
  
     def register_job_object(self, job_obj, service_obj):
@@ -147,12 +147,12 @@ class LocalJobPlugin(_JobPluginBase):
         ##         a job object is instantiated via the service.create_job() call.
         ##         You can still reject it by throwing an exception.
         self.bookkeeper.add_job_object(job_obj, service_obj)   
-        self.log_info("Registered new job object {!r}".format(repr(job_obj))) 
+        self.log_info("Registered new job object %s" % (repr(job_obj))) 
 
     def unregister_job_object(self, job_obj):
         '''Implements interface from _JobPluginBase'''
         self.bookkeeper.del_job_object(job_obj)
-        self.log_info("Unegisteredjob object {!r}".format(repr(job_obj))) 
+        self.log_info("Unegisteredjob object %s" % (repr(job_obj))) 
 
 
     def service_list(self, service_obj):
@@ -161,7 +161,7 @@ class LocalJobPlugin(_JobPluginBase):
         try:
             return self.bookkeeper.list_jobs_for_service(service_obj)   
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't retreive job list because: {!s} ".format(str(ex)))
+            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't retreive job list because: %s " % (str(ex)))
 
 
     def service_get_job(self, service_obj, job_id):
@@ -170,7 +170,7 @@ class LocalJobPlugin(_JobPluginBase):
         try:
             return self.bookkeeper.get_job_for_jobid(service_obj, job_id)   
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't get job list because: {!s} ".format(str(ex)))
+            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't get job list because: %s " % (str(ex)))
 
 
     def job_get_state(self, job):
@@ -179,7 +179,7 @@ class LocalJobPlugin(_JobPluginBase):
             service = self.bookkeeper.get_service_for_job(job)
             return self.bookkeeper.get_process_for_job(job).getstate()  
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't get job state because: {!s} ".format(str(ex)))
+            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't get job state because: %s " % (str(ex)))
 
 
     def job_get_job_id(self, job):
@@ -187,9 +187,9 @@ class LocalJobPlugin(_JobPluginBase):
         try:
             service = self.bookkeeper.get_service_for_job(job)
             return self.bookkeeper.get_process_for_job(job).getpid(str(service.url))  
-            self.log_info("Started local process: {!r} {!r}".format(job.get_description().executable, job.get_description().arguments)) 
+            self.log_info("Started local process: %s %s" % (job.get_description().executable, job.get_description().arguments)) 
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't get job id because: {!s} ".format(str(ex)))
+            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't get job id because: %s " % (str(ex)))
 
 
     def job_run(self, job):
@@ -200,9 +200,9 @@ class LocalJobPlugin(_JobPluginBase):
         try:
             service = self.bookkeeper.get_service_for_job(job)
             self.bookkeeper.get_process_for_job(job).run()  
-            self.log_info("Started local process: {!r} {!r}".format(job.get_description().executable, job.get_description().arguments)) 
+            self.log_info("Started local process: %s %s" % (job.get_description().executable, job.get_description().arguments)) 
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't run job because: {!s} ".format(str(ex)))
+            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't run job because: %s " % (str(ex)))
 
 
     def job_cancel(self, job, timeout):
@@ -210,9 +210,9 @@ class LocalJobPlugin(_JobPluginBase):
         ## Step X: implement job.cancel()
         try:
             self.bookkeeper.get_process_for_job(job).terminate()  
-            self.log_info("Terminated local process: {!r} {!r}".format(job.get_description().executable, job.get_description().arguments)) 
+            self.log_info("Terminated local process: %s %s" % (job.get_description().executable, job.get_description().arguments)) 
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't cancel job because: {!s} (already finished?)".format(str(ex)))
+            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't cancel job because: %s (already finished?)" % (str(ex)))
 
  
     def job_wait(self, job, timeout):
@@ -222,5 +222,5 @@ class LocalJobPlugin(_JobPluginBase):
             service = self.bookkeeper.get_service_for_job(job)
             self.bookkeeper.get_process_for_job(job).wait(timeout)   
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't wait for the job because: {!s} ".format(str(ex)))
+            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't wait for the job because: %s " % (str(ex)))
 

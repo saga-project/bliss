@@ -28,5 +28,5 @@ class Exception(Exception):
            self.msg   = msg
  
        def __str__(self):
-           string = "SAGA Exception ({!s}): {!s}".format(str(self.error), str(self.msg))
+           string = "SAGA Exception (%s): %s" % (str(self.error), str(self.msg))
            return (string)

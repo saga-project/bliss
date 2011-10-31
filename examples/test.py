@@ -109,20 +109,20 @@ def main():
         # create & run the job
         myjob = js.create_job(jd)
 
-        print "Job State : {!s}".format(myjob.get_state())
+        print "Job State : %s".format(myjob.get_state())
 
         myjob.run()
 
-        print "Job ID    : {!s}".format(myjob.get_job_id())
-        print "Job State : {!s}".format(myjob.get_state())
+        print "Job ID    : %s".format(myjob.get_job_id())
+        print "Job State : %s".format(myjob.get_state())
         print "waiting for job ..."
 
         myjob.wait()
 
-        print "Job State : {!s}".format(myjob.get_state())
+        print "Job State : %s".format(myjob.get_state())
 
     except saga.Exception, ex:
-        print "Oh, snap! An error occured: {!s}".format(str(ex))
+        print "Oh, snap! An error occured: %s".format(str(ex))
 
     ## do it the old-school way 
     ## (compatible with CCT's SAGA Python bindings
@@ -144,20 +144,20 @@ def main():
         # create & run the job
         myjob = js.create_job(jd)
 
-        print "Job State : {!s}".format(myjob.get_state())
+        print "Job State : %s".format(myjob.get_state())
 
         myjob.run()
 
-        print "Job ID    : {!s}".format(myjob.get_job_id())
-        print "Job State : {!s}".format(myjob.get_state())
+        print "Job ID    : %s".format(myjob.get_job_id())
+        print "Job State : %s".format(myjob.get_state())
         print "waiting for job ..."
 
         myjob.wait()
 
-        print "Job State : {!s}".format(myjob.get_state())
+        print "Job State : %s".format(myjob.get_state())
 
     except saga.exception, ex:
-        print "Oh, snap! An error occured: {!s}".format(str(ex))
+        print "Oh, snap! An error occured: %s".format(str(ex))
 
 
 

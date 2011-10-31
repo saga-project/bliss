@@ -28,7 +28,7 @@ class Service(SAGAObject):
         SAGAObject.__init__(self, SAGAObject.JobService, session=session)
         self._plugin = SAGAObject._get_plugin(self) # throws 'NoSuccess' on error
         self._plugin.register_service_object(self)
-        self._logger.info("Bound to plugin {!s}".format(repr(self._plugin)))
+        self._logger.info("Bound to plugin %s" % (repr(self._plugin)))
 
     def __del__(self):
         '''Destructor.

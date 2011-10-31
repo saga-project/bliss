@@ -25,7 +25,7 @@ class _PluginBase:
 
     def log_error_and_raise(self, error, message):
         '''Writes an ERROR to the plugin log and raises an exception'''
-        msg = "[{!r}] {!s} {!s}".format(self.name, message, utils.get_traceback())
+        msg = "[%s] %s %s" % (self.name, message, utils.get_traceback())
         self.__logger.error(message)
         raise SAGAException(error, msg)
 
@@ -66,5 +66,5 @@ class _PluginBase:
 
     def get_runtime_info(self):
         '''This method is used to reveal some runtime information for this plugin'''
-  #      raise exception.Exception(exception.Error.NotImplemented, "{!s}: get_runtime_info() is not supported by this plugin".format(repr(self))) 
+  #      raise exception.Exception(exception.Error.NotImplemented, "%s: get_runtime_info() is not supported by this plugin".format(repr(self))) 
 
