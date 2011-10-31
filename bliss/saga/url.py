@@ -51,10 +51,10 @@ class Url(SAGAObject):
         '''The host part of the Url (Warning: currenlty returns "url.netloc")'''
 
         def fget(self):
-            return self.host
+            return self.netloc
 
         def fset(self, host):
-            self.host = host
+            self.netloc = host
 
     @property
     def path(self):
