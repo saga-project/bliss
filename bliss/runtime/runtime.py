@@ -7,6 +7,7 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
+import os
 import logging
 import bliss.plugins.registry
 
@@ -15,8 +16,26 @@ class Runtime():
     def __init__(self):
         '''Constructs a runtime object'''
 
+        #BLISS_VERBOSE = int(os.getenv('BLISS_VERBOSE'))
+        try: 
+            SAGA_VERBOSE = int(os.getenv('SAGA_VERBOSE'))
+        except Exception:
+            SAGA_VERBOSE = 0
 
-        logging.basicConfig(level=logging.DEBUG, datefmt='%m/%d/%Y %I:%M:%S %p',
+        # 4 = DEBUG + INFO + WARNING + ERROR
+        if SAGA_VERBOSE >= 4:
+            self.loglevel = logging.DEBUG
+        # 3 = INFO + WARNING + ERROR
+        elif SAGA_VERBOSE == 3:
+            self.loglevel = logging.INFO
+        # 2 = WARNING + ERROR 
+        elif SAGA_VERBOSE == 2:
+            self.loglevel = logging.WARNING
+        # 1 = ERROR ONLY
+        elif SAGA_VERBOSE <= 1:
+            self.loglevel = logging.ERROR
+  
+        logging.basicConfig(level=self.loglevel, datefmt='%m/%d/%Y %I:%M:%S %p',
                     	    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         address=str(hex(id(self)))
         self.logger = logging.getLogger(self.__class__.__name__+'('+address+')') 
