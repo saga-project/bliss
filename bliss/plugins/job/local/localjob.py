@@ -58,6 +58,20 @@ class LocalJobPlugin(_JobPluginBase):
             self.parrent.log_error_and_raise(exception.Error.NoSuccess, 
               "INTERNAL ERROR: Job object {!r} is not known by this plugin {!s}".format(job, utils.get_traceback())) 
 
+        def get_job_for_jobid(self, service_obj, job_id):
+            '''Return the job object associated with the given job id'''
+            for job in self.list_jobs_for_service(service_obj):
+                proc = self.get_process_for_job(job)
+                if proc.getpid(str(service_obj.url)) == job_id:  
+                    return job
+            self.parrent.log_error_and_raise(exception.Error.NoSuccess, "Job ID not known by this plugin.")
+
+
+        def list_jobs_for_service(self, service_obj):
+            '''List all jobs that are registered with the given service'''
+            service_id = hex(id(service_obj))  
+            return self.objects[service_id]['jobs']
+
 
         def get_process_for_job(self, job_obj):
             '''Return the local process object for a given job'''
@@ -66,7 +80,6 @@ class LocalJobPlugin(_JobPluginBase):
             except Exception, ex:
                 self.parrent.log_error_and_raise(exception.Error.NoSuccess, 
                 "INTERNAL ERROR: Job object {!r} is not associated with a process {!s}".format(job_obj, utils.get_traceback()))   
-
     ##
     ########################################
 
@@ -131,8 +144,8 @@ class LocalJobPlugin(_JobPluginBase):
     def register_job_object(self, job_obj, service_obj):
         '''Implements interface from _JobPluginBase'''
         ## Step 6: Implement register_job_object. This method is called if 
-        ##         a job object is instantiated with a url schema that matches 
-        ##         this adaptor. You can still reject it by throwing an exception.
+        ##         a job object is instantiated via the service.create_job() call.
+        ##         You can still reject it by throwing an exception.
         self.bookkeeper.add_job_object(job_obj, service_obj)   
         self.log_info("Registered new job object {!r}".format(repr(job_obj))) 
 
@@ -141,38 +154,55 @@ class LocalJobPlugin(_JobPluginBase):
         self.bookkeeper.del_job_object(job_obj)
         self.log_info("Unegisteredjob object {!r}".format(repr(job_obj))) 
 
+
+    def service_list(self, service_obj):
+        '''Implements interface from _JobPluginBase'''
+        ## Step 76: Implement service_list_jobs() 
+        try:
+            return self.bookkeeper.list_jobs_for_service(service_obj)   
+        except Exception, ex:
+            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't retreive job list because: {!s} ".format(str(ex)))
+
+
+    def service_get_job(self, service_obj, job_id):
+        '''Implements interface from _JobPluginBase'''
+        ## Step 76: Implement service_get_job() 
+        try:
+            return self.bookkeeper.get_job_for_jobid(service_obj, job_id)   
+        except Exception, ex:
+            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't get job list because: {!s} ".format(str(ex)))
+
+
     def job_get_state(self, job):
         '''Implements interface from _JobPluginBase'''
-        service = self.bookkeeper.get_service_for_job(job)
-
         try:
+            service = self.bookkeeper.get_service_for_job(job)
             return self.bookkeeper.get_process_for_job(job).getstate()  
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Coudln't get job state because: {!s} ".format(str(ex)))
+            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't get job state because: {!s} ".format(str(ex)))
 
 
     def job_get_job_id(self, job):
         '''Implements interface from _JobPluginBase'''
-        service = self.bookkeeper.get_service_for_job(job)
         try:
-            pid = self.bookkeeper.get_process_for_job(job).getpid()  
-            return "[{!s}]-[{!s}]".format(str(service.url), pid)
+            service = self.bookkeeper.get_service_for_job(job)
+            return self.bookkeeper.get_process_for_job(job).getpid(str(service.url))  
             self.log_info("Started local process: {!r} {!r}".format(job.get_description().executable, job.get_description().arguments)) 
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Coudln't get job id because: {!s} ".format(str(ex)))
+            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't get job id because: {!s} ".format(str(ex)))
 
 
     def job_run(self, job):
         '''Implements interface from _JobPluginBase'''
         ## Step X: implement job.run()
-        service = self.bookkeeper.get_service_for_job(job)
         if job.get_description().executable == "":   
             self.log_error_and_raise(exception.Error.BadParameter, "No executable defined in job description")
         try:
+            service = self.bookkeeper.get_service_for_job(job)
             self.bookkeeper.get_process_for_job(job).run()  
             self.log_info("Started local process: {!r} {!r}".format(job.get_description().executable, job.get_description().arguments)) 
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Coudln't run job because: {!s} ".format(str(ex)))
+            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't run job because: {!s} ".format(str(ex)))
 
 
     def job_cancel(self, job, timeout):
@@ -182,15 +212,15 @@ class LocalJobPlugin(_JobPluginBase):
             self.bookkeeper.get_process_for_job(job).terminate()  
             self.log_info("Terminated local process: {!r} {!r}".format(job.get_description().executable, job.get_description().arguments)) 
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Coudln't cancel job because: {!s} (already finished?)".format(str(ex)))
+            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't cancel job because: {!s} (already finished?)".format(str(ex)))
 
  
     def job_wait(self, job, timeout):
         '''Implements interface from _JobPluginBase'''
         ## Step X: implement job.wait()
-        service = self.bookkeeper.get_service_for_job(job)
         try:
+            service = self.bookkeeper.get_service_for_job(job)
             self.bookkeeper.get_process_for_job(job).wait(timeout)   
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Coudln't wait for the job because: {!s} ".format(str(ex)))
+            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't wait for the job because: {!s} ".format(str(ex)))
 

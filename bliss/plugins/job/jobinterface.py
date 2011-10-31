@@ -12,8 +12,8 @@ import logging
 from bliss.plugins.pluginbase import _PluginBase
 from bliss.plugins.pluginbase import _api_type_saga_job
 
-#from bliss.saga import exception
-#import bliss.saga.job
+from bliss.saga.exception import Error as SAGAError
+from bliss.saga.exception import Exception as SAGAException
 
 class _JobPluginBase(_PluginBase):
     '''Abstract base class for all job plugins'''
@@ -35,12 +35,12 @@ class _JobPluginBase(_PluginBase):
 
     def register_service_object(self, service_obj):
         self.log_error("Not implemented plugin method called: register_service_object()")
-        self.log_error_and_raise(exception.Error.NotImplemented, errormsg) 
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def register_job_object(self, job_obj, service_obj):
         '''This method is called upon instantiation of a new job object'''
         self.log_error("Not implemented plugin method called: register_job_object()")
-        self.log_error_and_raise(exception.Error.NotImplemented, errormsg) 
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def unregister_service_object(self, service_obj):
         '''This method is called upon deletion of a new service object'''
@@ -52,30 +52,36 @@ class _JobPluginBase(_PluginBase):
         self.log_error("Not implemented plugin method called: unregister_job_object()")
         # don't throw -- destructor context
 
-    def get_job(self, job_id):
-        errormsg = "Not implemented plugin method called: get_job()"
-        self.log_error_and_raise(exception.Error.NotImplemented, errormsg)
 
-    def list(self):
+    ######## Implementation for saga.job.Service functionality 
+    ##
+    def service_list(self, service_obj):
         errormsg = "Not implemented plugin method called: list()"
-        self.log_error_and_raise(exception.Error.NotImplemented, errormsg) 
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
+    def service_get_job(self, service_obj, job_id):
+        errormsg = "Not implemented plugin method called: get_job()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
+
+
+    ######## Implementation for saga.job.Service functionality 
+    ##
     def job_get_state(self, job_obj):
         errormsg = "Not implemented plugin method called: job.get_state()"
-        self.log_error_and_raise(exception.Error.NotImplemented, errormsg) 
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
-    def job_get_job_id(self, job_obj):
+    def job_get_job_id(self, jobid):
         errormsg = "Not implemented plugin method called: job.get_job_id()"
-        self.log_error_and_raise(exception.Error.NotImplemented, errormsg) 
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def job_run(self, job_obj):
         errormsg = "Not implemented plugin method called: job.run()"
-        self.log_error_and_raise(exception.Error.NotImplemented, errormsg) 
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def job_wait(self, job_obj, timeout):
         errormsg = "Not implemented plugin method called: job.wait()"
-        self.log_error_and_raise(exception.Error.NotImplemented, errormsg)
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
 
     def job_cancel(self, job_obj, timeout):
         errormsg = "Not implemented plugin method called: job.cancel()"
-        self.log_error_and_raise(exception.Error.NotImplemented, errormsg)  
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)  

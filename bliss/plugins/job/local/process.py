@@ -8,6 +8,7 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 import copy
+import time
 import subprocess
 import bliss.saga
 
@@ -36,8 +37,8 @@ class LocalJobProcess():
         self.pid = self.prochandle.pid
         self.state = bliss.saga.job.Job.Running
 
-    def getpid(self):
-        return self.pid
+    def getpid(self, serviceurl):
+        return "[{!s}]-[{!s}]".format(str(serviceurl), self.pid)
 
     def getstate(self):
         if self.state == bliss.saga.job.Job.Running:

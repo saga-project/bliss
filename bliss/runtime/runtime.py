@@ -8,21 +8,22 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 import logging
-from bliss.plugins import registry
+import bliss.plugins.registry
 
 class Runtime():
     '''Implements the Bliss runtime system'''
     def __init__(self):
         '''Constructs a runtime object'''
-        logging.basicConfig(level=logging.DEBUG, datefmt='%m/%d/%Y %I:%M:%S %p',
+        logging.basicConfig(level=logging.ERROR, datefmt='%m/%d/%Y %I:%M:%S %p',
                     	    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
         self.logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')') 
         self.logger.info("BLISS runtime instance created at {!r}".format(str(hex(id(self)))))
         self.plugin_class_list = {}
         self.plugin_instance_list = {}
         
         #iterate thrugh plugin registry
-        for plugin in registry._registry:
+        for plugin in bliss.plugins.registry._registry:
             self.logger.info("Plugin {!r} found with signature: {!s}".format(plugin["name"], str(plugin)))
             try:
                 # see if the plugin can work properly on this system

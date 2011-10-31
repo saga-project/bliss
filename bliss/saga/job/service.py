@@ -14,7 +14,7 @@ from bliss.saga.url import Url
 
 class Service(SAGAObject):
     '''Loosely represents a SAGA job service as defined in GFD.90'''
-    def __init__(self, url):
+    def __init__(self, url, session=None):
         '''Construct a new job service object
            @param url: Url of the (remote) job manager.
            @type  url: L{Url} 
@@ -25,7 +25,7 @@ class Service(SAGAObject):
             # assume it's a URL object
             self.url = url
 
-        SAGAObject.__init__(self, SAGAObject.JobService)
+        SAGAObject.__init__(self, SAGAObject.JobService, session=session)
         self._plugin = SAGAObject._get_plugin(self) # throws 'NoSuccess' on error
         self._plugin.register_service_object(self)
         self._logger.info("Bound to plugin {!s}".format(repr(self._plugin)))
@@ -57,15 +57,15 @@ class Service(SAGAObject):
            @param job_id: The job id.
         '''
         if self._plugin is not None:
-            return self.plugin.get_job(job_id)
+            return self._plugin.service_get_job(self, job_id)
         else:
             raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
 
     def list(self):
-        '''List all jobs managed by this service.
+        '''List all jobs managed by this service instance.
         '''
         if self._plugin is not None:
-            return self.plugin.list()
+            return self._plugin.service_list(self)
         else:
             raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
 

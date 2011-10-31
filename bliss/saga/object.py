@@ -8,10 +8,8 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 import logging
-
-from bliss.saga.exception  import Exception as SException
-from bliss.saga.exception  import Error as SError
-from bliss.runtime.runtime import Runtime
+import bliss.saga
+import bliss.runtime
 
 class Object :
     '''Loosely resembles a SAGA object as defined in GFD.90'''
@@ -31,23 +29,30 @@ class Object :
 
     __shared_state = {}
     __shared_state["runtime_initialized"] = False
-    def __init__(self, objtype):
+
+    def __init__(self, objtype, session=None):
         '''Construct a new object'''
         #self.__dict__ = self.__shared_state
         if not self.__shared_state["runtime_initialized"]:
             # initialize runtime
             self._init_runtime()
+            self.__shared_state["default_session"] = bliss.saga.Session()
             self.__shared_state["runtime_initialized"] = True
 
         self._plugin = None
         self._type = objtype
         self._logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')')
-        self._session = None 
+ 
+        if session is not None:
+            self._session = session
+        else:
+            self._session = self.__shared_state["default_session"]
+
 
     def _init_runtime(self):
         '''Registers available plugins and so on'''
         if not self.__shared_state["runtime_initialized"]: 
-            self.__shared_state["runtime_instance"] = Runtime()
+            self.__shared_state["runtime_instance"] = bliss.runtime.Runtime()
 
     def _get_plugin(self):
         '''Bind an object to the runtime'''
@@ -64,6 +69,8 @@ class Object :
         '''Return the object's session.'''
         if self._session is None:
             pass # return default session
+        else:
+           return self._session
 
     def get_type(self):
         '''Return the object type.'''

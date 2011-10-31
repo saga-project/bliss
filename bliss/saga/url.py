@@ -11,7 +11,6 @@ from urlparse import urlparse
 
 from bliss.saga.object import Object as SAGAObject
 
-
 class Url(SAGAObject):
     '''Looesely defines a SAGA Url class as defined in GFD.90.'''
 
@@ -29,6 +28,9 @@ class Url(SAGAObject):
 
         # legacy support
         self.url      = self._urlobj.geturl()
+
+    def __del__(self):
+        '''Destructor (tear-down the Url object).'''
 
     def __str__(self):
         '''String representation'''

@@ -11,7 +11,8 @@ _api_type_saga_job = "saga.job"
 _api_type_saga_file = "saga.file"
 
 import logging
-#from bliss.saga import exception
+from bliss.plugins import utils
+from bliss.saga.exception import Exception as SAGAException
 
 class _PluginBase:
     '''Abstract base class for all plugins'''
@@ -24,9 +25,9 @@ class _PluginBase:
 
     def log_error_and_raise(self, error, message):
         '''Writes an ERROR to the plugin log and raises an exception'''
-        msg = "[{!r}] {!r}".format(self.name, message)
+        msg = "[{!r}] {!s} {!s}".format(self.name, message, utils.get_traceback())
         self.__logger.error(message)
- #       raise exception.Exception(error, msg)
+        raise SAGAException(error, msg)
 
     def log_info(self, message):
         '''Writes an INFO to the plugin log'''

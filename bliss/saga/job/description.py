@@ -47,7 +47,7 @@ class Description(Object):
         def fget(self):
             return self.environment
 
-        def fset(self, arguments):
+        def fset(self, environment):
             self.environment = environment 
 
 
