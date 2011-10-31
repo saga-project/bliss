@@ -14,7 +14,7 @@ from bliss.saga.url import Url
 class Description(Object, AttributeInterface):
     '''Loosely represents a SAGA job description as defined in GFD.90'''
 
-   # __slots__ = {'arguments', 'environment', 'project'}
+    __slots__ = {}
  
     def __init__(self):
         '''Constructor - create an empty job description.'''
@@ -30,8 +30,7 @@ class Description(Object, AttributeInterface):
         self._attributes['Queue']             = {'value':"", 'type':'S', 'access':'RW'}
         self._attributes['SPMDVariation']     = {'value':"", 'type':'S', 'access':'RW'}
         self._attributes['TotalCPUCount']     = {'value':"", 'type':'S', 'access':'RW'}
-        self._attributes['ProcessesPerHost']  = {'value':"", 'type':'S', 'access':'RW'}
-        self._attributes['ThreadsPerProcess'] = {'value':"", 'type':'S', 'access':'RW'}
+        self._attributes['NumberOfProcesses'] = {'value':"", 'type':'S', 'access':'RW'}
 
     @property
     def executable(self):
@@ -89,3 +88,26 @@ class Description(Object, AttributeInterface):
     def queue(self, val):
         self.set_attribute('Queue', val)
 
+    @property
+    def spmd_variation(self):
+        'The \'SPMD variation\' to use for the job (MPI or Single)'
+        return self.get_attribute('SPMDVariation')
+    @spmd_variation.setter
+    def spmd_variation(self, val):
+        self.set_attribute('SPMDVariation', val)
+
+    @property
+    def total_cpu_count(self):
+        'Number of CPUs to allocate for the job.'
+        return self.get_attribute('TotalCPUCount')
+    @total_cpu_count.setter
+    def total_cpu_count(self, val):
+        self.set_attribute('TotalCPUCount', val)
+
+    @property
+    def number_of_processes(self):
+        'Number of instances of the job executable to start.'
+        return self.get_attribute('NumberOfProcesses')
+    @number_of_processes.setter
+    def number_of_processes(self, val):
+        self.set_attribute('NumberOfProcesses', val)

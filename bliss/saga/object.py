@@ -30,7 +30,7 @@ class Object(object) :
     __shared_state = {}
     __shared_state["runtime_initialized"] = False
 
-    __slots__ = ("_plugin", "_type", "_logger", "_session")
+    __slots__ = ("_plugin", "type", "_logger", "session")
 
     def __init__(self, objtype, session=None):
         '''Construct a new object'''
@@ -42,13 +42,13 @@ class Object(object) :
             self.__shared_state["runtime_initialized"] = True
 
         self._plugin = None
-        self._type = objtype
+        self.type = objtype
         self._logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')')
  
         if session is not None:
-            self._session = session
+            self.session = session
         else:
-            self._session = self.__shared_state["default_session"]
+            self.session = self.__shared_state["default_session"]
 
     def _init_runtime(self):
         '''Registers available plugins and so on'''
@@ -67,17 +67,17 @@ class Object(object) :
         return self.plugin.get_runtime_info()
 
     def get_session(self):
-        '''Return the object's session.'''
-        if self._session is None:
+        '''Legacy method: return the object's session.'''
+        if self.session is None:
             pass # return default session
         else:
-           return self._session
+           return self.session
 
     def get_type(self):
-        '''Return the object type.'''
-        return self._type
+        '''Legacy method: return the object type.'''
+        return self.type
 
     def get_id(self):
-        '''Return the object identifier.'''
+        '''Legacy method: Return the object identifier.'''
         return repr(self) 
 
