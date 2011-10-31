@@ -11,6 +11,15 @@ from urlparse import urlparse
 
 from bliss.saga.object import Object as SAGAObject
 
+def register_scheme(scheme):
+    for method in filter(lambda s: s.startswith('uses_'), dir(urlparse)):
+        getattr(urlparse, method).append(scheme)
+
+# urlparse provides only a fixed set of schemes
+# all other schemes must be registered explicitly
+register_scheme('fork')
+register_scheme('pbs+ssh')
+
 class Url(SAGAObject):
     '''Looesely defines a SAGA Url class as defined in GFD.90.'''
 
@@ -19,18 +28,7 @@ class Url(SAGAObject):
         SAGAObject.__init__(self, SAGAObject.Url)
 
         self._urlobj  = urlparse(urlstring)
-        
-        # retarded workaround for older urlparse implementations
-        # that support only a fixed set of schemes (e.g., no 'fork://')
-        if self._urlobj.scheme != "http":
-            oldscheme = self._urlobj.scheme        
-            self._urlobj.scheme = "http"
-            self._urlobj = urlparse(str(self._urlobj))
-            self._urlobj.scheme = oldscheme
-        
         self.scheme   = self._urlobj.scheme
-        assert(self.scheme == oldscheme)
-
         self.host     = self._urlobj.netloc
         self.path     = self._urlobj.path
         self.params   = self._urlobj.params
