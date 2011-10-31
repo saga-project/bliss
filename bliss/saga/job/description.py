@@ -8,46 +8,28 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.saga.object import Object
+from bliss.saga.attributes import AttributeInterface
 from bliss.saga.url import Url
 
 
-class Description(Object):
+class Description(Object, AttributeInterface):
     '''Loosely represents a SAGA job description as defined in GFD.90'''
     def __init__(self):
+        '''Constructor - create an empty job description.'''
         Object.__init__(self, Object.JobDescription)
+        AttributeInterface.__init__(self)
 
-        self.executable  = ""
-        self.arguments    = []
-        self.environment  = {}
+        self._attributes['Arguments']    = {'value':[], 'type':'V', 'access':'RW'} 
+        self._attributes['Environment']  = {'value':{}, 'type':'V', 'access':'RW'}
+        self._attributes['Project']      = {'value':[], 'type':'V', 'access':'RW'}
 
-    @property
-    def executable(self):
-        '''The job's executable.'''
+        self._attributes['Executable']   = {'value':"", 'type':'S', 'access':'RW'}
+        self._attributes['Output']       = {'value':"", 'type':'S', 'access':'RW'}
+        self._attributes['Error']        = {'value':"", 'type':'S', 'access':'RW'}
+        self._attributes['Queue']        = {'value':"", 'type':'S', 'access':'RW'}
 
-        def fget(self):
-            return self.executable
 
-        def fset(self, executable):
-            self.executable = executable
 
-    @property
-    def arguments(self):
-        '''The job's executable arguments.'''
 
-        def fget(self):
-            return self.arguments
-
-        def fset(self, arguments):
-            self.arguments = arguments 
-
-    @property
-    def environment(self):
-        '''Environment variables to be set in the job's execution context.'''
-
-        def fget(self):
-            return self.environment
-
-        def fset(self, environment):
-            self.environment = environment 
 
 

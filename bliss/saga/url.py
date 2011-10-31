@@ -19,25 +19,28 @@ class Url(SAGAObject):
 
     def __init__(self, urlstring=''):
         '''Construct a new Url from a string'''
+
         SAGAObject.__init__(self, SAGAObject.Url)
 
-        self._urlobj = urlparse.urlparse(urlstring)
-
+        self._urlobj  = urlparse.urlparse(urlstring)
         self.scheme   = self._urlobj.scheme
         self.host     = self._urlobj.netloc
         self.path     = self._urlobj.path
         self.params   = self._urlobj.params
         self.quey     = self._urlobj.query
         self.fragment = self._urlobj.fragment
-
         self.url = self._urlobj.geturl()
+
+
+
+
 
     def __del__(self):
         '''Destructor (tear-down the Url object).'''
 
     def __str__(self):
         '''String representation'''
-        return self._urlobj.geturl()
+        return self.url
 
     @property
     def scheme(self):

@@ -11,7 +11,7 @@ import logging
 import bliss.saga
 import bliss.runtime
 
-class Object :
+class Object() :
     '''Loosely resembles a SAGA object as defined in GFD.90'''
 
     Url            = "saga.Url"
@@ -32,7 +32,7 @@ class Object :
 
     def __init__(self, objtype, session=None):
         '''Construct a new object'''
-        #self.__dict__ = self.__shared_state
+ 
         if not self.__shared_state["runtime_initialized"]:
             # initialize runtime
             self._init_runtime()
@@ -47,7 +47,6 @@ class Object :
             self._session = session
         else:
             self._session = self.__shared_state["default_session"]
-
 
     def _init_runtime(self):
         '''Registers available plugins and so on'''

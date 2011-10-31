@@ -12,10 +12,12 @@ def main():
         js.get_session().add_context(c1)
 
         jd = saga.job.Description()
-        jd.executable  = "/bin/sleep"
-        jd.arguments   = ["10"]
-
-
+        jd.set_attribute('Executable', '/bin/sleep')
+        jd.set_vector_attribute('Arguments', ["10"])
+        
+        for att in jd.list_attributes():
+            print "%s %s %s %s" % (att, jd.attribute_is_vector(att), jd.attribute_is_readonly(att), jd.attribute_is_writeable(att))
+            
         for job in range(10): 
             job = js.create_job(jd)
             job.run()
@@ -48,3 +50,10 @@ def main():
 if __name__ == "__main__":
     main()
 
+
+
+#env, exec, arg, env, stderr, stout, queue, project (allocation), WorkingDirectory, WallTimeLimit
+
+#TotalCPUCount
+#ProcessesPerHost
+#NumberOfProcesses
