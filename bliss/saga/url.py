@@ -7,18 +7,12 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-from urlparse import urlparse
+import urlparse 
 
 from bliss.saga.object import Object as SAGAObject
 
-def register_scheme(scheme):
-    for method in filter(lambda s: s.startswith('uses_'), dir(urlparse)):
-        getattr(urlparse, method).append(scheme)
-
-# urlparse provides only a fixed set of schemes
-# all other schemes must be registered explicitly
-register_scheme('fork')
-register_scheme('pbs+ssh')
+urlparse.uses_netloc.append("fork")
+urlparse.uses_fragment.append("fork")
 
 class Url(SAGAObject):
     '''Looesely defines a SAGA Url class as defined in GFD.90.'''
@@ -27,7 +21,8 @@ class Url(SAGAObject):
         '''Construct a new Url from a string'''
         SAGAObject.__init__(self, SAGAObject.Url)
 
-        self._urlobj  = urlparse(urlstring)
+        self._urlobj = urlparse.urlparse(urlstring)
+
         self.scheme   = self._urlobj.scheme
         self.host     = self._urlobj.netloc
         self.path     = self._urlobj.path
@@ -35,8 +30,7 @@ class Url(SAGAObject):
         self.quey     = self._urlobj.query
         self.fragment = self._urlobj.fragment
 
-        # legacy support
-        self.url      = self._urlobj.geturl()
+        self.url = self._urlobj.geturl()
 
     def __del__(self):
         '''Destructor (tear-down the Url object).'''
