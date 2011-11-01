@@ -14,6 +14,10 @@ from bliss.saga.object import Object as SAGAObject
 urlparse.uses_netloc.append("fork")
 urlparse.uses_fragment.append("fork")
 
+urlparse.uses_netloc.append("gram")
+urlparse.uses_fragment.append("gram")
+
+
 class Url(SAGAObject):
     '''Looesely defines a SAGA Url class as defined in GFD.90.'''
 
@@ -103,3 +107,7 @@ class Url(SAGAObject):
     def set_query(self, query):
         '''Legacy method: set the 'query' property.'''
         self.query = val
+
+    def get_url(self):
+        '''(Ugly) legacy method: return the 'query' property.'''
+        return self.url

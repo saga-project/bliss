@@ -30,10 +30,12 @@ class Object(object) :
     __shared_state = {}
     __shared_state["runtime_initialized"] = False
 
-    __slots__ = ("_plugin", "type", "_logger", "session")
+    __slots__ = ("_plugin", "_type", "_logger", "_session")
 
+    ######################################################################
+    ## 
     def __init__(self, objtype, session=None):
-        '''Construct a new object'''
+        '''Constructor.'''
  
         if not self.__shared_state["runtime_initialized"]:
             # initialize runtime
@@ -42,19 +44,29 @@ class Object(object) :
             self.__shared_state["runtime_initialized"] = True
 
         self._plugin = None
-        self.type = objtype
+        self._type = objtype
         self._logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')')
  
         if session is not None:
-            self.session = session
+            self._session = session
         else:
-            self.session = self.__shared_state["default_session"]
+            self._session = self.__shared_state["default_session"]
 
+    ######################################################################
+    ## 
+    def __del__(self):
+        '''Destructor.'''
+        pass
+
+    ######################################################################
+    ## PRIVATE 
     def _init_runtime(self):
         '''Registers available plugins and so on'''
         if not self.__shared_state["runtime_initialized"]: 
             self.__shared_state["runtime_instance"] = bliss.runtime.Runtime()
 
+    ######################################################################
+    ## PRIVATE
     def _get_plugin(self):
         '''Bind an object to the runtime'''
         try:
@@ -63,21 +75,66 @@ class Object(object) :
             error = ("%s" % (str(ex)))
             raise SException(SError.NoSuccess, error)
 
+    ######################################################################
+    ## PRIVATE 
     def _get_runtime_info(self):
         return self.plugin.get_runtime_info()
 
+    ######################################################################
+    ## Property: session
+    def session():
+        doc = "The object's session which contains the list of security context objects."
+        def fget(self):
+            return self._session
+        return locals()
+    session = property(**session())
+
+    ######################################################################
+    ## Property: type
+    def type():
+        doc = "The object's type identifier."
+        def fget(self):
+            return self._type
+        return locals()
+    type = property(**type())
+
+
+    ######################################################################
+    ## Property: id
+    def id():
+        doc = "The object's unique identifier."
+        def fget(self):
+            return repr(self)
+        return locals()
+    id = property(**id())
+
+    ######################################################################
+    ##
     def get_session(self):
-        '''Legacy method: return the object's session.'''
+        '''Legacy GFD.90 method: return the object's session.
+ 
+           It is encouraged to use the L{session} property instead.
+        '''
         if self.session is None:
             pass # return default session
         else:
            return self.session
 
+    ######################################################################
+    ##
     def get_type(self):
-        '''Legacy method: return the object type.'''
+        '''Legacy GFD.90 method: return the object type.
+
+           It is encouraged to use the L{type} property instead.
+        '''
         return self.type
 
+    ######################################################################
+    ##
     def get_id(self):
-        '''Legacy method: Return the object identifier.'''
+        '''Legacy GFD.90 method: return the object identifier.
+
+           It is encouraged to use the L{id} property instead.
+        '''
         return repr(self) 
 

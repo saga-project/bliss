@@ -8,62 +8,82 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 
-class Context():
-    '''Looesely defines a SAGA Context object as defined in GFD.90.'''
+class Context(object):
+    '''Looesely defines a SAGA Context object as defined in GFD.90.
+    '''
 
-    Default = "Default"
-    '''The default (None) security context.'''
-    SSH     = "SSH"
-    '''A security context based on public/private keys.''' 
-    X509    = "X509"
-    '''A security context based on X.509 certificates.'''
+    Default  = "Default"
+    '''The default (None) security context type.'''
+    SSH      = "SSH"
+    '''A security context type based on public/private keys.''' 
+    X509     = "X509"
+    '''A security context type based on X.509 certificates.'''
+    X509_SSH = "X509+SSH"
+    '''A security context type for X.509 over SSH.'''
 
+    __slots__ = {'_type', '_userkey', '_usercert', '_userproxy'}
+  
     def __init__(self):
-        '''Construct a new Context.'''
-        self.type      = self.Default
-        self.usercert  = ""
-        self.userkey   = ""
-        self.userproxy = ""
+        '''Constructor'''
+        self._type      = self.Default
+        self._usercert  = ""
+        self._userkey   = ""
+        self._userproxy = ""
 
+    ######################################################################
+    ##
     def __del__(self):
-        '''Destructor (tear-down the Context object).'''
+        '''Destructor.'''
+        pass
 
-    @property
-    def type(self):
-        '''Context type.'''
+    ######################################################################
+    ##
+    def __str__(self):
+        '''String represenation.
+        '''
+        return "%s" % (str(self.contexts))
 
+    ######################################################################
+    ## Property: type
+    def type():
+        doc = "Context type."
         def fget(self):
-            return self.type
+            return self._type
+        def fset(self, val):
+            self._type = val
+        return locals()
+    type = property(**type())
 
-        def fset(self, t):
-            self.type = t
-
-    @property
-    def userkey(self):
-        '''Location of a user key.'''
-
+    ######################################################################
+    ## Property: usercert
+    def usercert():
+        doc = "Location of a user certificate."
         def fget(self):
-            return self.userkey
+            return self._usercert
+        def fset(self, val):
+            self._usercert = val
+        return locals()
+    usercert = property(**usercert())
 
-        def fset(self, userkey):
-            self.userkey = userkey
-
-    @property
-    def usercert(self):
-        '''Location of a user certificate.'''
-
+    ######################################################################
+    ## Property: userkey
+    def userkey():
+        doc = "Location of a user key."
         def fget(self):
-            return self.usercert
+            return self._userkey
+        def fset(self, val):
+            self._userkey = val
+        return locals()
+    userkey = property(**userkey())
 
-        def fset(self, usercert):
-            self.usercert = usercert 
-
-    @property
-    def userproxy(self):
-        '''Location of an existing certificate proxy.'''
-
+    ######################################################################
+    ## Property: userproxy
+    def userproxy():
+        doc = "Location of a user proxy."
         def fget(self):
-            return self.userproxy
+            return self._userproxy
+        def fset(self, val):
+            self._userproxy = val
+        return locals()
+    userproxy = property(**userproxy())
 
-        def fset(self, userproxy):
-            self.userproxy = userproxy 

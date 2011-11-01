@@ -9,27 +9,70 @@ __license__   = "MIT"
 
 from bliss.saga.context import Context
 
-class Session():
+class Session(object):
     '''Looesely defines a SAGA Session object as defined in GFD.90.'''
 
+    __slots__ = {'_contexts'}
+
+    ######################################################################
+    ## 
     def __init__(self):
-        '''Construct a new Session.'''
+        '''Constructor.
+        '''
         self._contexts = []
+        '''Authentication / security contexts registered with the Session.'''
 
+    ######################################################################
+    ## 
     def __del__(self):
-        '''Destructor (tear-down the Session object).'''
+        '''Destructor.
+        '''
+        pass
 
-    def get_session():
-        '''Overloaded from saga.Object: just returns itself.'''
+    ######################################################################
+    ## 
+    def __str__(self):
+        '''String represenation.
+        '''
+        return "Registered contexts: % s" % (str(self.contexts))
 
+    ######################################################################
+    ## Property: type
+    def contexts():
+        doc = "Authentication contexts registered with the Session."
+        def fget(self):
+            return self._contexts
+        def fset(self, val):
+            self._contexts = val
+        #def fdel(self, val):
+        #    self._contexts.remove(val)
+        return locals()
+    contexts = property(**contexts())
+
+    ######################################################################
+    ## 
     def add_context(self, context):
-        '''Add an (authentication) L{Context} to the session.'''
+        '''Legacy GFD.90 method: add a security L{Context} to the session.
+
+           It is encouraged to use the L{contexts} property instead. 
+        '''
         self._contexts.append(context)
 
+    ######################################################################
+    ## 
     def remove_context(self, context):
-        '''Remove an (authentication) L{Context} to the session.'''
+        '''Legacy GFD.90 method: remove a security L{Context} from the session.
+
+           It is encouraged to use the L{contexts} property instead.
+        '''
         self._contexts.remove(context)
 
+    ######################################################################
+    ## 
     def list_contexts(self):
-        '''Retrieve all Contexts attached to the session.'''
+        '''Legacy GFD.90 method: retrieve all L{Context} objects attached to the session.
+
+
+           It is encouraged to use the L{contexts} property instead.
+        '''
         return self._contexts

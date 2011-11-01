@@ -9,14 +9,16 @@ def main():
         c1.userkey="/Users/s1063117/id_rsa"
 
         js = saga.job.Service("fork://localhost")
-        js.get_session().add_context(c1)
+        js.get_session().add_context(c1)      
+        js.get_session().contexts.append(c1)
+
 
         jd = saga.job.Description()
         jd.set_attribute('Executable', '/bin/sleep')
         jd.set_vector_attribute('Arguments', ["10"])
 
         xx = saga.Url("fork://localhost:8080")
-        jd.arguments = ['100'] 
+        jd.arguments = ['4'] 
         for att in jd.list_attributes():
             print "%s %s %s %s" % (att, jd.attribute_is_vector(att), jd.attribute_is_readonly(att), jd.attribute_is_writeable(att))
             
