@@ -39,9 +39,7 @@ class GRAMJobPlugin(_JobPluginBase):
             job_id = hex(id(job_obj))
             try:
                 self.objects[service_id]['jobs'].append(job_obj)
-                self.processes[job_id] = GRAMCmdLineWrapper(executable=job_obj.get_description().get_attribute("Executable"),
-                                                            arguments=job_obj.get_description().get_vector_attribute("Arguments"),
-                                                            environment=job_obj.get_description().get_vector_attribute("Environment"))
+                self.processes[job_id] = GRAMCmdLineWrapper(jobdescription=job_obj.get_description())
             except Exception, ex:
                 self.parent.log_error_and_raise(exception.Error.NoSuccess, 
                   "Can't register job: %s %s" % (ex, utils.get_traceback()))   
@@ -193,12 +191,12 @@ class GRAMJobPlugin(_JobPluginBase):
     ##
     def job_run(self, job):
         '''Implements interface from _JobPluginBase'''
-        if not job.get_description().attribute_exists('Executable'):   
+        if job.get_description().executable is None:   
             self.log_error_and_raise(exception.Error.BadParameter, "No executable defined in job description")
         try:
             service = self.bookkeeper.get_service_for_job(job)
             self.bookkeeper.get_process_for_job(job).run()  
-            self.log_info("Started local process: %s %s" % (job.get_description().get_attribute('Executable'), job.get_description().get_vector_attribute("Arguments")))
+            self.log_info("Started local process: %s %s" % (job.get_description().executable, job.get_description().arguments))
         except Exception, ex:
             self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't run job because: %s " % (str(ex)))
 
@@ -210,7 +208,7 @@ class GRAMJobPlugin(_JobPluginBase):
         ## Step X: implement job.cancel()
         try:
             self.bookkeeper.get_process_for_job(job).terminate()  
-            self.log_info("Terminated local process: %s %s" % (job.get_description().get_attribute('Executable'), job.get_description().get_vector_attribute('Arguments'))) 
+            self.log_info("Terminated local process: %s %s" % (job.get_description().executable, job.get_description().arguments)) 
         except Exception, ex:
             self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't cancel job because: %s (already finished?)" % (str(ex)))
 

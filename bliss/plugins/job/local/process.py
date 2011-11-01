@@ -20,10 +20,10 @@ class LocalJobProcess(object):
                  'environment', 'returncode', 'pid', 'state',
                  't_created', 't_started', 't_finished'}
 
-    def __init__(self, executable, arguments, environment):
-        self.executable = executable
-        self.arguments = arguments
-        self.environment = environment
+    def __init__(self, jobdescription):
+        self.executable  = jobdescription.executable
+        self.arguments   = jobdescription.arguments
+        self.environment = jobdescription.environment
         
         self.prochandle = None
         self.pid = None
