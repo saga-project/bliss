@@ -32,7 +32,11 @@ class LocalJobProcess(object):
         
 
     def run(self):
-        cmdline = copy.deepcopy(self.arguments)
+        if self.arguments is not None:
+             cmdline = copy.deepcopy(self.arguments)
+        else:
+             cmdline = []
+
         cmdline.insert(0, self.executable)
         self.prochandle = subprocess.Popen(cmdline, 
                                            executable=self.executable,
