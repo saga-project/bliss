@@ -64,7 +64,7 @@ class AttributeInterface(object):
                   "Attribute %s doesn't exist." % (key))
         if not self.attribute_is_vector(key):
             raise SAGAException(SAGAError.IncorrectState, 
-                  "Attribute %s is a vector attribute." % (key))
+                  "Attribute %s is a scalar attribute." % (key))
         return self._attributes[key]['value']
  
     ######################################################################

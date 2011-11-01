@@ -2,8 +2,8 @@
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-'''This examples shows how to submit a simple job to the 
-   local machine.
+'''This examples shows how to submit a single job to the 
+   local machine using the 'pythonic' version of the API. 
 '''
 
 __author__    = "Ole Christian Weidner"
@@ -27,56 +27,21 @@ def main():
         # create & run the job
         myjob = js.create_job(jd)
 
-        print "Job State : %s".format(myjob.get_state())
+        print "Job State : %s" % (myjob.get_state())
 
         myjob.run()
 
-        print "Job ID    : %s".format(myjob.get_job_id())
-        print "Job State : %s".format(myjob.get_state())
-        print "waiting for job ..."
-
+        print "Job ID    : %s" % (myjob.jobid)
+        print "Job State : %s" % (myjob.get_state())
+        
+        print "...waiting for job..."
         myjob.wait()
 
-        print "Job State : %s".format(myjob.get_state())
+        print "Job State : %s" % (myjob.get_state())
+        print "Exitcode  : %s" % (myjob.exitcode)
 
     except saga.Exception, ex:
-        print "Oh, snap! An error occured: %s".format(str(ex))
-
-    ## do it the old-school way 
-    ## (compatible with CCT's SAGA Python bindings
-    
-    try: 
-        # define lower-case aliases 
-        saga.exception = saga.exception.Exception
-        saga.job.service = saga.job.service.Service
-        saga.job.description = saga.job.description.Description
-
-        # start a local job service
-        js = saga.job.service("fork://localhost")
-
-        # describe our job
-        jd = saga.job.description()
-        jd.executable  = '/bin/sleep'
-        jd.arguments   = ['10']
-
-        # create & run the job
-        myjob = js.create_job(jd)
-
-        print "Job State : %s".format(myjob.get_state())
-
-        myjob.run()
-
-        print "Job ID    : %s".format(myjob.get_job_id())
-        print "Job State : %s".format(myjob.get_state())
-        print "waiting for job ..."
-
-        myjob.wait()
-
-        print "Job State : %s".format(myjob.get_state())
-
-    except saga.exception, ex:
-        print "Oh, snap! An error occured: %s".format(str(ex))
-
+        print "Oh, snap! An error occured: %s" % (str(ex))
 
 if __name__ == "__main__":
     main()

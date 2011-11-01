@@ -11,6 +11,9 @@ import logging
 import bliss.saga
 import bliss.runtime
 
+from bliss.plugins import utils
+
+
 class Object(object) :
     '''Loosely resembles a SAGA object as defined in GFD.90'''
 
@@ -70,10 +73,10 @@ class Object(object) :
     def _get_plugin(self):
         '''Bind an object to the runtime'''
         try:
-            return self.__shared_state["runtime_instance"].get_plugin_for_url(self.url) 
+            return self.__shared_state["runtime_instance"].get_plugin_for_url(self._url) 
         except Exception, ex:
-            error = ("%s" % (str(ex)))
-            raise SException(SError.NoSuccess, error)
+            error = ("%s %s" % (str(ex), utils.get_traceback()))
+            raise bliss.saga.exception.Exception(bliss.saga.exception.Error.NoSuccess, error)
 
     ######################################################################
     ## PRIVATE 

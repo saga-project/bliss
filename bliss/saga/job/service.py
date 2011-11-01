@@ -20,10 +20,10 @@ class Service(SAGAObject):
            @type  url: L{Url} 
         '''
         if(type(url) == str):
-            self.url = Url(str(url))
+            self._url = Url(str(url))
         else:
             # assume it's a URL object
-            self.url = url
+            self._url = url
 
         SAGAObject.__init__(self, SAGAObject.JobService, session=session)
         self._plugin = SAGAObject._get_plugin(self) # throws 'NoSuccess' on error

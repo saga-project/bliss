@@ -27,18 +27,20 @@ class Job(Object):
     Unknown  = "Unknown"
     '''Indicates that the job is in an unexpected state'''
 
+    __slots__ = {'_service', '_url', '_job_description', 'serviceurl'}
+
     def __init__(self):
         '''Constructor - not to be called directly'''
         Object.__init__(self, Object.Job)
 
     def __init_from_service(self, service_obj, job_desc):
         '''Constructor'''
-        self.service = service_obj
-        self.url = service_obj.url
+        self._service = service_obj
+        self._url = service_obj._url
         self._job_description = job_desc
 
         self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
-        self._plugin.register_job_object(job_obj=self, service_obj=self.service)
+        self._plugin.register_job_object(job_obj=self, service_obj=self._service)
         self._logger.info("Object bound to plugin %s" % (repr(self._plugin)))
 
     def __del__(self):
@@ -47,6 +49,8 @@ class Job(Object):
             self._plugin.unregister_job_object(self)
         else:
             pass # can't throw here
+
+
 
     def get_stderr(self):
         '''B{Not Implemented:} Bliss finds this method unnecessary and generally poorly \
@@ -118,3 +122,32 @@ class Job(Object):
         else:
             raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
 
+    ######################################################################
+    ## Property: exitcode
+    def exitcode():
+        doc = "The job's exitcode."
+        def fget(self):
+            if self._plugin is not None:
+                return self._plugin.job_get_exitcode(self)
+        return locals()
+    exitcode = property(**exitcode())
+
+    ######################################################################
+    ## Property: jobid
+    def jobid():
+        doc = "The job's identifier."
+        def fget(self):
+            if self._plugin is not None:
+                return self._plugin.job_get_job_id(self)
+        return locals()
+    jobid = property(**jobid())
+
+    ######################################################################
+    ## Property: jobid
+    def serviceurl():
+        doc = "The URL of the L{Service} instance managing this job."
+        def fget(self):
+            if self._plugin is not None:
+                return str(self._url)
+        return locals()
+    serviceurl = property(**serviceurl())

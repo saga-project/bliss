@@ -64,7 +64,7 @@ class _JobPluginBase(_PluginBase):
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
 
 
-    ######## Implementation for saga.job.Service functionality 
+    ######## Method templates for saga.Job functionality 
     ##
     def job_get_state(self, job_obj):
         errormsg = "Not implemented plugin method called: job.get_state()"
@@ -84,4 +84,11 @@ class _JobPluginBase(_PluginBase):
 
     def job_cancel(self, job_obj, timeout):
         errormsg = "Not implemented plugin method called: job.cancel()"
-        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)  
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
+
+    ######## Method templates for saga.Job attributes
+    ##
+    def job_get_exitcode(self, job_obj):
+        errormsg = "Not implemented plugin attribute accessed: job.exitcode"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)   

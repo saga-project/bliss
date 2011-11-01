@@ -13,8 +13,8 @@ import subprocess
 import bliss.saga
 
 
-class LocalJobProcess(object):
-    '''A wrapper around a subprocess'''
+class GRAMCmdLineWrapper():
+    '''A wrapper around the globus tools'''
 
     __slots__ = {'prochandle', 'executable', 'arguments', 
                  'environment', 'returncode', 'pid', 'state',
@@ -29,13 +29,29 @@ class LocalJobProcess(object):
         self.pid = None
         self.returncode = None
         self.state = bliss.saga.job.Job.New
+
+    def _execute_globusrun(self):
+        cmdline = "/opt/globus-5.0.4//bin/globusrun"
+        try:
+            (out, err) = subprocess.Popen(cmdline, 
+                                          stderr=subprocess.PIPE, 
+                                          stdout=subprocess.PIPE).communicate()
+            print "out %s" % out
+            print "err %s" % err
+        except Exception, ex:
+            print "SNAP"
+        
         
 
     def run(self):
         cmdline = copy.deepcopy(self.arguments)
         cmdline.insert(0, self.executable)
+
+
+        self._execute_globusrun()
+
         self.prochandle = subprocess.Popen(cmdline, 
-                                           executable=self.executable,
+                                           #executable=self.executable,
                                            stderr=subprocess.STDOUT, 
                                            stdout=subprocess.PIPE, 
                                            env=self.environment)
@@ -79,5 +95,4 @@ class LocalJobProcess(object):
 
     def get_exitcode(self):
         return self.returncode
-
     

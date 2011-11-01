@@ -38,7 +38,7 @@ class Description(Object, AttributeInterface):
         return self.get_attribute('Executable')
     @executable.setter
     def executable(self, val):
-        self.set_vector_attribute('Executable', val)
+        self.set_attribute('Executable', val)
 
     @property
     def arguments(self):

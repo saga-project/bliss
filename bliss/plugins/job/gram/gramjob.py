@@ -8,14 +8,13 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.plugins.job.jobinterface  import _JobPluginBase
-from bliss.plugins.job.local.process import LocalJobProcess
+from bliss.plugins.job.gram.cmdlinewrapper import GRAMCmdLineWrapper
 from bliss.plugins import utils
 
 from bliss.saga import exception
-#import bliss.saga.job
 
-class LocalJobPlugin(_JobPluginBase):
-    '''Implements a job plugin that can submit jobs to the local machine'''
+class GRAMJobPlugin(_JobPluginBase):
+    '''Implements a job plugin that can submit jobs to a Globus GRAM endpoint'''
 
     ########################################
     ##
@@ -40,9 +39,9 @@ class LocalJobPlugin(_JobPluginBase):
             job_id = hex(id(job_obj))
             try:
                 self.objects[service_id]['jobs'].append(job_obj)
-                self.processes[job_id] = LocalJobProcess(executable=job_obj.get_description().get_attribute("Executable"),
-                                                         arguments=job_obj.get_description().get_vector_attribute("Arguments"),
-                                                         environment=job_obj.get_description().get_vector_attribute("Environment"))
+                self.processes[job_id] = GRAMCmdLineWrapper(executable=job_obj.get_description().get_attribute("Executable"),
+                                                            arguments=job_obj.get_description().get_vector_attribute("Arguments"),
+                                                            environment=job_obj.get_description().get_vector_attribute("Environment"))
             except Exception, ex:
                 self.parent.log_error_and_raise(exception.Error.NoSuccess, 
                   "Can't register job: %s %s" % (ex, utils.get_traceback()))   
@@ -86,84 +85,78 @@ class LocalJobPlugin(_JobPluginBase):
 
     ## Step 1: Define adaptor name. Convention is:
     ##         saga.plugin.<package>.<name>
-    _name = 'saga.plugin.job.local'
+    _name = 'saga.plugin.job.gram'
 
     ## Step 2: Define supported url schemas
     ## 
-    _schemas = ['fork']
+    _schemas = ['gram']
 
     def __init__(self, url):
         '''Class constructor'''
         _JobPluginBase.__init__(self, name=self._name, schemas=self._schemas)
         self.bookkeeper = self.BookKeeper(self)
 
+    ######################################################################
+    ##
     @classmethod
     def sanity_check(self):
         '''Implements interface from _PluginBase'''
-        ## Step 3: Implement sanity_check. This method is called *once* on
-        ##         Bliss startup. Here you should check if everything this 
-        ##         adaptor needs is available, e.g., certain command line tools,
-        ##         python modules and so on.
-        ##         
         try: 
-            import subprocess
+            #todo: check for command line tools
+            pass 
         except Exception, ex:
             print "module missing -- plugin disabled. (NEEDS LOGGING SUPPORT)"
             return False 
         return True
 
-    def get_runtime_info(self): 
-        '''Implements interface from _PluginBase'''
-        #str = "Plugin: %s. Registered job.service objects: %s.\n%s".format(
-        #       self.name, len(self.objects), repr(self.objects))
-        #return str
-       
 
+    ######################################################################
+    ##
     def register_service_object(self, service_obj):
         '''Implements interface from _JobPluginBase'''
-        ## Step 4: Implement register_service_object. This method is called if 
-        ##         a service object is instantiated with a url schema that matches 
-        ##         this adaptor. You can still reject it by throwing an exception.
-        if service_obj._url.host != "localhost":
-            self.log_error_and_raise(exception.Error.BadParameter, "Only 'localhost' can be used as hostname")        
+        #if service_obj._url.host != "localhost":
+        #    self.log_error_and_raise(exception.Error.BadParameter, "Only 'localhost' can be used as hostname")        
       
         self.bookkeeper.add_service_object(service_obj)
         self.log_info("Registered new service object %s" % (repr(service_obj))) 
    
 
+    ######################################################################
+    ##
     def unregister_service_object(self, service_obj):
         '''Implements interface from _JobPluginBase'''
-        ## Step 5: Implement unregister_service_object. This method is called if
-        ##         a service object associated with this plugin is deleted. You
-        ##         shouldn't throw an exception here, since this method is called
-        ##         by the destructor!
         self.bookkeeper.del_service_object(service_obj)
         self.log_info("Unegistered new service object %s" % (repr(service_obj))) 
 
- 
+
+    ######################################################################
+    ## 
     def register_job_object(self, job_obj, service_obj):
         '''Implements interface from _JobPluginBase'''
-        ## Step 6: Implement register_job_object. This method is called if 
-        ##         a job object is instantiated via the service.create_job() call.
-        ##         You can still reject it by throwing an exception.
         self.bookkeeper.add_job_object(job_obj, service_obj)   
         self.log_info("Registered new job object %s" % (repr(job_obj))) 
 
+
+    ######################################################################
+    ##
     def unregister_job_object(self, job_obj):
         '''Implements interface from _JobPluginBase'''
         self.bookkeeper.del_job_object(job_obj)
         self.log_info("Unegisteredjob object %s" % (repr(job_obj))) 
 
 
+    ######################################################################
+    ##  
     def service_list(self, service_obj):
         '''Implements interface from _JobPluginBase'''
-        ## Step 76: Implement service_list_jobs() 
         try:
             return self.bookkeeper.list_jobs_for_service(service_obj)   
         except Exception, ex:
             self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't retreive job list because: %s " % (str(ex)))
 
 
+    ######################################################################
+    ##
     def service_get_job(self, service_obj, job_id):
         '''Implements interface from _JobPluginBase'''
         ## Step 76: Implement service_get_job() 
@@ -173,6 +166,8 @@ class LocalJobPlugin(_JobPluginBase):
             self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't get job list because: %s " % (str(ex)))
 
 
+    ######################################################################
+    ##
     def job_get_state(self, job):
         '''Implements interface from _JobPluginBase'''
         try:
@@ -182,6 +177,8 @@ class LocalJobPlugin(_JobPluginBase):
             self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't get job state because: %s " % (str(ex)))
 
 
+    ######################################################################
+    ##
     def job_get_job_id(self, job):
         '''Implements interface from _JobPluginBase'''
         try:
@@ -192,9 +189,10 @@ class LocalJobPlugin(_JobPluginBase):
             self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't get job id because: %s " % (str(ex)))
 
 
+    ######################################################################
+    ##
     def job_run(self, job):
         '''Implements interface from _JobPluginBase'''
-        ## Step X: implement job.run()
         if not job.get_description().attribute_exists('Executable'):   
             self.log_error_and_raise(exception.Error.BadParameter, "No executable defined in job description")
         try:
@@ -205,6 +203,8 @@ class LocalJobPlugin(_JobPluginBase):
             self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't run job because: %s " % (str(ex)))
 
 
+    ######################################################################
+    ##
     def job_cancel(self, job, timeout):
         '''Implements interface from _JobPluginBase'''
         ## Step X: implement job.cancel()
@@ -214,10 +214,11 @@ class LocalJobPlugin(_JobPluginBase):
         except Exception, ex:
             self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't cancel job because: %s (already finished?)" % (str(ex)))
 
- 
+
+    ######################################################################
+    ## 
     def job_wait(self, job, timeout):
         '''Implements interface from _JobPluginBase'''
-        ## Step X: implement job.wait()
         try:
             service = self.bookkeeper.get_service_for_job(job)
             self.bookkeeper.get_process_for_job(job).wait(timeout)   
@@ -237,4 +238,3 @@ class LocalJobPlugin(_JobPluginBase):
             return self.bookkeeper.get_process_for_job(job_obj).get_exitcode()   
         except Exception, ex:
             self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't get exitcode for job because: %s " % (str(ex)))
-
