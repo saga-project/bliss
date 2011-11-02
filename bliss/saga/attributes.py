@@ -14,24 +14,32 @@ from bliss.saga.exception import Error as SAGAError
 class AttributeInterface(object):
     '''Loosely defines the SAGA attribute interface as defined in GFD.90.'''
    
-    __slots__ = {'_axxttributes'} 
-
+    ######################################################################
+    # 
     def __init__(self, pclass):
         '''Constructor'''
         self._attributes = dict()
 
+    ######################################################################
+    # PROTECTED
     def _register_ro_attribute(self, name, accessor): 
         '''Register a read only attribute'''
         self._attributes[name] = {'type':'S', 'access':'RO', 'accessor':accessor}
 
+    ######################################################################
+    # PROTECTED
     def _register_ro_vec_attribute(self, name, accessor):
         '''Register a read only vector attribute'''
         self._attributes[name] = {'type':'V', 'access':'RO', 'accessor':accessor}
 
+    ######################################################################
+    # PROTECTED
     def _register_rw_attribute(self, name, accessor):
         '''Register a read/write attribute'''
         self._attributes[name] = {'type':'S', 'access':'RW', 'accessor':accessor}
 
+    ######################################################################
+    # PROTECTED
     def _register_rw_vec_attribute(self, name, accessor):
         '''Register a read/write vector attribute'''
         self._attributes[name] = {'type':'V', 'access':'RW', 'accessor':accessor}

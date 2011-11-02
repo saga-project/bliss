@@ -11,7 +11,7 @@ from bliss.saga.object import Object
 from bliss.saga.attributes import AttributeInterface
 from bliss.saga.url import Url
 
-class Description(AttributeInterface, Object):
+class Description(Object, AttributeInterface):
     '''Loosely represents a SAGA job description as defined in GFD.90'''
 
     __slots__ = {'_executable', '_arguments', '_environment', '_project',
