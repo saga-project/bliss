@@ -10,24 +10,19 @@ __license__   = "MIT"
 from bliss.saga.exception import Exception as SAGAException
 from bliss.saga.exception import Error as SAGAError
 
-#from itertools import chain
 
 class AttributeInterface(object):
     '''Loosely defines the SAGA attribute interface as defined in GFD.90.'''
    
-    #__slots__ = {'_attributes'} 
+    __slots__ = {'_axxttributes'} 
 
     def __init__(self, pclass):
         '''Constructor'''
         self._attributes = dict()
 
-        #slots = chain.from_iterable(getattr(cls, '__slots__', []) for cls in pclass.__mro__)
-        #for attr in slots:
-        #    print "SLOTS: " + repr(attr)
-
     def _register_ro_attribute(self, name, accessor): 
         '''Register a read only attribute'''
-        self._attributes[name] = {'type':'S', 'access':'RO', 'accessor':_accessor}
+        self._attributes[name] = {'type':'S', 'access':'RO', 'accessor':accessor}
 
     def _register_ro_vec_attribute(self, name, accessor):
         '''Register a read only vector attribute'''
