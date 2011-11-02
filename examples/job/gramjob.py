@@ -42,7 +42,7 @@ def main():
         myjob.wait()
 
         print "Job State : %s" % (myjob.get_state())
-        print "Exitcode  : %s" % (myjob.exitcode)
+        print "Exitcode  : %s" % (myjob.get_attribute("Exitcode"))
 
     except saga.Exception, ex:
         print "Oh, snap! An error occured: %s" % (str(ex))

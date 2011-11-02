@@ -20,7 +20,7 @@ class Description(Object, AttributeInterface):
     def __init__(self):
         '''Constructor.'''
         Object.__init__(self, Object.JobDescription)
-        AttributeInterface.__init__(self, self.__class__)
+        AttributeInterface.__init__(self)
 
         self._executable  = None
         self._arguments   = None

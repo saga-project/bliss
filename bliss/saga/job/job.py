@@ -9,9 +9,10 @@ __license__   = "MIT"
 
 import copy
 from bliss.saga.object import Object
+from bliss.saga.attributes import AttributeInterface
 from bliss.saga import exception
 
-class Job(Object):
+class Job(Object, AttributeInterface):
     '''Loosely represents a SAGA job as defined in GFD.90'''
     
     Canceled = "Canceled"
@@ -32,6 +33,16 @@ class Job(Object):
     def __init__(self):
         '''Constructor - not to be called directly'''
         Object.__init__(self, Object.Job)
+        AttributeInterface.__init__(self)
+      
+        # register properties with the attribute interface 
+        self._register_ro_attribute     (name="Exitcode", 
+                                         accessor=self.__class__.exitcode) 
+        self._register_ro_attribute     (name="JobID", 
+                                         accessor=self.__class__.jobid)  
+        self._register_ro_attribute     (name="ServiceURL", 
+                                         accessor=self.__class__.serviceurl)  
+
 
     def __init_from_service(self, service_obj, job_desc):
         '''Constructor'''

@@ -16,7 +16,7 @@ class AttributeInterface(object):
    
     ######################################################################
     # 
-    def __init__(self, pclass):
+    def __init__(self):
         '''Constructor'''
         self._attributes = dict()
 
@@ -75,7 +75,6 @@ class AttributeInterface(object):
         if self.attribute_is_vector(key):
             raise SAGAException(SAGAError.IncorrectState, 
                   "Attribute %s is a vector attribute." % (key))
-        return self._attributes[key]['value']
         return self._attributes[key]['accessor'].fget(self) 
 
 
