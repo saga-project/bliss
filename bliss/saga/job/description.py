@@ -11,7 +11,7 @@ from bliss.saga.object import Object
 from bliss.saga.attributes import AttributeInterface
 from bliss.saga.url import Url
 
-class Description(Object, AttributeInterface):
+class Description(AttributeInterface, Object):
     '''Loosely represents a SAGA job description as defined in GFD.90'''
 
     __slots__ = {'_executable', '_arguments', '_environment', '_project',
@@ -20,6 +20,7 @@ class Description(Object, AttributeInterface):
     def __init__(self):
         '''Constructor.'''
         Object.__init__(self, Object.JobDescription)
+        AttributeInterface.__init__(self)
 
         self._executable = None
         self._arguments = None
@@ -27,7 +28,18 @@ class Description(Object, AttributeInterface):
         self._project = None
         self._output = None
         self._error = None
-        self._queue = None 
+        self._queue = None
+
+        # register properties with the attribute interface
+        self._register_rw_attribute(name="Executable", accessor=self) 
+        self._register_rw_attribute(name="Output", accessor=self.output) 
+        self._register_rw_attribute(name="Error", accessor=self.error) 
+        self._register_rw_attribute(name="Queue", accessor=self.queue) 
+
+        self._register_rw_vec_attribute(name="Arguments", accessor=self.arguments) 
+        self._register_rw_vec_attribute(name="Environment", accessor=self.environment) 
+        self._register_rw_vec_attribute(name="Project", accessor=self.project) 
+
 
     def __del__(self):
         '''Destructor'''
@@ -97,4 +109,30 @@ class Description(Object, AttributeInterface):
             self._error = None
         return locals()
     error = property(**error())
+
+    ######################################################################
+    ## Property: project
+    def project():
+        doc = "The project / allocation name the job should be credited to."
+        def fget(self):
+            return self._project
+        def fset(self, val):
+            self._project = val
+        def fdel(self, val):
+            self._project = None
+        return locals()
+    project = property(**project())
+
+    ######################################################################
+    ## Property: queue
+    def queue():
+        doc = "The queue on the backend system to place the job in."
+        def fget(self):
+            return self._queue
+        def fset(self, val):
+            self._queue = val
+        def fdel(self, val):
+            self._queue = None
+        return locals()
+    queue = property(**queue())
 
