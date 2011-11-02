@@ -20,7 +20,7 @@ class Description(AttributeInterface, Object):
     def __init__(self):
         '''Constructor.'''
         Object.__init__(self, Object.JobDescription)
-        AttributeInterface.__init__(self)
+        AttributeInterface.__init__(self, self.__class__)
 
         self._executable = None
         self._arguments = None
@@ -31,15 +31,21 @@ class Description(AttributeInterface, Object):
         self._queue = None
 
         # register properties with the attribute interface
-        self._register_rw_attribute(name="Executable", accessor=self) 
-        self._register_rw_attribute(name="Output", accessor=self.output) 
-        self._register_rw_attribute(name="Error", accessor=self.error) 
-        self._register_rw_attribute(name="Queue", accessor=self.queue) 
+        self._register_rw_attribute(name="Executable", 
+                                    accessor=self.__class__.executable) 
+        self._register_rw_attribute(name="Output", 
+                                    accessor=self.__class__.output) 
+        self._register_rw_attribute(name="Error", 
+                                    accessor=self.__class__.error) 
+        self._register_rw_attribute(name="Queue", 
+                                    accessor=self.__class__.queue) 
 
-        self._register_rw_vec_attribute(name="Arguments", accessor=self.arguments) 
-        self._register_rw_vec_attribute(name="Environment", accessor=self.environment) 
-        self._register_rw_vec_attribute(name="Project", accessor=self.project) 
-
+        self._register_rw_vec_attribute(name="Arguments", 
+                                        accessor=self.__class__.arguments) 
+        self._register_rw_vec_attribute(name="Environment", 
+                                        accessor=self.__class__.environment) 
+        self._register_rw_vec_attribute(name="Project", 
+                                        accessor=self.__class__.project) 
 
     def __del__(self):
         '''Destructor'''

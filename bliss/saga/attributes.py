@@ -10,14 +10,20 @@ __license__   = "MIT"
 from bliss.saga.exception import Exception as SAGAException
 from bliss.saga.exception import Error as SAGAError
 
+#from itertools import chain
+
 class AttributeInterface(object):
     '''Loosely defines the SAGA attribute interface as defined in GFD.90.'''
    
     #__slots__ = {'_attributes'} 
 
-    def __init__(self):
+    def __init__(self, pclass):
         '''Constructor'''
         self._attributes = dict()
+
+        #slots = chain.from_iterable(getattr(cls, '__slots__', []) for cls in pclass.__mro__)
+        #for attr in slots:
+        #    print "SLOTS: " + repr(attr)
 
     def _register_ro_attribute(self, name, accessor): 
         '''Register a read only attribute'''
@@ -60,13 +66,15 @@ class AttributeInterface(object):
     def get_attribute(self, key):
         '''Return the value of a scalar attribute.
         '''
-        if not self.attribute_exists(key):
-            raise SAGAException(SAGAError.DoesNotExists, 
-                  "Attribute %s doesn't exist." % (key))
-        if self.attribute_is_vector(key):
-            raise SAGAException(SAGAError.IncorrectState, 
-                  "Attribute %s is a vector attribute." % (key))
-        return self._attributes[key]['value']
+        #if not self.attribute_exists(key):
+        #    raise SAGAException(SAGAError.DoesNotExists, 
+        #          "Attribute %s doesn't exist." % (key))
+        #if self.attribute_is_vector(key):
+        #    raise SAGAException(SAGAError.IncorrectState, 
+        #          "Attribute %s is a vector attribute." % (key))
+        #return self._attributes[key]['value']
+        return self._attributes[key]['accessor'].fget(self) 
+
 
     ######################################################################
     #    
@@ -83,8 +91,7 @@ class AttributeInterface(object):
        # if self.attribute_is_readonly(key):
        #     raise SAGAException(SAGAError.PermissionDenied, 
        #           "Attribute %s is a read-only attribute." % (key))
-        self._attributes[key]['accessor']  = value
-        print repr(self._attributes)
+        self._attributes[key]['accessor'].fset(self, value) 
 
     ######################################################################
     #

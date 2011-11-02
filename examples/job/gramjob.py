@@ -21,9 +21,12 @@ def main():
 
         # describe our job
         jd = saga.job.Description()
-        jd.executable  = '/bin/date'
+        jd.set_attribute("Executable", '/bin/sleep')
+        jd.arguments = ["10"]
         jd.output = "gramjob.stdout"
         jd.error  = "gramjob.stderr"
+
+        print jd.get_attribute("Arguments")
 
         # create & run the job
         myjob = js.create_job(jd)
