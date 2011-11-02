@@ -26,7 +26,7 @@ def main():
         jd.output = "gramjob.stdout"
         jd.error  = "gramjob.stderr"
 
-        print jd.get_attribute("Arguments")
+        print jd.get_vector_attribute("Arguments")
 
         # create & run the job
         myjob = js.create_job(jd)
@@ -46,6 +46,7 @@ def main():
 
     except saga.Exception, ex:
         print "Oh, snap! An error occured: %s" % (str(ex))
+        print "Traceback: %s" % ex.traceback
 
 if __name__ == "__main__":
     main()

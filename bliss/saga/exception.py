@@ -8,6 +8,18 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 
+import traceback
+import StringIO
+
+def _get_traceback(prefix="\n*** "):
+    '''returns the last traceback as a string with a given prefix'''
+    fp = StringIO.StringIO()
+    traceback.print_exc(file=fp)
+    if fp.getvalue() == "None\n":
+        return "(No Traceback)"
+    else:
+        return prefix+fp.getvalue() 
+
 class Error:
 
     AlreadyExists = 'AlreadyExists'
@@ -24,9 +36,14 @@ class Error:
 
 class Exception(Exception):
        def __init__(self, error, msg):
-           self.error = error
-           self.msg   = msg
+           self.error     = error
+           '''Contains the L{Error} type.'''
+           self.msg       = msg
+           '''Contains the error message.'''
+           self.traceback = _get_traceback()
+           '''Contains the traceback (if existent).'''
  
        def __str__(self):
+           '''String representation.'''
            string = "SAGA Exception (%s): %s" % (str(self.error), str(self.msg))
            return (string)
