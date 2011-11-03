@@ -61,8 +61,23 @@ class AttributeInterface(object):
                 return True
         else:
             raise SAGAException(SAGAError.DoesNotExists, 
-                  "Attribute %s is not defined on this object." % (name))
+                  "Attribute '%s' is not defined for this object." % (name))
         return False
+
+    ######################################################################
+    #
+    def remove_attribute(self, key):
+        '''Remove the attribute.
+        '''
+        if not self.attribute_exists(key):
+            raise SAGAException(SAGAError.DoesNotExists, 
+                  "Attribute '%s' doesn't exist." % (key))
+        if self.attribute_is_readonly(key):
+            raise SAGAException(SAGAError.PermissionDenied, 
+                  "Attribute '%s' is a read-only attribute." % (key))
+        return self._attributes[key]['accessor'].fset(self, None) 
+
+
 
     ######################################################################
     #
@@ -71,10 +86,10 @@ class AttributeInterface(object):
         '''
         if not self.attribute_exists(key):
             raise SAGAException(SAGAError.DoesNotExists, 
-                  "Attribute %s doesn't exist." % (key))
+                  "Attribute '%s' doesn't exist." % (key))
         if self.attribute_is_vector(key):
             raise SAGAException(SAGAError.IncorrectState, 
-                  "Attribute %s is a vector attribute." % (key))
+                  "Attribute '%s' is a vector attribute." % (key))
         return self._attributes[key]['accessor'].fget(self) 
 
 
@@ -85,13 +100,13 @@ class AttributeInterface(object):
         '''
         if not self._valid_attribute_key(key):
             raise SAGAException(SAGAError.DoesNotExist, 
-                  "Attribute %s is not defined for this object." % (key))
+                  "Attribute '%s' is not defined for this object." % (key))
         if self.attribute_is_vector(key):
             raise SAGAException(SAGAError.IncorrectState, 
-                  "Attribute %s is a vector attribute." % (key))
+                  "Attribute '%s' is a vector attribute." % (key))
         if self.attribute_is_readonly(key):
             raise SAGAException(SAGAError.PermissionDenied, 
-                  "Attribute %s is a read-only attribute." % (key))
+                  "Attribute '%s' is a read-only attribute." % (key))
         self._attributes[key]['accessor'].fset(self, value) 
 
     ######################################################################
@@ -101,10 +116,10 @@ class AttributeInterface(object):
         '''
         if not self.attribute_exists(key):
             raise SAGAException(SAGAError.DoesNotExist, 
-                  "Attribute %s doesn't exist." % (key))
+                  "Attribute '%s' doesn't exist." % (key))
         if not self.attribute_is_vector(key):
             raise SAGAException(SAGAError.IncorrectState, 
-                  "Attribute %s is a scalar attribute." % (key))
+                  "Attribute '%s' is a scalar attribute." % (key))
         return self._attributes[key]['accessor'].fget(self) 
  
     ######################################################################
@@ -114,13 +129,13 @@ class AttributeInterface(object):
         '''
         if not self._valid_attribute_key(key):
             raise SAGAException(SAGAError.DoesNotExists, 
-                  "Attribute %s doesn't exist." % (key))
+                  "Attribute '%s' doesn't exist." % (key))
         if not self.attribute_is_vector(key):
             raise SAGAException(SAGAError.IncorrectState, 
-                  "Attribute %s is a vector attribute." % (key))
+                  "Attribute '%s' is a scalar attribute." % (key))
         if self.attribute_is_readonly(key):
             raise SAGAException(SAGAError.PermissionDenied, 
-                  "Attribute %s is a read-only attribute." % (key))
+                  "Attribute '%s' is a read-only attribute." % (key))
         self._attributes[key]['accessor'].fset(self, value) 
 
     ######################################################################
@@ -165,7 +180,7 @@ class AttributeInterface(object):
         '''
         if not self._valid_attribute_key(key):
             raise SAGAException(SAGAError.DoesNotExist, 
-                  "Attribute %s doesn't exist." % (key))
+                  "Attribute '%s' doesn't exist." % (key))
  
         if (self._attributes[key]['type']) == 'V':
             return True
