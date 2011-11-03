@@ -7,8 +7,9 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
+from bliss.plugins.job.pbssh import pbsshjob
 from bliss.plugins.job.local import localjob
-from bliss.plugins.job.gram import gramjob
+from bliss.plugins.job.gram  import gramjob
 
 from bliss.plugins.job import dummyjob
 
@@ -24,6 +25,11 @@ _registry.append({"class"   : gramjob.GRAMJobPlugin,
                   "type"    : gramjob.GRAMJobPlugin.supported_api(),
                   "name"    : gramjob.GRAMJobPlugin.plugin_name(),
                   "schemas" : gramjob.GRAMJobPlugin.supported_schemas()})
+
+_registry.append({"class"   : pbsshjob.PBSOverSSHJobPlugin,
+                  "type"    : pbsshjob.PBSOverSSHJobPlugin.supported_api(),
+                  "name"    : pbsshjob.PBSOverSSHJobPlugin.plugin_name(),
+                  "schemas" : pbsshjob.PBSOverSSHJobPlugin.supported_schemas()})
 
 
 _registry.append({"class"   : dummyjob.DummyJobPlugin,

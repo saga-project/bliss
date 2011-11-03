@@ -92,7 +92,8 @@ setup_args = {
         "bliss.plugins",
         "bliss.plugins.job",
         "bliss.plugins.job.local",
-        "bliss.plugins.job.gram"
+        "bliss.plugins.job.gram",
+        "bliss.plugins.job.pbssh"
     ],
     'scripts': scripts,
     # mention data_files, even if empty, so install_data is called and
