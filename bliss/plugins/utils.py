@@ -27,17 +27,13 @@ class CommandWrapper(object):
 
     ######################################################################
     ##
-    def __init__(self, logger, via_ssh=None, ssh_username=None, 
+    def __init__(self, via_ssh=None, ssh_username=None, 
                  ssh_hostname=None, ssh_key=None):
         '''Constructor'''
         self._via_ssh = via_ssh
         self._ssh_username = ssh_username
         self._ssh_hostname = ssh_hostname
         self._ssh_key = ssh_key
-
-        self._output = None
-        self._error = None
-        self._returncode = None
 
         if self._via_ssh is True:
             if self._ssh_hostname is None:
@@ -47,44 +43,42 @@ class CommandWrapper(object):
                                                  identity_file=self._ssh_key,
                                                  login=self._ssh_username)
 
-    def run(self, executable, arguments):
+    def run(self, executable, arguments=[]):
         '''Runs a command (blocking)'''
-        self._output = None
-        self._error = None
-        self._returncode = None
+        cmd = executable
+        for arg in arguments:
+            cmd += " %s " % (arg)
 
         if self._via_ssh is True:
-            cmd = executable
-            for arg in arguments:
-                cmd += " %s " % (arg)
             result = self._ssh_connection.run(cmd)
-            self._output = result.output
-            self._error = result.error
-            self._returncode = result.returncode
 
+            cwr = CommandWrapperResult(command=cmd,
+                                       stdout=result.stdout,
+                                       stderr=result.stderr,
+                                       returncode=result.returncode)
+            return cwr                
         else:
-            pass #popen.communicate()
+            #pass #popen.communicate()
+            cwr = CommandWrapperResult(command=cmd)
+            return cwr
 
-    ######################################################################
-    ## Property
-    def stdoutput():
-        def fget(self):
-            return self._output
-        return locals()
-    stdoutput = property(**stdoutput())
+class CommandWrapperResult(object):
+    '''Represents a result.
+    '''
+    def __init__(self, command, stdout=None, stderr=None, returncode=None):
+        self.command = command
+        self.stdout = stdout
+        self.stderr = stderr
+        self.returncode = returncode
 
-    ######################################################################
-    ## Property
-    def stderror():
-        def fget(self):
-            return self._error
-        return locals()
-    stderror = property(**stderror())
+    def __str__(self):
+        return unicode(self).decode('utf-8', 'ignore')
 
-    ######################################################################
-    ## Property
-    def returncode():
-        def fget(self):
-            return self._returncode
-        return locals()
-    returncode = property(**returncode())
+    def __unicode__(self):
+        ret = []
+        ret.append(u'command: %s' % unicode(self.command))
+        ret.append(u'stdout: %s' % unicode(self.stdout))
+        ret.append(u'stderr: %s' % unicode(self.stderr))
+        ret.append(u'returncode: %s' % unicode(self.returncode))
+        return u'\n'.join(ret)
+

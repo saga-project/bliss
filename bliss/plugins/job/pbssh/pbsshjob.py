@@ -8,7 +8,7 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.plugins.job.jobinterface  import _JobPluginBase
-from bliss.plugins.job.pbssh.cmdlinewrapper import PBSSHCmdLineWrapper
+from bliss.plugins.job.pbssh.cmdlinewrapper import PBSSHCmdLineWrapper, PBSService
 from bliss.plugins import utils
 
 import bliss.saga
@@ -98,7 +98,7 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
 
     ## Step 2: Define supported url schemas
     ## 
-    _schemas = ['pbs+ssh']
+    _schemas = ['pbs+ssh', 'pbs']
 
     def __init__(self, url):
         '''Class constructor'''
@@ -119,10 +119,12 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
     ##
     def register_service_object(self, service_obj):
         '''Implements interface from _JobPluginBase'''
-        #if service_obj._url.host != "localhost":
-        #    self.log_error_and_raise(bliss.saga.Error.BadParameter, "Only 'localhost' can be used as hostname")        
       
         self.bookkeeper.add_service_object(service_obj)
+        pbs = PBSService(self, service_obj)
+        pbs._check_context()
+
+
         self.log_info("Registered new service object %s" % (repr(service_obj))) 
    
 
@@ -138,7 +140,8 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
     ## 
     def register_job_object(self, job_obj, service_obj):
         '''Implements interface from _JobPluginBase'''
-        self.bookkeeper.add_job_object(job_obj, service_obj)   
+        self.bookkeeper.add_job_object(job_obj, service_obj)  
+ 
         self.log_info("Registered new job object %s" % (repr(job_obj))) 
 
 

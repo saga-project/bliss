@@ -23,30 +23,30 @@ def main():
         ctx.usercert = '/Users/oweidner/.ssh/id_rsa'
  
         # start a local job service
-        js = saga.job.Service("pbs+ssh://india.futuregrid.org")
+        js = saga.job.Service("pbs+ssh://louie.loni.org")
         js.session.contexts.append(ctx)
 
         # describe our job
-        jd = saga.job.Description()
-        jd.set_attribute("Executable", '/bin/date')
-        jd.output = "pbsjob.stdout"
-        jd.error  = "pbsjob.stderr"
+        #jd = saga.job.Description()
+        #jd.set_attribute("Executable", '/bin/date')
+        #jd.output = "pbsjob.stdout"
+        #jd.error  = "pbsjob.stderr"
 
         # create & run the job
-        myjob = js.create_job(jd)
-
-        print "Job State : %s" % (myjob.get_state())
-
-        myjob.run()
-
-        print "Job ID    : %s" % (myjob.jobid)
-        print "Job State : %s" % (myjob.get_state())
-        
-        print "...waiting for job..."
-        myjob.wait()
-
-        print "Job State : %s" % (myjob.get_state())
-        print "Exitcode  : %s" % (myjob.get_attribute("Exitcode"))
+        #myjob = js.create_job(jd)
+#
+#        print "Job State : %s" % (myjob.get_state())
+#
+#        myjob.run()
+#
+#        print "Job ID    : %s" % (myjob.jobid)
+#        print "Job State : %s" % (myjob.get_state())
+#        
+#        print "...waiting for job..."
+#        myjob.wait()
+#
+#        print "Job State : %s" % (myjob.get_state())
+ #       print "Exitcode  : %s" % (myjob.get_attribute("Exitcode"))
 
     except saga.Exception, ex:
         print "Oh, snap! An error occured: %s" % (str(ex))
