@@ -7,13 +7,12 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
+from bliss.saga.attributes import AttributeInterface
 
-class Context(object):
+class Context(AttributeInterface, object):
     '''Looesely defines a SAGA Context object as defined in GFD.90.
     '''
 
-    Default  = "Default"
-    '''The default (None) security context type.'''
     SSH      = "SSH"
     '''A security context type based on public/private keys.''' 
     X509     = "X509"
@@ -21,14 +20,29 @@ class Context(object):
     X509_SSH = "X509+SSH"
     '''A security context type for X.509 over SSH.'''
 
-    __slots__ = {'_type', '_userkey', '_usercert', '_userproxy'}
+    #__dict__ = {'_type', '_userkey', '_usercert', '_userproxy'}
   
     def __init__(self):
         '''Constructor'''
-        self._type      = self.Default
-        self._usercert  = ""
-        self._userkey   = ""
-        self._userproxy = ""
+        self._type      = None
+        self._userid    = None
+        self._usercert  = None
+        self._userkey   = None
+        self._userproxy = None
+
+        AttributeInterface.__init__(self)
+      
+        # register properties with the attribute interface 
+        self._register_rw_attribute     (name="Type", 
+                                         accessor=self.__class__.type) 
+        self._register_rw_attribute     (name="UserID", 
+                                         accessor=self.__class__.userid)  
+        self._register_rw_attribute     (name="UserCert", 
+                                         accessor=self.__class__.usercert)  
+        self._register_rw_attribute     (name="UserKey", 
+                                         accessor=self.__class__.userkey)  
+        self._register_rw_attribute     (name="UserProxy", 
+                                         accessor=self.__class__.userproxy)  
 
     ######################################################################
     ##
@@ -41,7 +55,8 @@ class Context(object):
     def __str__(self):
         '''String represenation.
         '''
-        return "%s" % (str(self.contexts))
+        return "[Context Type: %s, UserCert: %s, UserKey: %s, UserProxy: %s]" % \
+                (self.type, self.usercert, self.userkey, self.userproxy)
 
     ######################################################################
     ## Property: type
@@ -53,6 +68,18 @@ class Context(object):
             self._type = val
         return locals()
     type = property(**type())
+
+
+    ######################################################################
+    ## Property: userid
+    def userid():
+        doc = "User ID or user name to use."
+        def fget(self):
+            return self._userid
+        def fset(self, val):
+            self._userid = val
+        return locals()
+    userid = property(**userid())
 
     ######################################################################
     ## Property: usercert

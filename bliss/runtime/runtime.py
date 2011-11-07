@@ -51,8 +51,9 @@ class Runtime():
                 plugin["class"].sanity_check()
                 self.logger.info("Plugin %s internal sanity check passed" % (plugin["name"]))
                 # passed. add it to the list
-                self.plugin_class_list[str(plugin["schemas"][0])] = plugin["class"]
-                self.logger.info("Plugin %s add to list as handler for Url schema %s" % (plugin["name"], str(plugin["schemas"][0])))
+                for schema in plugin["schemas"]:
+                    self.plugin_class_list[schema] = plugin["class"]
+                    self.logger.info("Plugin %s registered as handler for Url schema(s) %s://" % (plugin["name"], schema))
 
 
             except Exception, ex:
@@ -62,12 +63,12 @@ class Runtime():
         '''Returns a plugin instance for a given url or throws'''
         # first let's check if there's already a plugin-instance active that can handle this url scheme
         if url.scheme in self.plugin_instance_list:
-            self.logger.info("Found an existing plugin instance for url scheme %s: %s" % (str(url.scheme), self.plugin_instance_list[url.scheme]))
+            self.logger.info("Found an existing plugin instance for url scheme %s://: %s" % (str(url.scheme), self.plugin_instance_list[url.scheme]))
             return self.plugin_instance_list[url.scheme]
 
         elif url.scheme in self.plugin_class_list:                          
             plugin_obj = self.plugin_class_list[url.scheme](url)            
-            self.logger.info("Instantiated a new plugin for url scheme %s: %s" % (str(url.scheme), repr(plugin_obj)))
+            self.logger.info("Instantiated a new plugin for url scheme %s://: %s" % (str(url.scheme), repr(plugin_obj)))
             self.plugin_instance_list[url.scheme] = plugin_obj
             return plugin_obj
         else:

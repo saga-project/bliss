@@ -92,7 +92,8 @@ setup_args = {
         "bliss.plugins",
         "bliss.plugins.job",
         "bliss.plugins.job.local",
-        "bliss.plugins.job.gram"
+        "bliss.plugins.job.gram",
+        "bliss.plugins.job.pbssh"
     ],
     'scripts': scripts,
     # mention data_files, even if empty, so install_data is called and
@@ -118,7 +119,7 @@ except ImportError:
     pass
 else:
     setup_args['install_requires'] = [
-        #'pika >= 0.9.5',
+        'openssh-wrapper',
     ]
 
     if os.getenv('NO_INSTALL_REQS'):
