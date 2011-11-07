@@ -19,8 +19,8 @@ def main():
         # set up the security context
         ctx = saga.Context()
         ctx.type = saga.Context.SSH
-        ctx.usercert = "/Users/oweidner/.ssh/id_rsa_cluster.pub"
-        ctx.userkey  = "/Users/oweidner/.ssh/id_rsa_cluster"
+        ctx.userid  = 'oweidner'
+        ctx.usercert = '/Users/oweidner/.ssh/id_rsa'
  
         # start a local job service
         js = saga.job.Service("pbs+ssh://india.futuregrid.org")

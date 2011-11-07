@@ -23,6 +23,10 @@ class _PluginBase:
         self.schemas = schemas
         self.__logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')')
 
+    def get_logger(self):
+        '''Return the logger object'''
+        return self.__logger
+
     def log_error_and_raise(self, error, message):
         '''Writes an ERROR to the plugin log and raises an exception'''
         msg = "[%s] %s %s" % (self.name, message, utils.get_traceback())

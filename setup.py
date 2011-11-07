@@ -119,7 +119,7 @@ except ImportError:
     pass
 else:
     setup_args['install_requires'] = [
-        #'pika >= 0.9.5',
+        'openssh-wrapper',
     ]
 
     if os.getenv('NO_INSTALL_REQS'):

@@ -50,7 +50,7 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
                         sshctxs.append(ctx)
 
                 self.processes[job_id] = PBSSHCmdLineWrapper(jobdescription=job_obj.get_description(),
-                                                             contexts=sshctxs)
+                                                             contexts=sshctxs, plugin=self.parent)
             except Exception, ex:
                 self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
                   "Can't register job: %s %s" % (ex, utils.get_traceback()))   
@@ -94,7 +94,7 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
 
     ## Step 1: Define adaptor name. Convention is:
     ##         saga.plugin.<package>.<name>
-    _name = 'saga.plugin.job.gram'
+    _name = 'saga.plugin.job.pbssh'
 
     ## Step 2: Define supported url schemas
     ## 
@@ -111,13 +111,9 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
     def sanity_check(self):
         '''Implements interface from _PluginBase'''
         try: 
-            #todo: check for command line tools
-            pass 
+            from openssh_wrapper import SSHConnection
         except Exception, ex:
-            print "module missing -- plugin disabled. (NEEDS LOGGING SUPPORT)"
-            return False 
-        return True
-
+            raise Exception("openssh_wrapper module missing")
 
     ######################################################################
     ##

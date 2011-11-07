@@ -25,6 +25,7 @@ class Context(AttributeInterface, object):
     def __init__(self):
         '''Constructor'''
         self._type      = None
+        self._userid    = None
         self._usercert  = None
         self._userkey   = None
         self._userproxy = None
@@ -34,6 +35,8 @@ class Context(AttributeInterface, object):
         # register properties with the attribute interface 
         self._register_rw_attribute     (name="Type", 
                                          accessor=self.__class__.type) 
+        self._register_rw_attribute     (name="UserID", 
+                                         accessor=self.__class__.userid)  
         self._register_rw_attribute     (name="UserCert", 
                                          accessor=self.__class__.usercert)  
         self._register_rw_attribute     (name="UserKey", 
@@ -65,6 +68,18 @@ class Context(AttributeInterface, object):
             self._type = val
         return locals()
     type = property(**type())
+
+
+    ######################################################################
+    ## Property: userid
+    def userid():
+        doc = "User ID or user name to use."
+        def fget(self):
+            return self._userid
+        def fset(self, val):
+            self._userid = val
+        return locals()
+    userid = property(**userid())
 
     ######################################################################
     ## Property: usercert
