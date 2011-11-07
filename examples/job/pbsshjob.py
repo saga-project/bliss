@@ -26,6 +26,9 @@ def main():
         js = saga.job.Service("pbs+ssh://louie.loni.org")
         js.session.contexts.append(ctx)
 
+        print js.list()
+        print js.list()
+
         # describe our job
         #jd = saga.job.Description()
         #jd.set_attribute("Executable", '/bin/date')
@@ -50,7 +53,7 @@ def main():
 
     except saga.Exception, ex:
         print "Oh, snap! An error occured: %s" % (str(ex))
-        print "Traceback: %s" % ex.traceback
+        #print "Traceback: %s" % ex.traceback
 
 if __name__ == "__main__":
     main()

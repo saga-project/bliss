@@ -27,6 +27,11 @@ class PBSService():
         self._so = service_obj
         self._url = service_obj._url
         self._cw = None
+        if self._url.scheme == "pbs":
+            if self._url.host != "localhost":
+                self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+                "Can't use %s as hostname in conjunction with pbs:// schema. Try pbs+ssh:// instead" % (self._url.host))
+
 
     ##########################################################################
     ##  
@@ -35,13 +40,12 @@ class PBSService():
         
         # see if we run stuff on the local machine 
         if self._url.scheme == "pbs":
-            if self._url.host != "localhost":
-                self._pi.log_error_and_raise("11", "Can't use %s as hostname in conjunction with pbs:// schema. Try pbs+ssh:// instead" % (self._url.host))
             self._use_ssh = False
             cw = CommandWrapper(via_ssh=False)
             result = cw.run("pbs-config", ["--version"])
             if result.returncode != 0:
-                raise Exception("Couldn't find PBS tools on %s" % (self._url))
+                self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+                "Couldn't find PBS tools on %s" % (self._url))
             else:
                 self._cw = cw
 
@@ -59,6 +63,7 @@ class PBSService():
                         result = cw.run("true")
                         if result.returncode == 0:
                             usable_ctx = ctx
+                            self._cw = cw
                             self._pi.log_info("Using context %s to access %s succeeded" % (ctx, self._url))
                             break
                     except Exception, ex:
@@ -91,10 +96,11 @@ class PBSService():
     def get_job_status(self, jobid):
         '''Return the job status according to pstat'''
 
-    def list_jobs(self, jobid):
+    def list_jobs(self):
         '''Return the jobs known to qstat'''
         if self._cw == None:
-            self._check_context
+            self._check_context()
+        return []
 
 
 class PBSSHCmdLineWrapper():

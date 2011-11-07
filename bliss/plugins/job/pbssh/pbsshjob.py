@@ -26,8 +26,13 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
             self.processes = {}
             self.parent = parent
         
-        def add_service_object(self, service_obj):
-            self.objects[hex(id(service_obj))] = {'instance' : service_obj, 'jobs' : []}
+        def add_service_object(self, service_obj, pbs_obj):
+            self.objects[hex(id(service_obj))] = {'saga_instance' : service_obj, 'pbs_instance' : pbs_obj, 'jobs' : []}
+
+        def get_pbswrapper_for_serivce(self, service_obj):
+            service_id = hex(id(service_obj))  
+            return self.objects[service_id]['pbs_instance']
+
 
         def del_service_obj(self, service_obj):
             try:
@@ -119,14 +124,9 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
     ##
     def register_service_object(self, service_obj):
         '''Implements interface from _JobPluginBase'''
-      
-        self.bookkeeper.add_service_object(service_obj)
-        pbs = PBSService(self, service_obj)
-        pbs._check_context()
-
-
+        pbs_obj = PBSService(self, service_obj)
+        self.bookkeeper.add_service_object(service_obj, pbs_obj)
         self.log_info("Registered new service object %s" % (repr(service_obj))) 
-   
 
     ######################################################################
     ##
@@ -158,7 +158,8 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
     def service_list(self, service_obj):
         '''Implements interface from _JobPluginBase'''
         try:
-            return self.bookkeeper.list_jobs_for_service(service_obj)   
+            pbs = self.bookkeeper.get_pbswrapper_for_serivce(service_obj)
+            return pbs.list_jobs()
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't retreive job list because: %s " % (str(ex)))
 
