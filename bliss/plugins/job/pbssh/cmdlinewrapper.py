@@ -9,28 +9,76 @@ __license__   = "MIT"
 
 import copy
 import time
+import string
 import subprocess
 import bliss.saga
 
-from bliss.plugins.utils import CommandWrapper, split_saga_jobid
+from bliss.plugins.utils import CommandWrapper
+
+##############################################################################
+##
+class PBSJobInfo():
+    '''Encapsulates a PBS job'''
+    ##########################################################################
+    ##
+    def __init__(self, qstat_string):
+        '''Initialize from qstat string'''
+        cols= qstat_string.split()
+
+        self.jobid    = cols[0]
+        self.user     = cols[1]
+        self.queue    = cols[2]
+        self.name     = cols[3]
+        self.nodes    = cols[5]
+        self.walltime = cols[7]
+        self.state    = cols[8]
+        self.state    = cols[9]
+
+    Canceled = "Canceled"
+    '''Indicates that the job has been canceled either by the user or the system'''
+    Done     = "Done"
+    '''Indicates that the job has successfully executed''' 
+    Failed   = "Failed"
+    '''Indicates that the execution of the job has failed'''
+    New      = "New"
+    '''Indicates that the job hasn't been started yet'''
+    Running  = "Running"
+    '''Indicates that the job is executing'''
+    Waiting  = "Waiting"
+    '''Indicates that the job is waiting to be executed (NOT IN GFD.90)'''
+    Unknown  = "Unknown"
+    '''Indicates that the job is in an unexpected state'''
+
 
 ##############################################################################
 ##
 class PBSService():
     '''XX'''
+    ##########################################################################
+    ##
 
-    class PBSJobs():
-        '''Encapsulates a PBS job'''
-        def __init__(self, qstat_string):
-            '''Initialize from qstat string'''
-            cols= line.split(" ")
-            self.id       = cols[0]
-            self.user     = cols[1]
-            self.queue    = cols[2]
-            self.name     = cols[3]
-            self.nodes    = cols[5]
-            self.walltime = cols[7]
-            self.state    = cols[8]
+    @classmethod
+    def pbs_to_saga_jobstate(self, pbsjs):
+        '''translates a pbs one-letter state to saga'''
+        if pbsjs == 'C':
+            return bliss.saga.job.Job.Done
+        elif pbsjs == 'E':
+            return bliss.saga.job.Job.Running
+        elif pbsjs == 'H':
+            return bliss.saga.job.Job.Waiting
+        elif pbsjs == 'Q':
+            return bliss.saga.job.Job.Waiting
+        elif pbsjs == 'R':
+            return bliss.saga.job.Job.Running 
+        elif pbsjs == 'T': 
+            return bliss.saga.job.Job.Running 
+        elif pbsjs == 'W':
+            return bliss.saga.job.Job.Waiting
+        elif pbsjs == 'S':
+            return bliss.saga.job.Job.Waiting
+        else:
+            return bliss.saga.job.Job.Unknown
+
 
     ##########################################################################
     ##
@@ -44,6 +92,8 @@ class PBSService():
             if self._url.host != "localhost":
                 self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
                 "Can't use %s as hostname in conjunction with pbs:// schema. Try pbs+ssh:// instead" % (self._url.host))
+
+        self._known_jobs = dict()
 
 
     ##########################################################################
@@ -106,9 +156,6 @@ class PBSService():
                 self._pi.log_info("Found PBS command line tools on %s. Version: %s" % (self._url, result.stdout))
 
 
-  #  def get_job_status(self, jobid):
-  #      '''Return the job status according to pstat'''
-
     ######################################################################
     ##
     def list_jobs(self):
@@ -119,35 +166,34 @@ class PBSService():
         
         result = self._cw.run("qstat")
         lines = result.stdout.splitlines(True)
-        lines.pop(0) #remove header
-        lines.pop(0) #remove header
-        for line in lines:
-            jobids.append("[%s]-[%s]" % (self._url, line.split(" ")[0]))
+        for line in lines[2:]:
+            
+            jobids.append(bliss.saga.job.JobID(self._url, line.split()[0]))
         return jobids
+
 
     ######################################################################
     ##
-    def get_job_description_and_register(self, saga_jobid):
+    def get_jobinfo(self, saga_jobid):
         '''Returns a running PBS job as saga object'''
         if self._cw == None:
             self._check_context()
-
-        job_description = bliss.saga.job.Description()
- 
-        return job_description
+        
+        result = self._cw.run("qstat -a %s" % (saga_jobid.native_id))
+        lines = result.stdout.split("\n")
+        if len(lines) != 5:
+            self._pi.log_error_and_raise(bliss.saga.Error.DoesNotExist, 
+            "Job with ID '%s' doesn't exist (anymore)" % saga_jobid)
+        return PBSJobInfo(lines[4])
 
 
     ######################################################################
     ##
     def get_job_state(self, saga_jobid):
         '''Returns the state of the job with the given jobid'''
-        #if self._cw == None:
-        #    self._check_context()
-        #
-        #native_id = split_saga_jobid(saga_jobid)[1]         
-        #result = self._cw.run("qstat %s" % (native_id))
-        return 0
-
+        jobinfo = self.get_jobinfo(saga_jobid)
+        return self.pbs_to_saga_jobstate(jobinfo.state)
+ 
 
 
 class PBSSHCmdLineWrapper():

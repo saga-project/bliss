@@ -12,6 +12,46 @@ from bliss.saga.object import Object
 from bliss.saga.attributes import AttributeInterface
 from bliss.saga import exception
 
+
+##########################################################################
+##
+class JobID(object):
+    '''Represents a SAGA job ID'''
+    
+    __slots__ = {'_service', '_native'}
+   
+    ######################################################################
+    ##
+    def __init__(self, service_url, native_id):
+        '''Constructor'''
+        self._service = service_url
+        self._native = native_id
+
+    ######################################################################
+    ##
+    def __str__(self):
+        '''String representation'''
+        return "[%s]-[%s]" % (self._service, self._native)
+
+    ######################################################################
+    ##
+    def service_url():
+        doc = "The job id's service url component"
+        def fget(self):
+            return self._service
+        return locals()
+    service_url = property(**service_url())
+
+    ######################################################################
+    ##
+    def native_id():
+        doc = "The job id's native component"
+        def fget(self):
+            return self._native
+        return locals()
+    native_id = property(**native_id())
+
+
 class Job(Object, AttributeInterface):
     '''Loosely represents a SAGA job as defined in GFD.90'''
     
@@ -25,6 +65,8 @@ class Job(Object, AttributeInterface):
     '''Indicates that the job hasn't been started yet'''
     Running  = "Running"
     '''Indicates that the job is executing'''
+    Waiting  = "Waiting"
+    '''Indicates that the job is waiting to be executed (NOT IN GFD.90)'''
     Unknown  = "Unknown"
     '''Indicates that the job is in an unexpected state'''
 
