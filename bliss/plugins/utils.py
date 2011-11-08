@@ -19,6 +19,16 @@ def get_traceback(prefix="\n*** "):
     else:
         return prefix+fp.getvalue() 
 
+def split_saga_jobid(saga_jobid):
+    '''returns an array with the service and native job id components
+       of a saga jobid. 
+    '''
+    print "XXXXXXXX: " + saga_jobid
+
+    (service, native) = saga_jobid.split("]-[")
+    service = service[1:]
+    native = native[:-1]
+    return(service, native)
 
 class CommandWrapper(object):
     '''This class represent a wrapper for arbitrary commands.

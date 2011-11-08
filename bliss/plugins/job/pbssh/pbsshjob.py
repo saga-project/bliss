@@ -29,7 +29,7 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
         def add_service_object(self, service_obj, pbs_obj):
             self.objects[hex(id(service_obj))] = {'saga_instance' : service_obj, 'pbs_instance' : pbs_obj, 'jobs' : []}
 
-        def get_pbswrapper_for_serivce(self, service_obj):
+        def get_pbswrapper_for_service(self, service_obj):
             service_id = hex(id(service_obj))  
             return self.objects[service_id]['pbs_instance']
 
@@ -40,36 +40,23 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
             except Exception:
                 pass
 
-        def add_job_object(self, job_obj, service_obj):
+        def add_job_object_to_service(self, job_obj, service_obj, saga_jobid):
             service_id = hex(id(service_obj))  
             job_id = hex(id(job_obj))
             try:
                 self.objects[service_id]['jobs'].append(job_obj)
 
-                # get all relevant context objects
-                ctxts = service_obj.session.contexts
-                sshctxs = list()
-                for ctx in ctxts:
-                    if ctx.type is bliss.saga.Context.SSH:
-                        self.parent.log_info("Found valid SSH context: %s" % str(ctx))
-                        sshctxs.append(ctx)
-
-                self.processes[job_id] = PBSSHCmdLineWrapper(jobdescription=job_obj.get_description(),
-                                                             contexts=sshctxs, plugin=self.parent)
             except Exception, ex:
                 self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
                   "Can't register job: %s %s" % (ex, utils.get_traceback()))   
-
-        def del_job_object(self, job_obj):
-            pass
 
         def get_service_for_job(self, job_obj):
             '''Return the service object the job is registered with'''
             for key in self.objects.keys():
                 if job_obj in self.objects[key]['jobs']:
-                    return self.objects[key]['instance']
-            self.parrent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-              "INTERNAL ERROR: Job object %s is not known by this plugin %s" % (job, utils.get_traceback())) 
+                    return self.objects[key]['saga_instance']
+            self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "INTERNAL ERROR: Job object %s is not known by this plugin %s" % (job_obj, utils.get_traceback())) 
 
         def get_job_for_jobid(self, service_obj, job_id):
             '''Return the job object associated with the given job id'''
@@ -86,13 +73,13 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
             return self.objects[service_id]['jobs']
 
 
-        def get_process_for_job(self, job_obj):
-            '''Return the local process object for a given job'''
-            try: 
-                return self.processes[hex(id(job_obj))]
-            except Exception, ex:
-                self.parrent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                "INTERNAL ERROR: Job object %s is not associated with a process %s" % (job_obj, utils.get_traceback()))   
+        #def get_process_for_job(self, job_obj):
+        #    '''Return the local process object for a given job'''
+        #    try: 
+        #        return self.processes[hex(id(job_obj))]
+        #    except Exception, ex:
+        #        self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+        #        "INTERNAL ERROR: Job object %s is not associated with a process %s" % (job_obj, utils.get_traceback()))   
     ##
     ########################################
 
@@ -138,19 +125,18 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
 
     ######################################################################
     ## 
-    def register_job_object(self, job_obj, service_obj):
-        '''Implements interface from _JobPluginBase'''
-        self.bookkeeper.add_job_object(job_obj, service_obj)  
- 
-        self.log_info("Registered new job object %s" % (repr(job_obj))) 
+    #def register_job_object(self, job_obj, service_obj):
+    #    '''Implements interface from _JobPluginBase'''
+    #    #self.bookkeeper.add_job_object(job_obj, service_obj)  
+    #    #self.log_info("Registered new job object %s" % (repr(job_obj))) 
 
 
     ######################################################################
     ##
     def unregister_job_object(self, job_obj):
         '''Implements interface from _JobPluginBase'''
-        self.bookkeeper.del_job_object(job_obj)
-        self.log_info("Unegisteredjob object %s" % (repr(job_obj))) 
+    #    #self.bookkeeper.del_job_object(job_obj)
+    #    #self.log_info("Unegisteredjob object %s" % (repr(job_obj))) 
 
 
     ######################################################################
@@ -158,10 +144,15 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
     def service_list(self, service_obj):
         '''Implements interface from _JobPluginBase'''
         try:
-            pbs = self.bookkeeper.get_pbswrapper_for_serivce(service_obj)
+            pbs = self.bookkeeper.get_pbswrapper_for_service(service_obj)
             return pbs.list_jobs()
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't retreive job list because: %s " % (str(ex)))
+
+    ######################################################################
+    ##  
+    def service_create_job(self, service_obj, job_desc):
+        '''Implements interface from _JobPluginBase'''
 
 
     ######################################################################
@@ -170,9 +161,22 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
         '''Implements interface from _JobPluginBase'''
         ## Step 76: Implement service_get_job() 
         try:
-            return self.bookkeeper.get_job_for_jobid(service_obj, job_id)   
+            pbs = self.bookkeeper.get_pbswrapper_for_service(service_obj)
+            job_description = pbs.get_job_description(job_id)   
+            job = bliss.saga.job.Job()
+            job._Job__init_from_service(service_obj=service_obj, job_desc=job_description)
+            # register job with the plugin
+            self.bookkeeper.add_job_object_to_service(job, service_obj)
+            #pbs.register_as_known_job(job, 
+            # and return the new job object
+            return job
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't get job list because: %s " % (str(ex)))
+
+
+
+
+
 
 
     ######################################################################
@@ -181,7 +185,8 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
         '''Implements interface from _JobPluginBase'''
         try:
             service = self.bookkeeper.get_service_for_job(job)
-            return self.bookkeeper.get_process_for_job(job).getstate()  
+            pbs = self.bookkeeper.get_pbswrapper_for_service(service)
+            return pbs.get_job_state(job.get_id())  
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't get job state because: %s " % (str(ex)))
 
@@ -192,8 +197,8 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
         '''Implements interface from _JobPluginBase'''
         try:
             service = self.bookkeeper.get_service_for_job(job)
-            return self.bookkeeper.get_process_for_job(job).getpid(str(service._url))  
-            self.log_info("Started local process: %s %s" % (job.get_description().executable, job.get_description().arguments)) 
+            pbs = self.bookkeeper.get_pbswrapper_for_service(service)
+            return pbs.get_job_id(job) 
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't get job id because: %s " % (str(ex)))
 

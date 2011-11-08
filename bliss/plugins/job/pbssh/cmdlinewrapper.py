@@ -12,12 +12,25 @@ import time
 import subprocess
 import bliss.saga
 
-from bliss.plugins.utils import CommandWrapper
+from bliss.plugins.utils import CommandWrapper, split_saga_jobid
 
 ##############################################################################
 ##
 class PBSService():
     '''XX'''
+
+    class PBSJobs():
+        '''Encapsulates a PBS job'''
+        def __init__(self, qstat_string):
+            '''Initialize from qstat string'''
+            cols= line.split(" ")
+            self.id       = cols[0]
+            self.user     = cols[1]
+            self.queue    = cols[2]
+            self.name     = cols[3]
+            self.nodes    = cols[5]
+            self.walltime = cols[7]
+            self.state    = cols[8]
 
     ##########################################################################
     ##
@@ -93,14 +106,48 @@ class PBSService():
                 self._pi.log_info("Found PBS command line tools on %s. Version: %s" % (self._url, result.stdout))
 
 
-    def get_job_status(self, jobid):
-        '''Return the job status according to pstat'''
+  #  def get_job_status(self, jobid):
+  #      '''Return the job status according to pstat'''
 
+    ######################################################################
+    ##
     def list_jobs(self):
         '''Return the jobs known to qstat'''
+        jobids = []
         if self._cw == None:
             self._check_context()
-        return []
+        
+        result = self._cw.run("qstat")
+        lines = result.stdout.splitlines(True)
+        lines.pop(0) #remove header
+        lines.pop(0) #remove header
+        for line in lines:
+            jobids.append("[%s]-[%s]" % (self._url, line.split(" ")[0]))
+        return jobids
+
+    ######################################################################
+    ##
+    def get_job_description_and_register(self, saga_jobid):
+        '''Returns a running PBS job as saga object'''
+        if self._cw == None:
+            self._check_context()
+
+        job_description = bliss.saga.job.Description()
+ 
+        return job_description
+
+
+    ######################################################################
+    ##
+    def get_job_state(self, saga_jobid):
+        '''Returns the state of the job with the given jobid'''
+        #if self._cw == None:
+        #    self._check_context()
+        #
+        #native_id = split_saga_jobid(saga_jobid)[1]         
+        #result = self._cw.run("qstat %s" % (native_id))
+        return 0
+
 
 
 class PBSSHCmdLineWrapper():

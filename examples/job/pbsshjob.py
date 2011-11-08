@@ -23,11 +23,12 @@ def main():
         ctx.usercert = '/Users/oweidner/.ssh/id_rsa'
  
         # start a local job service
-        js = saga.job.Service("pbs+ssh://louie.loni.org")
+        js = saga.job.Service("pbs+ssh://india.futuregrid.org")
         js.session.contexts.append(ctx)
 
-        print js.list()
-        print js.list()
+        for jobid in js.list():
+            job = js.get_job(jobid)
+            print job.get_state()
 
         # describe our job
         #jd = saga.job.Description()

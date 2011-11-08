@@ -36,31 +36,36 @@ class Service(SAGAObject):
         #if self._plugin is not None:
         #    self._plugin.unregister_service_object(self)
 
+    ######################################################################
+    ##
     def create_job(self, job_description):
         '''Create a new job object.
            @param job_description: The description for the new job.
            @type  job_description: L{Description} 
         '''
-        if self._plugin is not None:
+        if self._plugin is None:
+            raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
+        else:
             if job_description.get_type() != SAGAObject.JobDescription:
                 raise exception.Exception(exception.Error.BadParameter, "create_job() expects "+Object.type_saga_job_description)
 
-            job = bliss.saga.job.Job()
-            job._Job__init_from_service(service_obj=self, job_desc=job_description)
-            return job
+            return self._plugin.service_get_job(self, job_id)
 
-        else:
-            raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
 
+    ######################################################################
+    ##
     def get_job(self, job_id):
         '''Return the job object for the given job id.
            @param job_id: The job id.
         '''
-        if self._plugin is not None:
-            return self._plugin.service_get_job(self, job_id)
-        else:
+        if self._plugin is None:
             raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
+        else:
+            return self._plugin.service_get_job(self, job_id)
 
+
+    ######################################################################
+    ##
     def list(self):
         '''List all jobs managed by this service instance.
         '''
