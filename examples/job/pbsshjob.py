@@ -64,14 +64,12 @@ def main():
         print "Job State : %s" % (myjob.get_state())
 
         print "...waiting for job..."
-#        myjob.wait()
 
         print "Job State : %s" % (myjob.get_state())
         print "Exitcode  : %s" % (myjob.exitcode)
 
     except saga.Exception, ex:
         print "Oh, snap! An error occured: %s" % (str(ex))
-        #print "Traceback: %s" % ex.traceback
 
 if __name__ == "__main__":
     main()
