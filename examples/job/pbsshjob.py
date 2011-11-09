@@ -26,32 +26,32 @@ def main():
         js = saga.job.Service("pbs+ssh://alamo.futuregrid.org")
         js.session.contexts.append(ctx)
 
-        for jobid in js.list():
-            job = js.get_job(jobid)
-            print "Job ID: %s, State: %s" % (job.jobid, job.get_state())
+        #for jobid in js.list():
+        #    job = js.get_job(jobid)
+        #    print "Job ID: %s, State: %s" % (job.jobid, job.get_state())
 
-        js = saga.job.Service("pbs+ssh://india.futuregrid.org")
-        js.session.contexts.append(ctx)
+        #js = saga.job.Service("pbs+ssh://india.futuregrid.org")
+        #js.session.contexts.append(ctx)
 
-        for jobid in js.list():
-            job = js.get_job(jobid)
-            print "Job ID: %s, State: %s" % (job.jobid, job.get_state())
+        #for jobid in js.list():
+        #    job = js.get_job(jobid)
+        #    print "Job ID: %s, State: %s" % (job.jobid, job.get_state())
 
         # describe our job
-        #jd = saga.job.Description()
-        #jd.set_attribute("Executable", '/bin/date')
-        #jd.output = "pbsjob.stdout"
-        #jd.error  = "pbsjob.stderr"
+        jd = saga.job.Description()
+        jd.set_attribute("Executable", '/bin/date')
+        jd.output = "pbsjob.stdout"
+        jd.error  = "pbsjob.stderr"
 
         # create & run the job
-        #myjob = js.create_job(jd)
+        myjob = js.create_job(jd)
 #
-#        print "Job State : %s" % (myjob.get_state())
+        print "Job State : %s" % (myjob.get_state())
 #
 #        myjob.run()
 #
-#        print "Job ID    : %s" % (myjob.jobid)
-#        print "Job State : %s" % (myjob.get_state())
+        print "Job ID    : %s" % (myjob.jobid)
+        print "Job State : %s" % (myjob.get_state())
 #        
 #        print "...waiting for job..."
 #        myjob.wait()

@@ -44,12 +44,14 @@ class Service(SAGAObject):
            @type  job_description: L{Description} 
         '''
         if self._plugin is None:
-            raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
+            raise exception.Exception(exception.Error.NoSuccess, 
+              "Object not bound to a plugin")
         else:
             if job_description.get_type() != SAGAObject.JobDescription:
-                raise exception.Exception(exception.Error.BadParameter, "create_job() expects "+Object.type_saga_job_description)
+                raise exception.Exception(exception.Error.BadParameter, 
+                  "create_job() expects "+Object.type_saga_job_description)
 
-            return self._plugin.service_get_job(self, job_id)
+            return self._plugin.service_create_job(self, job_description)
 
 
     ######################################################################
@@ -59,7 +61,8 @@ class Service(SAGAObject):
            @param job_id: The job id.
         '''
         if self._plugin is None:
-            raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
+            raise exception.Exception(exception.Error.NoSuccess, 
+              "Object not bound to a plugin")
         else:
             return self._plugin.service_get_job(self, job_id)
 

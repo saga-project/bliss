@@ -42,7 +42,7 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
               'jobs' : dict()}
 
 
-        def remove_service_obj(self, service_obj):
+        def remove_service_object(self, service_obj):
             '''Describe me'''
             service_key = hex(id(service_obj))  
             try:
@@ -51,7 +51,7 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
                 pass
 
 
-        def remove_job_obj(self, job_obj):
+        def remove_job_object(self, job_obj):
             '''Describe me'''
             service_key = hex(id(self.get_service_for_job(job_obj)))  
             job_key = hex(id(job_obj))  
@@ -153,23 +153,35 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
     def service_list(self, service_obj):
         '''Implements interface from _JobPluginBase'''
         try:
+            # we have to list the new jobs, too ?
             pbs = self.bookkeeper.get_pbswrapper_for_service(service_obj)
             return pbs.list_jobs()
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
               "Couldn't retreive job list because: %s " % (str(ex)))
 
+
     ######################################################################
     ##  
-    def service_create_job(self, service_obj, job_desc):
+    def service_create_job(self, service_obj, job_description):
         '''Implements interface from _JobPluginBase'''
+        try:
+            job = bliss.saga.job.Job()
+            job._Job__init_from_service(service_obj=service_obj, 
+                                        job_desc=job_description)
+            self.bookkeeper.add_job_object_to_service(job, service_obj,
+                bliss.saga.job.JobID(service_obj._url, None))
+            return job
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't create a new job because: %s " % (str(ex)))
 
 
     ######################################################################
     ##
     def service_get_job(self, service_obj, job_id):
         '''Implements interface from _JobPluginBase'''
-        ## Step 76: Implement service_get_job() 
+        ## Implement service_get_job() 
         try:
             # get some information about the job
             pbs = self.bookkeeper.get_pbswrapper_for_service(service_obj)
@@ -192,11 +204,13 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
     def job_get_state(self, job):
         '''Implements interface from _JobPluginBase'''
         try:
-            service = self.bookkeeper.get_service_for_job(job)
-            pbs = self.bookkeeper.get_pbswrapper_for_service(service)
-            # jobs disappear from the pbs job list
-            # once they're done. 
-            return pbs.get_job_state(job.get_job_id())  
+            if self.bookkeeper.get_jobid_for_job(job).native_id == None:
+                ## The job hasn't been submitted yet
+                return bliss.saga.job.Job.New
+            else:
+                service = self.bookkeeper.get_service_for_job(job)
+                pbs = self.bookkeeper.get_pbswrapper_for_service(service)
+                return pbs.get_job_state(job.get_job_id())  
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
               "Couldn't get job state because: %s " % (str(ex)))
@@ -207,7 +221,11 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
     def job_get_job_id(self, job):
         '''Implements interface from _JobPluginBase'''
         try:
-            return self.bookkeeper.get_jobid_for_job(job)
+            if self.bookkeeper.get_jobid_for_job(job).native_id == None:
+                ## The job hasn't been submitted yet
+                return self.bookkeeper.get_jobid_for_job(job)
+            else:
+                return self.bookkeeper.get_jobid_for_job(job)
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
               "Couldn't get job id because: %s " % (str(ex)))

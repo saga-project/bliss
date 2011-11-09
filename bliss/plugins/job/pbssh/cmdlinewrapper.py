@@ -83,7 +83,8 @@ class PBSService():
         if self._url.scheme == "pbs":
             if self._url.host != "localhost":
                 self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                "Can't use %s as hostname in conjunction with pbs:// schema. Try pbs+ssh:// instead" % (self._url.host))
+                "Can't use %s as hostname in conjunction with pbs:// schema. Try pbs+ssh:// instead" \
+                  % (self._url.host))
 
         self._known_jobs = dict()
 
@@ -139,7 +140,8 @@ class PBSService():
                             self._pi.log_info("Using context %s to access %s succeeded" % (ctx, self._url))
                             break
                     except Exception, ex:
-                        self._pi.log_warning("Using context %s to access %s failed because: %s" % (ctx, self._url, result.error))
+                        self._pi.log_warning("Using context %s to access %s failed because: %s" \
+                          % (ctx, self._url, result.error))
 
             if usable_ctx is None:
                 # see if we can use system defaults to run
@@ -147,7 +149,8 @@ class PBSService():
                 cw = CommandWrapper(ssh_hostname=self._url.host, via_ssh=True)
                 result = cw.run("true")
                 if result.returncode != 0:
-                    self._pi.log_warning("Using no context %s to access %s failed because: %s" % (ctx, self._url, result.error))
+                    self._pi.log_warning("Using no context %s to access %s failed because: %s" \
+                      % (ctx, self._url, result.error))
                 else:
                     self._cw = cw
                     self._pi.log_info("Using no context to access %s succeeded" % (self._url))
@@ -160,9 +163,11 @@ class PBSService():
             # now let's see if we can find PBS
             result = self._cw.run("pbs-config --version")
             if result.returncode != 0:
-                self._pi.log_error_and_raise("11", "Couldn't find PBS command line tools on %s: %s" % (self._url, result.stderr))
+                self._pi.log_error_and_raise("11", "Couldn't find PBS command line tools on %s: %s" \
+                  % (self._url, result.stderr))
             else:
-                self._pi.log_info("Found PBS command line tools on %s. Version: %s" % (self._url, result.stdout))
+                self._pi.log_info("Found PBS command line tools on %s. Version: %s" \
+                  % (self._url, result.stdout))
 
 
     ######################################################################
