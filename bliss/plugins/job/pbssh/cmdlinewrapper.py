@@ -209,8 +209,7 @@ class PBSService():
         
         result = self._cw.run("qstat -f1")
         if result.returncode != 0:
-            self._pi.log_error("Error running 'qstat': %s" % result.stderr)
-            raise Exception("blah")
+            raise Exception("Error running 'qstat': %s" % result.stderr)
 
         lines = result.stdout.split("\n\n")
         for line in lines:
@@ -234,8 +233,17 @@ class PBSService():
 
         result = self._cw.run("qstat -f1 %s" % (saga_jobid.native_id))
         if result.returncode != 0:
-            self._pi.log_error("Error running 'qstat': %s" % result.stderr)
-            raise Exception("blah")
+            if self._known_jobs_exists(saga_jobid.native_id):
+                ## if the job is on record but can't be reached anymore,
+                ## this probablty means that it has finished and already
+                ## kicked out qstat. in that case we just set it's state 
+                ## to done.
+                jobinfo = self._known_jobs[saga_jobid.native_id]
+                jobinfo._job_state = 'C' # PBS 'Complete'
+                return jobinfo
+            else:
+                ## something went wrong.
+                raise Exception("Error running 'qstat': %s" % result.stderr)
 
         jobinfo = PBSJobInfo(result.stdout, self._pi)
         self._known_jobs_update(jobinfo.jobid, jobinfo)
@@ -295,6 +303,7 @@ class PBSService():
 
         script = self._pbscript_generator(job.get_description())
         result = self._cw.run("echo '%s' | qsub" % (script))
+ 
         if result.returncode != 0:
             self._pi.log_error("Error running 'qstat': %s" % result.stderr)
             raise Exception("blah")

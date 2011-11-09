@@ -24,12 +24,12 @@ def main():
         ctx.usercert = '/Users/oweidner/.ssh/id_rsa'
  
         # start a local job service
-        js = saga.job.Service("pbs+ssh://india.futuregrid.org")
+        js = saga.job.Service("pbs+ssh://alamo.futuregrid.org")
         js.session.contexts.append(ctx)
 
-        for jobid in js.list():
-            job = js.get_job(jobid)
-            print "Job ID: %s, State: %s" % (job.jobid, job.get_state())
+        #for jobid in js.list():
+        #    job = js.get_job(jobid)
+        #    print "Job ID: %s, State: %s" % (job.jobid, job.get_state())
 
         #js = saga.job.Service("pbs+ssh://india.futuregrid.org")
         #js.session.contexts.append(ctx)
@@ -40,8 +40,8 @@ def main():
 
         # describe our job
         jd = saga.job.Description()
-        jd.executable = '/bin/false'
-        #jd.arguments = ['30']
+        jd.executable = '/bin/sleep'
+        jd.arguments = ['30']
         jd.walltime_limit = "0:10:00"
 
         jd.output = "my_job.stdout"
@@ -58,7 +58,7 @@ def main():
         print "Job ID    : %s" % (myjob.jobid)
         print "Job State : %s" % (myjob.get_state())
 
-        time.sleep(4)
+        time.sleep(60)
 
         print "Job ID    : %s" % (myjob.jobid)
         print "Job State : %s" % (myjob.get_state())
