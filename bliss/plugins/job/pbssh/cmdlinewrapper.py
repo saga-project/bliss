@@ -87,6 +87,14 @@ class PBSJobInfo(object):
     def queue(self):
         return self._queue
 
+    @property 
+    def exitcode(self):
+        if '_exit_status' in self.__dict__:
+            return self._exit_status
+        else:
+            return None
+
+
 ################################################################################
 ################################################################################
 

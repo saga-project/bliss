@@ -294,15 +294,12 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
     #          "Couldn't wait for the job because: %s " % (str(ex)))
 
     def job_get_exitcode(self, job_obj):
-        '''Implements interface from _JobPluginBase'''
+        '''Implements interface from _JobPluginBase.'''
         try:
             service = self.bookkeeper.get_service_for_job(job_obj)
-            #process = self.bookkeeper.get_process_for_job(job_obj)
-            #jobstate = process.getstate()
-
-            #if jobstate != bliss.saga.Job.Done or jobstate != bliss.saga.job.Failed:
-            #    self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't get the job's exitcode. Job must be in 'Done' or 'Failed' state.")
-            #else:
-            return self.bookkeeper.get_process_for_job(job_obj).get_exitcode()   
+            pbs = self.bookkeeper.get_pbswrapper_for_service(service)
+            return pbs.get_jobinfo(self.job_get_job_id(job_obj)).exitcode
         except Exception, ex:
-            self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't get exitcode for job because: %s " % (str(ex)))
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't get job exitcode because: %s " % (str(ex)))
+

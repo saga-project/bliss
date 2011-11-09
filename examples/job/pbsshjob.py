@@ -11,6 +11,7 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
+import time
 import bliss.saga as saga
 
 def main():
@@ -39,8 +40,8 @@ def main():
 
         # describe our job
         jd = saga.job.Description()
-        jd.executable = '/bin/sleep'
-        jd.arguments = ['30']
+        jd.executable = '/bin/false'
+        #jd.arguments = ['30']
         jd.walltime_limit = "0:10:00"
 
         jd.output = "my_job.stdout"
@@ -48,19 +49,25 @@ def main():
 
         # create & run the job
         myjob = js.create_job(jd)
-#
-        print "Job State : %s" % (myjob.get_state())
-#
-        myjob.run()
-#
+
         print "Job ID    : %s" % (myjob.jobid)
         print "Job State : %s" % (myjob.get_state())
-#        
-#        print "...waiting for job..."
+
+        myjob.run()
+
+        print "Job ID    : %s" % (myjob.jobid)
+        print "Job State : %s" % (myjob.get_state())
+
+        time.sleep(4)
+
+        print "Job ID    : %s" % (myjob.jobid)
+        print "Job State : %s" % (myjob.get_state())
+
+        print "...waiting for job..."
 #        myjob.wait()
-#
-#        print "Job State : %s" % (myjob.get_state())
- #       print "Exitcode  : %s" % (myjob.get_attribute("Exitcode"))
+
+        print "Job State : %s" % (myjob.get_state())
+        print "Exitcode  : %s" % (myjob.exitcode)
 
     except saga.Exception, ex:
         print "Oh, snap! An error occured: %s" % (str(ex))
