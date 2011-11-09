@@ -9,7 +9,6 @@ __license__   = "MIT"
 
 from bliss.plugins.job.pbssh import pbsshjob
 from bliss.plugins.job.local import localjob
-from bliss.plugins.job.gram  import gramjob
 
 from bliss.plugins.job import dummyjob
 
@@ -20,11 +19,6 @@ _registry.append({"class"   : localjob.LocalJobPlugin,
                   "type"    : localjob.LocalJobPlugin.supported_api(),
                   "name"    : localjob.LocalJobPlugin.plugin_name(),
                   "schemas" : localjob.LocalJobPlugin.supported_schemas()})
-
-_registry.append({"class"   : gramjob.GRAMJobPlugin,
-                  "type"    : gramjob.GRAMJobPlugin.supported_api(),
-                  "name"    : gramjob.GRAMJobPlugin.plugin_name(),
-                  "schemas" : gramjob.GRAMJobPlugin.supported_schemas()})
 
 _registry.append({"class"   : pbsshjob.PBSOverSSHJobPlugin,
                   "type"    : pbsshjob.PBSOverSSHJobPlugin.supported_api(),

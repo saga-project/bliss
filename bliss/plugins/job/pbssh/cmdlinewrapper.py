@@ -220,11 +220,11 @@ class PBSService():
         return self.get_jobinfo(saga_jobid).state
 
 
-class PBSSHCmdLineWrapper():
+class PBSSHCmdLineWrapper(object):
     '''A wrapper around the PBS command line tools via SSH'''
 
-    __slots__ = {'prochandle', '_jd', '_plugin', 'returncode', 
-                 'pid', 'state' }
+    #__slots__ = {'prochandle', '_jd', '_plugin', 'returncode', 
+    #             'pid', 'state' }
 
     def __init__(self, jobdescription, contexts, plugin):
         '''Constructor'''

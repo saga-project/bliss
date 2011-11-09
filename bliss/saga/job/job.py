@@ -18,7 +18,7 @@ from bliss.saga import exception
 class JobID(object):
     '''Represents a SAGA job ID'''
     
-    __slots__ = {'_service', '_native'}
+    #__slots__ = {'_service', '_native'}
    
     ######################################################################
     ##
@@ -70,7 +70,7 @@ class Job(Object, AttributeInterface):
     Unknown  = "Unknown"
     '''Indicates that the job is in an unexpected state'''
 
-    __slots__ = {'_service', '_url', '_job_description', 'serviceurl'}
+    #__slots__ = {'_service', '_url', '_job_description', 'serviceurl'}
 
     def __init__(self):
         '''Constructor - not to be called directly'''

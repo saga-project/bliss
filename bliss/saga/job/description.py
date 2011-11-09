@@ -14,8 +14,8 @@ from bliss.saga.url import Url
 class Description(Object, AttributeInterface):
     '''Loosely represents a SAGA job description as defined in GFD.90'''
 
-    __slots__ = {'_executable', '_arguments', '_environment', '_project',
-                  '_output', '_error', '_queue'}
+#    __slots__ = {'_executable', '_arguments', '_environment', '_project',
+#                  '_output', '_error', '_queue'}
 
     def __init__(self):
         '''Constructor.'''

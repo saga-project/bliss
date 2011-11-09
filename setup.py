@@ -92,7 +92,6 @@ setup_args = {
         "bliss.plugins",
         "bliss.plugins.job",
         "bliss.plugins.job.local",
-        "bliss.plugins.job.gram",
         "bliss.plugins.job.pbssh"
     ],
     'scripts': scripts,
