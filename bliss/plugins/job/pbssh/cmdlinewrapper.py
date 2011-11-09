@@ -15,6 +15,27 @@ import bliss.saga
 
 from bliss.plugins.utils import CommandWrapper
 
+def pbs_to_saga_jobstate(pbsjs):
+    '''translates a pbs one-letter state to saga'''
+    if pbsjs == 'C':
+        return bliss.saga.job.Job.Done
+    elif pbsjs == 'E':
+        return bliss.saga.job.Job.Running
+    elif pbsjs == 'H':
+        return bliss.saga.job.Job.Waiting
+    elif pbsjs == 'Q':
+        return bliss.saga.job.Job.Waiting
+    elif pbsjs == 'R':
+        return bliss.saga.job.Job.Running 
+    elif pbsjs == 'T': 
+        return bliss.saga.job.Job.Running 
+    elif pbsjs == 'W':
+        return bliss.saga.job.Job.Waiting
+    elif pbsjs == 'S':
+        return bliss.saga.job.Job.Waiting
+    else:
+        return bliss.saga.job.Job.Unknown
+
 ##############################################################################
 ##
 class PBSJobInfo():
@@ -24,15 +45,11 @@ class PBSJobInfo():
     def __init__(self, qstat_string):
         '''Initialize from qstat string'''
         cols= qstat_string.split()
-
         self.jobid    = cols[0]
-        self.user     = cols[1]
-        self.queue    = cols[2]
-        self.name     = cols[3]
-        self.nodes    = cols[5]
-        self.walltime = cols[7]
-        self.state    = cols[8]
-        self.state    = cols[9]
+        self.user     = cols[2]
+        self.queue    = cols[5]
+        self.name     = cols[1]
+        self.state    = pbs_to_saga_jobstate(cols[4])
 
     Canceled = "Canceled"
     '''Indicates that the job has been canceled either by the user or the system'''
@@ -54,31 +71,6 @@ class PBSJobInfo():
 ##
 class PBSService():
     '''XX'''
-    ##########################################################################
-    ##
-
-    @classmethod
-    def pbs_to_saga_jobstate(self, pbsjs):
-        '''translates a pbs one-letter state to saga'''
-        if pbsjs == 'C':
-            return bliss.saga.job.Job.Done
-        elif pbsjs == 'E':
-            return bliss.saga.job.Job.Running
-        elif pbsjs == 'H':
-            return bliss.saga.job.Job.Waiting
-        elif pbsjs == 'Q':
-            return bliss.saga.job.Job.Waiting
-        elif pbsjs == 'R':
-            return bliss.saga.job.Job.Running 
-        elif pbsjs == 'T': 
-            return bliss.saga.job.Job.Running 
-        elif pbsjs == 'W':
-            return bliss.saga.job.Job.Waiting
-        elif pbsjs == 'S':
-            return bliss.saga.job.Job.Waiting
-        else:
-            return bliss.saga.job.Job.Unknown
-
 
     ##########################################################################
     ##
@@ -95,7 +87,24 @@ class PBSService():
 
         self._known_jobs = dict()
 
+    def _known_jobs_update(self, native_jobid, job_info):
+        self._known_jobs[native_jobid] = job_info
 
+    def _known_jobs_remove(self, native_jobid):
+        self._known_jobs.remove(native_jobid)
+
+    def _known_jobs_exists(self, native_jobid):
+        if native_jobid in self._known_jobs:
+            return True
+        else: 
+            return False
+
+    def _known_jobs_is_done(self, native_jobid):
+        if self._known_jobs[native_jobid].state == bliss.saga.job.Job.Done:
+            return True
+        else:
+            return False
+ 
     ##########################################################################
     ##  
     def _check_context(self): 
@@ -167,8 +176,9 @@ class PBSService():
         result = self._cw.run("qstat")
         lines = result.stdout.splitlines(True)
         for line in lines[2:]:
-            
-            jobids.append(bliss.saga.job.JobID(self._url, line.split()[0]))
+            jobinfo = PBSJobInfo(line)
+            self._known_jobs_update(jobinfo.jobid, jobinfo)
+            jobids.append(bliss.saga.job.JobID(self._url, jobinfo.jobid))
         return jobids
 
 
@@ -178,22 +188,36 @@ class PBSService():
         '''Returns a running PBS job as saga object'''
         if self._cw == None:
             self._check_context()
-        
-        result = self._cw.run("qstat -a %s" % (saga_jobid.native_id))
+
+        if self._known_jobs_exists(saga_jobid.native_id):
+            if self._known_jobs_is_done(saga_jobid.native_id):
+                return self._known_jobs[saga_jobid.native_id]
+
+
+        result = self._cw.run("qstat %s" % (saga_jobid.native_id))
         lines = result.stdout.split("\n")
-        if len(lines) != 5:
-            self._pi.log_error_and_raise(bliss.saga.Error.DoesNotExist, 
-            "Job with ID '%s' doesn't exist (anymore)" % saga_jobid)
-        return PBSJobInfo(lines[4])
+        if len(lines) != 3:
+            # if we don't get any return value, but the job
+            # is known, it must be in 'done' state
+            if self._known_jobs_exists(saga_jobid.native_id):
+                jobinfo = self._known_jobs[saga_jobid.native_id]
+                jobinfo.status = bliss.saga.job.Job.Done
+                return jobinfo
+            else:
+                self._pi.log_error_and_raise(bliss.saga.Error.DoesNotExist, 
+                "Job with ID '%s' doesn't exist (anymore)" % saga_jobid)
+
+        jobinfo = PBSJobInfo(lines[2])
+        self._known_jobs_update(jobinfo.jobid, jobinfo)
+
+        return jobinfo
 
 
     ######################################################################
     ##
     def get_job_state(self, saga_jobid):
         '''Returns the state of the job with the given jobid'''
-        jobinfo = self.get_jobinfo(saga_jobid)
-        return self.pbs_to_saga_jobstate(jobinfo.state)
- 
+        return self.get_jobinfo(saga_jobid).state
 
 
 class PBSSHCmdLineWrapper():

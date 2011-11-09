@@ -174,6 +174,7 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
             # get some information about the job
             pbs = self.bookkeeper.get_pbswrapper_for_service(service_obj)
             jobinfo = pbs.get_jobinfo(job_id)
+
             job_description = bliss.saga.job.Description()
             job_description.queue = jobinfo.queue
             job = bliss.saga.job.Job()
@@ -183,7 +184,7 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
             return job
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-              "Couldn't get job list because: %s " % (str(ex)))
+              "Couldn't reconnect to job because: %s " % (str(ex)))
 
 
     ######################################################################
