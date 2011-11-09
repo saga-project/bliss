@@ -15,6 +15,9 @@ import bliss.saga
 
 from bliss.plugins.utils import CommandWrapper
 
+################################################################################
+################################################################################
+
 def pbs_to_saga_jobstate(pbsjs):
     '''translates a pbs one-letter state to saga'''
     if pbsjs == 'C':
@@ -36,44 +39,61 @@ def pbs_to_saga_jobstate(pbsjs):
     else:
         return bliss.saga.job.Job.Unknown
 
-##############################################################################
-##
-class PBSJobInfo():
-    '''Encapsulates a PBS job'''
-    ##########################################################################
-    ##
-    def __init__(self, qstat_string):
-        '''Initialize from qstat string'''
-        cols= qstat_string.split()
-        self.jobid    = cols[0]
-        self.user     = cols[2]
-        self.queue    = cols[5]
-        self.name     = cols[1]
-        self.state    = pbs_to_saga_jobstate(cols[4])
+################################################################################
+################################################################################
 
-    Canceled = "Canceled"
-    '''Indicates that the job has been canceled either by the user or the system'''
-    Done     = "Done"
-    '''Indicates that the job has successfully executed''' 
-    Failed   = "Failed"
-    '''Indicates that the execution of the job has failed'''
-    New      = "New"
-    '''Indicates that the job hasn't been started yet'''
-    Running  = "Running"
-    '''Indicates that the job is executing'''
-    Waiting  = "Waiting"
-    '''Indicates that the job is waiting to be executed (NOT IN GFD.90)'''
-    Unknown  = "Unknown"
-    '''Indicates that the job is in an unexpected state'''
+class PBSJobInfo(object):
+    '''Encapsulates infos about a PBS job as returned by qstat -f1.'''
+
+    def __init__(self, qstat_f_output, plugin):
+        '''Constructor: initialize from qstat -f <jobid> string.
+        '''
+        
+        plugin.log_debug("Got raw qstat output: %s" % qstat_f_output) 
+        lines = qstat_f_output.split("\n")
+        self._jobid = lines[0].split(":")[1].strip()
+
+        for line in lines[1:]:
+            try: 
+                (key, value) = line.split(" = ")
+                key = "_%s" % key.strip()
+                self.__dict__[key] = value
+            except Exception, ex:
+                pass
+        plugin.log_debug("Parsed qstat output: %s" % str(self.__dict__))
 
 
-##############################################################################
-##
+    @property 
+    def state(self):
+        return pbs_to_saga_jobstate(self._job_state)
+
+    @property 
+    def jobid(self):
+        return self._jobid
+
+    @property 
+    def walltime_limit(self):
+        return self._Resource_List.walltime
+
+    @property 
+    def output_path(self):
+        return self._Output_Path
+
+    @property 
+    def error_path(self):
+        return self._Error_Path
+
+    @property 
+    def queue(self):
+        return self._queue
+
+################################################################################
+################################################################################
+
 class PBSService():
-    '''XX'''
+    '''Encapsulates PBS command line tools.
+    '''
 
-    ##########################################################################
-    ##
     def __init__(self, plugin, service_obj):
         '''Constructor'''
         self._pi = plugin
@@ -106,8 +126,8 @@ class PBSService():
         else:
             return False
  
-    ##########################################################################
-    ##  
+    ######################################################################
+    ##
     def _check_context(self): 
         '''sets self._cw to a usable access configuration or throws'''
         
@@ -137,7 +157,8 @@ class PBSService():
                         if result.returncode == 0:
                             usable_ctx = ctx
                             self._cw = cw
-                            self._pi.log_info("Using context %s to access %s succeeded" % (ctx, self._url))
+                            self._pi.log_info("Using context %s to access %s succeeded" \
+                              % (ctx, self._url))
                             break
                     except Exception, ex:
                         self._pi.log_warning("Using context %s to access %s failed because: %s" \
@@ -178,10 +199,14 @@ class PBSService():
         if self._cw == None:
             self._check_context()
         
-        result = self._cw.run("qstat")
-        lines = result.stdout.splitlines(True)
-        for line in lines[2:]:
-            jobinfo = PBSJobInfo(line)
+        result = self._cw.run("qstat -f1")
+        if result.returncode != 0:
+            self._pi.log_error("Error running 'qstat': %s" % result.stderr)
+            raise Exception("blah")
+
+        lines = result.stdout.split("\n\n")
+        for line in lines:
+            jobinfo = PBSJobInfo(line, self._pi)
             self._known_jobs_update(jobinfo.jobid, jobinfo)
             jobids.append(bliss.saga.job.JobID(self._url, jobinfo.jobid))
         return jobids
@@ -199,20 +224,12 @@ class PBSService():
                 return self._known_jobs[saga_jobid.native_id]
 
 
-        result = self._cw.run("qstat %s" % (saga_jobid.native_id))
-        lines = result.stdout.split("\n")
-        if len(lines) != 3:
-            # if we don't get any return value, but the job
-            # is known, it must be in 'done' state
-            if self._known_jobs_exists(saga_jobid.native_id):
-                jobinfo = self._known_jobs[saga_jobid.native_id]
-                jobinfo.status = bliss.saga.job.Job.Done
-                return jobinfo
-            else:
-                self._pi.log_error_and_raise(bliss.saga.Error.DoesNotExist, 
-                "Job with ID '%s' doesn't exist (anymore)" % saga_jobid)
+        result = self._cw.run("qstat -f1 %s" % (saga_jobid.native_id))
+        if result.returncode != 0:
+            self._pi.log_error("Error running 'qstat': %s" % result.stderr)
+            raise Exception("blah")
 
-        jobinfo = PBSJobInfo(lines[2])
+        jobinfo = PBSJobInfo(result.stdout, self._pi)
         self._known_jobs_update(jobinfo.jobid, jobinfo)
 
         return jobinfo
@@ -221,28 +238,10 @@ class PBSService():
     ######################################################################
     ##
     def get_job_state(self, saga_jobid):
-        '''Returns the state of the job with the given jobid'''
+        '''Returns the state of the job with the given jobid.
+        '''
         return self.get_jobinfo(saga_jobid).state
 
-
-class PBSSHCmdLineWrapper(object):
-    '''A wrapper around the PBS command line tools via SSH'''
-
-    #__slots__ = {'prochandle', '_jd', '_plugin', 'returncode', 
-    #             'pid', 'state' }
-
-    def __init__(self, jobdescription, contexts, plugin):
-        '''Constructor'''
-        self._jd = jobdescription
-        self._plugin = plugin
-        
-        self.prochandle = None
-        self.pid = None
-        self.returncode = None
-        self.state = bliss.saga.job.Job.New
-
-            
- 
 
     ######################################################################
     ##
@@ -256,7 +255,7 @@ class PBSSHCmdLineWrapper(object):
             exec_n_args += "%s " % (jd.executable) 
         if jd.arguments is not None:
             for arg in jd.arguments:
-                exec_n_args += "%s " (arg)
+                exec_n_args += "%s " % (arg)
 
         pbs_params += "#PBS -N %s \n" % "bliss_job" 
              
@@ -264,51 +263,58 @@ class PBSSHCmdLineWrapper(object):
             pbs_params += "#PBS -o %s \n" % jd.output
         if jd.error is not None:
             pbs_params += "#PBS -e %s \n" % jd.error 
+        if jd.working_directory is not None:
+            pbs_params += "#PBS -d %s \n" % jd.working_directory
+        if jd.walltime_limit is not None:
+            pbs_params += "#PBS -l walltime=%s \n" % jd.walltime_limit
+        if jd.queue is not None:
+            pbs_params += "#PBS -q %s \n" % jd.queue
+        if jd.project is not None:
+            pbs_params += "#PBS -A %s \n" % jd.project[0]
 
         pbscript = "\n#!/bin/bash \n%s \n%s" % (pbs_params, exec_n_args)
-        self._plugin.log_info("Generated PBS script: %s" % (pbscript))
+        self._pi.log_info("Generated PBS script: %s" % (pbscript))
         return pbscript
 
 
-    def run(self):
-        '''run the job using qsub'''
-        cw = CommandWrapper()
+    ######################################################################
+    ##
+    def submit_job(self, job):
+        '''Submits a job to PBS and returns a jobinfo structure.
+        '''
+        if self._cw == None:
+            self._check_context()
 
-    def getpid(self, serviceurl):
-        return "[%s]-[%s]" % (serviceurl, self.pid)
-
-    def getstate(self):
-        if self.state == bliss.saga.job.Job.Running:
-            # only update if still running 
-            self.returncode = self.prochandle.poll() 
-            if self.returncode is not None:
-                if self.returncode != 0:
-                    self.state = bliss.saga.job.Job.Failed
-                else:
-                    self.state = bliss.saga.job.Job.Done
-
-        return self.state
-
-    def terminate(self):
-        self.prochandle.terminate()
-        self.state = bliss.saga.job.Job.Canceled
-
-
-    def wait(self, timeout):
-        if timeout == -1:
-            self.returncode = self.prochandle.wait()
+        script = self._pbscript_generator(job.get_description())
+        result = self._cw.run("echo '%s' | qsub" % (script))
+        if result.returncode != 0:
+            self._pi.log_error("Error running 'qstat': %s" % result.stderr)
+            raise Exception("blah")
         else:
-            t_beginning = time.time()
-            seconds_passed = 0
-            while True:
-                self.returncode = self.prochandle.poll()
-                if self.returncode is not None:
-                    break
-                seconds_passed = time.time() - t_beginning
-                if timeout and seconds_passed > timeout:
-                    break
-                time.sleep(0.1)
+            jobinfo = self.get_jobinfo(bliss.saga.job.JobID(self._url, 
+              result.stdout.split("\n")[0]))
+            return jobinfo
 
-    def get_exitcode(self):
-        return self.returncode
+#    def terminate(self):
+#        self.prochandle.terminate()
+#        self.state = bliss.saga.job.Job.Canceled
+#
+#
+#    def wait(self, timeout):
+#        if timeout == -1:
+#            self.returncode = self.prochandle.wait()
+#        else:
+#            t_beginning = time.time()
+#            seconds_passed = 0
+#            while True:
+#                self.returncode = self.prochandle.poll()
+#                if self.returncode is not None:
+         #           break
+               # seconds_passed = time.time() - t_beginning
+               # if timeout and seconds_passed > timeout:
+               #     break
+               # time.sleep(0.1)
+#
+#    def get_exitcode(self):
+#        return self.returncode
     

@@ -33,6 +33,10 @@ class _PluginBase:
         self.__logger.error(message)
         raise SAGAException(error, msg)
 
+    def log_debug(self, message):
+        '''Writes a DEBUG message to the plugin log'''
+        self.__logger.debug(message)
+
     def log_info(self, message):
         '''Writes an INFO to the plugin log'''
         self.__logger.info(message)
@@ -40,7 +44,6 @@ class _PluginBase:
     def log_warning(self, message):
         '''Writes a WARNING to the plugin log'''
         self.__logger.warning(message)
-
 
     def log_error(self, message):
         '''Writes an ERROR to the plugin log'''

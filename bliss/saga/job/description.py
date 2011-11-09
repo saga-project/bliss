@@ -22,13 +22,16 @@ class Description(Object, AttributeInterface):
         Object.__init__(self, Object.JobDescription)
         AttributeInterface.__init__(self)
 
-        self._executable  = None
-        self._arguments   = None
-        self._environment = None
-        self._project     = None
-        self._output      = None
-        self._error       = None
-        self._queue       = None
+        self._executable        = None
+        self._arguments         = None
+        self._environment       = None
+        self._project           = None
+        self._output            = None
+        self._error             = None
+        self._queue             = None
+        self._walltime_limit    = None
+        self._working_directory = None
+
 
         # register properties with the attribute interface
         self._register_rw_attribute     (name="Executable", 
@@ -39,12 +42,17 @@ class Description(Object, AttributeInterface):
                                          accessor=self.__class__.error) 
         self._register_rw_attribute     (name="Queue", 
                                          accessor=self.__class__.queue) 
+        self._register_rw_attribute     (name="WallTimeLimit", 
+                                         accessor=self.__class__.walltime_limit) 
+        self._register_rw_attribute     (name="WorkingDirectory", 
+                                         accessor=self.__class__.working_directory) 
+
 
         self._register_rw_vec_attribute (name="Arguments", 
                                          accessor=self.__class__.arguments) 
         self._register_rw_vec_attribute (name="Environment", 
                                          accessor=self.__class__.environment) 
-        self._register_rw_vec_attribute (name="Project", 
+        self._register_rw_vec_attribute (name="JobProject", 
                                          accessor=self.__class__.project) 
 
     def __del__(self):
@@ -142,3 +150,28 @@ class Description(Object, AttributeInterface):
         return locals()
     queue = property(**queue())
 
+    ######################################################################
+    ## Property: walltime_limit
+    def walltime_limit():
+        doc = "The hard limit for the total job runtime."
+        def fget(self):
+            return self._walltime_limit
+        def fset(self, val):
+            self._walltime_limit = val
+        def fdel(self, val):
+            self._walltime_limit = None
+        return locals()
+    walltime_limit = property(**walltime_limit())
+
+    ######################################################################
+    ## Property: walltime_limit
+    def working_directory():
+        doc = "The working directory for the job."
+        def fget(self):
+            return self._working_directory
+        def fset(self, val):
+            self._working_directory = val
+        def fdel(self, val):
+            self._working_directory = None
+        return locals()
+    working_directory = property(**working_directory())

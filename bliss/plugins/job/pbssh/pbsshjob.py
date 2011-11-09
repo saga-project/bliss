@@ -8,10 +8,13 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.plugins.job.jobinterface  import _JobPluginBase
-from bliss.plugins.job.pbssh.cmdlinewrapper import PBSSHCmdLineWrapper, PBSService
+from bliss.plugins.job.pbssh.cmdlinewrapper import PBSService
 from bliss.plugins import utils
 
 import bliss.saga
+
+################################################################################
+################################################################################
 
 class PBSOverSSHJobPlugin(_JobPluginBase):
     '''Implements a job plugin that can submit jobs to remote PBS cluster via SSH
@@ -164,7 +167,12 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
     ######################################################################
     ##  
     def service_create_job(self, service_obj, job_description):
-        '''Implements interface from _JobPluginBase'''
+        '''Implements interface from _JobPluginBase.
+           This method is called for saga.Service.create_job().
+        '''
+        if job_description.executable is None:   
+            self.log_error_and_raise(bliss.saga.Error.BadParameter, 
+              "No executable defined in job description")
         try:
             job = bliss.saga.job.Job()
             job._Job__init_from_service(service_obj=service_obj, 
@@ -180,8 +188,9 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
     ######################################################################
     ##
     def service_get_job(self, service_obj, job_id):
-        '''Implements interface from _JobPluginBase'''
-        ## Implement service_get_job() 
+        '''Implements interface from _JobPluginBase.
+           This method is called for saga.Service.get_job().
+        '''
         try:
             # get some information about the job
             pbs = self.bookkeeper.get_pbswrapper_for_service(service_obj)
@@ -202,10 +211,12 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
     ######################################################################
     ##
     def job_get_state(self, job):
-        '''Implements interface from _JobPluginBase'''
+        '''Implements interface from _JobPluginBase.
+           This method is called for the saga.Job.state property.'''
         try:
             if self.bookkeeper.get_jobid_for_job(job).native_id == None:
-                ## The job hasn't been submitted yet
+                ## The job hasn't been submitted yet - don't process
+                ## it using the PBSwrapper. 
                 return bliss.saga.job.Job.New
             else:
                 service = self.bookkeeper.get_service_for_job(job)
@@ -219,10 +230,13 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
     ######################################################################
     ##
     def job_get_job_id(self, job):
-        '''Implements interface from _JobPluginBase'''
+        '''Implements interface from _JobPluginBase.
+           This method is called for saga.Job.get_job_id().
+        '''
         try:
             if self.bookkeeper.get_jobid_for_job(job).native_id == None:
-                ## The job hasn't been submitted yet
+                ## The job hasn't been submitted yet - don't process
+                ## it using the PBSwrapper. 
                 return self.bookkeeper.get_jobid_for_job(job)
             else:
                 return self.bookkeeper.get_jobid_for_job(job)
@@ -235,13 +249,18 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
     ##
     def job_run(self, job):
         '''Implements interface from _JobPluginBase'''
-        if job.get_description().executable is None:   
-            self.log_error_and_raise(bliss.saga.Error.BadParameter, 
-              "No executable defined in job description")
+        if self.bookkeeper.get_jobid_for_job(job).native_id != None:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't run the job because: job is not in 'New' state.")
+
         try:
             service = self.bookkeeper.get_service_for_job(job)
+            pbs = self.bookkeeper.get_pbswrapper_for_service(service)
+            jobinfo = pbs.submit_job(job) 
+            
+            sagajobid = bliss.saga.job.JobID(service._url, jobinfo.jobid)
+            self.bookkeeper.add_job_object_to_service(job, service, sagajobid)
 
-            self.bookkeeper.get_process_for_job(job).run()  
             self.log_info("Started local process: %s %s" \
               % (job.get_description().executable, job.get_description().arguments))
         except Exception, ex:
@@ -251,28 +270,28 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
 
     ######################################################################
     ##
-    def job_cancel(self, job, timeout):
-        '''Implements interface from _JobPluginBase'''
-        ## Step X: implement job.cancel()
-        try:
-            self.bookkeeper.get_process_for_job(job).terminate()  
-            self.log_info("Terminated local process: %s %s" \
-              % (job.get_description().executable, job.get_description().arguments)) 
-        except Exception, ex:
-            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-              "Couldn't cancel job because: %s (already finished?)" % (str(ex)))
+    #def job_cancel(self, job, timeout):
+    #    '''Implements interface from _JobPluginBase'''
+    #    ## Step X: implement job.cancel()
+    #    try:
+    #        self.bookkeeper.get_process_for_job(job).terminate()  
+    #        self.log_info("Terminated local process: %s %s" \
+    #          % (job.get_description().executable, job.get_description().arguments)) 
+    #    except Exception, ex:
+    #        self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+    #          "Couldn't cancel job because: %s (already finished?)" % (str(ex)))
 
 
     ######################################################################
     ## 
-    def job_wait(self, job, timeout):
-        '''Implements interface from _JobPluginBase'''
-        try:
-            service = self.bookkeeper.get_service_for_job(job)
-            self.bookkeeper.get_process_for_job(job).wait(timeout)   
-        except Exception, ex:
-            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-              "Couldn't wait for the job because: %s " % (str(ex)))
+    #def job_wait(self, job, timeout):
+    #    '''Implements interface from _JobPluginBase'''
+    #    try:
+    #        service = self.bookkeeper.get_service_for_job(job)
+    #        self.bookkeeper.get_process_for_job(job).wait(timeout)   
+    #    except Exception, ex:
+    #        self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+    #          "Couldn't wait for the job because: %s " % (str(ex)))
 
     def job_get_exitcode(self, job_obj):
         '''Implements interface from _JobPluginBase'''
