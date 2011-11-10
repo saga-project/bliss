@@ -14,9 +14,11 @@ from bliss.saga.object import Object as SAGAObject
 urlparse.uses_netloc.append("fork")
 urlparse.uses_fragment.append("fork")
 
-urlparse.uses_netloc.append("gram")
-urlparse.uses_fragment.append("gram")
+urlparse.uses_netloc.append("pbs")
+urlparse.uses_fragment.append("pbs")
 
+urlparse.uses_netloc.append("pbs+ssh")
+urlparse.uses_fragment.append("pbs+ssh")
 
 class Url(SAGAObject):
     '''Looesely defines a SAGA Url class as defined in GFD.90.'''

@@ -34,12 +34,12 @@ class _JobPluginBase(_PluginBase):
 #        #return job
 
     def register_service_object(self, service_obj):
-        self.log_error("Not implemented plugin method called: register_service_object()")
+        errormsg = "Not implemented plugin method called: register_service_object()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def register_job_object(self, job_obj, service_obj):
         '''This method is called upon instantiation of a new job object'''
-        self.log_error("Not implemented plugin method called: register_job_object()")
+        errormsg = "Not implemented plugin method called: register_job_object()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def unregister_service_object(self, service_obj):

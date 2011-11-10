@@ -12,7 +12,7 @@ from bliss.saga.context import Context
 class Session(object):
     '''Looesely defines a SAGA Session object as defined in GFD.90.'''
 
-    __slots__ = {'_contexts'}
+    #__slots__ = {'_contexts'}
 
     ######################################################################
     ## 

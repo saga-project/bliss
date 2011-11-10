@@ -15,6 +15,7 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
+import time
 import bliss.saga as saga
 
 def main():
@@ -30,31 +31,53 @@ def main():
         js = saga.job.Service("pbs+ssh://india.futuregrid.org")
         js.session.contexts.append(ctx)
 
+        #for jobid in js.list():
+        #    job = js.get_job(jobid)
+        #    print "Job ID: %s, State: %s" % (job.jobid, job.get_state())
+
+        #js = saga.job.Service("pbs+ssh://india.futuregrid.org")
+        #js.session.contexts.append(ctx)
+
+        #for jobid in js.list():
+        #    job = js.get_job(jobid)
+        #    print "Job ID: %s, State: %s" % (job.jobid, job.get_state())
+
         # describe our job
         jd = saga.job.Description()
-        jd.set_attribute("Executable", '/bin/date')
-        jd.output = "pbsjob.stdout"
-        jd.error  = "pbsjob.stderr"
+        jd.executable = '/bin/sleep'
+        jd.arguments = ['30']
+        jd.walltime_limit = "0:10:00"
+
+        jd.output = "my_job.stdout"
+        jd.error  = "my_job.stderr"
 
         # create & run the job
         myjob = js.create_job(jd)
 
+        print "Job ID    : %s" % (myjob.jobid)
         print "Job State : %s" % (myjob.get_state())
 
         myjob.run()
 
+        time.sleep(5)
+        myjob.cancel()
+
         print "Job ID    : %s" % (myjob.jobid)
         print "Job State : %s" % (myjob.get_state())
-        
-        print "...waiting for job..."
-        myjob.wait()
 
-        print "Job State : %s" % (myjob.get_state())
-        print "Exitcode  : %s" % (myjob.get_attribute("Exitcode"))
+        #time.sleep(60)
+#
+#
+ #       print "Job ID    : %s" % (myjob.jobid)
+  #      print "Job State : %s" % (myjob.get_state())
+#
+ #       print "...waiting for job..."
+#
+ #       print "Job State : %s" % (myjob.get_state())
+        print "Exitcode  : %s" % (myjob.exitcode)
 
     except saga.Exception, ex:
         print "Oh, snap! An error occured: %s" % (str(ex))
-        print "Traceback: %s" % ex.traceback
 
 if __name__ == "__main__":
     main()

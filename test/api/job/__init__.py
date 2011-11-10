@@ -6,3 +6,4 @@ __author__    = "Ole Christian Weidner"
 __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
+

@@ -16,9 +16,9 @@ import bliss.saga
 class LocalJobProcess(object):
     '''A wrapper around a subprocess'''
 
-    __slots__ = {'prochandle', 'executable', 'arguments', 
-                 'environment', 'returncode', 'pid', 'state',
-                 't_created', 't_started', 't_finished'}
+#    __slots__ = {'prochandle', 'executable', 'arguments', 
+#                 'environment', 'returncode', 'pid', 'state',
+#                 't_created', 't_started', 't_finished'}
 
     def __init__(self, jobdescription):
         self.executable  = jobdescription.executable
