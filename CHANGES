@@ -1,3 +1,6 @@
-Version 0.1.1 released 2011-10-06
 
-* First official release
+Version 0.1.7 released 2011-11-09
+
+    * More or less stable job API
+    
+    * First functional PBS over SSH plugin 
