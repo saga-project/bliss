@@ -31,49 +31,32 @@ def main():
         js = saga.job.Service("pbs+ssh://india.futuregrid.org")
         js.session.contexts.append(ctx)
 
-        #for jobid in js.list():
-        #    job = js.get_job(jobid)
-        #    print "Job ID: %s, State: %s" % (job.jobid, job.get_state())
-
-        #js = saga.job.Service("pbs+ssh://india.futuregrid.org")
-        #js.session.contexts.append(ctx)
-
-        #for jobid in js.list():
-        #    job = js.get_job(jobid)
-        #    print "Job ID: %s, State: %s" % (job.jobid, job.get_state())
-
         # describe our job
         jd = saga.job.Description()
+        jd.walltime_limit = "0:10:00"        
         jd.executable = '/bin/sleep'
         jd.arguments = ['30']
-        jd.walltime_limit = "0:10:00"
+        jd.output = "pbssh_job.stdout"
+        jd.error  = "pbssh_job.stderr"
 
-        jd.output = "my_job.stdout"
-        jd.error  = "my_job.stderr"
-
-        # create & run the job
+        # create the job (state: New)
         myjob = js.create_job(jd)
 
         print "Job ID    : %s" % (myjob.jobid)
         print "Job State : %s" % (myjob.get_state())
 
+        print "\n...starting job...\n"
+        # run the job (submit the job to PBS)
         myjob.run()
-
-        time.sleep(5)
-        myjob.cancel()
 
         print "Job ID    : %s" % (myjob.jobid)
         print "Job State : %s" % (myjob.get_state())
 
-        #time.sleep(60)
-#
-#
- #       print "Job ID    : %s" % (myjob.jobid)
-  #      print "Job State : %s" % (myjob.get_state())
-#
- #       print "...waiting for job..."
-#
- #       print "Job State : %s" % (myjob.get_state())
+        print "\n...waiting for job...\n"
+        # wait for the job to either finish or fail
+        myjob.wait()
+
+        print "Job State : %s" % (myjob.get_state())
         print "Exitcode  : %s" % (myjob.exitcode)
 
     except saga.Exception, ex:

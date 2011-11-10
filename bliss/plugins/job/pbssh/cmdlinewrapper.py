@@ -175,8 +175,8 @@ class PBSService():
                               % (ctx, self._url))
                             break
                     except Exception, ex:
-                        self._pi.log_warning("Using context %s to access %s failed because: %s" \
-                          % (ctx, self._url, result.error))
+                        self._pi.log_warning("Using context %s to access %s failed." \
+                          % (ctx, self._url))
 
             if usable_ctx is None:
                 # see if we can use system defaults to run

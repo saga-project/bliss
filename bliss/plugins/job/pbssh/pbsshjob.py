@@ -11,6 +11,7 @@ from bliss.plugins.job.jobinterface  import _JobPluginBase
 from bliss.plugins.job.pbssh.cmdlinewrapper import PBSService
 from bliss.plugins import utils
 
+import time
 import bliss.saga
 
 ################################################################################
@@ -285,15 +286,19 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
 
     ######################################################################
     ## 
-    #def job_wait(self, job, timeout):
-    #    '''Implements interface from _JobPluginBase'''
-    #    try:
-    #        service = self.bookkeeper.get_service_for_job(job)
-    #        self.bookkeeper.get_process_for_job(job).wait(timeout)   
-    #    except Exception, ex:
-    #        self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-    #          "Couldn't wait for the job because: %s " % (str(ex)))
+    def job_wait(self, job_obj, timeout):
+        '''Implements interface from _JobPluginBase.
+           This method is called for saga.Job.wait().'''
+        try:
+            while self.job_get_state(job_obj) == bliss.saga.job.Job.Running:
+                time.sleep(2)
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't wait for job because: %s (already finished?)" % (str(ex)))
+ 
 
+    ######################################################################
+    ## 
     def job_get_exitcode(self, job_obj):
         '''Implements interface from _JobPluginBase.'''
         try:
