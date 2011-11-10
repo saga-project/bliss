@@ -3,7 +3,11 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 '''This examples shows how to submit a job to a PBS 
-   jobmanager via ssh using the 'pythonic' version of the API. 
+   jobmanager via ssh using a custom security context.
+
+   If the security context is left empty, the PBS
+   adaptor will pick up the default set of ssh credentials
+   of the user, i.e., ~/.ssh/id_rsa.
 '''
 
 __author__    = "Ole Christian Weidner"
@@ -19,10 +23,10 @@ def main():
         # set up the security context
         ctx = saga.Context()
         ctx.type = saga.Context.SSH
-        ctx.userid  = 'oweidner'
-        ctx.usercert = '/Users/oweidner/.ssh/id_rsa'
+        ctx.userid  = 'oweidner' # like 'ssh username@host ...'
+        ctx.usercert = '/Users/oweidner/.ssh/id_rsa_fg' # like ssh -i ...'
  
-        # start a local job service
+        # create a job service
         js = saga.job.Service("pbs+ssh://india.futuregrid.org")
         js.session.contexts.append(ctx)
 
