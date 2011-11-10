@@ -6,10 +6,10 @@
    jobmanager via ssh using a custom security context.
 
    If something doesn't work as expected, try to set 
-   SAGA_VERBOSE=6 in your environment before you run the
+   SAGA_VERBOSE=3 in your environment before you run the
    script in order to get some debug output.
 
-   If you think you have considered a defect, please 
+   If you think you have encountered a defect, please 
    report it at: https://github.com/oweidner/bliss/issues
 '''
 

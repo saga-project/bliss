@@ -290,8 +290,13 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
         '''Implements interface from _JobPluginBase.
            This method is called for saga.Job.wait().'''
         try:
-            while self.job_get_state(job_obj) == bliss.saga.job.Job.Running:
-                time.sleep(2)
+            while True:
+                state = self.job_get_state(job_obj)
+                if state == bliss.saga.job.Job.Running \
+                or state == bliss.saga.job.Job.Waiting:
+                    time.sleep(2)
+                else:
+                    break
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
               "Couldn't wait for job because: %s (already finished?)" % (str(ex)))
