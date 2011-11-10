@@ -17,18 +17,27 @@ from bliss.plugins import utils
 class Object(object) :
     '''Loosely resembles a SAGA object as defined in GFD.90'''
 
-    Url            = "saga.Url"
+    Url                  = "saga.Url"
     '''saga.Url object type.'''
-    Session        = "saga.Session"
+    Session              = "saga.Session"
     '''saga.Session object type.'''
-    Context        = "saga.Context"
+    Context              = "saga.Context"
     '''saga.Context object type.'''
-    Job            = "saga.job.Job"
+
+    Job                  = "saga.job.Job"
     '''saga.job.Job object typ.e'''
-    JobService     = "saga.job.Service"
+    JobService           = "saga.job.Service"
     '''saga.job.Service object type.'''
-    JobDescription = "saga.job.Description"
+    JobDescription       = "saga.job.Description"
     '''saga.job.Description object type.'''
+
+    SDDiscoverer         = "saga.sd.Discoverer"
+    '''saga.sd.Discoverer object type.'''
+    SDServiceDescription = "saga.sd.ServiceDescription"
+    '''saga.sd.ServiceDescription object type.'''
+    SDSerivceData        = "saga.sd.ServiceData"
+    '''saga.sd.ServiceData object type.'''
+
 
     __shared_state = {}
     __shared_state["runtime_initialized"] = False

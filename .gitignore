@@ -10,10 +10,12 @@
 *.pyc
 
 # generated 
-air/scripts/config.py
+MANIFEST
+
 
 # build dirs
-air.egg-info/
+bliss.egg-info/
 build/
+html/
 dist/
 
