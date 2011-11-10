@@ -31,7 +31,8 @@ class Description(Object, AttributeInterface):
         self._queue             = None
         self._walltime_limit    = None
         self._working_directory = None
-
+        self._contact           = None
+        self._total_cpu_count   = None
 
         # register properties with the attribute interface
         self._register_rw_attribute     (name="Executable", 
@@ -46,7 +47,10 @@ class Description(Object, AttributeInterface):
                                          accessor=self.__class__.walltime_limit) 
         self._register_rw_attribute     (name="WorkingDirectory", 
                                          accessor=self.__class__.working_directory) 
-
+        self._register_rw_attribute     (name="Contact", 
+                                         accessor=self.__class__.contact) 
+        self._register_rw_attribute     (name="TotalCPUCount", 
+                                         accessor=self.__class__.total_cpu_count) 
 
         self._register_rw_vec_attribute (name="Arguments", 
                                          accessor=self.__class__.arguments) 
@@ -164,7 +168,7 @@ class Description(Object, AttributeInterface):
     walltime_limit = property(**walltime_limit())
 
     ######################################################################
-    ## Property: walltime_limit
+    ## Property: 
     def working_directory():
         doc = "The working directory for the job."
         def fget(self):
@@ -175,3 +179,32 @@ class Description(Object, AttributeInterface):
             self._working_directory = None
         return locals()
     working_directory = property(**working_directory())
+
+
+    ######################################################################
+    ## Property: 
+    def contact():
+        doc = "Endpoint describing where to report job state transitions (e.g., email)."
+        def fget(self):
+            return self._contact
+        def fset(self, val):
+            self._contact = val
+        def fdel(self, val):
+            self._contact = None
+        return locals()
+    contact = property(**contact())
+
+
+    ######################################################################
+    ## Property: 
+    def total_cpu_count():
+        doc = "Total number of cpus requested for this job."
+        def fget(self):
+            return self._total_cpu_count
+        def fset(self, val):
+            self._total_cpu_count = val
+        def fdel(self, val):
+            self._total_cpu_count = None
+        return locals()
+    total_cpu_count = property(**total_cpu_count())
+

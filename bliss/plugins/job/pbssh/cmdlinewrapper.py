@@ -36,6 +36,8 @@ def pbs_to_saga_jobstate(pbsjs):
         return bliss.saga.job.Job.Waiting
     elif pbsjs == 'S':
         return bliss.saga.job.Job.Waiting
+    elif pbsjs == 'X':
+        return bliss.saga.job.Job.Canceled
     else:
         return bliss.saga.job.Job.Unknown
 
@@ -128,8 +130,12 @@ class PBSService():
         else: 
             return False
 
-    def _known_jobs_is_done(self, native_jobid):
+    def _known_jobs_is_final(self, native_jobid):
         if self._known_jobs[native_jobid].state == bliss.saga.job.Job.Done:
+            return True
+        elif self._known_jobs[native_jobid].state == bliss.saga.job.Job.Failed:
+            return True
+        elif self._known_jobs[native_jobid].state == bliss.saga.job.Job.Canceled:
             return True
         else:
             return False
@@ -227,7 +233,7 @@ class PBSService():
             self._check_context()
 
         if self._known_jobs_exists(saga_jobid.native_id):
-            if self._known_jobs_is_done(saga_jobid.native_id):
+            if self._known_jobs_is_final(saga_jobid.native_id):
                 return self._known_jobs[saga_jobid.native_id]
 
 
@@ -274,7 +280,8 @@ class PBSService():
                 exec_n_args += "%s " % (arg)
 
         pbs_params += "#PBS -N %s \n" % "bliss_job" 
-             
+        pbs_params += "#PBS -V     \n"
+    
         if jd.output is not None:
             pbs_params += "#PBS -o %s \n" % jd.output
         if jd.error is not None:
@@ -287,9 +294,14 @@ class PBSService():
             pbs_params += "#PBS -q %s \n" % jd.queue
         if jd.project is not None:
             pbs_params += "#PBS -A %s \n" % jd.project[0]
+        if jd.contact is not None:
+            pbs_params += "#PBS -m abe \n"
+        #if jd.environment is not None:
+        #    for (key,value) in environment 
+        #    pbs_params += "#PBS -v 
 
         pbscript = "\n#!/bin/bash \n%s \n%s" % (pbs_params, exec_n_args)
-        self._pi.log_info("Generated PBS script: %s" % (pbscript))
+        self._pi.log_debug("Generated PBS script: %s" % (pbscript))
         return pbscript
 
 
@@ -305,33 +317,26 @@ class PBSService():
         result = self._cw.run("echo '%s' | qsub" % (script))
  
         if result.returncode != 0:
-            self._pi.log_error("Error running 'qstat': %s" % result.stderr)
-            raise Exception("blah")
+            raise Exception("Error running 'qstat': %s" % result.stderr)
         else:
             jobinfo = self.get_jobinfo(bliss.saga.job.JobID(self._url, 
               result.stdout.split("\n")[0]))
             return jobinfo
 
-#    def terminate(self):
-#        self.prochandle.terminate()
-#        self.state = bliss.saga.job.Job.Canceled
-#
-#
-#    def wait(self, timeout):
-#        if timeout == -1:
-#            self.returncode = self.prochandle.wait()
-#        else:
-#            t_beginning = time.time()
-#            seconds_passed = 0
-#            while True:
-#                self.returncode = self.prochandle.poll()
-#                if self.returncode is not None:
-         #           break
-               # seconds_passed = time.time() - t_beginning
-               # if timeout and seconds_passed > timeout:
-               #     break
-               # time.sleep(0.1)
-#
-#    def get_exitcode(self):
-#        return self.returncode
-    
+    ######################################################################
+    ##
+    def cancel_job(self, saga_jobid):
+        '''Cancel the job.
+        '''
+        if self._cw == None:
+            self._check_context()
+
+        result = self._cw.run("qdel %s" % (saga_jobid.native_id))
+ 
+        if result.returncode != 0:
+            raise Exception("Error running 'qdel': %s" % result.stderr)
+        else:
+            jobinfo = self.get_jobinfo(saga_jobid)
+            if jobinfo.state == bliss.saga.job.Job.Done:
+                self.get_jobinfo(saga_jobid)._job_state = 'X' # pseudo-PBS 'Canceled'
+            #return jobinfo

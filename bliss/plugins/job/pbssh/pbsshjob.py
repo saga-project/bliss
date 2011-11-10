@@ -270,17 +270,18 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
 
     ######################################################################
     ##
-    #def job_cancel(self, job, timeout):
-    #    '''Implements interface from _JobPluginBase'''
-    #    ## Step X: implement job.cancel()
-    #    try:
-    #        self.bookkeeper.get_process_for_job(job).terminate()  
-    #        self.log_info("Terminated local process: %s %s" \
-    #          % (job.get_description().executable, job.get_description().arguments)) 
-    #    except Exception, ex:
-    #        self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-    #          "Couldn't cancel job because: %s (already finished?)" % (str(ex)))
+    def job_cancel(self, job_obj, timeout):
+        '''Implements interface from _JobPluginBase.
+           This method is called for saga.Job.cancel().
+        '''
+        try:
+            service = self.bookkeeper.get_service_for_job(job_obj)
+            pbs = self.bookkeeper.get_pbswrapper_for_service(service)
+            jobinfo = pbs.cancel_job(self.job_get_job_id(job_obj)) 
 
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't cancel job because: %s (already finished?)" % (str(ex)))
 
     ######################################################################
     ## 

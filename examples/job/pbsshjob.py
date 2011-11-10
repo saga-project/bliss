@@ -24,7 +24,7 @@ def main():
         ctx.usercert = '/Users/oweidner/.ssh/id_rsa'
  
         # start a local job service
-        js = saga.job.Service("pbs+ssh://alamo.futuregrid.org")
+        js = saga.job.Service("pbs+ssh://india.futuregrid.org")
         js.session.contexts.append(ctx)
 
         #for jobid in js.list():
@@ -55,17 +55,21 @@ def main():
 
         myjob.run()
 
-        print "Job ID    : %s" % (myjob.jobid)
-        print "Job State : %s" % (myjob.get_state())
-
-        time.sleep(60)
+        time.sleep(5)
+        myjob.cancel()
 
         print "Job ID    : %s" % (myjob.jobid)
         print "Job State : %s" % (myjob.get_state())
 
-        print "...waiting for job..."
-
-        print "Job State : %s" % (myjob.get_state())
+        #time.sleep(60)
+#
+#
+ #       print "Job ID    : %s" % (myjob.jobid)
+  #      print "Job State : %s" % (myjob.get_state())
+#
+ #       print "...waiting for job..."
+#
+ #       print "Job State : %s" % (myjob.get_state())
         print "Exitcode  : %s" % (myjob.exitcode)
 
     except saga.Exception, ex:
