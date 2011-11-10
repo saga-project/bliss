@@ -7,15 +7,17 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-_api_type_saga_job = "saga.job"
-_api_type_saga_file = "saga.file"
+
 
 import logging
 from bliss.plugins import utils
 from bliss.saga.exception import Exception as SAGAException
 
-class _PluginBase:
+class PluginBaseInterface:
     '''Abstract base class for all plugins'''
+
+    _api_type_saga_job  = "saga.job"
+    _api_type_saga_sd   = "saga.sd"
     
     def __init__(self, name, schemas):
         '''Class constructor'''

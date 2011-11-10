@@ -18,12 +18,21 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-import time
 import bliss.saga as saga
 
 def main():
     
     try:
+        # list of resource that are potentially 
+        # available 
+        machines = {
+          'xray'    : 'pbs+ssh://xray.futuregrid.org',
+          'india'   : 'pbs+ssh://india.futuregrid.org',
+          'alamo'   : 'pbs+ssh://alamo.futuregrid.org',
+          'louie'   : 'pbs+ssh://louie.loni.org',
+          'queenbee': 'pbs+ssh://queenbee.loni.org'
+        }
+        
         # set up the security contet:
         # if no security context is defined, the PBS
         # plugin will pick up the default set of ssh 
@@ -32,44 +41,18 @@ def main():
         ctx.type = saga.Context.SSH
         ctx.userid  = 'oweidner' # like 'ssh username@host ...'
         ctx.usercert = '/Users/oweidner/.ssh/id_rsa_fg' # like ssh -i ...'
+
+        sdd = saga.sd.Discoverer("pbs+ssh://xray.futuregrid.org")
+        sdd.session.contexts.append(ctx)
+        services = sdd.list_services()
+
  
+
         # create a job service for Futuregrid's 'india' PBS cluster
         # and attach the SSH security context to it
-        js = saga.job.Service("pbs+ssh://india.futuregrid.org")
-        js.session.contexts.append(ctx)
+        #js = saga.job.Service("pbs+ssh://louie.loni.org")
 
-        # describe our job
-        jd = saga.job.Description()
-        # resource requirements
-        jd.walltime_limit  = "0:05:00"
-        jd.total_cpu_count = 1     
-        # environment, executable & arguments
-        jd.environment = {'SLEEP_TIME':'10'}       
-        jd.executable  = '/bin/sleep'
-        jd.arguments   = ['$SLEEP_TIME']
-        # output options
-        jd.output = "bliss_pbssh_job.stdout"
-        jd.error  = "bliss_pbssh_job.stderr"
-
-        # create the job (state: New)
-        myjob = js.create_job(jd)
-
-        print "Job ID    : %s" % (myjob.jobid)
-        print "Job State : %s" % (myjob.get_state())
-
-        print "\n...starting job...\n"
-        # run the job (submit the job to PBS)
-        myjob.run()
-
-        print "Job ID    : %s" % (myjob.jobid)
-        print "Job State : %s" % (myjob.get_state())
-
-        print "\n...waiting for job...\n"
-        # wait for the job to either finish or fail
-        myjob.wait()
-
-        print "Job State : %s" % (myjob.get_state())
-        print "Exitcode  : %s" % (myjob.exitcode)
+        
 
     except saga.Exception, ex:
         print "Oh, snap! An error occured: %s" % (str(ex))

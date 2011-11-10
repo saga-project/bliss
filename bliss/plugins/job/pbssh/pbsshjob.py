@@ -7,7 +7,8 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.plugins.job.jobinterface  import _JobPluginBase
+from bliss.interface import JobPluginInterface
+
 from bliss.plugins.job.pbssh.cmdlinewrapper import PBSService
 from bliss.plugins import utils
 
@@ -17,7 +18,7 @@ import bliss.saga
 ################################################################################
 ################################################################################
 
-class PBSOverSSHJobPlugin(_JobPluginBase):
+class PBSOverSSHJobPlugin(JobPluginInterface):
     '''Implements a job plugin that can submit jobs to remote PBS cluster via SSH
     '''
     ## Define adaptor name. Convention is:
@@ -112,7 +113,7 @@ class PBSOverSSHJobPlugin(_JobPluginBase):
     ##
     def __init__(self, url):
         '''Class constructor'''
-        _JobPluginBase.__init__(self, name=self._name, schemas=self._schemas)
+        JobPluginInterface.__init__(self, name=self._name, schemas=self._schemas)
         self.bookkeeper = self.BookKeeper(self)
 
     ######################################################################

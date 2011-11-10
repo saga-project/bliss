@@ -47,5 +47,6 @@ class Discoverer(SAGAObject):
             raise exception.Exception(exception.Error.NoSuccess, 
               "Object not bound to a plugin")
         else:
-            return self._plugin.service_get_job(self, job_id)
+            return self._plugin.discoverer_list_services(self, 
+              service_filter, data_filter)
 

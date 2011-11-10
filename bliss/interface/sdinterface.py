@@ -7,25 +7,22 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-import logging
-
-from bliss.plugins.pluginbase import _PluginBase
-from bliss.plugins.pluginbase import _api_type_saga_job
+from bliss.interface import PluginBaseInterface
 
 from bliss.saga.exception import Error as SAGAError
 from bliss.saga.exception import Exception as SAGAException
 
-class _JobPluginBase(_PluginBase):
-    '''Abstract base class for all job plugins'''
+class SDPluginInterface(PluginBaseInterface):
+    '''Abstract base class for all SD plugins'''
     
     def __init__(self, name, schemas):
         '''Class constructor'''
-        _PluginBase.__init__(self, name=name, schemas=schemas)
+        PluginBaseInterface.__init__(self, name=name, schemas=schemas)
     
     @classmethod
     def supported_api(self):
         '''Implements interface from _PluginBase'''
-        return _api_type_saga_job
+        return PluginBaseInterface._api_type_saga_sd
 
 #    def create_job(self, service_obj, job_description):     
 #        '''Implement interface from _JobPluginBase'''

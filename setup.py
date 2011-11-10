@@ -90,6 +90,7 @@ setup_args = {
         "bliss.saga.job",
         "bliss.saga.sd",
         "bliss.runtime",
+        "bliss.interface",
         "bliss.plugins",
         "bliss.plugins.job",
         "bliss.plugins.job.local",

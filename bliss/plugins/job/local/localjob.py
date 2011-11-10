@@ -7,14 +7,16 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.plugins.job.jobinterface  import _JobPluginBase
+from bliss.interface import JobPluginInterface
+
+
 from bliss.plugins.job.local.process import LocalJobProcess
 from bliss.plugins import utils
 
 from bliss.saga import exception
 #import bliss.saga.job
 
-class LocalJobPlugin(_JobPluginBase):
+class LocalJobPlugin(JobPluginInterface):
     '''Implements a job plugin that can submit jobs to the local machine'''
 
     ########################################

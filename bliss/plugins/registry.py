@@ -10,8 +10,6 @@ __license__   = "MIT"
 from bliss.plugins.job.pbssh import pbsshjob
 from bliss.plugins.job.local import localjob
 
-from bliss.plugins.job import dummyjob
-
 # Here is where the plugins are registered
 _registry = []
 
@@ -24,11 +22,4 @@ _registry.append({"class"   : pbsshjob.PBSOverSSHJobPlugin,
                   "type"    : pbsshjob.PBSOverSSHJobPlugin.supported_api(),
                   "name"    : pbsshjob.PBSOverSSHJobPlugin.plugin_name(),
                   "schemas" : pbsshjob.PBSOverSSHJobPlugin.supported_schemas()})
-
-
-_registry.append({"class"   : dummyjob.DummyJobPlugin,
-                  "type"    : dummyjob.DummyJobPlugin.supported_api(),
-                  "name"    : dummyjob.DummyJobPlugin.plugin_name(),
-                  "schemas" : dummyjob.DummyJobPlugin.supported_schemas()})
-
 
