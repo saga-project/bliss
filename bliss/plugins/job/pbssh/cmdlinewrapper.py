@@ -106,10 +106,13 @@ class PBSService():
 
     def __init__(self, plugin, service_obj):
         '''Constructor'''
-        self._pi = plugin
-        self._so = service_obj
-        self._url = service_obj._url
-        self._cw = None
+        self._pi    = plugin
+        self._so    = service_obj
+        self._url   = service_obj._url
+        self._cw    = None
+        self._ppn   = 1 # number of processors per node. defaults to 1
+        self._nodes = 1 # total number of nodes. defaults to 1
+
         if self._url.scheme == "pbs":
             if self._url.host != "localhost":
                 self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
@@ -203,7 +206,21 @@ class PBSService():
             else:
                 self._pi.log_info("Found PBS command line tools on %s. Version: %s" \
                   % (self._url, result.stdout))
-
+                # now that we successfully detected the pbs tools, let 
+                # try to find out a few facts about the system. this might
+                # come in handy later.
+                result = self._cw.run('pbsnodes | grep "np ="')
+                if result.returncode != 0:
+                    self._pi.log_error_and_raise("11", 
+                      "Couldn't execute 'pbsnodes' on %s because: %s" \
+                      % (self._url, result.stderr))
+                else:
+                    nodes = result.stdout.split("\n")
+                    self._nodes = len(nodes)
+                    self._ppn   = int(nodes[1].split(" = ")[1].strip())
+                    self._pi.log_info("%s seems to have %s nodes and %s processors (cores) per node" \
+                      % (self._url, self._nodes, self._ppn))
+          
 
     ######################################################################
     ##
@@ -296,9 +313,20 @@ class PBSService():
             pbs_params += "#PBS -A %s \n" % jd.project[0]
         if jd.contact is not None:
             pbs_params += "#PBS -m abe \n"
-        #if jd.environment is not None:
-        #    for (key,value) in environment 
-        #    pbs_params += "#PBS -v 
+        
+        if jd.environment is not None:
+            variable_list = str()
+            for key in jd.environment.keys(): 
+                variable_list += "%s=%s," % (key, jd.environment[key])
+            pbs_params += "#PBS -v %s \n" % variable_list
+
+        if jd.total_cpu_count is not None:
+            tcc = int(jd.total_cpu_count)
+            tbd = float(tcc)/float(self._ppn)
+            if float(tbd) > int(tbd):
+                pbs_params += "#PBS -l nodes=%s:ppn=%s" % (str(int(tbd)+1), self._ppn)
+            else:
+                pbs_params += "#PBS -l nodes=%s:ppn=%s" % (str(int(tbd)), self._ppn)
 
         pbscript = "\n#!/bin/bash \n%s \n%s" % (pbs_params, exec_n_args)
         self._pi.log_debug("Generated PBS script: %s" % (pbscript))
