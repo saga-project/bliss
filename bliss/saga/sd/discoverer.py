@@ -9,11 +9,11 @@ __license__   = "MIT"
 
 import bliss.saga
 
-from bliss.saga.object import Object as SAGAObject
+from bliss.saga.object import Object 
 from bliss.saga import exception
 from bliss.saga.url import Url
 
-class Discoverer(SAGAObject):
+class Discoverer(Object):
     '''Loosely represents a SAGA service discoverer as defined in GFD.R-P.144'''
     def __init__(self, url, session=None):
         '''Construct a new service discoverer object
@@ -26,8 +26,9 @@ class Discoverer(SAGAObject):
             # assume it's a URL object
             self._url = url
 
-        SAGAObject.__init__(self, SAGAObject.SDDiscoverer, session=session)
-        self._plugin = SAGAObject._get_plugin(self) # throws 'NoSuccess' on error
+        Object.__init__(self, objtype=Object.SDDiscoverer, 
+                        apitype=Object.SDAPI, session=session)
+        self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
         self._plugin.register_service_object(self)
         self._logger.info("Bound to plugin %s" % (repr(self._plugin)))
 

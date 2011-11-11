@@ -9,7 +9,7 @@ __license__   = "MIT"
 
 import urlparse 
 
-from bliss.saga.object import Object as SAGAObject
+from bliss.saga.object import Object 
 
 urlparse.uses_netloc.append("fork")
 urlparse.uses_fragment.append("fork")
@@ -20,15 +20,15 @@ urlparse.uses_fragment.append("pbs")
 urlparse.uses_netloc.append("pbs+ssh")
 urlparse.uses_fragment.append("pbs+ssh")
 
-class Url(SAGAObject):
+class Url(Object):
     '''Looesely defines a SAGA Url class as defined in GFD.90.'''
 
-    __slots__ = ('_urlobj', 'scheme', 'host', 'port', 'path', 'params', 'query', 'fragment', 'url')
+    #__slots__ = ('_urlobj', 'scheme', 'host', 'port', 'path', 'params', 'query', 'fragment', 'url')
 
     def __init__(self, urlstring=''):
         '''Construct a new Url from a string'''
 
-        SAGAObject.__init__(self, SAGAObject.Url)
+        Object.__init__(self, objtype=Object.Url, apitype=Object.BaseAPI)
 
         self._urlobj  = urlparse.urlparse(urlstring)
         

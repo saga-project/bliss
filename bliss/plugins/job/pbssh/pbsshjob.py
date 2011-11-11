@@ -29,6 +29,11 @@ class PBSOverSSHJobPlugin(JobPluginInterface):
     ## 
     _schemas = ['pbs+ssh', 'pbs']
 
+    ## Define apis supported by this adaptor
+    ##
+    _apis = ['saga.job', 'saga.sd']
+
+
     ######################################################################
     ##
     class BookKeeper:

@@ -14,16 +14,13 @@ from bliss.saga.exception import Exception as SAGAException
 
 class JobPluginInterface(PluginBaseInterface):
     '''Abstract base class for all job plugins'''
-    
+    #PluginBaseInterface._supported_apis.append(PluginBaseInterface._api_type_saga_job)
+ 
     def __init__(self, name, schemas):
         '''Class constructor'''
-        PluginBaseInterface.__init__(self, name=name, schemas=schemas)
+        PluginBaseInterface.__init__(self, name=name, schemas=schemas,
+                                     api=PluginBaseInterface._api_type_saga_job)
     
-    @classmethod
-    def supported_api(self):
-        '''Implements interface from _PluginBase'''
-        return PluginBaseInterface._api_type_saga_job
-
     def register_service_object(self, service_obj):
         errormsg = "Not implemented plugin method called: register_service_object()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 

@@ -92,6 +92,10 @@ class LocalJobPlugin(JobPluginInterface):
     ## 
     _schemas = ['fork']
 
+    ## Step 3: Define apis supported by this adaptor
+    ##
+    _apis = ['saga.job']
+
     def __init__(self, url):
         '''Class constructor'''
         _JobPluginBase.__init__(self, name=self._name, schemas=self._schemas)

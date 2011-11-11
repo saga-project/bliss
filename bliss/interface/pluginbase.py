@@ -18,11 +18,15 @@ class PluginBaseInterface:
 
     _api_type_saga_job  = "saga.job"
     _api_type_saga_sd   = "saga.sd"
+ 
     
-    def __init__(self, name, schemas):
+    def __init__(self, name, schemas, api):
         '''Class constructor'''
         self.name = name
         self.schemas = schemas
+        self.supported_apis = []
+        self.supported_apis.append(api)
+
         self.__logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')')
 
     def get_logger(self):
@@ -51,12 +55,11 @@ class PluginBaseInterface:
         '''Writes an ERROR to the plugin log'''
         self.__logger.error(message)
  
- 
+
     @classmethod
-    def supported_api(self):
-        '''Return the api package this plugin supports'''
-        raise Exception("Requires implementation!")
-       
+    def supported_apis(self):
+        '''Return the api packages this plugin supports'''
+        return self._apis
 
     @classmethod
     def supported_schemas(self):

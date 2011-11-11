@@ -45,36 +45,45 @@ class Runtime():
         
         #iterate thrugh plugin registry
         for plugin in bliss.plugins.registry._registry:
-            self.logger.info("Plugin %s found with signature: %s" % (plugin["name"], str(plugin)))
+            self.logger.info("Found plugin %s supporting URL schmemas %s and API type(s) %s" \
+              % (plugin["name"], plugin['schemas'], plugin['apis']))
             try:
                 # see if the plugin can work properly on this system
                 plugin["class"].sanity_check()
-                self.logger.info("Plugin %s internal sanity check passed" % (plugin["name"]))
+                self.logger.info("Plugin %s internal sanity check passed" \
+                  % (plugin["name"]))
                 # passed. add it to the list
                 for schema in plugin["schemas"]:
                     self.plugin_class_list[schema] = plugin["class"]
-                    self.logger.info("Plugin %s registered as handler for Url schema(s) %s://" % (plugin["name"], schema))
-
-
+                    self.logger.info("Registered plugin %s as handler for URL schema %s://" \
+                      % (plugin["name"], schema))
             except Exception, ex:
-                self.logger.error("Plugin %s sanity check failed: %s. Disabled." % (plugin["name"], str(ex)))
+                self.logger.error("Sanity check FAILED for plugin %s: %s. Disabled." \
+                  % (plugin["name"], str(ex)))
 
-    def get_plugin_for_url(self, url):
+    def get_plugin_for_url(self, url, apitype):
         '''Returns a plugin instance for a given url or throws'''
         # first let's check if there's already a plugin-instance active that can handle this url scheme
         if url.scheme in self.plugin_instance_list:
-            self.logger.info("Found an existing plugin instance for url scheme %s://: %s" % (str(url.scheme), self.plugin_instance_list[url.scheme]))
+            self.logger.info("Found an existing plugin instance for url scheme %s://: %s" \
+              % (str(url.scheme), self.plugin_instance_list[url.scheme]))
+
+            #print "XXX %s XXX %s XXX" % ()
+
             return self.plugin_instance_list[url.scheme]
 
-        elif url.scheme in self.plugin_class_list:                          
-            plugin_obj = self.plugin_class_list[url.scheme](url)            
-            self.logger.info("Instantiated a new plugin for url scheme %s://: %s" % (str(url.scheme), repr(plugin_obj)))
-            self.plugin_instance_list[url.scheme] = plugin_obj
-            return plugin_obj
-        else:
-            error = ("Couldn't find a plugin for url scheme '%s://'" % (url.scheme))
-            self.logger.error(error)
-            raise Exception(error)
+        elif url.scheme in self.plugin_class_list:
+            plugin_obj = self.plugin_class_list[url.scheme](url)
+            if apitype in plugin_obj.__class__.supported_apis():                       
+                self.logger.info("Instantiated plugin '%s' for URL scheme %s:// and API type '%s'" \
+                  % (plugin_obj.name, str(url.scheme), apitype))
+                self.plugin_instance_list[url.scheme] = plugin_obj
+                return plugin_obj
+
+        # Only reached if both conditions above failed
+        error = ("Couldn't find a plugin for URL scheme '%s://' and API type '%s'" % (url.scheme, apitype))
+        self.logger.error(error)
+        raise Exception(error)
 
 
         

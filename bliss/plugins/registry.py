@@ -14,12 +14,12 @@ from bliss.plugins.job.local import localjob
 _registry = []
 
 _registry.append({"class"   : localjob.LocalJobPlugin,
-                  "type"    : localjob.LocalJobPlugin.supported_api(),
+                  "apis"    : localjob.LocalJobPlugin.supported_apis(),
                   "name"    : localjob.LocalJobPlugin.plugin_name(),
                   "schemas" : localjob.LocalJobPlugin.supported_schemas()})
 
 _registry.append({"class"   : pbsshjob.PBSOverSSHJobPlugin,
-                  "type"    : pbsshjob.PBSOverSSHJobPlugin.supported_api(),
+                  "apis"    : pbsshjob.PBSOverSSHJobPlugin.supported_apis(),
                   "name"    : pbsshjob.PBSOverSSHJobPlugin.plugin_name(),
                   "schemas" : pbsshjob.PBSOverSSHJobPlugin.supported_schemas()})
 

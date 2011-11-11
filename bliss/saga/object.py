@@ -17,6 +17,8 @@ from bliss.plugins import utils
 class Object(object) :
     '''Loosely resembles a SAGA object as defined in GFD.90'''
 
+    BaseAPI              = "saga.base"
+    '''Look & Feel API namespace'''
     Url                  = "saga.Url"
     '''saga.Url object type.'''
     Session              = "saga.Session"
@@ -24,6 +26,8 @@ class Object(object) :
     Context              = "saga.Context"
     '''saga.Context object type.'''
 
+    JobAPI               = "saga.job"
+    '''saga.job API namespace'''
     Job                  = "saga.job.Job"
     '''saga.job.Job object typ.e'''
     JobService           = "saga.job.Service"
@@ -31,6 +35,8 @@ class Object(object) :
     JobDescription       = "saga.job.Description"
     '''saga.job.Description object type.'''
 
+    SDAPI                = "saga.sd"
+    '''saga.sd API namespace'''
     SDDiscoverer         = "saga.sd.Discoverer"
     '''saga.sd.Discoverer object type.'''
     SDServiceDescription = "saga.sd.ServiceDescription"
@@ -46,7 +52,7 @@ class Object(object) :
 
     ######################################################################
     ## 
-    def __init__(self, objtype, session=None):
+    def __init__(self, objtype, apitype, session=None):
         '''Constructor.'''
  
         if not self.__shared_state["runtime_initialized"]:
@@ -57,6 +63,7 @@ class Object(object) :
 
         self._plugin = None
         self._type = objtype
+        self._apitype = apitype
         self._logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')')
  
         if session is not None:
@@ -82,7 +89,7 @@ class Object(object) :
     def _get_plugin(self):
         '''Bind an object to the runtime'''
         try:
-            return self.__shared_state["runtime_instance"].get_plugin_for_url(self._url) 
+            return self.__shared_state["runtime_instance"].get_plugin_for_url(self._url, self._apitype) 
         except Exception, ex:
             error = ("%s %s" % (str(ex), utils.get_traceback()))
             raise bliss.saga.exception.Exception(bliss.saga.exception.Error.NoSuccess, error)
