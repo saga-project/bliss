@@ -152,7 +152,7 @@ class PBSService():
         if self._url.scheme == "pbs":
             self._use_ssh = False
             cw = CommandWrapper(via_ssh=False)
-            result = cw.run("pbs-config", ["--version"])
+            result = cw.run("which pbsnodes")#, ["--version"])
             if result.returncode != 0:
                 self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
                 "Couldn't find PBS tools on %s" % (self._url))
@@ -199,13 +199,13 @@ class PBSService():
                 self._pi.log_error_and_raise("11", "Couldn't find a way to access %s" % (self._url))
             
             # now let's see if we can find PBS
-            result = self._cw.run("pbs-config --version")
+            result = self._cw.run("which pbsnodes")# --version")
             if result.returncode != 0:
                 self._pi.log_error_and_raise("11", "Couldn't find PBS command line tools on %s: %s" \
                   % (self._url, result.stderr))
             else:
-                self._pi.log_info("Found PBS command line tools on %s. Version: %s" \
-                  % (self._url, result.stdout))
+                self._pi.log_info("Found PBS command line tools on %s at %s" \
+                  % (self._url, result.stdout.replace('/pbsnodes', '')))
                 # now that we successfully detected the pbs tools, let 
                 # try to find out a few facts about the system. this might
                 # come in handy later.

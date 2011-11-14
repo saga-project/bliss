@@ -42,19 +42,29 @@ def main():
         ctx.userid  = 'oweidner' # like 'ssh username@host ...'
         ctx.usercert = '/Users/oweidner/.ssh/id_rsa_fg' # like ssh -i ...'
 
-        sdd = saga.sd.Discoverer("pbs+ssh://xray.futuregrid.org")
-        sdd.session.contexts.append(ctx)
-        services = sdd.list_services()
+        # get some infos about the machines in our 
+        # list, like number of waiting jobs, architecture, etc... 
+        for key in machines:
+            print "\nResource: %s" % (key)
+            # create a discoverer and retrieve a list
+            # of available serivces 
+            sdd = saga.sd.Discoverer(machines[key])
+            sdd.session.contexts.append(ctx)
+            services = sdd.list_services()
 
-        for service in services:
-            print "Serivce name: '%s', type: '%s', url: '%s'" \
-              % (service.name, service.type, service.url) 
+            for service in services:
+                # for each service, get some key metrics
+                print "  * Serivce: '%s', type: '%s', url: '%s'" \
+                  % (service.name, service.type, service.url)
+                
+                data = service.get_data()
+                print "    GlueHostProcessorModel      : %s" \
+                  % (data.get_attribute("GlueHostProcessorModel"))      
+                print "    GlueHostProcessorClockSpeed : %s" \
+                  % (data.get_attribute("GlueHostProcessorClockSpeed"))      
+                print "    GlueHostArchitectureSMPSize : %s" \
+                  % (data.get_attribute("GlueHostArchitectureSMPSize"))      
 
-        # create a job service for Futuregrid's 'india' PBS cluster
-        # and attach the SSH security context to it
-        #js = saga.job.Service("pbs+ssh://louie.loni.org")
-
-        
 
     except saga.Exception, ex:
         print "Oh, snap! An error occured: %s" % (str(ex))

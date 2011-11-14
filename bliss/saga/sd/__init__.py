@@ -9,4 +9,4 @@ __license__   = "MIT"
 
 from bliss.saga.sd.discoverer          import Discoverer
 from bliss.saga.sd.service_description import ServiceDescription
-#from bliss.saga.sd.service_data        import ServiceData
+from bliss.saga.sd.service_data        import ServiceData

@@ -7,6 +7,8 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
+import bliss.saga
+
 from bliss.saga.object import Object
 from bliss.saga.attributes import AttributeInterface
 from bliss.saga.url import Url
@@ -16,7 +18,7 @@ class ServiceDescription(Object, AttributeInterface):
 
     def __init__(self):
         '''Constructor.'''
-        Object.__init__(self, Object.JobDescription, 
+        Object.__init__(self, Object.SDServiceDescription, 
                         apitype=Object.JobAPI,)
         AttributeInterface.__init__(self)
 
@@ -41,12 +43,26 @@ class ServiceDescription(Object, AttributeInterface):
         self._register_ro_attribute     (name="Implementor", 
                                          accessor=self.__class__.implementor) 
 
+    def __init_from_discoverer(self, discoverer_obj):
+        '''Constructor'''
+        self._discoverer = discoverer_obj
+        self._url = discoverer_obj._url
+
+        self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
+        self._logger.info("SerivceDiscription object bound to plugin %s" % (repr(self._plugin)))
+
     def __del__(self):
         '''Destructor'''
         pass
 
-    def get_data():
+    def get_data(self):
         '''Return the service data object.'''
+        if self._plugin is not None:
+            return self._plugin.service_description_get_data(self) 
+        else:
+            raise bliss.saga.exception.Exception(
+              bliss.saga.exception.Error.NoSuccess, 
+              "Object not bound to a plugin")
         pass
 
     ######################################################################

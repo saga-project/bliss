@@ -41,7 +41,7 @@ class Object(object) :
     '''saga.sd.Discoverer object type.'''
     SDServiceDescription = "saga.sd.ServiceDescription"
     '''saga.sd.ServiceDescription object type.'''
-    SDSerivceData        = "saga.sd.ServiceData"
+    SDServiceData        = "saga.sd.ServiceData"
     '''saga.sd.ServiceData object type.'''
 
 

@@ -30,7 +30,7 @@ class Discoverer(Object):
                         apitype=Object.SDAPI, session=session)
         self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
         self._plugin.register_discoverer_object(self)
-        self._logger.info("Bound to plugin %s" % (repr(self._plugin)))
+        self._logger.info("Discoverer object bound to plugin %s" % (repr(self._plugin)))
 
     def __del__(self):
         '''Destructor.

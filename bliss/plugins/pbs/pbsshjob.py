@@ -172,7 +172,8 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
         try:
             pbs = self.bookkeeper.get_pbswrapper_for_service(discoverer_obj)
             service_info = pbs.get_service_info() # triggers ssh connection attempt
-            desc = bliss.saga.sd.ServiceDescription()   
+            desc = bliss.saga.sd.ServiceDescription()  
+            desc._ServiceDescription__init_from_discoverer(discoverer_obj) 
             ## set values
             desc._url = discoverer_obj._url 
             desc._type = "org.ogf.saga.service.job"
@@ -187,6 +188,29 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
               "Couldn't retreive service list because: %s " % (str(ex)))
+
+
+    ######################################################################
+    ##
+    def service_description_get_data(self, service_description_obj):
+        '''Implements interface from SDPluginInterface'''
+        try:
+            pbs = self.bookkeeper.get_pbswrapper_for_service(service_description_obj._discoverer)
+            service_info = pbs.get_service_info() # triggers ssh connection attempt        
+
+            data = bliss.saga.sd.ServiceData()
+            data._ServiceData__init_from_service_description(service_description_obj)
+            return data
+    
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't retreive service data because: %s " % (str(ex)))
+
+    ######################################################################
+    ##
+    def service_data_update(self, serivce_data_obj):
+        '''Implements interface from SDPluginInterface'''
+
 
 
     ######################################################################

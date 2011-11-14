@@ -30,15 +30,29 @@ class SDPluginInterface(PluginBaseInterface):
         # don't throw -- destructor context
 
 
-    ######## Implementation for saga.job.Service functionality 
+    ######## Implementation for saga.sd.Discoverer functionality 
     ##
     def discoverer_list_services(self, discoverer_obj, service_filter, data_filter):
         errormsg = "Not implemented plugin method called: list_services()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
 
-    ######## Method templates for saga.Job attributes
+    ######## Implementation for saga.sd.ServiceDescription functionality 
     ##
-    #def job_get_exitcode(self, job_obj):
-    #    errormsg = "Not implemented plugin attribute accessed: job.exitcode"
-    #    self.log_error_and_raise(SAGAError.NotImplemented, errormsg)   
+    def service_description_get_data(self, servide_description_obj):
+        errormsg = "Not implemented plugin method called: get_data()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
+
+
+    ######## Implementation for saga.sd.ServiceDescription functionality 
+    ##
+    def service_data_attribute_exists(self, servide_data_obj, key):
+        errormsg = "Not implemented plugin method called: attribute_exists()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)  
+
+    ######## Implementation for saga.sd.ServiceDescription functionality 
+    ##
+    def service_data_get_attribute(self, servide_data_obj, key):
+        errormsg = "Not implemented plugin method called: get_attribute()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)  
+
