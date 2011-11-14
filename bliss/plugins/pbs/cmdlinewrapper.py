@@ -44,8 +44,24 @@ def pbs_to_saga_jobstate(pbsjs):
 ################################################################################
 ################################################################################
 
+class PBSServiceInfo(object):
+    '''Encapsulates infos about a PBS cluster as returned by qstat & pbsnodes.
+    '''
+    
+    def __init__(self, qstat_a_output, pbsnodes_output, plugin):
+        '''Constructure: initializa data from 'qstat -a' and 'pbsnodes'.
+        '''
+        self._GlueHostProcessorModel      = None
+        self._GlueHostProcessorClockSpeed = None
+        self._GlueHostArchitectureSMPSize = None
+        self._GlueHostMainMemoryRAMSize   = None
+
+################################################################################
+################################################################################
+
 class PBSJobInfo(object):
-    '''Encapsulates infos about a PBS job as returned by qstat -f1.'''
+    '''Encapsulates infos about a PBS job as returned by qstat -f1.
+    '''
 
     def __init__(self, qstat_f_output, plugin):
         '''Constructor: initialize from qstat -f <jobid> string.

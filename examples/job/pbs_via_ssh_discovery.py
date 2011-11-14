@@ -59,6 +59,8 @@ def main():
 
                 print "  * Serivce: '%s', type: '%s', url: '%s'" \
                   % (service.name, service.type, service.url)
+                print "    GlueHostMainMemoryRAMSize   : %s" \
+                  % (data.get_attribute("GlueHostProcessorModel"))      
                 print "    GlueHostProcessorModel      : %s" \
                   % (data.get_attribute("GlueHostProcessorModel"))      
                 print "    GlueHostProcessorClockSpeed : %s" \
