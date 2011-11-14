@@ -7,7 +7,7 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.interface import JobPluginInterface
+from bliss.interface import JobPluginInterface, SDPluginInterface
 
 from bliss.plugins.pbs.cmdlinewrapper import PBSService
 from bliss.plugins import utils
@@ -18,7 +18,7 @@ import bliss.saga
 ################################################################################
 ################################################################################
 
-class PBSJobAndSDPlugin(JobPluginInterface):
+class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
     '''Implements a job plugin that can submit jobs to remote PBS cluster via SSH
     '''
     ## Define adaptor name. Convention is:
@@ -146,7 +146,47 @@ class PBSJobAndSDPlugin(JobPluginInterface):
         '''Implements interface from _JobPluginBase'''
         self.bookkeeper.remove_service_object(service_obj)
         self.log_info("Unegistered new service object %s" \
-          % (repr(service_obj))) 
+          % (repr(service_obj)))
+
+    ######################################################################
+    ##
+    def register_discoverer_object(self, discoverer_obj):
+        '''Implements interface from SDPluginInterface'''
+        pbs_obj = PBSService(self, discoverer_obj)
+        self.bookkeeper.add_service_object(discoverer_obj, pbs_obj)
+        self.log_info("Registered new discoverer object %s" \
+          % (repr(discoverer_obj))) 
+
+    ######################################################################
+    ##
+    def unregister_discoverer_object(self, discoverer_obj):
+        '''Implements interface from SDPluginInterface'''
+        pass
+
+
+    ######################################################################
+    ##
+    def discoverer_list_services(self, discoverer_obj, 
+                                 service_filter, data_filter):
+        '''Implements interface from SDPluginInterface'''
+        try:
+            pbs = self.bookkeeper.get_pbswrapper_for_service(discoverer_obj)
+            service_info = pbs.get_service_info() # triggers ssh connection attempt
+            desc = bliss.saga.sd.ServiceDescription()   
+            ## set values
+            desc._url = discoverer_obj._url 
+            desc._type = "org.ogf.saga.service.job"
+            desc._name = "PBS Job Scheduler"
+
+            #desc._implementor = 
+            #desc._site = 
+            #desc._uid = 
+
+            return [desc]       
+
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't retreive service list because: %s " % (str(ex)))
 
 
     ######################################################################
@@ -163,7 +203,6 @@ class PBSJobAndSDPlugin(JobPluginInterface):
     def service_list(self, service_obj):
         '''Implements interface from _JobPluginBase'''
         try:
-            # we have to list the new jobs, too ?
             pbs = self.bookkeeper.get_pbswrapper_for_service(service_obj)
             return pbs.list_jobs()
         except Exception, ex:

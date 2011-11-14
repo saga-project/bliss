@@ -46,7 +46,9 @@ def main():
         sdd.session.contexts.append(ctx)
         services = sdd.list_services()
 
- 
+        for service in services:
+            print "Serivce name: '%s', type: '%s', url: '%s'" \
+              % (service.name, service.type, service.url) 
 
         # create a job service for Futuregrid's 'india' PBS cluster
         # and attach the SSH security context to it

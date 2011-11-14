@@ -19,7 +19,8 @@ class Description(Object, AttributeInterface):
 
     def __init__(self):
         '''Constructor.'''
-        Object.__init__(self, Object.JobDescription)
+        Object.__init__(self, Object.JobDescription, 
+                        apitype=Object.JobAPI,)
         AttributeInterface.__init__(self)
 
         self._executable        = None

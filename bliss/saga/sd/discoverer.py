@@ -29,14 +29,14 @@ class Discoverer(Object):
         Object.__init__(self, objtype=Object.SDDiscoverer, 
                         apitype=Object.SDAPI, session=session)
         self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
-        self._plugin.register_service_object(self)
+        self._plugin.register_discoverer_object(self)
         self._logger.info("Bound to plugin %s" % (repr(self._plugin)))
 
     def __del__(self):
         '''Destructor.
         '''
-        #if self._plugin is not None:
-        #    self._plugin.unregister_service_object(self)
+        if self._plugin is not None:
+            self._plugin.unregister_discoverer_object(self)
 
     ######################################################################
     ##

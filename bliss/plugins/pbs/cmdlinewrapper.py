@@ -224,6 +224,25 @@ class PBSService():
 
     ######################################################################
     ##
+    def get_service_info(self):
+        '''Returns a single saga.job service description'''
+        if self._cw == None:
+            self._check_context()
+        
+        #result = self._cw.run("qstat -f1")
+        #if result.returncode != 0:
+        #    raise Exception("Error running 'qstat': %s" % result.stderr)
+
+        #lines = result.stdout.split("\n\n")
+        #for line in lines:
+        #    jobinfo = PBSJobInfo(line, self._pi)
+        #    self._known_jobs_update(jobinfo.jobid, jobinfo)
+        #    jobids.append(bliss.saga.job.JobID(self._url, jobinfo.jobid))
+        #return jobids
+        return None
+
+    ######################################################################
+    ##
     def list_jobs(self):
         '''Return the jobs known to qstat'''
         jobids = []

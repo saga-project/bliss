@@ -8,5 +8,5 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.saga.sd.discoverer          import Discoverer
-#from bliss.saga.sd.service_description import ServiceDescription
+from bliss.saga.sd.service_description import ServiceDescription
 #from bliss.saga.sd.service_data        import ServiceData

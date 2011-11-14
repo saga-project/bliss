@@ -74,7 +74,7 @@ class Job(Object, AttributeInterface):
 
     def __init__(self):
         '''Constructor - not to be called directly'''
-        Object.__init__(self, Object.Job)
+        Object.__init__(self, Object.Job, apitype=Object.JobAPI)
         AttributeInterface.__init__(self)
       
         # register properties with the attribute interface 
