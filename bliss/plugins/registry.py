@@ -7,19 +7,19 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.plugins.job.pbssh import pbsshjob
-from bliss.plugins.job.local import localjob
+from bliss.plugins.pbs import PBSJobAndSDPlugin
+from bliss.plugins.local import LocalJobPlugin
 
 # Here is where the plugins are registered
 _registry = []
 
-_registry.append({"class"   : localjob.LocalJobPlugin,
-                  "apis"    : localjob.LocalJobPlugin.supported_apis(),
-                  "name"    : localjob.LocalJobPlugin.plugin_name(),
-                  "schemas" : localjob.LocalJobPlugin.supported_schemas()})
+_registry.append({"class"   : LocalJobPlugin,
+                  "apis"    : LocalJobPlugin.supported_apis(),
+                  "name"    : LocalJobPlugin.plugin_name(),
+                  "schemas" : LocalJobPlugin.supported_schemas()})
 
-_registry.append({"class"   : pbsshjob.PBSOverSSHJobPlugin,
-                  "apis"    : pbsshjob.PBSOverSSHJobPlugin.supported_apis(),
-                  "name"    : pbsshjob.PBSOverSSHJobPlugin.plugin_name(),
-                  "schemas" : pbsshjob.PBSOverSSHJobPlugin.supported_schemas()})
+_registry.append({"class"   : PBSJobAndSDPlugin,
+                  "apis"    : PBSJobAndSDPlugin.supported_apis(),
+                  "name"    : PBSJobAndSDPlugin.plugin_name(),
+                  "schemas" : PBSJobAndSDPlugin.supported_schemas()})
 

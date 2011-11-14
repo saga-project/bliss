@@ -9,7 +9,7 @@ __license__   = "MIT"
 
 from bliss.interface import JobPluginInterface
 
-from bliss.plugins.job.pbssh.cmdlinewrapper import PBSService
+from bliss.plugins.pbs.cmdlinewrapper import PBSService
 from bliss.plugins import utils
 
 import time
@@ -18,7 +18,7 @@ import bliss.saga
 ################################################################################
 ################################################################################
 
-class PBSOverSSHJobPlugin(JobPluginInterface):
+class PBSJobAndSDPlugin(JobPluginInterface):
     '''Implements a job plugin that can submit jobs to remote PBS cluster via SSH
     '''
     ## Define adaptor name. Convention is:

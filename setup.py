@@ -92,9 +92,8 @@ setup_args = {
         "bliss.runtime",
         "bliss.interface",
         "bliss.plugins",
-        "bliss.plugins.job",
-        "bliss.plugins.job.local",
-        "bliss.plugins.job.pbssh"
+        "bliss.plugins.local",
+        "bliss.plugins.pbs"
     ],
     'scripts': scripts,
     # mention data_files, even if empty, so install_data is called and
