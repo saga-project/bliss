@@ -53,18 +53,18 @@ def main():
             services = sdd.list_services()
 
             for service in services:
-                # for each service, get some key metrics
+                # for each service, get some key metrics via the
+                # service data object
+                data = service.get_data()
+
                 print "  * Serivce: '%s', type: '%s', url: '%s'" \
                   % (service.name, service.type, service.url)
-                
-                data = service.get_data()
                 print "    GlueHostProcessorModel      : %s" \
                   % (data.get_attribute("GlueHostProcessorModel"))      
                 print "    GlueHostProcessorClockSpeed : %s" \
                   % (data.get_attribute("GlueHostProcessorClockSpeed"))      
                 print "    GlueHostArchitectureSMPSize : %s" \
                   % (data.get_attribute("GlueHostArchitectureSMPSize"))      
-
 
     except saga.Exception, ex:
         print "Oh, snap! An error occured: %s" % (str(ex))
