@@ -32,6 +32,10 @@ def main():
           'louie'   : 'pbs+ssh://louie.loni.org',
           'queenbee': 'pbs+ssh://queenbee.loni.org'
         }
+
+        jobs = [] # create 100 job templates
+        for i in range(100):
+            jobs.append("/bin/sleep 60")
         
         # set up the security contet:
         # if no security context is defined, the PBS
@@ -61,12 +65,12 @@ def main():
                   % (service.name, service.type, service.url)
                 print "    GlueHostMainMemoryRAMSize   : %s" \
                   % (data.get_attribute("GlueHostProcessorModel"))      
-                print "    GlueHostProcessorModel      : %s" \
-                  % (data.get_attribute("GlueHostProcessorModel"))      
-                print "    GlueHostProcessorClockSpeed : %s" \
-                  % (data.get_attribute("GlueHostProcessorClockSpeed"))      
-                print "    GlueHostArchitectureSMPSize : %s" \
-                  % (data.get_attribute("GlueHostArchitectureSMPSize"))      
+                #print "    GlueHostProcessorModel      : %s" \
+                #  % (data.get_attribute("GlueHostProcessorModel"))      
+                #print "    GlueHostProcessorClockSpeed : %s" \
+                #  % (data.get_attribute("GlueHostProcessorClockSpeed"))      
+                #print "    GlueHostArchitectureSMPSize : %s" \
+                #  % (data.get_attribute("GlueHostArchitectureSMPSize"))      
 
     except saga.Exception, ex:
         print "Oh, snap! An error occured: %s" % (str(ex))
