@@ -3,12 +3,14 @@ include *.py
 include bliss/*.py
 include bliss/saga/*.py
 include bliss/saga/job/*.py
+include bliss/saga/sd/*.py
 
 include bliss/runtime/*.py
+include bliss/interface/*.py
 
 include bliss/plugins/*.py
-include bliss/plugins/job/*.py
-include bliss/plugins/job/local/*.py
+include bliss/plugins/pbs/*.py
+include bliss/plugins/local/*.py
 
 include MANIFEST.in README LICENSE CHANGES
 

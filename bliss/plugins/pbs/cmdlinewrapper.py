@@ -51,10 +51,48 @@ class PBSServiceInfo(object):
     def __init__(self, qstat_a_output, pbsnodes_output, plugin):
         '''Constructure: initializa data from 'qstat -a' and 'pbsnodes'.
         '''
-        self._GlueHostProcessorModel      = None
-        self._GlueHostProcessorClockSpeed = None
-        self._GlueHostArchitectureSMPSize = None
-        self._GlueHostMainMemoryRAMSize   = None
+        self.GlueCEStateTotalJobs        = None
+        self.GlueCEStateRunningJobs      = None
+        self.GlueCEStateWaitingJobs      = None
+
+        self.GlueHostProcessorModel      = None
+        self.GlueHostProcessorClockSpeed = None
+        self.GlueHostArchitectureSMPSize = None
+        self.GlueHostMainMemoryRAMSize   = None
+
+# from man qstat(1)
+#                   C -  Job is completed after having run/
+#                   E -  Job is exiting after having run.
+#                   H -  Job is held.
+#                   Q -  job is queued, eligible to run or routed.
+#                   R -  job is running.
+#                   T -  job is being moved to new location.
+#                   W -  job is waiting for its execution time
+#                        (-a option) to be reached.
+
+        jobs_running = 0
+        jobs_waiting = 0
+        lines = qstat_a_output.split("\n")
+        #print lines
+        for line in lines: 
+            if line.find(" R ") != -1:
+                jobs_running += 1
+            elif line.find(" Q ") != -1:
+                jobs_waiting += 1
+
+        self.GlueCEStateRunningJobs = str(jobs_running)
+        self.GlueCEStateWaitingJobs = str(jobs_waiting)
+        self.GlueCEStateTotalJobs = str(jobs_running+jobs_waiting)
+
+
+    def has_attribute(self, key):
+        if self.__dict__[key] != None:
+            return True
+        else: 
+            return False
+
+    def get_attribute(self, key):
+        return self.__dict__[key]
 
 ################################################################################
 ################################################################################
@@ -135,6 +173,12 @@ class PBSService():
                 "Can't use %s as hostname in conjunction with pbs:// schema. Try pbs+ssh:// instead" \
                   % (self._url.host))
 
+        # Indicates when the service information was last updated
+        # Service information is updated only every 10 seconds or 
+        # so to avoid crazy network traffic 
+        self._service_info_last_update = 0.0
+        self._service_info = None
+        
         self._known_jobs = dict()
 
     def _known_jobs_update(self, native_jobid, job_info):
@@ -225,17 +269,19 @@ class PBSService():
                 # now that we successfully detected the pbs tools, let 
                 # try to find out a few facts about the system. this might
                 # come in handy later.
-                result = self._cw.run('pbsnodes | grep "np ="')
-                if result.returncode != 0:
-                    self._pi.log_error_and_raise("11", 
-                      "Couldn't execute 'pbsnodes' on %s because: %s" \
-                      % (self._url, result.stderr))
-                else:
-                    nodes = result.stdout.split("\n")
-                    self._nodes = len(nodes)
-                    self._ppn   = int(nodes[1].split(" = ")[1].strip())
-                    self._pi.log_info("%s seems to have %s nodes and %s processors (cores) per node" \
-                      % (self._url, self._nodes, self._ppn))
+                #result = self._cw.run('pbsnodes | grep "np ="')
+                #if result.returncode != 0:
+                #    self._pi.log_error_and_raise("11", 
+                #      "Couldn't execute 'pbsnodes' on %s because: %s" \
+                #      % (self._url, result.stderr))
+                si = self.get_service_info()
+                
+                #else:
+                #    nodes = result.stdout.split("\n")
+                #    self._nodes = len(nodes)
+                #    self._ppn   = int(nodes[1].split(" = ")[1].strip())
+                #    self._pi.log_info("%s seems to have %s nodes and %s processors (cores) per node" \
+                #      % (self._url, self._nodes, self._ppn))
           
 
     ######################################################################
@@ -245,17 +291,38 @@ class PBSService():
         if self._cw == None:
             self._check_context()
         
-        #result = self._cw.run("qstat -f1")
-        #if result.returncode != 0:
-        #    raise Exception("Error running 'qstat': %s" % result.stderr)
+        if self._service_info == None:
+            # initial creation
+            self._pi.log_info("Service info cache empty. Updating local service info.")
+            qstat_result = self._cw.run("qstat -a")
+            if qstat_result.returncode != 0:
+                raise Exception("Error running 'qstat': %s" % qstat_result.stderr)
+            pbsnodes_result = self._cw.run("pbsnodes")
+            if pbsnodes_result.returncode != 0:
+                raise Exception("Error running 'pbsnodes': %s" % pbsnodes_result.stderr)
 
-        #lines = result.stdout.split("\n\n")
-        #for line in lines:
-        #    jobinfo = PBSJobInfo(line, self._pi)
-        #    self._known_jobs_update(jobinfo.jobid, jobinfo)
-        #    jobids.append(bliss.saga.job.JobID(self._url, jobinfo.jobid))
-        #return jobids
-        return None
+            self._service_info = PBSServiceInfo(qstat_result.stdout,
+                                                pbsnodes_result.stdout, self._pi)
+            self._service_info_last_update = time.time()
+
+        else: 
+            if self._service_info_last_update+15.0 < time.time():
+                # older than 15 seconds. update.
+                self._pi.log_info("15s service info cache expired. Updating local service info.")
+                qstat_result = self._cw.run("qstat_result -a")
+                if qstat_result.returncode != 0:
+                    raise Exception("Error running 'qstat': %s" % qstat_result.stderr)
+                pbsnodes_result = self._cw.run("pbsnodes")
+                if pbsnodes_result.returncode != 0:
+                    raise Exception("Error running 'pbsnodes': %s" % pbsnodes_result.stderr)
+
+                self._service_info = PBSServiceInfo(qstat_result.stdout,
+                                                    pbsnodes_result.stdout, self._pi)
+                self._service_info_last_update = time.time()
+            else:
+                self._pi.log_info("15s cache not expired yet. Using local service info.")
+        
+        return self._service_info
 
     ######################################################################
     ##
