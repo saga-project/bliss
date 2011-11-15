@@ -59,13 +59,17 @@ def main():
 
                 print "  * Serivce: '%s', type: '%s', url: '%s'" \
                   % (service.name, service.type, service.url)
-                print "    GlueHostMainMemoryRAMSize   : %s" \
+                print "    |- Running Jobs         : %s" \
+                  % (data.get_attribute("GlueCEStateRunningJobs"))      
+                print "    |- Waiting Jobs         : %s" \
+                  % (data.get_attribute("GlueCEStateWaitingJobs"))      
+                print "    |- Main Memory Size     : %s" \
                   % (data.get_attribute("GlueHostProcessorModel"))      
-                print "    GlueHostProcessorModel      : %s" \
+                print "    |- Processor Model      : %s" \
                   % (data.get_attribute("GlueHostProcessorModel"))      
-                print "    GlueHostProcessorClockSpeed : %s" \
+                print "    |- Processor Speed      : %s" \
                   % (data.get_attribute("GlueHostProcessorClockSpeed"))      
-                print "    GlueHostArchitectureSMPSize : %s" \
+                print "    '- CPUs/Host (SMP Size) : %s" \
                   % (data.get_attribute("GlueHostArchitectureSMPSize"))      
 
     except saga.Exception, ex:

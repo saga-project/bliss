@@ -208,10 +208,17 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
 
     ######################################################################
     ##
-    def service_data_update(self, serivce_data_obj):
+    def service_data_get_attribute(self, serivce_data_obj, key):
         '''Implements interface from SDPluginInterface'''
-
-
+        try:
+            pbs = self.bookkeeper.get_pbswrapper_for_service(serivce_data_obj._discoverer)
+            service_info = pbs.get_service_info() # triggers ssh connection attempt
+            
+            return service_info.get_attribute(key)     
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't retreive service data because: %s " % (str(ex)))
+   
 
     ######################################################################
     ##
