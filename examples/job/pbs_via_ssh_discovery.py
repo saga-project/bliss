@@ -26,18 +26,31 @@ def main():
         # list of resource that are potentially 
         # available 
         machines = {
-          'xray'    : 'pbs+ssh://xray.futuregrid.org',
-          'india'   : 'pbs+ssh://india.futuregrid.org',
-          'alamo'   : 'pbs+ssh://alamo.futuregrid.org',
-          'louie'   : 'pbs+ssh://louie.loni.org',
-          'queenbee': 'pbs+ssh://queenbee.loni.org'
+          'xray'    : {'url':'pbs+ssh://xray.futuregrid.org',
+                       'metrics':None, 'jobservice':None},
+          'india'   : {'url':'pbs+ssh://india.futuregrid.org',
+                       'metrics':None, 'jobservice':None},
+          'alamo'   : {'url':'pbs+ssh://alamo.futuregrid.org',
+                       'metrics':None, 'jobservice':None},
+          'louie'   : {'url':'pbs+ssh://louie.loni.org',
+                       'metrics':None, 'jobservice':None},
+          'queenbee': {'url':'pbs+ssh://queenbee.loni.org',
+                       'metrics':None, 'jobservice':None}
         }
 
-        jobs = [] # create 100 job templates
+        # create a bunch of jobs. at this point they are just 
+        # descriptions and not bound to a resource manager
+        jd = saga.job.Description()
+        jd.walltime_limit  = "0:05:00"
+        jd.total_cpu_count = 1     
+        jd.executable      = "/bin/sleep"
+        jd.arguments       = ["10"] # 5 minutes
+
+        jobs = []        
         for i in range(100):
-            jobs.append("/bin/sleep 60")
-        
-        # set up the security contet:
+            jobs.append({'jd':jd, 'jobj':None})
+
+        # set up the security context:
         # if no security context is defined, the PBS
         # plugin will pick up the default set of ssh 
         # credentials of the user, i.e., ~/.ssh/id_rsa
@@ -52,14 +65,15 @@ def main():
             print "\nResource: %s" % (key)
             # create a discoverer and retrieve a list
             # of available serivces 
-            sdd = saga.sd.Discoverer(machines[key])
+            sdd = saga.sd.Discoverer(machines[key]['url'])
             sdd.session.contexts.append(ctx)
-            services = sdd.list_services()
+            services = sdd.list_services() # filter: org.ogf.saga.service.job
 
             for service in services:
                 # for each service, get some key metrics via the
                 # service data object
-                data = service.get_data()
+                machines[key]['metrics'] = service.get_data()
+                data = machines[key]['metrics'] 
 
                 print "  * Serivce: '%s', type: '%s', url: '%s'" \
                   % (service.name, service.type, service.url)
@@ -67,40 +81,38 @@ def main():
                   % (data.get_attribute("GlueCEStateRunningJobs"))      
                 print "    |- Waiting Jobs         : %s" \
                   % (data.get_attribute("GlueCEStateWaitingJobs"))      
-                print "    |- Main Memory Size     : %s" \
-                  % (data.get_attribute("GlueHostProcessorModel"))      
-<<<<<<< HEAD
+                #print "    |- Main Memory Size     : %s" \
+                #  % (data.get_attribute("GlueHostProcessorModel"))      
                 #print "    GlueHostProcessorModel      : %s" \
                 #  % (data.get_attribute("GlueHostProcessorModel"))      
                 #print "    GlueHostProcessorClockSpeed : %s" \
                 #  % (data.get_attribute("GlueHostProcessorClockSpeed"))      
                 #print "    GlueHostArchitectureSMPSize : %s" \
-                #  % (data.get_attribute("GlueHostArchitectureSMPSize"))      
-=======
-                print "    |- Processor Model      : %s" \
-                  % (data.get_attribute("GlueHostProcessorModel"))      
-                print "    |- Processor Speed      : %s" \
-                  % (data.get_attribute("GlueHostProcessorClockSpeed"))      
-                print "    '- CPUs/Host (SMP Size) : %s" \
-                  % (data.get_attribute("GlueHostArchitectureSMPSize"))      
->>>>>>> 2f47efb6a12d75b5ca259832763529bfd8e9437d
+                #  % (data.get_attribute("GlueHostArchitectureSMPSize"))
+
+            # create a job service for each machine.
+            machines[key]['jobservice'] = \
+                saga.job.Service(machines[key]['url'])
+            print "  * Job service up and waiting for jobs..."
+
+        # now that we have collected information about resources and 
+        # instantiated job service endpoints, we can start to submit
+        # jobs, following whatever strategy we want.
+        for job in jobs:
+            job['jobj'] = machines['india']['jobservice'].create_job(job['jd'])
+            job['jobj'].run()
+
+        for job in jobs:
+            js = job['jobj'].get_state()
+            ji = job['jobj'].get_job_id() 
+            print "Job %s state: %s" % (ji, js)
+
+
+             
 
     except saga.Exception, ex:
         print "Oh, snap! An error occured: %s" % (str(ex))
 
 if __name__ == "__main__":
     main()
-
-# INFO: The PBS script generated behind the scenes by the  
-#       plugin looks like this (SAGA_VERBOSE=6 shows it):
-#       
-#         #!/bin/bash 
-#         #PBS -N bliss_job 
-#         #PBS -V     
-#         #PBS -o bliss_pbssh_job.stdout 
-#         #PBS -e bliss_pbssh_job.stderr 
-#         #PBS -l walltime=0:05:00 
-#         #PBS -v SLEEP_TIME=10, 
-#       
-#         /bin/sleep $SLEEP_TIME 
 
