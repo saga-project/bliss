@@ -45,14 +45,15 @@ class Service(Object):
            @param job_description: The description for the new job.
            @type  job_description: L{Description} 
         '''
+        if job_description.get_type() != Object.JobDescription:
+            raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
+                  "create_job() expects %s object as parameter" 
+                  % (Object.JobDescription))
+
         if self._plugin is None:
             raise exception.Exception(exception.Error.NoSuccess, 
               "Object not bound to a plugin")
         else:
-            if job_description.get_type() != Object.JobDescription:
-                raise exception.Exception(exception.Error.BadParameter, 
-                  "create_job() expects "+Object.type_saga_job_description)
-
             return self._plugin.service_create_job(self, job_description)
 
 

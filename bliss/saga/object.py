@@ -29,11 +29,14 @@ class Object(object) :
     JobAPI               = "saga.job"
     '''saga.job API namespace'''
     Job                  = "saga.job.Job"
-    '''saga.job.Job object typ.e'''
+    '''saga.job.Job object type.'''
     JobService           = "saga.job.Service"
     '''saga.job.Service object type.'''
     JobDescription       = "saga.job.Description"
     '''saga.job.Description object type.'''
+    JobContainer         = "saga.job.Container"
+    '''saga.job.Container (task container) object type.'''
+
 
     SDAPI                = "saga.sd"
     '''saga.sd API namespace'''

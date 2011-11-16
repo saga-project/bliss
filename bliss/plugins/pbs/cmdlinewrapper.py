@@ -54,26 +54,29 @@ class PBSServiceInfo(object):
         self.GlueCEStateTotalJobs        = None
         self.GlueCEStateRunningJobs      = None
         self.GlueCEStateWaitingJobs      = None
+        self.GlueCEStateFreeCPUs         = None
 
         self.GlueHostProcessorModel      = None
         self.GlueHostProcessorClockSpeed = None
-        self.GlueHostArchitectureSMPSize = None
         self.GlueHostMainMemoryRAMSize   = None
 
-# from man qstat(1)
-#                   C -  Job is completed after having run/
-#                   E -  Job is exiting after having run.
-#                   H -  Job is held.
-#                   Q -  job is queued, eligible to run or routed.
-#                   R -  job is running.
-#                   T -  job is being moved to new location.
-#                   W -  job is waiting for its execution time
-#                        (-a option) to be reached.
+        self.GlueHostArchitectureSMPSize = None
+        self.GlueSubClusterPhysicalCPUs  = None
+
+        # from man qstat(1)
+        # C -  Job is completed after having run/
+        # E -  Job is exiting after having run.
+        # H -  Job is held.
+        # Q -  job is queued, eligible to run or routed.
+        # R -  job is running.
+        # T -  job is being moved to new location.
+        # W -  job is waiting for its execution time
+        #      (-a option) to be reached.
 
         jobs_running = 0
         jobs_waiting = 0
+
         lines = qstat_a_output.split("\n")
-        #print lines
         for line in lines: 
             if line.find(" R ") != -1:
                 jobs_running += 1
@@ -84,6 +87,30 @@ class PBSServiceInfo(object):
         self.GlueCEStateWaitingJobs = str(jobs_waiting)
         self.GlueCEStateTotalJobs = str(jobs_running+jobs_waiting)
 
+        if pbsnodes_output is not None:
+            # get all sorts of useful info about the 
+            # PBS cluster and translate it into GLUE
+            # schema attributes
+            cpus_total   = 0
+            cpus_free    = 0
+            cpus_pernode = 0
+
+            self._nodeinfo=list()
+            for node_raw in pbsnodes_output.split('\n\n'):
+                lines = node_raw.split('\n')
+                node_data = dict()
+                for line in lines[1:]:
+                    (key, value) = line.split(" = ")
+                    key = key.strip()
+                    node_data[key] = value
+                self._nodeinfo.append(node_data)
+                cpus_total += int(node_data['np'])
+                if node_data['state'] == 'free':
+                    cpus_free += int(node_data['np'])
+
+            self.GlueSubClusterPhysicalCPUs = str(cpus_total)
+            self.GlueCEStateFreeCPUs = str(cpus_free)
+            self.GlueHostArchitectureSMPSize = self._nodeinfo[0]['np']
 
     def has_attribute(self, key):
         if self.__dict__[key] != None:
@@ -266,20 +293,12 @@ class PBSService():
             else:
                 self._pi.log_info("Found PBS command line tools on %s at %s" \
                   % (self._url, result.stdout.replace('/pbsnodes', '')))
-                # now that we successfully detected the pbs tools, let 
-                # try to find out a few facts about the system. this might
-                # come in handy later.
-                #result = self._cw.run('pbsnodes | grep "np ="')
-                #if result.returncode != 0:
-                #    self._pi.log_error_and_raise("11", 
-                #      "Couldn't execute 'pbsnodes' on %s because: %s" \
-                #      % (self._url, result.stderr))
+               
                 si = self.get_service_info()
-                
-                #else:
-                #    nodes = result.stdout.split("\n")
-                #    self._nodes = len(nodes)
-                #    self._ppn   = int(nodes[1].split(" = ")[1].strip())
+                if si.GlueHostArchitectureSMPSize != None:
+                    self._ppn = si.GlueHostArchitectureSMPSize
+         
+                    #self._ppn   = int(nodes[1].split(" = ")[1].strip())
                 #    self._pi.log_info("%s seems to have %s nodes and %s processors (cores) per node" \
                 #      % (self._url, self._nodes, self._ppn))
           
@@ -447,7 +466,11 @@ class PBSService():
         result = self._cw.run("echo '%s' | qsub" % (script))
  
         if result.returncode != 0:
-            raise Exception("Error running 'qstat': %s" % result.stderr)
+            if len(result.stderr) < 1:
+                error = result.stdout
+            else:
+                error = result.sterr
+            raise Exception("Error running 'qsub': %s" % error)
         else:
             jobinfo = self.get_jobinfo(bliss.saga.job.JobID(self._url, 
               result.stdout.split("\n")[0]))
