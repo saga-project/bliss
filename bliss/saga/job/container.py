@@ -15,12 +15,18 @@ from bliss.saga import exception
 
 
 class WaitMode:
+    ''' Specifies the condition on which a wait() operation on
+        a L{saga.job.Container} returns.
+    '''
+  
     Any = "Any"
     '''wait() returns only if all tasks in the container
-       reach a final state.'''
+       reach a final state.
+    '''
     All = "All"
     '''wait() returns if one or more tasks in the container 
-       reach a final state.'''
+       reach a final state.
+    '''
 
 class Container(Object):
     '''Loosely represents a SAGA taks container as defined in GFD.90.
