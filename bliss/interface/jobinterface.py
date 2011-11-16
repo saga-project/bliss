@@ -44,39 +44,76 @@ class JobPluginInterface(PluginBaseInterface):
     ######## Implementation for saga.job.Service functionality 
     ##
     def service_list(self, service_obj):
-        errormsg = "Not implemented plugin method called: list()"
+        errormsg = "Not implemented plugin method called: service_list()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def service_get_job(self, service_obj, job_id):
-        errormsg = "Not implemented plugin method called: get_job()"
+        errormsg = "Not implemented plugin method called: service_get_job()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
+
+
+    ######## Implementation for saga.job.Container functionality 
+    ##
+
+    def container_object_register(self, container_obj):
+        errormsg = "Not implemented plugin method called: container_object_register()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
+    def container_object_unregister(self, container_obj):
+        errormsg = "Not implemented plugin method called: container_object_unregister()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
+    def container_add(self, container_obj, job_obj):
+        errormsg = "Not implemented plugin method called: container_add()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
+    def container_remove(self, container_obj, job_obj):
+        errormsg = "Not implemented plugin method called: container_remove()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
+    def container_list(self, container_obj):
+        errormsg = "Not implemented plugin method called: container_list)"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
+    def container_size(self, container_obj):
+        errormsg = "Not implemented plugin method called: container_size)"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
+    def container_run(self, container_obj):
+        errormsg = "Not implemented plugin method called: container_run)"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
+    def container_cancel(self, container_obj, timeout):
+        errormsg = "Not implemented plugin method called: container_cancel)"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
+    def container_wait(self, container_obj, wait_mode, timeout):
+        errormsg = "Not implemented plugin method called: container_wait)"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
 
     ######## Method templates for saga.Job functionality 
     ##
     def job_get_state(self, job_obj):
-        errormsg = "Not implemented plugin method called: job.get_state()"
+        errormsg = "Not implemented plugin method called: job_get_state()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def job_get_job_id(self, jobid):
-        errormsg = "Not implemented plugin method called: job.get_job_id()"
+        errormsg = "Not implemented plugin method called: job_get_job_id()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def job_run(self, job_obj):
-        errormsg = "Not implemented plugin method called: job.run()"
+        errormsg = "Not implemented plugin method called: job_run()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def job_wait(self, job_obj, timeout):
-        errormsg = "Not implemented plugin method called: job.wait()"
+        errormsg = "Not implemented plugin method called: job_wait()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
 
     def job_cancel(self, job_obj, timeout):
-        errormsg = "Not implemented plugin method called: job.cancel()"
+        errormsg = "Not implemented plugin method called: job_cancel()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
-
-    ######## Method templates for saga.Job attributes
-    ##
     def job_get_exitcode(self, job_obj):
-        errormsg = "Not implemented plugin attribute accessed: job.exitcode"
+        errormsg = "Not implemented plugin attribute accessed: job_get_exitcode"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg)   

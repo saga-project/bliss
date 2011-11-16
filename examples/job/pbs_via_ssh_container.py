@@ -56,6 +56,7 @@ def main():
 
         # create the job (state: New)
         myjob = js.create_job(jd)
+        container.add(myjob)
 
         print "Job ID    : %s" % (myjob.jobid)
         print "Job State : %s" % (myjob.get_state())

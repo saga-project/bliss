@@ -9,16 +9,14 @@ __license__   = "MIT"
 
 from bliss.saga.object import Object
 from bliss.saga.attributes import AttributeInterface
-from bliss.saga.url import Url
 
 class Description(Object, AttributeInterface):
     '''Loosely represents a SAGA job description as defined in GFD.90'''
 
-#    __slots__ = {'_executable', '_arguments', '_environment', '_project',
-#                  '_output', '_error', '_queue'}
-
+    ######################################################################
+    ## 
     def __init__(self):
-        '''Constructor.'''
+        '''Create a new, empty job description.'''
         Object.__init__(self, Object.JobDescription, 
                         apitype=Object.JobAPI,)
         AttributeInterface.__init__(self)
@@ -60,11 +58,15 @@ class Description(Object, AttributeInterface):
         self._register_rw_vec_attribute (name="JobProject", 
                                          accessor=self.__class__.project) 
 
+    ######################################################################
+    ## 
     def __del__(self):
-        '''Destructor'''
+        '''Delete the job description in a civilised fashion.'''
+        # nothing to do here 
+        pass
 
     ######################################################################
-    ## Property: executable
+    ## Property: 
     def executable():
         doc = "The job executable."
         def fget(self):
@@ -77,7 +79,7 @@ class Description(Object, AttributeInterface):
     executable = property(**executable())
       
     ######################################################################
-    ## Property: arguments
+    ## Property: 
     def arguments():
         doc = "The arguments to pass to the job executable."
         def fget(self):
@@ -90,7 +92,7 @@ class Description(Object, AttributeInterface):
     arguments = property(**arguments())
 
     ######################################################################
-    ## Property: environment
+    ## Property: 
     def environment():
         doc = "The environment variables to set in the job's execution context."
         def fget(self):
@@ -104,7 +106,7 @@ class Description(Object, AttributeInterface):
 
 
     ######################################################################
-    ## Property: output
+    ## Property: 
     def output():
         doc = "The file in which the job\'s stdout stream will be captured."
         def fget(self):
@@ -117,7 +119,7 @@ class Description(Object, AttributeInterface):
     output = property(**output())
 
     ######################################################################
-    ## Property: error
+    ## Property: 
     def error():
         doc = "The file in which the job\'s stderr stream will be captured."
         def fget(self):
@@ -130,7 +132,7 @@ class Description(Object, AttributeInterface):
     error = property(**error())
 
     ######################################################################
-    ## Property: project
+    ## Property: 
     def project():
         doc = "The project / allocation name the job should be credited to."
         def fget(self):
@@ -143,7 +145,7 @@ class Description(Object, AttributeInterface):
     project = property(**project())
 
     ######################################################################
-    ## Property: queue
+    ## Property: 
     def queue():
         doc = "The queue on the backend system to place the job in."
         def fget(self):
@@ -156,7 +158,7 @@ class Description(Object, AttributeInterface):
     queue = property(**queue())
 
     ######################################################################
-    ## Property: walltime_limit
+    ## Property:
     def walltime_limit():
         doc = "The hard limit for the total job runtime."
         def fget(self):

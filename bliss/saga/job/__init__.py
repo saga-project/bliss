@@ -2,7 +2,7 @@
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-'''SAGA Job Package API. 
+'''SAGA Job Package API.
 '''
 
 __author__    = "Ole Christian Weidner"

@@ -7,30 +7,26 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-import copy
 from bliss.saga.object import Object
 from bliss.saga.attributes import AttributeInterface
-from bliss.saga import exception
 
-
-##########################################################################
-##
 class JobID(object):
-    '''Represents a SAGA job ID'''
+    '''Represents a SAGA job ID (Not part of GFD.90)'''
     
-    #__slots__ = {'_service', '_native'}
-   
     ######################################################################
     ##
     def __init__(self, service_url, native_id):
-        '''Constructor'''
+        '''Create a new job id.
+           @param service_url : The URL of the job service of the job.
+           @param native_id: The native id (a.k.a. backend id) of the job.
+        '''
         self._service = service_url
         self._native = native_id
 
     ######################################################################
     ##
     def __str__(self):
-        '''String representation'''
+        '''String representation.'''
         return "[%s]-[%s]" % (self._service, self._native)
 
     ######################################################################
@@ -45,7 +41,7 @@ class JobID(object):
     ######################################################################
     ##
     def native_id():
-        doc = "The job id's native component"
+        doc = "The job id's native id component"
         def fget(self):
             return self._native
         return locals()
@@ -55,25 +51,25 @@ class JobID(object):
 class Job(Object, AttributeInterface):
     '''Loosely represents a SAGA job as defined in GFD.90'''
     
-    Canceled = "Canceled"
+    Canceled = "saga.job.Job.Canceled"
     '''Indicates that the job has been canceled either by the user or the system'''
-    Done     = "Done"
+    Done     = "saga.job.Job.Done"
     '''Indicates that the job has successfully executed''' 
-    Failed   = "Failed"
+    Failed   = "saga.job.Job.Failed"
     '''Indicates that the execution of the job has failed'''
-    New      = "New"
+    New      = "saga.job.Job.New"
     '''Indicates that the job hasn't been started yet'''
-    Running  = "Running"
+    Running  = "saga.job.Job.Running"
     '''Indicates that the job is executing'''
-    Waiting  = "Waiting"
+    Waiting  = "saga.job.Job.Waiting"
     '''Indicates that the job is waiting to be executed (NOT IN GFD.90)'''
-    Unknown  = "Unknown"
+    Unknown  = "saga.job.Job.Unknown"
     '''Indicates that the job is in an unexpected state'''
 
-    #__slots__ = {'_service', '_url', '_job_description', 'serviceurl'}
-
+    ######################################################################
+    ##
     def __init__(self):
-        '''Constructor - not to be called directly'''
+        '''PRIVATE Constructor (don't call explicitly!)'''
         Object.__init__(self, Object.Job, apitype=Object.JobAPI)
         AttributeInterface.__init__(self)
       
@@ -85,7 +81,8 @@ class Job(Object, AttributeInterface):
         self._register_ro_attribute     (name="ServiceURL", 
                                          accessor=self.__class__.serviceurl)  
 
-
+    ######################################################################
+    ##
     def __init_from_service(self, service_obj, job_desc):
         '''Constructor'''
         self._service = service_obj
@@ -93,67 +90,84 @@ class Job(Object, AttributeInterface):
         self._job_description = job_desc
 
         self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
-        self._logger.info("Job object bound to plugin %s" % (repr(self._plugin)))
+        self._logger.info("Bound to plugin %s" % (repr(self._plugin)))
 
+    ######################################################################
+    ##
     def __del__(self):
-        '''Tear down the object in a more or less civilised fashion.'''
+        '''Delete the job in a civilised fashion.'''
         if self._plugin is not None:
             self._plugin.unregister_job_object(self)
         else:
             pass # can't throw here
 
-
-
+    ######################################################################
+    ##
     def get_stderr(self):
-        '''B{Not Implemented:} Bliss finds this method unnecessary and generally poorly \
-           supported by distributed middelware - use U{Air<http://oweidner.github.com/air/>} \
-           instead for scalable output streaming and much more.
+        '''B{Not Implemented:} Bliss finds this method unnecessary and \
+           generally poorly supported by distributed middelware - use \
+           U{Air<http://oweidner.github.com/air/>} instead for scalable 
+           output streaming and much more.
         '''
+        raise bliss.saga.Exception(bliss.saga.Error.NotImplemented, 
+          "Bliss doesn't suppport get_stderr()")
 
-        raise exception.Exception(exception.Error.NotImplemented, "Bliss doesn't suppport get_stderr()")
-
+    ######################################################################
+    ##
     def get_stdout(self):
-        '''B{Not Implemented:} Bliss finds this method unnecessary and generally poorly \
-           supported by distributed middleware - use U{Air<http://oweidner.github.com/air/>}  \
-           instead for scalable output streaming and much more.
+        '''B{Not Implemented:} Bliss finds this method unnecessary and \
+           generally poorly supported by distributed middelware - use \
+           U{Air<http://oweidner.github.com/air/>} instead for scalable 
+           output 
         '''
-        raise exception.Exception(exception.Error.NotImplemented, "Bliss doesn't suppport get_stdout()")
+        raise bliss.saga.Exception(bliss.saga.Error.NotImplemented, 
+          "Bliss doesn't suppport get_stdout()")
 
+    ######################################################################
+    ##
     def get_description(self):
         '''Return the job description this job was created from.'''
         if self._plugin is not None:
             return self._job_description
         else:
-            raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
 
+    ######################################################################
+    ##
     def get_state(self):
         '''Return the current state of the job.'''
         if self._plugin is not None:
             return self._plugin.job_get_state(self)
             return None
         else:
-            raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
 
+    ######################################################################
+    ##
     def get_job_id(self):
         '''Return the identifier for the job (B{I{not officially part of GFD.90}}).
-
-           Job identifier I{should} follow the folling scheme::
-              [backend url]-[native jobid]
         '''
         if self._plugin is not None:
             return self._plugin.job_get_job_id(self)
         else:
-            raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
 
-
+    ######################################################################
+    ##
     def run(self):
         '''Execute the job via the associated job service.'''
         if self._plugin is not None:
             return self._plugin.job_run(self)
             return None
         else:
-            raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
 
+    ######################################################################
+    ##
     def cancel(self, timeout=0):
         '''Cancel the execution of the job.
            @param timeout: Timeout in seconds.
@@ -162,8 +176,11 @@ class Job(Object, AttributeInterface):
             return self._plugin.job_cancel(self, timeout)
             return None
         else:
-            raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
 
+    ######################################################################
+    ##
     def wait(self, timeout=-1):
         '''Wait for a running job to finish execution.
            @param timeout: Timeout in seconds.
@@ -172,10 +189,11 @@ class Job(Object, AttributeInterface):
             return self._plugin.job_wait(self, timeout)
             return None
         else:
-            raise exception.Exception(exception.Error.NoSuccess, "Object not bound to a plugin")
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
 
     ######################################################################
-    ## Property: exitcode
+    ## Property:
     def exitcode():
         doc = "The job's exitcode."
         def fget(self):
@@ -185,7 +203,7 @@ class Job(Object, AttributeInterface):
     exitcode = property(**exitcode())
 
     ######################################################################
-    ## Property: jobid
+    ## Property:
     def jobid():
         doc = "The job's identifier."
         def fget(self):
@@ -195,7 +213,7 @@ class Job(Object, AttributeInterface):
     jobid = property(**jobid())
 
     ######################################################################
-    ## Property: jobid
+    ## Property: 
     def serviceurl():
         doc = "The URL of the L{Service} instance managing this job."
         def fget(self):
@@ -203,3 +221,4 @@ class Job(Object, AttributeInterface):
                 return str(self._url)
         return locals()
     serviceurl = property(**serviceurl())
+
