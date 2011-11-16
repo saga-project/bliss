@@ -469,7 +469,7 @@ class PBSService():
             if len(result.stderr) < 1:
                 error = result.stdout
             else:
-                error = result.sterr
+                error = result.stderr
             raise Exception("Error running 'qsub': %s" % error)
         else:
             jobinfo = self.get_jobinfo(bliss.saga.job.JobID(self._url, 
