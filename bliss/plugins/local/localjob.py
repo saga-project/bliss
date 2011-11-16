@@ -11,7 +11,7 @@ from bliss.interface import JobPluginInterface
 from bliss.plugins.local.process import LocalJobProcess
 
 from bliss.plugins import utils
-from bliss.saga import exception
+import bliss.saga 
 
 class LocalJobPlugin(JobPluginInterface):
     '''Implements a job plugin that can submit jobs to the local machine'''
@@ -95,7 +95,7 @@ class LocalJobPlugin(JobPluginInterface):
 
     def __init__(self, url):
         '''Class constructor'''
-        _JobPluginBase.__init__(self, name=self._name, schemas=self._schemas)
+        JobPluginInterface.__init__(self, name=self._name, schemas=self._schemas)
         self.bookkeeper = self.BookKeeper(self)
 
     @classmethod
@@ -142,18 +142,39 @@ class LocalJobPlugin(JobPluginInterface):
         self.log_info("Unegistered new service object %s" % (repr(service_obj))) 
 
  
-    def register_job_object(self, job_obj, service_obj):
-        '''Implements interface from _JobPluginBase'''
-        ## Step 6: Implement register_job_object. This method is called if 
-        ##         a job object is instantiated via the service.create_job() call.
-        ##         You can still reject it by throwing an exception.
-        self.bookkeeper.add_job_object(job_obj, service_obj)   
-        self.log_info("Registered new job object %s" % (repr(job_obj))) 
+    #def register_job_object(self, job_obj, service_obj):
+    #    '''Implements interface from _JobPluginBase'''
+    #    ## Step 6: Implement register_job_object. This method is called if 
+    #    ##         a job object is instantiated via the service.create_job() call.
+    #    ##         You can still reject it by throwing an exception.
+    #    self.bookkeeper.add_job_object(job_obj, service_obj)   
+    #    self.log_info("Registered new job object %s" % (repr(job_obj))) 
 
     def unregister_job_object(self, job_obj):
         '''Implements interface from _JobPluginBase'''
         self.bookkeeper.del_job_object(job_obj)
         self.log_info("Unegisteredjob object %s" % (repr(job_obj))) 
+
+
+    def service_create_job(self, service_obj, job_description):
+        '''Implements interface from _JobPluginBase.
+           This method is called for saga.Service.create_job().
+        '''
+        if job_description.executable is None:   
+            self.log_error_and_raise(bliss.saga.Error.BadParameter, 
+              "No executable defined in job description")
+        try:
+            job = bliss.saga.job.Job()
+            job._Job__init_from_service(service_obj=service_obj, 
+                                        job_desc=job_description)
+            #self.bookkeeper.add_job_object_to_service(job, service_obj,
+            #    bliss.saga.job.JobID(service_obj._url, None))
+            self.bookkeeper.add_job_object(job, service_obj)   
+
+            return job
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't create a new job because: %s " % (str(ex)))
 
 
     def service_list(self, service_obj):
