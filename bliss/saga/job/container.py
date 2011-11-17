@@ -74,7 +74,7 @@ class Container(Object):
               "add() expects %s object as parameter" % (Object.Job))
 
         if self._plugin is not None:
-            return self._plugin.container_add(job)
+            return self._plugin.container_add_job(self, job)
         else:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
@@ -92,7 +92,7 @@ class Container(Object):
               "remove() expects %s object as parameter" % (Object.Job))
 
         if self._plugin is not None:
-            return self._plugin.container_remove(job)
+            return self._plugin.container_remove_job(job)
         else:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")

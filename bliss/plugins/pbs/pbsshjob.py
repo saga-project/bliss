@@ -10,6 +10,7 @@ __license__   = "MIT"
 from bliss.interface import JobPluginInterface, SDPluginInterface
 
 from bliss.plugins.pbs.cmdlinewrapper import PBSService
+from bliss.plugins.pbs.bookkeeper import BookKeeper
 from bliss.plugins import utils
 
 import time
@@ -36,90 +37,10 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
 
     ######################################################################
     ##
-    class BookKeeper:
-        '''Keeps track of job and service objects'''
-        def __init__(self, parent):
-            self.objects = {}
-            self.parent = parent
-        
-
-        def add_service_object(self, service_obj, pbs_obj):
-            '''Describe me'''
-            service_key = hex(id(service_obj))  
-            self.objects[service_key] = {
-              'saga_instance' : service_obj, 
-              'pbs_instance' : pbs_obj, 
-              'jobs' : dict()}
-
-
-        def remove_service_object(self, service_obj):
-            '''Describe me'''
-            service_key = hex(id(service_obj))  
-            try:
-                self.objects.remove(service_key)
-            except Exception:
-                pass
-
-
-        def remove_job_object(self, job_obj):
-            '''Describe me'''
-            service_key = hex(id(self.get_service_for_job(job_obj)))  
-            job_key = hex(id(job_obj))  
-            try:
-                self.objects[service_key]['jobs'].remove(job_key)
-            except Exception:
-                pass
-
-
-        def get_pbswrapper_for_service(self, service_obj):
-            '''Describe me'''
-            service_key = hex(id(service_obj))  
-            return self.objects[service_key]['pbs_instance']
-
-
-        def add_job_object_to_service(self, job_obj, service_obj, saga_jobid):
-            '''Describe me'''
-            service_key = hex(id(service_obj))  
-            job_key = hex(id(job_obj))
-            try:
-                self.objects[service_key]['jobs'][job_key] = {
-                  'instance':job_obj,
-                  'jobid':saga_jobid }
-            except Exception, ex:
-                self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                  "Can't register job: %s %s" % (ex, utils.get_traceback()))   
-
-
-        def get_service_for_job(self, job_obj):
-            '''Return the service object the job is registered with'''
-            for key in self.objects.keys():
-                job_key = hex(id(job_obj))
-                if job_key in self.objects[key]['jobs']:
-                    return self.objects[key]['saga_instance']
-            self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-              "INTERNAL ERROR: Job object %s is not known by this plugin %s" \
-              % (job_obj, utils.get_traceback())) 
-
-
-        def get_jobid_for_job(self, job_obj):
-            '''Return the local process object for a given job'''
-            try:
-                service_key = hex(id(self.get_service_for_job(job_obj)))  
-                job_key = hex(id(job_obj))  
-                return self.objects[service_key]['jobs'][job_key]['jobid']
-            except Exception, ex:
-                self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                  "INTERNAL ERROR: Job object %s is not associated with a process %s" \
-                  % (job_obj, utils.get_traceback()))   
-
-
-
-    ######################################################################
-    ##
     def __init__(self, url):
         '''Class constructor'''
         JobPluginInterface.__init__(self, name=self._name, schemas=self._schemas)
-        self.bookkeeper = self.BookKeeper(self)
+        self.bookkeeper = BookKeeper(self)
 
     ######################################################################
     ##
@@ -145,7 +66,7 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
     def unregister_service_object(self, service_obj):
         '''Implements interface from _JobPluginBase'''
         self.bookkeeper.remove_service_object(service_obj)
-        self.log_info("Unegistered new service object %s" \
+        self.log_info("Unegistered service object %s" \
           % (repr(service_obj)))
 
     ######################################################################
@@ -254,7 +175,7 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
             job = bliss.saga.job.Job()
             job._Job__init_from_service(service_obj=service_obj, 
                                         job_desc=job_description)
-            self.bookkeeper.add_job_object_to_service(job, service_obj,
+            self.bookkeeper.add_job_object(job, service_obj,
                 bliss.saga.job.JobID(service_obj._url, None))
             return job
         except Exception, ex:
@@ -278,7 +199,7 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
             job = bliss.saga.job.Job()
             job._Job__init_from_service(service_obj=service_obj, 
                                         job_desc=job_description)
-            self.bookkeeper.add_job_object_to_service(job, service_obj, job_id)
+            self.bookkeeper.add_job_object(job, service_obj, job_id)
             return job
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
@@ -336,7 +257,7 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
             jobinfo = pbs.submit_job(job) 
             
             sagajobid = bliss.saga.job.JobID(service._url, jobinfo.jobid)
-            self.bookkeeper.add_job_object_to_service(job, service, sagajobid)
+            self.bookkeeper.add_job_object(job, service, sagajobid)
 
             self.log_info("Started local process: %s %s" \
               % (job.get_description().executable, job.get_description().arguments))
@@ -381,7 +302,7 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
     ######################################################################
     ## 
     def job_get_exitcode(self, job_obj):
-        '''Implements interface from _JobPluginBase.'''
+        '''Implements interface from JobPluginInterface.'''
         try:
             service = self.bookkeeper.get_service_for_job(job_obj)
             pbs = self.bookkeeper.get_pbswrapper_for_service(service)
@@ -389,4 +310,50 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
               "Couldn't get job exitcode because: %s " % (str(ex)))
+
+    ######################################################################
+    ## 
+    def container_object_register(self, container_obj):
+        '''Implements interface from JobPluginInterface.'''
+        try:
+            self.bookkeeper.add_container_object(container_obj, 
+              container_obj._service)
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't create a new job because: %s " % (str(ex)))
+
+    ######################################################################
+    ## 
+    def container_object_unregister(self, container_obj):
+        '''Implements interface from JobPluginInterface.'''
+        self.bookkeeper.remove_container_object(service_obj)
+        self.log_info("Unegistered container object %s" \
+          % (repr(service_obj)))
+
+    ######################################################################
+    ## 
+    def container_add_job(self, container_obj, job_obj):
+        '''Implements interface from JobPluginInterface.'''
+        if container_obj._service != job_obj._service:
+            self.log_error_and_raise(bliss.saga.Error.BadParameter, 
+              "Couldn't add job to container because job and container \
+               don't seem to be managed to the same service object.")
+        try:
+            service = self.bookkeeper.add_job_to_container(job_obj, container_obj)
+            self.log_info("Added job %s to container %s" % (str(job_obj), str(container_obj)))
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't add job to container because: %s " % (str(ex)))
+
+
+    ######################################################################
+    ## 
+    def container_remove_job(self, container_obj, job_obj):
+        '''Implements interface from JobPluginInterface.'''
+        try:
+            service = self.bookkeeper.add_job_to_container(job_obj, container_obj)
+            self.log_info("Removed job %s from container %s" % (str(job_obj), str(container_obj)))
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't remove job from container because: %s " % (str(ex)))
 

@@ -54,7 +54,6 @@ class JobPluginInterface(PluginBaseInterface):
 
     ######## Implementation for saga.job.Container functionality 
     ##
-
     def container_object_register(self, container_obj):
         errormsg = "Not implemented plugin method called: container_object_register()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
@@ -63,11 +62,11 @@ class JobPluginInterface(PluginBaseInterface):
         errormsg = "Not implemented plugin method called: container_object_unregister()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
-    def container_add(self, container_obj, job_obj):
+    def container_add_job(self, container_obj, job_obj):
         errormsg = "Not implemented plugin method called: container_add()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
-    def container_remove(self, container_obj, job_obj):
+    def container_remove_remove(self, container_obj, job_obj):
         errormsg = "Not implemented plugin method called: container_remove()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
