@@ -71,23 +71,23 @@ class JobPluginInterface(PluginBaseInterface):
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def container_list(self, container_obj):
-        errormsg = "Not implemented plugin method called: container_list)"
+        errormsg = "Not implemented plugin method called: container_list()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def container_size(self, container_obj):
-        errormsg = "Not implemented plugin method called: container_size)"
+        errormsg = "Not implemented plugin method called: container_size()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def container_run(self, container_obj):
-        errormsg = "Not implemented plugin method called: container_run)"
+        errormsg = "Not implemented plugin method called: container_run()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def container_cancel(self, container_obj, timeout):
-        errormsg = "Not implemented plugin method called: container_cancel)"
+        errormsg = "Not implemented plugin method called: container_cancel()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def container_wait(self, container_obj, wait_mode, timeout):
-        errormsg = "Not implemented plugin method called: container_wait)"
+        errormsg = "Not implemented plugin method called: container_wait()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
 

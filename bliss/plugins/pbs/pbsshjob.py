@@ -332,6 +332,30 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
 
     ######################################################################
     ## 
+    def container_list(self, container_obj):
+        '''Implements interface from JobPluginInterface.'''
+        try:
+            return self.bookkeeper.container_list(container_obj)
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't list jobs from container because: %s " % (str(ex)))
+
+
+
+    ######################################################################
+    ## 
+    def container_size(self, container_obj):
+        '''Implements interface from JobPluginInterface.'''
+        try:
+            return len(self.bookkeeper.container_list(container_obj))
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't list jobs from container because: %s " % (str(ex)))
+
+
+
+    ######################################################################
+    ## 
     def container_add_job(self, container_obj, job_obj):
         '''Implements interface from JobPluginInterface.'''
         if container_obj._service != job_obj._service:
@@ -351,7 +375,7 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
     def container_remove_job(self, container_obj, job_obj):
         '''Implements interface from JobPluginInterface.'''
         try:
-            service = self.bookkeeper.add_job_to_container(job_obj, container_obj)
+            service = self.bookkeeper.remove_job_from_container(job_obj, container_obj)
             self.log_info("Removed job %s from container %s" % (str(job_obj), str(container_obj)))
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
