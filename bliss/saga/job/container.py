@@ -156,8 +156,7 @@ class Container(Object):
            @param timeout: Timeout in seconds.
         '''
         if self._plugin is not None:
-            return self._plugin.container_wait(self, timeout)
-            return None
+            return self._plugin.container_wait(self, wait_mode, timeout)
         else:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")

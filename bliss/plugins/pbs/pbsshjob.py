@@ -381,3 +381,57 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
               "Couldn't remove job from container because: %s " % (str(ex)))
 
+
+    ######################################################################
+    ## 
+    def container_run(self, container_obj):
+        try: 
+            for job in self.container_list(container_obj):
+                self.job_run(job)
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't start all jobs in the container because: %s " % (str(ex)))
+
+
+    ######################################################################
+    ##
+    def job_get_bulk_states(self, container):
+        '''Optimized bulk-state query for container jobs'''
+        try:
+            states = list()
+            notnew = list()
+            for job in self.container_list(container):
+                if self.bookkeeper.get_jobid_for_job(job).native_id == None:
+                    states.append(bliss.saga.job.Job.New)
+                else:
+                    notnew.append(job.get_job_id())
+                
+            pbs = self.bookkeeper.get_pbswrapper_for_service(container._service)
+            for state in pbs.get_bulk_job_states(notnew):
+                states.append(state)
+            return states
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't get bulk (container) job states because: %s " % (str(ex)))
+
+    ######################################################################
+    ## 
+    def container_wait(self, container_obj, wait_mode, timeout):
+        try:
+            all_done = False
+            while not all_done:
+                for state in self.job_get_bulk_states(container_obj):
+                    jobs_not_done = 0
+                    if state == bliss.saga.job.Job.Running \
+                    or state == bliss.saga.job.Job.Waiting:
+                        jobs_not_done += 1
+                    
+                    if jobs_not_done > 0:
+                        all_done = False
+                        time.sleep(2)
+                    else:
+                        all_done = True
+        
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't wait for jobs in the container because: %s " % (str(ex)))

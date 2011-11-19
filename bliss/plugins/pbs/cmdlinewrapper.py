@@ -366,6 +366,7 @@ class PBSService():
     ######################################################################
     ##
     def get_jobinfo(self, saga_jobid):
+
         '''Returns a running PBS job as saga object'''
         if self._cw == None:
             self._check_context()
@@ -397,10 +398,70 @@ class PBSService():
 
     ######################################################################
     ##
+    def get_jobinfo_bulk(self, saga_jobids):
+
+        '''Returns a running PBS job as saga object'''
+        if self._cw == None:
+            self._check_context()
+
+        jobinfos = list()
+        nativeids = str()
+        # pre-filter finished jobs
+        for jobid in saga_jobids:
+            if self._known_jobs_exists(jobid.native_id):
+                if self._known_jobs_is_final(jobid.native_id):
+                    jobinfos.append(self._known_jobs[jobid.native_id])
+                else:
+                    nativeids += ("%s " % (jobid.native_id))
+        # run bulk qstat
+        result = self._cw.run("qstat -f1 %s" % nativeids)
+        if result.returncode != 0:
+            if self._known_jobs_exists(saga_jobid.native_id):
+                ## if the job is on record but can't be reached anymore,
+                ## this probablty means that it has finished and already
+                ## kicked out qstat. in that case we just set it's state 
+                ## to done.
+                jobinfo = self._known_jobs[saga_jobid.native_id]
+                jobinfo._job_state = 'C' # PBS 'Complete'
+                return jobinfo
+            else:
+                ## something went wrong.
+                raise Exception("Error running %s: %s" \
+                  % (result.executable, result.stderr))
+        # create JobInfo objects
+        for result in result.stdout.split('\n\n'):
+
+            print "passing result: %s" % result
+            jobinfo = PBSJobInfo(result, self._pi)
+            self._known_jobs_update(jobinfo.jobid, jobinfo)
+            jobinfos.append(jobinfo)
+
+        return jobinfos
+
+
+    ######################################################################
+    ##
     def get_job_state(self, saga_jobid):
         '''Returns the state of the job with the given jobid.
         '''
         return self.get_jobinfo(saga_jobid).state
+
+    ######################################################################
+    ##
+    def get_bulk_job_states(self, saga_jobids):
+        '''Returns a list of states for the job with the given jobids.
+        '''
+        #jobids_str = list()
+        ##for jobid in saga_jobids:
+        #    jobids_str.append(str(jobid))
+        #self._pi.log_info("Trying to get bulk states for: %s " \
+        #  % (jobids_str))
+
+        states = list()
+        for jobinfo in self.get_jobinfo_bulk(saga_jobids):
+            states.append(jobinfo.state)
+        return states
+
 
 
     ######################################################################

@@ -54,22 +54,26 @@ def main():
         # create a new job container
         container = saga.job.Container(js)
 
-        # create the job (state: New)
-        myjob = js.create_job(jd)
-        container.add(myjob)
-        print len(container.list())
-        print container.size()
+        # create a bunch of jobs
+        for i in range(1):
+            container.add(js.create_job(jd))
 
+        #print "Job ID    : %s" % (myjob.jobid)
+        #print "Job State : %s" % (myjob.get_state())
+
+        print "\n...starting jobs...\n"
         container.run()
 
+        #print "Job ID    : %s" % (myjob.jobid)
+        #print "Job State : %s" % (myjob.get_state())
+
+        print "\n...waiting for jobs...\n" 
         container.wait()
 
-        print "Job ID    : %s" % (myjob.jobid)
-        print "Job State : %s" % (myjob.get_state())
+        #print "Job ID    : %s" % (myjob.jobid)
+        #print "Job State : %s" % (myjob.get_state())
 
-        print "\n...starting job...\n"
         # run the job (submit the job to PBS)
-        myjob.run()
 
         #print "Job ID    : %s" % (myjob.jobid)
         #print "Job State : %s" % (myjob.get_state())
