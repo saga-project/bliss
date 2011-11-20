@@ -11,6 +11,6 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.saga.job.job         import Job, JobID
-from bliss.saga.job.container   import Container
+from bliss.saga.job.container   import Container, WaitMode
 from bliss.saga.job.service     import Service
 from bliss.saga.job.description import Description

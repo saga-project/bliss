@@ -100,6 +100,31 @@ class Container(Object):
 
     ######################################################################
     ##
+    def get_job(self, job_uid):
+        '''Get a single job from the job container.
+           @param job_uid: The object uid itenifying the job.
+        '''
+        if self._plugin is not None:
+            return self._plugin.container_get_job(self, job_uid)
+        else:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+
+
+    ######################################################################
+    ##
+    def get_states(self):
+        '''Get the states of all jobs in the container.
+        '''
+        if self._plugin is not None:
+            return self._plugin.container_get_states(self, job)
+        else:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+
+    
+    ######################################################################
+    ##
     def list(self):
         '''List all jobs that are in the container.
         '''

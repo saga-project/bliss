@@ -394,6 +394,20 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
 
 
     ######################################################################
+    ## 
+    def container_get_job(self, container_obj, job_uid):
+        try: 
+            for job in self.container_list(container_obj):
+                if job_uid == job.id:
+                    return job
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Container doesn't contain a job with uid: %s " % (job_uid))            
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't start all jobs in the container because: %s " % (str(ex)))
+         
+
+    ######################################################################
     ##
     def job_get_bulk_states(self, container):
         '''Optimized bulk-state query for container jobs'''

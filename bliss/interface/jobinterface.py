@@ -70,6 +70,14 @@ class JobPluginInterface(PluginBaseInterface):
         errormsg = "Not implemented plugin method called: container_remove()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
+    def container_get_job(self, container_obj, job_uid):
+        errormsg = "Not implemented plugin method called: container_get_job()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
+    def container_get_states(self, container_obj):
+        errormsg = "Not implemented plugin method called: container_get_states()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
     def container_list(self, container_obj):
         errormsg = "Not implemented plugin method called: container_list()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 

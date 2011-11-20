@@ -126,7 +126,7 @@ class Object(object) :
     def id():
         doc = "The object's unique identifier."
         def fget(self):
-            return repr(self)
+            return str(hex(id(self)))
         return locals()
     id = property(**id())
 
@@ -158,5 +158,5 @@ class Object(object) :
 
            It is encouraged to use the L{id} property instead.
         '''
-        return repr(self) 
+        return self.id 
 

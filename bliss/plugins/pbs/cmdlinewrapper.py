@@ -431,7 +431,7 @@ class PBSService():
         # create JobInfo objects
         for result in result.stdout.split('\n\n'):
 
-            print "passing result: %s" % result
+            #print "passing result: %s" % result
             jobinfo = PBSJobInfo(result, self._pi)
             self._known_jobs_update(jobinfo.jobid, jobinfo)
             jobinfos.append(jobinfo)
