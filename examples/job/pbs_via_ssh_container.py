@@ -79,16 +79,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-# INFO: The PBS script generated behind the scenes by the  
-#       plugin looks like this (SAGA_VERBOSE=6 shows it):
-#       
-#         #!/bin/bash 
-#         #PBS -N bliss_job 
-#         #PBS -V     
-#         #PBS -o bliss_pbssh_job.stdout 
-#         #PBS -e bliss_pbssh_job.stderr 
-#         #PBS -l walltime=0:05:00 
-#         #PBS -v SLEEP_TIME=10, 
-#       
-#         /bin/sleep $SLEEP_TIME 
-

@@ -1,3 +1,11 @@
+Version 0.1.11 released 2011-11-20
+
+   * Implemented job container API (a.k.a task_containers)
+     and plugin supprot via PBS+SSH
+   * Implemented CPU and Memory information via
+     PBS service discovery
+   * Cleaned up examples
+
 Version 0.1.10 released 2011-11-16
   
     * Fixed issue with local job plugin
