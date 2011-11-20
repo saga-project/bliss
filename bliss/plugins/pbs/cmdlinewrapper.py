@@ -106,11 +106,19 @@ class PBSServiceInfo(object):
                 self._nodeinfo.append(node_data)
                 cpus_total += int(node_data['np'])
                 if node_data['state'] == 'free':
-                    cpus_free += int(node_data['np'])
+                    try:
+                        cpus_free += int(node_data['np'])
+                        for item in node_data['status'].split(','):
+                            (key, val) = item.split("=")
+                            if key == 'physmem':
+                                self.GlueHostMainMemoryRAMSize = val.replace('kb','')
+                    except Exception, ex:
+                        plugin.log_wrning("Can't determine GlueHostMainMemoryRAMSize.")
 
             self.GlueSubClusterPhysicalCPUs = str(cpus_total)
             self.GlueCEStateFreeCPUs = str(cpus_free)
             self.GlueHostArchitectureSMPSize = self._nodeinfo[0]['np']
+
 
     def has_attribute(self, key):
         if self.__dict__[key] != None:
@@ -133,8 +141,12 @@ class PBSJobInfo(object):
         '''
         
         plugin.log_debug("Got raw qstat output: %s" % qstat_f_output) 
-        lines = qstat_f_output.split("\n")
-        self._jobid = lines[0].split(":")[1].strip()
+        try:
+            lines = qstat_f_output.split("\n")
+            self._jobid = lines[0].split(":")[1].strip()
+        except Exception, ex:
+            raise Exception("Couldn't parse %s: %s" \
+              % (qstat_f_output, ex))
 
         for line in lines[1:]:
             try: 
@@ -430,11 +442,13 @@ class PBSService():
                   % (result.executable, result.stderr))
         # create JobInfo objects
         for result in result.stdout.split('\n\n'):
-
-            #print "passing result: %s" % result
-            jobinfo = PBSJobInfo(result, self._pi)
-            self._known_jobs_update(jobinfo.jobid, jobinfo)
-            jobinfos.append(jobinfo)
+            if result.find("Unable to copy") != -1:
+                # error that pops up sometimes. Ignore
+                pass
+            else:
+                jobinfo = PBSJobInfo(result, self._pi)
+                self._known_jobs_update(jobinfo.jobid, jobinfo)
+                jobinfos.append(jobinfo)
 
         return jobinfos
 

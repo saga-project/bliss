@@ -449,3 +449,4 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
               "Couldn't wait for jobs in the container because: %s " % (str(ex)))
+

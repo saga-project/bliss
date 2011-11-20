@@ -66,7 +66,9 @@ def main():
                 print "    |- Running Jobs         : %s" \
                   % (data.get_attribute("GlueCEStateRunningJobs"))      
                 print "    |- Waiting Jobs         : %s" \
-                  % (data.get_attribute("GlueCEStateWaitingJobs"))    
+                  % (data.get_attribute("GlueCEStateWaitingJobs"))   
+                print "    |- Memory per Node      : %.2f GB" \
+                  % (float(data.get_attribute("GlueHostMainMemoryRAMSize"))/1048576.0)     
                 print "    |- Total CPUs           : %s" \
                   % (data.get_attribute("GlueSubClusterPhysicalCPUs"))      
                 print "    |- Free CPUs            : %s" \
