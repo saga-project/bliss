@@ -28,7 +28,7 @@ class Description(Object, AttributeInterface):
         self._output            = None
         self._error             = None
         self._queue             = None
-        self._walltime_limit    = None
+        self._wall_time_limit    = None
         self._working_directory = None
         self._contact           = None
         self._total_cpu_count   = None
@@ -43,7 +43,7 @@ class Description(Object, AttributeInterface):
         self._register_rw_attribute     (name="Queue", 
                                          accessor=self.__class__.queue) 
         self._register_rw_attribute     (name="WallTimeLimit", 
-                                         accessor=self.__class__.walltime_limit) 
+                                         accessor=self.__class__.wall_time_limit) 
         self._register_rw_attribute     (name="WorkingDirectory", 
                                          accessor=self.__class__.working_directory) 
         self._register_rw_attribute     (name="Contact", 
@@ -159,16 +159,16 @@ class Description(Object, AttributeInterface):
 
     ######################################################################
     ## Property:
-    def walltime_limit():
+    def wall_time_limit():
         doc = "The hard limit for the total job runtime."
         def fget(self):
-            return self._walltime_limit
+            return self._wall_time_limit
         def fset(self, val):
-            self._walltime_limit = val
+            self._wall_time_limit = val
         def fdel(self, val):
-            self._walltime_limit = None
+            self._wall_time_limit = None
         return locals()
-    walltime_limit = property(**walltime_limit())
+    wall_time_limit = property(**wall_time_limit())
 
     ######################################################################
     ## Property: 

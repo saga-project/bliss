@@ -1,26 +1,32 @@
-Version 0.1.11 released 2011-11-20
+Version 0.1.11 released 2011-11-23
+----------------------------------------------------------------------
 
-   * Implemented job container API (a.k.a task_containers)
-     and plugin supprot via PBS+SSH
-   * Implemented CPU and Memory information via
-     PBS service discovery
-   * Cleaned up examples
+    * Changed job.Description.walltime_limit to 
+      job.Description.wall_time_limit
+    * Implemented job container API (a.k.a task_containers)
+      and plugin supprot via PBS+SSH
+    * Implemented CPU and Memory information via
+      PBS service discovery
+    * Cleaned up examples
 
 Version 0.1.10 released 2011-11-16
-  
+----------------------------------------------------------------------
+
     * Fixed issue with local job plugin
 
 Version 0.1.9 released 2011-11-16
+----------------------------------------------------------------------
 
     * Prototype of a Service Discovery packages
     * PBS/SSH support for service discovery
 
 Version 0.1.8 released 2011-11-09
+----------------------------------------------------------------------
 
     * Fixed issue with PBS plugin job.wait()
 
 Version 0.1.7 released 2011-11-09
+----------------------------------------------------------------------
 
-    * More or less stable job API
-    
+    * More or less stable job API    
     * First functional PBS over SSH plugin 

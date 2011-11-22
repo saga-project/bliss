@@ -501,8 +501,8 @@ class PBSService():
             pbs_params += "#PBS -e %s \n" % jd.error 
         if jd.working_directory is not None:
             pbs_params += "#PBS -d %s \n" % jd.working_directory
-        if jd.walltime_limit is not None:
-            pbs_params += "#PBS -l walltime=%s \n" % jd.walltime_limit
+        if jd.wall_time_limit is not None:
+            pbs_params += "#PBS -l walltime=%s \n" % jd.wall_time_limit
         if jd.queue is not None:
             pbs_params += "#PBS -q %s \n" % jd.queue
         if jd.project is not None:

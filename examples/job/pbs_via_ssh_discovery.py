@@ -41,7 +41,7 @@ def main():
         # create a bunch of jobs. at this point they are just 
         # descriptions and not bound to a resource manager
         jd = saga.job.Description()
-        jd.walltime_limit  = "0:05:00"
+        jd.wall_time_limit  = "0:05:00"
         jd.total_cpu_count = 1     
         jd.executable      = "/bin/sleep"
         jd.arguments       = ["10"] # 5 minutes
