@@ -1,5 +1,5 @@
 {"slideHeight":768,
-"filename":"bliss_intro",
+"filename":"bliss_intro.key",
 "navigatorEvents":[{"eventName":"Slide 1",
 "eventIndex":0}
 ,{"eventName":"Slide 2",
@@ -109,8 +109,8 @@
 ,
 "slideWidth":1024,
 "minorVersion":4,
-"timestamp":"2011-11-02 12:07:15",
-"title":"bliss_intro",
+"timestamp":"2011-11-02 14:06:08",
+"title":"bliss_intro.key",
 "eventTimelines":[{"automaticPlay":0,
 "hyperlinks":[]
 ,
