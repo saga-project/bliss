@@ -1,5 +1,5 @@
 {"slideHeight":768,
-"filename":"bliss_dynexec_101",
+"filename":"bliss_adex_101_1",
 "navigatorEvents":[{"eventName":"Slide 1",
 "eventIndex":0}
 ,{"eventName":"Slide 2",
@@ -179,8 +179,8 @@
 ,
 "slideWidth":1024,
 "minorVersion":4,
-"timestamp":"2011-11-23 11:28:58",
-"title":"bliss_dynexec_101",
+"timestamp":"2011-11-23 11:33:54",
+"title":"bliss_adex_101_1",
 "eventTimelines":[{"note":"slide-1",
 "automaticPlay":0,
 "hyperlinks":[{"url":"mailto:ole.weidner@me.com",
@@ -1044,21 +1044,15 @@
 ]
 }
 ,{"automaticPlay":0,
-"hyperlinks":[{"url":"https://github.com/oweidner/bliss/blob/docs/bliss_intro.pdf?raw=true",
-"targetRectangle":{"y":593,
-"width":149,
-"x":185,
-"height":48}
-}
-,{"url":"https://github.com/oweidner/bliss/blob/docs/bliss_intro.pdf?raw=true",
+"hyperlinks":[{"url":"http://oweidner.github.com/bliss/docs/bliss_adex_101.1",
 "targetRectangle":{"y":545,
-"width":654,
+"width":322,
 "x":185,
 "height":48}
 }
-,{"url":"https://github.com/oweidner/bliss/blob/docs/bliss_intro.pdf?raw=true",
+,{"url":"http://oweidner.github.com/bliss/docs/bliss_adex_101.1",
 "targetRectangle":{"y":497,
-"width":511,
+"width":478,
 "x":399,
 "height":48}
 }
