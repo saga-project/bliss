@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>bliss.saga.exception.Exception</title>
+  <title>bliss.saga.job.job.JobID</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -39,8 +39,9 @@
       <span class="breadcrumbs">
         Package&nbsp;bliss ::
         <a href="bliss.saga-module.html">Package&nbsp;saga</a> ::
-        <a href="bliss.saga.exception-module.html">Module&nbsp;exception</a> ::
-        Class&nbsp;Exception
+        <a href="bliss.saga.job-module.html">Package&nbsp;job</a> ::
+        <a href="bliss.saga.job.job-module.html">Module&nbsp;job</a> ::
+        Class&nbsp;JobID
       </span>
     </td>
     <td>
@@ -48,25 +49,23 @@
         <!-- hide/show private -->
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="bliss.saga.exception.Exception-class.html"
+            >]&nbsp;|&nbsp;<a href="bliss.saga.job.job.JobID-class.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class Exception</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.exception-pysrc.html#Exception">source&nbsp;code</a></span></p>
+<h1 class="epydoc">Class JobID</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.job.job-pysrc.html#JobID">source&nbsp;code</a></span></p>
 <pre class="base-tree">
-              object --+        
-                       |        
-exceptions.BaseException --+    
-                           |    
-        exceptions.Exception --+
-                               |
-                              <strong class="uidshort">Exception</strong>
+object --+
+         |
+        <strong class="uidshort">JobID</strong>
 </pre>
 
 <hr />
+<p>Represents a SAGA job ID (Not part of GFD.90)</p>
+
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
 <table class="summary" border="1" cellpadding="3"
@@ -81,12 +80,12 @@ exceptions.BaseException --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.exception.Exception-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">error</span>,
-        <span class="summary-sig-arg">msg</span>)</span><br />
-      x.__init__(...) initializes x; see x.__class__.__doc__ for signature</td>
+          <td><span class="summary-sig"><a href="bliss.saga.job.job.JobID-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">service_url</span>,
+        <span class="summary-sig-arg">native_id</span>)</span><br />
+      Create a new job id.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.exception-pysrc.html#Exception.__init__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.job.job-pysrc.html#JobID.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -100,10 +99,10 @@ exceptions.BaseException --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.exception.Exception-class.html#__str__" class="summary-sig-name">__str__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.job.job.JobID-class.html#__str__" class="summary-sig-name">__str__</a>(<span class="summary-sig-arg">self</span>)</span><br />
       String representation.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.exception-pysrc.html#Exception.__str__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.job.job-pysrc.html#JobID.__str__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -113,61 +112,19 @@ exceptions.BaseException --+
   </tr>
   <tr>
     <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>exceptions.Exception</code></b>:
-      <code>__new__</code>
-      </p>
-    <p class="indent-wrapped-lines"><b>Inherited from <code>exceptions.BaseException</code></b>:
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__delattr__</code>,
+      <code>__format__</code>,
       <code>__getattribute__</code>,
-      <code>__getitem__</code>,
-      <code>__getslice__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
       <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
       <code>__repr__</code>,
       <code>__setattr__</code>,
-      <code>__setstate__</code>,
-      <code>__unicode__</code>
-      </p>
-    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
-      <code>__format__</code>,
-      <code>__hash__</code>,
-      <code>__reduce_ex__</code>,
       <code>__sizeof__</code>,
       <code>__subclasshook__</code>
       </p>
-    </td>
-  </tr>
-</table>
-<!-- ==================== INSTANCE VARIABLES ==================== -->
-<a name="section-InstanceVariables"></a>
-<table class="summary" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Instance Variables</span></td>
-</tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="error"></a><span class="summary-name">error</span><br />
-      Contains the <a href="bliss.saga.exception.Error-class.html" 
-      class="link">Error</a> type.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="msg"></a><span class="summary-name">msg</span><br />
-      Contains the error message.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="traceback"></a><span class="summary-name">traceback</span><br />
-      Contains the traceback (if existent).
     </td>
   </tr>
 </table>
@@ -179,12 +136,24 @@ exceptions.BaseException --+
   <td align="left" colspan="2" class="table-header">
     <span class="table-header">Properties</span></td>
 </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.job.job.JobID-class.html#service_url" class="summary-name">service_url</a><br />
+      The job id's service url component
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.job.job.JobID-class.html#native_id" class="summary-name">native_id</a><br />
+      The job id's native id component
+    </td>
+  </tr>
   <tr>
     <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>exceptions.BaseException</code></b>:
-      <code>args</code>,
-      <code>message</code>
-      </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__class__</code>
       </p>
@@ -208,21 +177,24 @@ exceptions.BaseException --+
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">error</span>,
-        <span class="sig-arg">msg</span>)</span>
+        <span class="sig-arg">service_url</span>,
+        <span class="sig-arg">native_id</span>)</span>
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="bliss.saga.exception-pysrc.html#Exception.__init__">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="bliss.saga.job.job-pysrc.html#JobID.__init__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>x.__init__(...) initializes x; see x.__class__.__doc__ for 
-  signature</p>
+  <p>Create a new job id.</p>
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>service_url</code></strong> - The URL of the job service of the job.</li>
+        <li><strong class="pname"><code>native_id</code></strong> - The native id (a.k.a. backend id) of the job.</li>
+    </ul></dd>
     <dt>Overrides:
         object.__init__
-        <dd><em class="note">(inherited documentation)</em></dd>
     </dt>
   </dl>
 </td></tr></table>
@@ -238,7 +210,7 @@ exceptions.BaseException --+
     <br /><em class="fname">(Informal representation operator)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="bliss.saga.exception-pysrc.html#Exception.__str__">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="bliss.saga.job.job-pysrc.html#JobID.__str__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -247,6 +219,44 @@ exceptions.BaseException --+
     <dt>Overrides:
         object.__str__
     </dt>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== PROPERTY DETAILS ==================== -->
+<a name="section-PropertyDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Property Details</span></td>
+</tr>
+</table>
+<a name="service_url"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">service_url</h3>
+  <p>The job id's service url component</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="native_id"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">native_id</h3>
+  <p>The job id's native id component</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
   </dl>
 </td></tr></table>
 </div>

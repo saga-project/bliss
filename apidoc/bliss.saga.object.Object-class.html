@@ -65,7 +65,7 @@ object --+
 <dl><dt>Known Subclasses:</dt>
 <dd>
       <ul class="subclass-list">
-<li><a href="bliss.saga.url.Url-class.html">url.Url</a></li><li>, <a href="bliss.saga.job.service.Service-class.html">job.service.Service</a></li><li>, <a href="bliss.saga.job.description.Description-class.html">job.description.Description</a></li><li>, <a href="bliss.saga.job.job.Job-class.html">job.job.Job</a></li>  </ul>
+<li><a href="bliss.saga.url.Url-class.html">url.Url</a></li><li>, <a href="bliss.saga.job.job.Job-class.html">job.job.Job</a></li><li>, <a href="bliss.saga.job.container.Container-class.html">job.container.Container</a></li><li>, <a href="bliss.saga.job.service.Service-class.html">job.service.Service</a></li><li>, <a href="bliss.saga.job.description.Description-class.html">job.description.Description</a></li><li>, <a href="bliss.saga.sd.service_data.ServiceData-class.html">sd.service_data.ServiceData</a></li><li>, <a href="bliss.saga.sd.service_description.ServiceDescription-class.html">sd.service_description.ServiceDescription</a></li><li>, <a href="bliss.saga.sd.discoverer.Discoverer-class.html">sd.discoverer.Discoverer</a></li>  </ul>
 </dd></dl>
 
 <hr />
@@ -87,6 +87,7 @@ object --+
         <tr>
           <td><span class="summary-sig"><a href="bliss.saga.object.Object-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">objtype</span>,
+        <span class="summary-sig-arg">apitype</span>,
         <span class="summary-sig-arg">session</span>=<span class="summary-sig-default">None</span>)</span><br />
       Constructor.</td>
           <td align="right" valign="top">
@@ -197,6 +198,14 @@ object --+
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
+        <a name="BaseAPI"></a><span class="summary-name">BaseAPI</span> = <code title="'saga.base'"><code class="variable-quote">'</code><code class="variable-string">saga.base</code><code class="variable-quote">'</code></code><br />
+      Look &amp; Feel API namespace
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
         <a name="Url"></a><span class="summary-name">Url</span> = <code title="'saga.Url'"><code class="variable-quote">'</code><code class="variable-string">saga.Url</code><code class="variable-quote">'</code></code><br />
       saga.Url object type.
     </td>
@@ -221,8 +230,16 @@ object --+
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
+        <a name="JobAPI"></a><span class="summary-name">JobAPI</span> = <code title="'saga.job'"><code class="variable-quote">'</code><code class="variable-string">saga.job</code><code class="variable-quote">'</code></code><br />
+      saga.job API namespace
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
         <a name="Job"></a><span class="summary-name">Job</span> = <code title="'saga.job.Job'"><code class="variable-quote">'</code><code class="variable-string">saga.job.Job</code><code class="variable-quote">'</code></code><br />
-      saga.job.Job object typ.e
+      saga.job.Job object type.
     </td>
   </tr>
 <tr>
@@ -239,6 +256,46 @@ object --+
     </td><td class="summary">
         <a name="JobDescription"></a><span class="summary-name">JobDescription</span> = <code title="'saga.job.Description'"><code class="variable-quote">'</code><code class="variable-string">saga.job.Description</code><code class="variable-quote">'</code></code><br />
       saga.job.Description object type.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="JobContainer"></a><span class="summary-name">JobContainer</span> = <code title="'saga.job.Container'"><code class="variable-quote">'</code><code class="variable-string">saga.job.Container</code><code class="variable-quote">'</code></code><br />
+      saga.job.Container (task container) object type.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SDAPI"></a><span class="summary-name">SDAPI</span> = <code title="'saga.sd'"><code class="variable-quote">'</code><code class="variable-string">saga.sd</code><code class="variable-quote">'</code></code><br />
+      saga.sd API namespace
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SDDiscoverer"></a><span class="summary-name">SDDiscoverer</span> = <code title="'saga.sd.Discoverer'"><code class="variable-quote">'</code><code class="variable-string">saga.sd.Discoverer</code><code class="variable-quote">'</code></code><br />
+      saga.sd.Discoverer object type.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SDServiceDescription"></a><span class="summary-name">SDServiceDescription</span> = <code title="'saga.sd.ServiceDescription'"><code class="variable-quote">'</code><code class="variable-string">saga.sd.ServiceDescription</code><code class="variable-quote">'</code></code><br />
+      saga.sd.ServiceDescription object type.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SDServiceData"></a><span class="summary-name">SDServiceData</span> = <code title="'saga.sd.ServiceData'"><code class="variable-quote">'</code><code class="variable-string">saga.sd.ServiceData</code><code class="variable-quote">'</code></code><br />
+      saga.sd.ServiceData object type.
     </td>
   </tr>
 </table>
@@ -301,6 +358,7 @@ object --+
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">objtype</span>,
+        <span class="sig-arg">apitype</span>,
         <span class="sig-arg">session</span>=<span class="sig-default">None</span>)</span>
     <br /><em class="fname">(Constructor)</em>
   </h3>
@@ -463,7 +521,7 @@ object --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Wed Nov  2 15:06:56 2011
+    Generated by Epydoc 3.0.1 on Mon Nov 28 00:19:10 2011
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

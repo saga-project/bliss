@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>bliss.saga.job.description.Description</title>
+  <title>bliss.saga.sd.service_description.ServiceDescription</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -39,9 +39,9 @@
       <span class="breadcrumbs">
         Package&nbsp;bliss ::
         <a href="bliss.saga-module.html">Package&nbsp;saga</a> ::
-        <a href="bliss.saga.job-module.html">Package&nbsp;job</a> ::
-        <a href="bliss.saga.job.description-module.html">Module&nbsp;description</a> ::
-        Class&nbsp;Description
+        <a href="bliss.saga.sd-module.html">Package&nbsp;sd</a> ::
+        <a href="bliss.saga.sd.service_description-module.html">Module&nbsp;service_description</a> ::
+        Class&nbsp;ServiceDescription
       </span>
     </td>
     <td>
@@ -49,14 +49,14 @@
         <!-- hide/show private -->
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="bliss.saga.job.description.Description-class.html"
+            >]&nbsp;|&nbsp;<a href="bliss.saga.sd.service_description.ServiceDescription-class.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class Description</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.job.description-pysrc.html#Description">source&nbsp;code</a></span></p>
+<h1 class="epydoc">Class ServiceDescription</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.sd.service_description-pysrc.html#ServiceDescription">source&nbsp;code</a></span></p>
 <pre class="base-tree">
                    object --+    
                             |    
@@ -66,11 +66,12 @@
                             |   |
 <a href="bliss.saga.attributes.AttributeInterface-class.html">attributes.AttributeInterface</a> --+
                                 |
-                               <strong class="uidshort">Description</strong>
+                               <strong class="uidshort">ServiceDescription</strong>
 </pre>
 
 <hr />
-<p>Loosely represents a SAGA job description as defined in GFD.90</p>
+<p>Loosely represents a SAGA service description as defined in 
+  GFD-R-P.114</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -86,10 +87,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.job.description.Description-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Create a new, empty job description.</td>
+          <td><span class="summary-sig"><a href="bliss.saga.sd.service_description.ServiceDescription-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Constructor.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.job.description-pysrc.html#Description.__init__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.sd.service_description-pysrc.html#ServiceDescription.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -103,10 +104,27 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.job.description.Description-class.html#__del__" class="summary-sig-name">__del__</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Delete the job description in a civilised fashion.</td>
+          <td><span class="summary-sig"><a href="bliss.saga.sd.service_description.ServiceDescription-class.html#__del__" class="summary-sig-name">__del__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Destructor</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.job.description-pysrc.html#Description.__del__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.sd.service_description-pysrc.html#ServiceDescription.__del__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_data"></a><span class="summary-sig-name">get_data</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Return the service data object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.sd.service_description-pysrc.html#ServiceDescription.get_data">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -190,97 +208,55 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description.Description-class.html#executable" class="summary-name">executable</a><br />
-      The job executable.
+        <a href="bliss.saga.sd.service_description.ServiceDescription-class.html#url" class="summary-name">url</a><br />
+      The URL to contact the serivce.
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description.Description-class.html#arguments" class="summary-name">arguments</a><br />
-      The arguments to pass to the job executable.
+        <a href="bliss.saga.sd.service_description.ServiceDescription-class.html#uid" class="summary-name">uid</a><br />
+      The unique identifier of the service.
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description.Description-class.html#environment" class="summary-name">environment</a><br />
-      The environment variables to set in the job's execution context.
+        <a href="bliss.saga.sd.service_description.ServiceDescription-class.html#type" class="summary-name">type</a><br />
+      The type of the service.
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description.Description-class.html#output" class="summary-name">output</a><br />
-      The file in which the job's stdout stream will be captured.
+        <a href="bliss.saga.sd.service_description.ServiceDescription-class.html#site" class="summary-name">site</a><br />
+      Name of the site of the service.
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description.Description-class.html#error" class="summary-name">error</a><br />
-      The file in which the job's stderr stream will be captured.
+        <a href="bliss.saga.sd.service_description.ServiceDescription-class.html#name" class="summary-name">name</a><br />
+      (Descriptive) name of the service.
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description.Description-class.html#project" class="summary-name">project</a><br />
-      The project / allocation name the job should be credited to.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="bliss.saga.job.description.Description-class.html#queue" class="summary-name">queue</a><br />
-      The queue on the backend system to place the job in.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="bliss.saga.job.description.Description-class.html#wall_time_limit" class="summary-name">wall_time_limit</a><br />
-      The hard limit for the total job runtime.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="bliss.saga.job.description.Description-class.html#working_directory" class="summary-name">working_directory</a><br />
-      The working directory for the job.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="bliss.saga.job.description.Description-class.html#contact" class="summary-name">contact</a><br />
-      Endpoint describing where to report job state transitions (e.g., 
-      email).
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="bliss.saga.job.description.Description-class.html#total_cpu_count" class="summary-name">total_cpu_count</a><br />
-      Total number of cpus requested for this job.
+        <a href="bliss.saga.sd.service_description.ServiceDescription-class.html#implementor" class="summary-name">implementor</a><br />
+      Name of the organization providing the implementation of the service.
     </td>
   </tr>
   <tr>
     <td colspan="2" class="summary">
     <p class="indent-wrapped-lines"><b>Inherited from <code><a href="bliss.saga.object.Object-class.html">object.Object</a></code></b>:
       <code><a href="bliss.saga.object.Object-class.html#id">id</a></code>,
-      <code><a href="bliss.saga.object.Object-class.html#session">session</a></code>,
-      <code><a href="bliss.saga.object.Object-class.html#type">type</a></code>
+      <code><a href="bliss.saga.object.Object-class.html#session">session</a></code>
       </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__class__</code>
@@ -308,11 +284,11 @@
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="bliss.saga.job.description-pysrc.html#Description.__init__">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="bliss.saga.sd.service_description-pysrc.html#ServiceDescription.__init__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Create a new, empty job description.</p>
+  <p>Constructor.</p>
   <dl class="fields">
     <dt>Overrides:
         object.__init__
@@ -331,11 +307,11 @@
     <br /><em class="fname">(Destructor)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="bliss.saga.job.description-pysrc.html#Description.__del__">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="bliss.saga.sd.service_description-pysrc.html#ServiceDescription.__del__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Delete the job description in a civilised fashion.</p>
+  <p>Destructor</p>
   <dl class="fields">
     <dt>Overrides:
         <a href="bliss.saga.object.Object-class.html#__del__">object.Object.__del__</a>
@@ -353,245 +329,87 @@
     <span class="table-header">Property Details</span></td>
 </tr>
 </table>
-<a name="executable"></a>
+<a name="url"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <h3 class="epydoc">executable</h3>
-  <p>The job executable.</p>
+  <h3 class="epydoc">url</h3>
+  <p>The URL to contact the serivce.</p>
   <dl class="fields">
     <dt>Get Method:</dt>
     <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
-    </dd>
-    <dt>Set Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
-    </dd>
-    <dt>Delete Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
     </dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="arguments"></a>
+<a name="uid"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <h3 class="epydoc">arguments</h3>
-  <p>The arguments to pass to the job executable.</p>
+  <h3 class="epydoc">uid</h3>
+  <p>The unique identifier of the service.</p>
   <dl class="fields">
     <dt>Get Method:</dt>
     <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
-    </dd>
-    <dt>Set Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
-    </dd>
-    <dt>Delete Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
     </dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="environment"></a>
+<a name="type"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <h3 class="epydoc">environment</h3>
-  <p>The environment variables to set in the job's execution context.</p>
+  <h3 class="epydoc">type</h3>
+  <p>The type of the service.</p>
   <dl class="fields">
     <dt>Get Method:</dt>
     <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
-    </dd>
-    <dt>Set Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
-    </dd>
-    <dt>Delete Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
     </dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="output"></a>
+<a name="site"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <h3 class="epydoc">output</h3>
-  <p>The file in which the job's stdout stream will be captured.</p>
+  <h3 class="epydoc">site</h3>
+  <p>Name of the site of the service.</p>
   <dl class="fields">
     <dt>Get Method:</dt>
     <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
-    </dd>
-    <dt>Set Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
-    </dd>
-    <dt>Delete Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
     </dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="error"></a>
+<a name="name"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <h3 class="epydoc">error</h3>
-  <p>The file in which the job's stderr stream will be captured.</p>
+  <h3 class="epydoc">name</h3>
+  <p>(Descriptive) name of the service.</p>
   <dl class="fields">
     <dt>Get Method:</dt>
     <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
-    </dd>
-    <dt>Set Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
-    </dd>
-    <dt>Delete Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
     </dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="project"></a>
+<a name="implementor"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <h3 class="epydoc">project</h3>
-  <p>The project / allocation name the job should be credited to.</p>
+  <h3 class="epydoc">implementor</h3>
+  <p>Name of the organization providing the implementation of the 
+  service.</p>
   <dl class="fields">
     <dt>Get Method:</dt>
     <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
-    </dd>
-    <dt>Set Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
-    </dd>
-    <dt>Delete Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
-    </dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="queue"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">queue</h3>
-  <p>The queue on the backend system to place the job in.</p>
-  <dl class="fields">
-    <dt>Get Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
-    </dd>
-    <dt>Set Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
-    </dd>
-    <dt>Delete Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
-    </dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="wall_time_limit"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">wall_time_limit</h3>
-  <p>The hard limit for the total job runtime.</p>
-  <dl class="fields">
-    <dt>Get Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
-    </dd>
-    <dt>Set Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
-    </dd>
-    <dt>Delete Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
-    </dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="working_directory"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">working_directory</h3>
-  <p>The working directory for the job.</p>
-  <dl class="fields">
-    <dt>Get Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
-    </dd>
-    <dt>Set Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
-    </dd>
-    <dt>Delete Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
-    </dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="contact"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">contact</h3>
-  <p>Endpoint describing where to report job state transitions (e.g., 
-  email).</p>
-  <dl class="fields">
-    <dt>Get Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
-    </dd>
-    <dt>Set Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
-    </dd>
-    <dt>Delete Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
-    </dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="total_cpu_count"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">total_cpu_count</h3>
-  <p>Total number of cpus requested for this job.</p>
-  <dl class="fields">
-    <dt>Get Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
-    </dd>
-    <dt>Set Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
-    </dd>
-    <dt>Delete Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span>
     </dd>
   </dl>
 </td></tr></table>

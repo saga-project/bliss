@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>bliss.saga.job</title>
+  <title>bliss.saga.sd</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -39,7 +39,7 @@
       <span class="breadcrumbs">
         Package&nbsp;bliss ::
         <a href="bliss.saga-module.html">Package&nbsp;saga</a> ::
-        Package&nbsp;job
+        Package&nbsp;sd
       </span>
     </td>
     <td>
@@ -47,19 +47,19 @@
         <!-- hide/show private -->
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="bliss.saga.job-pysrc.html"
+            >]&nbsp;|&nbsp;<a href="bliss.saga.sd-pysrc.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
-<h1 class="epydoc">Source Code for <a href="bliss.saga.job-module.html">Package bliss.saga.job</a></h1>
+<h1 class="epydoc">Source Code for <a href="bliss.saga.sd-module.html">Package bliss.saga.sd</a></h1>
 <pre class="py-src">
 <a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment">#!/usr/bin/env python</tt> </tt>
 <a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"> </tt>
 <a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment"># vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4</tt> </tt>
 <a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"> </tt>
-<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-docstring">'''SAGA Job Package API.</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-docstring">'''SAGA Service Discovery Package API. </tt> </tt>
 <a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-docstring">'''</tt> </tt>
 <a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"> </tt>
 <a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-name">__author__</tt>    <tt class="py-op">=</tt> <tt class="py-string">"Ole Christian Weidner"</tt> </tt>
@@ -82,16 +82,10 @@ bliss.saga.url.__email__" class="py-name" href="#" onclick="return doclink('link
 <a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-name">__copyright__</tt> <tt class="py-op">=</tt> <tt class="py-string">"Copyright 2011, Ole Christian Weidner"</tt> </tt>
 <a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-name">__license__</tt>   <tt class="py-op">=</tt> <tt class="py-string">"MIT"</tt> </tt>
 <a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"> </tt>
-<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package bliss.saga=bliss.saga-module.html"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-1', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Package bliss.saga.job=bliss.saga.job-module.html,Module bliss.saga.job.job=bliss.saga.job.job-module.html"><a title="bliss.saga.job
-bliss.saga.job.job" class="py-name" href="#" onclick="return doclink('link-2', 'job', 'link-2');">job</a></tt><tt class="py-op">.</tt><tt id="link-3" class="py-name"><a title="bliss.saga.job
-bliss.saga.job.job" class="py-name" href="#" onclick="return doclink('link-3', 'job', 'link-2');">job</a></tt>         <tt class="py-keyword">import</tt> <tt id="link-4" class="py-name" targets="Class bliss.saga.job.job.Job=bliss.saga.job.job.Job-class.html,Variable bliss.saga.object.Object.Job=bliss.saga.object.Object-class.html#Job"><a title="bliss.saga.job.job.Job
-bliss.saga.object.Object.Job" class="py-name" href="#" onclick="return doclink('link-4', 'Job', 'link-4');">Job</a></tt><tt class="py-op">,</tt> <tt id="link-5" class="py-name" targets="Class bliss.saga.job.job.JobID=bliss.saga.job.job.JobID-class.html"><a title="bliss.saga.job.job.JobID" class="py-name" href="#" onclick="return doclink('link-5', 'JobID', 'link-5');">JobID</a></tt> </tt>
-<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-6" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-6', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-7" class="py-name"><a title="bliss.saga.job
-bliss.saga.job.job" class="py-name" href="#" onclick="return doclink('link-7', 'job', 'link-2');">job</a></tt><tt class="py-op">.</tt><tt id="link-8" class="py-name" targets="Module bliss.saga.job.container=bliss.saga.job.container-module.html"><a title="bliss.saga.job.container" class="py-name" href="#" onclick="return doclink('link-8', 'container', 'link-8');">container</a></tt>   <tt class="py-keyword">import</tt> <tt id="link-9" class="py-name" targets="Class bliss.saga.job.container.Container=bliss.saga.job.container.Container-class.html"><a title="bliss.saga.job.container.Container" class="py-name" href="#" onclick="return doclink('link-9', 'Container', 'link-9');">Container</a></tt><tt class="py-op">,</tt> <tt id="link-10" class="py-name" targets="Class bliss.saga.job.container.WaitMode=bliss.saga.job.container.WaitMode-class.html"><a title="bliss.saga.job.container.WaitMode" class="py-name" href="#" onclick="return doclink('link-10', 'WaitMode', 'link-10');">WaitMode</a></tt> </tt>
-<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-11" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-11', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-12" class="py-name"><a title="bliss.saga.job
-bliss.saga.job.job" class="py-name" href="#" onclick="return doclink('link-12', 'job', 'link-2');">job</a></tt><tt class="py-op">.</tt><tt id="link-13" class="py-name" targets="Module bliss.saga.job.service=bliss.saga.job.service-module.html"><a title="bliss.saga.job.service" class="py-name" href="#" onclick="return doclink('link-13', 'service', 'link-13');">service</a></tt>     <tt class="py-keyword">import</tt> <tt id="link-14" class="py-name" targets="Class bliss.saga.job.service.Service=bliss.saga.job.service.Service-class.html"><a title="bliss.saga.job.service.Service" class="py-name" href="#" onclick="return doclink('link-14', 'Service', 'link-14');">Service</a></tt> </tt>
-<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-15" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-15', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-16" class="py-name"><a title="bliss.saga.job
-bliss.saga.job.job" class="py-name" href="#" onclick="return doclink('link-16', 'job', 'link-2');">job</a></tt><tt class="py-op">.</tt><tt id="link-17" class="py-name" targets="Module bliss.saga.job.description=bliss.saga.job.description-module.html"><a title="bliss.saga.job.description" class="py-name" href="#" onclick="return doclink('link-17', 'description', 'link-17');">description</a></tt> <tt class="py-keyword">import</tt> <tt id="link-18" class="py-name" targets="Class bliss.saga.job.description.Description=bliss.saga.job.description.Description-class.html"><a title="bliss.saga.job.description.Description" class="py-name" href="#" onclick="return doclink('link-18', 'Description', 'link-18');">Description</a></tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package bliss.saga=bliss.saga-module.html"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-1', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Package bliss.saga.sd=bliss.saga.sd-module.html"><a title="bliss.saga.sd" class="py-name" href="#" onclick="return doclink('link-2', 'sd', 'link-2');">sd</a></tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Module bliss.saga.sd.discoverer=bliss.saga.sd.discoverer-module.html"><a title="bliss.saga.sd.discoverer" class="py-name" href="#" onclick="return doclink('link-3', 'discoverer', 'link-3');">discoverer</a></tt>          <tt class="py-keyword">import</tt> <tt id="link-4" class="py-name" targets="Class bliss.saga.sd.discoverer.Discoverer=bliss.saga.sd.discoverer.Discoverer-class.html"><a title="bliss.saga.sd.discoverer.Discoverer" class="py-name" href="#" onclick="return doclink('link-4', 'Discoverer', 'link-4');">Discoverer</a></tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-5" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-5', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name"><a title="bliss.saga.sd" class="py-name" href="#" onclick="return doclink('link-6', 'sd', 'link-2');">sd</a></tt><tt class="py-op">.</tt><tt id="link-7" class="py-name" targets="Module bliss.saga.sd.service_description=bliss.saga.sd.service_description-module.html"><a title="bliss.saga.sd.service_description" class="py-name" href="#" onclick="return doclink('link-7', 'service_description', 'link-7');">service_description</a></tt> <tt class="py-keyword">import</tt> <tt id="link-8" class="py-name" targets="Class bliss.saga.sd.service_description.ServiceDescription=bliss.saga.sd.service_description.ServiceDescription-class.html"><a title="bliss.saga.sd.service_description.ServiceDescription" class="py-name" href="#" onclick="return doclink('link-8', 'ServiceDescription', 'link-8');">ServiceDescription</a></tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-9" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-9', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-10" class="py-name"><a title="bliss.saga.sd" class="py-name" href="#" onclick="return doclink('link-10', 'sd', 'link-2');">sd</a></tt><tt class="py-op">.</tt><tt id="link-11" class="py-name" targets="Module bliss.saga.sd.service_data=bliss.saga.sd.service_data-module.html"><a title="bliss.saga.sd.service_data" class="py-name" href="#" onclick="return doclink('link-11', 'service_data', 'link-11');">service_data</a></tt>        <tt class="py-keyword">import</tt> <tt id="link-12" class="py-name" targets="Class bliss.saga.sd.service_data.ServiceData=bliss.saga.sd.service_data.ServiceData-class.html"><a title="bliss.saga.sd.service_data.ServiceData" class="py-name" href="#" onclick="return doclink('link-12', 'ServiceData', 'link-12');">ServiceData</a></tt> </tt>
 <a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"> </tt><script type="text/javascript">
 <!--
 expandto(location.href);

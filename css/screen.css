@@ -96,7 +96,7 @@ pre code {
 }
 
 .gist{
-  margin: 15px 0 !important;
+  margin: 10px 0 !important;
 }
 
 .gist-file{
@@ -105,6 +105,7 @@ pre code {
 
 .gist-meta{
   border: 1px solid #D2d2d2 !important;
+  font-size: 10pt !important;
   padding: 12px !important;
   -moz-border-radius-bottomleft: 0.4em;
   -webkit-border-bottom-left-radius: 0.4em;
@@ -125,6 +126,7 @@ pre code {
   -moz-border-radius-topright: 0.4em;
   -webkit-border-top-right-radius: 0.4em;
 }
+
 
 /* @section Informations {{{
 ******************************************************************************/
