@@ -494,13 +494,19 @@ class PBSService():
 
         pbs_params += "#PBS -N %s \n" % "bliss_job" 
         pbs_params += "#PBS -V     \n"
-    
+
+        if jd.environment is not None:
+            variable_list = str()
+            for key in jd.environment.keys(): 
+                variable_list += "%s=%s," % (key, jd.environment[key])
+            pbs_params += "#PBS -v %s \n" % variable_list
+
+        if jd.working_directory is not None:
+            pbs_params += "#PBS -d %s \n" % jd.working_directory 
         if jd.output is not None:
             pbs_params += "#PBS -o %s \n" % jd.output
         if jd.error is not None:
             pbs_params += "#PBS -e %s \n" % jd.error 
-        if jd.working_directory is not None:
-            pbs_params += "#PBS -d %s \n" % jd.working_directory
         if jd.wall_time_limit is not None:
             pbs_params += "#PBS -l walltime=%s \n" % jd.wall_time_limit
         if jd.queue is not None:
@@ -510,11 +516,6 @@ class PBSService():
         if jd.contact is not None:
             pbs_params += "#PBS -m abe \n"
         
-        if jd.environment is not None:
-            variable_list = str()
-            for key in jd.environment.keys(): 
-                variable_list += "%s=%s," % (key, jd.environment[key])
-            pbs_params += "#PBS -v %s \n" % variable_list
 
         if jd.total_cpu_count is not None:
             tcc = int(jd.total_cpu_count)

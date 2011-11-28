@@ -2,8 +2,14 @@
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-'''This examples shows how to submit a job to a PBS 
-   jobmanager via ssh using a custom security context.
+'''This examples shows how to submit a single BFAST 
+   (bfast.sourceforge.net) genmoe matching job
+   to a remote PBS cluster via pbs+ssh. This example 
+   is the same as pbs_via_ssh_simple_job.py, except
+   that it uses a differnet executable. 
+  
+   The example assuems that the BFAST executable and 
+   data are present on the target system. 
 
    If something doesn't work as expected, try to set 
    SAGA_VERBOSE=3 in your environment before you run the
@@ -31,8 +37,7 @@ def main():
         ctx = saga.Context()
         ctx.type = saga.Context.SSH
         ctx.userid  = 'oweidner' # like 'ssh username@host ...'
-        ctx.usercert = '/Users/oweidner/.ssh/id_rsa_fg' # like ssh -i ...'
- 
+
         # create a job service for Futuregrid's 'india' PBS cluster
         # and attach the SSH security context to it
         js = saga.job.Service("pbs+ssh://india.futuregrid.org")
@@ -44,12 +49,16 @@ def main():
         jd.wall_time_limit  = "0:05:00"
         jd.total_cpu_count = 1     
         # environment, executable & arguments
-        jd.environment = {'SLEEP_TIME':'10'}       
-        jd.executable  = '/bin/sleep'
-        jd.arguments   = ['$SLEEP_TIME']
+        jd.environment       = {'BFAST_DIR':'/N/u/oweidner/bfast'}
+        jd.working_directory = '/N/u/oweidner/bfast/tmp/'     
+        jd.executable        = '$BFAST_DIR/bin/bfast'
+        jd.arguments         = ['match', '-A 1',
+                                '-r $BFAST_DIR/data/small/reads_5K/reads.10.fastq',
+                                '-f $BFAST_DIR/data/small/reference/hg_2122.fa']
         # output options
-        jd.output = "bliss_pbssh_job.stdout"
-        jd.error  = "bliss_pbssh_job.stderr"
+        localtime = time.asctime( time.localtime(time.time()) ).replace(" ", "_")
+        jd.output = "bfast_job_%s.stdout" % localtime
+        jd.error  = "bfast_job_%s.stderr" % localtime
 
         # create the job (state: New)
         myjob = js.create_job(jd)
@@ -79,14 +88,17 @@ if __name__ == "__main__":
 
 # INFO: The PBS script generated behind the scenes by the  
 #       plugin looks like this (SAGA_VERBOSE=6 shows it):
-#       
+
 #         #!/bin/bash 
 #         #PBS -N bliss_job 
 #         #PBS -V     
-#         #PBS -o bliss_pbssh_job.stdout 
-#         #PBS -e bliss_pbssh_job.stderr 
+#         #PBS -v BFAST_DIR=/N/u/oweidner/bfast, 
+#         #PBS -d /N/u/oweidner/bfast/tmp/ 
+#         #PBS -o bfast_job_Sun_Nov_27_21:29:42_2011.stdout 
+#         #PBS -e bfast_job_Sun_Nov_27_21:29:42_2011.stderr 
 #         #PBS -l walltime=0:05:00 
-#         #PBS -v SLEEP_TIME=10, 
-#       
-#         /bin/sleep $SLEEP_TIME 
+#         #PBS -l nodes=1:ppn=8
+# 
+#         $BFAST_DIR/bin/bfast match -A 1 -r $BFAST_DIR/data/small/reads_5K/reads.10.fastq -f $BFAST_DIR/data/small/reference/hg_2122.fa 
+
 
