@@ -95,7 +95,36 @@ pre code {
 	font-size: 10pt;
 }
 
-/*}}}*/
+.gist{
+  margin: 15px 0 !important;
+}
+
+.gist-file{
+  border: none !important;
+}
+
+.gist-meta{
+  border: 1px solid #D2d2d2 !important;
+  padding: 12px !important;
+  -moz-border-radius-bottomleft: 0.4em;
+  -webkit-border-bottom-left-radius: 0.4em;
+  -moz-border-radius-bottomright: 0.4em;
+  -webkit-border-bottom-right-radius: 0.4em;
+
+}
+
+.gist-data{
+  line-height: 1.3em !important;
+  font-size: 10pt !important;
+  background: rgba(0,0,0,0.3) !important;
+  padding: 15px !important;
+  border: 0px solid #D2d2d2 !important;
+  border-bottom: none !important;
+  -moz-border-radius-topleft: 0.4em;
+  -webkit-border-top-left-radius: 0.4em;
+  -moz-border-radius-topright: 0.4em;
+  -webkit-border-top-right-radius: 0.4em;
+}
 
 /* @section Informations {{{
 ******************************************************************************/
