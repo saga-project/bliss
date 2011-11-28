@@ -1,13 +1,17 @@
-Version 0.1.11 released 2011-11-23
+
+Version 0.1.11 released 2011-11-28
 ----------------------------------------------------------------------
 
-    * Changed job.Description.walltime_limit to 
-      job.Description.wall_time_limit
-    * Implemented job container API (a.k.a task_containers)
-      and plugin supprot via PBS+SSH
+    * Fixed issues with PBS working directory 
+    * Added simple job API example that uses BFAST:
+      https://github.com/oweidner/bliss/blob/master/examples/job-api/pbs_via_ssh_bfast_job.py
+    * Updated apidoc: http://oweidner.github.com/bliss/apidoc/
+    * First prototype of a job container. Example can be found here:
+      https://github.com/oweidner/bliss/blob/master/examples/job-api/pbs_via_ssh_container.py  
     * Implemented CPU and Memory information via
       PBS service discovery
-    * Cleaned up examples
+    * Changed job.Description.walltime_limit to 
+      job.Description.wall_time_limit
 
 Version 0.1.10 released 2011-11-16
 ----------------------------------------------------------------------

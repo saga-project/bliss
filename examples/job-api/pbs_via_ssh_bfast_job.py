@@ -56,9 +56,9 @@ def main():
                                 '-r $BFAST_DIR/data/small/reads_5K/reads.10.fastq',
                                 '-f $BFAST_DIR/data/small/reference/hg_2122.fa']
         # output options
-        localtime = time.asctime( time.localtime(time.time()) ).replace(" ", "_")
-        jd.output = "bfast_job_%s.stdout" % localtime
-        jd.error  = "bfast_job_%s.stderr" % localtime
+        localtime = time.time()
+        jd.output = "bfast_match_%s.stdout" % localtime
+        jd.error  = "bfast_match_%s.stderr" % localtime
 
         # create the job (state: New)
         myjob = js.create_job(jd)

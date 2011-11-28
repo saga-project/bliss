@@ -431,21 +431,24 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
     ######################################################################
     ## 
     def container_wait(self, container_obj, wait_mode, timeout):
-        try:
-            all_done = False
-            while not all_done:
-                for state in self.job_get_bulk_states(container_obj):
-                    jobs_not_done = 0
-                    if state == bliss.saga.job.Job.Running \
-                    or state == bliss.saga.job.Job.Waiting:
-                        jobs_not_done += 1
-                    
-                    if jobs_not_done > 0:
-                        all_done = False
-                        time.sleep(2)
-                    else:
-                        all_done = True
-        
+        try: 
+            for job in self.container_list(container_obj):
+                self.job_wait(job, timeout)
+
+        #    all_done = False
+        #    while not all_done:
+        #        for state in self.job_get_bulk_states(container_obj):
+        #            jobs_not_done = 0
+        #            if state == bliss.saga.job.Job.Running \
+        #            or state == bliss.saga.job.Job.Waiting:
+        #                jobs_not_done += 1
+        #            
+        #            if jobs_not_done > 0:
+        #                all_done = False
+        #                time.sleep(2)
+        #            else:
+        #                all_done = True
+        #
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
               "Couldn't wait for jobs in the container because: %s " % (str(ex)))
