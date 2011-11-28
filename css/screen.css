@@ -2,7 +2,7 @@
 
 	@file         screen.css
 	@description  Screen stylesheet
-	vim: set noet ts=4 fdm=marker fenc=utf-8:
+	vim: set ts=4 fenc=utf-8:
 
 ***************************************************** */
 
@@ -30,7 +30,7 @@ body {
 
 p,ul,ol,dl,table,pre { margin-bottom: 1em; }
 ul { margin-left: 20px; }
-a { text-decoration: none; cursor: pointer; color:  #365c80; font-weight: normal; }
+a { text-decoration: none; cursor: pointer; color:  #a1804c; font-weight: normal; }
 a:focus { outline: 1px dotted; }
 a:visited {  }
 a:hover, a:focus { color: #d3a459; text-decoration: none; }
@@ -54,18 +54,18 @@ h1 {
 	margin: 0 0 0.1em;
 	font-family: 'BallparkWeiner', serif;
 	font-weight: normal;
-	text-shadow: 1px 1px 10px rgba(0,0,0,0.35);
+	text-shadow: 2px 2px 10px rgba(0,0,0,0.85);
 }
 
 h1 a,
 h1 a:hover {
-	color: #7ad3f3;
+	color: #D14;
 	font-weight: normal;
 	text-decoration: none;
 }
 
 #subtitle {
-	color: #365c80;
+	color: #a1804c;
 }
 
 #wrap {
@@ -85,9 +85,9 @@ pre {
 	background: rgba(0,0,0,0.3);
 	color: #fff;
 	padding: 8px 10px;
-	border-radius: 0.4em;
-	-moz-border-radius: 0.4em;
-	-webkit-border-radius: 0.4em;
+	border-radius: 0.5em;
+	-moz-border-radius: 0.5em;
+	-webkit-border-radius: 0.5em;
 	overflow-x: hidden;
 }
 
@@ -105,28 +105,33 @@ pre code {
 
 .gist-meta{
   border: 1px solid #D2d2d2 !important;
-  font-size: 10pt !important;
-  padding: 12px !important;
-  -moz-border-radius-bottomleft: 0.4em;
-  -webkit-border-bottom-left-radius: 0.4em;
-  -moz-border-radius-bottomright: 0.4em;
-  -webkit-border-bottom-right-radius: 0.4em;
+  font-size: 8pt !important;
+  padding: 6px !important;
+  -moz-border-radius-bottomleft: 0.5em;
+  -webkit-border-bottom-left-radius: 0.5em;
+  -moz-border-radius-bottomright: 0.5em;
+  -webkit-border-bottom-right-radius: 0.5em;
 
 }
 
 .gist-data{
-  line-height: 1.3em !important;
+  line-height: 1.2em !important;
   font-size: 10pt !important;
   background: rgba(0,0,0,0.3) !important;
-  padding: 15px !important;
+  padding: 10px !important;
   border: 0px solid #D2d2d2 !important;
   border-bottom: none !important;
-  -moz-border-radius-topleft: 0.4em;
-  -webkit-border-top-left-radius: 0.4em;
-  -moz-border-radius-topright: 0.4em;
-  -webkit-border-top-right-radius: 0.4em;
+  -moz-border-radius-topleft: 0.5em;
+  -webkit-border-top-left-radius: 0.5em;
+  -moz-border-radius-topright: 0.5em;
+  -webkit-border-top-right-radius: 0.5em;
 }
 
+.k, .o {
+  color: #A1804C !important;
+}
+
+/*}}}*/
 
 /* @section Informations {{{
 ******************************************************************************/
