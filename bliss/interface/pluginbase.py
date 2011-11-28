@@ -16,8 +16,9 @@ from bliss.saga.exception import Exception as SAGAException
 class PluginBaseInterface:
     '''Abstract base class for all plugins'''
 
-    _api_type_saga_job  = "saga.job"
-    _api_type_saga_sd   = "saga.sd"
+    _api_type_saga_filesystem = "saga.filesystem"
+    _api_type_saga_job        = "saga.job"
+    _api_type_saga_sd         = "saga.sd"
  
     
     def __init__(self, name, schemas, api):

@@ -8,7 +8,9 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.plugins.pbs import PBSJobAndSDPlugin
+from bliss.plugins.ssh import SSHFilesystemPlugin
 from bliss.plugins.local import LocalJobPlugin
+
 
 # Here is where the plugins are registered
 _registry = []
@@ -23,3 +25,7 @@ _registry.append({"class"   : PBSJobAndSDPlugin,
                   "name"    : PBSJobAndSDPlugin.plugin_name(),
                   "schemas" : PBSJobAndSDPlugin.supported_schemas()})
 
+_registry.append({"class"   : SSHFilesystemPlugin,
+                  "apis"    : SSHFilesystemPlugin.supported_apis(),
+                  "name"    : SSHFilesystemPlugin.plugin_name(),
+                  "schemas" : SSHFilesystemPlugin.supported_schemas()})

@@ -20,6 +20,7 @@ from bliss.saga.session   import Session
 from bliss.saga.context   import Context
 
 # API packages
+from bliss.saga           import filesystem
 from bliss.saga           import job
 from bliss.saga           import sd
   

@@ -47,6 +47,11 @@ class Object(object) :
     SDServiceData        = "saga.sd.ServiceData"
     '''saga.sd.ServiceData object type.'''
 
+    FilesystemAPI        = "saga.filesystem"
+    '''saga.filesystem API namespace'''
+    FilesystemFile      = "saga.filesystem.File"
+    '''saga.filesystem.File object type'''
+
 
     __shared_state = {}
     __shared_state["runtime_initialized"] = False

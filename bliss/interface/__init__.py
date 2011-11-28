@@ -10,4 +10,5 @@ __license__   = "MIT"
 from bliss.interface.pluginbase import PluginBaseInterface
 from bliss.interface.sdinterface import SDPluginInterface
 from bliss.interface.jobinterface import JobPluginInterface
+from bliss.interface.filesysteminterface import FilesystemPluginInterface
 

@@ -50,8 +50,8 @@ class our_sdist(sdist):
 setup_args = {
     'name': "bliss",
     'version': version,
-    'description': "A lightweight, 'laissez-faire' implementation of a subset of the OGF SAGA standard (GFD.90).",
-    'long_description': "Bliss (BLiss IS SagaA) is a lightweight , 'laissez-faire' implementation of the OGF SAGA standard (GFD.90). Bliss is written 100% in Python and focuses on usability and ease of deployment rather than on feature completeness or blind standard obedience. ",
+    'description': "A pragmatic Python implementation of the OGF SAGA standard (GFD.90).",
+    'long_description': "Bliss (BLiss IS SagaA) is a pragmatic, lightweight and 'laissez-faire' implementation of the OGF SAGA standard (GFD.90). Bliss is written 100% in Python and focuses on usability and ease of deployment rather than on feature completeness or blind standard obedience.",
     'author': "Ole Christian Weidner",
     'author_email': "ole.weidner@me.com",
     'maintainer': "Ole Christian Weidner",
@@ -59,7 +59,7 @@ setup_args = {
     'url': "http://oweidner.github.com/bliss/",
     'license': "MIT",
     'classifiers': [
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: No Input/Output (Daemon)',
         'Intended Audience :: Developers',
         'Programming Language :: Python',
@@ -87,13 +87,15 @@ setup_args = {
     'packages': [
         "bliss",
         "bliss.saga",
-        "bliss.saga.job",
         "bliss.saga.sd",
+        "bliss.saga.job",
+        "bliss.saga.filesystem",
         "bliss.runtime",
         "bliss.interface",
         "bliss.plugins",
         "bliss.plugins.local",
-        "bliss.plugins.pbs"
+        "bliss.plugins.pbs",
+        "bliss.plugins.ssh"
     ],
     'scripts': scripts,
     # mention data_files, even if empty, so install_data is called and
