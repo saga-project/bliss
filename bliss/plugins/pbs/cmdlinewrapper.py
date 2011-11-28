@@ -140,22 +140,23 @@ class PBSJobInfo(object):
         '''Constructor: initialize from qstat -f <jobid> string.
         '''
         
-        plugin.log_debug("Got raw qstat output: %s" % qstat_f_output) 
-        try:
-            lines = qstat_f_output.split("\n")
-            self._jobid = lines[0].split(":")[1].strip()
-        except Exception, ex:
-            raise Exception("Couldn't parse %s: %s" \
-              % (qstat_f_output, ex))
-
-        for line in lines[1:]:
-            try: 
-                (key, value) = line.split(" = ")
-                key = "_%s" % key.strip()
-                self.__dict__[key] = value
+        plugin.log_debug("Got raw qstat output: %s" % qstat_f_output)
+        if len(qstat_f_output) > 0:
+            try:
+                lines = qstat_f_output.split("\n")
+                self._jobid = lines[0].split(":")[1].strip()
             except Exception, ex:
-                pass
-        plugin.log_debug("Parsed qstat output: %s" % str(self.__dict__))
+                raise Exception("Couldn't parse %s: %s" \
+                  % (qstat_f_output, ex))
+
+            for line in lines[1:]:
+                try: 
+                    (key, value) = line.split(" = ")
+                    key = "_%s" % key.strip()
+                    self.__dict__[key] = value
+                except Exception, ex:
+                    pass
+            plugin.log_debug("Parsed qstat output: %s" % str(self.__dict__))
 
 
     @property 
@@ -476,8 +477,6 @@ class PBSService():
             states.append(jobinfo.state)
         return states
 
-
-
     ######################################################################
     ##
     def _pbscript_generator(self, jd):
@@ -548,6 +547,14 @@ class PBSService():
                 error = result.stderr
             raise Exception("Error running 'qsub': %s" % error)
         else:
+            #depending on the PBS configuration, the job can already 
+            #have disappeared from the queue at this point. that's why
+            #we create a dummy job info here
+            ji = PBSJobInfo("", self._pi)
+            ji._jobid = result.stdout.split("\n")[0]
+            ji._job_state = "R"
+            self._known_jobs_update(ji.jobid, ji)
+
             jobinfo = self.get_jobinfo(bliss.saga.job.JobID(self._url, 
               result.stdout.split("\n")[0]))
             return jobinfo
