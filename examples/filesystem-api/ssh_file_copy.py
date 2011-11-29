@@ -32,11 +32,15 @@ def main():
         ctx.type = saga.Context.SSH
         ctx.userid  = 'oweidner' # like 'ssh username@host ...'
         ctx.usercert = '/Users/oweidner/.ssh/id_rsa_fg' # like ssh -i ...'
+
+        session = saga.Session()
+        session.contexts.append(ctx)
  
         # create a job service for Futuregrid's 'india' PBS cluster
         # and attach the SSH security context to it
-        myfile = saga.filesystem.File("ssh://alamo.futuregrid.org/tmp/myfile")
-        myfile.session.contexts.append(ctx)
+        myfile = saga.filesystem.File("ssh://localhost/tmp/afile.txt", 
+                                      session=session)
+        myfile.copy("ssh://alamo.futuregrid.org/home/oweidner/")
 
     except saga.Exception, ex:
         print "Oh, snap! An error occured: %s" % (str(ex))
