@@ -2,6 +2,7 @@
 Version 0.1.12 released 2011-11-28
 ----------------------------------------------------------------------
 
+    * Fixed bug in URL.get_host()
     * Fixed issues with extremely short running PBS jobs 
       in conjunction with scheduler configruations that 
       remove the job from the queue the second it finishes execution. 

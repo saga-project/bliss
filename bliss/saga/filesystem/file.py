@@ -48,5 +48,9 @@ class File(Object):
         '''Copy the file
            @param target: Url of the copy target.
         '''
-        pass
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+        else:
+            return self._plugin.file_copy(self, target)
 

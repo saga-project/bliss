@@ -17,6 +17,9 @@ urlparse.uses_fragment.append("fork")
 urlparse.uses_netloc.append("pbs")
 urlparse.uses_fragment.append("pbs")
 
+urlparse.uses_netloc.append("ssh")
+urlparse.uses_fragment.append("ssh")
+
 urlparse.uses_netloc.append("pbs+ssh")
 urlparse.uses_fragment.append("pbs+ssh")
 
@@ -72,7 +75,7 @@ class Url(Object):
 
     def get_host(self):
         '''Legacy method: return the 'host' property.'''
-        return self.scheme
+        return self.host
 
     def set_host(self, val):
         '''Legacy method: set the 'host' property.'''

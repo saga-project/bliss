@@ -26,6 +26,7 @@ class Context(AttributeInterface, object):
         '''Constructor'''
         self._type      = None
         self._userid    = None
+        self._userpass  = None
         self._usercert  = None
         self._userkey   = None
         self._userproxy = None
@@ -37,6 +38,8 @@ class Context(AttributeInterface, object):
                                          accessor=self.__class__.type) 
         self._register_rw_attribute     (name="UserID", 
                                          accessor=self.__class__.userid)  
+        self._register_rw_attribute     (name="UserPass", 
+                                         accessor=self.__class__.userpass)  
         self._register_rw_attribute     (name="UserCert", 
                                          accessor=self.__class__.usercert)  
         self._register_rw_attribute     (name="UserKey", 
@@ -55,8 +58,8 @@ class Context(AttributeInterface, object):
     def __str__(self):
         '''String represenation.
         '''
-        return "[Context Type: %s, UserCert: %s, UserKey: %s, UserProxy: %s]" % \
-                (self.type, self.usercert, self.userkey, self.userproxy)
+        return "\n[\n Context Type: %s\n UserID: %s\n UserPass: %s\n UserCert: %s\n UserKey: %s\n UserProxy: %s\n]" % \
+                (self.type, self.userid, self.userpass, self.usercert, self.userkey, self.userproxy)
 
     ######################################################################
     ## Property: type
@@ -80,6 +83,17 @@ class Context(AttributeInterface, object):
             self._userid = val
         return locals()
     userid = property(**userid())
+
+    ######################################################################
+    ## Property: userpass
+    def userpass():
+        doc = "User password (use with care)."
+        def fget(self):
+            return self._userpass
+        def fset(self, val):
+            self._userpass = val
+        return locals()
+    userpass = property(**userpass())
 
     ######################################################################
     ## Property: usercert

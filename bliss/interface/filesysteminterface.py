@@ -21,10 +21,20 @@ class FilesystemPluginInterface(PluginBaseInterface):
                                      api=PluginBaseInterface._api_type_saga_filesystem)
     
     def register_file_object(self, service_obj):
-        errormsg = "Not implemented plugin method called: register_service_object()"
+        '''This method is called upon instantiation of a new file object
+        '''
+        errormsg = "Not implemented plugin method called: register_file_object()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def unregister_file_object(self, service_obj):
-        '''This method is called upon deletion of a new service object'''
-        self.log_error("Not implemented plugin method called: unregister_service_object()")
+        '''This method is called upon deletion of a file object
+        '''
+        self.log_error("Not implemented plugin method called: unregister_file_object()")
         # don't throw -- destructor context
+
+    def file_copy(self, file_obj, target_url):
+        '''This method is called upon file.copy()
+        '''
+        errormsg = "Not implemented plugin method called: file_copy()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
