@@ -52,6 +52,9 @@ def main(jobno, session, jobservice):
         print "Job #%s with ID '%s' finished (RC: %s). Output available in: '%s'"\
           % (jobno, myjob.jobid, myjob.exitcode, workdir)
 
+        # copy result to local machine: basedir.copy(...)
+        #basedir.close()
+
     except saga.Exception, ex:
         print "Oh, snap! An error occured: %s" % (str(ex))
 
