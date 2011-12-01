@@ -54,3 +54,15 @@ class Directory(Object):
         else:
             return self._plugin.dir_list(self, pattern)
 
+    ######################################################################
+    ## 
+    def make_dir(self, path, flags=None):
+        '''Create a new directoy
+           @param pattern: name/path of the new directory
+           @param flags: directory creation flags
+        '''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+        else:
+            return self._plugin.dir_make_dir(self, path, flags)

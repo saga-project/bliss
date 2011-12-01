@@ -125,10 +125,20 @@ class SSHFilesystemPlugin(FilesystemPluginInterface):
         except Exception, ex:
             raise Exception("paramiko module missing")
  
-    def entry_exists(self, obj):
-        path = "."
-        if obj._url.path is not None:
+    def entry_exists(self, obj, entry_path=None):
+        # if no path is given, use the one from
+        # the object's url
+        if entry_path is not None:
+            if entry_path.startswith("/") is True:
+                #absolute path
+                path = entry_path
+            else:
+                #relative path
+                path = "%s/%s" % (obj._url.path, entry_path)
+        elif obj._url.path is not None:
             path = obj._url.path
+        else:
+            path = "."
         try:
             ssh = self._cp.get_connection(obj)
             sftp = ssh.open_sftp()
@@ -168,7 +178,7 @@ class SSHFilesystemPlugin(FilesystemPluginInterface):
         '''
         if self.entry_exists(dir_obj) != True:
             self.log_error_and_raise(bliss.saga.Error.DoesNotExist, 
-            "Couldn't open %s. File doesn't exist." % (str(ex)))
+            "Couldn't open %s. File doesn't exist." % (dir_obj._url))
         else:
             pass
 
@@ -176,6 +186,7 @@ class SSHFilesystemPlugin(FilesystemPluginInterface):
         '''Implements interface from FilesystemPluginInterface
         '''
         pass
+
 
     def dir_list(self, dir_obj, pattern):
         path = "."
@@ -188,4 +199,28 @@ class SSHFilesystemPlugin(FilesystemPluginInterface):
         except Exception, ex:
             self._parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
             "Couldn't list directory: %s " % (str(ex)))
+
+
+    def dir_make_dir(self, dir_obj, path, flags):
+        '''Implements interface from FilesystemPluginInterface
+        '''
+        if path is not None:
+            if path.startswith("/") is True:
+                complete_path = path
+            else:
+                complete_path = "%s/%s" % (dir_obj._url.path, path)
+        
+        # throw exception if directory already exists
+        if self.entry_exists(dir_obj, path) == True:
+            self.log_error_and_raise(bliss.saga.Error.DoesNotExist, 
+            "Couldn't create directory '%s'. Entry already exist." % (complete_path))
+
+        try:
+            ssh = self._cp.get_connection(dir_obj)
+            sftp = ssh.open_sftp()
+            sftp.mkdir(complete_path)
+        except Exception, ex:
+            self._parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+            "Couldn't create directory: %s " % (str(ex)))
+
 

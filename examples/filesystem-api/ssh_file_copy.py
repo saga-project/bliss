@@ -38,8 +38,8 @@ def main():
  
         # create a job service for Futuregrid's 'india' PBS cluster
         # and attach the SSH security context to it
-        myfile = saga.filesystem.File("sftp://india.futuregrid.org:22//N/u/oweidner/.bashrc", 
-                                      session=session)
+        #myfile = saga.filesystem.File("sftp://india.futuregrid.org:22//N/u/oweidner/.bashrc", 
+        #                              session=session)
 
         mydir = saga.filesystem.Directory("sftp://india.futuregrid.org/tmp", session=session)
         for entry in mydir.list():
