@@ -17,8 +17,8 @@ urlparse.uses_fragment.append("fork")
 urlparse.uses_netloc.append("pbs")
 urlparse.uses_fragment.append("pbs")
 
-urlparse.uses_netloc.append("ssh")
-urlparse.uses_fragment.append("ssh")
+urlparse.uses_netloc.append("sftp")
+urlparse.uses_fragment.append("sftp")
 
 urlparse.uses_netloc.append("pbs+ssh")
 urlparse.uses_fragment.append("pbs+ssh")
@@ -39,7 +39,7 @@ class Url(Object):
             (host,port) = self._urlobj.netloc.split(":")
         else:
             host = self._urlobj.netloc
-            port = ""
+            port = None
 
         self.scheme   = self._urlobj.scheme
         '''The scheme part of the Url.'''

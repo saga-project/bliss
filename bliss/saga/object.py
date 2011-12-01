@@ -49,7 +49,9 @@ class Object(object) :
 
     FilesystemAPI        = "saga.filesystem"
     '''saga.filesystem API namespace'''
-    FilesystemFile      = "saga.filesystem.File"
+    FilesystemFile       = "saga.filesystem.File"
+    '''saga.filesystem.File object type'''
+    FilesystemDirectory  = "saga.filesystem.Directory"
     '''saga.filesystem.File object type'''
 
 

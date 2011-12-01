@@ -11,4 +11,5 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.saga.filesystem.file import File
+from bliss.saga.filesystem.directory import Directory
 
