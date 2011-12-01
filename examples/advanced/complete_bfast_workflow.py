@@ -21,25 +21,14 @@ __license__   = "MIT"
 import time
 import bliss.saga as saga
 
-def main():
+def main(jobno, session, jobservice):
    
-    execution_host = saga.Url("pbs+ssh://queenbee.loni.org") 
     bfast_base_dir = saga.Url("sftp://queenbee.loni.org/work/oweidner/bfast")
  
     try:
-        ctx = saga.Context()
-        ctx.type = saga.Context.SSH
-        ctx.userid  = 'oweidner' # like 'ssh username@host ...'
-        ctx.usercert = '/Users/s1063117/.ssh/id_rsa' # like ssh -i ...'
-
-        session = saga.Session()
-        session.contexts.append(ctx)
- 
         workdir = "%s/tmp/run/%s" % (bfast_base_dir.path, str(int(time.time())))
         basedir = saga.filesystem.Directory(bfast_base_dir, session=session)
         basedir.make_dir(workdir)
-
-        js = saga.job.Service(execution_host, session)
 
         jd = saga.job.Description()
         jd.wall_time_limit   = "0:05:00"
@@ -54,18 +43,32 @@ def main():
         myjob = js.create_job(jd)
         myjob.run()
 
-        print "Job started with ID '%s' and working directory: '%s'"\
-          % (myjob.jobid, workdir)
+        time.sleep(1)
+        print "Job #%s started with ID '%s' and working directory: '%s'"\
+          % (jobno, myjob.jobid, workdir)
 
         myjob.wait()
 
-        print "Job with ID '%s' finished (RC: %s). Output available in: '%s'"\
-          % (myjob.jobid, myjob.exitcode, workdir)
+        print "Job #%s with ID '%s' finished (RC: %s). Output available in: '%s'"\
+          % (jobno, myjob.jobid, myjob.exitcode, workdir)
 
     except saga.Exception, ex:
         print "Oh, snap! An error occured: %s" % (str(ex))
 
 if __name__ == "__main__":
-    for i in range (0,8):
-        main()
+
+    execution_host = saga.Url("pbs+ssh://queenbee.loni.org") 
+    ctx = saga.Context()
+    ctx.type = saga.Context.SSH
+    ctx.userid  = 'oweidner' # like 'ssh username@host ...'
+    ctx.usercert = '/Users/s1063117/.ssh/id_rsa' # like ssh -i ...'
+
+    session = saga.Session()
+    session.contexts.append(ctx)
+
+    js = saga.job.Service(execution_host, session)
+    
+
+    for i in range (0,64):
+        main(i, session, js)
 

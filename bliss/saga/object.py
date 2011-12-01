@@ -133,7 +133,7 @@ class Object(object) :
     def id():
         doc = "The object's unique identifier."
         def fget(self):
-            return str(hex(id(self)))
+            return ("%s_%s") % (self.__class__.__name__, str(hex(id(self))))
         return locals()
     id = property(**id())
 
