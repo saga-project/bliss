@@ -57,29 +57,34 @@
       <ul>
         <li>
           <div class="group row">
+            <p><b><em>What is Bliss?</em></b></p>
+
             <p>Bliss (<em>BLiss IS Saga</em>) is a pragmatic, light-weight
-            implementationof the <a href="http://www.ogf.org/documents/GFD.90.pdf">OGF
+            implementation of the <a href="http://www.ogf.org/documents/GFD.90.pdf">OGF
             GFD.90</a> SAGA standard. Bliss is written 100% in Python and
             focuses on usability and simple deployment rather than on feature
-            completeness.</p>
+            completeness and strict standard obedience.</p>
 
-            <p>SAGA defines a high-level API for uniform access to the building-blocks of
+            <p>The SAGA standard defines a high-level API for uniform access to the building-blocks of
             distributed computing: (1) <em>job execution and managegment</em>, (2)
-            <em>file and data management</em> and (3) <em>distributed coordination and
-            orchestration</em>. Bliss is a native Python implementation of this API.</p>
+            <em>data management</em> and (3) <em>distributed coordination and
+            orchestration</em>. Bliss is a native Python implementation of this API with
+            flexible <a href="https://github.com/oweidner/bliss/wiki/Plugins">plug-in</a> 
+            mechanism to support different distributed backends.</p>
 
             <p><b><em>So why should I use Bliss?</em></b></p>
-            <P>With Bliss you can write distributed application pipelines and workflows
-            that are portable accross distributed systems. With Bliss you can finally say
-            good bye to all those aweful, error-prone
-            glue-code scripts that you use to handle compute and data provisioning 
-            and management (or avoid them in the first place).</p>
 
-            <p>Bliss can also be a great tool for your research in computer 
-            science! You have great idea for an algorithm that does data/compute co-scheduling 
-            accross XSEDE and Open Science Grid machines? Use Bliss to encapsulate resource 
-            access details. This will give you more time to focus on the important things 
-            and less things to wory about.</p>
+            <P>Bliss allows you to write distributed applications and workflows
+            that are portable accross distributed systems. With Bliss you can finally say
+            goodbye to all those awful, error-prone glue-code scripts that you use to 
+            handle compute and data provisioning and management for your application.</p>
+
+            <p>Bliss is also a great tool for your distributed computing and computational 
+            science research: 
+            you have great idea for an algorithm that does data/compute co-scheduling 
+            accross a heterogeneous resource landscape? You want to test it in a real-life
+            scenario? Bliss encapsulates the resource access details and lets you focus 
+            on the important part of your work!</p>
           </div>
         </li>
 
@@ -88,7 +93,7 @@
             <div class="col-1">
               <p>Bliss installs in seconds with easy_install:<br />
               <em><a href=
-              "http://wiki.github.com/oweidner/bliss/installation">Installation
+              "http://wiki.github.com/oweidner/bliss/Installation">Installation
               instructions</a></em></p>
             </div>
 
@@ -104,7 +109,7 @@
           <div class="group row">
             <p>Simple remote job submission using the <a href=
             "http://oweidner.github.com/bliss/apidoc/">Job API</a><br />
-            <em><a href="http://wiki.github.com/oweidner/bliss/">More examples &amp;
+            <em><a href="http://wiki.github.com/oweidner/bliss/Userguide">More examples &amp;
             documentation</a></em></p><script src=
             "https://gist.github.com/1353955.js?file=pbssh.py" type="text/javascript">
 </script>
