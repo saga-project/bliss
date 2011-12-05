@@ -36,15 +36,9 @@ def main():
         session = saga.Session()
         session.contexts.append(ctx)
  
-        # create a job service for Futuregrid's 'india' PBS cluster
-        # and attach the SSH security context to it
-        #myfile = saga.filesystem.File("sftp://india.futuregrid.org:22//N/u/oweidner/.bashrc", 
-        #                              session=session)
-
         mydir = saga.filesystem.Directory("sftp://india.futuregrid.org/tmp", session=session)
         for entry in mydir.list():
             print entry
-        #myfile.copy("ssh://alamo.futuregrid.org/home/oweidner/")
 
     except saga.Exception, ex:
         print "Oh, snap! An error occured: %s" % (str(ex))

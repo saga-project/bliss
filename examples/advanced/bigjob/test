@@ -1,0 +1,152 @@
+A Critical Assessment of BigJob
+===============================
+
+Abstract
+========
+
+In this technical report (?), we try to identify the main issues that arise when using the BigJob pilot-job framework in a real-life application and resource scenario. We argue that most issues are attributable to the simple fact that agent control, resource provisioning and assignment code (bigjob manager) and workload submission and monitoring code (subjob api) have to live in the same execution context due to the monolithic design of the bigjob API. We propose a simple solution for this problem in form of a concept for BigJob version 2, that allows logical and physical decoupling of both components. Lastly, we describe how 'version 2' can better support advance application scenarios, like for example the one outlined in the ExTENCI project. As a take-home message, we sugget that the issues encountered with BigJob and the more modular design of BigJob 'version 2' should be considered in the requirement analysis and design phase of possible follow-up projects, like for example TROY.
+
+Introduction 
+============
+
+BigJob (BJ) is  a pilot job implementation written in Python. It decouples resource provisioning and resource usage by using the concept of a container job (pilot-job) that can be filled with arbitrary compute jobs (sub-jobs) after it has been scheduled. This allows 'late-binding', i.e., resource-to-executable mapping during application runtime rather than before application runtime ('early-binding'). 
+
+The concept of pilot jobs has been proven to be an effective tool for running 'bunch of tasks' applications of both single-core as well multi-core/MPI application in HPC cluster environemnts. The benefits (reduced time-to-completion) stems from the fact that a pilot-job can be scheduled in a way favored by a particular queueing system (e.g., large jobs v.s. small jobs) independently from the application decomposition. 
+
+Example: Consider an application consisting of 1,000 single-core genome matching steps that take ~ 10 minutes each. Trying to schedule these 1,000 tasks one-by-one on large HPC cluster that favors multi-core, long-running jobs over single-core, short-running jobs could become a lengthy undertaking. With BJ, it is possible to schedule one lare 128-core slot for 2 hours which will be taken over by the pilot-job (placeholder job). The pilot job then pulls individual tasks from the 1,000 tasks that have been registered in a task list and executes them within the 128-core slot -- 128 tasks at a time in parallel. 
+
+Besides potential benefits for job scheduling, BJ and the concept of pilot-jobs in general allow for other interesting concetps, like transparent usage of multiple resources and data-mapping based on location and affinity. Both are active areas of research and manifest themselves in the ManyJobs, Pilot-Data and TROY projects. BigJob, besides being a useful standalone tool, can be considered as on of the building blocks for the development of new abstractions for dynamic, data-intensive computing. 
+
+
+Implementation 
+==============
+
+BigJob (http://faust.cct.lsu.edu/trac/bigjob/) is implemented in Python. It is available via SVN (https://svn.cct.lsu.edu/repos/saga-projects/applications/bigjob/trunk/generic) as well as through the Python packakge index PyPi (http://pypi.python.org/pypi/BigJob). The license under which BigJob is released is unknown. BigJob is compatible with Python >= 2.4 and relies on the following external packages:
+
+* SAGA
+* UUID (via PyPi) 
+* ThreadPool (via PyPi)
+* Virtualenv (via PyPi)
+* Redis (optional - via PyPi)
+* Zero-MQ (optional)
+
+BigJob consists of four main components (classes): the bigjob_manager, bigjob_agent and sub_job. The big_job manager plays the role of a central coordinator. It sets up and manages the central communication 'hub' or database (either via SAGA advert, Redis or ZMQ), launches and monitors the bigjob_agents and manages the list of application tasks (work units).
+The bigjob_agents represent the placeholder jobs that are submitted to a remote queuing system by the bigjob_manager. The agents are written in Python as well and communicate with the bigjob_manager via one of the available communication backends (SAGA advert, Redis, ZMQ). Their task is to periodically connect to the bigjob communication 'hub' and pull and execute waiting jobs on the resource they're occupying. Lastly, the sub_job represents an application task (executable, arguments, description of resource requirements). It provides a handle to query the status of the job (new, running, done, failed) as well as cancel to cancel it.
+
+A typical BigJob invocation is done via a Python script and allways follows the following pattern:
+
+# (1) BigJob instantiation, communication 'hub' setup
+bj = bigjob(COORDINATION_URL)
+
+# (2) Start the placeholder job
+bj.start_pilot_job(number of slots, walltime, etc)
+
+# (3) describe a 'work unit'
+jd = saga.job.description()
+jd.executable = "/bin/sleep"
+
+# (4) create a sub_job and add it to the manager
+sj = subjob() 
+sj.submit_job(bj.pilot_url, jd) 
+
+# (5) wait for sub_jobs(s) to finish 
+while 1: 
+    state = str(sj.get_state()) 
+    if(state=="Failed" or state=="Done"):
+        break
+
+# (6) stop BigJob and cleanup 
+bj.cancel()
+
+From and application's point of view, step (3) work unit description, step (4) work unit submission and (5) work unit monitoring represents the most important and, one could argue, only relevant parts of the BigJob interface, since they provide job submission and control capabilites. Without the surrounding framwork consisting of step (1), (2) and (6), the BigJob interface doesn't look too different from any other jobs submission interface and is particularly similar to the one provided by SAGA. 
+
+However, due to the design inherent to the BigJob framework, a separation between resource provisioning and management (1,2,6) and resource usage (3,4,5) is not possible. The submission of a sub_job requires a handle to the bigjob_manager (4). The bigjob manager in turn, requires the description of a communication backend (1), as well as configuration of the agent / placeholder job iteself (2). While the complexity of these tasks is certainly manageable, they are in many cases not of immediate concern or interest to a distributed application. The application, after all, is just concerned of executing its workload as fast or as efficient as possible. Ideally, the questions of 'how' and 'where' to execute the workload doesn't need to be answered at all on application level. 
+
+While it might be possible to hide many of these aspects from the application by adding another thin layer of abstraction, scenario-sepcific pre-made configuration files and examples or even a portal or gateway on top of BigJob, the requirement of bigjob manager and sub_jobs having to be in the same source namespace, has a far more unpleasnt implication and that is external dependencies!
+
+Dependency and Environment Nightmare
+====================================
+
+The concept of decoupling workload submission from resource provisioning and assignment also allows for a decoupling of workload submission from the underlying middleware. The provisioning and assignment component(s) ('manager') of a pilot job system take over the task of interacting with the physical systems via their middleware and services, like e.g., Globus, Condor, PBS, etc. Application work units are generally registered with the manager which then (with the help of the agents) takes care of resource assignment and workload execution. This separation of concerns allows for a simple and light-weight implementation of a pilot-job job submission interface, since most of the logic and complexity that arise from practical interaction with distributed systems are implemented in the manager. 
+
+BigJob follows the same idea: the sub_job component is implemented as an interface with a simple key-value-based dictionary behind it. Task submission, monitoring and control is forwarded to the bigjob_manager, which implements all communication with the central communication 'hub' (via SAGA advert, Redis or ZMQ) and the distributed middleware, either via SAGA job, or a built-in PBS-over-SSH mechanism. The architecture of BigJob however, incorporates both components / interfaces in the same framework without the option of separation. This has an impractical consequence for any application that wants to use BigJob for workload execution: it needs to run in an environment that is suitable for the bigjob_manager to interact with middleware and communication infrastructure, even though the application would prefer to be agnostic with regard to the physical execution environment. 
+
+Here is an example: Consider the above application with 1,000 genome matching tasks. Let's assume that the application wants to employ BigJob to execut its workload on the XSEDE Ranger cluster. The default generic version of BigJob uses a SAGA advert database for communication and communiction. Ranger can be accessed via Globus GRAM. In order to utulize BigJob, the user running the application needs to make sure that the environment for his application consists at least of the following software components:
+
+* SAGA C++ Core libraries 
+* SAGA Python bindings 
+* PostgreSQL client libraries
+* Globus Toolkit inc. development headers
+* SAGA Globus Adaptors
+* BigJob itself
+
+In scenarios were BigJob is used to execute application workloads on multiple resources via more than one distinct type of middelware concurrently, the sofware dependencies for BigJob become even more severe. Furthermore, in some scenarios the availability of specific middleware (e.g., Condor) is limited to a specific set of machines (e.g., frontend- or submit-nodes), which often provide a not very pleasant environment for application development and execution or even restrict the execution of (esp. long-running) user-code. 
+
+Besides to ensure its availabiltiy, the user also must ensure that the sofware stack is configured properly (e.g., the SAGA Advert Adaptor) and properly loaded into the environment. All these tasks are highly non-trivial for the typical users who come often from the ranks of domain scientist with only moderate backgrounds in software delpoyment and computer science in general. The BigJob team has tried to overcome parts of these problems by providing pre-configured BigJob environments across the majority of XSEDE systems, but this approach doesn't seem to provide a sufficient amount of transparancy, scalability and flexibiltiy due to its static and manual nature and single-point of failure.  
+
+It seems that the 'dependency and environment nightmare' provides an unnecessary inhibition threshold for the uptake of BigJob and that it is the main reason for frustration and exodus. 
+
+Instance Lifetime and Fault-Tolerance
+=====================================
+
+Another issue that comes up in the context of practical BigJob usage is the issue of instance lifetime and fault tolerance. It is rooted in the same causes as the 'dependency and environment' issue: a lack of separation of the job submission component (a.k.a application interface) and the resource provisioning and assignment component.
+
+In the current, 'monolithic' incarnation of BigJob, the application lifetime is coupled to the bigjob_manager lifetime and vice versa and is determined by the lifetime of the BigJob Python script that is running interactively in user-space. While this might not be a problem for short-running jobs, this can become a problem for long-running BigJob applications. While it is desirable for many, especially long-running, applications to go 'offline' after the complete workload is submitted and only come back 'online' to periodically check the status of the workload, this is not possible with BigJob.
+
+Since application code and provisioning (bigjob_manager) code have to reside in the same execution context, a minor error in the application code will inevitably bring down the bigjob_manager and vice versa, which sufficiently increases the chance of application failure while also increasing the complexity of the debugging process. 
+
+In a way related to this is the issue that BigJob's static architecture prevents the usage of a pilot-job environment instantiated in BigJob by more than one application / application instance, unless they run in the same exeuction context. Scenarios where a single pilot-job environment is made available to a group of users or applications are not possible at the moment.
+
+While the 'instance lifetime and fault-tolerance' issue doesn't necessarily affect the majority of current application scenarios, it is of concern to long-running applications (days?, weeks?) and a stumbling block for more advanced application scenarios. 
+
+
+Input and Output File Handling
+==============================
+
+The third issue that was encountered was BigJob's lack of support for data movement. BigJob doesn't provide any means of moving application input files into the location of the pilot-job or moving output files back. This means that workload submission and workload data staging are completely decoupled. The current procedure that is employed by users to overcome this shortfall is either to copy data manually (!!) into the systems where they intend to run BigJob for execution or implement application-level file transfer routines as another layer of failure and obfuscation in the application code. 
+
+While this clunky approach might work on some systems like HPC clusters whith shared filesystems, it will eventually hit the brick wall on complex systems like EGI or OSG where it is not possible to determine the execution location of a pilot-job before it get scheduled. Even though it is certainly possible to find another workaround in application space for this, the lack of an integrated approach for data staging is a big disadvantage over any regular job submission system (Condor, Globus, PBS, etc.) which all support at least rudimentary file staging. It raises the complexity on application level considerably. 
+
+
+
+Proposal for 2nd Generation BigJob
+==================================
+
+-- Split up bigjob_manager and subjob
+-- Enable remote connection between both 
+-- Expose subjob API through saga (Bliss?) adaptor
+
+
+Relevance for Advanced Application Scenarios
+============================================
+
+Context
+- You don't know in advance where PJ will end up
+- You don't know in advance where to put your files
+- Users don't necessarily have access to gateway machines
+- Condor can only be submitted from GW node, but long-running 
+  user applications can't ncessessarily run there...
+
+Requirements for BJ in ExTENCI
+
+- Access OSG's Condor-(G) resources
+- Access XSEDE's Globus resources
+- File staging capabilities 
+- Accessible through DARE gateway 
+- Accessible via CMD line
+
+
+
+Conclusion / Implications for Future Projects
+=============================================
+
+While BigJob embraces the concepts of pilot-jobs (or the P* model) and has been used successfuly in real-life application scenarios, its architecture makes its usage in advanced and ad-hoc application scenario cumbersome to almost impossible. We fully appreciate the long way BigJob has come from research prototype to a software tool for computational science applications. However, we believe that the physical and logical separation of bigjob_manager and subjobs in our proposed BigJob version 2 are necessary for advanced application scenarios while highly beneficial for existing ones. 
+
+We believe that the fundamental set of ideas and concepts of UNIX have made distributed computing possible in the first place and that lots of this wisdom is captured in its philosophy. Let's revisit some of these concepts summarized by Eric S. Raymond in his book "The Art of Unix Programming":
+
+* Rule of Modularity: Write simple parts connected by clean interfaces
+* Rule of Composition: Design programs to be connected to other programs
+* Rule of Separation: Separate policy from mechanism; separate interfaces from engines
+* Rule of Parsimony: Write a big program only when it is clear by demonstration that nothing else will do
+
+Our proposed extension for BigJob is a direct refelction of these rules...

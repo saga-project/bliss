@@ -8,7 +8,7 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.plugins.pbs import PBSJobAndSDPlugin
-from bliss.plugins.ssh import SSHFilesystemPlugin
+from bliss.plugins.sftp import SFTPFilesystemPlugin
 from bliss.plugins.local import LocalJobPlugin
 
 
@@ -25,7 +25,7 @@ _registry.append({"class"   : PBSJobAndSDPlugin,
                   "name"    : PBSJobAndSDPlugin.plugin_name(),
                   "schemas" : PBSJobAndSDPlugin.supported_schemas()})
 
-_registry.append({"class"   : SSHFilesystemPlugin,
-                  "apis"    : SSHFilesystemPlugin.supported_apis(),
-                  "name"    : SSHFilesystemPlugin.plugin_name(),
-                  "schemas" : SSHFilesystemPlugin.supported_schemas()})
+_registry.append({"class"   : SFTPFilesystemPlugin,
+                  "apis"    : SFTPFilesystemPlugin.supported_apis(),
+                  "name"    : SFTPFilesystemPlugin.plugin_name(),
+                  "schemas" : SFTPFilesystemPlugin.supported_schemas()})

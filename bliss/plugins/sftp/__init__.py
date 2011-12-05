@@ -7,4 +7,4 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.plugins.ssh.sshfile import SSHFilesystemPlugin
+from bliss.plugins.sftp.sftpfile import SFTPFilesystemPlugin

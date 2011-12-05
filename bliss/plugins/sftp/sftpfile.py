@@ -91,7 +91,7 @@ class SSHConnectionPool:
 ################################################################################
 ################################################################################
 
-class SSHFilesystemPlugin(FilesystemPluginInterface):
+class SFTPFilesystemPlugin(FilesystemPluginInterface):
     '''Implements a filesystem plugin that does things via SSH
     '''
     ## Define adaptor name. Convention is:
