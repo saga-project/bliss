@@ -5,7 +5,12 @@ Version 0.1.12 released 2011-11-28
     * Fixed bug in URL.get_host()
     * Fixed issues with extremely short running PBS jobs 
       in conjunction with scheduler configruations that 
-      remove the job from the queue the second it finishes execution. 
+      remove the job from the queue the second it finishes execution.
+    * First working version of an SFTP file API plugini based on Paramiko
+    * Two advance bfast examples incl. output file staging:
+      https://github.com/oweidner/bliss/blob/master/examples/advanced/bfast_workflow_01.py
+      https://github.com/oweidner/bliss/blob/master/examples/advanced/bfast_workflow_02.py
+       
 
 Version 0.1.11 released 2011-11-28
 ----------------------------------------------------------------------
