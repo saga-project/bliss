@@ -66,3 +66,29 @@ class Directory(Object):
               "Object not bound to a plugin")
         else:
             return self._plugin.dir_make_dir(self, path, flags)
+
+    ######################################################################
+    ## 
+    def copy(self, source, target):
+        '''Copy a file from source to target
+           @param source: path of the file to copy
+           @param target: destination path
+        '''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+        else:
+            return self._plugin.dir_copy(self, source, target)
+
+    ######################################################################
+    ## 
+    def get_size(self, path):
+        '''Returns the size of a file (in bytes)
+           @param path: path of the file
+        '''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+        else:
+            return self._plugin.dir_get_size(self, path)
+

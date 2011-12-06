@@ -96,7 +96,7 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
     '''
     ## Define adaptor name. Convention is:
     ##         saga.plugin.<package>.<name>
-    _name = 'saga.plugin.file.ssh'
+    _name = 'saga.plugin.file.sftp'
 
     ## Define supported url schemas
     ## 
@@ -125,9 +125,12 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
         except Exception, ex:
             raise Exception("paramiko module missing")
  
-    def entry_exists(self, obj, entry_path=None):
+    def entry_getstat(self, obj, entry_path=None):
         # if no path is given, use the one from
         # the object's url
+        path = "."
+
+
         if entry_path is not None:
             if entry_path.startswith("/") is True:
                 #absolute path
@@ -136,33 +139,33 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
                 #relative path
                 path = "%s/%s" % (obj._url.path, entry_path)
         elif obj._url.path is not None:
-            path = obj._url.path
-        else:
-            path = "."
+            if len(obj._url.path) > 0:
+                path = obj._url.path
+
         try:
             ssh = self._cp.get_connection(obj)
             sftp = ssh.open_sftp()
             filestat = sftp.stat(path)
             self.log_info("SFTP stat for '%s' returned: '%s'" % (path, filestat))
-            return True
+            return filestat
         except IOError, ex:
             if ex.errno == 2:
-                return False
+                return None
             else:
                 self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                "Couldn't open directory: %s " % (str(ex)))
+                "Couldn't access entry: %s " % (str(ex)))
         except Exception, ex:
                 self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                "Couldn't open directory: %s " % (str(ex)))
-
+                "Couldn't access entry: %s " % (str(ex)))
 
 
     def register_file_object(self, file_obj):
         '''Implements interface from FilesystemPluginInterface
         '''
-        if self.entry_exists(file_obj) != True:
+        stat = self.entry_getstat(file_obj)
+        if stat == None:
             self.log_error_and_raise(bliss.saga.Error.DoesNotExist, 
-            "Couldn't open %s. File doesn't exist." % file_obj._url)
+            "Couldn't open %s. Entry doesn't exist." % file_obj._url)
         else:
             pass
         
@@ -176,11 +179,14 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
     def register_directory_object(self, dir_obj):
         '''Implements interface from FilesystemPluginInterface
         '''
-        if self.entry_exists(dir_obj) != True:
+        stat = self.entry_getstat(dir_obj)
+        if stat == None:
             self.log_error_and_raise(bliss.saga.Error.DoesNotExist, 
-            "Couldn't open %s. File doesn't exist." % (dir_obj._url))
-        else:
-            pass
+            "Couldn't open %s. Entry doesn't exist." % (dir_obj._url))
+        elif str(stat).startswith("d") is not True:
+            self.log_error_and_raise(bliss.saga.Error.BadParameter, 
+            "Couldn't open %s. Entry is a file and not a directory." % (dir_obj._url))
+            
 
     def unregister_directory_object(self, dir_obj):
         '''Implements interface from FilesystemPluginInterface
@@ -197,8 +203,24 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
             sftp = ssh.open_sftp()
             return sftp.listdir(path)
         except Exception, ex:
-            self._parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
             "Couldn't list directory: %s " % (str(ex)))
+
+
+    def dir_get_size(self, dir_obj, path):
+        '''Implements interface from FilesystemPluginInterface
+        '''
+        if path is not None:
+            if path.startswith("/") is True:
+                complete_path = path
+            else:
+                complete_path = "%s/%s" % (dir_obj._url.path, path)
+        try:
+            stat = self.entry_getstat(dir_obj, path)
+            return stat.st_size    
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+            "Couldn't determine size for '%s': %s " % (path, (str(ex))))
 
 
     def dir_make_dir(self, dir_obj, path, flags):
@@ -211,7 +233,8 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
                 complete_path = "%s/%s" % (dir_obj._url.path, path)
         
         # throw exception if directory already exists
-        if self.entry_exists(dir_obj, path) == True:
+        stat = self.entry_getstat(dir_obj, path)
+        if stat != None:
             self.log_error_and_raise(bliss.saga.Error.DoesNotExist, 
             "Couldn't create directory '%s'. Entry already exist." % (complete_path))
 
@@ -220,7 +243,41 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
             sftp = ssh.open_sftp()
             sftp.mkdir(complete_path)
         except Exception, ex:
-            self._parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
             "Couldn't create directory: %s " % (str(ex)))
+
+
+    def dir_copy(self, dir_obj, source, target):
+        '''Implements interface from FilesystemPluginInterface
+        '''
+        basepath = dir_obj._url.path
+        full_path = os.path.join(basepath, source)
+
+        if(type(target) == str):
+            target_url = bliss.saga.Url(str(target))
+        else:
+            target_url = target
+
+        if target_url.host != 'localhost':
+            error = 'Only sftp://localhost/... supported as target'
+            self.log_error_and_raise(bliss.saga.Error.BadParameter, 
+            "Couldn't copy '%s' to '%s': %s " % (full_path, target_url, error))
+
+        target_path = str(target_url.path)
+        if os.path.exists(target_path):
+            if os.path.isdir(target_path):
+                target_path += os.path.basename(full_path)
+            else:
+                self.log_error_and_raise(bliss.saga.Error.AlreadyExists, 
+                "Couldn't copy '%s' to '%s': target already exists." % (full_path, target_url))
+ 
+        try:
+            ssh = self._cp.get_connection(dir_obj)
+            sftp = ssh.open_sftp()
+            self.log_info("trying to copy %s -> %s" % (full_path, target_path))
+            sftp.get(full_path, target_path)
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+            "Couldn't copy '%s' to '%s': %s " % (full_path, target_path, str(ex)))
 
 

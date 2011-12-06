@@ -18,8 +18,9 @@ def run_bfast(jobno, session, jobservice):
     bfast_base_dir = saga.Url("sftp://queenbee.loni.org/work/oweidner/bfast")
  
     try:
+        run_id = str(int(time.time()))
         # create a working directory on the remote machine
-        workdir = "%s/tmp/run/%s" % (bfast_base_dir.path, str(int(time.time())))
+        workdir = "%s/tmp/run/%s" % (bfast_base_dir.path, run_id)
         basedir = saga.filesystem.Directory(bfast_base_dir, session=session)
         basedir.make_dir(workdir)
 
@@ -30,16 +31,16 @@ def run_bfast(jobno, session, jobservice):
         jd.working_directory = workdir     
         jd.output            = 'bfast.out'     
         jd.error             = 'bfast.err' 
-        jd.executable        = '/bin/date'#$BFAST_DIR/bin/bfast'
-        #jd.arguments         = ['match', '-A 1',
-        #                        '-r $BFAST_DIR/data/small/reads_5K/reads.10.fastq',
-        #                        '-f $BFAST_DIR/data/small/reference/hg_2122.fa']
+        jd.executable        = '$BFAST_DIR/bin/bfast'
+        jd.arguments         = ['match', '-A 1',
+                                '-r $BFAST_DIR/data/small/reads_5K/reads.10.fastq',
+                                '-f $BFAST_DIR/data/small/reference/hg_2122.fa']
 
         myjob = js.create_job(jd)
         myjob.run()
 
         start = time.time()
-        print "Job #%s started with ID '%s' and working directory: '%s'"\
+        print "\nJob #%s started with ID '%s' and working directory: '%s'"\
           % (jobno, myjob.jobid, workdir)
 
         myjob.wait()
@@ -49,7 +50,10 @@ def run_bfast(jobno, session, jobservice):
           % (jobno, myjob.jobid, myjob.exitcode, diff)
 
         # copy output and error files back to the local machine
-        basedir.copy(workdir+'/bfast.*', 'sftp://localhost//tmp/')
+        local_file = saga.Url('sftp://localhost//tmp/bfast.out.'+run_id)
+        basedir.copy(workdir+'/bfast.out', local_file)
+        print "Job #%s output copied to local machine: %s (%s bytes)" \
+          % (jobno, local_file, basedir.get_size(workdir+'/bfast.out'))
 
         return diff
 
@@ -58,7 +62,7 @@ def run_bfast(jobno, session, jobservice):
 
 if __name__ == "__main__":
 
-    NUMJOBS = 2
+    NUMJOBS = 32
 
     execution_host = saga.Url("pbs+ssh://queenbee.loni.org") 
     ctx = saga.Context()
@@ -72,7 +76,7 @@ if __name__ == "__main__":
     js = saga.job.Service(execution_host, session)
   
     print "\n-------------------------------------"
-    print "Submitting %s jobs sequentially\n" % NUMJOBS
+    print "Submitting %s jobs sequentially" % NUMJOBS
  
     total_time = 0.0 
 

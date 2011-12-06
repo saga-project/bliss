@@ -37,10 +37,11 @@ def main():
         session.contexts.append(ctx)
  
         # open home directory on a remote machine
-        mydir = saga.filesystem.Directory("sftp://india.futuregrid.org", session=session)
+        mydir = saga.filesystem.Directory("sftp://queenbee.loni.org/home/oweidner", session=session)
 
-        # copy all files that start with '.bash_' to /tmp/ on the local machine
-        mydir.copy('.bash_*', 'sftp://localhost/tmp/')
+        # copy .bash_history to /tmp/ on the local machine
+        mydir.copy('.bash_history', 'sftp://localhost/tmp/) 
+
 
     except saga.Exception, ex:
         print "Oh, snap! An error occured: %s" % (str(ex))
