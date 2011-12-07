@@ -1,4 +1,9 @@
-Version 0.1.12 released 2011-12-07
+Version 0.1.14 released 2011-12-??
+----------------------------------------------------------------------
+
+    * Added bliss.sagacompat module for API compatibility
+
+Version 0.1.13 released 2011-12-07
 ----------------------------------------------------------------------
 
     * Fixed executable & argument handling for the local job plugin
