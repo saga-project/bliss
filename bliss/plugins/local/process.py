@@ -20,7 +20,7 @@ class LocalJobProcess(object):
 #                 'environment', 'returncode', 'pid', 'state',
 #                 't_created', 't_started', 't_finished'}
 
-    def __init__(self, jobdescription):
+    def __init__(self, jobdescription, plugin):
         self.executable  = jobdescription.executable
         self.arguments   = jobdescription.arguments
         self.environment = jobdescription.environment
@@ -29,19 +29,39 @@ class LocalJobProcess(object):
         self.pid = None
         self.returncode = None
         self.state = bliss.saga.job.Job.New
+        self.pi = plugin
         
 
-    def run(self):
-        if self.arguments is not None:
-             cmdline = copy.deepcopy(self.arguments)
-        else:
-             cmdline = []
+    def __del__(self):
+        if self._job_output is not None:
+            self._job_output.close()
+        if self._job_error is not None:
+            self._job_error.close()
 
-        cmdline.insert(0, self.executable)
-        self.prochandle = subprocess.Popen(cmdline, 
-                                           executable=self.executable,
-                                           stderr=subprocess.STDOUT, 
-                                           stdout=subprocess.PIPE, 
+
+    def run(self, jd):
+        if jd.output is not None:
+            self._job_output = open(jd.output,"w")  
+        else:
+            self._job_output = None 
+
+        if jd.error is not None:
+            self._job_error = open(jd.error,"w")  
+        else:
+            self._job_error = None 
+
+        cmdline = str(self.executable)
+        args = ""
+        if self.arguments is not None:
+            for arg in self.arguments:
+                cmdline += " %s" % arg 
+
+        self.pi.log_info("Trying to run: %s" % cmdline)   
+
+        self.prochandle = subprocess.Popen(cmdline, shell=True, 
+                                           #executable=self.executable,
+                                           stderr=self._job_error, 
+                                           stdout=self._job_output, 
                                            env=self.environment)
         self.pid = self.prochandle.pid
         self.state = bliss.saga.job.Job.Running

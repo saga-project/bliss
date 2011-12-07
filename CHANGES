@@ -1,5 +1,10 @@
+Version 0.1.12 released 2011-12-07
+----------------------------------------------------------------------
 
-Version 0.1.12 released 2011-11-28
+    * Fixed executable & argument handling for the local job plugin
+    * Added support for jd.output and jd.error to local job plugin
+
+Version 0.1.12 released 2011-12-06
 ----------------------------------------------------------------------
 
     * Fixed bug in URL.get_host()

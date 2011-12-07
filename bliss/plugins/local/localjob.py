@@ -39,9 +39,9 @@ class LocalJobPlugin(JobPluginInterface):
             job_id = hex(id(job_obj))
             try:
                 self.objects[service_id]['jobs'].append(job_obj)
-                self.processes[job_id] = LocalJobProcess(jobdescription=job_obj.get_description())
+                self.processes[job_id] = LocalJobProcess(jobdescription=job_obj.get_description(), plugin=self.parent)
             except Exception, ex:
-                self.parent.log_error_and_raise(exception.Error.NoSuccess, 
+                self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
                   "Can't register job: %s %s" % (ex, utils.get_traceback()))   
 
         def del_job_object(self, job_obj):
@@ -52,7 +52,7 @@ class LocalJobPlugin(JobPluginInterface):
             for key in self.objects.keys():
                 if job_obj in self.objects[key]['jobs']:
                     return self.objects[key]['instance']
-            self.parrent.log_error_and_raise(exception.Error.NoSuccess, 
+            self.parrent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
               "INTERNAL ERROR: Job object %s is not known by this plugin %s" % (job, utils.get_traceback())) 
 
         def get_job_for_jobid(self, service_obj, job_id):
@@ -61,7 +61,7 @@ class LocalJobPlugin(JobPluginInterface):
                 proc = self.get_process_for_job(job)
                 if proc.getpid(str(service_obj._url)) == job_id:  
                     return job
-            self.parrent.log_error_and_raise(exception.Error.NoSuccess, "Job ID not known by this plugin.")
+            self.parrent.log_error_and_raise(bliss.saga.Error.NoSuccess, "Job ID not known by this plugin.")
 
 
         def list_jobs_for_service(self, service_obj):
@@ -75,7 +75,7 @@ class LocalJobPlugin(JobPluginInterface):
             try: 
                 return self.processes[hex(id(job_obj))]
             except Exception, ex:
-                self.parrent.log_error_and_raise(exception.Error.NoSuccess, 
+                self.parrent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
                 "INTERNAL ERROR: Job object %s is not associated with a process %s" % (job_obj, utils.get_traceback()))   
     ##
     ########################################
@@ -126,7 +126,7 @@ class LocalJobPlugin(JobPluginInterface):
         ##         a service object is instantiated with a url schema that matches 
         ##         this adaptor. You can still reject it by throwing an exception.
         if service_obj._url.host != "localhost":
-            self.log_error_and_raise(exception.Error.BadParameter, "Only 'localhost' can be used as hostname")        
+            self.log_error_and_raise(bliss.saga.Error.BadParameter, "Only 'localhost' can be used as hostname")        
       
         self.bookkeeper.add_service_object(service_obj)
         self.log_info("Registered new service object %s" % (repr(service_obj))) 
@@ -183,7 +183,7 @@ class LocalJobPlugin(JobPluginInterface):
         try:
             return self.bookkeeper.list_jobs_for_service(service_obj)   
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't retreive job list because: %s " % (str(ex)))
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't retreive job list because: %s " % (str(ex)))
 
 
     def service_get_job(self, service_obj, job_id):
@@ -192,7 +192,7 @@ class LocalJobPlugin(JobPluginInterface):
         try:
             return self.bookkeeper.get_job_for_jobid(service_obj, job_id)   
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't get job list because: %s " % (str(ex)))
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't get job list because: %s " % (str(ex)))
 
 
     def job_get_state(self, job):
@@ -201,7 +201,7 @@ class LocalJobPlugin(JobPluginInterface):
             service = self.bookkeeper.get_service_for_job(job)
             return self.bookkeeper.get_process_for_job(job).getstate()  
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't get job state because: %s " % (str(ex)))
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't get job state because: %s " % (str(ex)))
 
 
     def job_get_job_id(self, job):
@@ -211,20 +211,20 @@ class LocalJobPlugin(JobPluginInterface):
             return self.bookkeeper.get_process_for_job(job).getpid(str(service._url))  
             self.log_info("Started local process: %s %s" % (job.get_description().executable, job.get_description().arguments)) 
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't get job id because: %s " % (str(ex)))
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't get job id because: %s " % (str(ex)))
 
 
     def job_run(self, job):
         '''Implements interface from _JobPluginBase'''
         ## Step X: implement job.run()
         if job.get_description().executable is None:   
-            self.log_error_and_raise(exception.Error.BadParameter, "No executable defined in job description")
+            self.log_error_and_raise(bliss.saga.Error.BadParameter, "No executable defined in job description")
         try:
             service = self.bookkeeper.get_service_for_job(job)
-            self.bookkeeper.get_process_for_job(job).run()  
+            self.bookkeeper.get_process_for_job(job).run(job.get_description())  
             self.log_info("Started local process: %s %s" % (job.get_description().executable, job.get_description().arguments))
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't run job because: %s " % (str(ex)))
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't run job because: %s " % (str(ex)))
 
 
     def job_cancel(self, job, timeout):
@@ -234,7 +234,7 @@ class LocalJobPlugin(JobPluginInterface):
             self.bookkeeper.get_process_for_job(job).terminate()  
             self.log_info("Terminated local process: %s %s" % (job.get_description().executable, job.get_description().arguments)) 
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't cancel job because: %s (already finished?)" % (str(ex)))
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't cancel job because: %s (already finished?)" % (str(ex)))
 
  
     def job_wait(self, job, timeout):
@@ -244,7 +244,7 @@ class LocalJobPlugin(JobPluginInterface):
             service = self.bookkeeper.get_service_for_job(job)
             self.bookkeeper.get_process_for_job(job).wait(timeout)   
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't wait for the job because: %s " % (str(ex)))
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't wait for the job because: %s " % (str(ex)))
 
     def job_get_exitcode(self, job_obj):
         '''Implements interface from _JobPluginBase'''
@@ -254,9 +254,9 @@ class LocalJobPlugin(JobPluginInterface):
             #jobstate = process.getstate()
 
             #if jobstate != bliss.saga.Job.Done or jobstate != bliss.saga.job.Failed:
-            #    self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't get the job's exitcode. Job must be in 'Done' or 'Failed' state.")
+            #    self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't get the job's exitcode. Job must be in 'Done' or 'Failed' state.")
             #else:
             return self.bookkeeper.get_process_for_job(job_obj).get_exitcode()   
         except Exception, ex:
-            self.log_error_and_raise(exception.Error.NoSuccess, "Couldn't get exitcode for job because: %s " % (str(ex)))
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't get exitcode for job because: %s " % (str(ex)))
 
