@@ -1,8 +1,11 @@
 Version 0.1.14 released 2011-12-??
 ----------------------------------------------------------------------
 
-    * Added bliss.sagacompat module for API compatibility
-    * Added configuration file for epydoc
+    * Added bliss.sagacompat module for API compatibility.
+      API documentation: http://oweidner.github.com/bliss/apidoc-compat/
+    * Added examples for 'compat' API, e.g.:
+      https://github.com/oweidner/bliss/tree/master/examples/job-api/compat/
+    * Added configuration files for epydoc
 
 Version 0.1.13 released 2011-12-07
 ----------------------------------------------------------------------
