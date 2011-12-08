@@ -47,10 +47,7 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
     @classmethod
     def sanity_check(self):
         '''Implements interface from _PluginBase'''
-        try: 
-            from openssh_wrapper import SSHConnection
-        except Exception, ex:
-            raise Exception("openssh_wrapper module missing")
+        pass
 
     ######################################################################
     ##

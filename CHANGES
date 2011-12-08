@@ -2,6 +2,7 @@ Version 0.1.14 released 2011-12-??
 ----------------------------------------------------------------------
 
     * Added bliss.sagacompat module for API compatibility
+    * Added configuration file for epydoc
 
 Version 0.1.13 released 2011-12-07
 ----------------------------------------------------------------------

@@ -9,9 +9,9 @@ __license__   = "MIT"
 
 import bliss.saga
 
-from bliss.saga.object import Object
-from bliss.saga.attributes import AttributeInterface
-from bliss.saga.url import Url
+from bliss.saga._object_impl import Object
+from bliss.saga._attributes_impl import AttributeInterface
+from bliss.saga._url_impl import Url
 
 class ServiceDescription(Object, AttributeInterface):
     '''Loosely represents a SAGA service description as defined in GFD-R-P.114'''

@@ -9,11 +9,12 @@ __license__   = "MIT"
 
 import bliss.saga
 
-from bliss.saga.object import Object 
-from bliss.saga import exception
-from bliss.saga.url import Url
+from bliss.saga._object_impl import Object as SObject
+from bliss.saga._exception_impl import Exception as SException
+from bliss.saga._exception_impl import Error as SError
+from bliss.saga._url_impl import Url
 
-class Discoverer(Object):
+class Discoverer(SObject):
     '''Loosely represents a SAGA service discoverer as defined in GFD.R-P.144'''
     def __init__(self, url, session=None):
         '''Construct a new service discoverer object
@@ -26,9 +27,9 @@ class Discoverer(Object):
             # assume it's a URL object
             self._url = url
 
-        Object.__init__(self, objtype=Object.SDDiscoverer, 
-                        apitype=Object.SDAPI, session=session)
-        self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
+        SObject.__init__(self, objtype=SObject.SDDiscoverer, 
+                        apitype=SObject.SDAPI, session=session)
+        self._plugin = SObject._get_plugin(self) # throws 'NoSuccess' on error
         self._plugin.register_discoverer_object(self)
         self._logger.info("Discoverer object bound to plugin %s" % (repr(self._plugin)))
 
@@ -42,10 +43,9 @@ class Discoverer(Object):
     ##
     def list_services(self, service_filter=None, data_filter=None):
         '''Returns the set of services that pass the set of specified filters.
-           @param job_id: The job id.
         '''
         if self._plugin is None:
-            raise exception.Exception(exception.Error.NoSuccess, 
+            raise SException(SError.NoSuccess, 
               "Object not bound to a plugin")
         else:
             return self._plugin.discoverer_list_services(self, 

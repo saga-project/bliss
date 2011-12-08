@@ -2,7 +2,7 @@
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-'''SAGA Job Package API.
+'''SAGA Job Package (compatibility) API.
 '''
 
 __author__    = "Ole Christian Weidner"
@@ -11,37 +11,37 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.saga.job._job_impl import Job as SJob
-class Job(SJob):
+class job(SJob):
     '''Loosely defines a SAGA Job as defined in GFD.90.
     '''
     pass
 
 from bliss.saga.job._job_impl import JobID as SJobID
-class JobID(SJobID):
+class job_id(SJobID):
     '''Defines a JobID. This is not part of GFD.90.
     '''
     pass
 
 from bliss.saga.job._container_impl import Container as SContainer
-class Container(SContainer):
+class container(SContainer):
     '''Loosely defines a SAGA Job Container. It roughly resembles a GFD.90 task_container.
     '''
     pass
 
 from bliss.saga.job._container_impl import WaitMode as SWaitMode
-class WaitMode(SWaitMode):
+class wait_mode(SWaitMode):
     '''Loosely defines a SAGA WaitMode as defined in GFD.90.
     '''
     pass
 
 from bliss.saga.job._service_impl import Service as SService
-class Service(SService):
+class service(SService):
     '''Loosely defines a SAGA Job Service as defined in GFD.90.
     '''
     pass
 
 from bliss.saga.job._description_impl import Description as SDescription
-class Description(SDescription):
+class description(SDescription):
     '''Loosely defines a SAGA Job Description as defined in GFD.90.
     '''
     pass
