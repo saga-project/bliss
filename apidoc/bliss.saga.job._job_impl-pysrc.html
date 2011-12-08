@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>bliss.saga.job._job_impl</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="bliss.saga-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://oweidner.github.com/bliss">Bliss</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;bliss ::
+        <a href="bliss.saga-module.html">Package&nbsp;saga</a> ::
+        <a href="bliss.saga.job-module.html">Package&nbsp;job</a> ::
+        Module&nbsp;_job_impl
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="bliss.saga.job._job_impl-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="bliss.saga.job._job_impl-module.html" onclick="show_private();">Module bliss.saga.job._job_impl</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-comment">#!/usr/bin/env python</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-comment"># vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-name">__author__</tt>    <tt class="py-op">=</tt> <tt class="py-docstring">"Ole Christian Weidner"</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt id="link-0" class="py-name" targets="Variable bliss.saga.__email__=bliss.saga-module.html#__email__,Variable bliss.saga._attributes_impl.__email__=bliss.saga._attributes_impl-module.html#__email__,Variable bliss.saga._context_impl.__email__=bliss.saga._context_impl-module.html#__email__,Variable bliss.saga._exception_impl.__email__=bliss.saga._exception_impl-module.html#__email__,Variable bliss.saga._object_impl.__email__=bliss.saga._object_impl-module.html#__email__,Variable bliss.saga._session_impl.__email__=bliss.saga._session_impl-module.html#__email__,Variable bliss.saga._url_impl.__email__=bliss.saga._url_impl-module.html#__email__,Variable bliss.saga.filesystem.__email__=bliss.saga.filesystem-module.html#__email__,Variable bliss.saga.filesystem._directory_impl.__email__=bliss.saga.filesystem._directory_impl-module.html#__email__,Variable bliss.saga.filesystem._file_impl.__email__=bliss.saga.filesystem._file_impl-module.html#__email__,Variable bliss.saga.job.__email__=bliss.saga.job-module.html#__email__,Variable bliss.saga.job._container_impl.__email__=bliss.saga.job._container_impl-module.html#__email__,Variable bliss.saga.job._description_impl.__email__=bliss.saga.job._description_impl-module.html#__email__,Variable bliss.saga.job._job_impl.__email__=bliss.saga.job._job_impl-module.html#__email__,Variable bliss.saga.job._service_impl.__email__=bliss.saga.job._service_impl-module.html#__email__,Variable bliss.saga.sd.__email__=bliss.saga.sd-module.html#__email__,Variable bliss.saga.sd._discoverer_impl.__email__=bliss.saga.sd._discoverer_impl-module.html#__email__,Variable bliss.saga.sd._service_data_impl.__email__=bliss.saga.sd._service_data_impl-module.html#__email__,Variable bliss.saga.sd._service_description_impl.__email__=bliss.saga.sd._service_description_impl-module.html#__email__"><a title="bliss.saga.__email__
+bliss.saga._attributes_impl.__email__
+bliss.saga._context_impl.__email__
+bliss.saga._exception_impl.__email__
+bliss.saga._object_impl.__email__
+bliss.saga._session_impl.__email__
+bliss.saga._url_impl.__email__
+bliss.saga.filesystem.__email__
+bliss.saga.filesystem._directory_impl.__email__
+bliss.saga.filesystem._file_impl.__email__
+bliss.saga.job.__email__
+bliss.saga.job._container_impl.__email__
+bliss.saga.job._description_impl.__email__
+bliss.saga.job._job_impl.__email__
+bliss.saga.job._service_impl.__email__
+bliss.saga.sd.__email__
+bliss.saga.sd._discoverer_impl.__email__
+bliss.saga.sd._service_data_impl.__email__
+bliss.saga.sd._service_description_impl.__email__" class="py-name" href="#" onclick="return doclink('link-0', '__email__', 'link-0');">__email__</a></tt>     <tt class="py-op">=</tt> <tt class="py-string">"ole.weidner@me.com"</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-name">__copyright__</tt> <tt class="py-op">=</tt> <tt class="py-string">"Copyright 2011, Ole Christian Weidner"</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-name">__license__</tt>   <tt class="py-op">=</tt> <tt class="py-string">"MIT"</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package bliss.saga=bliss.saga-module.html"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-1', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module bliss.saga._object_impl=bliss.saga._object_impl-module.html"><a title="bliss.saga._object_impl" class="py-name" href="#" onclick="return doclink('link-2', '_object_impl', 'link-2');">_object_impl</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class bliss.saga.Object=bliss.saga.Object-class.html,Class bliss.saga._object_impl.Object=bliss.saga._object_impl.Object-class.html"><a title="bliss.saga.Object
+bliss.saga._object_impl.Object" class="py-name" href="#" onclick="return doclink('link-3', 'Object', 'link-3');">Object</a></tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-4" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-4', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Module bliss.saga._attributes_impl=bliss.saga._attributes_impl-module.html"><a title="bliss.saga._attributes_impl" class="py-name" href="#" onclick="return doclink('link-5', '_attributes_impl', 'link-5');">_attributes_impl</a></tt> <tt class="py-keyword">import</tt> <tt id="link-6" class="py-name" targets="Class bliss.saga._attributes_impl.AttributeInterface=bliss.saga._attributes_impl.AttributeInterface-class.html"><a title="bliss.saga._attributes_impl.AttributeInterface" class="py-name" href="#" onclick="return doclink('link-6', 'AttributeInterface', 'link-6');">AttributeInterface</a></tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"> </tt>
+<a name="JobID"></a><div id="JobID-def"><a name="L13"></a><tt class="py-lineno"> 13</tt> <a class="py-toggle" href="#" id="JobID-toggle" onclick="return toggle('JobID');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.JobID-class.html">JobID</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="JobID-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="JobID-expanded"><a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line">    <tt class="py-docstring">'''Represents a SAGA job ID (Not part of GFD.90)'''</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line">     </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line">    <tt class="py-comment">##</tt> </tt>
+<a name="JobID.__init__"></a><div id="JobID.__init__-def"><a name="L18"></a><tt class="py-lineno"> 18</tt> <a class="py-toggle" href="#" id="JobID.__init__-toggle" onclick="return toggle('JobID.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.JobID-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">service_url</tt><tt class="py-op">,</tt> <tt class="py-param">native_id</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="JobID.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="JobID.__init__-expanded"><a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line">        <tt class="py-docstring">'''Create a new job id.</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt class="py-docstring">           @param service_url : The URL of the job service of the job.</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt class="py-docstring">           @param native_id: The native id (a.k.a. backend id) of the job.</tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"><tt class="py-docstring">        '''</tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_service</tt> <tt class="py-op">=</tt> <tt id="link-7" class="py-name" targets="Variable bliss.saga.job._job_impl.JobID.service_url=bliss.saga.job._job_impl.JobID-class.html#service_url"><a title="bliss.saga.job._job_impl.JobID.service_url" class="py-name" href="#" onclick="return doclink('link-7', 'service_url', 'link-7');">service_url</a></tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_native</tt> <tt class="py-op">=</tt> <tt id="link-8" class="py-name" targets="Variable bliss.saga.job._job_impl.JobID.native_id=bliss.saga.job._job_impl.JobID-class.html#native_id"><a title="bliss.saga.job._job_impl.JobID.native_id" class="py-name" href="#" onclick="return doclink('link-8', 'native_id', 'link-8');">native_id</a></tt> </tt>
+</div><a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line">    <tt class="py-comment">##</tt> </tt>
+<a name="JobID.__str__"></a><div id="JobID.__str__-def"><a name="L28"></a><tt class="py-lineno"> 28</tt> <a class="py-toggle" href="#" id="JobID.__str__-toggle" onclick="return toggle('JobID.__str__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.JobID-class.html#__str__">__str__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="JobID.__str__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="JobID.__str__-expanded"><a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line">        <tt class="py-docstring">'''String representation.'''</tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-string">"[%s]-[%s]"</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_service</tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_native</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line">    <tt class="py-comment">##</tt> </tt>
+<a name="JobID.service_url"></a><div id="JobID.service_url-def"><a name="L34"></a><tt class="py-lineno"> 34</tt> <a class="py-toggle" href="#" id="JobID.service_url-toggle" onclick="return toggle('JobID.service_url');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.JobID-class.html#service_url">service_url</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="JobID.service_url-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="JobID.service_url-expanded"><a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line">        <tt class="py-name">doc</tt> <tt class="py-op">=</tt> <tt class="py-string">"The job id's service url component"</tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fget</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_service</tt> </tt>
+</div><a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">locals</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line">    <tt id="link-9" class="py-name"><a title="bliss.saga.job._job_impl.JobID.service_url" class="py-name" href="#" onclick="return doclink('link-9', 'service_url', 'link-7');">service_url</a></tt> <tt class="py-op">=</tt> <tt class="py-name">property</tt><tt class="py-op">(</tt><tt class="py-op">**</tt><tt id="link-10" class="py-name"><a title="bliss.saga.job._job_impl.JobID.service_url" class="py-name" href="#" onclick="return doclink('link-10', 'service_url', 'link-7');">service_url</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line">    <tt class="py-comment">##</tt> </tt>
+<a name="JobID.native_id"></a><div id="JobID.native_id-def"><a name="L43"></a><tt class="py-lineno"> 43</tt> <a class="py-toggle" href="#" id="JobID.native_id-toggle" onclick="return toggle('JobID.native_id');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.JobID-class.html#native_id">native_id</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="JobID.native_id-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="JobID.native_id-expanded"><a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line">        <tt class="py-name">doc</tt> <tt class="py-op">=</tt> <tt class="py-string">"The job id's native id component"</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fget</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_native</tt> </tt>
+</div><a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">locals</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line">    <tt id="link-11" class="py-name"><a title="bliss.saga.job._job_impl.JobID.native_id" class="py-name" href="#" onclick="return doclink('link-11', 'native_id', 'link-8');">native_id</a></tt> <tt class="py-op">=</tt> <tt class="py-name">property</tt><tt class="py-op">(</tt><tt class="py-op">**</tt><tt id="link-12" class="py-name"><a title="bliss.saga.job._job_impl.JobID.native_id" class="py-name" href="#" onclick="return doclink('link-12', 'native_id', 'link-8');">native_id</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line"> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"> </tt>
+<a name="Job"></a><div id="Job-def"><a name="L51"></a><tt class="py-lineno"> 51</tt> <a class="py-toggle" href="#" id="Job-toggle" onclick="return toggle('Job');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.Job-class.html">Job</a><tt class="py-op">(</tt><tt class="py-base-class">Object</tt><tt class="py-op">,</tt> <tt class="py-base-class">AttributeInterface</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Job-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="Job-expanded"><a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line">    <tt class="py-docstring">'''Loosely represents a SAGA job as defined in GFD.90'''</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line">     </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line">    <tt id="link-13" class="py-name" targets="Variable bliss.saga.job._job_impl.Job.Canceled=bliss.saga.job._job_impl.Job-class.html#Canceled"><a title="bliss.saga.job._job_impl.Job.Canceled" class="py-name" href="#" onclick="return doclink('link-13', 'Canceled', 'link-13');">Canceled</a></tt> <tt class="py-op">=</tt> <tt class="py-string">"saga.job.Job.Canceled"</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line">    <tt class="py-string">'''Indicates that the job has been canceled either by the user or the system'''</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line">    <tt id="link-14" class="py-name" targets="Variable bliss.saga.job._job_impl.Job.Done=bliss.saga.job._job_impl.Job-class.html#Done"><a title="bliss.saga.job._job_impl.Job.Done" class="py-name" href="#" onclick="return doclink('link-14', 'Done', 'link-14');">Done</a></tt>     <tt class="py-op">=</tt> <tt class="py-string">"saga.job.Job.Done"</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line">    <tt class="py-string">'''Indicates that the job has successfully executed'''</tt>  </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line">    <tt id="link-15" class="py-name" targets="Variable bliss.saga.job._job_impl.Job.Failed=bliss.saga.job._job_impl.Job-class.html#Failed"><a title="bliss.saga.job._job_impl.Job.Failed" class="py-name" href="#" onclick="return doclink('link-15', 'Failed', 'link-15');">Failed</a></tt>   <tt class="py-op">=</tt> <tt class="py-string">"saga.job.Job.Failed"</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line">    <tt class="py-string">'''Indicates that the execution of the job has failed'''</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line">    <tt id="link-16" class="py-name" targets="Variable bliss.saga.job._job_impl.Job.New=bliss.saga.job._job_impl.Job-class.html#New"><a title="bliss.saga.job._job_impl.Job.New" class="py-name" href="#" onclick="return doclink('link-16', 'New', 'link-16');">New</a></tt>      <tt class="py-op">=</tt> <tt class="py-string">"saga.job.Job.New"</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line">    <tt class="py-string">'''Indicates that the job hasn't been started yet'''</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">    <tt id="link-17" class="py-name" targets="Variable bliss.saga.job._job_impl.Job.Running=bliss.saga.job._job_impl.Job-class.html#Running"><a title="bliss.saga.job._job_impl.Job.Running" class="py-name" href="#" onclick="return doclink('link-17', 'Running', 'link-17');">Running</a></tt>  <tt class="py-op">=</tt> <tt class="py-string">"saga.job.Job.Running"</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line">    <tt class="py-string">'''Indicates that the job is executing'''</tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line">    <tt id="link-18" class="py-name" targets="Variable bliss.saga.job._job_impl.Job.Waiting=bliss.saga.job._job_impl.Job-class.html#Waiting"><a title="bliss.saga.job._job_impl.Job.Waiting" class="py-name" href="#" onclick="return doclink('link-18', 'Waiting', 'link-18');">Waiting</a></tt>  <tt class="py-op">=</tt> <tt class="py-string">"saga.job.Job.Waiting"</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line">    <tt class="py-string">'''Indicates that the job is waiting to be executed (NOT IN GFD.90)'''</tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line">    <tt id="link-19" class="py-name" targets="Variable bliss.saga.job._job_impl.Job.Unknown=bliss.saga.job._job_impl.Job-class.html#Unknown"><a title="bliss.saga.job._job_impl.Job.Unknown" class="py-name" href="#" onclick="return doclink('link-19', 'Unknown', 'link-19');">Unknown</a></tt>  <tt class="py-op">=</tt> <tt class="py-string">"saga.job.Job.Unknown"</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line">    <tt class="py-string">'''Indicates that the job is in an unexpected state'''</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line"> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line">    <tt class="py-comment">##</tt> </tt>
+<a name="Job.__init__"></a><div id="Job.__init__-def"><a name="L71"></a><tt class="py-lineno"> 71</tt> <a class="py-toggle" href="#" id="Job.__init__-toggle" onclick="return toggle('Job.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.Job-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Job.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Job.__init__-expanded"><a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line">        <tt class="py-docstring">'''PRIVATE Constructor (don't call explicitly!)'''</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line">        <tt id="link-20" class="py-name"><a title="bliss.saga.Object
+bliss.saga._object_impl.Object" class="py-name" href="#" onclick="return doclink('link-20', 'Object', 'link-3');">Object</a></tt><tt class="py-op">.</tt><tt id="link-21" class="py-name" targets="Method bliss.saga._attributes_impl.AttributeInterface.__init__()=bliss.saga._attributes_impl.AttributeInterface-class.html#__init__,Method bliss.saga._context_impl.Context.__init__()=bliss.saga._context_impl.Context-class.html#__init__,Method bliss.saga._exception_impl.Exception.__init__()=bliss.saga._exception_impl.Exception-class.html#__init__,Method bliss.saga._object_impl.Object.__init__()=bliss.saga._object_impl.Object-class.html#__init__,Method bliss.saga._session_impl.Session.__init__()=bliss.saga._session_impl.Session-class.html#__init__,Method bliss.saga._url_impl.Url.__init__()=bliss.saga._url_impl.Url-class.html#__init__,Method bliss.saga.filesystem._directory_impl.Directory.__init__()=bliss.saga.filesystem._directory_impl.Directory-class.html#__init__,Method bliss.saga.filesystem._file_impl.File.__init__()=bliss.saga.filesystem._file_impl.File-class.html#__init__,Method bliss.saga.job._container_impl.Container.__init__()=bliss.saga.job._container_impl.Container-class.html#__init__,Method bliss.saga.job._description_impl.Description.__init__()=bliss.saga.job._description_impl.Description-class.html#__init__,Method bliss.saga.job._job_impl.Job.__init__()=bliss.saga.job._job_impl.Job-class.html#__init__,Method bliss.saga.job._job_impl.JobID.__init__()=bliss.saga.job._job_impl.JobID-class.html#__init__,Method bliss.saga.job._service_impl.Service.__init__()=bliss.saga.job._service_impl.Service-class.html#__init__,Method bliss.saga.sd._discoverer_impl.Discoverer.__init__()=bliss.saga.sd._discoverer_impl.Discoverer-class.html#__init__,Method bliss.saga.sd._service_data_impl.ServiceData.__init__()=bliss.saga.sd._service_data_impl.ServiceData-class.html#__init__,Method bliss.saga.sd._service_description_impl.ServiceDescription.__init__()=bliss.saga.sd._service_description_impl.ServiceDescription-class.html#__init__"><a title="bliss.saga._attributes_impl.AttributeInterface.__init__
+bliss.saga._context_impl.Context.__init__
+bliss.saga._exception_impl.Exception.__init__
+bliss.saga._object_impl.Object.__init__
+bliss.saga._session_impl.Session.__init__
+bliss.saga._url_impl.Url.__init__
+bliss.saga.filesystem._directory_impl.Directory.__init__
+bliss.saga.filesystem._file_impl.File.__init__
+bliss.saga.job._container_impl.Container.__init__
+bliss.saga.job._description_impl.Description.__init__
+bliss.saga.job._job_impl.Job.__init__
+bliss.saga.job._job_impl.JobID.__init__
+bliss.saga.job._service_impl.Service.__init__
+bliss.saga.sd._discoverer_impl.Discoverer.__init__
+bliss.saga.sd._service_data_impl.ServiceData.__init__
+bliss.saga.sd._service_description_impl.ServiceDescription.__init__" class="py-name" href="#" onclick="return doclink('link-21', '__init__', 'link-21');">__init__</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">,</tt> <tt id="link-22" class="py-name"><a title="bliss.saga.Object
+bliss.saga._object_impl.Object" class="py-name" href="#" onclick="return doclink('link-22', 'Object', 'link-3');">Object</a></tt><tt class="py-op">.</tt><tt id="link-23" class="py-name" targets="Variable bliss.saga._object_impl.Object.Job=bliss.saga._object_impl.Object-class.html#Job,Class bliss.saga.job.Job=bliss.saga.job.Job-class.html,Class bliss.saga.job._job_impl.Job=bliss.saga.job._job_impl.Job-class.html"><a title="bliss.saga._object_impl.Object.Job
+bliss.saga.job.Job
+bliss.saga.job._job_impl.Job" class="py-name" href="#" onclick="return doclink('link-23', 'Job', 'link-23');">Job</a></tt><tt class="py-op">,</tt> <tt class="py-name">apitype</tt><tt class="py-op">=</tt><tt id="link-24" class="py-name"><a title="bliss.saga.Object
+bliss.saga._object_impl.Object" class="py-name" href="#" onclick="return doclink('link-24', 'Object', 'link-3');">Object</a></tt><tt class="py-op">.</tt><tt id="link-25" class="py-name" targets="Variable bliss.saga._object_impl.Object.JobAPI=bliss.saga._object_impl.Object-class.html#JobAPI"><a title="bliss.saga._object_impl.Object.JobAPI" class="py-name" href="#" onclick="return doclink('link-25', 'JobAPI', 'link-25');">JobAPI</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line">        <tt id="link-26" class="py-name"><a title="bliss.saga._attributes_impl.AttributeInterface" class="py-name" href="#" onclick="return doclink('link-26', 'AttributeInterface', 'link-6');">AttributeInterface</a></tt><tt class="py-op">.</tt><tt id="link-27" class="py-name"><a title="bliss.saga._attributes_impl.AttributeInterface.__init__
+bliss.saga._context_impl.Context.__init__
+bliss.saga._exception_impl.Exception.__init__
+bliss.saga._object_impl.Object.__init__
+bliss.saga._session_impl.Session.__init__
+bliss.saga._url_impl.Url.__init__
+bliss.saga.filesystem._directory_impl.Directory.__init__
+bliss.saga.filesystem._file_impl.File.__init__
+bliss.saga.job._container_impl.Container.__init__
+bliss.saga.job._description_impl.Description.__init__
+bliss.saga.job._job_impl.Job.__init__
+bliss.saga.job._job_impl.JobID.__init__
+bliss.saga.job._service_impl.Service.__init__
+bliss.saga.sd._discoverer_impl.Discoverer.__init__
+bliss.saga.sd._service_data_impl.ServiceData.__init__
+bliss.saga.sd._service_description_impl.ServiceDescription.__init__" class="py-name" href="#" onclick="return doclink('link-27', '__init__', 'link-21');">__init__</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">       </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line">        <tt class="py-comment"># register properties with the attribute interface </tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_register_ro_attribute</tt>     <tt class="py-op">(</tt><tt id="link-28" class="py-name" targets="Variable bliss.saga.sd._service_description_impl.ServiceDescription.name=bliss.saga.sd._service_description_impl.ServiceDescription-class.html#name"><a title="bliss.saga.sd._service_description_impl.ServiceDescription.name" class="py-name" href="#" onclick="return doclink('link-28', 'name', 'link-28');">name</a></tt><tt class="py-op">=</tt><tt class="py-string">"Exitcode"</tt><tt class="py-op">,</tt>  </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">                                         <tt class="py-name">accessor</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">.</tt><tt id="link-29" class="py-name" targets="Variable bliss.saga.job._job_impl.Job.exitcode=bliss.saga.job._job_impl.Job-class.html#exitcode"><a title="bliss.saga.job._job_impl.Job.exitcode" class="py-name" href="#" onclick="return doclink('link-29', 'exitcode', 'link-29');">exitcode</a></tt><tt class="py-op">)</tt>  </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_register_ro_attribute</tt>     <tt class="py-op">(</tt><tt id="link-30" class="py-name"><a title="bliss.saga.sd._service_description_impl.ServiceDescription.name" class="py-name" href="#" onclick="return doclink('link-30', 'name', 'link-28');">name</a></tt><tt class="py-op">=</tt><tt class="py-string">"JobID"</tt><tt class="py-op">,</tt>  </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">                                         <tt class="py-name">accessor</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">.</tt><tt id="link-31" class="py-name" targets="Variable bliss.saga.job._job_impl.Job.jobid=bliss.saga.job._job_impl.Job-class.html#jobid"><a title="bliss.saga.job._job_impl.Job.jobid" class="py-name" href="#" onclick="return doclink('link-31', 'jobid', 'link-31');">jobid</a></tt><tt class="py-op">)</tt>   </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_register_ro_attribute</tt>     <tt class="py-op">(</tt><tt id="link-32" class="py-name"><a title="bliss.saga.sd._service_description_impl.ServiceDescription.name" class="py-name" href="#" onclick="return doclink('link-32', 'name', 'link-28');">name</a></tt><tt class="py-op">=</tt><tt class="py-string">"ServiceURL"</tt><tt class="py-op">,</tt>  </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line">                                         <tt class="py-name">accessor</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">.</tt><tt id="link-33" class="py-name" targets="Variable bliss.saga.job._job_impl.Job.serviceurl=bliss.saga.job._job_impl.Job-class.html#serviceurl"><a title="bliss.saga.job._job_impl.Job.serviceurl" class="py-name" href="#" onclick="return doclink('link-33', 'serviceurl', 'link-33');">serviceurl</a></tt><tt class="py-op">)</tt>   </tt>
+</div><a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line"> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">    <tt class="py-comment">##</tt> </tt>
+<a name="Job.__init_from_service"></a><div id="Job.__init_from_service-def"><a name="L86"></a><tt class="py-lineno"> 86</tt> <a class="py-toggle" href="#" id="Job.__init_from_service-toggle" onclick="return toggle('Job.__init_from_service');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.Job-class.html#__init_from_service">__init_from_service</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">service_obj</tt><tt class="py-op">,</tt> <tt class="py-param">job_desc</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Job.__init_from_service-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Job.__init_from_service-expanded"><a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">        <tt class="py-docstring">'''Constructor'''</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_service</tt> <tt class="py-op">=</tt> <tt class="py-name">service_obj</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_url</tt> <tt class="py-op">=</tt> <tt class="py-name">service_obj</tt><tt class="py-op">.</tt><tt class="py-name">_url</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_job_description</tt> <tt class="py-op">=</tt> <tt class="py-name">job_desc</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line"> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt> <tt class="py-op">=</tt> <tt id="link-34" class="py-name"><a title="bliss.saga.Object
+bliss.saga._object_impl.Object" class="py-name" href="#" onclick="return doclink('link-34', 'Object', 'link-3');">Object</a></tt><tt class="py-op">.</tt><tt class="py-name">_get_plugin</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> <tt class="py-comment"># throws 'NoSuccess' on error</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_logger</tt><tt class="py-op">.</tt><tt class="py-name">info</tt><tt class="py-op">(</tt><tt class="py-string">"Bound to plugin %s"</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">repr</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line"> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">    <tt class="py-comment">##</tt> </tt>
+<a name="Job.__del__"></a><div id="Job.__del__-def"><a name="L97"></a><tt class="py-lineno"> 97</tt> <a class="py-toggle" href="#" id="Job.__del__-toggle" onclick="return toggle('Job.__del__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.Job-class.html#__del__">__del__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Job.__del__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Job.__del__-expanded"><a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">        <tt class="py-docstring">'''Delete the job in a civilised fashion.'''</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt><tt class="py-op">.</tt><tt class="py-name">unregister_job_object</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line">            <tt class="py-keyword">pass</tt> <tt class="py-comment"># can't throw here</tt> </tt>
+</div><a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line"> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">    <tt class="py-comment">##</tt> </tt>
+<a name="Job.get_stderr"></a><div id="Job.get_stderr-def"><a name="L106"></a><tt class="py-lineno">106</tt> <a class="py-toggle" href="#" id="Job.get_stderr-toggle" onclick="return toggle('Job.get_stderr');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.Job-class.html#get_stderr">get_stderr</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Job.get_stderr-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Job.get_stderr-expanded"><a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line">        <tt class="py-docstring">'''B{Not Implemented:} Bliss finds this method unnecessary and \</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line"><tt class="py-docstring">           generally poorly supported by distributed middelware - use \</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line"><tt class="py-docstring">           U{Air&lt;http://oweidner.github.com/air/&gt;} instead for scalable </tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line"><tt class="py-docstring">           output streaming and much more.</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"><tt class="py-docstring">        '''</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-35" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-35', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-36" class="py-name" targets="Class bliss.saga.Exception=bliss.saga.Exception-class.html,Class bliss.saga._exception_impl.Exception=bliss.saga._exception_impl.Exception-class.html"><a title="bliss.saga.Exception
+bliss.saga._exception_impl.Exception" class="py-name" href="#" onclick="return doclink('link-36', 'Exception', 'link-36');">Exception</a></tt><tt class="py-op">(</tt><tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-37" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-37', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-38" class="py-name" targets="Class bliss.saga.Error=bliss.saga.Error-class.html,Class bliss.saga._exception_impl.Error=bliss.saga._exception_impl.Error-class.html"><a title="bliss.saga.Error
+bliss.saga._exception_impl.Error" class="py-name" href="#" onclick="return doclink('link-38', 'Error', 'link-38');">Error</a></tt><tt class="py-op">.</tt><tt id="link-39" class="py-name" targets="Variable bliss.saga._exception_impl.Error.NotImplemented=bliss.saga._exception_impl.Error-class.html#NotImplemented"><a title="bliss.saga._exception_impl.Error.NotImplemented" class="py-name" href="#" onclick="return doclink('link-39', 'NotImplemented', 'link-39');">NotImplemented</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line">          <tt class="py-string">"Bliss doesn't suppport get_stderr()"</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line">    <tt class="py-comment">##</tt> </tt>
+<a name="Job.get_stdout"></a><div id="Job.get_stdout-def"><a name="L117"></a><tt class="py-lineno">117</tt> <a class="py-toggle" href="#" id="Job.get_stdout-toggle" onclick="return toggle('Job.get_stdout');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.Job-class.html#get_stdout">get_stdout</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Job.get_stdout-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Job.get_stdout-expanded"><a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">        <tt class="py-docstring">'''B{Not Implemented:} Bliss finds this method unnecessary and \</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line"><tt class="py-docstring">           generally poorly supported by distributed middelware - use \</tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line"><tt class="py-docstring">           U{Air&lt;http://oweidner.github.com/air/&gt;} instead for scalable </tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line"><tt class="py-docstring">           output </tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line"><tt class="py-docstring">        '''</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-40" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-40', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-41" class="py-name"><a title="bliss.saga.Exception
+bliss.saga._exception_impl.Exception" class="py-name" href="#" onclick="return doclink('link-41', 'Exception', 'link-36');">Exception</a></tt><tt class="py-op">(</tt><tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-42" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-42', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-43" class="py-name"><a title="bliss.saga.Error
+bliss.saga._exception_impl.Error" class="py-name" href="#" onclick="return doclink('link-43', 'Error', 'link-38');">Error</a></tt><tt class="py-op">.</tt><tt id="link-44" class="py-name"><a title="bliss.saga._exception_impl.Error.NotImplemented" class="py-name" href="#" onclick="return doclink('link-44', 'NotImplemented', 'link-39');">NotImplemented</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line">          <tt class="py-string">"Bliss doesn't suppport get_stdout()"</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line"> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line">    <tt class="py-comment">##</tt> </tt>
+<a name="Job.get_description"></a><div id="Job.get_description-def"><a name="L128"></a><tt class="py-lineno">128</tt> <a class="py-toggle" href="#" id="Job.get_description-toggle" onclick="return toggle('Job.get_description');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.Job-class.html#get_description">get_description</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Job.get_description-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Job.get_description-expanded"><a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line">        <tt class="py-docstring">'''Return the job description this job was created from.'''</tt> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_job_description</tt> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-45" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-45', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-46" class="py-name"><a title="bliss.saga.Exception
+bliss.saga._exception_impl.Exception" class="py-name" href="#" onclick="return doclink('link-46', 'Exception', 'link-36');">Exception</a></tt><tt class="py-op">(</tt><tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-47" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-47', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-48" class="py-name"><a title="bliss.saga.Error
+bliss.saga._exception_impl.Error" class="py-name" href="#" onclick="return doclink('link-48', 'Error', 'link-38');">Error</a></tt><tt class="py-op">.</tt><tt id="link-49" class="py-name" targets="Variable bliss.saga._exception_impl.Error.NoSuccess=bliss.saga._exception_impl.Error-class.html#NoSuccess"><a title="bliss.saga._exception_impl.Error.NoSuccess" class="py-name" href="#" onclick="return doclink('link-49', 'NoSuccess', 'link-49');">NoSuccess</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line">              <tt class="py-string">"Object not bound to a plugin"</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line"> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line">    <tt class="py-comment">##</tt> </tt>
+<a name="Job.get_state"></a><div id="Job.get_state-def"><a name="L138"></a><tt class="py-lineno">138</tt> <a class="py-toggle" href="#" id="Job.get_state-toggle" onclick="return toggle('Job.get_state');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.Job-class.html#get_state">get_state</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Job.get_state-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Job.get_state-expanded"><a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line">        <tt class="py-docstring">'''Return the current state of the job.'''</tt> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt><tt class="py-op">.</tt><tt class="py-name">job_get_state</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">None</tt> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-50" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-50', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-51" class="py-name"><a title="bliss.saga.Exception
+bliss.saga._exception_impl.Exception" class="py-name" href="#" onclick="return doclink('link-51', 'Exception', 'link-36');">Exception</a></tt><tt class="py-op">(</tt><tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-52" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-52', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-53" class="py-name"><a title="bliss.saga.Error
+bliss.saga._exception_impl.Error" class="py-name" href="#" onclick="return doclink('link-53', 'Error', 'link-38');">Error</a></tt><tt class="py-op">.</tt><tt id="link-54" class="py-name"><a title="bliss.saga._exception_impl.Error.NoSuccess" class="py-name" href="#" onclick="return doclink('link-54', 'NoSuccess', 'link-49');">NoSuccess</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line">              <tt class="py-string">"Object not bound to a plugin"</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line"> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line">    <tt class="py-comment">##</tt> </tt>
+<a name="Job.get_job_id"></a><div id="Job.get_job_id-def"><a name="L149"></a><tt class="py-lineno">149</tt> <a class="py-toggle" href="#" id="Job.get_job_id-toggle" onclick="return toggle('Job.get_job_id');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.Job-class.html#get_job_id">get_job_id</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Job.get_job_id-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Job.get_job_id-expanded"><a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line">        <tt class="py-docstring">'''Return the identifier for the job (B{I{not officially part of GFD.90}}).</tt> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line"><tt class="py-docstring">        '''</tt> </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt><tt class="py-op">.</tt><tt class="py-name">job_get_job_id</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-55" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-55', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-56" class="py-name"><a title="bliss.saga.Exception
+bliss.saga._exception_impl.Exception" class="py-name" href="#" onclick="return doclink('link-56', 'Exception', 'link-36');">Exception</a></tt><tt class="py-op">(</tt><tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-57" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-57', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-58" class="py-name"><a title="bliss.saga.Error
+bliss.saga._exception_impl.Error" class="py-name" href="#" onclick="return doclink('link-58', 'Error', 'link-38');">Error</a></tt><tt class="py-op">.</tt><tt id="link-59" class="py-name"><a title="bliss.saga._exception_impl.Error.NoSuccess" class="py-name" href="#" onclick="return doclink('link-59', 'NoSuccess', 'link-49');">NoSuccess</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line">              <tt class="py-string">"Object not bound to a plugin"</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line"> </tt>
+<a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line">    <tt class="py-comment">##</tt> </tt>
+<a name="Job.run"></a><div id="Job.run-def"><a name="L160"></a><tt class="py-lineno">160</tt> <a class="py-toggle" href="#" id="Job.run-toggle" onclick="return toggle('Job.run');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.Job-class.html#run">run</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Job.run-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Job.run-expanded"><a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line">        <tt class="py-docstring">'''Execute the job via the associated job service.'''</tt> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt><tt class="py-op">.</tt><tt class="py-name">job_run</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">None</tt> </tt>
+<a name="L165"></a><tt class="py-lineno">165</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-60" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-60', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-61" class="py-name"><a title="bliss.saga.Exception
+bliss.saga._exception_impl.Exception" class="py-name" href="#" onclick="return doclink('link-61', 'Exception', 'link-36');">Exception</a></tt><tt class="py-op">(</tt><tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-62" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-62', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-63" class="py-name"><a title="bliss.saga.Error
+bliss.saga._exception_impl.Error" class="py-name" href="#" onclick="return doclink('link-63', 'Error', 'link-38');">Error</a></tt><tt class="py-op">.</tt><tt id="link-64" class="py-name"><a title="bliss.saga._exception_impl.Error.NoSuccess" class="py-name" href="#" onclick="return doclink('link-64', 'NoSuccess', 'link-49');">NoSuccess</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line">              <tt class="py-string">"Object not bound to a plugin"</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line"> </tt>
+<a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line">    <tt class="py-comment">##</tt> </tt>
+<a name="Job.cancel"></a><div id="Job.cancel-def"><a name="L171"></a><tt class="py-lineno">171</tt> <a class="py-toggle" href="#" id="Job.cancel-toggle" onclick="return toggle('Job.cancel');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.Job-class.html#cancel">cancel</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">timeout</tt><tt class="py-op">=</tt><tt class="py-number">0</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Job.cancel-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Job.cancel-expanded"><a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line">        <tt class="py-docstring">'''Cancel the execution of the job.</tt> </tt>
+<a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line"><tt class="py-docstring">           @param timeout: Timeout in seconds.</tt> </tt>
+<a name="L174"></a><tt class="py-lineno">174</tt>  <tt class="py-line"><tt class="py-docstring">        '''</tt> </tt>
+<a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L176"></a><tt class="py-lineno">176</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt><tt class="py-op">.</tt><tt class="py-name">job_cancel</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">,</tt> <tt class="py-name">timeout</tt><tt class="py-op">)</tt> </tt>
+<a name="L177"></a><tt class="py-lineno">177</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">None</tt> </tt>
+<a name="L178"></a><tt class="py-lineno">178</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L179"></a><tt class="py-lineno">179</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-65" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-65', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-66" class="py-name"><a title="bliss.saga.Exception
+bliss.saga._exception_impl.Exception" class="py-name" href="#" onclick="return doclink('link-66', 'Exception', 'link-36');">Exception</a></tt><tt class="py-op">(</tt><tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-67" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-67', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-68" class="py-name"><a title="bliss.saga.Error
+bliss.saga._exception_impl.Error" class="py-name" href="#" onclick="return doclink('link-68', 'Error', 'link-38');">Error</a></tt><tt class="py-op">.</tt><tt id="link-69" class="py-name"><a title="bliss.saga._exception_impl.Error.NoSuccess" class="py-name" href="#" onclick="return doclink('link-69', 'NoSuccess', 'link-49');">NoSuccess</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L180"></a><tt class="py-lineno">180</tt>  <tt class="py-line">              <tt class="py-string">"Object not bound to a plugin"</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L181"></a><tt class="py-lineno">181</tt>  <tt class="py-line"> </tt>
+<a name="L182"></a><tt class="py-lineno">182</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line">    <tt class="py-comment">##</tt> </tt>
+<a name="Job.wait"></a><div id="Job.wait-def"><a name="L184"></a><tt class="py-lineno">184</tt> <a class="py-toggle" href="#" id="Job.wait-toggle" onclick="return toggle('Job.wait');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.Job-class.html#wait">wait</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">timeout</tt><tt class="py-op">=</tt><tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Job.wait-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Job.wait-expanded"><a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line">        <tt class="py-docstring">'''Wait for a running job to finish execution.</tt> </tt>
+<a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line"><tt class="py-docstring">           @param timeout: Timeout in seconds.</tt> </tt>
+<a name="L187"></a><tt class="py-lineno">187</tt>  <tt class="py-line"><tt class="py-docstring">        '''</tt> </tt>
+<a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L189"></a><tt class="py-lineno">189</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt><tt class="py-op">.</tt><tt class="py-name">job_wait</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">,</tt> <tt class="py-name">timeout</tt><tt class="py-op">)</tt> </tt>
+<a name="L190"></a><tt class="py-lineno">190</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">None</tt> </tt>
+<a name="L191"></a><tt class="py-lineno">191</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L192"></a><tt class="py-lineno">192</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-70" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-70', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-71" class="py-name"><a title="bliss.saga.Exception
+bliss.saga._exception_impl.Exception" class="py-name" href="#" onclick="return doclink('link-71', 'Exception', 'link-36');">Exception</a></tt><tt class="py-op">(</tt><tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-72" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-72', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-73" class="py-name"><a title="bliss.saga.Error
+bliss.saga._exception_impl.Error" class="py-name" href="#" onclick="return doclink('link-73', 'Error', 'link-38');">Error</a></tt><tt class="py-op">.</tt><tt id="link-74" class="py-name"><a title="bliss.saga._exception_impl.Error.NoSuccess" class="py-name" href="#" onclick="return doclink('link-74', 'NoSuccess', 'link-49');">NoSuccess</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L193"></a><tt class="py-lineno">193</tt>  <tt class="py-line">              <tt class="py-string">"Object not bound to a plugin"</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L194"></a><tt class="py-lineno">194</tt>  <tt class="py-line"> </tt>
+<a name="L195"></a><tt class="py-lineno">195</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L196"></a><tt class="py-lineno">196</tt>  <tt class="py-line">    <tt class="py-comment">## Property:</tt> </tt>
+<a name="Job.exitcode"></a><div id="Job.exitcode-def"><a name="L197"></a><tt class="py-lineno">197</tt> <a class="py-toggle" href="#" id="Job.exitcode-toggle" onclick="return toggle('Job.exitcode');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.Job-class.html#exitcode">exitcode</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Job.exitcode-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Job.exitcode-expanded"><a name="L198"></a><tt class="py-lineno">198</tt>  <tt class="py-line">        <tt class="py-name">doc</tt> <tt class="py-op">=</tt> <tt class="py-string">"The job's exitcode."</tt> </tt>
+<a name="L199"></a><tt class="py-lineno">199</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fget</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L200"></a><tt class="py-lineno">200</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L201"></a><tt class="py-lineno">201</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt><tt class="py-op">.</tt><tt class="py-name">job_get_exitcode</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L202"></a><tt class="py-lineno">202</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">locals</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L203"></a><tt class="py-lineno">203</tt>  <tt class="py-line">    <tt id="link-75" class="py-name"><a title="bliss.saga.job._job_impl.Job.exitcode" class="py-name" href="#" onclick="return doclink('link-75', 'exitcode', 'link-29');">exitcode</a></tt> <tt class="py-op">=</tt> <tt class="py-name">property</tt><tt class="py-op">(</tt><tt class="py-op">**</tt><tt id="link-76" class="py-name"><a title="bliss.saga.job._job_impl.Job.exitcode" class="py-name" href="#" onclick="return doclink('link-76', 'exitcode', 'link-29');">exitcode</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L204"></a><tt class="py-lineno">204</tt>  <tt class="py-line"> </tt>
+<a name="L205"></a><tt class="py-lineno">205</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L206"></a><tt class="py-lineno">206</tt>  <tt class="py-line">    <tt class="py-comment">## Property:</tt> </tt>
+<a name="Job.jobid"></a><div id="Job.jobid-def"><a name="L207"></a><tt class="py-lineno">207</tt> <a class="py-toggle" href="#" id="Job.jobid-toggle" onclick="return toggle('Job.jobid');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.Job-class.html#jobid">jobid</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Job.jobid-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Job.jobid-expanded"><a name="L208"></a><tt class="py-lineno">208</tt>  <tt class="py-line">        <tt class="py-name">doc</tt> <tt class="py-op">=</tt> <tt class="py-string">"The job's identifier."</tt> </tt>
+<a name="L209"></a><tt class="py-lineno">209</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fget</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L210"></a><tt class="py-lineno">210</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L211"></a><tt class="py-lineno">211</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt><tt class="py-op">.</tt><tt class="py-name">job_get_job_id</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L212"></a><tt class="py-lineno">212</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">locals</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L213"></a><tt class="py-lineno">213</tt>  <tt class="py-line">    <tt id="link-77" class="py-name"><a title="bliss.saga.job._job_impl.Job.jobid" class="py-name" href="#" onclick="return doclink('link-77', 'jobid', 'link-31');">jobid</a></tt> <tt class="py-op">=</tt> <tt class="py-name">property</tt><tt class="py-op">(</tt><tt class="py-op">**</tt><tt id="link-78" class="py-name"><a title="bliss.saga.job._job_impl.Job.jobid" class="py-name" href="#" onclick="return doclink('link-78', 'jobid', 'link-31');">jobid</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L214"></a><tt class="py-lineno">214</tt>  <tt class="py-line"> </tt>
+<a name="L215"></a><tt class="py-lineno">215</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L216"></a><tt class="py-lineno">216</tt>  <tt class="py-line">    <tt class="py-comment">## Property: </tt> </tt>
+<a name="Job.serviceurl"></a><div id="Job.serviceurl-def"><a name="L217"></a><tt class="py-lineno">217</tt> <a class="py-toggle" href="#" id="Job.serviceurl-toggle" onclick="return toggle('Job.serviceurl');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.job._job_impl.Job-class.html#serviceurl">serviceurl</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Job.serviceurl-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Job.serviceurl-expanded"><a name="L218"></a><tt class="py-lineno">218</tt>  <tt class="py-line">        <tt class="py-name">doc</tt> <tt class="py-op">=</tt> <tt class="py-string">"The URL of the L{Service} instance managing this job."</tt> </tt>
+<a name="L219"></a><tt class="py-lineno">219</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fget</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L220"></a><tt class="py-lineno">220</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_plugin</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L221"></a><tt class="py-lineno">221</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_url</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L222"></a><tt class="py-lineno">222</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">locals</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L223"></a><tt class="py-lineno">223</tt>  <tt class="py-line">    <tt id="link-79" class="py-name"><a title="bliss.saga.job._job_impl.Job.serviceurl" class="py-name" href="#" onclick="return doclink('link-79', 'serviceurl', 'link-33');">serviceurl</a></tt> <tt class="py-op">=</tt> <tt class="py-name">property</tt><tt class="py-op">(</tt><tt class="py-op">**</tt><tt id="link-80" class="py-name"><a title="bliss.saga.job._job_impl.Job.serviceurl" class="py-name" href="#" onclick="return doclink('link-80', 'serviceurl', 'link-33');">serviceurl</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L224"></a><tt class="py-lineno">224</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="bliss.saga-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://oweidner.github.com/bliss">Bliss</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    <a href="epydoc-log.html">Generated by Epydoc
+    3.0.1 on Thu Dec  8 12:09:39 2011</a>
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
