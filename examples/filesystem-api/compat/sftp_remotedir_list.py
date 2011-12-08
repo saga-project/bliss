@@ -19,7 +19,7 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 import time
-import bliss.saga as saga
+import bliss.sagacompat as saga
 
 def main():
     
@@ -28,22 +28,19 @@ def main():
         # if no security context is defined, the PBS
         # plugin will pick up the default set of ssh 
         # credentials of the user, i.e., ~/.ssh/id_rsa
-        ctx = saga.Context()
-        ctx.type = saga.Context.SSH
+        ctx = saga.context()
+        ctx.type = saga.context.SSH
         ctx.userid  = 'oweidner' # like 'ssh username@host ...'
         ctx.usercert = '/Users/s1063117/.ssh/id_rsa' # like ssh -i ...'
 
-        session = saga.Session()
+        session = saga.session()
         session.contexts.append(ctx)
  
-        # open home directory on a remote machine
-        mydir = saga.filesystem.Directory("sftp://queenbee.loni.org/home/oweidner", session=session)
+        mydir = saga.filesystem.directory("sftp://india.futuregrid.org/tmp", session=session)
+        for entry in mydir.list():
+            print entry
 
-        # copy .bash_history to /tmp/ on the local machine
-        mydir.copy('.bash_history', 'sftp://localhost/tmp/') 
-
-
-    except saga.Exception, ex:
+    except saga.exception, ex:
         print "Oh, snap! An error occured: %s" % (str(ex))
 
 if __name__ == "__main__":

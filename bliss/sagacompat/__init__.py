@@ -2,7 +2,9 @@
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-'''Bliss (BLiss IS SagaA) is a pragmatic, light-weight implementation of the OGF SAGA standard (GFD.90). The bliss.sagacompat module only exists to ensure B{compatibility} with existing SAGA implementations (U{http://www.saga-project.org}) and its use is B{highly discouraged}. Please use the bliss.saga module instead!
+'''Bliss (BLiss IS SagaA) is a pragmatic, light-weight implementation of the OGF SAGA standard (GFD.90).
+
+   B{ATTENTION:} The bliss.sagacompat module only exists to ensure B{compatibility} with existing SAGA implementations (U{http://www.saga-project.org}) and its use is B{highly discouraged}. Please use the bliss.saga module (U{http://oweidner.github.com/bliss/apidoc/}) instead!
    
    More information can be found at: U{http://oweidner.github.com/bliss}
 '''
@@ -49,7 +51,7 @@ class context(SContext):
     pass
 
 # API packages
-from bliss.saga           import filesystem
-from bliss.saga           import job
-from bliss.saga           import sd
+from bliss.sagacompat import filesystem
+from bliss.sagacompat import job
+from bliss.sagacompat import sd
   
