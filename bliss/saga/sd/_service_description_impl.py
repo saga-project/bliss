@@ -60,8 +60,8 @@ class ServiceDescription(Object, AttributeInterface):
         if self._plugin is not None:
             return self._plugin.service_description_get_data(self) 
         else:
-            raise bliss.saga.exception.Exception(
-              bliss.saga.exception.Error.NoSuccess, 
+            raise bliss.saga.Exception(
+              bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
         pass
 

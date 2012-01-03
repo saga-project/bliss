@@ -46,8 +46,8 @@ class ServiceData(Object, AttributeInterface):
         if self._plugin is not None:
             return self._plugin.service_data_attribute_exists(self, key) 
         else:
-            raise bliss.saga.exception.Exception(
-              bliss.saga.exception.Error.NoSuccess, 
+            raise bliss.saga.Exception(
+              bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
         
     ######################################################################
@@ -57,8 +57,8 @@ class ServiceData(Object, AttributeInterface):
         if self._plugin is not None:
             return self._plugin.service_data_get_attribute(self, key) 
         else:
-            raise bliss.saga.exception.Exception(
-              bliss.saga.exception.Error.NoSuccess, 
+            raise bliss.saga.Exception(
+              bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
     
     ######################################################################

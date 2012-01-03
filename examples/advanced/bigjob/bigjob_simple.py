@@ -29,7 +29,7 @@ def main():
         # if the bigjob service doesn't have security enabled,
         # this is not necessary. 
         ctx = saga.Context()
-        ctx.type = saga.Context.Bigjob
+        ctx.type = saga.Context.BigJob
         ctx.userid   = 'oweidner' 
         ctx.userpass = 'indianpaleale'
 
@@ -37,20 +37,17 @@ def main():
         session.contexts.append(ctx)
 
         # create a job service that connects to a bigjob 
-        # manager running on a remote machine. the url is
-        # returned by the bigjob manager on startup
-        js = saga.job.Service("bigjob://localhost",
-                              session=session)
+        # server running.
+        js = saga.job.Service("bigjob://localhost:8000/mylocalpilot", session=session)
 
         # describe our job
         jd = saga.job.Description()
         # resource requirements
         jd.wall_time_limit  = "0:05:00"
-        jd.total_cpu_count = 1     
+        jd.number_of_processes = 1     
         # environment, executable & arguments
-        jd.environment = {'SLEEP_TIME':'10'}       
         jd.executable  = '/bin/sleep'
-        jd.arguments   = ['$SLEEP_TIME']
+        jd.arguments   = ['10']
         # output options
         jd.output = "bigjob_via_saga_api.stdout"
         jd.error  = "bigjob_via_saga_api.stderr"

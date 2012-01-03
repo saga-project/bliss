@@ -102,7 +102,7 @@ class Object(object) :
             return self.__shared_state["runtime_instance"].get_plugin_for_url(self._url, self._apitype) 
         except Exception, ex:
             error = ("%s %s" % (str(ex), utils.get_traceback()))
-            raise bliss.saga.exception.Exception(bliss.saga.exception.Error.NoSuccess, error)
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, error)
 
     ######################################################################
     ## PRIVATE 

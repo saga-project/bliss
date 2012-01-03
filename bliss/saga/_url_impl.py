@@ -11,17 +11,20 @@ import urlparse
 
 from bliss.saga._object_impl import Object 
 
+# this is a stupid hack that is unfortunately necessary for 
+# pre 2.4 urlparse implementations
+
 urlparse.uses_netloc.append("fork")
 urlparse.uses_fragment.append("fork")
-
-urlparse.uses_netloc.append("pbs")
-urlparse.uses_fragment.append("pbs")
 
 urlparse.uses_netloc.append("sftp")
 urlparse.uses_fragment.append("sftp")
 
 urlparse.uses_netloc.append("pbs+ssh")
 urlparse.uses_fragment.append("pbs+ssh")
+
+urlparse.uses_netloc.append("bigjob")
+urlparse.uses_fragment.append("bigjob")
 
 class Url(Object):
     '''Looesely defines a SAGA Url class as defined in GFD.90.'''
@@ -47,6 +50,10 @@ class Url(Object):
         '''The host part of the Url.'''
         self.port     = port
         '''The port part of the Url.'''
+        self.username = self._urlobj.username
+        '''The username part of the Url.'''
+        self.password = self._urlobj.password
+        '''The password part of the Url.'''
         self.path     = self._urlobj.path
         '''The path part of the Url.'''
         self.params   = self._urlobj.params
@@ -113,6 +120,25 @@ class Url(Object):
         '''Legacy method: set the 'query' property.'''
         self.query = val
 
+    def get_username(self):
+        '''Legacy method: return the 'username' property.'''
+        return self.username
+
+    def set_username(self, val):
+        '''Legacy method: set the 'username' property.'''
+        self.username = val
+
+    def get_password(self):
+        '''Legacy method: return the 'username' property.'''
+        return self.username
+
+    def set_password(self, val):
+        '''Legacy method: set the 'password' property.'''
+        self.password = val
+
+
     def get_url(self):
         '''(Ugly) legacy method: return the 'query' property.'''
         return self.url
+
+
