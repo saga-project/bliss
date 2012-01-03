@@ -1,9 +1,10 @@
-Version 0.1.15 released 2012-01-02
+Version 0.1.15 released 2012-01-03
 ----------------------------------------------------------------------
 
     * Fixed issue: https://github.com/oweidner/bliss/issues/8
     * Fixed issue: https://github.com/oweidner/bliss/issues/6
-    * First version of a bigjob adaptor. See wiki for details
+    * First version of a bigjob plugin. See wiki for details.
+    * Fixed Python 2.4 compatibility issue
 
 Version 0.1.14 released 2011-12-08
 ----------------------------------------------------------------------
