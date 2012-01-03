@@ -16,6 +16,15 @@ class job(SJob):
     '''
     pass
 
+Canceled = SJob.Canceled
+Done     = SJob.Done 
+Failed   = SJob.Failed
+New      = SJob.New
+Running  = SJob.Running
+Waiting  = SJob.Waiting
+Unknown  = SJob.Unknown
+
+
 from bliss.saga.job._job_impl import JobID as SJobID
 class job_id(SJobID):
     '''Defines a JobID. This is not part of GFD.90.

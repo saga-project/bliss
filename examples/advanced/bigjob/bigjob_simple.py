@@ -31,7 +31,7 @@ def main():
         ctx = saga.Context()
         ctx.type = saga.Context.Bigjob
         ctx.userid   = 'oweidner' 
-        ctx.userpass = 'morebeer'
+        ctx.userpass = 'indianpaleale'
 
         session = saga.Session()
         session.contexts.append(ctx)
@@ -39,7 +39,7 @@ def main():
         # create a job service that connects to a bigjob 
         # manager running on a remote machine. the url is
         # returned by the bigjob manager on startup
-        js = saga.job.Service("bigjob://gw68.quarry.iu.teragrid.org:5845/test",
+        js = saga.job.Service("bigjob://localhost",
                               session=session)
 
         # describe our job
