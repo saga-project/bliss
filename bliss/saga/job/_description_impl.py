@@ -28,10 +28,13 @@ class Description(Object, AttributeInterface):
         self._output            = None
         self._error             = None
         self._queue             = None
-        self._wall_time_limit    = None
+        self._wall_time_limit   = None
         self._working_directory = None
         self._contact           = None
         self._total_cpu_count   = None
+
+        self._number_of_processes = None
+        self._spmd_variation = None
 
         # register properties with the attribute interface
         self._register_rw_attribute     (name="Executable", 
@@ -50,6 +53,11 @@ class Description(Object, AttributeInterface):
                                          accessor=self.__class__.contact) 
         self._register_rw_attribute     (name="TotalCPUCount", 
                                          accessor=self.__class__.total_cpu_count) 
+        self._register_rw_attribute     (name="NumberOfProcesses", 
+                                         accessor=self.__class__.number_of_processes) 
+        self._register_rw_attribute     (name="SPMDVariation", 
+                                         accessor=self.__class__.spmd_variation) 
+
 
         self._register_rw_vec_attribute (name="Arguments", 
                                          accessor=self.__class__.arguments) 
@@ -211,3 +219,29 @@ class Description(Object, AttributeInterface):
         return locals()
     total_cpu_count = property(**total_cpu_count())
 
+
+    ######################################################################
+    ## Property: 
+    def number_of_processes():
+        doc = "Number of processes to launch"
+        def fget(self):
+            return self._number_of_processes
+        def fset(self, val):
+            self._number_of_processes = val
+        def fdel(self, val):
+            self._number_of_processes = None
+        return locals()
+    number_of_processes = property(**number_of_processes())
+
+    ######################################################################
+    ## Property: 
+    def spmd_variation():
+        doc = "SPMD variation (MPI, None, ...)"
+        def fget(self):
+            return self._spmd_variation
+        def fset(self, val):
+            self._spmd_variation = val
+        def fdel(self, val):
+            self._spmd_variation = None
+        return locals()
+    spmd_variation = property(**spmd_variation())
