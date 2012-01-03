@@ -46,10 +46,13 @@ class Url(Object):
 
         self.scheme   = self._urlobj.scheme
         '''The scheme part of the Url.'''
-        self.host     = host
+        self.host     = self._urlobj.hostname #host
         '''The host part of the Url.'''
-        self.port     = port
-        '''The port part of the Url.'''
+        if self._urlobj.port is not None:
+            self.port     = int(self._urlobj.port) # int(port)
+            '''The port part of the Url.'''
+        else:
+            self.port     = None
         self.username = self._urlobj.username
         '''The username part of the Url.'''
         self.password = self._urlobj.password
