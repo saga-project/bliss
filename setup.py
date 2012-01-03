@@ -125,7 +125,7 @@ except ImportError:
     pass
 else:
     setup_args['install_requires'] = [
-        'openssh-wrapper',
+        'openssh_wrapper',
         'paramiko-on-pypi'
     ]
 
