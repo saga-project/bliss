@@ -11,7 +11,7 @@ import os
 import logging
 import bliss.plugins.registry
 
-class Runtime():
+class Runtime:
     '''Implements the Bliss runtime system'''
     def __init__(self):
         '''Constructs a runtime object'''
