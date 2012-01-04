@@ -538,14 +538,17 @@ class PBSService:
             self._check_context()
 
         script = self._pbscript_generator(job.get_description())
-        result = self._cw.run("echo '%s' | qsub" % (script))
+
+        # filter the script
+        script = script.replace("\"", "\\\"")
+        result = self._cw.run("echo \"%s\" | qsub" % (script))
  
         if result.returncode != 0:
             if len(result.stderr) < 1:
                 error = result.stdout
             else:
                 error = result.stderr
-            raise Exception("Error running 'qsub': %s" % error)
+            raise Exception("Error running 'qsub': %s. Script was: %s" % (error, script))
         else:
             #depending on the PBS configuration, the job can already 
             #have disappeared from the queue at this point. that's why
