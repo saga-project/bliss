@@ -54,6 +54,12 @@ class Object(object) :
     FilesystemDirectory  = "saga.filesystem.Directory"
     '''saga.filesystem.File object type'''
 
+    ResourceAPI          = "saga.resource"
+    '''saga.resource API namespace'''
+    ResourceDescription  = "saga.resource.Description"
+    '''saga.resource.Description object type'''
+    ResourceManager      = "saga.resource.Manager"
+    '''saga.resource.Manager object type'''
 
     __shared_state = {}
     __shared_state["runtime_initialized"] = False

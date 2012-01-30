@@ -89,6 +89,7 @@ setup_args = {
         "bliss.saga",
         "bliss.saga.sd",
         "bliss.saga.job",
+        "bliss.saga.resource",
         "bliss.saga.filesystem",
         "bliss.sagacompat",
         "bliss.sagacompat.sd",

@@ -51,6 +51,7 @@ class Context(SContext):
 
 # API packages
 from bliss.saga           import filesystem
+from bliss.saga           import resource
 from bliss.saga           import job
 from bliss.saga           import sd
   
