@@ -12,13 +12,17 @@ __license__   = "MIT"
 
 from bliss.saga.resource._description_impl import Description as SDescription
 class Description(SDescription):
-    '''Loosely defines a SAGA Resource description as defined in GWD-R.xx
+    '''A SAGA Resource description as defined in GWD-R.xx
     '''
     pass
 
 from bliss.saga.resource._manager_impl import Manager as SManager
 class Manager(SManager):
-    '''Loosely defines a SAGA Resource Manager object as defined in GWD-R.xx
+    '''A SAGA Resource manager as defined in GWD-R.xx.
+
+       The resource manager can translate resource requests into stateful
+       resource handles. It also manages the persistency of resource
+       handles and resource pools.
     '''
     pass
 
