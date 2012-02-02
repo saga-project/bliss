@@ -45,7 +45,7 @@
         Package&nbsp;bliss ::
         <a href="bliss.saga-module.html">Package&nbsp;saga</a> ::
         <a href="bliss.saga.job-module.html">Package&nbsp;job</a> ::
-        <a href="bliss.saga.job._container_impl-module.html" onclick="show_private();">Module&nbsp;_container_impl</a> ::
+        <a href="bliss.saga.job._container_impl-module.html">Module&nbsp;_container_impl</a> ::
         Class&nbsp;Container
       </span>
     </td>
@@ -69,12 +69,6 @@
                       |
                      <strong class="uidshort">Container</strong>
 </pre>
-
-<dl><dt>Known Subclasses:</dt>
-<dd>
-      <ul class="subclass-list">
-<li><a href="bliss.saga.job.Container-class.html">Container</a></li>  </ul>
-</dd></dl>
 
 <hr />
 <p>Loosely represents a SAGA taks container as defined in GFD.90.</p>
@@ -271,65 +265,11 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="bliss.saga.job._container_impl.Container-class.html#wait" class="summary-sig-name">wait</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">wait_mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">saga.job.WaitMode.All</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">wait_mode</span>=<span class="summary-sig-default">WaitMode.All</span>,
         <span class="summary-sig-arg">timeout</span>=<span class="summary-sig-default">-1</span>)</span><br />
       Wait for jobs in the task container to finish execution.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.job._container_impl-pysrc.html#Container.wait">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="bliss.saga._object_impl.Object-class.html#get_id" class="summary-sig-name">get_id</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy GFD.90 method: return the object identifier.
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._object_impl-pysrc.html#Object.get_id">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="bliss.saga._object_impl.Object-class.html#get_session" class="summary-sig-name">get_session</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy GFD.90 method: return the object's session.
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._object_impl-pysrc.html#Object.get_session">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="bliss.saga._object_impl.Object-class.html#get_type" class="summary-sig-name">get_type</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy GFD.90 method: return the object type.
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._object_impl-pysrc.html#Object.get_type">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -355,6 +295,60 @@
       </p>
     </td>
   </tr>
+<tr bgcolor="#e8f0f8" >
+  <th colspan="2" class="group-header"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga._object_impl.Object-class.html">_object_impl.Object</a></th></tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga._object_impl.Object-class.html#get_id" class="summary-sig-name">get_id</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Legacy GFD.90 method: return the object identifier.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga._object_impl-pysrc.html#Object.get_id">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga._object_impl.Object-class.html#get_session" class="summary-sig-name">get_session</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Legacy GFD.90 method: return the object's session.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga._object_impl-pysrc.html#Object.get_session">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga._object_impl.Object-class.html#get_type" class="summary-sig-name">get_type</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Legacy GFD.90 method: return the object type.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga._object_impl-pysrc.html#Object.get_type">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
 </table>
 <!-- ==================== CLASS VARIABLES ==================== -->
 <a name="section-ClassVariables"></a>
@@ -364,148 +358,180 @@
   <td align="left" colspan="2" class="table-header">
     <span class="table-header">Class Variables</span></td>
 </tr>
+<tr bgcolor="#e8f0f8" >
+  <th colspan="2" class="group-header"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga._object_impl.Object-class.html">_object_impl.Object</a></th></tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="BaseAPI"></a><span class="summary-name">BaseAPI</span> = <code title="'saga.base'"><code class="variable-quote">'</code><code class="variable-string">saga.base</code><code class="variable-quote">'</code></code><br />
+        <a name="BaseAPI"></a><span class="summary-name">BaseAPI</span> = <code title="&quot;saga.base&quot;">&quot;saga.base&quot;</code><br />
       Look &amp; Feel API namespace
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="Context"></a><span class="summary-name">Context</span> = <code title="'saga.Context'"><code class="variable-quote">'</code><code class="variable-string">saga.Context</code><code class="variable-quote">'</code></code><br />
+        <a name="Context"></a><span class="summary-name">Context</span> = <code title="&quot;saga.Context&quot;">&quot;saga.Context&quot;</code><br />
       saga.Context object type.
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="FilesystemAPI"></a><span class="summary-name">FilesystemAPI</span> = <code title="'saga.filesystem'"><code class="variable-quote">'</code><code class="variable-string">saga.filesystem</code><code class="variable-quote">'</code></code><br />
+        <a name="FilesystemAPI"></a><span class="summary-name">FilesystemAPI</span> = <code title="&quot;saga.filesystem&quot;">&quot;saga.filesystem&quot;</code><br />
       saga.filesystem API namespace
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="FilesystemDirectory"></a><span class="summary-name">FilesystemDirectory</span> = <code title="'saga.filesystem.Directory'"><code class="variable-quote">'</code><code class="variable-string">saga.filesystem.Directory</code><code class="variable-quote">'</code></code><br />
+        <a name="FilesystemDirectory"></a><span class="summary-name">FilesystemDirectory</span> = <code title="&quot;saga.filesystem.Directory&quot;">&quot;saga.filesystem.Directory&quot;</code><br />
       saga.filesystem.File object type
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="FilesystemFile"></a><span class="summary-name">FilesystemFile</span> = <code title="'saga.filesystem.File'"><code class="variable-quote">'</code><code class="variable-string">saga.filesystem.File</code><code class="variable-quote">'</code></code><br />
+        <a name="FilesystemFile"></a><span class="summary-name">FilesystemFile</span> = <code title="&quot;saga.filesystem.File&quot;">&quot;saga.filesystem.File&quot;</code><br />
       saga.filesystem.File object type
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="Job"></a><span class="summary-name">Job</span> = <code title="'saga.job.Job'"><code class="variable-quote">'</code><code class="variable-string">saga.job.Job</code><code class="variable-quote">'</code></code><br />
+        <a name="Job"></a><span class="summary-name">Job</span> = <code title="&quot;saga.job.Job&quot;">&quot;saga.job.Job&quot;</code><br />
       saga.job.Job object type.
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="JobAPI"></a><span class="summary-name">JobAPI</span> = <code title="'saga.job'"><code class="variable-quote">'</code><code class="variable-string">saga.job</code><code class="variable-quote">'</code></code><br />
+        <a name="JobAPI"></a><span class="summary-name">JobAPI</span> = <code title="&quot;saga.job&quot;">&quot;saga.job&quot;</code><br />
       saga.job API namespace
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="JobContainer"></a><span class="summary-name">JobContainer</span> = <code title="'saga.job.Container'"><code class="variable-quote">'</code><code class="variable-string">saga.job.Container</code><code class="variable-quote">'</code></code><br />
+        <a name="JobContainer"></a><span class="summary-name">JobContainer</span> = <code title="&quot;saga.job.Container&quot;">&quot;saga.job.Container&quot;</code><br />
       saga.job.Container (task container) object type.
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="JobDescription"></a><span class="summary-name">JobDescription</span> = <code title="'saga.job.Description'"><code class="variable-quote">'</code><code class="variable-string">saga.job.Description</code><code class="variable-quote">'</code></code><br />
+        <a name="JobDescription"></a><span class="summary-name">JobDescription</span> = <code title="&quot;saga.job.Description&quot;">&quot;saga.job.Description&quot;</code><br />
       saga.job.Description object type.
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="JobService"></a><span class="summary-name">JobService</span> = <code title="'saga.job.Service'"><code class="variable-quote">'</code><code class="variable-string">saga.job.Service</code><code class="variable-quote">'</code></code><br />
+        <a name="JobService"></a><span class="summary-name">JobService</span> = <code title="&quot;saga.job.Service&quot;">&quot;saga.job.Service&quot;</code><br />
       saga.job.Service object type.
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="SDAPI"></a><span class="summary-name">SDAPI</span> = <code title="'saga.sd'"><code class="variable-quote">'</code><code class="variable-string">saga.sd</code><code class="variable-quote">'</code></code><br />
+        <a name="ResourceAPI"></a><span class="summary-name">ResourceAPI</span> = <code title="&quot;saga.resource&quot;">&quot;saga.resource&quot;</code><br />
+      saga.resource API namespace
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="ResourceDescription"></a><span class="summary-name">ResourceDescription</span> = <code title="&quot;saga.resource.Description&quot;">&quot;saga.resource.Description&quot;</code><br />
+      saga.resource.Description object type
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="ResourceManager"></a><span class="summary-name">ResourceManager</span> = <code title="&quot;saga.resource.Manager&quot;">&quot;saga.resource.Manager&quot;</code><br />
+      saga.resource.Manager object type
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SDAPI"></a><span class="summary-name">SDAPI</span> = <code title="&quot;saga.sd&quot;">&quot;saga.sd&quot;</code><br />
       saga.sd API namespace
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="SDDiscoverer"></a><span class="summary-name">SDDiscoverer</span> = <code title="'saga.sd.Discoverer'"><code class="variable-quote">'</code><code class="variable-string">saga.sd.Discoverer</code><code class="variable-quote">'</code></code><br />
+        <a name="SDDiscoverer"></a><span class="summary-name">SDDiscoverer</span> = <code title="&quot;saga.sd.Discoverer&quot;">&quot;saga.sd.Discoverer&quot;</code><br />
       saga.sd.Discoverer object type.
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="SDServiceData"></a><span class="summary-name">SDServiceData</span> = <code title="'saga.sd.ServiceData'"><code class="variable-quote">'</code><code class="variable-string">saga.sd.ServiceData</code><code class="variable-quote">'</code></code><br />
+        <a name="SDServiceData"></a><span class="summary-name">SDServiceData</span> = <code title="&quot;saga.sd.ServiceData&quot;">&quot;saga.sd.ServiceData&quot;</code><br />
       saga.sd.ServiceData object type.
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="SDServiceDescription"></a><span class="summary-name">SDServiceDescription</span> = <code title="'saga.sd.ServiceDescription'"><code class="variable-quote">'</code><code class="variable-string">saga.sd.ServiceDescription</code><code class="variable-quote">'</code></code><br />
+        <a name="SDServiceDescription"></a><span class="summary-name">SDServiceDescription</span> = <code title="&quot;saga.sd.ServiceDescription&quot;">&quot;saga.sd.ServiceDescription&quot;</code><br />
       saga.sd.ServiceDescription object type.
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="Session"></a><span class="summary-name">Session</span> = <code title="'saga.Session'"><code class="variable-quote">'</code><code class="variable-string">saga.Session</code><code class="variable-quote">'</code></code><br />
+        <a name="Session"></a><span class="summary-name">Session</span> = <code title="&quot;saga.Session&quot;">&quot;saga.Session&quot;</code><br />
       saga.Session object type.
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="Url"></a><span class="summary-name">Url</span> = <code title="'saga.Url'"><code class="variable-quote">'</code><code class="variable-string">saga.Url</code><code class="variable-quote">'</code></code><br />
+        <a name="Url"></a><span class="summary-name">Url</span> = <code title="&quot;saga.Url&quot;">&quot;saga.Url&quot;</code><br />
       saga.Url object type.
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="id"></a><span class="summary-name">id</span> = <code title="property(** id())">property(** id())</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="session"></a><span class="summary-name">session</span> = <code title="property(** session())">property(** session())</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="type"></a><span class="summary-name">type</span> = <code title="property(** type())">property(** type())</code>
     </td>
   </tr>
 </table>
@@ -517,34 +543,6 @@
   <td align="left" colspan="2" class="table-header">
     <span class="table-header">Properties</span></td>
 </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="bliss.saga._object_impl.Object-class.html#id" class="summary-name">id</a><br />
-      The object's unique identifier.
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="bliss.saga._object_impl.Object-class.html#session" class="summary-name">session</a><br />
-      The object's session which contains the list of security context 
-      objects.
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="bliss.saga._object_impl.Object-class.html#type" class="summary-name">type</a><br />
-      The object's type identifier.
-      <em>(Inherited from <a href="bliss.saga._object_impl.Object-class.html">bliss.saga._object_impl.Object</a>)</em>
-    </td>
-  </tr>
   <tr>
     <td colspan="2" class="summary">
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
@@ -720,7 +718,7 @@
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">wait</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">wait_mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">saga.job.WaitMode.All</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">wait_mode</span>=<span class="sig-default">WaitMode.All</span>,
         <span class="sig-arg">timeout</span>=<span class="sig-default">-1</span>)</span>
   </h3>
   </td><td align="right" valign="top"
@@ -771,7 +769,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Thu Dec  8 12:09:39 2011</a>
+    3.0.1 on Wed Feb  1 21:36:33 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

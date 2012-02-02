@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>bliss.saga.Url</title>
+  <title>bliss.saga.resource.Manager</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -42,9 +42,11 @@
   <tr valign="top">
     <td width="100%">
       <span class="breadcrumbs">
-        Package&nbsp;bliss ::
-        <a href="bliss.saga-module.html">Package&nbsp;saga</a> ::
-        Class&nbsp;Url
+        bliss ::
+        saga ::
+        resource ::
+        Manager ::
+        Class&nbsp;Manager
       </span>
     </td>
     <td>
@@ -52,26 +54,29 @@
         <!-- hide/show private -->
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="bliss.saga.Url-class.html"
+            >]&nbsp;|&nbsp;<a href="bliss.saga.resource.Manager-class.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class Url</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga-pysrc.html#Url">source&nbsp;code</a></span></p>
+<h1 class="epydoc">Class Manager</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.resource-pysrc.html#Manager">source&nbsp;code</a></span></p>
 <pre class="base-tree">
          object --+        
                   |        
 <a href="bliss.saga._object_impl.Object-class.html">_object_impl.Object</a> --+    
                       |    
-          <a href="bliss.saga._url_impl.Url-class.html">_url_impl.Url</a> --+
+  <a href="bliss.saga.resource._manager_impl.Manager-class.html">_manager_impl.Manager</a> --+
                           |
-                         <strong class="uidshort">Url</strong>
+                         <strong class="uidshort">Manager</strong>
 </pre>
 
 <hr />
-<p>Loosely defines a SAGA URL as defined in GFD.90.</p>
+<p>A SAGA Resource manager as defined in GWD-R.xx.</p>
+  <p>The resource manager can translate resource requests into stateful 
+  resource handles. It also manages the persistency of resource handles and
+  resource pools.</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -94,23 +99,24 @@
       <code>__repr__</code>,
       <code>__setattr__</code>,
       <code>__sizeof__</code>,
+      <code>__str__</code>,
       <code>__subclasshook__</code>
       </p>
     </td>
   </tr>
 <tr bgcolor="#e8f0f8" >
   <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga._url_impl.Url-class.html">_url_impl.Url</a></th></tr>
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.resource._manager_impl.Manager-class.html">_manager_impl.Manager</a></th></tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga._url_impl.Url-class.html#__del__" class="summary-sig-name">__del__</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Destructor (tear-down the Url object).</td>
+          <td><span class="summary-sig"><a href="bliss.saga.resource._manager_impl.Manager-class.html#__del__" class="summary-sig-name">__del__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Delete the manager in a civilised fashion.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.__del__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource._manager_impl-pysrc.html#Manager.__del__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -124,11 +130,12 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga._url_impl.Url-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">urlstring</span>=<span class="summary-sig-default">''</span>)</span><br />
-      Construct a new Url from a string</td>
+          <td><span class="summary-sig"><a href="bliss.saga.resource._manager_impl.Manager-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">url</span>,
+        <span class="summary-sig-arg">session</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Construct a new resource manager object</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.__init__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource._manager_impl-pysrc.html#Manager.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -142,10 +149,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga._url_impl.Url-class.html#__str__" class="summary-sig-name">__str__</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Return Url as string.</td>
+          <td><span class="summary-sig"><a name="create_compute"></a><span class="summary-sig-name">create_compute</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">description</span>)</span><br />
+      Instantiate (request) a new compute resource</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.__str__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource._manager_impl-pysrc.html#Manager.create_compute">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -159,10 +167,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="get_fragment"></a><span class="summary-sig-name">get_fragment</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy method: return the 'fragment' property.</td>
+          <td><span class="summary-sig"><a name="create_storage"></a><span class="summary-sig-name">create_storage</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">description</span>)</span><br />
+      Instantiate (request) a new storage resource</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.get_fragment">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource._manager_impl-pysrc.html#Manager.create_storage">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -176,10 +185,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="get_host"></a><span class="summary-sig-name">get_host</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy method: return the 'host' property.</td>
+          <td><span class="summary-sig"><a name="get_compute"></a><span class="summary-sig-name">get_compute</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">compute_id</span>)</span><br />
+      Return the resource handle for an existing compute resource</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.get_host">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource._manager_impl-pysrc.html#Manager.get_compute">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -193,10 +203,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="get_password"></a><span class="summary-sig-name">get_password</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy method: return the 'username' property.</td>
+          <td><span class="summary-sig"><a name="get_storage"></a><span class="summary-sig-name">get_storage</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">storage_id</span>)</span><br />
+      Return the resource handle for an existing storage resource</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.get_password">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource._manager_impl-pysrc.html#Manager.get_storage">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -210,10 +221,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="get_path"></a><span class="summary-sig-name">get_path</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy method: return the 'path' property.</td>
+          <td><span class="summary-sig"><a name="list_ids"></a><span class="summary-sig-name">list_ids</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filter</span>=<span class="summary-sig-default">None</span>)</span><br />
+      List known instances</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.get_path">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource._manager_impl-pysrc.html#Manager.list_ids">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -227,10 +239,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="get_port"></a><span class="summary-sig-name">get_port</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy method: return the 'port' property.</td>
+          <td><span class="summary-sig"><a name="list_templates"></a><span class="summary-sig-name">list_templates</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filter</span>=<span class="summary-sig-default">None</span>)</span><br />
+      List available templates</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.get_port">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource._manager_impl-pysrc.html#Manager.list_templates">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -244,10 +257,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="get_query"></a><span class="summary-sig-name">get_query</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy method: return the 'query' property.</td>
+          <td><span class="summary-sig"><a name="release_compute"></a><span class="summary-sig-name">release_compute</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">compute_id</span>)</span><br />
+      Release (close) an existing compute resource</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.get_query">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource._manager_impl-pysrc.html#Manager.release_compute">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -261,188 +275,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="get_scheme"></a><span class="summary-sig-name">get_scheme</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy method: return the 'scheme' property.</td>
+          <td><span class="summary-sig"><a name="release_storage"></a><span class="summary-sig-name">release_storage</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">storage_id</span>)</span><br />
+      Release (close) an existing storage resource</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.get_scheme">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="get_url"></a><span class="summary-sig-name">get_url</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      (Ugly) legacy method: return the 'query' property.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.get_url">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="get_username"></a><span class="summary-sig-name">get_username</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy method: return the 'username' property.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.get_username">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="set_fragment"></a><span class="summary-sig-name">set_fragment</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span><br />
-      Legacy method: set the 'fragment' property.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.set_fragment">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="set_host"></a><span class="summary-sig-name">set_host</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span><br />
-      Legacy method: set the 'host' property.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.set_host">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="set_password"></a><span class="summary-sig-name">set_password</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span><br />
-      Legacy method: set the 'password' property.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.set_password">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="set_path"></a><span class="summary-sig-name">set_path</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span><br />
-      Legacy method: set the 'path' property.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.set_path">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="set_port"></a><span class="summary-sig-name">set_port</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">port</span>)</span><br />
-      Legacy method: set the 'port' property.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.set_port">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="set_query"></a><span class="summary-sig-name">set_query</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">query</span>)</span><br />
-      Legacy method: set the 'query' property.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.set_query">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="set_scheme"></a><span class="summary-sig-name">set_scheme</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span><br />
-      Legacy method: set the 'scheme' property.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.set_scheme">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="set_username"></a><span class="summary-sig-name">set_username</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">val</span>)</span><br />
-      Legacy method: set the 'username' property.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._url_impl-pysrc.html#Url.set_username">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource._manager_impl-pysrc.html#Manager.release_storage">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -690,98 +527,6 @@
     </td>
   </tr>
 </table>
-<!-- ==================== INSTANCE VARIABLES ==================== -->
-<a name="section-InstanceVariables"></a>
-<table class="summary" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Instance Variables</span></td>
-</tr>
-<tr bgcolor="#e8f0f8" >
-  <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga._url_impl.Url-class.html">_url_impl.Url</a></th></tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="fragment"></a><span class="summary-name">fragment</span><br />
-      The fragment part of the Url.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="host"></a><span class="summary-name">host</span><br />
-      The host part of the Url.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="params"></a><span class="summary-name">params</span><br />
-      The params part of the Url.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="password"></a><span class="summary-name">password</span><br />
-      The password part of the Url.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="path"></a><span class="summary-name">path</span><br />
-      The path part of the Url.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="port"></a><span class="summary-name">port</span><br />
-      The port part of the Url.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="query"></a><span class="summary-name">query</span><br />
-      The query part of the Url.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="scheme"></a><span class="summary-name">scheme</span><br />
-      The scheme part of the Url.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="url"></a><span class="summary-name">url</span><br />
-      The Url as string (same as __str__).
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="username"></a><span class="summary-name">username</span><br />
-      The username part of the Url.
-    </td>
-  </tr>
-</table>
 <!-- ==================== PROPERTIES ==================== -->
 <a name="section-Properties"></a>
 <table class="summary" border="1" cellpadding="3"
@@ -830,7 +575,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Wed Feb  1 21:36:32 2012</a>
+    3.0.1 on Wed Feb  1 21:36:33 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
