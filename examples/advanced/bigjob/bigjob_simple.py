@@ -38,7 +38,7 @@ def main():
 
         # create a job service that connects to a bigjob 
         # server running.
-        js = saga.job.Service("bigjob://localhost:8000/mylocalpilot", session=session)
+        js = saga.job.Service("bigjob://engage-submit3.renci.org:28082/engage.fork.test", session=session)
 
         # describe our job
         jd = saga.job.Description()

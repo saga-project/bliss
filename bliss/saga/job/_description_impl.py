@@ -24,6 +24,7 @@ class Description(Object, AttributeInterface):
         self._executable        = None
         self._arguments         = None
         self._environment       = None
+        self._file_transfer     = None
         self._project           = None
         self._output            = None
         self._error             = None
@@ -61,6 +62,8 @@ class Description(Object, AttributeInterface):
 
         self._register_rw_vec_attribute (name="Arguments", 
                                          accessor=self.__class__.arguments) 
+        self._register_rw_vec_attribute (name="FileTransfer", 
+                                         accessor=self.__class__.file_transfer) 
         self._register_rw_vec_attribute (name="Environment", 
                                          accessor=self.__class__.environment) 
         self._register_rw_vec_attribute (name="JobProject", 
@@ -112,6 +115,19 @@ class Description(Object, AttributeInterface):
             self._arguments = None
         return locals()
     arguments = property(**arguments())
+
+    ######################################################################
+    ## Property: 
+    def file_transfer():
+        doc = "The arguments to pass to the file transfer directives."
+        def fget(self):
+            return self._file_transfer
+        def fset(self, val):
+            self._file_transfer = val
+        def fdel(self, val):
+            self._file_transfer = None
+        return locals()
+    file_transfer = property(**file_transfer())
 
     ######################################################################
     ## Property: 
