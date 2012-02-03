@@ -10,7 +10,7 @@ __license__   = "MIT"
 from bliss.saga._object_impl import Object
 from bliss.saga._attributes_impl import AttributeInterface
 
-class Description(Object, AttributeInterface):
+class ComputeDescription(Object, AttributeInterface):
     '''Loosely defines a SAGA Resource description as defined in GWD-R.xx
     '''
 
@@ -22,12 +22,37 @@ class Description(Object, AttributeInterface):
                         apitype=Object.JobAPI,)
         AttributeInterface.__init__(self)
 
-        self._dummy        = None
-  
+        self._start          = None
+        self._end            = None
+        self._duration       = None
+
+        self._machine_os     = None
+        self._machine_arch   = None
+        self._hostnames      = None
+        self._cores          = None # total or per machine? 
+        self._memory         = None # total or per machine?
 
         # register properties with the attribute interface
-        self._register_rw_attribute     (name="Dummy", 
-                                         accessor=self.__class__.dummy) 
+        self._register_rw_attribute     (name="Start", 
+                                         accessor=self.__class__.start) 
+        self._register_rw_attribute     (name="End", 
+                                         accessor=self.__class__.end) 
+        self._register_rw_attribute     (name="Duration", 
+                                         accessor=self.__class__.duration) 
+
+        self._register_rw_vec_attribute (name="MachineOS", 
+                                         accessor=self.__class__.machine_os) 
+        self._register_rw_vec_attribute (name="MachineArch", 
+                                         accessor=self.__class__.machine_arch)
+        self._register_rw_vec_attribute (name="Hostnames", 
+                                         accessor=self.__class__.hostnames)
+ 
+        self._register_rw_attribute     (name="Cores", 
+                                         accessor=self.__class__.cores)
+        self._register_rw_attribute     (name="Memory", 
+                                         accessor=self.__class__.memory) 
+
+
     ######################################################################
     ## 
     def __del__(self):
@@ -38,28 +63,52 @@ class Description(Object, AttributeInterface):
     def __str__(self):
         '''String representation of the resource description'''
         result = str("{")
-        #for attribute in self.list_attributes():
-        #    if self.attribute_is_vector(attribute):
-        #        value = repr(self.get_vector_attribute(attribute))
-        #    else:
-        #        value = str(self.get_attribute(attribute))
-        #    result += str("'%s' : '%s'," % (str(attribute), value))
-        #
+        for attribute in self.list_attributes():
+            if self.attribute_is_vector(attribute):
+                value = repr(self.get_vector_attribute(attribute))
+            else:
+                value = str(self.get_attribute(attribute))
+            result += str("'%s' : '%s'," % (str(attribute), value))
         result += "}"
         return result
         
 
     ######################################################################
-    ## Property: 
-    def dummy():
-        doc = "A dummy attribute."
+    ## Property 
+    def start():
+        doc = "Desired start time for the resource reservation."
         def fget(self):
-            return self._dummy
+            return self._start
         def fset(self, val):
-            self._dummy = val
+            self._start = val
         def fdel(self, val):
-            self._dummy = None
+            self._start = None
         return locals()
-    dummy = property(**dummy())
+    start = property(**start())
       
+    ######################################################################
+    ## Property 
+    def end():
+        doc = "Desired end time for the resource reservation."
+        def fget(self):
+            return self._end
+        def fset(self, val):
+            self._end = val
+        def fdel(self, val):
+            self._end = None
+        return locals()
+    end = property(**end())
+
+    ######################################################################
+    ## Property 
+    def start():
+        doc = "Desired duration for the resource reservation."
+        def fget(self):
+            return self._duration
+        def fset(self, val):
+            self._duration = val
+        def fdel(self, val):
+            self._duration = None
+        return locals()
+    duration = property(**duration())
 
