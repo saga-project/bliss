@@ -10,15 +10,17 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.resource._description_impl import Description as SDescription
-class Description(SDescription):
-    '''A SAGA Resource description as defined in GWD-R.xx
+
+from bliss.saga.resource._compute_description import ComputeDescription as SComputeDescription
+class ComputeDescription(SComputeDescription):
+    '''A SAGA compute resource description as defined in GWD-R.xx
     '''
     pass
 
-from bliss.saga.resource._manager_impl import Manager as SManager
+
+from bliss.saga.resource._manager_facade import Manager as SManager
 class Manager(SManager):
-    '''A SAGA Resource manager as defined in GWD-R.xx.
+    '''A SAGA resource manager as defined in GWD-R.xx.
 
        The resource manager can translate resource requests into stateful
        resource handles. It also manages the persistency of resource
@@ -26,16 +28,25 @@ class Manager(SManager):
     '''
     pass
 
-#from bliss.saga.resource._compute_impl import Compute as SCompute
-#class Compute(SCompute):
-#    '''Loosely defines a SAGA Compute Resource object as defined in GWD-R.x
-#    '''
-#    pass
 
-#from bliss.saga.resource._storage_impl import Storage as SStorage
-#class Storage(SStorage):
-#    '''Loosely defines a SAGA Storage Resource object as defined in GWD-R.x
-#    '''
-#    pass
+from bliss.saga.resource._compute_facade import Compute as SCompute
+class Compute(SCompute):
+    '''A SAGA compute resource as defined in GWD-R.xx.
+
+       A compute resource represents a stateful handle to a physical
+       compute resource. Jobs can be submitted to it.  
+    '''
+    pass
+
+
+from bliss.saga.resource._compute_pool_facade import ComputePool as SComputePool
+class ComputePool(SComputePool):
+    '''A SAGA compute pool as defined in GWD-R.xx.
+
+       A compute resource pool is a container for that holds
+       compute resource objects. A custom job scheduling 
+       algorithm can be selected for a compute resource pool. 
+    '''
+    pass
 
 

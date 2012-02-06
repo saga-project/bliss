@@ -17,7 +17,7 @@ class ComputeDescription(Object, AttributeInterface):
     ######################################################################
     ## 
     def __init__(self):
-        '''Create a new, empty resource description.'''
+        '''Create a new (empty) compute resource description.'''
         Object.__init__(self, Object.ResourceDescription, 
                         apitype=Object.JobAPI,)
         AttributeInterface.__init__(self)
@@ -56,12 +56,12 @@ class ComputeDescription(Object, AttributeInterface):
     ######################################################################
     ## 
     def __del__(self):
-        '''Delete the resource description in a civilised fashion.'''
+        '''Delete this resource description.'''
         # nothing to do here 
         pass
 
     def __str__(self):
-        '''String representation of the resource description'''
+        '''String representation.'''
         result = str("{")
         for attribute in self.list_attributes():
             if self.attribute_is_vector(attribute):
@@ -76,7 +76,7 @@ class ComputeDescription(Object, AttributeInterface):
     ######################################################################
     ## Property 
     def start():
-        doc = "Desired start time for the resource reservation."
+        doc = "Required start time for this resource reservation."
         def fget(self):
             return self._start
         def fset(self, val):
@@ -89,7 +89,7 @@ class ComputeDescription(Object, AttributeInterface):
     ######################################################################
     ## Property 
     def end():
-        doc = "Desired end time for the resource reservation."
+        doc = "Required end time for this resource reservation."
         def fget(self):
             return self._end
         def fset(self, val):
@@ -101,8 +101,8 @@ class ComputeDescription(Object, AttributeInterface):
 
     ######################################################################
     ## Property 
-    def start():
-        doc = "Desired duration for the resource reservation."
+    def duration():
+        doc = "Required duration for this resource reservation."
         def fget(self):
             return self._duration
         def fset(self, val):
@@ -112,3 +112,28 @@ class ComputeDescription(Object, AttributeInterface):
         return locals()
     duration = property(**duration())
 
+    ######################################################################
+    ## Property 
+    def cores():
+        doc = "Required number of cores for this resource reservation."
+        def fget(self):
+            return self._cores
+        def fset(self, val):
+            self._cores = val
+        def fdel(self, val):
+            self._cores = None
+        return locals()
+    cores = property(**cores())
+
+    ######################################################################
+    ## Property 
+    def memory():
+        doc = "Required amount of memory for this resource reservation."
+        def fget(self):
+            return self._memory
+        def fset(self, val):
+            self._memory = val
+        def fdel(self, val):
+            self._memory = None
+        return locals()
+    memory = property(**memory())

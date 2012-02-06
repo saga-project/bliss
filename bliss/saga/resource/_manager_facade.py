@@ -19,7 +19,7 @@ class Manager(Object):
            @param url: Url of the (remote) resource manager.
            @type  url: L{Url} 
         '''
-        Object.__init__(self, Object.ResourceService, 
+        Object.__init__(self, Object.ResourceManager, 
                         apitype=Object.ResourceAPI, session=session)
 
         if(type(url) == str):

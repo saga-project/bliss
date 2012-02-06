@@ -37,7 +37,6 @@ class Object(object) :
     JobContainer         = "saga.job.Container"
     '''saga.job.Container (task container) object type.'''
 
-
     SDAPI                = "saga.sd"
     '''saga.sd API namespace'''
     SDDiscoverer         = "saga.sd.Discoverer"
@@ -54,12 +53,16 @@ class Object(object) :
     FilesystemDirectory  = "saga.filesystem.Directory"
     '''saga.filesystem.File object type'''
 
-    ResourceAPI          = "saga.resource"
+    ResourceAPI                 = "saga.resource"
     '''saga.resource API namespace'''
-    ResourceDescription  = "saga.resource.Description"
-    '''saga.resource.Description object type'''
-    ResourceManager      = "saga.resource.Manager"
+    ResourceManager             = "saga.resource.Manager"
     '''saga.resource.Manager object type'''
+    ResourceComputeDescription  = "saga.resource.ComputeDescription"
+    '''saga.resource.Description object type'''
+    ResourceCompute             = "saga.resource.Compute"
+    '''saga.resource.Compute object type'''
+    ResourceComputePool         = "saga.resource.ComputePool"
+    '''saga.resource.ComputePool object type'''
 
     __shared_state = {}
     __shared_state["runtime_initialized"] = False
