@@ -3,8 +3,7 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2011-2012 Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.saga import Url
@@ -28,9 +27,39 @@ class Service(Object):
         else:
             self._url = url
 
+        self._from_compute = False
+        self._compute_obj = None
+
         self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
         self._plugin.register_service_object(self)
         self._logger.info("Bound to plugin %s" % (repr(self._plugin)))
+
+    ######################################################################
+    ## 
+    @classmethod
+    def from_url(url, session=None):
+        '''Initialize a new job service from (resource manager) URL.'''
+        s = Service(url, session=session)
+        s._from_compute = False
+        return s
+
+
+    ######################################################################
+    ## 
+    @classmethod
+    def from_compute(compute_obj, session=None):
+        '''Create a job service from a saga.resource.Compute object.'''
+        if description.get_type() != Object.ResourceCompute:
+            raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
+                  "Service.fromcompute() expects %s object as parameter" 
+                  % (Object.ResourceComputeDescription))
+        
+        
+        service = Service(compute_obj.get_url(), session=session)
+        s._from_compute = True
+        s._compute_obj = compute_obj
+        return s        
+
 
     ######################################################################
     ## 

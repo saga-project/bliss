@@ -3,7 +3,6 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
@@ -45,7 +44,7 @@ class Manager(Object):
     def list_ids(self, filter="*"):
         '''List known instances'''
         if self._plugin is not None:
-            return self._plugin.manager_list_ids(filter)
+            return self._plugin.manager_list_ids(self, filter)
         else:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
@@ -55,7 +54,7 @@ class Manager(Object):
     def list_templates(self, filter="*"):
         '''List available templates'''
         if self._plugin is not None:
-            return self._plugin.manager_list_templated(filter)
+            return self._plugin.manager_list_templated(self, filter)
         else:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
@@ -64,8 +63,14 @@ class Manager(Object):
     ## 
     def create_compute(self, description):
         '''Instantiate (request) a new compute resource'''
+
+        if description.get_type() != Object.ResourceComputeDescription:
+            raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
+                  "create_compute() expects %s object as parameter" 
+                  % (Object.ResourceComputeDescription))
+
         if self._plugin is not None:
-            return self._plugin.manager_create_compute(description)
+            return self._plugin.manager_create_compute(self, description)
         else:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
@@ -76,7 +81,7 @@ class Manager(Object):
     def get_compute(self, compute_id):
         '''Return the resource handle for an existing compute resource'''
         if self._plugin is not None:
-            return self._plugin.manager_get_compute(compute_id)
+            return self._plugin.manager_get_compute(self, compute_id)
         else:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
@@ -87,7 +92,7 @@ class Manager(Object):
     def release_compute(self, compute_id):
         '''Release (close) an existing compute resource'''
         if self._plugin is not None:
-            return self._plugin.manager_release_compute(compute_id)
+            return self._plugin.manager_release_compute(self, compute_id)
         else:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
@@ -98,7 +103,7 @@ class Manager(Object):
     def create_storage(self, description):
         '''Instantiate (request) a new storage resource'''
         if self._plugin is not None:
-            return self._plugin.manager_create_storage(description)
+            return self._plugin.manager_create_storage(self, description)
         else:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")

@@ -139,7 +139,6 @@ class Job(Object, AttributeInterface):
         '''Return the current state of the job.'''
         if self._plugin is not None:
             return self._plugin.job_get_state(self)
-            return None
         else:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
@@ -161,7 +160,6 @@ class Job(Object, AttributeInterface):
         '''Execute the job via the associated job service.'''
         if self._plugin is not None:
             return self._plugin.job_run(self)
-            return None
         else:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
@@ -174,7 +172,6 @@ class Job(Object, AttributeInterface):
         '''
         if self._plugin is not None:
             return self._plugin.job_cancel(self, timeout)
-            return None
         else:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
@@ -187,7 +184,6 @@ class Job(Object, AttributeInterface):
         '''
         if self._plugin is not None:
             return self._plugin.job_wait(self, timeout)
-            return None
         else:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")

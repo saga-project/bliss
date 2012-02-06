@@ -6,7 +6,6 @@
 '''
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
@@ -14,6 +13,13 @@ __license__   = "MIT"
 from bliss.saga.resource._compute_description import ComputeDescription as SComputeDescription
 class ComputeDescription(SComputeDescription):
     '''A SAGA compute resource description as defined in GWD-R.xx
+    '''
+    pass
+
+
+from bliss.saga.resource._state import State as SState
+class State(SState):
+    '''SAGA resource states as defined in GWD-R.xx.
     '''
     pass
 

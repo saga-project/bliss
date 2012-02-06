@@ -3,7 +3,6 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
@@ -20,6 +19,7 @@ class Compute(Object):
         Object.__init__(self, Object.ResourceComputeResource, 
                         apitype=Object.ResourceAPI, session=session)
 
+
     ######################################################################
     ##
     def __init_from_manager(self, manager_obj, compute_description):
@@ -30,3 +30,47 @@ class Compute(Object):
 
         self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
         self._logger.info("Bound to plugin %s" % (repr(self._plugin)))
+
+
+    ######################################################################
+    ##
+    def wait(self, state, timeout=-1):
+        '''Wait for the compute resource to reach a specific state.'''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+        else:
+            return self._plugin.compute_wait(self, state, timeout)
+
+
+    ######################################################################
+    ##
+    def get_state(self):
+        '''Return the state of the compute resource'''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+        else:
+            return self._plugin.compute_get_state(self, job_description)
+
+    
+    ######################################################################
+    ##
+    def get_manager(self):
+        '''Return the associated resource manager object.'''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+        else:
+            return self._plugin.compute_get_manager(self, job_description)
+    
+
+    ######################################################################
+    ##
+    def get_description(self): 
+        '''x'''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+        else:
+            return self._compute_description 

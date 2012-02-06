@@ -14,7 +14,6 @@
 '''
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
@@ -38,14 +37,17 @@ def main():
         rm.session.contexts.append(ctx)
 
 
-        # Next, define and request a compute resource with 64 cores.
+        # Next, define a compute resource with 64 cores.
         cdesc = saga.resource.ComputeDescription()
         cdesc.cores = '64'
 
+        # Now we can create a compute resource object from the 
+        # description and wait for it to reach 'Active' state.
         cr64 = rm.create_compute(cdesc)
+        cr64.wait(saga.resource.State.Active)
 
         # Create a job service from the compute resource
-        js = saga.job.Service(cr64)
+        js = saga.job.Service.from_compute(cr64)
 
         # describe our job
         jd = saga.job.Description()
