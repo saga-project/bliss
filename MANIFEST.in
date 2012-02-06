@@ -19,8 +19,9 @@ include bliss/interface/*.py
 include bliss/plugins/*.py
 include bliss/plugins/sftp/*.py
 include bliss/plugins/pbs/*.py
+include bliss/plugins/pbsbigjob/*.py
 include bliss/plugins/local/*.py
-include bliss/plugins/bigjob/*.py
+
 
 include MANIFEST.in README.md LICENSE CHANGES
 

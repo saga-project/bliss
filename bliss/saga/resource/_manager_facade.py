@@ -27,7 +27,7 @@ class Manager(Object):
             self._url = url
 
         self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
-        self._plugin.register_service_object(self)
+        self._plugin.register_manager_object(self)
         self._logger.info("Bound to plugin %s" % (repr(self._plugin)))
 
     ######################################################################

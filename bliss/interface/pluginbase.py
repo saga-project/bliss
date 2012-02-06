@@ -16,10 +16,10 @@ from bliss.saga._exception_impl import Exception as SAGAException
 class PluginBaseInterface:
     '''Abstract base class for all plugins'''
 
-    _api_type_saga_filesystem = "saga.filesystem"
-    _api_type_saga_job        = "saga.job"
-    _api_type_saga_sd         = "saga.sd"
- 
+    _api_type_saga_filesystem = "saga.filesystem.cpi"
+    _api_type_saga_resource   = "saga.resource.cpi"
+    _api_type_saga_job        = "saga.job.cpi"
+    _api_type_saga_sd         = "saga.sd.cpi"
     
     def __init__(self, name, schemas, api):
         '''Class constructor'''

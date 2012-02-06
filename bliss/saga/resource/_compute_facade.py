@@ -68,7 +68,7 @@ class Compute(Object):
     ######################################################################
     ##
     def get_description(self): 
-        '''x'''
+        '''Return the associated (compute) resource description object.'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")

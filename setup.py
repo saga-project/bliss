@@ -100,7 +100,7 @@ setup_args = {
         "bliss.plugins",
         "bliss.plugins.local",
         "bliss.plugins.pbs",
-        "bliss.plugins.bigjob",
+        "bliss.plugins.pbsbigjob",
         "bliss.plugins.sftp"
     ],
     'scripts': scripts,
