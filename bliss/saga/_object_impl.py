@@ -116,7 +116,7 @@ class Object(object) :
     ######################################################################
     ## PRIVATE 
     def _get_runtime_info(self):
-        return self.plugin.get_runtime_info()
+        return self._get_plugin().get_runtime_info()
 
     ######################################################################
     ## Property: session
