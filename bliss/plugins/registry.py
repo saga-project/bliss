@@ -10,7 +10,7 @@ __license__   = "MIT"
 from bliss.plugins.pbs import PBSJobAndSDPlugin
 from bliss.plugins.sftp import SFTPFilesystemPlugin
 from bliss.plugins.local import LocalJobPlugin
-from bliss.plugins.pbsbigjob import PBSBigJobResourcePlugin
+#from bliss.plugins.pbsbigjob import PBSBigJobResourcePlugin
 
 _registry = []
 
@@ -24,10 +24,10 @@ _registry.append({"class"   : PBSJobAndSDPlugin,
                   "name"    : PBSJobAndSDPlugin.plugin_name(),
                   "schemas" : PBSJobAndSDPlugin.supported_schemas()})
 
-_registry.append({"class"   : PBSBigJobResourcePlugin,
-                  "apis"    : PBSBigJobResourcePlugin.supported_apis(),
-                  "name"    : PBSBigJobResourcePlugin.plugin_name(),
-                  "schemas" : PBSBigJobResourcePlugin.supported_schemas()})
+#_registry.append({"class"   : PBSBigJobResourcePlugin,
+#                  "apis"    : PBSBigJobResourcePlugin.supported_apis(),
+#                  "name"    : PBSBigJobResourcePlugin.plugin_name(),
+#                  "schemas" : PBSBigJobResourcePlugin.supported_schemas()})
 
 _registry.append({"class"   : SFTPFilesystemPlugin,
                   "apis"    : SFTPFilesystemPlugin.supported_apis(),
