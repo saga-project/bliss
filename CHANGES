@@ -1,3 +1,14 @@
+Version 0.1.18 released 2012-02-29
+----------------------------------------------------------------------
+
+    * Fixed issue with plugin introspection 
+    * Added template for job plug-in
+
+Version 0.1.17 released 2012-01-04
+----------------------------------------------------------------------
+
+    * Hotfix
+
 Version 0.1.16 released 2012-01-03
 ----------------------------------------------------------------------
 
@@ -37,7 +48,6 @@ Version 0.1.12 released 2011-12-06
     * Two advance bfast examples incl. output file staging:
       https://github.com/oweidner/bliss/blob/master/examples/advanced/bfast_workflow_01.py
       https://github.com/oweidner/bliss/blob/master/examples/advanced/bfast_workflow_02.py
-       
 
 Version 0.1.11 released 2011-11-28
 ----------------------------------------------------------------------
