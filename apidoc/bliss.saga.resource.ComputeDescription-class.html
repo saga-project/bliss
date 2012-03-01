@@ -63,19 +63,17 @@
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class ComputeDescription</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.resource-pysrc.html#ComputeDescription">source&nbsp;code</a></span></p>
 <pre class="base-tree">
-                         object --+            
-                                  |            
-                <a href="bliss.saga._object_impl.Object-class.html">_object_impl.Object</a> --+        
-                                      |        
-                         object --+   |        
-                                  |   |        
-<a href="bliss.saga._attributes_impl.AttributeInterface-class.html">_attributes_impl.AttributeInterface</a> --+        
-                                      |        
-               <a href="bliss.saga.resource._description.Description-class.html">_description.Description</a> --+    
-                                          |    
-    <a href="bliss.saga.resource._compute_description.ComputeDescription-class.html">_compute_description.ComputeDescription</a> --+
-                                              |
-                                             <strong class="uidshort">ComputeDescription</strong>
+                            object --+        
+                                     |        
+                     <a href="bliss.saga.object_api.Object-class.html">object_api.Object</a> --+    
+                                         |    
+                            object --+   |    
+                                     |   |    
+     <a href="bliss.saga.attributes_api.AttributeInterface-class.html">attributes_api.AttributeInterface</a> --+    
+                                         |    
+<a href="bliss.saga.resource.compute_description_api.ComputeDescription-class.html">compute_description_api.ComputeDescription</a> --+
+                                             |
+                                            <strong class="uidshort">ComputeDescription</strong>
 </pre>
 
 <hr />
@@ -108,37 +106,17 @@
   </tr>
 <tr bgcolor="#e8f0f8" >
   <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.resource._compute_description.ComputeDescription-class.html">_compute_description.ComputeDescription</a></th></tr>
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.resource.compute_description_api.ComputeDescription-class.html">compute_description_api.ComputeDescription</a></th></tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.resource._compute_description.ComputeDescription-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Create a new (empty) compute resource description.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._compute_description-pysrc.html#ComputeDescription.__init__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr bgcolor="#e8f0f8" >
-  <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.resource._description.Description-class.html">_description.Description</a></th></tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.resource._description.Description-class.html#__del__" class="summary-sig-name">__del__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.resource.compute_description_api.ComputeDescription-class.html#__del__" class="summary-sig-name">__del__</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Delete this resource description.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._description-pysrc.html#Description.__del__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.compute_description_api-pysrc.html#ComputeDescription.__del__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -152,10 +130,27 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.resource._description.Description-class.html#__str__" class="summary-sig-name">__str__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.resource.compute_description_api.ComputeDescription-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Create a new (empty) compute resource description.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.resource.compute_description_api-pysrc.html#ComputeDescription.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.resource.compute_description_api.ComputeDescription-class.html#__str__" class="summary-sig-name">__str__</a>(<span class="summary-sig-arg">self</span>)</span><br />
       String representation.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._description-pysrc.html#Description.__str__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.compute_description_api-pysrc.html#ComputeDescription.__str__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -165,17 +160,17 @@
   </tr>
 <tr bgcolor="#e8f0f8" >
   <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga._object_impl.Object-class.html">_object_impl.Object</a></th></tr>
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.object_api.Object-class.html">object_api.Object</a></th></tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga._object_impl.Object-class.html#get_id" class="summary-sig-name">get_id</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.object_api.Object-class.html#get_id" class="summary-sig-name">get_id</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Legacy GFD.90 method: return the object identifier.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._object_impl-pysrc.html#Object.get_id">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.object_api-pysrc.html#Object.get_id">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -189,10 +184,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga._object_impl.Object-class.html#get_session" class="summary-sig-name">get_session</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.object_api.Object-class.html#get_session" class="summary-sig-name">get_session</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Legacy GFD.90 method: return the object's session.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._object_impl-pysrc.html#Object.get_session">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.object_api-pysrc.html#Object.get_session">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -206,10 +201,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga._object_impl.Object-class.html#get_type" class="summary-sig-name">get_type</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.object_api.Object-class.html#get_type" class="summary-sig-name">get_type</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Legacy GFD.90 method: return the object type.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._object_impl-pysrc.html#Object.get_type">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.object_api-pysrc.html#Object.get_type">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -219,7 +214,7 @@
   </tr>
 <tr bgcolor="#e8f0f8" >
   <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga._attributes_impl.AttributeInterface-class.html">_attributes_impl.AttributeInterface</a></th></tr>
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.attributes_api.AttributeInterface-class.html">attributes_api.AttributeInterface</a></th></tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
@@ -230,7 +225,7 @@
         <span class="summary-sig-arg">key</span>)</span><br />
       Check if an attribute exists.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._attributes_impl-pysrc.html#AttributeInterface.attribute_exists">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.attributes_api-pysrc.html#AttributeInterface.attribute_exists">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -248,7 +243,7 @@
         <span class="summary-sig-arg">key</span>)</span><br />
       Check if an attribute is read-only.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._attributes_impl-pysrc.html#AttributeInterface.attribute_is_readonly">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.attributes_api-pysrc.html#AttributeInterface.attribute_is_readonly">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -266,7 +261,7 @@
         <span class="summary-sig-arg">key</span>)</span><br />
       Check if an attribute is a vector.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._attributes_impl-pysrc.html#AttributeInterface.attribute_is_vector">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.attributes_api-pysrc.html#AttributeInterface.attribute_is_vector">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -284,7 +279,7 @@
         <span class="summary-sig-arg">key</span>)</span><br />
       Check if an attribute is writable.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._attributes_impl-pysrc.html#AttributeInterface.attribute_is_writeable">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.attributes_api-pysrc.html#AttributeInterface.attribute_is_writeable">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -302,7 +297,7 @@
         <span class="summary-sig-arg">key</span>)</span><br />
       Return the value of a scalar attribute.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._attributes_impl-pysrc.html#AttributeInterface.get_attribute">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.attributes_api-pysrc.html#AttributeInterface.get_attribute">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -320,7 +315,7 @@
         <span class="summary-sig-arg">key</span>)</span><br />
       Return the value of a vector attribute.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._attributes_impl-pysrc.html#AttributeInterface.get_vector_attribute">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.attributes_api-pysrc.html#AttributeInterface.get_vector_attribute">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -337,7 +332,7 @@
           <td><span class="summary-sig"><a name="list_attributes"></a><span class="summary-sig-name">list_attributes</span>(<span class="summary-sig-arg">self</span>)</span><br />
       List all defined attributes.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._attributes_impl-pysrc.html#AttributeInterface.list_attributes">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.attributes_api-pysrc.html#AttributeInterface.list_attributes">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -355,7 +350,7 @@
         <span class="summary-sig-arg">key</span>)</span><br />
       Remove the attribute.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._attributes_impl-pysrc.html#AttributeInterface.remove_attribute">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.attributes_api-pysrc.html#AttributeInterface.remove_attribute">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -374,7 +369,7 @@
         <span class="summary-sig-arg">value</span>)</span><br />
       Set the value of a scalar attribute.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._attributes_impl-pysrc.html#AttributeInterface.set_attribute">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.attributes_api-pysrc.html#AttributeInterface.set_attribute">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -393,7 +388,7 @@
         <span class="summary-sig-arg">value</span>)</span><br />
       Set the value of a vector attribute.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._attributes_impl-pysrc.html#AttributeInterface.set_vector_attribute">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.attributes_api-pysrc.html#AttributeInterface.set_vector_attribute">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -412,29 +407,26 @@
 </tr>
 <tr bgcolor="#e8f0f8" >
   <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.resource._compute_description.ComputeDescription-class.html">_compute_description.ComputeDescription</a></th></tr>
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.resource.compute_description_api.ComputeDescription-class.html">compute_description_api.ComputeDescription</a></th></tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="cores"></a><span class="summary-name">cores</span> = <code title="property(** cores())">property(** cores())</code>
+        <a name="arch"></a><span class="summary-name">arch</span> = <code title="property(** arch())">property(** arch())</code>
     </td>
   </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="memory"></a><span class="summary-name">memory</span> = <code title="property(** memory())">property(** memory())</code>
-    </td>
-  </tr>
-<tr bgcolor="#e8f0f8" >
-  <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.resource._description.Description-class.html">_description.Description</a></th></tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a name="duration"></a><span class="summary-name">duration</span> = <code title="property(** duration())">property(** duration())</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="dynamic"></a><span class="summary-name">dynamic</span> = <code title="property(** dynamic())">property(** dynamic())</code>
     </td>
   </tr>
 <tr>
@@ -448,12 +440,47 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
+        <a name="hostnames"></a><span class="summary-name">hostnames</span> = <code title="property(** hostnames())">property(** hostnames())</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="memory"></a><span class="summary-name">memory</span> = <code title="property(** memory())">property(** memory())</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="os"></a><span class="summary-name">os</span> = <code title="property(** os())">property(** os())</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="slots"></a><span class="summary-name">slots</span> = <code title="property(** slots())">property(** slots())</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
         <a name="start"></a><span class="summary-name">start</span> = <code title="property(** start())">property(** start())</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="type"></a><span class="summary-name">type</span> = <code title="property(** type())">property(** type())</code>
     </td>
   </tr>
 <tr bgcolor="#e8f0f8" >
   <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga._object_impl.Object-class.html">_object_impl.Object</a></th></tr>
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.object_api.Object-class.html">object_api.Object</a></th></tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
@@ -636,13 +663,6 @@
         <a name="session"></a><span class="summary-name">session</span> = <code title="property(** session())">property(** session())</code>
     </td>
   </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="type"></a><span class="summary-name">type</span> = <code title="property(** type())">property(** type())</code>
-    </td>
-  </tr>
 </table>
 <!-- ==================== PROPERTIES ==================== -->
 <a name="section-Properties"></a>
@@ -692,7 +712,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Thu Mar  1 12:56:10 2012</a>
+    3.0.1 on Thu Mar  1 16:10:59 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

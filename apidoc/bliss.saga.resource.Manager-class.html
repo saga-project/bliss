@@ -63,13 +63,13 @@
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class Manager</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.resource-pysrc.html#Manager">source&nbsp;code</a></span></p>
 <pre class="base-tree">
-         object --+        
-                  |        
-<a href="bliss.saga._object_impl.Object-class.html">_object_impl.Object</a> --+    
-                      |    
-<a href="bliss.saga.resource._manager_facade.Manager-class.html">_manager_facade.Manager</a> --+
-                          |
-                         <strong class="uidshort">Manager</strong>
+       object --+        
+                |        
+<a href="bliss.saga.object_api.Object-class.html">object_api.Object</a> --+    
+                    |    
+  <a href="bliss.saga.resource.manager_api.Manager-class.html">manager_api.Manager</a> --+
+                        |
+                       <strong class="uidshort">Manager</strong>
 </pre>
 
 <hr />
@@ -106,17 +106,17 @@
   </tr>
 <tr bgcolor="#e8f0f8" >
   <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.resource._manager_facade.Manager-class.html">_manager_facade.Manager</a></th></tr>
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.resource.manager_api.Manager-class.html">manager_api.Manager</a></th></tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.resource._manager_facade.Manager-class.html#__del__" class="summary-sig-name">__del__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.resource.manager_api.Manager-class.html#__del__" class="summary-sig-name">__del__</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Delete the manager in a civilised fashion.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._manager_facade-pysrc.html#Manager.__del__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.manager_api-pysrc.html#Manager.__del__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -130,12 +130,12 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.resource._manager_facade.Manager-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="bliss.saga.resource.manager_api.Manager-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">url</span>,
         <span class="summary-sig-arg">session</span>=<span class="summary-sig-default">None</span>)</span><br />
       Construct a new resource manager object</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._manager_facade-pysrc.html#Manager.__init__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.manager_api-pysrc.html#Manager.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -153,7 +153,7 @@
         <span class="summary-sig-arg">compute_description</span>)</span><br />
       Instantiate (request) a new compute resource</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._manager_facade-pysrc.html#Manager.create_compute">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.manager_api-pysrc.html#Manager.create_compute">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -171,7 +171,7 @@
         <span class="summary-sig-arg">network_description</span>)</span><br />
       Instantiate (request) a new network resource</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._manager_facade-pysrc.html#Manager.create_network">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.manager_api-pysrc.html#Manager.create_network">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -189,7 +189,7 @@
         <span class="summary-sig-arg">pool_description</span>)</span><br />
       Instantiate (request) a new pool resource</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._manager_facade-pysrc.html#Manager.create_pool">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.manager_api-pysrc.html#Manager.create_pool">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -207,7 +207,7 @@
         <span class="summary-sig-arg">storage_description</span>)</span><br />
       Instantiate (request) a new storage resource</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._manager_facade-pysrc.html#Manager.create_storage">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.manager_api-pysrc.html#Manager.create_storage">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -225,7 +225,7 @@
         <span class="summary-sig-arg">r_id</span>)</span><br />
       get resource description</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._manager_facade-pysrc.html#Manager.describe_resource">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.manager_api-pysrc.html#Manager.describe_resource">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -243,7 +243,7 @@
         <span class="summary-sig-arg">t_id</span>)</span><br />
       get template description</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._manager_facade-pysrc.html#Manager.describe_template">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.manager_api-pysrc.html#Manager.describe_template">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -262,7 +262,7 @@
         <span class="summary-sig-arg">drain</span>=<span class="summary-sig-default">False</span>)</span><br />
       Destroy (close) an existing compute resource</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._manager_facade-pysrc.html#Manager.destroy_compute">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.manager_api-pysrc.html#Manager.destroy_compute">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -281,7 +281,7 @@
         <span class="summary-sig-arg">drain</span>=<span class="summary-sig-default">False</span>)</span><br />
       Destroy (close) an existing network resource</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._manager_facade-pysrc.html#Manager.destroy_network">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.manager_api-pysrc.html#Manager.destroy_network">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -300,7 +300,7 @@
         <span class="summary-sig-arg">drain</span>=<span class="summary-sig-default">False</span>)</span><br />
       Destroy (close) an existing pool resource</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._manager_facade-pysrc.html#Manager.destroy_pool">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.manager_api-pysrc.html#Manager.destroy_pool">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -319,7 +319,7 @@
         <span class="summary-sig-arg">drain</span>=<span class="summary-sig-default">False</span>)</span><br />
       Destroy (close) an existing storage resource</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._manager_facade-pysrc.html#Manager.destroy_storage">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.manager_api-pysrc.html#Manager.destroy_storage">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -337,7 +337,7 @@
         <span class="summary-sig-arg">js_instance</span>)</span><br />
       Return the resource handle for a legacy saga.job.service</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._manager_facade-pysrc.html#Manager.get_compute">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.manager_api-pysrc.html#Manager.get_compute">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -355,7 +355,7 @@
         <span class="summary-sig-arg">network_id</span>)</span><br />
       Return the resource handle for an existing network resource</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._manager_facade-pysrc.html#Manager.get_network">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.manager_api-pysrc.html#Manager.get_network">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -373,7 +373,7 @@
         <span class="summary-sig-arg">pool_id</span>)</span><br />
       Return the resource handle for an existing pool resource</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._manager_facade-pysrc.html#Manager.get_pool">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.manager_api-pysrc.html#Manager.get_pool">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -391,7 +391,7 @@
         <span class="summary-sig-arg">r_id</span>)</span><br />
       get resource handle for some id</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._manager_facade-pysrc.html#Manager.get_resource">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.manager_api-pysrc.html#Manager.get_resource">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -409,7 +409,7 @@
         <span class="summary-sig-arg">fs_instance</span>)</span><br />
       Return the resource handle for a legacy saga.filesystem::directory</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._manager_facade-pysrc.html#Manager.get_storage">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.manager_api-pysrc.html#Manager.get_storage">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -427,7 +427,7 @@
         <span class="summary-sig-arg">r_type</span>=<span class="summary-sig-default">&quot;*&quot;</span>)</span><br />
       List known resource ids</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._manager_facade-pysrc.html#Manager.list_resources">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.manager_api-pysrc.html#Manager.list_resources">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -445,7 +445,7 @@
         <span class="summary-sig-arg">ttype</span>=<span class="summary-sig-default">&quot;*&quot;</span>)</span><br />
       List available template names</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._manager_facade-pysrc.html#Manager.list_templates">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource.manager_api-pysrc.html#Manager.list_templates">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -455,17 +455,17 @@
   </tr>
 <tr bgcolor="#e8f0f8" >
   <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga._object_impl.Object-class.html">_object_impl.Object</a></th></tr>
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.object_api.Object-class.html">object_api.Object</a></th></tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga._object_impl.Object-class.html#get_id" class="summary-sig-name">get_id</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.object_api.Object-class.html#get_id" class="summary-sig-name">get_id</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Legacy GFD.90 method: return the object identifier.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._object_impl-pysrc.html#Object.get_id">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.object_api-pysrc.html#Object.get_id">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -479,10 +479,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga._object_impl.Object-class.html#get_session" class="summary-sig-name">get_session</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.object_api.Object-class.html#get_session" class="summary-sig-name">get_session</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Legacy GFD.90 method: return the object's session.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._object_impl-pysrc.html#Object.get_session">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.object_api-pysrc.html#Object.get_session">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -496,10 +496,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga._object_impl.Object-class.html#get_type" class="summary-sig-name">get_type</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.object_api.Object-class.html#get_type" class="summary-sig-name">get_type</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Legacy GFD.90 method: return the object type.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._object_impl-pysrc.html#Object.get_type">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.object_api-pysrc.html#Object.get_type">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -518,7 +518,7 @@
 </tr>
 <tr bgcolor="#e8f0f8" >
   <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga._object_impl.Object-class.html">_object_impl.Object</a></th></tr>
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.object_api.Object-class.html">object_api.Object</a></th></tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
@@ -757,7 +757,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Thu Mar  1 12:56:10 2012</a>
+    3.0.1 on Thu Mar  1 16:10:59 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

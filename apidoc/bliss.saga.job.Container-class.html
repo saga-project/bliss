@@ -63,13 +63,13 @@
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class Container</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.job-pysrc.html#Container">source&nbsp;code</a></span></p>
 <pre class="base-tree">
-           object --+        
-                    |        
-  <a href="bliss.saga._object_impl.Object-class.html">_object_impl.Object</a> --+    
-                        |    
-<a href="bliss.saga.job._container_impl.Container-class.html">_container_impl.Container</a> --+
-                            |
-                           <strong class="uidshort">Container</strong>
+         object --+        
+                  |        
+  <a href="bliss.saga.object_api.Object-class.html">object_api.Object</a> --+    
+                      |    
+<a href="bliss.saga.job.container_api.Container-class.html">container_api.Container</a> --+
+                          |
+                         <strong class="uidshort">Container</strong>
 </pre>
 
 <hr />
@@ -104,17 +104,17 @@
   </tr>
 <tr bgcolor="#e8f0f8" >
   <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.job._container_impl.Container-class.html">_container_impl.Container</a></th></tr>
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.job.container_api.Container-class.html">container_api.Container</a></th></tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.job._container_impl.Container-class.html#__del__" class="summary-sig-name">__del__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.job.container_api.Container-class.html#__del__" class="summary-sig-name">__del__</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Delete the container in a civilised fashion.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.job._container_impl-pysrc.html#Container.__del__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.__del__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -128,11 +128,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.job._container_impl.Container-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="bliss.saga.job.container_api.Container-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">service</span>)</span><br />
       Create a new job (a.k.a.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.job._container_impl-pysrc.html#Container.__init__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -146,11 +146,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.job._container_impl.Container-class.html#add" class="summary-sig-name">add</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="bliss.saga.job.container_api.Container-class.html#add" class="summary-sig-name">add</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">job</span>)</span><br />
       Add a job to the container.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.job._container_impl-pysrc.html#Container.add">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.add">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -164,11 +164,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.job._container_impl.Container-class.html#cancel" class="summary-sig-name">cancel</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="bliss.saga.job.container_api.Container-class.html#cancel" class="summary-sig-name">cancel</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">timeout</span>=<span class="summary-sig-default">0</span>)</span><br />
       Cancel the execution of all jobs in the container.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.job._container_impl-pysrc.html#Container.cancel">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.cancel">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -182,11 +182,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.job._container_impl.Container-class.html#get_job" class="summary-sig-name">get_job</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="bliss.saga.job.container_api.Container-class.html#get_job" class="summary-sig-name">get_job</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">job_uid</span>)</span><br />
       Get a single job from the job container.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.job._container_impl-pysrc.html#Container.get_job">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.get_job">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -203,7 +203,7 @@
           <td><span class="summary-sig"><a name="get_states"></a><span class="summary-sig-name">get_states</span>(<span class="summary-sig-arg">self</span>)</span><br />
       Get the states of all jobs in the container.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.job._container_impl-pysrc.html#Container.get_states">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.get_states">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -220,7 +220,7 @@
           <td><span class="summary-sig"><a name="list"></a><span class="summary-sig-name">list</span>(<span class="summary-sig-arg">self</span>)</span><br />
       List all jobs that are in the container.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.job._container_impl-pysrc.html#Container.list">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.list">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -234,11 +234,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.job._container_impl.Container-class.html#remove" class="summary-sig-name">remove</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="bliss.saga.job.container_api.Container-class.html#remove" class="summary-sig-name">remove</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">job</span>)</span><br />
       Remove a job from the container.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.job._container_impl-pysrc.html#Container.remove">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.remove">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -255,7 +255,7 @@
           <td><span class="summary-sig"><a name="run"></a><span class="summary-sig-name">run</span>(<span class="summary-sig-arg">self</span>)</span><br />
       Start all jobs in the container.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.job._container_impl-pysrc.html#Container.run">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.run">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -272,7 +272,7 @@
           <td><span class="summary-sig"><a name="size"></a><span class="summary-sig-name">size</span>(<span class="summary-sig-arg">self</span>)</span><br />
       Return the number of elements in the container.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.job._container_impl-pysrc.html#Container.size">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.size">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -286,12 +286,12 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.job._container_impl.Container-class.html#wait" class="summary-sig-name">wait</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="bliss.saga.job.container_api.Container-class.html#wait" class="summary-sig-name">wait</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">wait_mode</span>=<span class="summary-sig-default">WaitMode.All</span>,
         <span class="summary-sig-arg">timeout</span>=<span class="summary-sig-default">-1</span>)</span><br />
       Wait for jobs in the task container to finish execution.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.job._container_impl-pysrc.html#Container.wait">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.wait">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -301,17 +301,17 @@
   </tr>
 <tr bgcolor="#e8f0f8" >
   <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga._object_impl.Object-class.html">_object_impl.Object</a></th></tr>
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.object_api.Object-class.html">object_api.Object</a></th></tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga._object_impl.Object-class.html#get_id" class="summary-sig-name">get_id</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.object_api.Object-class.html#get_id" class="summary-sig-name">get_id</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Legacy GFD.90 method: return the object identifier.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._object_impl-pysrc.html#Object.get_id">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.object_api-pysrc.html#Object.get_id">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -325,10 +325,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga._object_impl.Object-class.html#get_session" class="summary-sig-name">get_session</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.object_api.Object-class.html#get_session" class="summary-sig-name">get_session</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Legacy GFD.90 method: return the object's session.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._object_impl-pysrc.html#Object.get_session">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.object_api-pysrc.html#Object.get_session">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -342,10 +342,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga._object_impl.Object-class.html#get_type" class="summary-sig-name">get_type</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.object_api.Object-class.html#get_type" class="summary-sig-name">get_type</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Legacy GFD.90 method: return the object type.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._object_impl-pysrc.html#Object.get_type">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.object_api-pysrc.html#Object.get_type">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -364,7 +364,7 @@
 </tr>
 <tr bgcolor="#e8f0f8" >
   <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga._object_impl.Object-class.html">_object_impl.Object</a></th></tr>
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.object_api.Object-class.html">object_api.Object</a></th></tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
@@ -603,7 +603,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Thu Mar  1 12:56:10 2012</a>
+    3.0.1 on Thu Mar  1 16:10:59 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
