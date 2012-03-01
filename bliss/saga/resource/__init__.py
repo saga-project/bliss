@@ -1,16 +1,11 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-__author__    = "Ole Christian Weidner"
-__copyright__ = "Copyright 2012, Ole Christian Weidner"
-__license__   = "MIT"
-
 '''SAGA Job Package API.
 '''
 
 __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
-
 
 
 from bliss.saga.resource.state import State as SState

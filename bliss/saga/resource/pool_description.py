@@ -4,9 +4,10 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.resource.description import Description as SDescription
+from bliss.saga.object_api import Object
+from bliss.saga.attributes_api import AttributeInterface
 
-class PoolDescription(SDescription):
+class PoolDescription(Object, AttributeInterface):
     '''Defines a SAGA pool_description as defined in GFD.xx
     '''
 
@@ -16,8 +17,8 @@ class PoolDescription(SDescription):
     # to work this way...
     def __init__(self):
         '''Create a new (empty) pool resource description.'''
-        Object.__init__(self, Object.ResourceDescription, 
-                        apitype=Object.JobAPI,)
+        Object.__init__(self, Object.ResourcePoolDescription, 
+                        apitype=Object.ResourceAPI,)
 
         self._type           = Type.Pool
         self._policy         = 'Default'
