@@ -8,7 +8,7 @@ __license__   = "MIT"
 
 from bliss.saga                           import Url
 from bliss.saga.filesystem._directory     import Directory as SDirectory
-from bliss.saga.resource._resource_facade import Resource  as SResource
+from bliss.saga.resource._resource_api import Resource  as SResource
 
 
 class Storage(SResource, SDirectory):

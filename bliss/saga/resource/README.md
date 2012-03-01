@@ -36,5 +36,5 @@
     self._memory         = None # total or per machine?
     -> there is no notion of 'machine'  
 
-- when is _facade, when not? (description)
+- when is _api, when not? (description)
   

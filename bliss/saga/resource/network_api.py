@@ -7,7 +7,7 @@ __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.saga                           import Url
-from bliss.saga.resource.resource_facade import Resource as SResource
+from bliss.saga.resource.resource_api import Resource as SResource
 
 
 class Network(SResource):
