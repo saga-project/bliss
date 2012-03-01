@@ -160,7 +160,7 @@ class SGEJobInfo(object):
 
     @property 
     def state(self):
-        return pbs_to_saga_jobstate(self._job_state)
+        return sge_to_saga_jobstate(self._job_state)
 
     @property 
     def jobid(self):
@@ -332,7 +332,7 @@ class SGEService:
             if pbsnodes_result.returncode != 0:
                 raise Exception("Error running 'pbsnodes': %s" % pbsnodes_result.stderr)
 
-            self._service_info = PBSServiceInfo(qstat_result.stdout,
+            self._service_info = SGEServiceInfo(qstat_result.stdout,
                                                 pbsnodes_result.stdout, self._pi)
             self._service_info_last_update = time.time()
 
@@ -347,7 +347,7 @@ class SGEService:
                 if pbsnodes_result.returncode != 0:
                     raise Exception("Error running 'pbsnodes': %s" % pbsnodes_result.stderr)
 
-                self._service_info = PBSServiceInfo(qstat_result.stdout,
+                self._service_info = SGEServiceInfo(qstat_result.stdout,
                                                     pbsnodes_result.stdout, self._pi)
                 self._service_info_last_update = time.time()
             else:
@@ -369,7 +369,7 @@ class SGEService:
 
         lines = result.stdout.split("\n\n")
         for line in lines:
-            jobinfo = PBSJobInfo(line, self._pi)
+            jobinfo = SGEJobInfo(line, self._pi)
             self._known_jobs_update(jobinfo.jobid, jobinfo)
             jobids.append(bliss.saga.job.JobID(self._url, jobinfo.jobid))
         return jobids
@@ -402,7 +402,7 @@ class SGEService:
                 ## something went wrong.
                 raise Exception("Error running 'qstat': %s" % result.stderr)
 
-        jobinfo = PBSJobInfo(result.stdout, self._pi)
+        jobinfo = SGEJobInfo(result.stdout, self._pi)
         self._known_jobs_update(jobinfo.jobid, jobinfo)
 
         return jobinfo
@@ -446,7 +446,7 @@ class SGEService:
                 # error that pops up sometimes. Ignore
                 pass
             else:
-                jobinfo = PBSJobInfo(result, self._pi)
+                jobinfo = SGEJobInfo(result, self._pi)
                 self._known_jobs_update(jobinfo.jobid, jobinfo)
                 jobinfos.append(jobinfo)
 
