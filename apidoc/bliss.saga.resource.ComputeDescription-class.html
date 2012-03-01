@@ -63,21 +63,23 @@
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class ComputeDescription</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.resource-pysrc.html#ComputeDescription">source&nbsp;code</a></span></p>
 <pre class="base-tree">
-                         object --+        
-                                  |        
-                <a href="bliss.saga._object_impl.Object-class.html">_object_impl.Object</a> --+    
-                                      |    
-                         object --+   |    
-                                  |   |    
-<a href="bliss.saga._attributes_impl.AttributeInterface-class.html">_attributes_impl.AttributeInterface</a> --+    
-                                      |    
-<a href="bliss.saga.resource._compute_description.ComputeDescription-class.html">_compute_description.ComputeDescription</a> --+
-                                          |
-                                         <strong class="uidshort">ComputeDescription</strong>
+                         object --+            
+                                  |            
+                <a href="bliss.saga._object_impl.Object-class.html">_object_impl.Object</a> --+        
+                                      |        
+                         object --+   |        
+                                  |   |        
+<a href="bliss.saga._attributes_impl.AttributeInterface-class.html">_attributes_impl.AttributeInterface</a> --+        
+                                      |        
+               <a href="bliss.saga.resource._description.Description-class.html">_description.Description</a> --+    
+                                          |    
+    <a href="bliss.saga.resource._compute_description.ComputeDescription-class.html">_compute_description.ComputeDescription</a> --+
+                                              |
+                                             <strong class="uidshort">ComputeDescription</strong>
 </pre>
 
 <hr />
-<p>A SAGA compute resource description as defined in GWD-R.xx</p>
+<p>A SAGA compute resource description as defined in GFD.xx</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -113,23 +115,6 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.resource._compute_description.ComputeDescription-class.html#__del__" class="summary-sig-name">__del__</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Delete this resource description.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._compute_description-pysrc.html#ComputeDescription.__del__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
           <td><span class="summary-sig"><a href="bliss.saga.resource._compute_description.ComputeDescription-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Create a new (empty) compute resource description.</td>
           <td align="right" valign="top">
@@ -141,16 +126,36 @@
       
     </td>
   </tr>
+<tr bgcolor="#e8f0f8" >
+  <th colspan="2" class="group-header"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.resource._description.Description-class.html">_description.Description</a></th></tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.resource._compute_description.ComputeDescription-class.html#__str__" class="summary-sig-name">__str__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.resource._description.Description-class.html#__del__" class="summary-sig-name">__del__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Delete this resource description.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.resource._description-pysrc.html#Description.__del__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.resource._description.Description-class.html#__str__" class="summary-sig-name">__str__</a>(<span class="summary-sig-arg">self</span>)</span><br />
       String representation.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._compute_description-pysrc.html#ComputeDescription.__str__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource._description-pysrc.html#Description.__str__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -419,6 +424,16 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
+        <a name="memory"></a><span class="summary-name">memory</span> = <code title="property(** memory())">property(** memory())</code>
+    </td>
+  </tr>
+<tr bgcolor="#e8f0f8" >
+  <th colspan="2" class="group-header"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.resource._description.Description-class.html">_description.Description</a></th></tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
         <a name="duration"></a><span class="summary-name">duration</span> = <code title="property(** duration())">property(** duration())</code>
     </td>
   </tr>
@@ -427,13 +442,6 @@
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a name="end"></a><span class="summary-name">end</span> = <code title="property(** end())">property(** end())</code>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="memory"></a><span class="summary-name">memory</span> = <code title="property(** memory())">property(** memory())</code>
     </td>
   </tr>
 <tr>
@@ -684,7 +692,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Wed Feb 29 16:47:41 2012</a>
+    3.0.1 on Thu Mar  1 12:56:10 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

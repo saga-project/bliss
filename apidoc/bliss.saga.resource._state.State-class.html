@@ -74,43 +74,112 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="Pending"></a><span class="summary-name">Pending</span> = <code title="1">1</code><br />
-      Will eventually become active or fail.
+        <a name="Unknown"></a><span class="summary-name">Unknown</span> = <code title="0 '''wut?'''">0 '''wut?'''</code>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="Active"></a><span class="summary-name">Active</span> = <code title="2">2</code><br />
-      Accepting jobs.
+        <a href="bliss.saga.resource._state.State-class.html#Pending" class="summary-name">Pending</a> = <code title="1 '''accepting workload, will eventually become active or fail.'''">1 '''accepting workload, will eventually become acti<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="Closed"></a><span class="summary-name">Closed</span> = <code title="3">3</code><br />
-      Closed by user.
+        <a name="Active"></a><span class="summary-name">Active</span> = <code title="2 '''Accepting workload, workload is executed.'''">2 '''Accepting workload, workload is executed.'''</code>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="Expired"></a><span class="summary-name">Expired</span> = <code title="4">4</code><br />
-      Closed by system.
+        <a href="bliss.saga.resource._state.State-class.html#Draining" class="summary-name">Draining</a> = <code title="4 '''workload still executed, not accepting new work items.'''">4 '''workload still executed, not accepting new wor<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="Failed"></a><span class="summary-name">Failed</span> = <code title="5">5</code><br />
-      Something went wrong.
+        <a name="Running"></a><span class="summary-name">Running</span> = <code title="Pending | Active | Draining">Pending | Active | Draining</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="Destroyed"></a><span class="summary-name">Destroyed</span> = <code title="8 '''Closed by user.'''">8 '''Closed by user.'''</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="Expired"></a><span class="summary-name">Expired</span> = <code title="16 '''Closed by system.'''">16 '''Closed by system.'''</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="Failed"></a><span class="summary-name">Failed</span> = <code title="32 '''Something went wrong.'''">32 '''Something went wrong.'''</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="Final"></a><span class="summary-name">Final</span> = <code title="Destroyed | Expired | Failed">Destroyed | Expired | Failed</code>
     </td>
   </tr>
 </table>
+<!-- ==================== CLASS VARIABLE DETAILS ==================== -->
+<a name="section-ClassVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Class Variable Details</span></td>
+</tr>
+</table>
+<a name="Pending"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Pending</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+1 '''accepting workload, will eventually become active or fail.'''
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Draining"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Draining</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+4 '''workload still executed, not accepting new work items.'''
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
        bgcolor="#a0c0ff" cellspacing="0">
@@ -143,7 +212,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Wed Feb 29 16:47:41 2012</a>
+    3.0.1 on Thu Mar  1 12:56:10 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

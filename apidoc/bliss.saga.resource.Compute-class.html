@@ -63,17 +63,25 @@
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class Compute</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.resource-pysrc.html#Compute">source&nbsp;code</a></span></p>
 <pre class="base-tree">
-         object --+        
-                  |        
-<a href="bliss.saga._object_impl.Object-class.html">_object_impl.Object</a> --+    
-                      |    
-<a href="bliss.saga.resource._compute_facade.Compute-class.html">_compute_facade.Compute</a> --+
-                          |
-                         <strong class="uidshort">Compute</strong>
+           object --+            
+                    |            
+  <a href="bliss.saga._object_impl.Object-class.html">_object_impl.Object</a> --+        
+                        |        
+<a href="bliss.saga.resource._resource_facade.Resource-class.html">_resource_facade.Resource</a> --+    
+                            |    
+           object --+       |    
+                    |       |    
+  <a href="bliss.saga._object_impl.Object-class.html">_object_impl.Object</a> --+   |    
+                        |   |    
+<a href="bliss.saga.job._service_impl.Service-class.html">job._service_impl.Service</a> --+    
+                            |    
+      <a href="bliss.saga.resource._compute_facade.Compute-class.html">_compute_facade.Compute</a> --+
+                                |
+                               <strong class="uidshort">Compute</strong>
 </pre>
 
 <hr />
-<p>A SAGA compute resource as defined in GWD-R.xx.</p>
+<p>A SAGA compute resource as defined in GFD.xx.</p>
   <p>A compute resource represents a stateful handle to a physical compute 
   resource. Jobs can be submitted to it.</p>
 
@@ -129,10 +137,100 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="get_description"></a><span class="summary-sig-name">get_description</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Return the associated (compute) resource description object.</td>
+          <td><span class="summary-sig"><a name="get_job_service"></a><span class="summary-sig-name">get_job_service</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      submit a job from JSDL description.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._compute_facade-pysrc.html#Compute.get_description">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource._compute_facade-pysrc.html#Compute.get_job_service">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_jobs"></a><span class="summary-sig-name">get_jobs</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      submit a job from JSDL description.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.resource._compute_facade-pysrc.html#Compute.get_jobs">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="submit"></a><span class="summary-sig-name">submit</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">jsdl</span>)</span><br />
+      submit a job from JSDL description.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.resource._compute_facade-pysrc.html#Compute.submit">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr bgcolor="#e8f0f8" >
+  <th colspan="2" class="group-header"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.resource._resource_facade.Resource-class.html">_resource_facade.Resource</a></th></tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="destroy"></a><span class="summary-sig-name">destroy</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">drain</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Destroy (close) the resource.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.resource._resource_facade-pysrc.html#Resource.destroy">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_description"></a><span class="summary-sig-name">get_description</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Return the associated resource description object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.resource._resource_facade-pysrc.html#Resource.get_description">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.resource._resource_facade.Resource-class.html#get_id" class="summary-sig-name">get_id</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Return the id of the resource</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.resource._resource_facade-pysrc.html#Resource.get_id">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -149,7 +247,7 @@
           <td><span class="summary-sig"><a name="get_manager"></a><span class="summary-sig-name">get_manager</span>(<span class="summary-sig-arg">self</span>)</span><br />
       Return the associated resource manager object.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._compute_facade-pysrc.html#Compute.get_manager">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource._resource_facade-pysrc.html#Resource.get_manager">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -164,9 +262,43 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="get_state"></a><span class="summary-sig-name">get_state</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Return the state of the compute resource</td>
+      Return the state of the resource</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._compute_facade-pysrc.html#Compute.get_state">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource._resource_facade-pysrc.html#Resource.get_state">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_state_detail"></a><span class="summary-sig-name">get_state_detail</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Return the state detail of the resource</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.resource._resource_facade-pysrc.html#Resource.get_state_detail">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.resource._resource_facade.Resource-class.html#get_type" class="summary-sig-name">get_type</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Return the type of the resource</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.resource._resource_facade-pysrc.html#Resource.get_type">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -181,11 +313,84 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="wait"></a><span class="summary-sig-name">wait</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">state</span>,
-        <span class="summary-sig-arg">timeout</span>=<span class="summary-sig-default">-1</span>)</span><br />
-      Wait for the compute resource to reach a specific state.</td>
+        <span class="summary-sig-arg">timeout</span>=<span class="summary-sig-default">-1</span>,
+        <span class="summary-sig-arg">state</span>=<span class="summary-sig-default">Final</span>)</span><br />
+      Wait for the resource to reach a specific state.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.resource._compute_facade-pysrc.html#Compute.wait">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.resource._resource_facade-pysrc.html#Resource.wait">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr bgcolor="#e8f0f8" >
+  <th colspan="2" class="group-header"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.job._service_impl.Service-class.html">job._service_impl.Service</a></th></tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.job._service_impl.Service-class.html#__del__" class="summary-sig-name">__del__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Delete the service in a civilised fashion.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.job._service_impl-pysrc.html#Service.__del__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.job._service_impl.Service-class.html#create_job" class="summary-sig-name">create_job</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">job_description</span>)</span><br />
+      Create a new job object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.job._service_impl-pysrc.html#Service.create_job">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.job._service_impl.Service-class.html#get_job" class="summary-sig-name">get_job</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">job_id</span>)</span><br />
+      Return the job object for the given job id.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.job._service_impl-pysrc.html#Service.get_job">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="list"></a><span class="summary-sig-name">list</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      List all jobs managed by this service instance.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.job._service_impl-pysrc.html#Service.list">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -196,40 +401,6 @@
 <tr bgcolor="#e8f0f8" >
   <th colspan="2" class="group-header"
     >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga._object_impl.Object-class.html">_object_impl.Object</a></th></tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="__del__"></a><span class="summary-sig-name">__del__</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Destructor.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._object_impl-pysrc.html#Object.__del__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="bliss.saga._object_impl.Object-class.html#get_id" class="summary-sig-name">get_id</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy GFD.90 method: return the object identifier.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._object_impl-pysrc.html#Object.get_id">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
@@ -247,16 +418,47 @@
       
     </td>
   </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Class Methods</span></td>
+</tr>
+<tr bgcolor="#e8f0f8" >
+  <th colspan="2" class="group-header"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.job._service_impl.Service-class.html">job._service_impl.Service</a></th></tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga._object_impl.Object-class.html#get_type" class="summary-sig-name">get_type</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy GFD.90 method: return the object type.</td>
+          <td><span class="summary-sig"><a name="from_compute"></a><span class="summary-sig-name">from_compute</span>(<span class="summary-sig-arg">compute_obj</span>,
+        <span class="summary-sig-arg">session</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Create a job service from a saga.resource.Compute object.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga._object_impl-pysrc.html#Object.get_type">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.job._service_impl-pysrc.html#Service.from_compute">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="from_url"></a><span class="summary-sig-name">from_url</span>(<span class="summary-sig-arg">url</span>,
+        <span class="summary-sig-arg">session</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Initialize a new job service from (resource manager) URL.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.job._service_impl-pysrc.html#Service.from_url">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -514,7 +716,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Wed Feb 29 16:47:41 2012</a>
+    3.0.1 on Thu Mar  1 12:56:10 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

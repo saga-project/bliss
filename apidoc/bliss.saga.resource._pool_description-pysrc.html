@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>bliss.saga.resource._pool_description</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="bliss.saga-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://oweidner.github.com/bliss">Bliss</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;bliss ::
+        <a href="bliss.saga-module.html">Package&nbsp;saga</a> ::
+        <a href="bliss.saga.resource-module.html">Package&nbsp;resource</a> ::
+        Module&nbsp;_pool_description
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="bliss.saga.resource._pool_description-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="bliss.saga.resource._pool_description-module.html">Module bliss.saga.resource._pool_description</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment">#!env python</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment"># vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-name">__author__</tt>    <tt class="py-op">=</tt> <tt class="py-docstring">"Ole Christian Weidner"</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt id="link-0" class="py-name" targets="Variable bliss.saga.__email__=bliss.saga-module.html#__email__,Variable bliss.saga._attributes_impl.__email__=bliss.saga._attributes_impl-module.html#__email__,Variable bliss.saga._context_impl.__email__=bliss.saga._context_impl-module.html#__email__,Variable bliss.saga._exception_impl.__email__=bliss.saga._exception_impl-module.html#__email__,Variable bliss.saga._object_impl.__email__=bliss.saga._object_impl-module.html#__email__,Variable bliss.saga._session_impl.__email__=bliss.saga._session_impl-module.html#__email__,Variable bliss.saga._url_impl.__email__=bliss.saga._url_impl-module.html#__email__,Variable bliss.saga.filesystem.__email__=bliss.saga.filesystem-module.html#__email__,Variable bliss.saga.filesystem._directory_impl.__email__=bliss.saga.filesystem._directory_impl-module.html#__email__,Variable bliss.saga.filesystem._file_impl.__email__=bliss.saga.filesystem._file_impl-module.html#__email__,Variable bliss.saga.job.__email__=bliss.saga.job-module.html#__email__,Variable bliss.saga.job._container_impl.__email__=bliss.saga.job._container_impl-module.html#__email__,Variable bliss.saga.job._description_impl.__email__=bliss.saga.job._description_impl-module.html#__email__,Variable bliss.saga.job._job_impl.__email__=bliss.saga.job._job_impl-module.html#__email__,Variable bliss.saga.resource._compute_description.__email__=bliss.saga.resource._compute_description-module.html#__email__,Variable bliss.saga.resource._description.__email__=bliss.saga.resource._description-module.html#__email__,Variable bliss.saga.resource._network_description.__email__=bliss.saga.resource._network_description-module.html#__email__,Variable bliss.saga.resource._pool_description.__email__=bliss.saga.resource._pool_description-module.html#__email__,Variable bliss.saga.resource._storage_description.__email__=bliss.saga.resource._storage_description-module.html#__email__,Variable bliss.saga.sd.__email__=bliss.saga.sd-module.html#__email__,Variable bliss.saga.sd._discoverer_impl.__email__=bliss.saga.sd._discoverer_impl-module.html#__email__,Variable bliss.saga.sd._service_data_impl.__email__=bliss.saga.sd._service_data_impl-module.html#__email__,Variable bliss.saga.sd._service_description_impl.__email__=bliss.saga.sd._service_description_impl-module.html#__email__"><a title="bliss.saga.__email__
+bliss.saga._attributes_impl.__email__
+bliss.saga._context_impl.__email__
+bliss.saga._exception_impl.__email__
+bliss.saga._object_impl.__email__
+bliss.saga._session_impl.__email__
+bliss.saga._url_impl.__email__
+bliss.saga.filesystem.__email__
+bliss.saga.filesystem._directory_impl.__email__
+bliss.saga.filesystem._file_impl.__email__
+bliss.saga.job.__email__
+bliss.saga.job._container_impl.__email__
+bliss.saga.job._description_impl.__email__
+bliss.saga.job._job_impl.__email__
+bliss.saga.resource._compute_description.__email__
+bliss.saga.resource._description.__email__
+bliss.saga.resource._network_description.__email__
+bliss.saga.resource._pool_description.__email__
+bliss.saga.resource._storage_description.__email__
+bliss.saga.sd.__email__
+bliss.saga.sd._discoverer_impl.__email__
+bliss.saga.sd._service_data_impl.__email__
+bliss.saga.sd._service_description_impl.__email__" class="py-name" href="#" onclick="return doclink('link-0', '__email__', 'link-0');">__email__</a></tt>     <tt class="py-op">=</tt> <tt class="py-string">"ole.weidner@me.com"</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-name">__copyright__</tt> <tt class="py-op">=</tt> <tt class="py-string">"Copyright 2012, Ole Christian Weidner"</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-name">__license__</tt>   <tt class="py-op">=</tt> <tt class="py-string">"MIT"</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package bliss.saga=bliss.saga-module.html"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-1', 'saga', 'link-1');">saga</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Package bliss.saga.resource=bliss.saga.resource-module.html"><a title="bliss.saga.resource" class="py-name" href="#" onclick="return doclink('link-2', 'resource', 'link-2');">resource</a></tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Module bliss.saga.resource._description=bliss.saga.resource._description-module.html"><a title="bliss.saga.resource._description" class="py-name" href="#" onclick="return doclink('link-3', '_description', 'link-3');">_description</a></tt> <tt class="py-keyword">import</tt> <tt id="link-4" class="py-name" targets="Class bliss.saga.job.Description=bliss.saga.job.Description-class.html,Class bliss.saga.job._description_impl.Description=bliss.saga.job._description_impl.Description-class.html,Class bliss.saga.resource._description.Description=bliss.saga.resource._description.Description-class.html"><a title="bliss.saga.job.Description
+bliss.saga.job._description_impl.Description
+bliss.saga.resource._description.Description" class="py-name" href="#" onclick="return doclink('link-4', 'Description', 'link-4');">Description</a></tt> <tt class="py-keyword">as</tt> <tt class="py-name">SDescription</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"> </tt>
+<a name="PoolDescription"></a><div id="PoolDescription-def"><a name="L12"></a><tt class="py-lineno">12</tt> <a class="py-toggle" href="#" id="PoolDescription-toggle" onclick="return toggle('PoolDescription');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="bliss.saga.resource._pool_description.PoolDescription-class.html">PoolDescription</a><tt class="py-op">(</tt><tt class="py-base-class">SDescription</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="PoolDescription-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="PoolDescription-expanded"><a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line">    <tt class="py-docstring">'''Defines a SAGA pool_description as defined in GFD.xx</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-docstring">    '''</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line">    <tt class="py-comment">## </tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line">    <tt class="py-comment"># FIXME: not sure if inheritance for the attrib interface is supposed </tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line">    <tt class="py-comment"># to work this way...</tt> </tt>
+<a name="PoolDescription.__init__"></a><div id="PoolDescription.__init__-def"><a name="L20"></a><tt class="py-lineno">20</tt> <a class="py-toggle" href="#" id="PoolDescription.__init__-toggle" onclick="return toggle('PoolDescription.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.resource._pool_description.PoolDescription-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="PoolDescription.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="PoolDescription.__init__-expanded"><a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">        <tt class="py-docstring">'''Create a new (empty) pool resource description.'''</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">        <tt id="link-5" class="py-name" targets="Class bliss.saga.Object=bliss.saga.Object-class.html,Class bliss.saga._object_impl.Object=bliss.saga._object_impl.Object-class.html"><a title="bliss.saga.Object
+bliss.saga._object_impl.Object" class="py-name" href="#" onclick="return doclink('link-5', 'Object', 'link-5');">Object</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name" targets="Method bliss.saga._attributes_impl.AttributeInterface.__init__()=bliss.saga._attributes_impl.AttributeInterface-class.html#__init__,Method bliss.saga._context_impl.Context.__init__()=bliss.saga._context_impl.Context-class.html#__init__,Method bliss.saga._exception_impl.Exception.__init__()=bliss.saga._exception_impl.Exception-class.html#__init__,Method bliss.saga._object_impl.Object.__init__()=bliss.saga._object_impl.Object-class.html#__init__,Method bliss.saga._session_impl.Session.__init__()=bliss.saga._session_impl.Session-class.html#__init__,Method bliss.saga._url_impl.Url.__init__()=bliss.saga._url_impl.Url-class.html#__init__,Method bliss.saga.filesystem._directory_impl.Directory.__init__()=bliss.saga.filesystem._directory_impl.Directory-class.html#__init__,Method bliss.saga.filesystem._file_impl.File.__init__()=bliss.saga.filesystem._file_impl.File-class.html#__init__,Method bliss.saga.job._container_impl.Container.__init__()=bliss.saga.job._container_impl.Container-class.html#__init__,Method bliss.saga.job._description_impl.Description.__init__()=bliss.saga.job._description_impl.Description-class.html#__init__,Method bliss.saga.job._job_impl.Job.__init__()=bliss.saga.job._job_impl.Job-class.html#__init__,Method bliss.saga.job._job_impl.JobID.__init__()=bliss.saga.job._job_impl.JobID-class.html#__init__,Method bliss.saga.job._service_impl.Service.__init__()=bliss.saga.job._service_impl.Service-class.html#__init__,Method bliss.saga.resource._compute_description.ComputeDescription.__init__()=bliss.saga.resource._compute_description.ComputeDescription-class.html#__init__,Method bliss.saga.resource._compute_facade.Compute.__init__()=bliss.saga.resource._compute_facade.Compute-class.html#__init__,Method bliss.saga.resource._description.Description.__init__()=bliss.saga.resource._description.Description-class.html#__init__,Method bliss.saga.resource._manager_facade.Manager.__init__()=bliss.saga.resource._manager_facade.Manager-class.html#__init__,Method bliss.saga.resource._network_description.NetworkDescription.__init__()=bliss.saga.resource._network_description.NetworkDescription-class.html#__init__,Method bliss.saga.resource._network_facade.Network.__init__()=bliss.saga.resource._network_facade.Network-class.html#__init__,Method bliss.saga.resource._pool_description.PoolDescription.__init__()=bliss.saga.resource._pool_description.PoolDescription-class.html#__init__,Method bliss.saga.resource._resource_facade.Resource.__init__()=bliss.saga.resource._resource_facade.Resource-class.html#__init__,Method bliss.saga.resource._storage_description.StorageDescription.__init__()=bliss.saga.resource._storage_description.StorageDescription-class.html#__init__,Method bliss.saga.resource._storage_facade.Storage.__init__()=bliss.saga.resource._storage_facade.Storage-class.html#__init__,Method bliss.saga.sd._discoverer_impl.Discoverer.__init__()=bliss.saga.sd._discoverer_impl.Discoverer-class.html#__init__,Method bliss.saga.sd._service_data_impl.ServiceData.__init__()=bliss.saga.sd._service_data_impl.ServiceData-class.html#__init__,Method bliss.saga.sd._service_description_impl.ServiceDescription.__init__()=bliss.saga.sd._service_description_impl.ServiceDescription-class.html#__init__"><a title="bliss.saga._attributes_impl.AttributeInterface.__init__
+bliss.saga._context_impl.Context.__init__
+bliss.saga._exception_impl.Exception.__init__
+bliss.saga._object_impl.Object.__init__
+bliss.saga._session_impl.Session.__init__
+bliss.saga._url_impl.Url.__init__
+bliss.saga.filesystem._directory_impl.Directory.__init__
+bliss.saga.filesystem._file_impl.File.__init__
+bliss.saga.job._container_impl.Container.__init__
+bliss.saga.job._description_impl.Description.__init__
+bliss.saga.job._job_impl.Job.__init__
+bliss.saga.job._job_impl.JobID.__init__
+bliss.saga.job._service_impl.Service.__init__
+bliss.saga.resource._compute_description.ComputeDescription.__init__
+bliss.saga.resource._compute_facade.Compute.__init__
+bliss.saga.resource._description.Description.__init__
+bliss.saga.resource._manager_facade.Manager.__init__
+bliss.saga.resource._network_description.NetworkDescription.__init__
+bliss.saga.resource._network_facade.Network.__init__
+bliss.saga.resource._pool_description.PoolDescription.__init__
+bliss.saga.resource._resource_facade.Resource.__init__
+bliss.saga.resource._storage_description.StorageDescription.__init__
+bliss.saga.resource._storage_facade.Storage.__init__
+bliss.saga.sd._discoverer_impl.Discoverer.__init__
+bliss.saga.sd._service_data_impl.ServiceData.__init__
+bliss.saga.sd._service_description_impl.ServiceDescription.__init__" class="py-name" href="#" onclick="return doclink('link-6', '__init__', 'link-6');">__init__</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">,</tt> <tt id="link-7" class="py-name"><a title="bliss.saga.Object
+bliss.saga._object_impl.Object" class="py-name" href="#" onclick="return doclink('link-7', 'Object', 'link-5');">Object</a></tt><tt class="py-op">.</tt><tt class="py-name">ResourceDescription</tt><tt class="py-op">,</tt>  </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">                        <tt class="py-name">apitype</tt><tt class="py-op">=</tt><tt id="link-8" class="py-name"><a title="bliss.saga.Object
+bliss.saga._object_impl.Object" class="py-name" href="#" onclick="return doclink('link-8', 'Object', 'link-5');">Object</a></tt><tt class="py-op">.</tt><tt id="link-9" class="py-name" targets="Variable bliss.saga._object_impl.Object.JobAPI=bliss.saga._object_impl.Object-class.html#JobAPI"><a title="bliss.saga._object_impl.Object.JobAPI" class="py-name" href="#" onclick="return doclink('link-9', 'JobAPI', 'link-9');">JobAPI</a></tt><tt class="py-op">,</tt><tt class="py-op">)</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-10" class="py-name" targets="Module bliss.saga.resource._type=bliss.saga.resource._type-module.html"><a title="bliss.saga.resource._type" class="py-name" href="#" onclick="return doclink('link-10', '_type', 'link-10');">_type</a></tt>           <tt class="py-op">=</tt> <tt id="link-11" class="py-name" targets="Class bliss.saga.resource._type.Type=bliss.saga.resource._type.Type-class.html"><a title="bliss.saga.resource._type.Type" class="py-name" href="#" onclick="return doclink('link-11', 'Type', 'link-11');">Type</a></tt><tt class="py-op">.</tt><tt id="link-12" class="py-name" targets="Class bliss.saga.resource.Pool=bliss.saga.resource.Pool-class.html,Variable bliss.saga.resource._type.Type.Pool=bliss.saga.resource._type.Type-class.html#Pool"><a title="bliss.saga.resource.Pool
+bliss.saga.resource._type.Type.Pool" class="py-name" href="#" onclick="return doclink('link-12', 'Pool', 'link-12');">Pool</a></tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_policy</tt>         <tt class="py-op">=</tt> <tt class="py-string">'Default'</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_access</tt>         <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">        <tt class="py-comment"># register properties with the attribute interface</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_register_ro_type</tt>          <tt class="py-op">(</tt><tt id="link-13" class="py-name" targets="Variable bliss.saga.sd._service_description_impl.ServiceDescription.name=bliss.saga.sd._service_description_impl.ServiceDescription-class.html#name"><a title="bliss.saga.sd._service_description_impl.ServiceDescription.name" class="py-name" href="#" onclick="return doclink('link-13', 'name', 'link-13');">name</a></tt><tt class="py-op">=</tt><tt class="py-string">"type"</tt><tt class="py-op">,</tt>  </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">                                         <tt class="py-name">accessor</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">.</tt><tt class="py-name">res_type</tt><tt class="py-op">)</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_register_rw_attribute</tt>     <tt class="py-op">(</tt><tt id="link-14" class="py-name"><a title="bliss.saga.sd._service_description_impl.ServiceDescription.name" class="py-name" href="#" onclick="return doclink('link-14', 'name', 'link-13');">name</a></tt><tt class="py-op">=</tt><tt class="py-string">"Policy"</tt><tt class="py-op">,</tt>  </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">                                         <tt class="py-name">accessor</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">.</tt><tt id="link-15" class="py-name" targets="Method bliss.saga.resource._pool_description.PoolDescription.policy()=bliss.saga.resource._pool_description.PoolDescription-class.html#policy"><a title="bliss.saga.resource._pool_description.PoolDescription.policy" class="py-name" href="#" onclick="return doclink('link-15', 'policy', 'link-15');">policy</a></tt><tt class="py-op">)</tt>  </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_register_ro_attribute</tt>     <tt class="py-op">(</tt><tt id="link-16" class="py-name"><a title="bliss.saga.sd._service_description_impl.ServiceDescription.name" class="py-name" href="#" onclick="return doclink('link-16', 'name', 'link-13');">name</a></tt><tt class="py-op">=</tt><tt class="py-string">"Access"</tt><tt class="py-op">,</tt>  </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">                                         <tt class="py-name">accessor</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">.</tt><tt class="py-name">access</tt><tt class="py-op">)</tt>  </tt>
+</div><a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">    <tt class="py-comment"># FIXME: details do not reflect above spec, yet.</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line"> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">    <tt class="py-comment">## Property </tt> </tt>
+<a name="PoolDescription.policy"></a><div id="PoolDescription.policy-def"><a name="L42"></a><tt class="py-lineno">42</tt> <a class="py-toggle" href="#" id="PoolDescription.policy-toggle" onclick="return toggle('PoolDescription.policy');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.resource._pool_description.PoolDescription-class.html#policy">policy</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="PoolDescription.policy-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="PoolDescription.policy-expanded"><a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">        <tt class="py-name">doc</tt> <tt class="py-op">=</tt> <tt class="py-string">"."</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fget</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_policy</tt> </tt>
+</div><a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fset</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_policy</tt> <tt class="py-op">=</tt> <tt class="py-name">val</tt> </tt>
+</div><a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fdel</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_policy</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">locals</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line">    <tt id="link-17" class="py-name" targets="Variable bliss.saga.resource._compute_description.ComputeDescription.cores=bliss.saga.resource._compute_description.ComputeDescription-class.html#cores,Variable bliss.saga.resource._description.Description.cores=bliss.saga.resource._description.Description-class.html#cores,Variable bliss.saga.resource._network_description.NetworkDescription.cores=bliss.saga.resource._network_description.NetworkDescription-class.html#cores,Variable bliss.saga.resource._pool_description.PoolDescription.cores=bliss.saga.resource._pool_description.PoolDescription-class.html#cores,Variable bliss.saga.resource._storage_description.StorageDescription.cores=bliss.saga.resource._storage_description.StorageDescription-class.html#cores"><a title="bliss.saga.resource._compute_description.ComputeDescription.cores
+bliss.saga.resource._description.Description.cores
+bliss.saga.resource._network_description.NetworkDescription.cores
+bliss.saga.resource._pool_description.PoolDescription.cores
+bliss.saga.resource._storage_description.StorageDescription.cores" class="py-name" href="#" onclick="return doclink('link-17', 'cores', 'link-17');">cores</a></tt> <tt class="py-op">=</tt> <tt class="py-name">property</tt><tt class="py-op">(</tt><tt class="py-op">**</tt><tt id="link-18" class="py-name"><a title="bliss.saga.resource._pool_description.PoolDescription.policy" class="py-name" href="#" onclick="return doclink('link-18', 'policy', 'link-15');">policy</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="bliss.saga-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://oweidner.github.com/bliss">Bliss</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    <a href="epydoc-log.html">Generated by Epydoc
+    3.0.1 on Thu Mar  1 12:56:10 2012</a>
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
