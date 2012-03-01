@@ -99,6 +99,7 @@ setup_args = {
         "bliss.interface",
         "bliss.plugins",
         "bliss.plugins.local",
+        "bliss.plugins.sge",
         "bliss.plugins.pbs",
         "bliss.plugins.pbsbigjob",
         "bliss.plugins.sftp"

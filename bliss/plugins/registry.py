@@ -4,10 +4,11 @@
 
 __author__    = "Ole Christian Weidner"
 __email__     = "ole.weidner@me.com"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.plugins.pbs import PBSJobAndSDPlugin
+from bliss.plugins.sge import SGEJobAndSDPlugin
 from bliss.plugins.sftp import SFTPFilesystemPlugin
 from bliss.plugins.local import LocalJobPlugin
 #from bliss.plugins.pbsbigjob import PBSBigJobResourcePlugin
@@ -23,6 +24,11 @@ _registry.append({"class"   : PBSJobAndSDPlugin,
                   "apis"    : PBSJobAndSDPlugin.supported_apis(),
                   "name"    : PBSJobAndSDPlugin.plugin_name(),
                   "schemas" : PBSJobAndSDPlugin.supported_schemas()})
+
+_registry.append({"class"   : SGEJobAndSDPlugin,
+                  "apis"    : SGEJobAndSDPlugin.supported_apis(),
+                  "name"    : SGEJobAndSDPlugin.plugin_name(),
+                  "schemas" : SGEJobAndSDPlugin.supported_schemas()})
 
 #_registry.append({"class"   : PBSBigJobResourcePlugin,
 #                  "apis"    : PBSBigJobResourcePlugin.supported_apis(),
