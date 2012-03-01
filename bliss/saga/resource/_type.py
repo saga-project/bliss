@@ -8,9 +8,14 @@ __license__   = "MIT"
 
 class Type:
 
-    Unknown   =  0  '''wut?'''
-    Compute   =  1  '''accepting compute jobs'''
-    Storage   =  2  '''stores data'''
-    Network   =  3  '''connects resources'''
-    Pool      =  4  '''combines resources'''
+    Unknown   =  0  
+    '''wut?'''
+    Compute   =  1  
+    '''accepting compute jobs'''
+    Storage   =  2  
+    '''stores data'''
+    Network   =  3  
+    '''connects resources'''
+    Pool      =  4  
+    '''combines resources'''
 

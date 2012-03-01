@@ -9,8 +9,8 @@ __license__   = "MIT"
 
 import bliss.saga
 
-from bliss.saga._object_impl import Object
-from bliss.saga._attributes_impl import AttributeInterface
+from bliss.saga.object_impl import Object
+from bliss.saga.attributes_impl import AttributeInterface
 
 
 class ServiceData(Object, AttributeInterface):

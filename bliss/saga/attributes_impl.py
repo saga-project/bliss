@@ -3,12 +3,11 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga._exception_impl import Exception as SAGAException
-from bliss.saga._exception_impl import Error as SAGAError
+from bliss.saga.exception_impl import Exception as SAGAException
+from bliss.saga.exception_impl import Error as SAGAError
 
 
 class AttributeInterface(object):

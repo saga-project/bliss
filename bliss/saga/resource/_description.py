@@ -7,8 +7,8 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga._object_impl import Object
-from bliss.saga._attributes_impl import AttributeInterface
+from bliss.saga.object_impl import Object
+from bliss.saga.attributes_impl import AttributeInterface
 
 class Description(Object, AttributeInterface):
     '''Loosely defines a SAGA Resource description as defined in GFD.xx

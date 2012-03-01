@@ -9,10 +9,10 @@ __license__   = "MIT"
 
 import bliss.saga
 
-from bliss.saga._object_impl import Object as SObject
-from bliss.saga._exception_impl import Exception as SException
-from bliss.saga._exception_impl import Error as SError
-from bliss.saga._url_impl import Url
+from bliss.saga.object_impl import Object as SObject
+from bliss.saga.exception_impl import Exception as SException
+from bliss.saga.exception_impl import Error as SError
+from bliss.saga.url_impl import Url
 
 class Discoverer(SObject):
     '''Loosely represents a SAGA service discoverer as defined in GFD.R-P.144'''

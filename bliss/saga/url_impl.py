@@ -9,7 +9,7 @@ __license__   = "MIT"
 
 import urlparse 
 
-from bliss.saga._object_impl import Object 
+from bliss.saga.object_impl import Object 
 
 # this is a stupid hack that is unfortunately necessary for 
 # pre 2.4 urlparse implementations
@@ -23,8 +23,8 @@ urlparse.uses_fragment.append("sftp")
 urlparse.uses_netloc.append("pbs+ssh")
 urlparse.uses_fragment.append("pbs+ssh")
 
-urlparse.uses_netloc.append("bigjob")
-urlparse.uses_fragment.append("bigjob")
+urlparse.uses_netloc.append("sge+ssh")
+urlparse.uses_fragment.append("sge+ssh")
 
 class Url(Object):
     '''Looesely defines a SAGA Url class as defined in GFD.90.'''

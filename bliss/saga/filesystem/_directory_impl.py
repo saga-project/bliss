@@ -8,7 +8,7 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.saga import Url
-from bliss.saga._object_impl import Object 
+from bliss.saga.object_impl import Object 
 
 class Directory(Object):
     '''Loosely represents a SAGA directory as defined in GFD.90'''

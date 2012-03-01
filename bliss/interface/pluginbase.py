@@ -11,7 +11,7 @@ __license__   = "MIT"
 
 import logging
 from bliss.plugins import utils
-from bliss.saga._exception_impl import Exception as SAGAException
+from bliss.saga.exception_impl import Exception as SAGAException
 
 class PluginBaseInterface:
     '''Abstract base class for all plugins'''

@@ -97,7 +97,7 @@ class Pool(SResource):
 
     ######################################################################
     ##
-    def get(self, id)
+    def get(self, id):
         '''get resource from the managed pool.'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
@@ -108,7 +108,7 @@ class Pool(SResource):
 
     ######################################################################
     ##
-    def list_policies(self)
+    def list_policies(self):
         '''list available pool policy names.'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
@@ -119,7 +119,7 @@ class Pool(SResource):
 
     ######################################################################
     ##
-    def describe_policy(self, name)
+    def describe_policy(self, name):
         '''describe a pool policy.'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
@@ -130,7 +130,7 @@ class Pool(SResource):
 
     ######################################################################
     ##
-    def set_policy(self, name)
+    def set_policy(self, name):
         '''set a pool policy.'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
@@ -141,7 +141,7 @@ class Pool(SResource):
 
     ######################################################################
     ##
-    def get_compute(self)
+    def get_compute(self):
         '''get an interface to the pool's compute capabilities'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
@@ -152,7 +152,7 @@ class Pool(SResource):
 
     ######################################################################
     ##
-    def get_storage(self)
+    def get_storage(self):
         '''get an interface to the pool's storage capabilities'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
@@ -163,7 +163,7 @@ class Pool(SResource):
 
     ######################################################################
     ##
-    def get_network(self)
+    def get_network(self):
         '''get an interface to the pool's network capabilities'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 

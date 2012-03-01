@@ -7,8 +7,8 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga._object_impl import Object
-from bliss.saga._attributes_impl import AttributeInterface
+from bliss.saga.object_impl import Object
+from bliss.saga.attributes_impl import AttributeInterface
 
 class WaitMode:
     ''' Specifies the condition on which a wait() operation on
