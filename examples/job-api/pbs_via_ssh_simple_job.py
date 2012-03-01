@@ -35,7 +35,7 @@ def main():
  
         # create a job service for Futuregrid's 'india' PBS cluster
         # and attach the SSH security context to it
-        js = saga.job.Service("pbs+ssh://alamo.futuregrid.org")
+        js = saga.job.Service("pbs+ssh://india.futuregrid.org")
         js.session.contexts.append(ctx)
 
         # describe our job

@@ -14,37 +14,37 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 # Base "look-and-feel packages"
-from bliss.saga.exception_impl import Exception as SException
+from bliss.saga.exception_api import Exception as SException
 class exception(SException):
     '''Loosely defines a SAGA Exception as defined in GFD.90.
     '''
     pass
 
-from bliss.saga.exception_impl import Error as SError
+from bliss.saga.exception_api import Error as SError
 class error(SError):
     '''Loosely defines a SAGA Error as defined in GFD.90.
     '''
     pass
 
-from bliss.saga.object_impl import Object as SObject
+from bliss.saga.object_api import Object as SObject
 class object(SObject):
     '''Loosely defines a SAGA Object as defined in GFD.90.
     '''
     pass
 
-from bliss.saga.url_impl import Url as SUrl
+from bliss.saga.url_api import Url as SUrl
 class url(SUrl):
     '''Loosely defines a SAGA URL as defined in GFD.90.
     '''
     pass
 
-from bliss.saga.session_impl import Session as SSession
+from bliss.saga.session_api import Session as SSession
 class session(SSession):
     '''Loosely defines a SAGA Session as defined in GFD.90.
     '''
     pass
 
-from bliss.saga.context_impl import Context as SContext
+from bliss.saga.context_api import Context as SContext
 class context(SContext):
     '''Loosely defines a SAGA Context as defined in GFD.90.
     '''

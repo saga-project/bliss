@@ -97,7 +97,7 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
             desc._type = "org.ogf.saga.service.job"
             desc._name = "PBS Job Scheduler"
 
-            #desc._implementor = 
+            #desc._apiementor = 
             #desc._site = 
             #desc._uid = 
 
