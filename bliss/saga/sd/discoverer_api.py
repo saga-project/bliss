@@ -3,16 +3,15 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import bliss.saga
 
-from bliss.saga.object_impl import Object as SObject
-from bliss.saga.exception_impl import Exception as SException
-from bliss.saga.exception_impl import Error as SError
-from bliss.saga.url_impl import Url
+from bliss.saga.object_api import Object as SObject
+from bliss.saga.exception_api import Exception as SException
+from bliss.saga.exception_api import Error as SError
+from bliss.saga.url_api import Url
 
 class Discoverer(SObject):
     '''Loosely represents a SAGA service discoverer as defined in GFD.R-P.144'''

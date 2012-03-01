@@ -3,14 +3,13 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.resource._description import Description as SDescription
+from bliss.saga.resource.description import Description as SDescription
 
-class NetworkDescription(SDescription):
-    '''Defines a SAGA network_description as defined in GFD.xx
+class PoolDescription(SDescription):
+    '''Defines a SAGA pool_description as defined in GFD.xx
     '''
 
     ######################################################################
@@ -18,19 +17,19 @@ class NetworkDescription(SDescription):
     # FIXME: not sure if inheritance for the attrib interface is supposed 
     # to work this way...
     def __init__(self):
-        '''Create a new (empty) network resource description.'''
+        '''Create a new (empty) pool resource description.'''
         Object.__init__(self, Object.ResourceDescription, 
                         apitype=Object.JobAPI,)
 
-        self._type           = Type.Network
-        self._size           = ''
+        self._type           = Type.Pool
+        self._policy         = 'Default'
         self._access         = None
 
         # register properties with the attribute interface
         self._register_ro_type          (name="type", 
                                          accessor=self.__class__.res_type)
-        self._register_rw_attribute     (name="Size", 
-                                         accessor=self.__class__.size) 
+        self._register_rw_attribute     (name="Policy", 
+                                         accessor=self.__class__.policy) 
         self._register_ro_attribute     (name="Access", 
                                          accessor=self.__class__.access) 
 
@@ -39,14 +38,14 @@ class NetworkDescription(SDescription):
 
     ######################################################################
     ## Property 
-    def size():
-        doc = "Required size of network."
+    def policy():
+        doc = "."
         def fget(self):
-            return self._size
+            return self._policy
         def fset(self, val):
-            self._size = val
+            self._policy = val
         def fdel(self, val):
-            self._size = None
+            self._policy = None
         return locals()
-    cores = property(**size())
+    cores = property(**policy())
 

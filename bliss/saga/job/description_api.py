@@ -3,12 +3,11 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.object_impl import Object
-from bliss.saga.attributes_impl import AttributeInterface
+from bliss.saga.object_api import Object
+from bliss.saga.attributes_api import AttributeInterface
 
 class Description(Object, AttributeInterface):
     '''Loosely represents a SAGA job description as defined in GFD.90'''

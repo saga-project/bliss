@@ -3,11 +3,10 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.resource._description import Description as SDescription
+from bliss.saga.resource.description import Description as SDescription
 
 class ComputeDescription(SDescription):
     '''Defines a SAGA compute_description as defined in GFD.xx

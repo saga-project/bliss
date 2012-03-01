@@ -7,7 +7,7 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.context_impl import Context
+from bliss.saga.context_api import Context
 
 class Session(object):
     '''Looesely defines a SAGA Session object as defined in GFD.90.'''

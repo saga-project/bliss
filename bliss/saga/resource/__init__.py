@@ -10,21 +10,21 @@ __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 
-from bliss.saga.resource._compute_description import ComputeDescription as SComputeDescription
+from bliss.saga.resource.compute_description import ComputeDescription as SComputeDescription
 class ComputeDescription(SComputeDescription):
     '''A SAGA compute resource description as defined in GFD.xx
     '''
     pass
 
 
-from bliss.saga.resource._state import State as SState
+from bliss.saga.resource.state import State as SState
 class State(SState):
     '''SAGA resource states as defined in GFD.xx.
     '''
     pass
 
 
-from bliss.saga.resource._manager_facade import Manager as SManager
+from bliss.saga.resource.manager_api import Manager as SManager
 class Manager(SManager):
     '''A SAGA resource manager as defined in GFD.xx.
 
@@ -35,7 +35,7 @@ class Manager(SManager):
     pass
 
 
-from bliss.saga.resource._compute_facade import Compute as SCompute
+from bliss.saga.resource.compute_api import Compute as SCompute
 class Compute(SCompute):
     '''A SAGA compute resource as defined in GFD.xx.
 
@@ -45,7 +45,7 @@ class Compute(SCompute):
     pass
 
 
-from bliss.saga.resource._pool_facade import Pool as SPool
+from bliss.saga.resource.pool_api import Pool as SPool
 class Pool(SPool):
     '''A SAGA compute pool as defined in GFD.xx.
 

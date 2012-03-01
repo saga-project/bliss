@@ -9,7 +9,7 @@ __license__   = "MIT"
 
 import urlparse 
 
-from bliss.saga.object_impl import Object 
+from bliss.saga.object_api import Object 
 
 # this is a stupid hack that is unfortunately necessary for 
 # pre 2.4 urlparse implementations

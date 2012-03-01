@@ -3,11 +3,11 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__copyright__ = "Copyright 2011-2012 Ole Christian Weidner"
+__copyright__ = "Copyright 2012 Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.saga import Url
-from bliss.saga.object_impl import Object 
+from bliss.saga.object_api import Object 
 
 class Service(Object):
     '''Loosely represents a SAGA job service as defined in GFD.90'''

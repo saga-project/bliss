@@ -6,9 +6,9 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga                           import Url
-from bliss.saga.job._service_impl         import Service  as SService
-from bliss.saga.resource._resource_facade import Resource as SResource
+from bliss.saga                       import Url
+from bliss.saga.job._service_api      import Service  as SService
+from bliss.saga.resource.resource_api import Resource as SResource
 
 
 class Compute(SResource, SService):

@@ -7,7 +7,7 @@ __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.saga import Url
-from bliss.saga.object_impl import Object 
+from bliss.saga.object_api import Object 
 
 class Manager(Object):
 

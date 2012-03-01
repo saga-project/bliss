@@ -3,15 +3,14 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import bliss.saga
 
-from bliss.saga.object_impl import Object
-from bliss.saga.attributes_impl import AttributeInterface
-from bliss.saga.url_impl import Url
+from bliss.saga.object_api import Object
+from bliss.saga.attributes_api import AttributeInterface
+from bliss.saga.url_api import Url
 
 class ServiceDescription(Object, AttributeInterface):
     '''Loosely represents a SAGA service description as defined in GFD-R-P.114'''
@@ -27,7 +26,7 @@ class ServiceDescription(Object, AttributeInterface):
         self._uid         = None
         self._site        = None
         self._name        = None
-        self._implementor = None
+        self._apiementor = None
 
         # register properties with the attribute interface
         self._register_ro_attribute     (name="URL", 
@@ -115,6 +114,6 @@ class ServiceDescription(Object, AttributeInterface):
     def implementor():
         doc = "Name of the organization providing the implementation of the service."
         def fget(self):
-            return self._implementor
+            return self._apiementor
         return locals()
     implementor = property(**implementor())

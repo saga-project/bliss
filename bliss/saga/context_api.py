@@ -7,7 +7,7 @@ __email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.attributes_impl import AttributeInterface
+from bliss.saga.attributes_api import AttributeInterface
 
 class Context(AttributeInterface, object):
     '''Looesely defines a SAGA Context object as defined in GFD.90.
