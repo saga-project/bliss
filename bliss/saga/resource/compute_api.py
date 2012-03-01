@@ -1,5 +1,3 @@
-#!env python
-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
@@ -7,11 +5,11 @@ __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.saga                       import Url
-from bliss.saga.job._service_api      import Service  as SService
+from bliss.saga.job.service_api      import Service  as SService
 from bliss.saga.resource.resource_api import Resource as SResource
 
 
-class Compute(SResource, SService):
+class Compute(SResource):
 
     ######################################################################
     ## 

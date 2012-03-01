@@ -1,5 +1,3 @@
-#!env python
-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
@@ -9,24 +7,27 @@ __license__   = "MIT"
 from bliss.saga.object_api import Object
 from bliss.saga.attributes_api import AttributeInterface
 
-class Description(Object, AttributeInterface):
-    '''Loosely defines a SAGA Resource description as defined in GFD.xx
+class NetworkDescription(Object, AttributeInterface):
+    '''Defines a SAGA network_description as defined in GFD.xx
     '''
 
     ######################################################################
     ## 
+    # FIXME: not sure if inheritance for the attrib interface is supposed 
+    # to work this way...
     def __init__(self):
-        '''Create a new (empty) resource description.'''
-        Object.__init__(self, Object.ResourceDescription, 
-                        apitype=Object.JobAPI,)
-        AttributeInterface.__init__(self)
+        '''Create a new (empty) network resource description.'''
+        Object.__init__(self, Object.ResourceNetworkDescription, 
+                        apitype=Object.ResourceAPI,)
 
+        self._type           = Type.Network
         self._dynamic        = False
         self._start          = None
         self._end            = None
         self._duration       = None
-
-        # register properties with the attribute interface
+        
+        self._register_ro_type          (name="Type", 
+                                         accessor=self.__class__.res_type)
         self._register_rw_attribute     (name="Dynamic", 
                                          accessor=self.__class__.dynamic) 
         self._register_rw_attribute     (name="Start", 
@@ -35,10 +36,14 @@ class Description(Object, AttributeInterface):
                                          accessor=self.__class__.end) 
         self._register_rw_attribute     (name="Duration", 
                                          accessor=self.__class__.duration) 
+        
+        self._size           = ''
+        self._access         = None
 
-        # FIXME: how do I signal the attrib interface that the attrib set is
-        # extensible?
-
+        self._register_rw_attribute     (name="Size", 
+                                         accessor=self.__class__.size) 
+        self._register_ro_attribute     (name="Access", 
+                                         accessor=self.__class__.access) 
 
     ######################################################################
     ## 
@@ -46,7 +51,9 @@ class Description(Object, AttributeInterface):
         '''Delete this resource description.'''
         # nothing to do here 
         pass
-
+    
+    ######################################################################
+    ## 
     def __str__(self):
         '''String representation.'''
         result = str("{")
@@ -58,8 +65,16 @@ class Description(Object, AttributeInterface):
             result += str("'%s' : '%s'," % (str(attribute), value))
         result += "}"
         return result
-        
-
+    
+    ######################################################################
+    ## Property 
+    def type():
+        doc = "Type..."
+        def fget(self):
+            return self._type
+        return locals()
+    type = property(**type())
+    
     ######################################################################
     ## Property 
     def start():
@@ -72,7 +87,7 @@ class Description(Object, AttributeInterface):
             self._start = None
         return locals()
     start = property(**start())
-      
+    
     ######################################################################
     ## Property 
     def end():
@@ -85,7 +100,7 @@ class Description(Object, AttributeInterface):
             self._end = None
         return locals()
     end = property(**end())
-
+    
     ######################################################################
     ## Property 
     def duration():
@@ -98,30 +113,43 @@ class Description(Object, AttributeInterface):
             self._duration = None
         return locals()
     duration = property(**duration())
+    
+    ######################################################################
+    ## Property 
+    def dynamic():
+        doc = "Dynamic or not."
+        def fget(self):
+            return self._dynamic
+        def fset(self, val):
+            self._dynamic = val
+        def fdel(self, val):
+            self._dynamic = None
+        return locals()
+    dynamic = property(**dynamic())
+    
+    ######################################################################
+    ## Property 
+    def size():
+        doc = "Required size of network."
+        def fget(self):
+            return self._size
+        def fset(self, val):
+            self._size = val
+        def fdel(self, val):
+            self._size = None
+        return locals()
+    cores = property(**size())
 
     ######################################################################
     ## Property 
-    def cores():
-        doc = "Required number of cores for this resource reservation."
+    def access():
+        doc = "Required access of network."
         def fget(self):
-            return self._cores
+            return self._access
         def fset(self, val):
-            self._cores = val
+            self._access = val
         def fdel(self, val):
-            self._cores = None
+            self._access = None
         return locals()
-    cores = property(**cores())
-
-    ######################################################################
-    ## Property 
-    def memory():
-        doc = "Required amount of memory for this resource reservation."
-        def fget(self):
-            return self._memory
-        def fset(self, val):
-            self._memory = val
-        def fdel(self, val):
-            self._memory = None
-        return locals()
-    memory = property(**memory())
+    access = property(**access())
 

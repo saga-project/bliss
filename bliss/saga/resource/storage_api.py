@@ -1,17 +1,13 @@
-#!env python
-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga                           import Url
-from bliss.saga.filesystem._directory     import Directory as SDirectory
-from bliss.saga.resource._resource_api import Resource  as SResource
+from bliss.saga                        import Url
+from bliss.saga.resource.resource_api import Resource  as SResource
 
-
-class Storage(SResource, SDirectory):
+class Storage(SResource):
 
     ######################################################################
     ## 

@@ -1,5 +1,3 @@
-#!env python
-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
@@ -111,7 +109,7 @@ class Resource(Object):
 
     ######################################################################
     ##
-    def wait(self, timeout=-1, state=Final):
+    def wait(self, timeout=-1, state="Final"):
         '''Wait for the resource to reach a specific state.'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
