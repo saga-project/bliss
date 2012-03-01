@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!env python
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
@@ -6,10 +6,12 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga import Url
-from bliss.saga._object_impl import Object 
+from bliss.saga                           import Url
+from bliss.saga.job._service_impl         import Service  as SService
+from bliss.saga.resource._resource_facade import Resource as SResource
 
-class Compute(Object):
+
+class Compute(SResource, SService):
 
     ######################################################################
     ## 
@@ -22,55 +24,46 @@ class Compute(Object):
 
     ######################################################################
     ##
+    #  FIXME: not sure if that should be overloaded or not...
     def __init_from_manager(self, manager_obj, compute_description):
         '''(Hidden) Constructor'''
         self._manager = manager_obj
-        self._url = manager_obj._url
+        self._url     = manager_obj._url
         self._compute_description = compute_description
 
-        self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
+        self._plugin  = Object._get_plugin(self) # throws 'NoSuccess' on error
         self._logger.info("Bound to plugin %s" % (repr(self._plugin)))
 
 
     ######################################################################
     ##
-    def wait(self, state, timeout=-1):
-        '''Wait for the compute resource to reach a specific state.'''
+    def submit(self, jsdl): 
+        '''submit a job from JSDL description.'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
-        else:
-            return self._plugin.compute_wait(self, state, timeout)
+
+        return self.submit (jsdl) 
 
 
     ######################################################################
     ##
-    def get_state(self):
-        '''Return the state of the compute resource'''
+    def get_jobs(self): 
+        '''submit a job from JSDL description.'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
-        else:
-            return self._plugin.compute_get_state(self, job_description)
 
-    
-    ######################################################################
-    ##
-    def get_manager(self):
-        '''Return the associated resource manager object.'''
-        if self._plugin is None:
-            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-              "Object not bound to a plugin")
-        else:
-            return self._plugin.compute_get_manager(self, job_description)
-    
+        return self.get_jobs () 
+
 
     ######################################################################
     ##
-    def get_description(self): 
-        '''Return the associated (compute) resource description object.'''
+    def get_job_service(self): 
+        '''submit a job from JSDL description.'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
-        else:
-            return self._compute_description 
+
+        return self.get_job_service () 
+
