@@ -15,6 +15,7 @@ class State:
     Draining  =  4  
     '''workload still executed, not accepting new work items.'''
     Running   =  Pending | Active | Draining 
+    '''simplify management of the non-final states'''
     Destroyed =  8  
     '''Closed by user.'''
     Expired   = 16  
@@ -22,4 +23,5 @@ class State:
     Failed    = 32  
     '''Something went wrong.'''
     Final     = Destroyed | Expired | Failed 
+    '''simplify management of the final states'''
 

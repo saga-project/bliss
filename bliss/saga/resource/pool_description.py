@@ -4,7 +4,7 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.object_api import Object
+from bliss.saga.object_api     import Object
 from bliss.saga.attributes_api import AttributeInterface
 
 class PoolDescription(Object, AttributeInterface):
@@ -13,7 +13,7 @@ class PoolDescription(Object, AttributeInterface):
 
     ######################################################################
     ## 
-    # FIXME: not sure if inheritance for the attrib interface is supposed 
+    # FIXME: not sure if inheritance for the attribute interface is supposed 
     # to work this way...
     def __init__(self):
         '''Create a new (empty) pool resource description.'''

@@ -5,7 +5,7 @@ __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.saga                       import Url
-from bliss.saga.job.service_api      import Service  as SService
+from bliss.saga.job.service_api       import Service  as SService
 from bliss.saga.resource.resource_api import Resource as SResource
 
 
@@ -47,7 +47,7 @@ class Compute(SResource):
     ######################################################################
     ##
     def get_jobs(self): 
-        '''submit a job from JSDL description.'''
+        '''get all managed jobs in a task container.'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
@@ -57,8 +57,15 @@ class Compute(SResource):
 
     ######################################################################
     ##
+    # FIXME: Ole, in the spec, the compute resource IS-A job service, so
+    # get_job_service() is not needed -- the instance can simply be casted into
+    # a job service. I am not sure how that is rendered in Python -- I would
+    # of course also simply inherit this resource type from job.service -- 
+    # that seems much cleaner than re-implementing the whole job service
+    # API/CPI...
+    #
     def get_job_service(self): 
-        '''submit a job from JSDL description.'''
+        '''expose this resource as legacy job service.'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
