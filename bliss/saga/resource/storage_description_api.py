@@ -13,14 +13,14 @@ class StorageDescription(Object, AttributeInterface):
 
     ######################################################################
     ## 
-    # FIXME: not sure if inheritance for the attrib interface is supposed 
+    # FIXME: not sure if inheritance for the attribute interface is supposed 
     # to work this way...
     def __init__(self):
         '''Create a new (empty) storage resource description.'''
         Object.__init__(self, Object.ResourceDescription, 
                         apitype=Object.JobAPI,)
 
-        self._type           = Type.Network
+        self._type           = Type.Storage
         self._dynamic        = False
         self._start          = None
         self._end            = None
@@ -38,12 +38,12 @@ class StorageDescription(Object, AttributeInterface):
                                          accessor=self.__class__.duration) 
         
         self._size           = ''
-        self._access         = None
+        self._mountpoint     = None
         
         self._register_rw_attribute     (name="Size", 
                                          accessor=self.__class__.size) 
-        self._register_ro_attribute     (name="Access", 
-                                         accessor=self.__class__.access) 
+        self._register_rw_attribute     (name="Mountpoint",
+                                         accessor=self.__class__.mountpoint) 
 
 
     ######################################################################
@@ -131,7 +131,7 @@ class StorageDescription(Object, AttributeInterface):
     ######################################################################
     ## Property 
     def size():
-        doc = "Required size of network."
+        doc = "Required size of storage."
         def fget(self):
             return self._size
         def fset(self, val):
@@ -143,14 +143,14 @@ class StorageDescription(Object, AttributeInterface):
     
     ######################################################################
     ## Property 
-    def access():
-        doc = "Required access of network."
+    def mountpoint():
+        doc = "Mountpoint of storage."
         def fget(self):
-            return self._access
+            return self._mountpoint
         def fset(self, val):
-            self._access = val
+            self._mountpoint = val
         def fdel(self, val):
-            self._access = None
+            self._mountpoint = None
         return locals()
-    access = property(**access())
+    mountpoint = property(**mountpoint())
 

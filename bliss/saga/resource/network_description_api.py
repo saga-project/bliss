@@ -13,7 +13,7 @@ class NetworkDescription(Object, AttributeInterface):
 
     ######################################################################
     ## 
-    # FIXME: not sure if inheritance for the attrib interface is supposed 
+    # FIXME: not sure if inheritance for the attribute interface is supposed 
     # to work this way...
     def __init__(self):
         '''Create a new (empty) network resource description.'''
@@ -38,12 +38,12 @@ class NetworkDescription(Object, AttributeInterface):
                                          accessor=self.__class__.duration) 
         
         self._size           = ''
-        self._access         = None
+        self._label          = None
 
         self._register_rw_attribute     (name="Size", 
                                          accessor=self.__class__.size) 
-        self._register_ro_attribute     (name="Access", 
-                                         accessor=self.__class__.access) 
+        self._register_rw_attribute     (name="Label", 
+                                         accessor=self.__class__.label) 
 
     ######################################################################
     ## 
@@ -142,14 +142,14 @@ class NetworkDescription(Object, AttributeInterface):
 
     ######################################################################
     ## Property 
-    def access():
-        doc = "Required access of network."
+    def label():
+        doc = "Access label of network."
         def fget(self):
-            return self._access
+            return self._label
         def fset(self, val):
-            self._access = val
+            self._label = val
         def fdel(self, val):
-            self._access = None
+            self._label = None
         return locals()
-    access = property(**access())
+    label = property(**label())
 
