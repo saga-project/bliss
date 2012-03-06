@@ -44,7 +44,7 @@ def main():
         ctx = saga.Context()
         ctx.type = saga.Context.SSH
         ctx.userid  = 'oweidner' # like 'ssh username@host ...'
-        ctx.usercert = '/Users/oweidner/.ssh/id_rsa_fg' # like ssh -i ...'
+        ctx.userkey = '/Users/oweidner/.ssh/id_rsa_fg' # like ssh -i ...'
 
         # get some infos about the resources in our 
         # list, like number of waiting jobs, architecture, etc... 

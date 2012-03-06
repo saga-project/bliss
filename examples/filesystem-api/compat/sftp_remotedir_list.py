@@ -31,7 +31,7 @@ def main():
         ctx = saga.context()
         ctx.type = saga.context.SSH
         ctx.userid  = 'oweidner' # like 'ssh username@host ...'
-        ctx.usercert = '/Users/s1063117/.ssh/id_rsa' # like ssh -i ...'
+        ctx.userkey = '/Users/s1063117/.ssh/id_rsa' # like ssh -i ...'
 
         session = saga.session()
         session.contexts.append(ctx)

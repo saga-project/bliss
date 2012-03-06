@@ -64,7 +64,7 @@ if __name__ == "__main__":
     ctx = saga.Context()
     ctx.type = saga.Context.SSH
     ctx.userid  = 'oweidner' # like 'ssh username@host ...'
-    ctx.usercert = '/Users/s1063117/.ssh/id_rsa' # like ssh -i ...'
+    ctx.userkey = '/Users/s1063117/.ssh/id_rsa' # like ssh -i ...'
 
     session = saga.Session()
     session.contexts.append(ctx)

@@ -5,7 +5,6 @@ def main():
     try:
         c1 = saga.Context()
         c1.type = saga.Context.SSH
-        c1.usercert="/Users/s1063117/id_rsa.pub"
         c1.userkey="/Users/s1063117/id_rsa"
 
         js = saga.job.Service("fork://localhost")
