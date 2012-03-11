@@ -16,8 +16,8 @@ class Manager(Object):
            @param url: Url of the (remote) resource manager.
            @type  url: L{Url} 
         '''
-        Object.__init__(self, Object.ResourceManager, 
-                        apitype=Object.ResourceAPI, session=session)
+        Object.__init__(self, Object.Type.ResourceManager, 
+                        apitype=Object.Type.ResourceAPI, session=session)
 
         if(type(url) == str):
             self._url = Url(str(url))
@@ -92,10 +92,10 @@ class Manager(Object):
     def create_compute(self, compute_description):
         '''Instantiate (request) a new compute resource'''
 
-        if description.get_type() != Object.ResourceComputeDescription:
+        if description.get_type() != Object.Type.ResourceComputeDescription:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
                   "create_compute() expects %s object as parameter" 
-                  % (Object.ResourceComputeDescription))
+                  % (Object.Type.ResourceComputeDescription))
 
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
@@ -131,10 +131,10 @@ class Manager(Object):
     def create_storage(self, storage_description):
         '''Instantiate (request) a new storage resource'''
 
-        if description.get_type() != Object.ResourceStorageDescription:
+        if description.get_type() != Object.Type.ResourceStorageDescription:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
                   "create_storage() expects %s object as parameter" 
-                  % (Object.ResourceStorageDescription))
+                  % (Object.Type.ResourceStorageDescription))
 
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
@@ -156,17 +156,6 @@ class Manager(Object):
 
     ######################################################################
     ## 
-    #def get_storage(self, fs_instance):
-    #    '''Return the resource handle for a legacy saga.filesystem::directory'''
-    #    if self._plugin is None:
-    #        raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-    #          "Object not bound to a plugin")
-#
-#        return self._plugin.manager_get_storage(self, fs_instance)
-
-
-    ######################################################################
-    ## 
     def destroy_storage(self, storage_id, drain=False):
         '''Destroy (close) an existing storage resource'''
         if self._plugin is None:
@@ -174,83 +163,5 @@ class Manager(Object):
               "Object not bound to a plugin")
 
         return self._plugin.manager_destroy_storage(self, storage_id, drain)
-
-
-    ######################################################################
-    ## 
-    #def create_network(self, network_description):
-    #    '''Instantiate (request) a new network resource'''
-#
-#        if description.get_type() != Object.ResourceNetworkDescription:
-#            raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
-#                  "create_network() expects %s object as parameter" 
-#                  % (Object.ResourceNetworkDescription))
-
-#        if self._plugin is None:
-#            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-#              "Object not bound to a plugin")
-
-#        return self._plugin.manager_create_network(self, description)
-
-
-    ######################################################################
-    ## 
-#    def get_network(self, network_id):
-#        '''Return the resource handle for an existing network resource'''
-#        if self._plugin is None:
-#            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-#              "Object not bound to a plugin")
-#
-#        return self._plugin.manager_get_network(self, network_id)
-
-
-    ######################################################################
-    ## 
-#    def destroy_network(self, network_id, drain=False):
-#        '''Destroy (close) an existing network resource'''
-#        if self._plugin is None:
-#            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-#              "Object not bound to a plugin")
-#
-#        return self._plugin.manager_destroy_network(self, network_id, drain)
-
-
-    ######################################################################
-    ## 
-#    def create_pool(self, pool_description):
-#        '''Instantiate (request) a new pool resource'''
-#
-#        if description.get_type() != Object.ResourcePoolDescription:
-#            raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
-#                  "create_pool() expects %s object as parameter" 
-#                  % (Object.ResourcePoolDescription))
-#
-#        if self._plugin is None:
-#            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-#              "Object not bound to a plugin")
-#
-#        return self._plugin.manager_create_pool(self, description)
-
-
-    ######################################################################
-    ## 
-#    def get_pool(self, pool_id):
-#        '''Return the resource handle for an existing pool resource'''
-#        if self._plugin is None:
-#            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-#              "Object not bound to a plugin")
-#
-#        return self._plugin.manager_get_pool(self, pool_id)
-
-
-    ######################################################################
-    ## 
-#    def destroy_pool(self, pool_id, drain=False):
-#        '''Destroy (close) an existing pool resource'''
-#        if self._plugin is None:
-#            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-#              "Object not bound to a plugin")
-#
-#        return self._plugin.manager_destroy_pool(self, pool_id, drain)
 
 

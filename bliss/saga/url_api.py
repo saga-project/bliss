@@ -34,7 +34,7 @@ class Url(Object):
     def __init__(self, urlstring=''):
         '''Construct a new Url from a string'''
 
-        Object.__init__(self, objtype=Object.Url, apitype=Object.BaseAPI)
+        Object.__init__(self, objtype=Object.Type.Url, apitype=Object.Type.BaseAPI)
 
         self._urlobj  = urlparse.urlparse(urlstring)
         

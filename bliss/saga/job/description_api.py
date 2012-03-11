@@ -16,8 +16,8 @@ class Description(Object, AttributeInterface):
     ## 
     def __init__(self):
         '''Create a new, empty job description.'''
-        Object.__init__(self, Object.JobDescription, 
-                        apitype=Object.JobAPI,)
+        Object.__init__(self, Object.Type.JobDescription, 
+                        apitype=Object.Type.JobAPI,)
         AttributeInterface.__init__(self)
 
         self._executable        = None

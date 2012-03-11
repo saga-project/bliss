@@ -17,8 +17,8 @@ class StorageDescription(Object, AttributeInterface):
     # to work this way...
     def __init__(self):
         '''Create a new (empty) storage resource description.'''
-        Object.__init__(self, Object.ResourceDescription, 
-                        apitype=Object.JobAPI,)
+        Object.__init__(self, Object.Type.ResourceDescription, 
+                        apitype=Object.Type.ResourceAPI,)
 
         self._type           = Type.Storage
         self._dynamic        = False
@@ -139,7 +139,7 @@ class StorageDescription(Object, AttributeInterface):
         def fdel(self, val):
             self._size = None
         return locals()
-    cores = property(**size())
+    size = property(**size())
     
     ######################################################################
     ## Property 

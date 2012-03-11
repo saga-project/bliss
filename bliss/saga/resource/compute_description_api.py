@@ -17,8 +17,8 @@ class ComputeDescription(Object, AttributeInterface):
     # to work this way...
     def __init__(self):
         '''Create a new (empty) compute resource description.'''
-        Object.__init__(self, Object.ResourceComputeDescription, 
-                        apitype=Object.ResourceAPI,)
+        Object.__init__(self, Object.Type.ResourceComputeDescription, 
+                        apitype=Object.Type.ResourceAPI,)
 
         self._type           = Type.Compute
         self._dynamic        = False

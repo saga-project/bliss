@@ -26,8 +26,8 @@ class Discoverer(SObject):
             # assume it's a URL object
             self._url = url
 
-        SObject.__init__(self, objtype=SObject.SDDiscoverer, 
-                        apitype=SObject.SDAPI, session=session)
+        SObject.__init__(self, objtype=SObject.Type.SDDiscoverer, 
+                        apitype=SObject.Type.SDAPI, session=session)
         self._plugin = SObject._get_plugin(self) # throws 'NoSuccess' on error
         self._plugin.register_discoverer_object(self)
         self._logger.info("Discoverer object bound to plugin %s" % (repr(self._plugin)))

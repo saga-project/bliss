@@ -38,13 +38,13 @@ class Container(Object):
                            a valid L{saga.job.Service} and can only hold 
                            jobs that are known to that serivce.  
         '''
-        Object.__init__(self, Object.JobContainer, apitype=Object.JobAPI)
+        Object.__init__(self, Object.Type.JobContainer, apitype=Object.Type.JobAPI)
         
         # parameter checks
-        if service.get_type() != Object.JobService:
+        if service.get_type() != Object.Type.JobService:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
                   "Container c'tor expects %s object as parameter" 
-                  % (Object.JobService))
+                  % (Object.Type.JobService))
       
         self._service = service
         self._url = service._url
@@ -68,9 +68,9 @@ class Container(Object):
            @param job: A saga.job.Job object in 'New' state.
         '''
         # parameter checks
-        if job.get_type() != Object.Job:
+        if job.get_type() != Object.Type.Job:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
-              "add() expects %s object as parameter" % (Object.Job))
+              "add() expects %s object as parameter" % (Object.Type.Job))
 
         if self._plugin is not None:
             return self._plugin.container_add_job(self, job)
@@ -86,9 +86,9 @@ class Container(Object):
            @param job: The saga.job.Job object to remove.
         '''
         # parameter checks
-        if job.get_type() != Object.Job:
+        if job.get_type() != Object.Type.Job:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
-              "remove() expects %s object as parameter" % (Object.Job))
+              "remove() expects %s object as parameter" % (Object.Type.Job))
 
         if self._plugin is not None:
             return self._plugin.container_remove_job(self, job)

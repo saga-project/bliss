@@ -17,52 +17,53 @@ from bliss.plugins import utils
 class Object(object) :
     '''Loosely resembles a SAGA object as defined in GFD.90'''
 
-    BaseAPI              = "saga.base"
-    '''Look & Feel API namespace'''
-    Url                  = "saga.Url"
-    '''saga.Url object type.'''
-    Session              = "saga.Session"
-    '''saga.Session object type.'''
-    Context              = "saga.Context"
-    '''saga.Context object type.'''
+    class Type :
+        BaseAPI              = "saga.base"
+        '''Look & Feel API namespace'''
+        Url                  = "saga.Url"
+        '''saga.Url object type.'''
+        Session              = "saga.Session"
+        '''saga.Session object type.'''
+        Context              = "saga.Context"
+        '''saga.Context object type.'''
 
-    JobAPI               = "saga.job"
-    '''saga.job API namespace'''
-    Job                  = "saga.job.Job"
-    '''saga.job.Job object type.'''
-    JobService           = "saga.job.Service"
-    '''saga.job.Service object type.'''
-    JobDescription       = "saga.job.Description"
-    '''saga.job.Description object type.'''
-    JobContainer         = "saga.job.Container"
-    '''saga.job.Container (task container) object type.'''
+        JobAPI               = "saga.job"
+        '''saga.job API namespace'''
+        Job                  = "saga.job.Job"
+        '''saga.job.Job object type.'''
+        JobService           = "saga.job.Service"
+        '''saga.job.Service object type.'''
+        JobDescription       = "saga.job.Description"
+        '''saga.job.Description object type.'''
+        JobContainer         = "saga.job.Container"
+        '''saga.job.Container (task container) object type.'''
 
-    SDAPI                = "saga.sd"
-    '''saga.sd API namespace'''
-    SDDiscoverer         = "saga.sd.Discoverer"
-    '''saga.sd.Discoverer object type.'''
-    SDServiceDescription = "saga.sd.ServiceDescription"
-    '''saga.sd.ServiceDescription object type.'''
-    SDServiceData        = "saga.sd.ServiceData"
-    '''saga.sd.ServiceData object type.'''
+        SDAPI                = "saga.sd"
+        '''saga.sd API namespace'''
+        SDDiscoverer         = "saga.sd.Discoverer"
+        '''saga.sd.Discoverer object type.'''
+        SDServiceDescription = "saga.sd.ServiceDescription"
+        '''saga.sd.ServiceDescription object type.'''
+        SDServiceData        = "saga.sd.ServiceData"
+        '''saga.sd.ServiceData object type.'''
 
-    FilesystemAPI        = "saga.filesystem"
-    '''saga.filesystem API namespace'''
-    FilesystemFile       = "saga.filesystem.File"
-    '''saga.filesystem.File object type'''
-    FilesystemDirectory  = "saga.filesystem.Directory"
-    '''saga.filesystem.File object type'''
+        FilesystemAPI        = "saga.filesystem"
+        '''saga.filesystem API namespace'''
+        FilesystemFile       = "saga.filesystem.File"
+        '''saga.filesystem.File object type'''
+        FilesystemDirectory  = "saga.filesystem.Directory"
+        '''saga.filesystem.File object type'''
 
-    ResourceAPI                 = "saga.resource"
-    '''saga.resource API namespace'''
-    ResourceManager             = "saga.resource.Manager"
-    '''saga.resource.Manager object type'''
-    ResourceComputeDescription  = "saga.resource.ComputeDescription"
-    '''saga.resource.Description object type'''
-    ResourceCompute             = "saga.resource.Compute"
-    '''saga.resource.Compute object type'''
-    ResourceComputePool         = "saga.resource.ComputePool"
-    '''saga.resource.ComputePool object type'''
+        ResourceAPI                 = "saga.resource"
+        '''saga.resource API namespace'''
+        ResourceManager             = "saga.resource.Manager"
+        '''saga.resource.Manager object type'''
+        ResourceComputeDescription  = "saga.resource.ComputeDescription"
+        '''saga.resource.Description object type'''
+        ResourceCompute             = "saga.resource.Compute"
+        '''saga.resource.Compute object type'''
+        ResourceComputePool         = "saga.resource.ComputePool"
+        '''saga.resource.ComputePool object type'''
 
     __shared_state = {}
     __shared_state["runtime_initialized"] = False

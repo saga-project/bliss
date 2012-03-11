@@ -69,7 +69,7 @@ class Job(Object, AttributeInterface):
     ##
     def __init__(self):
         '''PRIVATE Constructor (don't call explicitly!)'''
-        Object.__init__(self, Object.Job, apitype=Object.JobAPI)
+        Object.__init__(self, Object.Type.Job, apitype=Object.Type.JobAPI)
         AttributeInterface.__init__(self)
       
         # register properties with the attribute interface 

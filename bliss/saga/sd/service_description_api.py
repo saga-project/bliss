@@ -17,8 +17,8 @@ class ServiceDescription(Object, AttributeInterface):
 
     def __init__(self):
         '''Constructor.'''
-        Object.__init__(self, Object.SDServiceDescription, 
-                        apitype=Object.JobAPI,)
+        Object.__init__(self, Object.Type.SDServiceDescription, 
+                        apitype=Object.Type.JobAPI,)
         AttributeInterface.__init__(self)
 
         self._url         = None

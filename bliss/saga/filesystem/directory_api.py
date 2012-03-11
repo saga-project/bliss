@@ -19,8 +19,8 @@ class Directory(Object):
            @param url: Url of the (remote) job manager.
            @type  url: L{Url} 
         '''
-        Object.__init__(self, Object.FilesystemDirectory, 
-                        apitype=Object.FilesystemAPI, session=session)
+        Object.__init__(self, Object.Type.FilesystemDirectory, 
+                        apitype=Object.Type.FilesystemAPI, session=session)
 
         if(type(url) == str):
             self._url = Url(str(url))

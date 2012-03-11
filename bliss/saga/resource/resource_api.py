@@ -15,8 +15,8 @@ class Resource(Object):
     def __init__(self):
         '''PRIVATE: Create a new resource.
         '''
-        Object.__init__(self, Object.ResourcResource, 
-                        apitype=Object.ResourceAPI, session=session)
+        Object.__init__(self, Object.Type.ResourcResource, 
+                        apitype=Object.Type.ResourceAPI, session=session)
 
 
     ######################################################################

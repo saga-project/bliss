@@ -19,8 +19,8 @@ class Service(Object):
            @param url: Url of the (remote) job manager.
            @type  url: L{Url} 
         '''
-        Object.__init__(self, Object.JobService, 
-                            apitype=Object.JobAPI, session=session)
+        Object.__init__(self, Object.Type.JobService, 
+                            apitype=Object.Type.JobAPI, session=session)
 
         if(type(url) == str):
             self._url = Url(str(url))
@@ -39,9 +39,9 @@ class Service(Object):
     @classmethod
     def from_url(url, session=None):
         '''Initialize a new job service from (resource manager) URL.'''
-        s = Service(url, session=session)
-        s._from_compute = False
-        return s
+        service = Service(url, session=session)
+        service._from_compute = False
+        return service
 
 
     ######################################################################
@@ -49,16 +49,16 @@ class Service(Object):
     @classmethod
     def from_compute(compute_obj, session=None):
         '''Create a job service from a saga.resource.Compute object.'''
-        if description.get_type() != Object.ResourceCompute:
+        if description.get_type() != Object.Type.ResourceCompute:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
                   "Service.fromcompute() expects %s object as parameter" 
-                  % (Object.ResourceComputeDescription))
+                  % (Object.Type.ResourceComputeDescription))
         
         
         service = Service(compute_obj.get_url(), session=session)
-        s._from_compute = True
-        s._compute_obj = compute_obj
-        return s        
+        service._from_compute = True
+        sservice._compute_obj = compute_obj
+        return service        
 
 
     ######################################################################
@@ -77,10 +77,10 @@ class Service(Object):
            @param job_description: The description for the new job.
            @type  job_description: L{Description} 
         '''
-        if job_description.get_type() != Object.JobDescription:
+        if job_description.get_type() != Object.Type.JobDescription:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
                   "create_job() expects %s object as parameter" 
-                  % (Object.JobDescription))
+                  % (Object.Type.JobDescription))
 
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 

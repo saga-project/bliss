@@ -17,8 +17,8 @@ class ServiceData(Object, AttributeInterface):
     def __init__(self):
         '''Construct a new service data object
         '''
-        Object.__init__(self, Object.SDServiceData, 
-                        apitype=Object.JobAPI,)
+        Object.__init__(self, Object.Type.SDServiceData, 
+                        apitype=Object.Type.JobAPI,)
         AttributeInterface.__init__(self)
 
 
