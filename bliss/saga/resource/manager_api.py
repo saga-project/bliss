@@ -26,7 +26,7 @@ class Manager(Object):
             self._url = url
 
         self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
-        self._plugin.register_manager_object(self)
+        self._plugin.register_manager_object(self, url)
         self._logger.info("Bound to plugin %s" % (repr(self._plugin)))
 
     ######################################################################
@@ -60,13 +60,23 @@ class Manager(Object):
 
     ######################################################################
     ## 
-    def list_templates(self, ttype="*"):
+    def list_compute_templates(self):
         '''List available template names'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
 
-        return self._plugin.manager_list_templates(self, ttype)
+        return self._plugin.manager_list_compute_templates(self)
+
+    ######################################################################
+    ## 
+    def list_storage_templates(self):
+        '''List available template names'''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+
+        return self._plugin.manager_list_storage_templates(self)
 
     ######################################################################
     ## 

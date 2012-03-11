@@ -47,7 +47,7 @@ class PBSPilotJobResourcePlugin(ResourcePluginInterface):
         #return str
        
 
-    def register_manager_object(self, service_obj):
+    def register_manager_object(self, service_obj, url):
         '''Implements interface from _ResourcePluginBase'''
         self.log_info("Registered new manager object %s" % (repr(service_obj))) 
    
@@ -98,9 +98,13 @@ class PBSPilotJobResourcePlugin(ResourcePluginInterface):
         '''Implements interface from _ResourcePluginBase'''
         self.log_info("IMPLEMENT ME! manager_list_storage_resources()") 
 
-    def manager_list_templates(self, manager_obj, filter):
+    def manager_list_compute_templates(self, manager_obj):
         '''Implements interface from _ResourcePluginBase'''
-        self.log_info("IMPLEMENT ME! manager_list_templates()") 
+        self.log_info("IMPLEMENT ME! manager_list_compute_templates()") 
+
+    def manager_list_storage_templates(self, manager_obj):
+        '''Implements interface from _ResourcePluginBase'''
+        self.log_info("IMPLEMENT ME! manager_list_storage_templates()") 
 
     def manager_get_template_details(self, manager_obj, template_id):
         '''Implements interface from _ResourcePluginBase'''
