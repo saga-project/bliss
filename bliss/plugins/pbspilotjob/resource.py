@@ -3,111 +3,24 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.interface import JobPluginInterface
-from bliss.plugins.bigjob.process import LocalJobProcess
-
-from bliss.plugins import utils
 import bliss.saga 
-import xmlrpclib
 
+from bliss.interface import ResourcePluginInterface
+from bliss.plugins import utils
 
-class PBSBigJobResourcePlugin(JobPluginInterface):
+class PBSPilotJobResourcePlugin(ResourcePluginInterface):
     '''Implements a job plugin that can submit jobs to a bigjob server'''
-
-    ########################################
-    ##
-    class BookKeeper:
-        '''Keeps track of job and service objects'''
-        def __init__(self, parent):
-            self.objects = {}
-            self.processes = {}
-            self.parent = parent
-        
-        def add_service_object(self, service_obj, proxy, pilot):
-            self.objects[hex(id(service_obj))] = {'instance' : service_obj, 
-                                                  'proxy'    : proxy,
-                                                  'pilot'    : pilot,
-                                                  'jobs'     : []}
-            
-
-        def get_service_object(self, service_obj):
-            try: 
-                return self.objects[hex(id(service_obj))]
-            except Exception:
-                self.parrent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                  "INTERNAL ERROR: Service object '%s' is not known by this plugin." % (str(service_obj))) 
-     
-
-        def del_service_object(self, service_obj):
-            try:
-                self.objects.remove((hex(id(service_obj))))
-            except Exception:
-                pass
-
-        def add_job_object(self, job_obj, service_obj):
-            service_id = hex(id(service_obj))  
-            job_id = hex(id(job_obj))
-            try:
-                self.objects[service_id]['jobs'].append(job_obj)
-                self.objects[service_id]['jobs']
-                self.processes[job_id] = LocalJobProcess(jobdescription=job_obj.get_description(), 
-                                                         plugin=self.parent,
-                                                         proxy=self.objects[service_id]['proxy'],
-                                                         pilot=self.objects[service_id]['pilot'])
-
-            except Exception, ex:
-                self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                  "Can't register job: %s" % ex) 
-
-        def del_job_object(self, job_obj):
-            pass
-
-        def get_service_for_job(self, job_obj):
-            '''Return the service object the job is registered with'''
-            for key in self.objects.keys():
-                if job_obj in self.objects[key]['jobs']:
-                    return self.objects[key]['instance']
-            self.parrent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-              "INTERNAL ERROR: Job object %s is not known by this plugin." % (job)) 
-
-        def get_job_for_jobid(self, service_obj, job_id):
-            '''Return the job object associated with the given job id'''
-            for job in self.list_jobs_for_service(service_obj):
-                proc = self.get_process_for_job(job)
-                if proc.getpid(str(service_obj._url)) == job_id:  
-                    return job
-            self.parrent.log_error_and_raise(bliss.saga.Error.NoSuccess, "Job ID not known by this plugin.")
-
-
-        def list_jobs_for_service(self, service_obj):
-            '''List all jobs that are registered with the given service'''
-            service_id = hex(id(service_obj))  
-            return self.objects[service_id]['jobs']
-
-
-        def get_process_for_job(self, job_obj):
-            '''Return the local process object for a given job'''
-            try: 
-                return self.processes[hex(id(job_obj))]
-            except Exception, ex:
-                self.parrent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                "INTERNAL ERROR: Job object %s is not associated with a process." % (job_obj))   
-
-    ##
-    ########################################
-
 
     ## Step 1: Define adaptor name. Convention is:
     ##         saga.plugin.<package>.<name>
-    _name = 'saga.plugin.resource.pbsbigjob'
+    _name = 'saga.plugin.resource.pbspilotjob'
 
     ## Step 2: Define supported url schemas
     ## 
-    _schemas = ['pbsbigjob+ssh']
+    _schemas = ['pbs+ssh']
 
     ## Step 3: Define apis supported by this adaptor
     ##
@@ -126,11 +39,6 @@ class PBSBigJobResourcePlugin(JobPluginInterface):
         ##         adaptor needs is available, e.g., certain command line tools,
         ##         python modules and so on.
         ##         
-        try: 
-            import subprocess
-        except Exception, ex:
-            print "module missing -- plugin disabled. (NEEDS LOGGING SUPPORT)"
-            return False 
         return True
 
     def get_runtime_info(self): 
@@ -141,7 +49,7 @@ class PBSBigJobResourcePlugin(JobPluginInterface):
        
 
     def register_manager_object(self, service_obj):
-        '''Implements interface from _JobPluginBase'''
+        '''Implements interface from _ResourcePluginBase'''
         server_host = service_obj._url.host
         server_port = service_obj._url.port
         pilot_name  = service_obj._url.path.replace("/","")
