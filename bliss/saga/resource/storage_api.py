@@ -46,5 +46,5 @@ class Storage(SResource):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
 
-        return self.get_filesystem () 
+        return self._plugin.get_filesystem () 
 

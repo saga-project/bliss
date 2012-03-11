@@ -49,13 +49,13 @@ class Manager(Object):
 
     ######################################################################
     ## 
-    def describe_resource(self, r_id):
-        '''get resource description'''
-        if self._plugin is None:
-            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-              "Object not bound to a plugin")
-
-        return self._plugin.manager_describe_resource(self, r_id)
+    #def describe_resource(self, r_id):
+    #    '''get resource description'''
+    #    if self._plugin is None:
+    #        raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+    #          "Object not bound to a plugin")
+#
+#        return self._plugin.manager_describe_resource(self, r_id)
 
     ######################################################################
     ## 
@@ -117,17 +117,6 @@ class Manager(Object):
 
     ######################################################################
     ## 
-    def get_compute(self, js_instance):
-        '''Return the resource handle for a legacy saga.job.service'''
-        if self._plugin is None:
-            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-              "Object not bound to a plugin")
-
-        return self._plugin.manager_get_compute(self, js_instance)
-
-
-    ######################################################################
-    ## 
     def destroy_compute(self, compute_id, drain=False):
         '''Destroy (close) an existing compute resource'''
         if self._plugin is None:
@@ -167,13 +156,13 @@ class Manager(Object):
 
     ######################################################################
     ## 
-    def get_storage(self, fs_instance):
-        '''Return the resource handle for a legacy saga.filesystem::directory'''
-        if self._plugin is None:
-            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-              "Object not bound to a plugin")
-
-        return self._plugin.manager_get_storage(self, fs_instance)
+    #def get_storage(self, fs_instance):
+    #    '''Return the resource handle for a legacy saga.filesystem::directory'''
+    #    if self._plugin is None:
+    #        raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+    #          "Object not bound to a plugin")
+#
+#        return self._plugin.manager_get_storage(self, fs_instance)
 
 
     ######################################################################
@@ -189,79 +178,79 @@ class Manager(Object):
 
     ######################################################################
     ## 
-    def create_network(self, network_description):
-        '''Instantiate (request) a new network resource'''
+    #def create_network(self, network_description):
+    #    '''Instantiate (request) a new network resource'''
+#
+#        if description.get_type() != Object.ResourceNetworkDescription:
+#            raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
+#                  "create_network() expects %s object as parameter" 
+#                  % (Object.ResourceNetworkDescription))
 
-        if description.get_type() != Object.ResourceNetworkDescription:
-            raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
-                  "create_network() expects %s object as parameter" 
-                  % (Object.ResourceNetworkDescription))
+#        if self._plugin is None:
+#            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+#              "Object not bound to a plugin")
 
-        if self._plugin is None:
-            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-              "Object not bound to a plugin")
-
-        return self._plugin.manager_create_network(self, description)
-
-
-    ######################################################################
-    ## 
-    def get_network(self, network_id):
-        '''Return the resource handle for an existing network resource'''
-        if self._plugin is None:
-            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-              "Object not bound to a plugin")
-
-        return self._plugin.manager_get_network(self, network_id)
+#        return self._plugin.manager_create_network(self, description)
 
 
     ######################################################################
     ## 
-    def destroy_network(self, network_id, drain=False):
-        '''Destroy (close) an existing network resource'''
-        if self._plugin is None:
-            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-              "Object not bound to a plugin")
-
-        return self._plugin.manager_destroy_network(self, network_id, drain)
-
-
-    ######################################################################
-    ## 
-    def create_pool(self, pool_description):
-        '''Instantiate (request) a new pool resource'''
-
-        if description.get_type() != Object.ResourcePoolDescription:
-            raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
-                  "create_pool() expects %s object as parameter" 
-                  % (Object.ResourcePoolDescription))
-
-        if self._plugin is None:
-            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-              "Object not bound to a plugin")
-
-        return self._plugin.manager_create_pool(self, description)
+#    def get_network(self, network_id):
+#        '''Return the resource handle for an existing network resource'''
+#        if self._plugin is None:
+#            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+#              "Object not bound to a plugin")
+#
+#        return self._plugin.manager_get_network(self, network_id)
 
 
     ######################################################################
     ## 
-    def get_pool(self, pool_id):
-        '''Return the resource handle for an existing pool resource'''
-        if self._plugin is None:
-            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-              "Object not bound to a plugin")
-
-        return self._plugin.manager_get_pool(self, pool_id)
+#    def destroy_network(self, network_id, drain=False):
+#        '''Destroy (close) an existing network resource'''
+#        if self._plugin is None:
+#            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+#              "Object not bound to a plugin")
+#
+#        return self._plugin.manager_destroy_network(self, network_id, drain)
 
 
     ######################################################################
     ## 
-    def destroy_pool(self, pool_id, drain=False):
-        '''Destroy (close) an existing pool resource'''
-        if self._plugin is None:
-            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-              "Object not bound to a plugin")
+#    def create_pool(self, pool_description):
+#        '''Instantiate (request) a new pool resource'''
+#
+#        if description.get_type() != Object.ResourcePoolDescription:
+#            raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
+#                  "create_pool() expects %s object as parameter" 
+#                  % (Object.ResourcePoolDescription))
+#
+#        if self._plugin is None:
+#            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+#              "Object not bound to a plugin")
+#
+#        return self._plugin.manager_create_pool(self, description)
 
-        return self._plugin.manager_destroy_pool(self, pool_id, drain)
+
+    ######################################################################
+    ## 
+#    def get_pool(self, pool_id):
+#        '''Return the resource handle for an existing pool resource'''
+#        if self._plugin is None:
+#            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+#              "Object not bound to a plugin")
+#
+#        return self._plugin.manager_get_pool(self, pool_id)
+
+
+    ######################################################################
+    ## 
+#    def destroy_pool(self, pool_id, drain=False):
+#        '''Destroy (close) an existing pool resource'''
+#        if self._plugin is None:
+#            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+#              "Object not bound to a plugin")
+#
+#        return self._plugin.manager_destroy_pool(self, pool_id, drain)
 
 

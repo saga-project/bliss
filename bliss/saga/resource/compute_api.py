@@ -35,24 +35,24 @@ class Compute(SResource):
 
     ######################################################################
     ##
-    def submit(self, jsdl): 
-        '''submit a job from JSDL description.'''
-        if self._plugin is None:
-            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-              "Object not bound to a plugin")
-
-        return self.submit (jsdl) 
+    #def submit(self, jsdl): 
+    #    '''submit a job from JSDL description.'''
+    #    if self._plugin is None:
+    #        raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+    #          "Object not bound to a plugin")
+#
+#        return self._plugin.submit(jsdl) 
 
 
     ######################################################################
     ##
-    def get_jobs(self): 
-        '''get all managed jobs in a task container.'''
-        if self._plugin is None:
-            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-              "Object not bound to a plugin")
-
-        return self.get_jobs () 
+#    def get_jobs(self): 
+#        '''get all managed jobs in a task container.'''
+#        if self._plugin is None:
+#            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+#              "Object not bound to a plugin")
+#
+#        return self._plugin.get_jobs () 
 
 
     ######################################################################
@@ -70,5 +70,5 @@ class Compute(SResource):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
 
-        return self.get_job_service () 
+        return self._plugin.get_job_service () 
 

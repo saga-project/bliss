@@ -94,7 +94,7 @@ class Resource(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
         
-        return self._description 
+        return self._plugin._description 
 
     ######################################################################
     ##

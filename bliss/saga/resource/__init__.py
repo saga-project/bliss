@@ -1,4 +1,4 @@
-# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
+    #v .im: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 '''SAGA Job Package API.
 '''
@@ -31,14 +31,15 @@ from bliss.saga.resource.compute_api import Compute as SCompute
 class Compute(SCompute):
     '''A SAGA compute resource as defined in GFD.xx.
 
-       A compute resource represents a stateful handle to a physical
-       compute resource. Jobs can be submitted to it.  
+       TODO: Describe me.
     '''
     pass
 
 from bliss.saga.resource.compute_description_api import ComputeDescription as SComputeDescription
 class ComputeDescription(SComputeDescription):
     '''A SAGA compute resource description as defined in GFD.xx
+
+       TODO: Describe me.
     '''
     pass
 
@@ -55,35 +56,24 @@ class Storage(SStorage):
 from bliss.saga.resource.storage_description_api import StorageDescription as SStorageDescription
 class StorageDescription(SStorageDescription):
     '''A SAGA storage resource description as defined in GFD.xx
-    '''
-    pass
-
-
-
-from bliss.saga.resource.network_api import Network as SNetwork
-class Network(SNetwork):
-    '''A SAGA network resource as defined in GFD.xx.
 
        TODO: Describe me.
     '''
     pass
 
-from bliss.saga.resource.network_description_api import NetworkDescription as SNetworkDescription
-class NetworkDescription(SNetworkDescription):
-    '''A SAGA network resource description as defined in GFD.xx
-    '''
-    pass
 
 
+#from bliss.saga.resource.network_api import Network as SNetwork
+#class Network(SNetwork):
+#    '''A SAGA network resource as defined in GFD.xx.
+#
+#       TODO: Describe me.
+#    '''
+#    pass
 
-from bliss.saga.resource.pool_api import Pool as SPool
-class Pool(SPool):
-    '''A SAGA compute pool as defined in GFD.xx.
-
-       A compute resource pool is a container for that holds
-       resource objects. Custom policies for scheduling etc.
-       can be selected for a resource pool. 
-    '''
-    pass
-
+#from bliss.saga.resource.network_description_api import NetworkDescription as SNetworkDescription
+#class NetworkDescription(SNetworkDescription):
+#    '''A SAGA network resource description as defined in GFD.xx
+#    '''
+#    pass
 
