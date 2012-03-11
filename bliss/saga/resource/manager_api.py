@@ -33,7 +33,7 @@ class Manager(Object):
     def __del__(self):
         '''Delete the manager in a civilised fashion.'''
         if self._plugin is not None:
-            self._plugin.unregister_service_object(self)
+            self._plugin.unregister_manager_object(self)
         else:
             pass # can't throw here
 
@@ -47,15 +47,6 @@ class Manager(Object):
 
         return self._plugin.manager_list_resources(self, r_type)
 
-    ######################################################################
-    ## 
-    #def describe_resource(self, r_id):
-    #    '''get resource description'''
-    #    if self._plugin is None:
-    #        raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-    #          "Object not bound to a plugin")
-#
-#        return self._plugin.manager_describe_resource(self, r_id)
 
     ######################################################################
     ## 
@@ -65,34 +56,25 @@ class Manager(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
 
-        return self._plugin.manager_list_templated(self, ttype)
+        return self._plugin.manager_list_templates(self, ttype)
 
     ######################################################################
     ## 
-    def describe_template(self, t_id):
+    def get_template_details(self, t_id):
         '''get template description'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
 
-        return self._plugin.manager_describe_template(self, t_id)
+        return self._plugin.manager_get_template_details(self, t_id)
 
-    ######################################################################
-    ## 
-    def get_resource(self, r_id):
-        '''get resource handle for some id'''
-        if self._plugin is None:
-            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-              "Object not bound to a plugin")
-
-        return self._plugin.manager_get_resource(self, r_id)
 
     ######################################################################
     ## 
     def create_compute(self, compute_description):
         '''Instantiate (request) a new compute resource'''
 
-        if description.get_type() != Object.Type.ResourceComputeDescription:
+        if compute_description.get_type() != Object.Type.ResourceComputeDescription:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
                   "create_compute() expects %s object as parameter" 
                   % (Object.Type.ResourceComputeDescription))
@@ -101,7 +83,7 @@ class Manager(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
 
-        return self._plugin.manager_create_compute(self, description)
+        return self._plugin.manager_create_compute(self, compute_description)
 
 
     ######################################################################

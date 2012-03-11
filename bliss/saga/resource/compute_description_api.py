@@ -20,14 +20,13 @@ class ComputeDescription(Object, AttributeInterface):
         Object.__init__(self, Object.Type.ResourceComputeDescription, 
                         apitype=Object.Type.ResourceAPI,)
 
-        self._type           = Type.Compute
+        AttributeInterface.__init__(self)
+
         self._dynamic        = False
         self._start          = None
         self._end            = None
         self._duration       = None
 
-        self._register_ro_type          (name="Type", 
-                                             accessor=self.__class__.res_type)
         self._register_rw_attribute     (name="Dynamic", 
                                              accessor=self.__class__.dynamic) 
         self._register_rw_attribute     (name="Start", 
@@ -37,11 +36,11 @@ class ComputeDescription(Object, AttributeInterface):
         self._register_rw_attribute     (name="Duration", 
                                              accessor=self.__class__.duration) 
         
-        self._slots          = 1
-        self._memory         = None
-        self._hostnames      = None
-        self._os             = 'Any'
-        self._arch           = 'Any'
+        self._slots            = 1
+        self._memory           = None
+        self._hostnames        = None
+        self._operating_system = 'Any'
+        self._arch             = 'Any'
 
         self._register_rw_vec_attribute (name="OperatingSystem", 
                                          accessor=self.__class__.operating_system) 
@@ -53,8 +52,6 @@ class ComputeDescription(Object, AttributeInterface):
                                          accessor=self.__class__.slots)
         self._register_rw_attribute     (name="Memory", 
                                          accessor=self.__class__.memory) 
-        self._register_ro_attribute     (name="Access", 
-                                         accessor=self.__class__.access) 
     
     ######################################################################
     ## 
@@ -77,15 +74,6 @@ class ComputeDescription(Object, AttributeInterface):
         result += "}"
         return result
 
-    ######################################################################
-    ## Property 
-    def type():
-        doc = "Type..."
-        def fget(self):
-            return self._type
-        return locals()
-    type = property(**type())
-    
     ######################################################################
     ## Property 
     def start():
@@ -179,26 +167,26 @@ class ComputeDescription(Object, AttributeInterface):
 
     ######################################################################
     ## Property 
-    def os():
-        doc = "Allowed operating systems for this resource reservation."
+    def operating_system():
+        doc = "Allowed operating system(s) for this resource reservation."
         def fget(self):
-            return self._os
+            return self._operating_system
         def fset(self, val):
-            self._os = val
+            self._operating_system = val
         def fdel(self, val):
-            self._os = None
+            self._operating_system = None
         return locals()
-    os = property(**os())
+    operating_system = property(**operating_system())
 
     ######################################################################
     ## Property 
-    def arch():
-        doc = "Allowed operating systems for this resource reservation."
+    def architecture():
+        doc = "Allowed systems architecture(s) for this resource reservation."
         def fget(self):
-            return self._arch
+            return self._architecture
         def fset(self, val):
-            self._arch = val
+            self._architecture = val
         def fdel(self, val):
-            self._arch = None
+            self._architecture = None
         return locals()
-    arch = property(**arch())
+    architecture = property(**architecture())

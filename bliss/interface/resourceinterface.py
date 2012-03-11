@@ -24,38 +24,92 @@ class ResourcePluginInterface(PluginBaseInterface):
         errormsg = "Not implemented plugin method called: register_manager_object()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
-    def register_compute_object(self, compute_obj, manager_obj):
-        '''This method is called upon instantiation of a new compute resource object'''
-        errormsg = "Not implemented plugin method called: register_compute_object()"
-        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def unregister_manager_object(self, manager_obj):
         '''This method is called upon deletion of a manager object'''
         self.log_error("Not implemented plugin method called: unregister_manager_object()")
         # don't throw -- destructor context
 
-    def unregister_compute_object(self, compute_obj):
-        '''This method is called upon deletion of a compute object'''
-        self.log_error("Not implemented plugin method called: unregister_compute_object()")
-        # don't throw -- destructor context
+    #def unregister_compute_object(self, compute_obj):
+    #    '''This method is called upon deletion of a compute object'''
+    #    self.log_error("Not implemented plugin method called: unregister_compute_object()")
+    #    # don't throw -- destructor context
+
+    #def unregister_storage_object(self, compute_obj, manager_obj):
+    #    '''This method is called upon instantiation of a new compute resource object'''
+    #    errormsg = "Not implemented plugin method called: unregister_storage_object()"
+    #    self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
 
-    ######## Implementation for saga.job.Service functionality 
+
+    ######## Implementation for saga.resource.Manager functionality 
     ##
-    def manager_list_ids(self, manager_obj):
-        errormsg = "Not implemented plugin method called: service_list_ids()"
+    def manager_create_compute(self, manager_obj, compute_desc):
+        '''This method is called upon instantiation of a new compute resource object'''
+        errormsg = "Not implemented plugin method called: manager_create_compute()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
+    def manager_create_storage(self, manager_obj, storage_desc):
+        '''This method is called upon instantiation of a new storage resource object'''
+        errormsg = "Not implemented plugin method called: manager_create_storage()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
+    def manager_list_resources(self, manager_obj, filter):
+        errormsg = "Not implemented plugin method called: manager_list_resources()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
+    def manager_list_templates(self, manager_obj, filter):
+        errormsg = "Not implemented plugin method called: manager_list_templates()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
+
+    def manager_get_template_details(self, manager_obj, t_id):
+        errormsg = "Not implemented plugin method called: manager_get_template_detail()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)  
 
     def manager_get_compute(self, manager_obj):
-        errormsg = "Not implemented plugin method called: service_get_compute()"
+        errormsg = "Not implemented plugin method called: manager_get_compute()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
-    def manager_release_compute(self, manager_obj):
-        errormsg = "Not implemented plugin method called: service_release_compute()"
+    def manager_destroy_compute(self, manager_obj, compute_id, drain):
+        errormsg = "Not implemented plugin method called: manager_destroy_compute()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
+    def manager_destroy_storage(self, manager_obj, storage_id):
+        errormsg = "Not implemented plugin method called: manager_destroy_compute()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg, drain) 
 
-    ######## Method templates for saga.Job functionality 
+
+    ######## Method templates for saga.resource.Resource functionality 
+    ##
+    def resource_get_state(self, res_obj):
+        errormsg = "Not implemented plugin method called: resource_get_state()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
+    def resource_get_state_detail(self, res_obj):
+        errormsg = "Not implemented plugin method called: resource_get_state_detail()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
+    def resource_get_id(self, res_obj):
+        errormsg = "Not implemented plugin method called: resource_get_id()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
+
+    def resource_get_manager(self, res_obj):
+        errormsg = "Not implemented plugin method called: resource_get_manager()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)  
+
+    def resource_get_description(self, res_obj):
+        errormsg = "Not implemented plugin method called: resource_get_description()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)  
+
+    def resource_destroy(self, res_obj):
+        errormsg = "Not implemented plugin method called: resource_destroy()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
+    def resource_wait(self, res_obj, filter):
+        errormsg = "Not implemented plugin method called: resource_wait()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
+    ######## Method templates for saga.resource.Compute functionality 
     ##
     def compute_get_state(self, job_obj):
         errormsg = "Not implemented plugin method called: compute_get_state()"

@@ -30,17 +30,6 @@ class Resource(Object):
         self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
         self._logger.info("Bound to plugin %s" % (repr(self._plugin)))
 
-
-    ######################################################################
-    ##
-    def get_type(self):
-        '''Return the type of the resource'''
-        if self._plugin is None:
-            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-              "Object not bound to a plugin")
-        
-        return self._plugin.get_type(self)
-
     
     ######################################################################
     ##
@@ -50,7 +39,7 @@ class Resource(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
         
-        return self._plugin.get_state(self)
+        return self._plugin.resource_get_state(self)
 
     
     ######################################################################
@@ -61,7 +50,7 @@ class Resource(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
         
-        return self._plugin.get_state_detail(self)
+        return self._plugin.resource_get_state_detail(self)
 
     
     ######################################################################
@@ -72,7 +61,7 @@ class Resource(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
         
-        return self._plugin.get_id(self)
+        return self._plugin.resource_get_id(self)
 
     
     ######################################################################
@@ -83,7 +72,7 @@ class Resource(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
         
-        return self._plugin.get_manager(self)
+        return self._plugin.resource_get_manager(self)
     
 
     ######################################################################
@@ -94,7 +83,7 @@ class Resource(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
         
-        return self._plugin._description 
+        return self._plugin.resource_get_description(self)
 
     ######################################################################
     ##
@@ -104,7 +93,7 @@ class Resource(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
         
-        return self._plugin.destroy(self, drain)
+        return self._plugin.resource_destroy(self, drain)
 
 
     ######################################################################
@@ -115,6 +104,6 @@ class Resource(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
 
-        return self._plugin.wait(self, state, timeout)
+        return self._plugin.resource_wait(self, state)
 
 

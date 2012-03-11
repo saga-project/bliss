@@ -18,16 +18,15 @@ class StorageDescription(Object, AttributeInterface):
     def __init__(self):
         '''Create a new (empty) storage resource description.'''
         Object.__init__(self, Object.Type.ResourceDescription, 
-                        apitype=Object.Type.ResourceAPI,)
+                        apitype=Object.Type.ResourceAPI)
 
-        self._type           = Type.Storage
+        AttributeInterface.__init__(self)
+
         self._dynamic        = False
         self._start          = None
         self._end            = None
         self._duration       = None
         
-        self._register_ro_type          (name="Type", 
-                                         accessor=self.__class__.res_type)
         self._register_rw_attribute     (name="Dynamic", 
                                          accessor=self.__class__.dynamic) 
         self._register_rw_attribute     (name="Start", 
@@ -66,15 +65,6 @@ class StorageDescription(Object, AttributeInterface):
             result += str("'%s' : '%s'," % (str(attribute), value))
         result += "}"
         return result
-    
-    ######################################################################
-    ## Property 
-    def type():
-        doc = "Type..."
-        def fget(self):
-            return self._type
-        return locals()
-    type = property(**type())
     
     ######################################################################
     ## Property 

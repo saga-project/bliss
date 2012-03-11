@@ -33,9 +33,15 @@ def main():
  
         # Create a resource manager for Futuregrid's 'india' PBS cluster
         # and attach the SSH security context to it
-        rm = saga.resource.Manager("pbsbigjob+ssh://alamo.futuregrid.org")
+        rm = saga.resource.Manager("pbs+ssh://alamo.futuregrid.org")
         rm.session.contexts.append(ctx)
 
+        rm.list_resources()
+        rm.list_templates()
+
+        rm.get_template_details("tpml123")
+        rm.get_compute("comp123")
+        rm.get_storage("stor123")
 
         # Next, define a compute resource with 64 cores.
         cdesc = saga.resource.ComputeDescription()
@@ -46,21 +52,27 @@ def main():
         cr64 = rm.create_compute(cdesc)
         cr64.wait(saga.resource.State.Active)
 
+        cr64.get_state()
+        cr64.get_state_detail()
+        cr64.get_id()
+        cr64.get_manager()
+        cr64.get_description()
+
         # Create a job service from the compute resource
-        js = saga.job.Service.from_compute(cr64)
+        #js = saga.job.Service.from_compute(cr64)
 
         # describe our job
-        jd = saga.job.Description()
+        #jd = saga.job.Description()
         # resource requirements
-        jd.wall_time_limit  = "0:05:00"
-        jd.total_cpu_count = 1     
+        #jd.wall_time_limit  = "0:05:00"
+        #jd.total_cpu_count = 1     
         # environment, executable & arguments
-        jd.environment = {'SLEEP_TIME':'10'}       
-        jd.executable  = '/bin/sleep'
-        jd.arguments   = ['$SLEEP_TIME']
+        #jd.environment = {'SLEEP_TIME':'10'}       
+        #jd.executable  = '/bin/sleep'
+        #jd.arguments   = ['$SLEEP_TIME']
         # output options
-        jd.output = "bliss_pbssh_job.stdout"
-        jd.error  = "bliss_pbssh_job.stderr"
+        #jd.output = "bliss_pbssh_job.stdout"
+        #jd.error  = "bliss_pbssh_job.stderr"
 
         
 
@@ -83,7 +95,7 @@ def main():
 
 
         # Finally, we can release the compute resource
-        rm.release_compute(cr64)
+        rm.destroy_compute(cr64)
 
     except saga.Exception, ex:
         print "Oh, snap! An error occured: %s" % (str(ex))

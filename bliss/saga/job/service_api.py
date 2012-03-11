@@ -47,15 +47,15 @@ class Service(Object):
     ######################################################################
     ## 
     @classmethod
-    def from_compute(compute_obj, session=None):
+    def from_compute(self, compute_obj, session=None):
         '''Create a job service from a saga.resource.Compute object.'''
-        if description.get_type() != Object.Type.ResourceCompute:
-            raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
-                  "Service.fromcompute() expects %s object as parameter" 
-                  % (Object.Type.ResourceComputeDescription))
+        #if compute_obj.get_type() != Object.Type.ResourceCompute:
+        #    raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
+        #          "Service.fromcompute() expects %s object as parameter" 
+        #          % (Object.Type.ResourceComputeDescription))
         
         
-        service = Service(compute_obj.get_url(), session=session)
+        service = Service(compute_obj, session=session)
         service._from_compute = True
         sservice._compute_obj = compute_obj
         return service        
