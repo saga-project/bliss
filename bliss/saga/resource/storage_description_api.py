@@ -17,7 +17,7 @@ class StorageDescription(Object, AttributeInterface):
     # to work this way...
     def __init__(self):
         '''Create a new (empty) storage resource description.'''
-        Object.__init__(self, Object.Type.ResourceDescription, 
+        Object.__init__(self, Object.Type.ResourceStorageDescription, 
                         apitype=Object.Type.ResourceAPI)
 
         AttributeInterface.__init__(self)

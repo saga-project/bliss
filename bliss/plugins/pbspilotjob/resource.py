@@ -76,9 +76,27 @@ class PBSPilotJobResourcePlugin(ResourcePluginInterface):
               "Couldn't create a new compute resource: %s " % (str(ex)))
 
 
-    def manager_list_resources(self, manager_obj, filter):
+    def manager_create_storage(self, manager_obj, storage_description):
+        '''Implements interface from _ResourcePluginBase.
+           This method is called for saga.resource.manager.create_compute().
+        '''
+        try:
+            storage_resource = bliss.saga.resource.Storage()
+            storage_resource._Storage__init_from_manager(manager_obj=manager_obj, 
+                                                         storage_description=storage_description)
+            return storage_resource
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't create a new storage resource: %s " % (str(ex)))
+
+
+    def manager_list_compute_resources(self, manager_obj):
         '''Implements interface from _ResourcePluginBase'''
-        self.log_info("IMPLEMENT ME! manager_list_resources()") 
+        self.log_info("IMPLEMENT ME! manager_list_compute_resources()") 
+
+    def manager_list_storage_resources(self, manager_obj):
+        '''Implements interface from _ResourcePluginBase'''
+        self.log_info("IMPLEMENT ME! manager_list_storage_resources()") 
 
     def manager_list_templates(self, manager_obj, filter):
         '''Implements interface from _ResourcePluginBase'''
@@ -100,28 +118,72 @@ class PBSPilotJobResourcePlugin(ResourcePluginInterface):
         '''Implements interface from _ResourcePluginBase'''
         self.log_info("IMPLEMENT ME! manager_destroy_compute()") 
 
-    def resource_wait(self, res_obj, filter):
+    def manager_destroy_storage(self, manager_obj, storage_id, drain):
         '''Implements interface from _ResourcePluginBase'''
-        self.log_info("IMPLEMENT ME! resource_wait()")
+        self.log_info("IMPLEMENT ME! manager_destroy_storage()") 
 
-    def resource_get_state(self, res_obj,):
-        '''Implements interface from _ResourcePluginBase'''
-        self.log_info("IMPLEMENT ME! resource_get_state()")  
 
-    def resource_get_state_detail(self, res_obj):
-        '''Implements interface from _ResourcePluginBase'''
-        self.log_info("IMPLEMENT ME! resource_get_state_detail()")  
 
-    def resource_get_description(self, res_obj):
-        '''Implements interface from _ResourcePluginBase'''
-        self.log_info("IMPLEMENT ME! resource_get_description()")  
 
-    def resource_get_id(self, res_obj):
+    def compute_resource_wait(self, res_obj, filter):
         '''Implements interface from _ResourcePluginBase'''
-        self.log_info("IMPLEMENT ME! resource_get_id()")  
+        self.log_info("IMPLEMENT ME! compute_resource_wait()")
 
-    def resource_get_manager(self, res_obj):
+    def compute_resource_get_state(self, res_obj,):
         '''Implements interface from _ResourcePluginBase'''
-        self.log_info("IMPLEMENT ME! resource_get_manager()")   
+        self.log_info("IMPLEMENT ME! compute_resource_get_state()")  
+
+    def compute_resource_get_state_detail(self, res_obj):
+        '''Implements interface from _ResourcePluginBase'''
+        self.log_info("IMPLEMENT ME! compute_resource_get_state_detail()")  
+
+    def compute_resource_get_description(self, res_obj):
+        '''Implements interface from _ResourcePluginBase'''
+        self.log_info("IMPLEMENT ME! compute_resource_get_description()")  
+
+    def compute_resource_get_id(self, res_obj):
+        '''Implements interface from _ResourcePluginBase'''
+        self.log_info("IMPLEMENT ME! compute_resource_get_id()")  
+
+    def compute_resource_get_manager(self, res_obj):
+        '''Implements interface from _ResourcePluginBase'''
+        self.log_info("IMPLEMENT ME! compute_resource_get_manager()")   
  
+    def compute_resource_destroy(self, res_obj, drain):
+        '''Implements interface from _ResourcePluginBase'''
+        self.log_info("IMPLEMENT ME! compute_resource_destroy()")   
+
+
+
+    def storage_resource_wait(self, res_obj, filter):
+        '''Implements interface from _ResourcePluginBase'''
+        self.log_info("IMPLEMENT ME! storage_resource_wait()")
+
+    def storage_resource_get_state(self, res_obj,):
+        '''Implements interface from _ResourcePluginBase'''
+        self.log_info("IMPLEMENT ME! storage_resource_get_state()")  
+
+    def storage_resource_get_state_detail(self, res_obj):
+        '''Implements interface from _ResourcePluginBase'''
+        self.log_info("IMPLEMENT ME! storage_resource_get_state_detail()")  
+
+    def storage_resource_get_description(self, res_obj):
+        '''Implements interface from _ResourcePluginBase'''
+        self.log_info("IMPLEMENT ME! storage_resource_get_description()")  
+
+    def storage_resource_get_id(self, res_obj):
+        '''Implements interface from _ResourcePluginBase'''
+        self.log_info("IMPLEMENT ME! storage_resource_get_id()")  
+
+    def storage_resource_get_manager(self, res_obj):
+        '''Implements interface from _ResourcePluginBase'''
+        self.log_info("IMPLEMENT ME! storage_resource_get_manager()")   
+
+    def storage_resource_get_filesystem(self, res_obj):
+        '''Implements interface from _ResourcePluginBase'''
+        self.log_info("IMPLEMENT ME! storage_resource_get_filesystem()")   
+
+    def storage_resource_destroy(self, res_obj, drain):
+        '''Implements interface from _ResourcePluginBase'''
+        self.log_info("IMPLEMENT ME! storage_resource_destroy()")   
 

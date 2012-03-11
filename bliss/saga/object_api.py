@@ -62,8 +62,10 @@ class Object(object) :
         '''saga.resource.Description object type'''
         ResourceCompute             = "saga.resource.Compute"
         '''saga.resource.Compute object type'''
-        ResourceComputePool         = "saga.resource.ComputePool"
-        '''saga.resource.ComputePool object type'''
+        ResourceStorageDescription  = "saga.resource.StorageDescription"
+        '''saga.resource.StorageDescription object type'''
+        ResourceStorage             = "saga.resource.Storage"
+        '''saga.resource.Storage object type'''
 
     __shared_state = {}
     __shared_state["runtime_initialized"] = False

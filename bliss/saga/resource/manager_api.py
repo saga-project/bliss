@@ -4,6 +4,7 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
+import bliss.saga 
 from bliss.saga import Url
 from bliss.saga.object_api import Object 
 
@@ -39,14 +40,23 @@ class Manager(Object):
 
     ######################################################################
     ## 
-    def list_resources(self, r_type="*"):
-        '''List known resource ids'''
+    def list_compute_resources(self):
+        '''List known compute resource ids'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
 
-        return self._plugin.manager_list_resources(self, r_type)
+        return self._plugin.manager_list_compute_resources(self)
 
+    ######################################################################
+    ## 
+    def list_storage_resources(self):
+        '''List known resource storage ids'''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+
+        return self._plugin.manager_list_storage_resources(self)
 
     ######################################################################
     ## 
@@ -113,7 +123,7 @@ class Manager(Object):
     def create_storage(self, storage_description):
         '''Instantiate (request) a new storage resource'''
 
-        if description.get_type() != Object.Type.ResourceStorageDescription:
+        if storage_description.get_type() != Object.Type.ResourceStorageDescription:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
                   "create_storage() expects %s object as parameter" 
                   % (Object.Type.ResourceStorageDescription))
@@ -122,7 +132,7 @@ class Manager(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
 
-        return self._plugin.manager_create_storage(self, description)
+        return self._plugin.manager_create_storage(self, storage_description)
 
 
     ######################################################################

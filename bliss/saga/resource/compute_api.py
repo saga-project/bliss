@@ -4,13 +4,10 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga                       import Url
-from bliss.saga.object_api            import Object 
-from bliss.saga.job.service_api       import Service  as SService
-from bliss.saga.resource.resource_api import Resource as SResource
+from bliss.saga import Url
+from bliss.saga.object_api import Object 
 
-
-class Compute(SResource):
+class Compute(Object):
 
     ######################################################################
     ## 
@@ -33,43 +30,77 @@ class Compute(SResource):
         self._plugin  = Object._get_plugin(self) # throws 'NoSuccess' on error
         self._logger.info("Bound to plugin %s" % (repr(self._plugin)))
 
-
     ######################################################################
     ##
-    #def submit(self, jsdl): 
-    #    '''submit a job from JSDL description.'''
-    #    if self._plugin is None:
-    #        raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-    #          "Object not bound to a plugin")
-#
-#        return self._plugin.submit(jsdl) 
-
-
+    def get_state(self):
+        '''Return the state of the resource'''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+                                       "Object not bound to a plugin")
+        
+        return self._plugin.compute_resource_get_state(self)
+    
+    
     ######################################################################
     ##
-#    def get_jobs(self): 
-#        '''get all managed jobs in a task container.'''
-#        if self._plugin is None:
-#            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-#              "Object not bound to a plugin")
-#
-#        return self._plugin.get_jobs () 
-
-
+    def get_state_detail(self):
+        '''Return the state detail of the resource'''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+                                       "Object not bound to a plugin")
+        
+        return self._plugin.compute_resource_get_state_detail(self)
+    
+    
     ######################################################################
     ##
-    # FIXME: Ole, in the spec, the compute resource IS-A job service, so
-    # get_job_service() is not needed -- the instance can simply be casted into
-    # a job service. I am not sure how that is rendered in Python -- I would
-    # of course also simply inherit this resource type from job.service -- 
-    # that seems much cleaner than re-implementing the whole job service
-    # API/CPI...
-    #
-#    def get_job_service(self): 
-#        '''expose this resource as legacy job service.'''
-#        if self._plugin is None:
-#            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
-#              "Object not bound to a plugin")
-#
-#        return self._plugin.get_job_service () 
-
+    def get_id(self):
+        '''Return the id of the resource'''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+                                       "Object not bound to a plugin")
+        
+        return self._plugin.compute_resource_get_id(self)
+    
+    
+    ######################################################################
+    ##
+    def get_manager(self):
+        '''Return the associated resource manager object.'''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+                                       "Object not bound to a plugin")
+        
+        return self._plugin.compute_resource_get_manager(self)
+    
+    
+    ######################################################################
+    ##
+    def get_description(self): 
+        '''Return the associated resource description object.'''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+                                       "Object not bound to a plugin")
+        
+        return self._plugin.compute_resource_get_description(self)
+    
+    ######################################################################
+    ##
+    def destroy(self, drain=False):
+        '''Destroy (close) the resource.'''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+                                       "Object not bound to a plugin")
+        
+        return self._plugin.compute_resource_destroy(self, drain)
+    
+    
+    ######################################################################
+    ##
+    def wait(self, timeout=-1, state="Final"):
+        '''Wait for the resource to reach a specific state.'''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+                                       "Object not bound to a plugin")
+        
+        return self._plugin.compute_resource_wait(self, state)
