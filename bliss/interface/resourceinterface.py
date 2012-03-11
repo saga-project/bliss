@@ -121,11 +121,6 @@ class ResourcePluginInterface(PluginBaseInterface):
         errormsg = "Not implemented plugin method called: compute_resource_wait()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
-    def compute_get_state(self, job_obj):
-        errormsg = "Not implemented plugin method called: compute_get_state()"
-        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
-
-
     ######## Method templates for saga.resource.Storage functionality 
     ##
     def storage_resource_get_state(self, res_obj):
@@ -154,9 +149,5 @@ class ResourcePluginInterface(PluginBaseInterface):
 
     def storage_resource_wait(self, res_obj, filter):
         errormsg = "Not implemented plugin method called: storage_resource_wait()"
-        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
-
-    def storage_get_state(self, job_obj):
-        errormsg = "Not implemented plugin method called: storage_get_state()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
