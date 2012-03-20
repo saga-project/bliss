@@ -20,7 +20,7 @@ class PBSPilotJobResourcePlugin(ResourcePluginInterface):
 
     ## Step 2: Define supported url schemas
     ## 
-    _schemas = ['pbs+ssh']
+    _schemas = ['pbspilot']
 
     ## Step 3: Define apis supported by this adaptor
     ##
