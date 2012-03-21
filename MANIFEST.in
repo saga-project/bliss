@@ -22,6 +22,8 @@ include bliss/plugins/pbs/*.py
 include bliss/plugins/pbsbigjob/*.py
 include bliss/plugins/local/*.py
 
+include bliss/plugins/ec2/*.py
+include bliss/plugins/ssh/*.py
 
 include MANIFEST.in README.md LICENSE CHANGES
 

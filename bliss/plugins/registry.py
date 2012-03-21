@@ -10,9 +10,22 @@ __license__   = "MIT"
 from bliss.plugins.pbs import PBSJobAndSDPlugin
 from bliss.plugins.sftp import SFTPFilesystemPlugin
 from bliss.plugins.local import LocalJobPlugin
+from bliss.plugins.ec2 import EC2JobPlugin
+from bliss.plugins.ssh import SSHJobPlugin
+
 #from bliss.plugins.pbsbigjob import PBSBigJobResourcePlugin
 
 _registry = []
+
+_registry.append({"class"   : SSHJobPlugin,
+                  "apis"    : SSHJobPlugin.supported_apis(),
+                  "name"    : SSHJobPlugin.plugin_name(),
+                  "schemas" : SSHJobPlugin.supported_schemas()})
+
+_registry.append({"class"   : EC2JobPlugin,
+                  "apis"    : EC2JobPlugin.supported_apis(),
+                  "name"    : EC2JobPlugin.plugin_name(),
+                  "schemas" : EC2JobPlugin.supported_schemas()})
 
 _registry.append({"class"   : LocalJobPlugin,
                   "apis"    : LocalJobPlugin.supported_apis(),

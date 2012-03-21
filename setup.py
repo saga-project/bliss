@@ -101,7 +101,9 @@ setup_args = {
         "bliss.plugins.local",
         "bliss.plugins.pbs",
         "bliss.plugins.pbsbigjob",
-        "bliss.plugins.sftp"
+        "bliss.plugins.sftp",
+        "bliss.plugins.ec2",
+        "bliss.plugins.ssh"
     ],
     'scripts': scripts,
     # mention data_files, even if empty, so install_data is called and
