@@ -8,11 +8,6 @@ include bliss/saga/job/*.py
 include bliss/saga/resource/*.py
 include bliss/saga/filesystem/*.py
 
-include bliss/sagacompat/*.py
-include bliss/sagacompat/sd/*.py
-include bliss/sagacompat/job/*.py
-include bliss/sagacompat/filesystem/*.py
-
 include bliss/runtime/*.py
 include bliss/interface/*.py
 
@@ -20,7 +15,6 @@ include bliss/plugins/*.py
 include bliss/plugins/sftp/*.py
 include bliss/plugins/sge/*.py
 include bliss/plugins/pbs/*.py
-include bliss/plugins/pbspilotjob/*.py
 include bliss/plugins/local/*.py
 
 
