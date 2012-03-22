@@ -96,7 +96,7 @@ class Description(Object, AttributeInterface):
         def fget(self):
             return self._executable
         def fset(self, val):
-            if type(val) is not type(str):
+            if type(val) is not str:
                 raise Exception(Error.BadParameter, "'executable' attribute expects 'string' type.")
             self._executable = val
         def fdel(self, val):
@@ -111,7 +111,7 @@ class Description(Object, AttributeInterface):
         def fget(self):
             return self._arguments
         def fset(self, val):
-            if type(val) is not type(list):
+            if type(val) is not list:
                 raise Exception(Error.BadParameter, "'arguments' attribute expects 'list' type.")
             self._arguments = val
         def fdel(self, val):
@@ -139,7 +139,7 @@ class Description(Object, AttributeInterface):
         def fget(self):
             return self._environment
         def fset(self, val):
-            if type(val) is not type(list):
+            if type(val) is not list:
                 raise Exception(Error.BadParameter, "'environment' attribute expects 'list' type.")
             self._environment = val
         def fdel(self, val):
@@ -155,7 +155,7 @@ class Description(Object, AttributeInterface):
         def fget(self):
             return self._output
         def fset(self, val):
-            if type(val) is not type(str):
+            if type(val) is not str:
                 raise Exception(Error.BadParameter, "'output' attribute expects 'string' type.")
             self._output = val
         def fdel(self, val):
@@ -170,7 +170,7 @@ class Description(Object, AttributeInterface):
         def fget(self):
             return self._error
         def fset(self, val):
-            if type(val) is not type(str):
+            if type(val) is not str:
                 raise Exception(Error.BadParameter, "'error' attribute expects 'string' type.")
             self._error = val
         def fdel(self, val):
@@ -185,7 +185,7 @@ class Description(Object, AttributeInterface):
         def fget(self):
             return self._project
         def fset(self, val):
-            if type(val) is not type(str):
+            if type(val) is not str:
                 raise Exception(Error.BadParameter, "'project' attribute expects 'string' type.")
             self._project = val
         def fdel(self, val):
@@ -200,7 +200,7 @@ class Description(Object, AttributeInterface):
         def fget(self):
             return self._queue
         def fset(self, val):
-            if type(val) is not type(str):
+            if type(val) is not str:
                 raise Exception(Error.BadParameter, "'queue' attribute expects 'string' type.")
             self._queue = val
         def fdel(self, val):
@@ -215,7 +215,7 @@ class Description(Object, AttributeInterface):
         def fget(self):
             return self._wall_time_limit
         def fset(self, val):
-            if type(val) is not type(int):
+            if type(val) is not int:
                 raise Exception(Error.BadParameter, "'wall_time_limit' attribute expects 'int' type.")
             self._wall_time_limit = val
         def fdel(self, val):
@@ -230,7 +230,7 @@ class Description(Object, AttributeInterface):
         def fget(self):
             return self._working_directory
         def fset(self, val):
-            if type(val) is not type(str):
+            if type(val) is not str:
                 raise Exception(Error.BadParameter, "'working_directory' attribute expects 'string' type.")
             self._working_directory = val
         def fdel(self, val):
@@ -246,7 +246,7 @@ class Description(Object, AttributeInterface):
         def fget(self):
             return self._contact
         def fset(self, val):
-            if type(val) is not type(str):
+            if type(val) is not str:
                 raise Exception(Error.BadParameter, "'contact' attribute expects 'string' type.")
             self._contact = val
         def fdel(self, val):
@@ -262,7 +262,7 @@ class Description(Object, AttributeInterface):
         def fget(self):
             return self._total_cpu_count
         def fset(self, val):
-            if type(val) is not type(int):
+            if type(val) is not int:
                 raise Exception(Error.BadParameter, "'total_cpu_count' attribute expects 'int' type.")
             self._total_cpu_count = val
         def fdel(self, val):
@@ -278,7 +278,7 @@ class Description(Object, AttributeInterface):
         def fget(self):
             return self._number_of_processes
         def fset(self, val):
-            if type(val) is not type(int):
+            if type(val) is not int:
                 raise Exception(Error.BadParameter, "'number_of_processes' attribute expects 'int' type.")
             self._number_of_processes = val
         def fdel(self, val):
@@ -293,7 +293,7 @@ class Description(Object, AttributeInterface):
         def fget(self):
             return self._spmd_variation
         def fset(self, val):
-            if type(val) is not type(str):
+            if type(val) is not str:
                 raise Exception(Error.BadParameter, "'spmd_variation' attribute expects 'string' type.")
             self._spmd_variation = val
         def fdel(self, val):

@@ -40,8 +40,8 @@ def main():
         # describe our job
         jd = saga.job.Description()
         # project to use
-        jd.project = list("TG-MCB090174")
-        jd.queue = "development"
+        jd.project = "TG-MCB090174"
+        jd.queue   = "development"
 
         # resource requirements
         jd.wall_time_limit  = "0:05:00"
