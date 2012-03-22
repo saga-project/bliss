@@ -18,5 +18,5 @@ include bliss/plugins/pbs/*.py
 include bliss/plugins/local/*.py
 
 
-include MANIFEST.in README.md LICENSE CHANGES
+include MANIFEST.in README.md LICENSE.md CHANGES.md
 
