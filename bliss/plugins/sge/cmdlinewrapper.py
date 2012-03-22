@@ -481,7 +481,9 @@ class SGEService:
         if jd.error is not None:
             sge_params += "#$ -e %s \n" % jd.error 
         if jd.wall_time_limit is not None:
-            sge_params += "#$ -l h_rt=%s \n" % jd.wall_time_limit
+            hours = jd.wall_time_limit/60
+            minutes = jd.wall_time_limit%60
+            sge_params += "#$ -l h_rt=%s:%s:00 \n" % (str(hours), str(minutes))
         if jd.queue is not None:
             sge_params += "#$ -q %s \n" % jd.queue
         if jd.project is not None:

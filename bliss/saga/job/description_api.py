@@ -139,8 +139,8 @@ class Description(Object, AttributeInterface):
         def fget(self):
             return self._environment
         def fset(self, val):
-            if type(val) is not list:
-                raise Exception(Error.BadParameter, "'environment' attribute expects 'list' type.")
+            if type(val) is not dict:
+                raise Exception(Error.BadParameter, "'environment' attribute expects 'dict' type.")
             self._environment = val
         def fdel(self, val):
             self._environment = None

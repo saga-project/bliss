@@ -511,7 +511,9 @@ class PBSService:
         if jd.error is not None:
             pbs_params += "#PBS -e %s \n" % jd.error 
         if jd.wall_time_limit is not None:
-            pbs_params += "#PBS -l walltime=%s \n" % jd.wall_time_limit
+            hours = jd.wall_time_limit/60
+            minutes = jd.wall_time_limit%60
+            pbs_params += "#PBS -l walltime=%s:%s:00 \n" % (str(hours), str(minutes))
         if jd.queue is not None:
             pbs_params += "#PBS -q %s \n" % jd.queue
         if jd.project is not None:
