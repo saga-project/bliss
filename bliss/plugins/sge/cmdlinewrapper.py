@@ -114,6 +114,9 @@ class SGEJobInfo(object):
         '''Constructor: initialize from qstat -f <jobid> string.
         '''
         
+        self._job_state = None
+        self._jobid = None
+
         plugin.log_debug("Got raw qstat output: %s" % qstat_output)
         #if len(qstat_f_output) > 0:
         #    try:
