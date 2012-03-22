@@ -10,7 +10,6 @@ from bliss.plugins.pbs import PBSJobAndSDPlugin
 from bliss.plugins.sge import SGEJobAndSDPlugin
 from bliss.plugins.sftp import SFTPFilesystemPlugin
 from bliss.plugins.local import LocalJobPlugin
-from bliss.plugins.pbspilotjob import PBSPilotJobResourcePlugin
 
 _registry = []
 

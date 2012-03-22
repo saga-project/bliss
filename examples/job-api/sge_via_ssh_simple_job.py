@@ -29,7 +29,7 @@ def main():
         # credentials of the user, i.e., ~/.ssh/id_rsa
         ctx = saga.Context()
         ctx.type = saga.Context.SSH
-        ctx.userid  = 'yye00' # like 'ssh username@host ...'
+        ctx.userid  = 'tg802352' # like 'ssh username@host ...'
 #        ctx.usercert = '/home1/01125/yye00/.ssh/id_rsa' # like ssh -i ...'
  
         # create a job service for TACC's 'lonestar' SGE cluster
@@ -40,12 +40,12 @@ def main():
         # describe our job
         jd = saga.job.Description()
         # project to use
-        jd.project = "TG-STA110014S"
+        jd.project = "TG-MCB090174"
         # resource requirements
         jd.wall_time_limit  = "0:05:00"
         jd.total_cpu_count = 12
         # the email notification
-        jd.contact = "yelkhamra@gmail.com" 
+        jd.contact = "oweidner@cct.lsu.edu" 
         # environment, executable & arguments
         jd.environment = {'SLEEP_TIME':'10'}       
         jd.executable  = '/bin/sleep'
