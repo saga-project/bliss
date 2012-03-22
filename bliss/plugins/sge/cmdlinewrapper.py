@@ -25,9 +25,9 @@ def sge_to_saga_jobstate(sgejs):
         return bliss.saga.job.Job.Running
     elif sgejs == 'H':
         return bliss.saga.job.Job.Waiting
-    elif sgejs == 'Q':
+    elif sgejs == 'qw':
         return bliss.saga.job.Job.Waiting
-    elif sgejs == 'R':
+    elif sgejs == 'r':
         return bliss.saga.job.Job.Running 
     elif sgejs == 'T': 
         return bliss.saga.job.Job.Running 
@@ -110,28 +110,31 @@ class SGEJobInfo(object):
     '''Encapsulates infos about a SGE job as returned by qstat -f1.
     '''
 
-    def __init__(self, qstat_f_output, plugin):
+    def __init__(self, qstat_output, plugin):
         '''Constructor: initialize from qstat -f <jobid> string.
         '''
         
-        plugin.log_debug("Got raw qstat output: %s" % qstat_f_output)
-        if len(qstat_f_output) > 0:
-            try:
-                lines = qstat_f_output.split("\n")
-                self._jobid = lines[0].split(":")[1].strip()
-            except Exception, ex:
-                raise Exception("Couldn't parse %s: %s" \
-                  % (qstat_f_output, ex))
+        plugin.log_debug("Got raw qstat output: %s" % qstat_output)
+        #if len(qstat_f_output) > 0:
+        #    try:
+        #        lines = qstat_f_output.split("\n")
+        #self._jobid = jobid #lines[0].split(":")[1].strip()
+        #    except Exception, ex:
+        #        raise Exception("Couldn't parse %s: %s" \
+        #          % (qstat_f_output, ex))
 
-            for line in lines[1:]:
-                try: 
-                    (key, value) = line.split(" = ")
-                    key = "_%s" % key.strip()
-                    self.__dict__[key] = value
-                except Exception, ex:
-                    pass
-            plugin.log_debug("Parsed qstat output: %s" % str(self.__dict__))
-
+        #    for line in lines[1:]:
+        #        try: 
+        #            (key, value) = line.split(" = ")
+        #            key = "_%s" % key.strip()
+        #            self.__dict__[key] = value
+        #        except Exception, ex:
+        #            pass
+        #    plugin.log_debug("Parsed qstat output: %s" % str(self.__dict__))
+        self._qstat_output = qstat_output
+        for line in self._qstat_output.split('\n'):
+            if line.find("bliss_job") != -1:
+                self._job_state = line.split()[4]  
 
     @property 
     def state(self):
@@ -363,8 +366,8 @@ class SGEService:
                 return self._known_jobs[saga_jobid.native_id]
 
 
-        result = self._cw.run("qstat -f -j %s" % (saga_jobid.native_id))
-        if result.returncode != 0:
+        result = self._cw.run("qstat | grep %s" % saga_jobid.native_id )
+        if (result.returncode != 0) or (len(result.stderr) > 1):
             if self._known_jobs_exists(saga_jobid.native_id):
                 ## if the job is on record but can't be reached anymore,
                 ## this probablty means that it has finished and already
@@ -378,6 +381,7 @@ class SGEService:
                 raise Exception("Error running 'qstat': %s" % result.stderr)
 
         jobinfo = SGEJobInfo(result.stdout, self._pi)
+        jobinfo._jobid = saga_jobid.native_id
         self._known_jobs_update(jobinfo.jobid, jobinfo)
 
         return jobinfo
@@ -514,7 +518,6 @@ class SGEService:
         # filter the script
         script = script.replace("\"", "\\\"")
         result = self._cw.run("echo \"%s\" | qsub" % (script))
- 
         if result.returncode != 0:
             if len(result.stderr) < 1:
                 error = result.stdout
@@ -526,12 +529,20 @@ class SGEService:
             #have disappeared from the queue at this point. that's why
             #we create a dummy job info here
             ji = SGEJobInfo("", self._pi)
-            ji._jobid = result.stdout.split("\n")[0]
+
+            for line in result.stdout.split('\n'):
+                if line.find("Your job") != -1:
+                    ji._jobid = line.split(" ")[2]
+                 
+            if ji._jobid == None:
+                self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess,
+                  "Couldn't parse Job ID from qsub output: %s" % (result.stdout))
+
             ji._job_state = "R"
             self._known_jobs_update(ji.jobid, ji)
 
-            jobinfo = self.get_jobinfo(bliss.saga.job.JobID(self._url, 
-              result.stdout.split("\n")[0]))
+            jobinfo = self.get_jobinfo(bliss.saga.job.JobID(self._url, ji._jobid))
+              #result.stdout.split("\n")[0]))
             return jobinfo
 
     ######################################################################
