@@ -465,34 +465,34 @@ class SGEService:
             for arg in jd.arguments:
                 exec_n_args += "%s " % (arg)
 
-        sge_params += "#SGE -N %s \n" % "bliss_job" 
-        sge_params += "#SGE -V     \n"
+        sge_params += "#$ -N %s \n" % "bliss_job" 
+        sge_params += "#$ -V     \n"
 
         if jd.environment is not None:
             variable_list = str()
             for key in jd.environment.keys(): 
                 variable_list += "%s=%s," % (key, jd.environment[key])
-            sge_params += "#SGE -v %s \n" % variable_list
+            sge_params += "#$ -v %s \n" % variable_list
 
         if jd.working_directory is not None:
-            sge_params += "#SGE -d %s \n" % jd.working_directory 
+            sge_params += "#$ -d %s \n" % jd.working_directory 
         if jd.output is not None:
-            sge_params += "#SGE -o %s \n" % jd.output
+            sge_params += "#$ -o %s \n" % jd.output
         if jd.error is not None:
-            sge_params += "#SGE -e %s \n" % jd.error 
+            sge_params += "#$ -e %s \n" % jd.error 
         if jd.wall_time_limit is not None:
-            sge_params += "#SGE -l h_rt=%s \n" % jd.wall_time_limit
+            sge_params += "#$ -l h_rt=%s \n" % jd.wall_time_limit
         if jd.queue is not None:
-            sge_params += "#SGE -q %s \n" % jd.queue
+            sge_params += "#$ -q %s \n" % jd.queue
         if jd.project is not None:
-            sge_params += "#SGE -A %s \n" % jd.project[0]
+            sge_params += "#$ -A %s \n" % str(jd.project)
         if jd.contact is not None:
-            sge_params += "#SGE -m be \n"
-            sge_params += "#SGE -M %s \n" % jd.contact
+            sge_params += "#$ -m be \n"
+            sge_params += "#$ -M %s \n" % jd.contact
         
 
         if jd.total_cpu_count is not None:
-            sge_params += "#SGE -pe %sway %s" % (self._ppn, str(jd.total_cpu_count))
+            sge_params += "#$ -pe %sway %s" % (self._ppn, str(jd.total_cpu_count))
 
         sgescript = "\n#!/bin/bash \n%s \n%s" % (sge_params, exec_n_args)
         self._pi.log_info("Generated SGE script: %s" % (sgescript))

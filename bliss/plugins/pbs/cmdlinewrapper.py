@@ -515,7 +515,7 @@ class PBSService:
         if jd.queue is not None:
             pbs_params += "#PBS -q %s \n" % jd.queue
         if jd.project is not None:
-            pbs_params += "#PBS -A %s \n" % jd.project[0]
+            pbs_params += "#PBS -A %s \n" % str(jd.project)
         if jd.contact is not None:
             pbs_params += "#PBS -m abe \n"
         

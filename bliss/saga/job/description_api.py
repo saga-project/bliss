@@ -57,6 +57,9 @@ class Description(Object, AttributeInterface):
                                          accessor=self.__class__.number_of_processes) 
         self._register_rw_attribute     (name="SPMDVariation", 
                                          accessor=self.__class__.spmd_variation) 
+        self._register_rw_attribute     (name="JobProject", 
+                                         accessor=self.__class__.project) 
+
 
 
         self._register_rw_vec_attribute (name="Arguments", 
@@ -65,8 +68,6 @@ class Description(Object, AttributeInterface):
                                          accessor=self.__class__.file_transfer) 
         self._register_rw_vec_attribute (name="Environment", 
                                          accessor=self.__class__.environment) 
-        self._register_rw_vec_attribute (name="JobProject", 
-                                         accessor=self.__class__.project) 
 
     ######################################################################
     ## 
