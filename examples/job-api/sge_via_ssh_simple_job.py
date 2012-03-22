@@ -29,19 +29,23 @@ def main():
         # credentials of the user, i.e., ~/.ssh/id_rsa
         ctx = saga.Context()
         ctx.type = saga.Context.SSH
-        ctx.userid  = 'oweidner' # like 'ssh username@host ...'
-        ctx.usercert = '/Users/oweidner/.ssh/rsa_work' # like ssh -i ...'
+        ctx.userid  = 'yye00' # like 'ssh username@host ...'
+#        ctx.usercert = '/home1/01125/yye00/.ssh/id_rsa' # like ssh -i ...'
  
         # create a job service for TACC's 'lonestar' SGE cluster
         # and attach the SSH security context to it
-        js = saga.job.Service("sge+ssh://alamo.futuregrid.org") # replace with lonestar
+        js = saga.job.Service("sge+ssh://lonestar.tacc.utexas.edu") # replace with lonestar
         js.session.contexts.append(ctx)
 
         # describe our job
         jd = saga.job.Description()
+        # project to use
+        jd.project = "TG-STA110014S"
         # resource requirements
         jd.wall_time_limit  = "0:05:00"
-        jd.total_cpu_count = 1     
+        jd.total_cpu_count = 12
+        # the email notification
+        jd.contact = "yelkhamra@gmail.com" 
         # environment, executable & arguments
         jd.environment = {'SLEEP_TIME':'10'}       
         jd.executable  = '/bin/sleep'

@@ -17,25 +17,25 @@ from bliss.plugins.utils import CommandWrapper
 ################################################################################
 ################################################################################
 
-def sge_to_saga_jobstate(pbsjs):
+def sge_to_saga_jobstate(sgejs):
     '''translates a pbs one-letter state to saga'''
-    if pbsjs == 'C':
+    if sgejs == 'C':
         return bliss.saga.job.Job.Done
-    elif pbsjs == 'E':
+    elif sgejs == 'E':
         return bliss.saga.job.Job.Running
-    elif pbsjs == 'H':
+    elif sgejs == 'H':
         return bliss.saga.job.Job.Waiting
-    elif pbsjs == 'Q':
+    elif sgejs == 'Q':
         return bliss.saga.job.Job.Waiting
-    elif pbsjs == 'R':
+    elif sgejs == 'R':
         return bliss.saga.job.Job.Running 
-    elif pbsjs == 'T': 
+    elif sgejs == 'T': 
         return bliss.saga.job.Job.Running 
-    elif pbsjs == 'W':
+    elif sgejs == 'W':
         return bliss.saga.job.Job.Waiting
-    elif pbsjs == 'S':
-        return bliss.saga.job.Job.Waiting
-    elif pbsjs == 'X':
+    elif sgejs == 'S':
+        return bliss.saga.job.Job.Waiting 
+    elif sgejs == 'X':
         return bliss.saga.job.Job.Canceled
     else:
         return bliss.saga.job.Job.Unknown
@@ -75,6 +75,8 @@ class SGEServiceInfo(object):
         jobs_running = 0
         jobs_waiting = 0
 
+
+        # yye00 modified all of this
         lines = qstat_a_output.split("\n")
         for line in lines: 
             if line.find(" R ") != -1:
@@ -86,37 +88,10 @@ class SGEServiceInfo(object):
         self.GlueCEStateWaitingJobs = str(jobs_waiting)
         self.GlueCEStateTotalJobs = str(jobs_running+jobs_waiting)
 
-        if pbsnodes_output is not None:
-            # get all sorts of useful info about the 
-            # PBS cluster and translate it into GLUE
-            # schema attributes
-            cpus_total   = 0
-            cpus_free    = 0
-            cpus_pernode = 0
-
-            self._nodeinfo=list()
-            for node_raw in pbsnodes_output.split('\n\n'):
-                lines = node_raw.split('\n')
-                node_data = dict()
-                for line in lines[1:]:
-                    (key, value) = line.split(" = ")
-                    key = key.strip()
-                    node_data[key] = value
-                self._nodeinfo.append(node_data)
-                cpus_total += int(node_data['np'])
-                if node_data['state'] == 'free':
-                    try:
-                        cpus_free += int(node_data['np'])
-                        for item in node_data['status'].split(','):
-                            (key, val) = item.split("=")
-                            if key == 'physmem':
-                                self.GlueHostMainMemoryRAMSize = val.replace('kb','')
-                    except Exception, ex:
-                        plugin.log_wrning("Can't determine GlueHostMainMemoryRAMSize.")
-
-            self.GlueSubClusterPhysicalCPUs = str(cpus_total)
-            self.GlueCEStateFreeCPUs = str(cpus_free)
-            self.GlueHostArchitectureSMPSize = self._nodeinfo[0]['np']
+        # hack to work on lonestar
+        self.GlueSubClusterPhysicalCPUs = "256"
+        self.GlueCEStateFreeCPUs = "256"
+        self.GlueHostArchitectureSMPSize = "12"
 
 
     def has_attribute(self, key):
@@ -251,7 +226,7 @@ class SGEService:
         if self._url.scheme == "sge":
             self._use_ssh = False
             cw = CommandWrapper(via_ssh=False)
-            result = cw.run("which pbsnodes")#, ["--version"]) ### CHANGE to sge tool name
+            result = cw.run("which qstat")#, ["--version"]) ### CHANGE to sge tool name
             if result.returncode != 0:
                 self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
                 "Couldn't find SGE tools on %s" % (self._url))
@@ -298,13 +273,13 @@ class SGEService:
                 self._pi.log_error_and_raise("11", "Couldn't find a way to access %s" % (self._url))
             
             # now let's see if we can find PBS
-            result = self._cw.run("which pbsnodes")# --version") ### CHANGE to SGE tools
+            result = self._cw.run("which qstat")# --version") ### CHANGE to SGE tools
             if result.returncode != 0:
-                self._pi.log_error_and_raise("11", "Couldn't find PBS command line tools on %s: %s" \
+                self._pi.log_error_and_raise("11", "Couldn't find SGE command line tools on %s: %s" \
                   % (self._url, result.stderr))
             else:
-                self._pi.log_info("Found PBS command line tools on %s at %s" \
-                  % (self._url, result.stdout.replace('/pbsnodes', '')))
+                self._pi.log_info("Found SGE command line tools on %s at %s" \
+                  % (self._url, result.stdout.replace('/qstat', '')))
                
                 si = self.get_service_info()
                 if si.GlueHostArchitectureSMPSize != None:
@@ -325,30 +300,30 @@ class SGEService:
         if self._service_info == None:
             # initial creation
             self._pi.log_info("Service info cache empty. Updating local service info.")
-            qstat_result = self._cw.run("qstat -a")
+            qstat_result = self._cw.run("qstat -g c")
             if qstat_result.returncode != 0:
                 raise Exception("Error running 'qstat': %s" % qstat_result.stderr)
-            pbsnodes_result = self._cw.run("pbsnodes")
-            if pbsnodes_result.returncode != 0:
-                raise Exception("Error running 'pbsnodes': %s" % pbsnodes_result.stderr)
+            sgeqstat_result = self._cw.run("qstat -g c")
+            if sgeqstat_result.returncode != 0:
+                raise Exception("Error running 'qstat': %s" % sgeqstat_result.stderr)
 
             self._service_info = SGEServiceInfo(qstat_result.stdout,
-                                                pbsnodes_result.stdout, self._pi)
+                                                sgeqstat_result.stdout, self._pi)
             self._service_info_last_update = time.time()
 
         else: 
             if self._service_info_last_update+15.0 < time.time():
                 # older than 15 seconds. update.
                 self._pi.log_info("15s service info cache expired. Updating local service info.")
-                qstat_result = self._cw.run("qstat_result -a")
+                qstat_result = self._cw.run("qstat_result -g c")
                 if qstat_result.returncode != 0:
                     raise Exception("Error running 'qstat': %s" % qstat_result.stderr)
-                pbsnodes_result = self._cw.run("pbsnodes")
-                if pbsnodes_result.returncode != 0:
-                    raise Exception("Error running 'pbsnodes': %s" % pbsnodes_result.stderr)
+                sgeqstat_result = self._cw.run("qstat -g c")
+                if sgeqstat_result.returncode != 0:
+                    raise Exception("Error running 'qstat -g c': %s" % sgeqstat_result.stderr)
 
                 self._service_info = SGEServiceInfo(qstat_result.stdout,
-                                                    pbsnodes_result.stdout, self._pi)
+                                                    sgeqstat_result.stdout, self._pi)
                 self._service_info_last_update = time.time()
             else:
                 self._pi.log_info("15s cache not expired yet. Using local service info.")
@@ -363,7 +338,7 @@ class SGEService:
         if self._cw == None:
             self._check_context()
         
-        result = self._cw.run("qstat -f1")
+        result = self._cw.run("qstat ")
         if result.returncode != 0:
             raise Exception("Error running 'qstat': %s" % result.stderr)
 
@@ -388,7 +363,7 @@ class SGEService:
                 return self._known_jobs[saga_jobid.native_id]
 
 
-        result = self._cw.run("qstat -f1 %s" % (saga_jobid.native_id))
+        result = self._cw.run("qstat -f -j %s" % (saga_jobid.native_id))
         if result.returncode != 0:
             if self._known_jobs_exists(saga_jobid.native_id):
                 ## if the job is on record but can't be reached anymore,
@@ -426,7 +401,7 @@ class SGEService:
                 else:
                     nativeids += ("%s " % (jobid.native_id))
         # run bulk qstat
-        result = self._cw.run("qstat -f1 %s" % nativeids)
+        result = self._cw.run("qstat -f -j %s" % nativeids)
         if result.returncode != 0:
             if self._known_jobs_exists(saga_jobid.native_id):
                 ## if the job is on record but can't be reached anymore,
@@ -479,9 +454,9 @@ class SGEService:
     ######################################################################
     ##
     def _sge_script_generator(self, jd):
-        '''Generates a PBS script from a SAGA job description.
+        '''Generates a SGE script from a SAGA job description.
         '''
-        pbs_params = str()
+        sge_params = str()
         exec_n_args = str()
 
         if jd.executable is not None:
@@ -490,40 +465,36 @@ class SGEService:
             for arg in jd.arguments:
                 exec_n_args += "%s " % (arg)
 
-        pbs_params += "#PBS -N %s \n" % "bliss_job" 
-        pbs_params += "#PBS -V     \n"
+        sge_params += "#SGE -N %s \n" % "bliss_job" 
+        sge_params += "#SGE -V     \n"
 
         if jd.environment is not None:
             variable_list = str()
             for key in jd.environment.keys(): 
                 variable_list += "%s=%s," % (key, jd.environment[key])
-            pbs_params += "#PBS -v %s \n" % variable_list
+            sge_params += "#SGE -v %s \n" % variable_list
 
         if jd.working_directory is not None:
-            pbs_params += "#PBS -d %s \n" % jd.working_directory 
+            sge_params += "#SGE -d %s \n" % jd.working_directory 
         if jd.output is not None:
-            pbs_params += "#PBS -o %s \n" % jd.output
+            sge_params += "#SGE -o %s \n" % jd.output
         if jd.error is not None:
-            pbs_params += "#PBS -e %s \n" % jd.error 
+            sge_params += "#SGE -e %s \n" % jd.error 
         if jd.wall_time_limit is not None:
-            pbs_params += "#PBS -l walltime=%s \n" % jd.wall_time_limit
+            sge_params += "#SGE -l h_rt=%s \n" % jd.wall_time_limit
         if jd.queue is not None:
-            pbs_params += "#PBS -q %s \n" % jd.queue
+            sge_params += "#SGE -q %s \n" % jd.queue
         if jd.project is not None:
-            pbs_params += "#PBS -A %s \n" % jd.project[0]
+            sge_params += "#SGE -A %s \n" % jd.project[0]
         if jd.contact is not None:
-            pbs_params += "#PBS -m abe \n"
+            sge_params += "#SGE -m be \n"
+            sge_params += "#SGE -M %s \n" % jd.contact
         
 
         if jd.total_cpu_count is not None:
-            tcc = int(jd.total_cpu_count)
-            tbd = float(tcc)/float(self._ppn)
-            if float(tbd) > int(tbd):
-                pbs_params += "#PBS -l nodes=%s:ppn=%s" % (str(int(tbd)+1), self._ppn)
-            else:
-                pbs_params += "#PBS -l nodes=%s:ppn=%s" % (str(int(tbd)), self._ppn)
+            sge_params += "#SGE -pe %sway %s" % (self._ppn, str(jd.total_cpu_count))
 
-        sgescript = "\n#!/bin/bash \n%s \n%s" % (pbs_params, exec_n_args)
+        sgescript = "\n#!/bin/bash \n%s \n%s" % (sge_params, exec_n_args)
         self._pi.log_info("Generated SGE script: %s" % (sgescript))
         return sgescript
 
@@ -549,7 +520,7 @@ class SGEService:
                 error = result.stderr
             raise Exception("Error running 'qsub': %s. Script was: %s" % (error, script))
         else:
-            #depending on the PBS configuration, the job can already 
+            #depending on the SGE configuration, the job can already 
             #have disappeared from the queue at this point. that's why
             #we create a dummy job info here
             ji = SGEJobInfo("", self._pi)
@@ -576,5 +547,5 @@ class SGEService:
         else:
             jobinfo = self.get_jobinfo(saga_jobid)
             if jobinfo.state == bliss.saga.job.Job.Done:
-                self.get_jobinfo(saga_jobid)._job_state = 'X' # pseudo-PBS 'Canceled'
+                self.get_jobinfo(saga_jobid)._job_state = 'X' # pseudo-SGE 'Canceled'
             #return jobinfo
