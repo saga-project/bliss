@@ -39,7 +39,7 @@ class SSHJobPlugin(JobPluginInterface):
             job_id = hex(id(job_obj))
             try:
                 self.objects[service_id]['jobs'].append(job_obj)
-                self.processes[job_id] = SSHJobProcess(jobdescription=job_obj.get_description(), plugin=self.parent)
+                self.processes[job_id] = SSHJobProcess(jobdescription=job_obj.get_description(), plugin=self.parent, service_object=service_obj)
             except Exception, ex:
                 self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
                   "Can't register job: %s %s" % (ex, utils.get_traceback()))   
@@ -98,6 +98,9 @@ class SSHJobPlugin(JobPluginInterface):
         JobPluginInterface.__init__(self, name=self._name, schemas=self._schemas)
         self.bookkeeper = self.BookKeeper(self)
 
+    def __del__ (self):
+        self.log_debug("In the deconstructor for the SSH job adaptor")
+
     @classmethod
     def sanity_check(self):
         '''Implements interface from _PluginBase'''
@@ -148,7 +151,7 @@ class SSHJobPlugin(JobPluginInterface):
         ##         shouldn't throw an exception here, since this method is called
         ##         by the destructor!
         self.bookkeeper.del_service_object(service_obj)
-        self.log_info("Unegistered service object %s" % (repr(service_obj))) 
+        self.log_info("Unregistered service object %s" % (repr(service_obj))) 
 
  
     def unregister_job_object(self, job_obj):
@@ -158,7 +161,7 @@ class SSHJobPlugin(JobPluginInterface):
         ##         by the destructor!
         '''Implements interface from _JobPluginBase'''
         self.bookkeeper.del_job_object(job_obj)
-        self.log_info("Unegisteredjob object %s" % (repr(job_obj))) 
+        self.log_info("Unregistered job object %s" % (repr(job_obj))) 
 
 
     def service_create_job(self, service_obj, job_description):
@@ -222,7 +225,6 @@ class SSHJobPlugin(JobPluginInterface):
         try:
             service = self.bookkeeper.get_service_for_job(job)
             return self.bookkeeper.get_process_for_job(job).getpid(str(service._url))  
-            self.log_info("Started local process: %s %s" % (job.get_description().executable, job.get_description().arguments)) 
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't get job id because: %s " % (str(ex)))
         return "ERROR"

@@ -11,11 +11,11 @@ class SSHJobProcess(object):
 #                 'environment', 'returncode', 'pid', 'state',
 #                 't_created', 't_started', 't_finished'}
 
-    def __init__(self, jobdescription,  plugin):
+    def __init__(self, jobdescription,  plugin, service_object):
         self.executable  = jobdescription.executable
         self.arguments   = jobdescription.arguments
         self.environment = jobdescription.environment
-        
+        self.so = service_object
         self.sshclient = None
         self.sshchannel = None
         #self.service_obj=service_object
@@ -31,6 +31,12 @@ class SSHJobProcess(object):
             self._job_output.close()
         if self._job_error is not None:
             self._job_error.close()
+        if self.sshchannel is not None:
+            self.pi.log_debug("Closing SSH channel")   
+            self.sshchannel.close()
+        if self.sshclient is not None:
+            self.pi.log_debug("Closing SSH client")
+            self.sshclient.close()
 
 
     def run(self, jd, url):
@@ -52,12 +58,7 @@ class SSHJobProcess(object):
 
         self.pi.log_info("Trying to run: %s on host %s" % (cmdline, url.host))   
 
-        #self.prochandle = subprocess.Popen(cmdline, shell=True, 
-        #                                   #executable=self.executable,
-        #                                   stderr=self._job_error, 
-        #                                   stdout=self._job_output, 
-        #                                   env=self.environment)
-
+ 
         self.config = paramiko.SSHConfig()
         #self.config.parse(open("$HOME/.ssh/config"))
         config_file = os.path.expanduser(os.path.join("~", ".ssh", "config"))
@@ -66,10 +67,38 @@ class SSHJobProcess(object):
         self.config.parse(open(config_file))
         #self.sshconfig = self.config.lookup(host)
 
+        usable_ctx = None
+
+        for ctx in self.so.session.contexts:
+            if ctx.type is bliss.saga.Context.SSH:
+                usable_ctx = ctx
+                self.pi.log_debug("Found SSH context to use!")
+                break
+
+    
+        #username = pwd.getpwuid(os.getuid()).pw_name
+
+        username = None
+        userkey = None
+        if usable_ctx is not None:
+            if usable_ctx.userid is not None:
+                username = usable_ctx.userid
+            if usable_ctx.userkey is not None:
+                userkey = usable_ctx.userkey
+
         self.sshclient=paramiko.SSHClient()
         self.sshclient.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        self.sshclient.load_host_keys(os.path.expanduser(os.path.join("~", ".ssh", "known_hosts")))
-        #self.prochandle.connect(hostname=hostname, port=int(port), username=username, allow_agent=True, look_for_keys=True)
+        self.sshclient.load_host_keys(os.path.expanduser(os.path.join("~", ".ssh", "known_hosts")))    
+          
+        if not userkey:
+            self.pi.log_debug("Using default ssh key")    
+        else:
+            self.pi.log_debug("Using context-provided ssh key")
+
+        if not username:
+            self.pi.log_debug("Using default username")
+        else:
+            self.pi.log_debug("Using context-provided username")
 
         hn = url.host
         try:
@@ -81,7 +110,7 @@ class SSHJobProcess(object):
 
         self.pi.log_info("Connecting to host %s" % hn)
 
-        self.sshclient.connect(hn)
+        self.sshclient.connect(hn, username=username, key_filename=userkey)
         self.sshchannel = self.sshclient.get_transport().open_session()
         self.sshchannel.exec_command("("+cmdline+")" + "> "+ jd.output + " 2> " + jd.error)
         #self.stdin = self.sshchannel.makefile('wb', bufsize)
@@ -90,6 +119,7 @@ class SSHJobProcess(object):
         self._job_error = self.sshchannel.makefile_stderr('rb', bufsize)
 
         #self.pid = self.prochandle.pid
+        self.pid = self.sshchannel.get_id()
         self.state = bliss.saga.job.Job.Running
 
     def getpid(self, serviceurl):
@@ -113,13 +143,14 @@ class SSHJobProcess(object):
         return self.state
 
     def terminate(self):
-        self.prochandle.terminate()
+        self.sshchannel.close()
         self.state = bliss.saga.job.Job.Canceled
 
 
     def wait(self, timeout):
         if timeout == -1:
             self.returncode = self.sshchannel.recv_exit_status()
+            self.sshchannel.close()
         else:
             t_beginning = time.time()
             seconds_passed = 0
