@@ -5,3 +5,5 @@
 __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
+
+from bliss.plugins.sge.sgesshjob import SGEJobAndSDPlugin

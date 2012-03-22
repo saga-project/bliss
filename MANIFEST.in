@@ -18,6 +18,7 @@ include bliss/interface/*.py
 
 include bliss/plugins/*.py
 include bliss/plugins/sftp/*.py
+include bliss/plugins/sge/*.py
 include bliss/plugins/pbs/*.py
 include bliss/plugins/pbspilotjob/*.py
 include bliss/plugins/local/*.py
