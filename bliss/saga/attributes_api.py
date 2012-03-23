@@ -59,7 +59,7 @@ class AttributeInterface(object):
             if self._attributes['name']['accessor'] is not None:
                 return True
         else:
-            raise SAGAException(SAGAError.DoesNotExists, 
+            raise SAGAException(SAGAError.DoesNotExist, 
                   "Attribute '%s' is not defined for this object." % (name))
         return False
 
@@ -69,7 +69,7 @@ class AttributeInterface(object):
         '''Remove the attribute.
         '''
         if not self.attribute_exists(key):
-            raise SAGAException(SAGAError.DoesNotExists, 
+            raise SAGAException(SAGAError.DoesNotExist, 
                   "Attribute '%s' doesn't exist." % (key))
         if self.attribute_is_readonly(key):
             raise SAGAException(SAGAError.PermissionDenied, 
@@ -84,7 +84,7 @@ class AttributeInterface(object):
         '''Return the value of a scalar attribute.
         '''
         if not self.attribute_exists(key):
-            raise SAGAException(SAGAError.DoesNotExists, 
+            raise SAGAException(SAGAError.DoesNotExist, 
                   "Attribute '%s' doesn't exist." % (key))
         if self.attribute_is_vector(key):
             raise SAGAException(SAGAError.IncorrectState, 
@@ -127,7 +127,7 @@ class AttributeInterface(object):
         '''Set the value of a vector attribute.
         '''
         if not self._valid_attribute_key(key):
-            raise SAGAException(SAGAError.DoesNotExists, 
+            raise SAGAException(SAGAError.DoesNotExist, 
                   "Attribute '%s' doesn't exist." % (key))
         if not self.attribute_is_vector(key):
             raise SAGAException(SAGAError.IncorrectState, 
