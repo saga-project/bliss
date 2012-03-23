@@ -155,10 +155,7 @@ class Object(object) :
  
            It is encouraged to use the L{session} property instead.
         '''
-        if self.session is None:
-            pass # return default session
-        else:
-           return self.session
+        return self.session
 
     ######################################################################
     ##
