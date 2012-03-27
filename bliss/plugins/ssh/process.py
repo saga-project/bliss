@@ -104,7 +104,15 @@ class SSHJobProcess(object):
 
         self.sshclient.connect(hn, username=username, key_filename=userkey)
         self.sshchannel = self.sshclient.get_transport().open_session()
-        self.sshchannel.exec_command("echo $$ && ("+cmdline+")" + "> "+ jd.output + " 2> " + jd.error)
+
+        envline="env "
+        for k in self.environment.keys():
+            envline += k+"="+self.environment[k]+" "
+        envline += " /bin/sh -c "
+        full_line = "echo $$ && ("+envline+"'"+cmdline+"')" + "> "+ jd.output + " 2> " + jd.error
+
+        self.pi.log_debug("Sending command %s to remote server:" % full_line)
+        self.sshchannel.exec_command(full_line)
         
         #the below is commented out because if we create a shell, i'm not sure how to
         #wait for the process to end execution properly, and i'm not sure how to get

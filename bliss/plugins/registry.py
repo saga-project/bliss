@@ -6,11 +6,11 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.plugins.pbs import PBSJobAndSDPlugin
+#from bliss.plugins.pbs import PBSJobAndSDPlugin
 from bliss.plugins.sge import SGEJobAndSDPlugin
 from bliss.plugins.sftp import SFTPFilesystemPlugin
 from bliss.plugins.local import LocalJobPlugin
-from bliss.plugins.ec2 import EC2JobPlugin
+#from bliss.plugins.ec2 import EC2JobPlugin
 from bliss.plugins.ssh import SSHJobPlugin
 
 #from bliss.plugins.pbsbigjob import PBSBigJobResourcePlugin
@@ -22,20 +22,20 @@ _registry.append({"class"   : SSHJobPlugin,
                   "name"    : SSHJobPlugin.plugin_name(),
                   "schemas" : SSHJobPlugin.supported_schemas()})
 
-_registry.append({"class"   : EC2JobPlugin,
-                  "apis"    : EC2JobPlugin.supported_apis(),
-                  "name"    : EC2JobPlugin.plugin_name(),
-                  "schemas" : EC2JobPlugin.supported_schemas()})
+#_registry.append({"class"   : EC2JobPlugin,
+#                  "apis"    : EC2JobPlugin.supported_apis(),
+#                  "name"    : EC2JobPlugin.plugin_name(),
+#                  "schemas" : EC2JobPlugin.supported_schemas()})
 
 _registry.append({"class"   : LocalJobPlugin,
                   "apis"    : LocalJobPlugin.supported_apis(),
                   "name"    : LocalJobPlugin.plugin_name(),
                   "schemas" : LocalJobPlugin.supported_schemas()})
 
-_registry.append({"class"   : PBSJobAndSDPlugin,
-                  "apis"    : PBSJobAndSDPlugin.supported_apis(),
-                  "name"    : PBSJobAndSDPlugin.plugin_name(),
-                  "schemas" : PBSJobAndSDPlugin.supported_schemas()})
+#_registry.append({"class"   : PBSJobAndSDPlugin,
+#                  "apis"    : PBSJobAndSDPlugin.supported_apis(),
+#                  "name"    : PBSJobAndSDPlugin.plugin_name(),
+#                  "schemas" : PBSJobAndSDPlugin.supported_schemas()})
 
 _registry.append({"class"   : SGEJobAndSDPlugin,
                   "apis"    : SGEJobAndSDPlugin.supported_apis(),
