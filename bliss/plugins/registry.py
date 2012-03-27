@@ -34,11 +34,6 @@ _registry.append({"class"   : SFTPFilesystemPlugin,
                   "name"    : SFTPFilesystemPlugin.plugin_name(),
                   "schemas" : SFTPFilesystemPlugin.supported_schemas()})
 
-_registry.append({"class"   : SFTPFilesystemPlugin,
-                  "apis"    : SFTPFilesystemPlugin.supported_apis(),
-                  "name"    : SFTPFilesystemPlugin.plugin_name(),
-                  "schemas" : SFTPFilesystemPlugin.supported_schemas()})
-
 _registry.append({"class"   : SSHJobPlugin,
                   "apis"    : SSHJobPlugin.supported_apis(),
                   "name"    : SSHJobPlugin.plugin_name(),
