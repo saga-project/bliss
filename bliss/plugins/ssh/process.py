@@ -10,6 +10,7 @@ class SSHJobProcess(object):
         self.executable  = jobdescription.executable
         self.arguments   = jobdescription.arguments
         self.environment = jobdescription.environment
+        self.working_directory=jobdescription.working_directory
         self.so = service_object
         self.sshclient = None
         self.sshchannel = None
@@ -34,16 +35,6 @@ class SSHJobProcess(object):
 
 
     def run(self, jd, url):
-        cmdline = str(self.executable)
-
-        #make a list of arguments
-        args = ""
-        if self.arguments is not None:
-            for arg in self.arguments:
-                cmdline += " %s" % arg 
-
-        self.pi.log_debug("Trying to run: %s on host %s" % (cmdline, url.host))
- 
         #load up ssh config file
         self.config = paramiko.SSHConfig()
         config_file = os.path.expanduser(os.path.join("~", ".ssh", "config"))
@@ -109,6 +100,23 @@ class SSHJobProcess(object):
         for k in self.environment.keys():
             envline += k+"="+self.environment[k]+" "
         envline += " /bin/sh -c "
+        
+        #set up our commandline
+        cmdline = ""
+
+        #do we have a working directory to cd into?
+        if(self.working_directory):
+            cmdline+="cd "+self.working_directory + " && "
+        cmdline+= str(self.executable)
+
+        #make a list of arguments
+        args = ""
+        if self.arguments is not None:
+            for arg in self.arguments:
+                cmdline += " %s" % arg 
+
+
+
         full_line = "echo $$ && ("+envline+"'"+cmdline+"')" + "> "+ jd.output + " 2> " + jd.error
 
         self.pi.log_debug("Sending command %s to remote server:" % full_line)
