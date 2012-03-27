@@ -10,6 +10,7 @@ from bliss.plugins.pbs import PBSJobAndSDPlugin
 from bliss.plugins.sge import SGEJobAndSDPlugin
 from bliss.plugins.sftp import SFTPFilesystemPlugin
 from bliss.plugins.local import LocalJobPlugin
+from bliss.plugins.ssh import SSHJobPlugin
 
 _registry = []
 
@@ -32,3 +33,8 @@ _registry.append({"class"   : SFTPFilesystemPlugin,
                   "apis"    : SFTPFilesystemPlugin.supported_apis(),
                   "name"    : SFTPFilesystemPlugin.plugin_name(),
                   "schemas" : SFTPFilesystemPlugin.supported_schemas()})
+
+_registry.append({"class"   : SSHJobPlugin,
+                  "apis"    : SSHJobPlugin.supported_apis(),
+                  "name"    : SSHJobPlugin.plugin_name(),
+                  "schemas" : SSHJobPlugin.supported_schemas()})
