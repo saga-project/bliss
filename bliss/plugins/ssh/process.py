@@ -6,11 +6,6 @@ import paramiko
 import os 
 class SSHJobProcess(object):
     '''A wrapper around an SSH process'''
-
-#    __slots__ = {'prochandle', 'executable', 'arguments', 
-#                 'environment', 'returncode', 'pid', 'state',
-#                 't_created', 't_started', 't_finished'}
-
     def __init__(self, jobdescription,  plugin, service_object):
         self.executable  = jobdescription.executable
         self.arguments   = jobdescription.arguments
@@ -18,7 +13,6 @@ class SSHJobProcess(object):
         self.so = service_object
         self.sshclient = None
         self.sshchannel = None
-        #self.service_obj=service_object
         self.pid = None
         self.returncode = None
         self.state = bliss.saga.job.Job.New
@@ -48,15 +42,13 @@ class SSHJobProcess(object):
             for arg in self.arguments:
                 cmdline += " %s" % arg 
 
-        self.pi.log_debug("Trying to run: %s on host %s" % (cmdline, url.host))   
+        self.pi.log_debug("Trying to run: %s on host %s" % (cmdline, url.host))
  
+        #load up ssh config file
         self.config = paramiko.SSHConfig()
-        #self.config.parse(open("$HOME/.ssh/config"))
         config_file = os.path.expanduser(os.path.join("~", ".ssh", "config"))
-
         self.pi.log_info("Loading SSH configuration file: %s" % config_file)
         self.config.parse(open(config_file))
-        #self.sshconfig = self.config.lookup(host)
 
         usable_ctx = None
 
@@ -76,8 +68,11 @@ class SSHJobProcess(object):
             if usable_ctx.userkey is not None:
                 userkey = usable_ctx.userkey
 
+        #set missing host key policy to automatically add it
         self.sshclient=paramiko.SSHClient()
         self.sshclient.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+        #have paramiko load host keys from .ssh directory
         self.sshclient.load_host_keys(os.path.expanduser(os.path.join("~", ".ssh", "known_hosts")))    
           
         #if the context provides a userkey, let us know that we're using it
@@ -93,6 +88,9 @@ class SSHJobProcess(object):
             self.pi.log_info("Using context-provided username")
 
         hn = url.host
+
+        #see if we have any information on the host from the ssh config
+        # that must be loaded
         try:
             temp = self.config.lookup(hn)['hostname']
             self.pi.log_debug("Translating provided hostname %s to %s" % (hn, temp))
@@ -102,9 +100,11 @@ class SSHJobProcess(object):
 
         self.pi.log_info("Connecting to host %s" % hn)
 
+        #set up our ssh channel
         self.sshclient.connect(hn, username=username, key_filename=userkey)
         self.sshchannel = self.sshclient.get_transport().open_session()
 
+        #parse environment variables
         envline="env "
         for k in self.environment.keys():
             envline += k+"="+self.environment[k]+" "
@@ -131,17 +131,13 @@ class SSHJobProcess(object):
         #leave pipes open for reading/writing later if needed
         self._job_output = self.sshchannel.makefile('rb')
         self._job_error = self.sshchannel.makefile_stderr('rb')
-
-        #self.pid = self.sshchannel.get_id()
         self.pid=self._job_output.readline().strip()
-        #self.pid=self.sshchannel.get_id()
         self.state = bliss.saga.job.Job.Running
 
     def getpid(self, serviceurl):
         return "[%s]-[%s]" % (serviceurl, self.pid)
 
     def getstate(self):
-        #self._job_output.read()
         if self.state == bliss.saga.job.Job.Running:
             # only update if still running 
             if self.sshchannel.exit_status_ready():
@@ -158,7 +154,6 @@ class SSHJobProcess(object):
     def terminate(self):
         self.sshchannel.close()
         self.state = bliss.saga.job.Job.Canceled
-
 
     def wait(self, timeout):
         if timeout == -1:
@@ -178,5 +173,3 @@ class SSHJobProcess(object):
 
     def get_exitcode(self):
         return self.returncode
-
-    

@@ -111,35 +111,22 @@ class SSHJobPlugin(JobPluginInterface):
     def get_runtime_info(self): 
         '''Implements interface from _PluginBase'''
         ## Optional: Can be used for plug-in introspection during runtime.
-        ## Return whatever you think is appropriate / releavent for the user. 
         text = "SSH Plugin standing by"
         return text
 
 
     def register_service_object(self, service_obj):
         '''Implements interface from _JobPluginBase'''
-        ## Step 5: Implement register_service_object. This method is called if 
-        ##         a service object is instantiated with a url schema that matches 
-        ##         this adaptor. You can still reject it by throwing an exception.
-        
         self.bookkeeper.add_service_object(service_obj)
         self.log_info("Registered new service object %s" % (repr(service_obj))) 
 
     def unregister_service_object(self, service_obj):
         '''Implements interface from _JobPluginBase'''
-        ## Step 6: Implement unregister_service_object. This method is called if
-        ##         a service object associated with this plugin is deleted. You
-        ##         shouldn't throw an exception here, since this method is called
-        ##         by the destructor!
         self.bookkeeper.del_service_object(service_obj)
         self.log_info("Unregistered service object %s" % (repr(service_obj))) 
 
  
     def unregister_job_object(self, job_obj):
-        ## Step 7: Implement unregister_job_object. This method is called if
-        ##         a job object associated with this plugin is deleted. You
-        ##         shouldn't throw an exception here, since this method is called
-        ##         by the destructor!
         '''Implements interface from _JobPluginBase'''
         self.bookkeeper.del_job_object(job_obj)
         self.log_info("Unregistered job object %s" % (repr(job_obj))) 
@@ -211,7 +198,6 @@ class SSHJobPlugin(JobPluginInterface):
 
     def job_run(self, job):
         '''Implements interface from _JobPluginBase'''
-        ## Step X: implement job.run()
         if job.get_description().executable is None:   
             self.log_error_and_raise(bliss.saga.Error.BadParameter, "No executable defined in job description")
         try:
@@ -224,13 +210,15 @@ class SSHJobPlugin(JobPluginInterface):
 
     def job_cancel(self, job, timeout):
         '''Implements interface from _JobPluginBase'''
-        ## Step X: implement job.cancel()
         self.log_info("job.cancel() called")
-
+        try:
+            service = self.bookkeeper.get_service_for_job(job)
+            self.bookkeeper.get_process_for_job(job).terminate()   
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't terminate job because: %s " % (str(ex)))
  
     def job_wait(self, job, timeout):
         '''Implements interface from _JobPluginBase'''
-        ## Step X: implement job.wait()
         self.log_info("job.wait() called")
         try:
             service = self.bookkeeper.get_service_for_job(job)
