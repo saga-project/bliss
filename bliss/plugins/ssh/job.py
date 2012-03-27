@@ -89,7 +89,7 @@ class SSHJobPlugin(JobPluginInterface):
         self.bookkeeper = self.BookKeeper(self)
 
     def __del__ (self):
-        print "In the deconstructor for the SSH job adaptor"
+        self.log_debug("In the deconstructor for the SSH job adaptor")
 
     @classmethod
     def sanity_check(self):
