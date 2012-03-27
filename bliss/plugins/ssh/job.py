@@ -2,9 +2,9 @@
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-__author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__author__    = "Ashley Zebrowski"
+__email__     = "anz7@rutgers.edu"
+__copyright__ = "Copyright 2012, Ashley Zebrowski"
 __license__   = "MIT"
 
 import bliss.saga 
@@ -13,8 +13,7 @@ from bliss.interface import JobPluginInterface
 from bliss.plugins.ssh.process import SSHJobProcess
 
 class SSHJobPlugin(JobPluginInterface):
-    '''Implements a 'null' plugin that does absolutely nothing
-       but print things to the console'''
+    '''Implements an SSH plugin which makes use of Paramiko'''
 
     ########################################
     ##
@@ -80,17 +79,8 @@ class SSHJobPlugin(JobPluginInterface):
     ##
     ########################################
 
-
-    ## Step 1: Define adaptor name. Convention is:
-    ##         saga.plugin.<package>.<name>
     _name = 'saga.plugin.job.ssh'
-
-    ## Step 2: Define supported url schemas
-    ## 
     _schemas = ['ssh']
-
-    ## Step 3: Define apis supported by this adaptor
-    ##
     _apis = ['saga.job']
 
     def __init__(self, url):
@@ -99,16 +89,11 @@ class SSHJobPlugin(JobPluginInterface):
         self.bookkeeper = self.BookKeeper(self)
 
     def __del__ (self):
-        self.log_debug("In the deconstructor for the SSH job adaptor")
+        print "In the deconstructor for the SSH job adaptor"
 
     @classmethod
     def sanity_check(self):
         '''Implements interface from _PluginBase'''
-        ## Step 4: Implement sanity_check. This method is called *once* on
-        ##         Bliss startup. Here you should check if everything this 
-        ##         adaptor needs is available, e.g., certain command line tools,
-        ##         python modules and so on.
-        ##         
         try: 
             import subprocess
         except Exception, ex:
@@ -139,10 +124,6 @@ class SSHJobPlugin(JobPluginInterface):
         
         self.bookkeeper.add_service_object(service_obj)
         self.log_info("Registered new service object %s" % (repr(service_obj))) 
-
-        ## YOU HAVE TO TAKE TRACK OF KNOWN OBJECTS YOURSELF, E.G., BY USING A 
-        ## DICTIONARY. HAVE A LOOK AT THE 'LOCAL' ADAPTOR FOR A PRACTICAL EXAMPLE
-
 
     def unregister_service_object(self, service_obj):
         '''Implements interface from _JobPluginBase'''
@@ -177,8 +158,6 @@ class SSHJobPlugin(JobPluginInterface):
             job._Job__init_from_service(service_obj=service_obj, 
                                         job_desc=job_description)
             self.bookkeeper.add_job_object(job, service_obj)   
-            ## YOU HAVE TO TAKE TRACK OF KNOWN OBJECTS YOURSELF, E.G., BY USING A 
-            ## DICTIONARY. HAVE A LOOK AT THE 'LOCAL' ADAPTOR FOR A PRACTICAL EXAMPLE
             self.log_info("service.create_job() called")
             return job
         
@@ -264,7 +243,7 @@ class SSHJobPlugin(JobPluginInterface):
         '''Implements interface from _JobPluginBase'''
         self.log_info("job.get_exitcode() called")
         try:
-            service = self.bookkeeper.get_service_for_job(job_obj)
+            #service = self.bookkeeper.get_service_for_job(job_obj)
             #process = self.bookkeeper.get_process_for_job(job_obj)
             #jobstate = process.getstate()
 
