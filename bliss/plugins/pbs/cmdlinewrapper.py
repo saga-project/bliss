@@ -3,7 +3,6 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
@@ -265,6 +264,11 @@ class PBSService:
             usable_ctx = None
             for ctx in self._so.session.contexts:
                 if ctx.type is bliss.saga.Context.SSH:
+                    if ctx.userkey is not None:
+                        import os.path
+                        if not os.path.isfile(ctx.userkey):
+                            self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+                                                         "Userkey %s doesn't exist." % ctx.userkey)
                     try:
                         cw = CommandWrapper(via_ssh=True,
                                             ssh_username=ctx.userid, 
@@ -278,8 +282,8 @@ class PBSService:
                               % (ctx, self._url))
                             break
                     except Exception, ex:
-                        self._pi.log_warning("Using context %s to access %s failed." \
-                          % (ctx, self._url))
+                        self._pi.log_warning("Using context %s to access %s failed: %s" \
+                          % (ctx, self._url, ex))
 
             if usable_ctx is None:
                 # see if we can use system defaults to run
@@ -507,11 +511,13 @@ class PBSService:
         if jd.error is not None:
             pbs_params += "#PBS -e %s \n" % jd.error 
         if jd.wall_time_limit is not None:
-            pbs_params += "#PBS -l walltime=%s \n" % jd.wall_time_limit
+            hours = jd.wall_time_limit/60
+            minutes = jd.wall_time_limit%60
+            pbs_params += "#PBS -l walltime=%s:%s:00 \n" % (str(hours), str(minutes))
         if jd.queue is not None:
             pbs_params += "#PBS -q %s \n" % jd.queue
         if jd.project is not None:
-            pbs_params += "#PBS -A %s \n" % jd.project[0]
+            pbs_params += "#PBS -A %s \n" % str(jd.project)
         if jd.contact is not None:
             pbs_params += "#PBS -m abe \n"
         

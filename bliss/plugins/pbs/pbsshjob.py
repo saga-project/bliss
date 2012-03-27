@@ -3,7 +3,6 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
@@ -97,7 +96,7 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
             desc._type = "org.ogf.saga.service.job"
             desc._name = "PBS Job Scheduler"
 
-            #desc._implementor = 
+            #desc._apiementor = 
             #desc._site = 
             #desc._uid = 
 

@@ -1,0 +1,4 @@
+To generate the API documentation, run this in the Bliss **root directory**:
+
+    epydoc -v --config=docs/epydoc.bliss.saga.cfg
+

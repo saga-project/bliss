@@ -14,7 +14,6 @@
 '''
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
@@ -31,11 +30,11 @@ def main():
         ctx = saga.Context()
         ctx.type = saga.Context.SSH
         ctx.userid  = 'oweidner' # like 'ssh username@host ...'
-        ctx.usercert = '/Users/oweidner/.ssh/id_rsa_fg' # like ssh -i ...'
+        ctx.userkey = '/Users/oweidner/.ssh/rsa_work' # like ssh -i ...'
  
         # create a job service for Futuregrid's 'india' PBS cluster
         # and attach the SSH security context to it
-        js = saga.job.Service("pbs+ssh://alamo.futuregrid.org")
+        js = saga.job.Service("pbs+ssh://india.futuregrid.org")
         js.session.contexts.append(ctx)
 
         # describe our job

@@ -18,7 +18,6 @@
 '''
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
@@ -44,7 +43,7 @@ def main():
         ctx = saga.context()
         ctx.type = saga.context.SSH
         ctx.userid  = 'oweidner' # like 'ssh username@host ...'
-        ctx.usercert = '/Users/oweidner/.ssh/id_rsa_fg' # like ssh -i ...'
+        ctx.userkey = '/Users/oweidner/.ssh/id_rsa_fg' # like ssh -i ...'
 
         # get some infos about the resources in our 
         # list, like number of waiting jobs, architecture, etc... 

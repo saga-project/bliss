@@ -3,11 +3,11 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.plugins.pbs import PBSJobAndSDPlugin
+from bliss.plugins.sge import SGEJobAndSDPlugin
 from bliss.plugins.sftp import SFTPFilesystemPlugin
 from bliss.plugins.local import LocalJobPlugin
 from bliss.plugins.ec2 import EC2JobPlugin
@@ -37,10 +37,10 @@ _registry.append({"class"   : PBSJobAndSDPlugin,
                   "name"    : PBSJobAndSDPlugin.plugin_name(),
                   "schemas" : PBSJobAndSDPlugin.supported_schemas()})
 
-#_registry.append({"class"   : PBSBigJobResourcePlugin,
-#                  "apis"    : PBSBigJobResourcePlugin.supported_apis(),
-#                  "name"    : PBSBigJobResourcePlugin.plugin_name(),
-#                  "schemas" : PBSBigJobResourcePlugin.supported_schemas()})
+_registry.append({"class"   : SGEJobAndSDPlugin,
+                  "apis"    : SGEJobAndSDPlugin.supported_apis(),
+                  "name"    : SGEJobAndSDPlugin.plugin_name(),
+                  "schemas" : SGEJobAndSDPlugin.supported_schemas()})
 
 _registry.append({"class"   : SFTPFilesystemPlugin,
                   "apis"    : SFTPFilesystemPlugin.supported_apis(),

@@ -3,7 +3,6 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
@@ -11,7 +10,7 @@ __license__   = "MIT"
 
 import logging
 from bliss.plugins import utils
-from bliss.saga.exception_impl import Exception as SAGAException
+from bliss.saga.exception_api import Exception as SAGAException
 
 class PluginBaseInterface:
     '''Abstract base class for all plugins'''

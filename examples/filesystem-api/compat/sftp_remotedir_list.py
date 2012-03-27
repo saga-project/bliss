@@ -14,7 +14,6 @@
 '''
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
@@ -31,7 +30,7 @@ def main():
         ctx = saga.context()
         ctx.type = saga.context.SSH
         ctx.userid  = 'oweidner' # like 'ssh username@host ...'
-        ctx.usercert = '/Users/s1063117/.ssh/id_rsa' # like ssh -i ...'
+        ctx.userkey = '/Users/s1063117/.ssh/id_rsa' # like ssh -i ...'
 
         session = saga.session()
         session.contexts.append(ctx)

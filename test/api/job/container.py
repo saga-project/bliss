@@ -3,8 +3,7 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__email__     = "ole.weidner@me.com"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import bliss.saga as saga
@@ -33,7 +32,7 @@ class JobContainerTests(unittest.TestCase):
         ctx = saga.Context()
         ctx.type = saga.Context.SSH
         ctx.userid  = 'oweidner' # like 'ssh username@host ...'
-        ctx.usercert = '/Users/oweidner/.ssh/id_rsa_fg' # like ssh -i ...'
+        ctx.userkey = '/Users/oweidner/.ssh/id_rsa_fg' # like ssh -i ...'
  
         # create a job service for Futuregrid's 'india' PBS cluster
         # and attach the SSH security context to it
