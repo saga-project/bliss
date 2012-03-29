@@ -171,7 +171,9 @@ class SSHJobProcess(object):
             t_beginning = time.time()
             seconds_passed = 0
             while True:
-                self.returncode = self.prochandle.poll()
+                if self.sshchannel.exit_status_ready():
+                    self.returncode = self.sshchannel.recv_exit_status()
+                # self.returncode = self.prochandle.poll()
                 if self.returncode is not None:
                     break
                 seconds_passed = time.time() - t_beginning
