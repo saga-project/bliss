@@ -45,7 +45,7 @@ def main():
         # describe our job
         jd = saga.job.Description()
         # resource requirements
-        jd.wall_time_limit  = "0:05:00"
+        jd.wall_time_limit  = 5 #minutes
         jd.total_cpu_count = 1     
         # environment, executable & arguments
         jd.environment       = {'BFAST_DIR':'/N/u/oweidner/bfast'}
