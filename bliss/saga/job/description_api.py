@@ -12,7 +12,152 @@ from bliss.saga.object_api import Object
 from bliss.saga.attributes_api import AttributeInterface
 
 class Description(Object, AttributeInterface):
-    '''Loosely represents a SAGA job description as defined in GFD.90'''
+    '''Loosely represents a SAGA job description as defined in GFD.90<F2>
+    The following attributes are supported:
+
+      - B{Executable:}  I{command to execute. }
+         - this is the only required attribute.  
+         - can be a full pathname, a pathname 
+           relative to the 'WorkingDirectory' as 
+           evaluated on the execution host, or
+           a executable name to be searched in the
+           target host's PATH environment (if 
+           available).
+         - B{Example:} C{d.set_attribute ("Executable", "/usr/local/bin/blast")}
+
+      - B{Arguments:} I{list of parameters for the command. }
+         - B{Example:} C{d.set_attribute ("Arguments", ["-i", "/data/input.dat", "-o", "/tmp/output.dat"])}
+
+      - B{SPMDVariation:} I{SPMD job type and startup mechanism}
+         - the SPMD JSDL extension defines the value
+           to be an URI.  For simplicity, SAGA allows
+           the following strings, which map into the 
+           respective URIs: MPI, GridMPI, IntelMPI,
+           LAM-MPI, MPICH1, MPICH2, MPICH-GM, MPICH-MX,
+           MVAPICH, MVAPICH2, OpenMP, POE, PVM, None
+         - the value '' (no value, default) indicates
+           that the application is not a SPMD 
+           application.
+         - as JSDL, SAGA allows other arbitrary values.
+           The implementation must clearly document
+           which values are supported.
+         - B{Example:} C{d.set_attribute ("SPMDVariation", "OpenMP")}
+
+      - B{TotalCPUCount:} I{total number of cpus requested for this job}
+         - B{Example:} C{d.set_attribute ("TotalCPUCount", 5)}
+
+      - B{NumberOfProcesses:} I{total number of processes to be started}
+         - B{Example:} C{d.set_attribute ("NumberOfProcesses", 10)}
+
+      - B{Environment:} I{list of environment variables and values for the job}
+         - exported into the job environment
+         - format: 'key=value'
+         - B{Example:} C{d.set_attribute ("Environment", ["DEBUG=1", "PRIORITY=3"])}
+
+      - B{WorkingDirectory:} I{working directory for the job}
+         - gets created if it does not exist
+         - B{Example:} C{d.set_attribute ("Working Directory", "/scratch/blast/")}
+
+      - B{Output:} I{pathname of the standard output file}
+         - will not be used if 'Interactive' is 'True'
+         - B{Example:} C{d.set_attribute ("Output", "stdout.log")}
+
+      - B{Error:} I{pathname of the standard error file}
+         - will not be used if 'Interactive' is 'True'
+         - B{Example:} C{d.set_attribute ("Error", "stderr.log")}
+
+      - B{FileTransfer:} I{list of file transfer directives}
+         - translates into jsdl:DataStaging
+         - used to specify pre- and post-staging
+         - staging is part of the job's 'Running' state
+         - syntax similar to LSF (SRC and TGT are URLs)::
+              'SRC >  TGT' : SRC is staged in               to TGT
+              'SRC >> TGT' : SRC is staged in  and appended to TGT
+              'TGT <  SRC' : SRC is staged out              to TGT
+              'TGT << SRC' : SRC is staged out and appended to TGT
+         - B{Example:} C{d.set_attribute ("FileTransfer", ["file://localhost/data/data_1 > input.dat"])}
+              
+
+      - B{WallTimeLimit:} I{hard limit for the total job runtime.}
+         - intended to provide hints to the scheduler. 
+         - B{Example:} C{d.set_attribute ("WallTimeLlimit", "00:20:00")}
+
+      - B{Queue:} I{name of a queue to place the job into}
+         - While SAGA itself does not define the 
+           semantics of a "queue", many backend systems
+           can make use of this attribute. 
+         - B{Example:} C{d.set_attribute ("Queue", "Small")}
+
+      - B{JobProject:} I{name of a account or project name}
+         - While SAGA itself does not define the 
+           semantics of an "account" or "project", 
+           many backend systems can make use of
+           this attribute for the purpose of 
+           accounting.
+         - B{Example:} C{d.set_attribute ("JobPorject", "AllocationStudentXYZ")}
+
+      - B{Contact:} I{set of endpoints describing where to report job state transitions.}
+         - format: URI (e.g. fax:+123456789, sms:+123456789, mailto:joe@doe.net). 
+         - named 'JobContact' in GFD.90
+         - B{Example:} C{d.set_attribute ("Contact", "job_states_changes@group.intitute.edu")}
+    
+    '''
+
+#      - B{ProcessesPerHost:} I{number of processes to be started per host}
+#
+#      - B{ThreadsPerProcess:} I{number of threads to start per process}
+#
+#      - B{Interactive:} I{run the job in interactive mode}
+#         - this implies that stdio streams will stay 
+#           connected to the submitter after job 
+#           submission, and during job execution. 
+#         - if an implementation cannot handle
+#           interactive jobs, and this attribute is
+#           present, and 'True', the job creation MUST
+#           throw an 'IncorrectParameter' error with a
+#           descriptive error message.
+#
+#      - B{Input:} I{pathname of the standard input file}
+#         - will not be used if 'Interactive' is 'True'
+#
+#      - B{Cleanup:} I{defines if output files get removed after the job finishes}
+#         - can have the Values 'True', 'False', and 
+#           'Default'
+#         - On 'False', output files MUST be kept 
+#           after job the finishes
+#         - On 'True', output files MUST be deleted
+#           after job the finishes
+#         - On 'Default', the behavior is defined by
+#           the implementation or the backend.
+#         - translates into 'DeleteOnTermination' elements
+#           in JSDL
+#
+#      - B{JobStartTime:} I{time at which a job should be scheduled}
+#         - Could be viewed as a desired job start 
+#           time, but that is up to the resource 
+#           manager. 
+#         - format: number of seconds since epoch
+#
+#      - B{TotalCPUTime:} I{estimate total number of CPU seconds which the job will
+#    require}
+#         - intended to provide hints to the scheduler. 
+#           scheduling policies.
+#
+#      - B{TotalPhysicalMemory:} I{Estimated amount of memory the job requires}
+#         - unit is in MegaByte
+#         - memory usage of the job is aggregated 
+#           across all processes of the job
+#
+#      - B{CPUArchitecture:} I{compatible processor for job submission}
+#         - allowed values as specified in JSDL
+#
+#      - B{OperatingSystemType:} I{compatible operating system for job submission}
+#         - allowed values as specified in JSDL
+#
+#      - B{CandidateHosts:} I{list of host names which are to be considered by the
+#    resource manager as candidate targets}
+
+
 
     ######################################################################
     ## 
