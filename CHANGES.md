@@ -3,6 +3,8 @@ Version 0.1.20 released 2012-XX-XX
 
 * Merged SGE plug-in development branch 
 * Removed sagacompat compatibility API
+* Log source names now all start with 'bliss.'. This should make 
+  filtering much easier
 
 Version 0.1.19 released 2012-02-29
 ----------------------------------------------------------------------

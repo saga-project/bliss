@@ -95,6 +95,7 @@ class Job(Object, AttributeInterface):
     ##
     def __del__(self):
         '''Delete the job in a civilised fashion.'''
+        print "SDSDSDS"
         if self._plugin is not None:
             self._plugin.unregister_job_object(self)
         else:
@@ -102,25 +103,21 @@ class Job(Object, AttributeInterface):
 
     ######################################################################
     ##
-    def get_stderr(self):
-        '''B{Not Implemented:} Bliss finds this method unnecessary and \
-           generally poorly supported by distributed middelware - use \
-           U{Air<http://oweidner.github.com/air/>} instead for scalable 
-           output streaming and much more.
-        '''
-        raise bliss.saga.Exception(bliss.saga.Error.NotImplemented, 
-          "Bliss doesn't suppport get_stderr()")
+    #def get_stderr(self):
+    #    '''B{Not Implemented:} Bliss finds this method unnecessary and \
+    #       generally poorly supported by distributed middelware.
+    #    '''
+    #    raise bliss.saga.Exception(bliss.saga.Error.NotImplemented, 
+    #      "Bliss doesn't suppport get_stderr()")
 
     ######################################################################
     ##
-    def get_stdout(self):
-        '''B{Not Implemented:} Bliss finds this method unnecessary and \
-           generally poorly supported by distributed middelware - use \
-           U{Air<http://oweidner.github.com/air/>} instead for scalable 
-           output 
-        '''
-        raise bliss.saga.Exception(bliss.saga.Error.NotImplemented, 
-          "Bliss doesn't suppport get_stdout()")
+    #def get_stdout(self):
+    #    '''B{Not Implemented:} Bliss finds this method unnecessary and \
+    #       generally poorly supported by distributed middelware .
+    #    '''
+    #    raise bliss.saga.Exception(bliss.saga.Error.NotImplemented, 
+    #     "Bliss doesn't suppport get_stdout()")
 
     ######################################################################
     ##

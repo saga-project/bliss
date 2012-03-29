@@ -14,6 +14,7 @@ class Runtime:
     '''Implements the Bliss runtime system'''
     def __init__(self):
         '''Constructs a runtime object'''
+        print "runtime -- start"
 
         #BLISS_VERBOSE = int(os.getenv('BLISS_VERBOSE'))
         try: 
@@ -60,14 +61,17 @@ class Runtime:
                 self.logger.error("Sanity check FAILED for plugin %s: %s. Disabled." \
                   % (plugin["name"], str(ex)))
 
+    def __del__(self):
+        '''Deletes runtime object'''
+        print "runtime -- delete"
+
+
     def get_plugin_for_url(self, url, apitype):
         '''Returns a plugin instance for a given url or throws'''
         # first let's check if there's already a plugin-instance active that can handle this url scheme
         if url.scheme in self.plugin_instance_list:
             self.logger.info("Found an existing plugin instance for url scheme %s://: %s" \
               % (str(url.scheme), self.plugin_instance_list[url.scheme]))
-
-            #print "XXX %s XXX %s XXX" % ()
 
             return self.plugin_instance_list[url.scheme]
 
