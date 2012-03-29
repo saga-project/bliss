@@ -3,7 +3,7 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import os
@@ -35,7 +35,7 @@ class Runtime:
             self.loglevel = logging.ERROR
   
         logging.basicConfig(level=self.loglevel, datefmt='%m/%d/%Y %I:%M:%S %p',
-                    	    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+                    	    format='%(asctime)s - bliss.%(name)s - %(levelname)s - %(message)s')
         address=str(hex(id(self)))
         self.logger = logging.getLogger(self.__class__.__name__+'('+address+')') 
         self.logger.info("BLISS runtime instance created at %s" % address)
