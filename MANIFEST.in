@@ -3,7 +3,6 @@ include *.py
 include bliss/*.py
 
 include bliss/saga/*.py
-include bliss/saga/sd/*.py
 include bliss/saga/job/*.py
 include bliss/saga/resource/*.py
 include bliss/saga/filesystem/*.py

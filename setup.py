@@ -87,7 +87,6 @@ setup_args = {
     'packages': [
         "bliss",
         "bliss.saga",
-        "bliss.saga.sd",
         "bliss.saga.job",
         "bliss.saga.resource",
         "bliss.saga.filesystem",
