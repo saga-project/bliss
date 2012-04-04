@@ -27,7 +27,9 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
 
     ## Define supported url schemas
     ## 
-    _schemas = ['pbs+ssh', 'pbs']
+    _schemas = ['pbs+ssh', 'pbs', 
+                'torque', 'torque+ssh', 
+                'xt5torque', 'xt5torque+ssh']
 
     ## Define apis supported by this adaptor
     ##
