@@ -17,12 +17,9 @@ from bliss import version
 
 scripts = [] # ["bin/bliss-run"]
 
-# sdist is usually run on a non-Windows platform, but the buildslave.bat file
-# still needs to get packaged.
-
-#if 'sdist' in sys.argv or sys.platform == 'win32':
-#    scripts.append("contrib/windows/air-run.bat")
-#    scripts.append("contrib/windows/air-flow.bat")
+import sys
+if sys.hexversion < 0x02040000:
+    raise RuntimeError, "Bliss requires Python 2.4 or higher"
 
 class our_install_data(install_data):
 
