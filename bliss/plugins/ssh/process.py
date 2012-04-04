@@ -7,6 +7,41 @@ import os
 class SSHJobProcess(object):
     '''A wrapper around an SSH process'''
     def __init__(self, jobdescription,  plugin, service_object):
+        self.pi = plugin
+
+        #check for things we dont support
+        if jobdescription.file_transfer     != None: 
+            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+                                        "SSH Job adaptor doesn't support the file transfer attribute!") 
+
+        if jobdescription.project     != None: 
+            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+                                        "SSH Job adaptor doesn't support the project attribute!") 
+        
+        if jobdescription.queue     != None: 
+            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+                                        "SSH Job adaptor doesn't support the queue attribute!") 
+
+        if jobdescription.wall_time_limit     != None: 
+            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+                                        "SSH Job adaptor doesn't support the wall_time_limit attribute!") 
+              
+        if jobdescription.contact     != None: 
+            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+                                        "SSH Job adaptor doesn't support the contact attribute!")
+
+        if jobdescription.total_cpu_count     != None: 
+            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+                                        "SSH Job adaptor doesn't support the total_cpu_count attribute!")
+
+        if jobdescription.number_of_processes     != None: 
+            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+                                        "SSH Job adaptor doesn't support the number_of_processes attribute!")
+
+        if jobdescription.spmd_variation     != None: 
+            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+                                        "SSH Job adaptor doesn't support the spmd_variation attribute!")    
+
         self.executable  = jobdescription.executable
         self.arguments   = jobdescription.arguments
         self.environment = jobdescription.environment
@@ -17,7 +52,6 @@ class SSHJobProcess(object):
         self.pid = None
         self.returncode = None
         self.state = bliss.saga.job.Job.New
-        self.pi = plugin
         self._job_output=None
         self._job_error=None
 
@@ -35,6 +69,8 @@ class SSHJobProcess(object):
 
 
     def run(self, jd, url):
+        #check if there are things in the job descriptor that we don't support
+
         #load up ssh config file
         self.config = paramiko.SSHConfig()
         config_file = os.path.expanduser(os.path.join("~", ".ssh", "config"))
@@ -115,8 +151,6 @@ class SSHJobProcess(object):
             for arg in self.arguments:
                 cmdline += " %s" % arg 
 
-
-
         full_line = "echo $$ && ("+envline+"'"+cmdline+"')" + "> "+ jd.output + " 2> " + jd.error
 
         self.pi.log_debug("Sending command %s to remote server:" % full_line)
@@ -173,7 +207,6 @@ class SSHJobProcess(object):
             while True:
                 if self.sshchannel.exit_status_ready():
                     self.returncode = self.sshchannel.recv_exit_status()
-                # self.returncode = self.prochandle.poll()
                 if self.returncode is not None:
                     break
                 seconds_passed = time.time() - t_beginning
