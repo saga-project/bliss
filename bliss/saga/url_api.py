@@ -6,27 +6,11 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-import urlparse 
-
+from furl import furl
 from bliss.saga.object_api import Object 
 
-# this is a stupid hack that is unfortunately necessary for 
-# pre 2.4 urlparse implementations
-
-urlparse.uses_netloc.append("fork")
-urlparse.uses_fragment.append("fork")
-
-urlparse.uses_netloc.append("sftp")
-urlparse.uses_fragment.append("sftp")
-
-urlparse.uses_netloc.append("pbs+ssh")
-urlparse.uses_fragment.append("pbs+ssh")
-
-urlparse.uses_netloc.append("sge+ssh")
-urlparse.uses_fragment.append("sge+ssh")
-
 class Url(Object):
-    '''Looesely defines a SAGA Url class as defined in GFD.90.'''
+    '''Defines a SAGA Url class as defined in GFD.90.'''
 
     #__slots__ = ('_urlobj', 'scheme', 'host', 'port', 'path', 'params', 'query', 'fragment', 'url')
 
@@ -35,38 +19,28 @@ class Url(Object):
 
         Object.__init__(self, objtype=Object.Type.Url, apitype=Object.Type.BaseAPI)
 
-        self._urlobj  = urlparse.urlparse(urlstring)
+        self._urlobj  = furl(urlstring)
         
-        if self._urlobj.netloc.find(":") > 0:
-            (host,port) = self._urlobj.netloc.split(":")
-        else:
-            host = self._urlobj.netloc
-            port = None
-
         self.scheme   = self._urlobj.scheme
         '''The scheme part of the Url.'''
-        self.host     = self._urlobj.hostname #host
+        self.hostname = self._urlobj.host #host
         '''The host part of the Url.'''
-        if self._urlobj.port is not None:
-            self.port     = int(self._urlobj.port) # int(port)
-            '''The port part of the Url.'''
-        else:
-            self.port     = None
+        self.port     = int(self._urlobj.port) # int(port)
+        '''The port part of the Url.'''
         self.username = self._urlobj.username
         '''The username part of the Url.'''
         self.password = self._urlobj.password
         '''The password part of the Url.'''
         self.path     = self._urlobj.path
         '''The path part of the Url.'''
-        self.params   = self._urlobj.params
-        '''The params part of the Url.'''
         self.query    = self._urlobj.query
         '''The query part of the Url.'''
         self.fragment = self._urlobj.fragment
         '''The fragment part of the Url.'''
-        self.url      = self._urlobj.geturl()
+        self.url      = str(self._urlobj)
         '''The Url as string (same as __str__).'''
 
+    # Old-style accessors
     def __del__(self):
         '''Destructor (tear-down the Url object).'''
 

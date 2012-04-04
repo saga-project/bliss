@@ -129,7 +129,8 @@ except ImportError:
 else:
     setup_args['install_requires'] = [
         'openssh_wrapper',
-        'paramiko-on-pypi'
+        'paramiko-on-pypi',
+        'furl'
     ]
 
     if os.getenv('NO_INSTALL_REQS'):

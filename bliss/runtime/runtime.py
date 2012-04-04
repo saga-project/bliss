@@ -14,7 +14,6 @@ class Runtime:
     '''Implements the Bliss runtime system'''
     def __init__(self):
         '''Constructs a runtime object'''
-        print "runtime -- start"
 
         #BLISS_VERBOSE = int(os.getenv('BLISS_VERBOSE'))
         try: 
