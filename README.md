@@ -5,4 +5,4 @@ standard obedience.
 
 Please refer to the Bliss wiki for installation instructions, user guide, etc:
 
-  https://github.com/oweidner/bliss/wiki/
+  https://github.com/saga-project/bliss/wiki/
