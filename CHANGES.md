@@ -1,10 +1,13 @@
-Version 0.1.20 released 2012-XX-XX
+Version 0.1.20 released 2012-04-04
 ----------------------------------------------------------------------
 
+* Swapped urlparse with furl in saga.Url class This hopefully fixes
+  the problem with inconsistent parsing accross different Python versions
 * Merged SGE plug-in development branch 
 * Removed sagacompat compatibility API
 * Log source names now all start with 'bliss.'. This should make 
   filtering much easier
+* Moved SD package into development branch features/servicediscovery
 
 Version 0.1.19 released 2012-02-29
 ----------------------------------------------------------------------
