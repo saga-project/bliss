@@ -95,6 +95,13 @@ class SSHJobProcess(object):
             if usable_ctx.userkey is not None:
                 userkey = usable_ctx.userkey
 
+        #overwrite the context username/password with our url-provided username/password
+        #(if they exist)
+        if url.username:
+            username = url.username
+        if url.password:
+            password = url.password
+
         #set missing host key policy to automatically add it
         self.sshclient=paramiko.SSHClient()
         self.sshclient.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -112,7 +119,10 @@ class SSHJobProcess(object):
         if not username:
             self.pi.log_info("Using default username")
         else:
-            self.pi.log_info("Using context-provided username")
+            if url.username:
+                self.pi.log_info("Using username from URL")
+            else:
+                self.pi.log_info("Using context-provided username")
 
         hn = url.host
 
