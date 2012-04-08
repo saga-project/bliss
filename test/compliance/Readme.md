@@ -16,6 +16,13 @@ Plug-In: Local (Fork) Job
     * 04_run_python_command_newline.py: **PASS**
     * 05_run_python_command_multiline.py: **PASS**
 
+  * URL: **fork://localhost**, Info: Ubuntu Server 10.11, Date: 04/08/2012, 
+    Git hash (git log -1): 823a82b1b0c797bc97063530cc17a84b35d0dc92
+    * 01_run_remote_exe.py: **PASS**
+    * 02_run_shell_command_newline.py: **PASS**
+    * 03_run_shell_command_multiline.py: **PASS**
+    * 04_run_python_command_newline.py: **PASS**
+    * 05_run_python_command_multiline.py: **PASS**
 
 Plug-In: PBS(+SSH) Job
 ----------------------
