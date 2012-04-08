@@ -77,7 +77,7 @@ def run(url):
       print "                                            "
       print "NOW, SOME MANUAL CHECKING IS REQUIRED!      "
       print "                                            "
-      print "(1) Login to %s                             " (url)
+      print "(1) Login to %s                             " % (url)
       print "(2) Make sure the file bliss_job.stdout exists"
       print "(3) Make sure bliss_job.stdout contains the string 'Hello from Bliss'"
       print ""
