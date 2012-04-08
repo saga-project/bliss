@@ -19,7 +19,7 @@ In order to run the unit tests, execute the following commands:
      source /tmp/bliss-test/bin/activate```
 
 * Install Bliss into the virutalenv sandbox. From the Bliss 
-  ROOT DIRECTORY call:
+  **SOURCE ROOT DIRECTORY** call:
   ```easy_install .```
 
 * Once Bliss has installed successfully, you can run the unit tests by typing:
@@ -31,4 +31,19 @@ Compliance Tests
 
 In order to run the compliance tests for a specific adaptor, follow these steps:
 
-* Open the configuration file __compliancetest.cfg__ and 
+* Create a virtual environment for testing (if not already done):
+  ```virtualenv /tmp/bliss-test
+     source /tmp/bliss-test/bin/activate```
+
+* Install Bliss into the virutalenv sandbox. From the Bliss 
+  **SOURCE ROOT DIRECTORY**: call:
+  ```easy_install .```
+
+* Next, run the individual test scripts with the URL of the adaptor/remote 
+  machine combination you would like to test, e.g.,
+
+  * ```python 01_run_remote_exe.py ssh://peahi.inf.ed.ac.uk```
+  * ```python 02_run_shell_command_newline.py```
+  * ...
+
+
