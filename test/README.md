@@ -42,8 +42,12 @@ In order to run the compliance tests for a specific adaptor, follow these steps:
 * Next, run the individual test scripts with the URL of the adaptor/remote 
   machine combination you would like to test, e.g.,
 
-  * ```python 01_run_remote_exe.py ssh://peahi.inf.ed.ac.uk```
-  * ```python 02_run_shell_command_newline.py```
+  * ```python test/compliance/job/01_run_remote_exe.py ssh://peahi.inf.ed.ac.uk```
+  * ```python test/compliance/job/02_run_shell_command_newline.py ssh://peahi.inf.ed.ac.uk```
   * ...
+  
+* You can add your test results manually to https://github.com/saga-project/bliss/blob/master/test/compliance/Readme.md
+
+* If you think that you have discovered a bug, consider filing an issue: https://github.com/saga-project/bliss/issues
 
 
