@@ -34,7 +34,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://oweidner.github.com/bliss">Bliss</a></th>
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -44,10 +44,6 @@
     <td>
       <table cellpadding="0" cellspacing="0">
         <!-- hide/show private -->
-        <tr><td align="right"><span class="options"
-            >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="class-tree.html"
-            target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
@@ -59,8 +55,18 @@
 <h1 class="epydoc">Class Hierarchy</h1>
 <ul class="nomargin-top">
     <li> <strong class="uidlink"><a href="bliss.saga.exception_api.Error-class.html">bliss.saga.exception_api.Error</a></strong>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.Error-class.html">bliss.saga.Error</a></strong>:
+      <em class="summary">Loosely defines a SAGA Error as defined in GFD.90.</em>
+    </li>
+    </ul>
     </li>
     <li> <strong class="uidlink"><a href="bliss.saga.resource.state.State-class.html">bliss.saga.resource.state.State</a></strong>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.State-class.html">bliss.saga.resource.State</a></strong>:
+      <em class="summary">Resource states as defined in GFD.xx.</em>
+    </li>
+    </ul>
     </li>
     <li> <strong class="uidlink"><a href="bliss.saga.object_api.Object.Type-class.html">bliss.saga.object_api.Object.Type</a></strong>
     </li>
@@ -68,12 +74,77 @@
       <em class="summary">Specifies the condition on which a wait() operation on a <a 
         href="bliss.saga.job.Container-class.html" 
         class="link">saga.job.Container</a> returns.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.job.WaitMode-class.html">bliss.saga.job.WaitMode</a></strong>:
+      <em class="summary">Loosely defines a SAGA WaitMode as defined in GFD.90.</em>
+    </li>
+    </ul>
     </li>
     <li> <strong class="uidlink">object</strong>:
       <em class="summary">The most base type</em>
     <ul>
     <li> <strong class="uidlink"><a href="bliss.saga.attributes_api.AttributeInterface-class.html">bliss.saga.attributes_api.AttributeInterface</a></strong>:
       <em class="summary">Loosely defines the SAGA attribute interface as defined in GFD.90.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.compute_description_api.ComputeDescription-class.html">bliss.saga.resource.compute_description_api.ComputeDescription</a></strong>:
+      <em class="summary">Defines a SAGA compute_description as defined in GFD.xx</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.ComputeDescription-class.html">bliss.saga.resource.ComputeDescription</a></strong>:
+      <em class="summary">A compute resource description as defined in GFD.xx</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.context_api.Context-class.html">bliss.saga.context_api.Context</a></strong>:
+      <em class="summary">Looesely defines a SAGA Context object as defined in GFD.90.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.Context-class.html">bliss.saga.Context</a></strong>:
+      <em class="summary">Loosely defines a SAGA Context as defined in GFD.90.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.job.description_api.Description-class.html">bliss.saga.job.description_api.Description</a></strong>:
+      <em class="summary">Loosely represents a SAGA job description as defined in GFD.90</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.job.Description-class.html">bliss.saga.job.Description</a></strong>:
+      <em class="summary">Loosely defines a SAGA Job Description as defined in GFD.90.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.job.job_api.Job-class.html">bliss.saga.job.job_api.Job</a></strong>:
+      <em class="summary">Loosely represents a SAGA job as defined in GFD.90</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.job.Job-class.html">bliss.saga.job.Job</a></strong>:
+      <em class="summary">Loosely defines a SAGA Job as defined in GFD.90.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.sd.service_data_api.ServiceData-class.html">bliss.saga.sd.service_data_api.ServiceData</a></strong>:
+      <em class="summary">Loosely represents a SAGA service data object as defined in 
+        GFD.R-P.144</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.sd.ServiceData-class.html">bliss.saga.sd.ServiceData</a></strong>:
+      <em class="summary">Loosely defines a SAGA Service Data as defined in GFD.90.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.sd.service_description_api.ServiceDescription-class.html">bliss.saga.sd.service_description_api.ServiceDescription</a></strong>:
+      <em class="summary">Loosely represents a SAGA service description as defined in 
+        GFD-R-P.114</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.sd.ServiceDescription-class.html">bliss.saga.sd.ServiceDescription</a></strong>:
+      <em class="summary">Loosely defines a SAGA Service Description as defined in GFD.90.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.storage_description_api.StorageDescription-class.html">bliss.saga.resource.storage_description_api.StorageDescription</a></strong>:
+      <em class="summary">Defines a SAGA storage_description as defined in GFD.xx</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.StorageDescription-class.html">bliss.saga.resource.StorageDescription</a></strong>:
+      <em class="summary">A storage resource description as defined in GFD.xx</em>
+    </li>
+    </ul>
+    </li>
+    </ul>
     </li>
     <li> <strong class="uidlink">exceptions.BaseException</strong>:
       <em class="summary">Common base class for all exceptions</em>
@@ -82,6 +153,11 @@
       <em class="summary">Common base class for all non-exit exceptions.</em>
     <ul>
     <li> <strong class="uidlink"><a href="bliss.saga.exception_api.Exception-class.html">bliss.saga.exception_api.Exception</a></strong>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.Exception-class.html">bliss.saga.Exception</a></strong>:
+      <em class="summary">Loosely defines a SAGA Exception as defined in GFD.90.</em>
+    </li>
+    </ul>
     </li>
     </ul>
     </li>
@@ -89,15 +165,155 @@
     </li>
     <li> <strong class="uidlink"><a href="bliss.saga.context_api.Context-class.html">bliss.saga.context_api.Context</a></strong>:
       <em class="summary">Looesely defines a SAGA Context object as defined in GFD.90.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.Context-class.html">bliss.saga.Context</a></strong>:
+      <em class="summary">Loosely defines a SAGA Context as defined in GFD.90.</em>
+    </li>
+    </ul>
     </li>
     <li> <strong class="uidlink"><a href="bliss.saga.job.job_api.JobID-class.html">bliss.saga.job.job_api.JobID</a></strong>:
       <em class="summary">Represents a SAGA job ID (Not part of GFD.90)</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.job.JobID-class.html">bliss.saga.job.JobID</a></strong>:
+      <em class="summary">Defines a JobID.</em>
+    </li>
+    </ul>
     </li>
     <li> <strong class="uidlink"><a href="bliss.saga.object_api.Object-class.html">bliss.saga.object_api.Object</a></strong>:
       <em class="summary">Loosely resembles a SAGA object as defined in GFD.90</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.compute_api.Compute-class.html">bliss.saga.resource.compute_api.Compute</a></strong>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.Compute-class.html">bliss.saga.resource.Compute</a></strong>:
+      <em class="summary">A compute resource as defined in GFD.xx.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.compute_description_api.ComputeDescription-class.html">bliss.saga.resource.compute_description_api.ComputeDescription</a></strong>:
+      <em class="summary">Defines a SAGA compute_description as defined in GFD.xx</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.ComputeDescription-class.html">bliss.saga.resource.ComputeDescription</a></strong>:
+      <em class="summary">A compute resource description as defined in GFD.xx</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.job.container_api.Container-class.html">bliss.saga.job.container_api.Container</a></strong>:
+      <em class="summary">Loosely represents a SAGA task container as defined in GFD.90.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.job.Container-class.html">bliss.saga.job.Container</a></strong>:
+      <em class="summary">Loosely defines a SAGA Job Container.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.job.description_api.Description-class.html">bliss.saga.job.description_api.Description</a></strong>:
+      <em class="summary">Loosely represents a SAGA job description as defined in GFD.90</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.job.Description-class.html">bliss.saga.job.Description</a></strong>:
+      <em class="summary">Loosely defines a SAGA Job Description as defined in GFD.90.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.filesystem.directory_api.Directory-class.html">bliss.saga.filesystem.directory_api.Directory</a></strong>:
+      <em class="summary">Loosely represents a SAGA directory as defined in GFD.90</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.filesystem.Directory-class.html">bliss.saga.filesystem.Directory</a></strong>:
+      <em class="summary">Loosely defines a SAGA Directory as defined in GFD.90.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.sd.discoverer_api.Discoverer-class.html">bliss.saga.sd.discoverer_api.Discoverer</a></strong>:
+      <em class="summary">Loosely represents a SAGA service discoverer as defined in 
+        GFD.R-P.144</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.sd.Discoverer-class.html">bliss.saga.sd.Discoverer</a></strong>:
+      <em class="summary">Loosely defines a SAGA Service Discoverer as defined in GFD.90.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.filesystem.file_api.File-class.html">bliss.saga.filesystem.file_api.File</a></strong>:
+      <em class="summary">Loosely represents a SAGA file as defined in GFD.90</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.filesystem.File-class.html">bliss.saga.filesystem.File</a></strong>:
+      <em class="summary">Loosely defines a SAGA File as defined in GFD.90.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.job.job_api.Job-class.html">bliss.saga.job.job_api.Job</a></strong>:
+      <em class="summary">Loosely represents a SAGA job as defined in GFD.90</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.job.Job-class.html">bliss.saga.job.Job</a></strong>:
+      <em class="summary">Loosely defines a SAGA Job as defined in GFD.90.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.manager_api.Manager-class.html">bliss.saga.resource.manager_api.Manager</a></strong>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.Manager-class.html">bliss.saga.resource.Manager</a></strong>:
+      <em class="summary">A resource manager as defined in GFD.xx.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.Object-class.html">bliss.saga.Object</a></strong>:
+      <em class="summary">Loosely defines a SAGA Object as defined in GFD.90.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.job.service_api.Service-class.html">bliss.saga.job.service_api.Service</a></strong>:
+      <em class="summary">Loosely represents a SAGA job service as defined in GFD.90</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.job.Service-class.html">bliss.saga.job.Service</a></strong>:
+      <em class="summary">Loosely defines a SAGA Job Service as defined in GFD.90.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.sd.service_data_api.ServiceData-class.html">bliss.saga.sd.service_data_api.ServiceData</a></strong>:
+      <em class="summary">Loosely represents a SAGA service data object as defined in 
+        GFD.R-P.144</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.sd.ServiceData-class.html">bliss.saga.sd.ServiceData</a></strong>:
+      <em class="summary">Loosely defines a SAGA Service Data as defined in GFD.90.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.sd.service_description_api.ServiceDescription-class.html">bliss.saga.sd.service_description_api.ServiceDescription</a></strong>:
+      <em class="summary">Loosely represents a SAGA service description as defined in 
+        GFD-R-P.114</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.sd.ServiceDescription-class.html">bliss.saga.sd.ServiceDescription</a></strong>:
+      <em class="summary">Loosely defines a SAGA Service Description as defined in GFD.90.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.storage_api.Storage-class.html">bliss.saga.resource.storage_api.Storage</a></strong>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.Storage-class.html">bliss.saga.resource.Storage</a></strong>:
+      <em class="summary">A storage resource as defined in GFD.xx.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.storage_description_api.StorageDescription-class.html">bliss.saga.resource.storage_description_api.StorageDescription</a></strong>:
+      <em class="summary">Defines a SAGA storage_description as defined in GFD.xx</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.StorageDescription-class.html">bliss.saga.resource.StorageDescription</a></strong>:
+      <em class="summary">A storage resource description as defined in GFD.xx</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.url_api.Url-class.html">bliss.saga.url_api.Url</a></strong>:
+      <em class="summary">Looesely defines a SAGA Url class as defined in GFD.90.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.Url-class.html">bliss.saga.Url</a></strong>:
+      <em class="summary">Loosely defines a SAGA URL as defined in GFD.90.</em>
+    </li>
+    </ul>
+    </li>
+    </ul>
     </li>
     <li> <strong class="uidlink"><a href="bliss.saga.session_api.Session-class.html">bliss.saga.session_api.Session</a></strong>:
       <em class="summary">Looesely defines a SAGA Session object as defined in GFD.90.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="bliss.saga.Session-class.html">bliss.saga.Session</a></strong>:
+      <em class="summary">Loosely defines a SAGA Session as defined in GFD.90.</em>
+    </li>
+    </ul>
     </li>
     </ul>
     </li>
@@ -126,7 +342,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://oweidner.github.com/bliss">Bliss</a></th>
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -134,7 +350,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Tue Apr  3 20:48:07 2012</a>
+    3.0.1 on Tue Apr 10 20:58:31 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

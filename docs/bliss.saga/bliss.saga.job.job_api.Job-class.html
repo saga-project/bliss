@@ -34,7 +34,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://oweidner.github.com/bliss">Bliss</a></th>
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -52,30 +52,37 @@
     <td>
       <table cellpadding="0" cellspacing="0">
         <!-- hide/show private -->
-        <tr><td align="right"><span class="options"
-            >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="bliss.saga.job.job_api.Job-class.html"
-            target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class Job</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.job.job_api-pysrc.html#Job">source&nbsp;code</a></span></p>
-<pre class="base-tree">
-                       object --+    
-                                |    
-                <a href="bliss.saga.object_api.Object-class.html">object_api.Object</a> --+
-                                    |
-                       object --+   |
-                                |   |
-<a href="bliss.saga.attributes_api.AttributeInterface-class.html">attributes_api.AttributeInterface</a> --+
-                                    |
-                                   <strong class="uidshort">Job</strong>
-</pre>
+<center>
 
+</center>
 <hr />
 <p>Loosely represents a SAGA job as defined in GFD.90</p>
+  <p>A 'Job' represents a running application instance, which may consist 
+  of one or more processes.  Jobs are created by submitting a Job 
+  description to a Job submission system -- usually a queuing system, or 
+  some other service which spawns jobs on the user's behalf.</p>
+  <p>Jobs have a unique ID (see get_job_id()), and are stateful entities --
+  their 'state' attribute changes according to a well defined state 
+  model:</p>
+  <p>A job as returned by job.Service.create(jd) is in 'New' state -- it is
+  not yet submitted to the job submission backend.  Once it was submitted, 
+  via run(), it will enter the 'Pending' state, where it waits to get 
+  actually executed by the backend (e.g. waiting in a queue etc).  Once the
+  job is actually executed, it enters the 'Running' state -- only in that 
+  state is the job actually consuming resources (CPU, memory, ...).</p>
+  <p>Jobs can leave the 'Running' state in three different ways: they 
+  finish successfully on their own ('Done'), they finish unsuccessfully on 
+  their own, or get canceled by the job management backend ('Failed'), or 
+  they get actively canceled by the user or the application 
+  ('Canaceled').</p>
+  <p>The methods defined on the Job object serve two purposes: inspecting 
+  the job's state, and initiating job state transitions.</p>
 
 <!-- ==================== NESTED CLASSES ==================== -->
 <a name="section-NestedClasses"></a>
@@ -144,11 +151,8 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="get_stderr"></a><span class="summary-sig-name">get_stderr</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      <b>Not Implemented:</b> Bliss finds this method unnecessary and
-      generally poorly supported by distributed middelware - use
-      <a href="http://oweidner.github.com/air/" target="_top">Air</a> 
-      instead for scalable output streaming and much more.</td>
+          <td><span class="summary-sig"><a href="bliss.saga.job.job_api.Job-class.html#get_stderr" class="summary-sig-name">get_stderr</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      <b>Not Implemented:</b> Bliss does not support I/O streaming.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.job.job_api-pysrc.html#Job.get_stderr">source&nbsp;code</a></span>
             
@@ -164,11 +168,8 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="get_stdout"></a><span class="summary-sig-name">get_stdout</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      <b>Not Implemented:</b> Bliss finds this method unnecessary and
-      generally poorly supported by distributed middelware - use
-      <a href="http://oweidner.github.com/air/" target="_top">Air</a> 
-      instead for scalable output</td>
+          <td><span class="summary-sig"><a href="bliss.saga.job.job_api.Job-class.html#get_stdout" class="summary-sig-name">get_stdout</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      <b>Not Implemented:</b> Bliss does not support I/O streaming.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.job.job_api-pysrc.html#Job.get_stdout">source&nbsp;code</a></span>
             
@@ -184,7 +185,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="get_description"></a><span class="summary-sig-name">get_description</span>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.job.job_api.Job-class.html#get_description" class="summary-sig-name">get_description</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Return the job description this job was created from.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.job.job_api-pysrc.html#Job.get_description">source&nbsp;code</a></span>
@@ -201,7 +202,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="get_state"></a><span class="summary-sig-name">get_state</span>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.job.job_api.Job-class.html#get_state" class="summary-sig-name">get_state</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Return the current state of the job.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.job.job_api-pysrc.html#Job.get_state">source&nbsp;code</a></span>
@@ -219,8 +220,7 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="get_job_id"></a><span class="summary-sig-name">get_job_id</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Return the identifier for the job (<b><i>not officially part of 
-      GFD.90</i></b>).</td>
+      Return the identifier for the job.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.job.job_api-pysrc.html#Job.get_job_id">source&nbsp;code</a></span>
             
@@ -236,7 +236,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="run"></a><span class="summary-sig-name">run</span>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.job.job_api.Job-class.html#run" class="summary-sig-name">run</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Execute the job via the associated job service.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.job.job_api-pysrc.html#Job.run">source&nbsp;code</a></span>
@@ -253,8 +253,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.job.job_api.Job-class.html#cancel" class="summary-sig-name">cancel</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">timeout</span>=<span class="summary-sig-default">0</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.job.job_api.Job-class.html#cancel" class="summary-sig-name">cancel</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Cancel the execution of the job.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.job.job_api-pysrc.html#Job.cancel">source&nbsp;code</a></span>
@@ -552,7 +551,47 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="Canceled"></a><span class="summary-name">Canceled</span> = <code title="&quot;saga.job.Job.Canceled&quot;">&quot;saga.job.Job.Canceled&quot;</code><br />
+        <a name="New"></a><span class="summary-name">New</span> = <code title="'saga.job.Job.New'"><code class="variable-quote">'</code><code class="variable-string">saga.job.Job.New</code><code class="variable-quote">'</code></code><br />
+      Indicates that the job hasn't been started yet
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="Pending"></a><span class="summary-name">Pending</span> = <code title="'saga.job.Job.Pending'"><code class="variable-quote">'</code><code class="variable-string">saga.job.Job.Pending</code><code class="variable-quote">'</code></code><br />
+      Indicates that the job is waiting to be executed (NOT IN GFD.90)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.job.job_api.Job-class.html#Running" class="summary-name">Running</a> = <code title="'saga.job.Job.Running'"><code class="variable-quote">'</code><code class="variable-string">saga.job.Job.Running</code><code class="variable-quote">'</code></code><br />
+      Indicates that the job is executing
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="Done"></a><span class="summary-name">Done</span> = <code title="'saga.job.Job.Done'"><code class="variable-quote">'</code><code class="variable-string">saga.job.Job.Done</code><code class="variable-quote">'</code></code><br />
+      Indicates that the job has successfully executed
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="Failed"></a><span class="summary-name">Failed</span> = <code title="'saga.job.Job.Failed'"><code class="variable-quote">'</code><code class="variable-string">saga.job.Job.Failed</code><code class="variable-quote">'</code></code><br />
+      Indicates that the execution of the job has failed
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="Canceled"></a><span class="summary-name">Canceled</span> = <code title="'saga.job.Job.Canceled'"><code class="variable-quote">'</code><code class="variable-string">saga.job.Job.Canceled</code><code class="variable-quote">'</code></code><br />
       Indicates that the job has been canceled either by the user or the 
       system
     </td>
@@ -561,93 +600,8 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="Done"></a><span class="summary-name">Done</span> = <code title="&quot;saga.job.Job.Done&quot;">&quot;saga.job.Job.Done&quot;</code><br />
-      Indicates that the job has successfully executed
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="Failed"></a><span class="summary-name">Failed</span> = <code title="&quot;saga.job.Job.Failed&quot;">&quot;saga.job.Job.Failed&quot;</code><br />
-      Indicates that the execution of the job has failed
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="New"></a><span class="summary-name">New</span> = <code title="&quot;saga.job.Job.New&quot;">&quot;saga.job.Job.New&quot;</code><br />
-      Indicates that the job hasn't been started yet
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="Running"></a><span class="summary-name">Running</span> = <code title="&quot;saga.job.Job.Running&quot;">&quot;saga.job.Job.Running&quot;</code><br />
-      Indicates that the job is executing
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="Waiting"></a><span class="summary-name">Waiting</span> = <code title="&quot;saga.job.Job.Waiting&quot;">&quot;saga.job.Job.Waiting&quot;</code><br />
-      Indicates that the job is waiting to be executed (NOT IN GFD.90)
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="Unknown"></a><span class="summary-name">Unknown</span> = <code title="&quot;saga.job.Job.Unknown&quot;">&quot;saga.job.Job.Unknown&quot;</code><br />
+        <a name="Unknown"></a><span class="summary-name">Unknown</span> = <code title="'saga.job.Job.Unknown'"><code class="variable-quote">'</code><code class="variable-string">saga.job.Job.Unknown</code><code class="variable-quote">'</code></code><br />
       Indicates that the job is in an unexpected state
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="exitcode"></a><span class="summary-name">exitcode</span> = <code title="property(** exitcode())">property(** exitcode())</code>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="jobid"></a><span class="summary-name">jobid</span> = <code title="property(** jobid())">property(** jobid())</code>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="serviceurl"></a><span class="summary-name">serviceurl</span> = <code title="property(** serviceurl())">property(** serviceurl())</code>
-    </td>
-  </tr>
-<tr bgcolor="#e8f0f8" >
-  <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.object_api.Object-class.html">object_api.Object</a></th></tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="id"></a><span class="summary-name">id</span> = <code title="property(** id())">property(** id())</code>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="session"></a><span class="summary-name">session</span> = <code title="property(** session())">property(** session())</code>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="type"></a><span class="summary-name">type</span> = <code title="property(** type())">property(** type())</code>
     </td>
   </tr>
 </table>
@@ -659,11 +613,62 @@
   <td align="left" colspan="2" class="table-header">
     <span class="table-header">Properties</span></td>
 </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.job.job_api.Job-class.html#exitcode" class="summary-name">exitcode</a>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.job.job_api.Job-class.html#jobid" class="summary-name">jobid</a>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.job.job_api.Job-class.html#serviceurl" class="summary-name">serviceurl</a><br />
+      The URL of the <a href="bliss.saga.job.Service-class.html" 
+      class="link">Service</a> instance managing this job.
+    </td>
+  </tr>
   <tr>
     <td colspan="2" class="summary">
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__class__</code>
       </p>
+    </td>
+  </tr>
+<tr bgcolor="#e8f0f8" >
+  <th colspan="2" class="group-header"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.object_api.Object-class.html">object_api.Object</a></th></tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.object_api.Object-class.html#id" class="summary-name">id</a><br />
+      The object's unique identifier.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.object_api.Object-class.html#session" class="summary-name">session</a><br />
+      The object's session which contains the list of security context 
+      objects.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.object_api.Object-class.html#type" class="summary-name">type</a><br />
+      The object's type identifier.
     </td>
   </tr>
 </table>
@@ -722,6 +727,160 @@
   </dl>
 </td></tr></table>
 </div>
+<a name="get_stderr"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_stderr</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.job.job_api-pysrc.html#Job.get_stderr">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p><b>Not Implemented:</b> Bliss does not support I/O streaming.  Please 
+  use file staging to retrieve stdout and stderr files.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_stdout"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_stdout</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.job.job_api-pysrc.html#Job.get_stdout">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p><b>Not Implemented:</b> Bliss does not support I/O streaming.  Please 
+  use file staging to retrieve stdout and stderr files.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_description"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_description</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.job.job_api-pysrc.html#Job.get_description">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return the job description this job was created from.</p>
+  <p>The returned description can be used to inspect job properties 
+  (executable name, arguments, etc.).  It can also be used to start 
+  identical job instances.</p>
+  <p>The returned job description will in general reflect the actual state 
+  of the running job, and is not necessarily a simple copy of the job 
+  description which was used to create the job instance.  For example, the 
+  environment variables in the returned job description may reflect the 
+  actual environment of the running job instance.</p>
+  <p>Example:</p>
+<pre class="literalblock">
+ ----------------------------------------------------------------------
+ js = saga.job.Service (&quot;sge://localhost&quot;)
+ j  = js.create_job    (jd)
+
+ j.run ()
+
+ live_jd = j.get_description ()
+
+ print &quot;job ended up in the %s queue&quot;  %  live_jd['Queue']
+ ----------------------------------------------------------------------
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_state"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_state</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.job.job_api-pysrc.html#Job.get_state">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return the current state of the job.</p>
+  <p>Example:</p>
+<pre class="literalblock">
+ ----------------------------------------------------------------------
+ js = saga.job.Service (&quot;sge://localhost&quot;)
+ j  = js.create_job    (jd)
+
+ if      j.get_state () == saga.job.New      : print &quot;new&quot;
+ else                                        : print &quot;oops!&quot;
+
+ j.run ()
+
+ if      j.get_state () == saga.job.Pending  : print &quot;pending&quot;
+ else if j.get_state () == saga.job.Running  : print &quot;running&quot;
+ else                                        : print &quot;oops!&quot;
+ ----------------------------------------------------------------------
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="run"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">run</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.job.job_api-pysrc.html#Job.run">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Execute the job via the associated job service.</p>
+  <p>Request that the job is being executed by the backend.  If the backend
+  is accepting this run request, the job will move to the 'Pending' or 
+  'Running' state -- otherwise this method will raise an error, and the job
+  will be moved to 'Failed'.</p>
+  <p>Example:</p>
+<pre class="literalblock">
+ ----------------------------------------------------------------------
+ js = saga.job.Service (&quot;sge://localhost&quot;)
+ j  = js.create_job    (jd)
+
+ if      j.state == saga.job.New      : print &quot;new&quot;
+ else                                 : print &quot;oops!&quot;
+
+ j.run ()
+
+ if      j.state == saga.job.Pending  : print &quot;pending&quot;
+ else if j.state == saga.job.Running  : print &quot;running&quot;
+ else                                 : print &quot;oops!&quot;
+ ----------------------------------------------------------------------
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
 <a name="cancel"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -729,8 +888,7 @@
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">cancel</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">timeout</span>=<span class="sig-default">0</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">cancel</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="bliss.saga.job.job_api-pysrc.html#Job.cancel">source&nbsp;code</a></span>&nbsp;
@@ -738,11 +896,20 @@
   </tr></table>
   
   <p>Cancel the execution of the job.</p>
+  <p>----------------------------------------------------------------------
+  js = saga.job.Service (&quot;sge://localhost&quot;) j  = js.create_job
+  (jd)</p>
+  <p>if      j.state == saga.job.New      : print &quot;new&quot; else
+  : print &quot;oops!&quot;</p>
+  <p>j.run ()</p>
+  <p>if      j.state == saga.job.Pending  : print &quot;pending&quot; else 
+  if j.state == saga.job.Running  : print &quot;running&quot; else
+  : print &quot;oops!&quot;</p>
+  <p>j.cancel ()</p>
+  <p>if      j.state == saga.job.Canceled : print &quot;canceled&quot; else
+  : print &quot;oops!&quot; 
+  ----------------------------------------------------------------------</p>
   <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>timeout</code></strong> - Timeout in seconds.</li>
-    </ul></dd>
   </dl>
 </td></tr></table>
 </div>
@@ -765,8 +932,124 @@
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>timeout</code></strong> - Timeout in seconds.</li>
+        <li><strong class="pname"><code>timeout</code></strong> - Timeout in seconds.
+          <p>The optional timeout parameter specifies the time to wait, and
+          accepts the following values:</p>
+<pre class="literalblock">
+ timeout &lt;  0  : wait forever (block)
+ timeout == 0  : wait not at all (non-blocking test)
+ timeout &gt;  0  : wait for 'timeout' seconds
+</pre>
+          <p>On a non-negative timeout, the call can thus return even if 
+          the job is not in final state, and the application should check 
+          the actual job state.  The default timeout value is '-1.0' 
+          (blocking).</p>
+          <p>Example:</p>
+<pre class="literalblock">
+ ----------------------------------------------------------------------
+ js = saga.job.Service (&quot;sge://localhost&quot;)
+ j  = js.create_job    (jd)
+
+ if      j.state == saga.job.New      : print &quot;new&quot;
+ else                                 : print &quot;oops!&quot;
+
+ j.run ()
+
+ if      j.state == saga.job.Pending  : print &quot;pending&quot;
+ else if j.state == saga.job.Running  : print &quot;running&quot;
+ else                                 : print &quot;oops!&quot;
+
+ j.wait (-1.0)
+
+ if      j.state == saga.job.Done     : print &quot;done&quot;
+ if      j.state == saga.job.Failed   : print &quot;failed&quot;
+ else                                 : print &quot;oops!&quot;
+ ----------------------------------------------------------------------
+</pre></li>
     </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== CLASS VARIABLE DETAILS ==================== -->
+<a name="section-ClassVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Class Variable Details</span></td>
+</tr>
+</table>
+<a name="Running"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Running</h3>
+  <p>Indicates that the job is executing</p>
+  <p>Note that Bliss does not expose the 'Suspended' state -- Suspended 
+  jobs will be reported as 'Running'.</p>
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-quote">'</code><code class="variable-string">saga.job.Job.Running</code><code class="variable-quote">'</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== PROPERTY DETAILS ==================== -->
+<a name="section-PropertyDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Property Details</span></td>
+</tr>
+</table>
+<a name="exitcode"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">exitcode</h3>
+  
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="jobid"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">jobid</h3>
+  
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="serviceurl"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">serviceurl</h3>
+  <p>The URL of the <a href="bliss.saga.job.Service-class.html" 
+  class="link">Service</a> instance managing this job.</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
   </dl>
 </td></tr></table>
 </div>
@@ -795,7 +1078,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://oweidner.github.com/bliss">Bliss</a></th>
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -803,7 +1086,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Tue Apr  3 20:48:07 2012</a>
+    3.0.1 on Tue Apr 10 20:58:31 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

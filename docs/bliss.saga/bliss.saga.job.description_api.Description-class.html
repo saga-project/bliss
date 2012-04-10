@@ -34,7 +34,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://oweidner.github.com/bliss">Bliss</a></th>
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -52,51 +52,34 @@
     <td>
       <table cellpadding="0" cellspacing="0">
         <!-- hide/show private -->
-        <tr><td align="right"><span class="options"
-            >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="bliss.saga.job.description_api.Description-class.html"
-            target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class Description</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.job.description_api-pysrc.html#Description">source&nbsp;code</a></span></p>
-<pre class="base-tree">
-                       object --+    
-                                |    
-                <a href="bliss.saga.object_api.Object-class.html">object_api.Object</a> --+
-                                    |
-                       object --+   |
-                                |   |
-<a href="bliss.saga.attributes_api.AttributeInterface-class.html">attributes_api.AttributeInterface</a> --+
-                                    |
-                                   <strong class="uidshort">Description</strong>
-</pre>
+<center>
 
+</center>
 <hr />
+<p>Loosely represents a SAGA job description as defined in GFD.90</p>
+  <p>The job.Description class is essentially a table of key/value pairs 
+  (dict), which describes both the resource (e.g. number of CPUs, working 
+  directory etc.), and the application properties (e.g. executable path, 
+  program arguments, environment etc.) of a job to be submitted.</p>
+  <p>Usage example:</p>
 <pre class="literalblock">
+   ------------------------------------------------------------------------
+   jd = saga.job.Description()
 
-Loosely represents a SAGA job description as defined in GFD.90
+   jd.executable          = /usr/local/bin/blast&quot;)
+   jd.arguments           = [&quot;-i&quot;, &quot;/data/in/x_42&quot;]
+   jd.spmd_variation      = &quot;MPI&quot;
+   jd.number_of_processed = 42
 
-The job.Description class is essentially a table of key/value pairs (dict),
-which describes both the resource (e.g. number of CPUs, working directory
-etc.), and the application properties (e.g. executable path, program
-arguments, environment etc.) of a job to be submitted.
-
-Usage example:
-
-  jd = saga.job.Description()
-
-  jd.executable          = /usr/local/bin/blast&quot;)
-  jd.arguments           = [&quot;-i&quot;, &quot;/data/in/x_42&quot;]
-  jd.spmd_variation      = &quot;MPI&quot;
-  jd.number_of_processed = 42
-
-  js = saga.job.Service (&quot;sge://localhost&quot;)
-  j  = js.submit_job    (jd)
-  
-
+   js = saga.job.Service (&quot;sge://localhost&quot;)
+   j  = js.create_job    (jd)
+   ------------------------------------------------------------------------
 </pre>
 
 <!-- ==================== NESTED CLASSES ==================== -->
@@ -433,19 +416,19 @@ Usage example:
     </td>
   </tr>
 </table>
-<!-- ==================== CLASS VARIABLES ==================== -->
-<a name="section-ClassVariables"></a>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
   <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Class Variables</span></td>
+    <span class="table-header">Properties</span></td>
 </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description_api.Description-class.html#executable" class="summary-name">executable</a> = <code title="property(** executable())">property(** executable())</code><br />
+        <a href="bliss.saga.job.description_api.Description-class.html#executable" class="summary-name">executable</a><br />
       Defines the command to execute.
     </td>
   </tr>
@@ -453,7 +436,7 @@ Usage example:
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description_api.Description-class.html#arguments" class="summary-name">arguments</a> = <code title="property(** arguments())">property(** arguments())</code><br />
+        <a href="bliss.saga.job.description_api.Description-class.html#arguments" class="summary-name">arguments</a><br />
       List of arguments for the executable
     </td>
   </tr>
@@ -461,7 +444,7 @@ Usage example:
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description_api.Description-class.html#environment" class="summary-name">environment</a> = <code title="property(** environment())">property(** environment())</code><br />
+        <a href="bliss.saga.job.description_api.Description-class.html#environment" class="summary-name">environment</a><br />
       The environment variables to set in the job's execution context.
     </td>
   </tr>
@@ -469,7 +452,7 @@ Usage example:
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description_api.Description-class.html#file_transfer" class="summary-name">file_transfer</a> = <code title="property(** file_transfer())">property(** file_transfer())</code><br />
+        <a href="bliss.saga.job.description_api.Description-class.html#file_transfer" class="summary-name">file_transfer</a><br />
       Defines the file staging operations.
     </td>
   </tr>
@@ -477,7 +460,7 @@ Usage example:
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description_api.Description-class.html#output" class="summary-name">output</a> = <code title="property(** output())">property(** output())</code><br />
+        <a href="bliss.saga.job.description_api.Description-class.html#output" class="summary-name">output</a><br />
       The file in which the job's stdout stream will be captured.
     </td>
   </tr>
@@ -485,7 +468,7 @@ Usage example:
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description_api.Description-class.html#error" class="summary-name">error</a> = <code title="property(** error())">property(** error())</code><br />
+        <a href="bliss.saga.job.description_api.Description-class.html#error" class="summary-name">error</a><br />
       The file in which the job's stderr stream will be captured.
     </td>
   </tr>
@@ -493,7 +476,7 @@ Usage example:
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description_api.Description-class.html#project" class="summary-name">project</a> = <code title="property(** project())">property(** project())</code><br />
+        <a href="bliss.saga.job.description_api.Description-class.html#project" class="summary-name">project</a><br />
       The project / allocation name the job should be credited to.
     </td>
   </tr>
@@ -501,7 +484,7 @@ Usage example:
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description_api.Description-class.html#queue" class="summary-name">queue</a> = <code title="property(** queue())">property(** queue())</code><br />
+        <a href="bliss.saga.job.description_api.Description-class.html#queue" class="summary-name">queue</a><br />
       The queue on the backend system to place the job in.
     </td>
   </tr>
@@ -509,7 +492,7 @@ Usage example:
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description_api.Description-class.html#wall_time_limit" class="summary-name">wall_time_limit</a> = <code title="property(** wall_time_limit())">property(** wall_time_limit())</code><br />
+        <a href="bliss.saga.job.description_api.Description-class.html#wall_time_limit" class="summary-name">wall_time_limit</a><br />
       The hard limit (in minutes) for the total job runtime.
     </td>
   </tr>
@@ -517,7 +500,7 @@ Usage example:
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description_api.Description-class.html#working_directory" class="summary-name">working_directory</a> = <code title="property(** working_directory())">property(** working_directory())</code><br />
+        <a href="bliss.saga.job.description_api.Description-class.html#working_directory" class="summary-name">working_directory</a><br />
       The working directory for the job.
     </td>
   </tr>
@@ -525,7 +508,7 @@ Usage example:
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description_api.Description-class.html#contact" class="summary-name">contact</a> = <code title="property(** contact())">property(** contact())</code><br />
+        <a href="bliss.saga.job.description_api.Description-class.html#contact" class="summary-name">contact</a><br />
       Endpoint describing where to report job state transitions (e.g., 
       email).
     </td>
@@ -534,7 +517,7 @@ Usage example:
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description_api.Description-class.html#total_cpu_count" class="summary-name">total_cpu_count</a> = <code title="property(** total_cpu_count())">property(** total_cpu_count())</code><br />
+        <a href="bliss.saga.job.description_api.Description-class.html#total_cpu_count" class="summary-name">total_cpu_count</a><br />
       Total number of cpus requested for this job.
     </td>
   </tr>
@@ -542,7 +525,7 @@ Usage example:
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description_api.Description-class.html#number_of_processes" class="summary-name">number_of_processes</a> = <code title="property(** number_of_processes())">property(** number_of_processes())</code><br />
+        <a href="bliss.saga.job.description_api.Description-class.html#number_of_processes" class="summary-name">number_of_processes</a><br />
       Number of processes to launch
     </td>
   </tr>
@@ -550,8 +533,15 @@ Usage example:
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="bliss.saga.job.description_api.Description-class.html#spmd_variation" class="summary-name">spmd_variation</a> = <code title="property(** spmd_variation())">property(** spmd_variation())</code><br />
+        <a href="bliss.saga.job.description_api.Description-class.html#spmd_variation" class="summary-name">spmd_variation</a><br />
       SPMD job type and startup mechanism (MPI, OpenMP, None, ...)
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
     </td>
   </tr>
 <tr bgcolor="#e8f0f8" >
@@ -561,37 +551,25 @@ Usage example:
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="id"></a><span class="summary-name">id</span> = <code title="property(** id())">property(** id())</code>
+        <a href="bliss.saga.object_api.Object-class.html#id" class="summary-name">id</a><br />
+      The object's unique identifier.
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="session"></a><span class="summary-name">session</span> = <code title="property(** session())">property(** session())</code>
+        <a href="bliss.saga.object_api.Object-class.html#session" class="summary-name">session</a><br />
+      The object's session which contains the list of security context 
+      objects.
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="type"></a><span class="summary-name">type</span> = <code title="property(** type())">property(** type())</code>
-    </td>
-  </tr>
-</table>
-<!-- ==================== PROPERTIES ==================== -->
-<a name="section-Properties"></a>
-<table class="summary" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Properties</span></td>
-</tr>
-  <tr>
-    <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
-      <code>__class__</code>
-      </p>
+        <a href="bliss.saga.object_api.Object-class.html#type" class="summary-name">type</a><br />
+      The object's type identifier.
     </td>
   </tr>
 </table>
@@ -674,13 +652,13 @@ Usage example:
 </td></tr></table>
 </div>
 <br />
-<!-- ==================== CLASS VARIABLE DETAILS ==================== -->
-<a name="section-ClassVariableDetails"></a>
+<!-- ==================== PROPERTY DETAILS ==================== -->
+<a name="section-PropertyDetails"></a>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
   <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Class Variable Details</span></td>
+    <span class="table-header">Property Details</span></td>
 </tr>
 </table>
 <a name="executable"></a>
@@ -703,22 +681,30 @@ Usage example:
   </ul>
   <p><b>Example</b> (using Python properties):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.executable = &quot;/usr/local/bin/blast&quot;
+ --------------------------------------------------------------------------
 </pre>
   <p><b>Example</b> (using the attribute interface):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.set_attribute(&quot;Executable&quot;, &quot;/usr/local/bin/blast&quot;)
+ --------------------------------------------------------------------------
 </pre>
   <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-property(** executable())
-</pre></td></tr></table>
-</dd>
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
+    <dt>Delete Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
   </dl>
 </td></tr></table>
 </div>
@@ -743,22 +729,30 @@ property(** executable())
   </ul>
   <p><b>Example</b> (using Python properties):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.arguments = [&quot;--prefix&quot;, &quot;/usr/local/bin&quot;]
+ --------------------------------------------------------------------------
 </pre>
   <p><b>Example</b> (using the attribute interface):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.set_attribute(&quot;Arguments&quot;. [&quot;--prefix&quot;, &quot;/usr/local/bin&quot;])
+ --------------------------------------------------------------------------
 </pre>
   <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-property(** arguments())
-</pre></td></tr></table>
-</dd>
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
+    <dt>Delete Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
   </dl>
 </td></tr></table>
 </div>
@@ -784,22 +778,30 @@ property(** arguments())
   </ul>
   <p><b>Example</b> (using Python properties):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.environment = [&quot;PATH=/bin:/usr/bin&quot;, &quot;TARGET=KingKong&quot;]
+ --------------------------------------------------------------------------
 </pre>
   <p><b>Example</b> (using the attribute interface):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.set_attribute(&quot;Environment&quot;. [&quot;PATH=/bin:/usr/bin&quot;, &quot;TARGET=KingKong&quot;])
+ --------------------------------------------------------------------------
 </pre>
   <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-property(** environment())
-</pre></td></tr></table>
-</dd>
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
+    <dt>Delete Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
   </dl>
 </td></tr></table>
 </div>
@@ -812,22 +814,30 @@ property(** environment())
   <p>Defines the file staging operations.</p>
   <p><b>Example</b> (using Python properties):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.arguments = [&quot;--prefix&quot;, &quot;/usr/local/bin&quot;]
+ --------------------------------------------------------------------------
 </pre>
   <p><b>Example</b> (using the attribute interface):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.set_attribute(&quot;Arguments&quot;. [&quot;--prefix&quot;, &quot;/usr/local/bin&quot;])
+ --------------------------------------------------------------------------
 </pre>
   <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-property(** file_transfer())
-</pre></td></tr></table>
-</dd>
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
+    <dt>Delete Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
   </dl>
 </td></tr></table>
 </div>
@@ -840,22 +850,30 @@ property(** file_transfer())
   <p>The file in which the job's stdout stream will be captured.</p>
   <p><b>Example</b> (using Python properties):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.output = &quot;/tmp/app.log&quot;
+ --------------------------------------------------------------------------
 </pre>
   <p><b>Example</b> (using the attribute interface):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.set_attribute(&quot;Output&quot;, &quot;/tmp/app.log&quot;)
+ --------------------------------------------------------------------------
 </pre>
   <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-property(** output())
-</pre></td></tr></table>
-</dd>
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
+    <dt>Delete Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
   </dl>
 </td></tr></table>
 </div>
@@ -868,22 +886,30 @@ property(** output())
   <p>The file in which the job's stderr stream will be captured.</p>
   <p><b>Example</b> (using Python properties):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.error = &quot;/tmp/app.err&quot;
+ --------------------------------------------------------------------------
 </pre>
   <p><b>Example</b> (using the attribute interface):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.set_attribute(&quot;Error&quot;, &quot;/tmp/app.err&quot;)
+ --------------------------------------------------------------------------
 </pre>
   <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-property(** error())
-</pre></td></tr></table>
-</dd>
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
+    <dt>Delete Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
   </dl>
 </td></tr></table>
 </div>
@@ -902,22 +928,30 @@ property(** error())
   </ul>
   <p><b>Example</b> (using Python properties):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.project = &quot;project_42&quot;
+ --------------------------------------------------------------------------
 </pre>
   <p><b>Example</b> (using the attribute interface):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.set_attribute(&quot;Project&quot;, &quot;project_42&quot;)
+ --------------------------------------------------------------------------
 </pre>
   <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-property(** project())
-</pre></td></tr></table>
-</dd>
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
+    <dt>Delete Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
   </dl>
 </td></tr></table>
 </div>
@@ -936,22 +970,30 @@ property(** project())
   </ul>
   <p><b>Example</b> (using Python properties):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.queue = &quot;Large&quot;
+ --------------------------------------------------------------------------
 </pre>
   <p><b>Example</b> (using the attribute interface):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.set_attribute(&quot;Queue&quot;, &quot;Large&quot;)
+ --------------------------------------------------------------------------
 </pre>
   <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-property(** queue())
-</pre></td></tr></table>
-</dd>
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
+    <dt>Delete Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
   </dl>
 </td></tr></table>
 </div>
@@ -973,22 +1015,30 @@ property(** queue())
   </ul>
   <p><b>Example</b> (using Python properties):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.wall_time_limit = &quot;42&quot;
+ --------------------------------------------------------------------------
 </pre>
   <p><b>Example</b> (using the attribute interface):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.set_attribute(&quot;WallTimeLimit&quot;, &quot;42&quot;)
+ --------------------------------------------------------------------------
 </pre>
   <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-property(** wall_time_limit())
-</pre></td></tr></table>
-</dd>
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
+    <dt>Delete Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
   </dl>
 </td></tr></table>
 </div>
@@ -1014,22 +1064,30 @@ property(** wall_time_limit())
   </ul>
   <p><b>Example</b> (using Python properties):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.working_directory = &quot;/scratch/cpt_hook/&quot;
+ --------------------------------------------------------------------------
 </pre>
   <p><b>Example</b> (using the attribute interface):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.set_attribute(&quot;WorkingDirectory&quot;, &quot;/scratch/cpt_hook/&quot;)
+ --------------------------------------------------------------------------
 </pre>
   <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-property(** working_directory())
-</pre></td></tr></table>
-</dd>
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
+    <dt>Delete Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
   </dl>
 </td></tr></table>
 </div>
@@ -1049,22 +1107,30 @@ property(** working_directory())
   </ul>
   <p><b>Example</b> (using Python properties):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.contact = &quot;cpt_hook@piratebay.org&quot;
+ --------------------------------------------------------------------------
 </pre>
   <p><b>Example</b> (using the attribute interface):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.set_attribute(&quot;Contact&quot;, &quot;cpt_hook@piratebay.org&quot;)
+ --------------------------------------------------------------------------
 </pre>
   <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-property(** contact())
-</pre></td></tr></table>
-</dd>
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
+    <dt>Delete Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
   </dl>
 </td></tr></table>
 </div>
@@ -1088,22 +1154,30 @@ property(** contact())
   </ul>
   <p><b>Example</b> (using Python properties):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.cpu_count = 42
+ --------------------------------------------------------------------------
 </pre>
   <p><b>Example</b> (using the attribute interface):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.set_attribute(&quot;CpuCount&quot;, 42)
+ --------------------------------------------------------------------------
 </pre>
   <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-property(** total_cpu_count())
-</pre></td></tr></table>
-</dd>
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
+    <dt>Delete Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
   </dl>
 </td></tr></table>
 </div>
@@ -1127,22 +1201,30 @@ property(** total_cpu_count())
   </ul>
   <p><b>Example</b> (using Python properties):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.number_of_processes = 42
+ --------------------------------------------------------------------------
 </pre>
   <p><b>Example</b> (using the attribute interface):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.set_attribute(&quot;NumberOfProcesses&quot;, 42)
+ --------------------------------------------------------------------------
 </pre>
   <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-property(** number_of_processes())
-</pre></td></tr></table>
-</dd>
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
+    <dt>Delete Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
   </dl>
 </td></tr></table>
 </div>
@@ -1168,22 +1250,30 @@ property(** number_of_processes())
   </ul>
   <p><b>Example</b> (using Python properties):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.spmd_variation = &quot;MPI&quot;
+ --------------------------------------------------------------------------
 </pre>
   <p><b>Example</b> (using the attribute interface):</p>
 <pre class="literalblock">
+ --------------------------------------------------------------------------
  jd = saga.job.Description()
  jd.set_attribute(&quot;SpmdVariation&quot;, &quot;MPI&quot;)
+ --------------------------------------------------------------------------
 </pre>
   <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-property(** spmd_variation())
-</pre></td></tr></table>
-</dd>
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fget(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fset(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
+    <dt>Delete Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>.fdel(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">val</span>)</span>
+    </dd>
   </dl>
 </td></tr></table>
 </div>
@@ -1212,7 +1302,7 @@ property(** spmd_variation())
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://oweidner.github.com/bliss">Bliss</a></th>
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -1220,7 +1310,7 @@ property(** spmd_variation())
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Tue Apr  3 20:48:07 2012</a>
+    3.0.1 on Tue Apr 10 20:58:31 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

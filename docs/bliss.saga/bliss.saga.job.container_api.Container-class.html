@@ -34,7 +34,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://oweidner.github.com/bliss">Bliss</a></th>
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -52,28 +52,59 @@
     <td>
       <table cellpadding="0" cellspacing="0">
         <!-- hide/show private -->
-        <tr><td align="right"><span class="options"
-            >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="bliss.saga.job.container_api.Container-class.html"
-            target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class Container</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container">source&nbsp;code</a></span></p>
-<pre class="base-tree">
-       object --+    
-                |    
-<a href="bliss.saga.object_api.Object-class.html">object_api.Object</a> --+
-                    |
-                   <strong class="uidshort">Container</strong>
-</pre>
+<center>
 
+</center>
 <hr />
-<p>Loosely represents a SAGA taks container as defined in GFD.90.</p>
-  <p>Since Bliss doesn't support the superflous concept of a tasks, we 
-  decided to rename task container into job container.</p>
+<p>Loosely represents a SAGA task container as defined in GFD.90.</p>
+  <p>The job.Container class allows to manage collections of jobs 
+  efficiently. It supports:</p>
+  <ul>
+    <li>
+      management of the job collection:
+<pre class="literalblock">
+  --------------------------------------------------------------------
+  jc = saga.job.Container()    # new container
+
+  jc.add (job_1)               # add
+  jc.add (job_2)               # some
+  jc.add (job_3)               # jobs
+
+  j = jc.get_job (id)          # retrieve job
+
+  jc.remove (job_1)            # remove job
+
+  print str(jc.size ())        # get number of jobs
+  print str(jc.list ())        # get all job ids
+  print str(jc.get_states ())  # get all job states
+  --------------------------------------------------------------------
+</pre>
+    </li>
+    <li>
+      collective operations:
+<pre class="literalblock">
+  --------------------------------------------------------------------
+  jc.run ()                    # run all jobs in container
+  jc.cancel ()                 # cancel all jobs in container
+  --------------------------------------------------------------------
+</pre>
+    </li>
+    <li>
+      event driven programming:
+<pre class="literalblock">
+  --------------------------------------------------------------------
+  jc.wait (saga.job.Any)       # wait until any job in container finishes
+  jc.wait (saga.job.All)       # wait until all job in container finish
+  --------------------------------------------------------------------
+</pre>
+    </li>
+  </ul>
 
 <!-- ==================== NESTED CLASSES ==================== -->
 <a name="section-NestedClasses"></a>
@@ -180,7 +211,7 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="bliss.saga.job.container_api.Container-class.html#get_job" class="summary-sig-name">get_job</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">job_uid</span>)</span><br />
+        <span class="summary-sig-arg">job_id</span>)</span><br />
       Get a single job from the job container.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.get_job">source&nbsp;code</a></span>
@@ -197,7 +228,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="get_states"></a><span class="summary-sig-name">get_states</span>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.job.container_api.Container-class.html#get_states" class="summary-sig-name">get_states</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Get the states of all jobs in the container.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.get_states">source&nbsp;code</a></span>
@@ -214,7 +245,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="list"></a><span class="summary-sig-name">list</span>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.job.container_api.Container-class.html#list" class="summary-sig-name">list</a>(<span class="summary-sig-arg">self</span>)</span><br />
       List all jobs that are in the container.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.list">source&nbsp;code</a></span>
@@ -231,7 +262,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="size"></a><span class="summary-sig-name">size</span>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.job.container_api.Container-class.html#size" class="summary-sig-name">size</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Return the number of elements in the container.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.size">source&nbsp;code</a></span>
@@ -248,7 +279,24 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="run"></a><span class="summary-sig-name">run</span>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a name="__len__"></a><span class="summary-sig-name">__len__</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Pythonesque rendering of Container.size().</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.__len__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.job.container_api.Container-class.html#run" class="summary-sig-name">run</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Start all jobs in the container.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.run">source&nbsp;code</a></span>
@@ -284,7 +332,7 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="bliss.saga.job.container_api.Container-class.html#wait" class="summary-sig-name">wait</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">wait_mode</span>=<span class="summary-sig-default">WaitMode.All</span>,
+        <span class="summary-sig-arg">wait_mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">saga.job.WaitMode.All</code><code class="variable-quote">'</code></span>,
         <span class="summary-sig-arg">timeout</span>=<span class="summary-sig-default">-1</span>)</span><br />
       Wait for jobs in the task container to finish execution.</td>
           <td align="right" valign="top">
@@ -369,39 +417,6 @@
     </td>
   </tr>
 </table>
-<!-- ==================== CLASS VARIABLES ==================== -->
-<a name="section-ClassVariables"></a>
-<table class="summary" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Class Variables</span></td>
-</tr>
-<tr bgcolor="#e8f0f8" >
-  <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.object_api.Object-class.html">object_api.Object</a></th></tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="id"></a><span class="summary-name">id</span> = <code title="property(** id())">property(** id())</code>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="session"></a><span class="summary-name">session</span> = <code title="property(** session())">property(** session())</code>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="type"></a><span class="summary-name">type</span> = <code title="property(** type())">property(** type())</code>
-    </td>
-  </tr>
-</table>
 <!-- ==================== PROPERTIES ==================== -->
 <a name="section-Properties"></a>
 <table class="summary" border="1" cellpadding="3"
@@ -415,6 +430,34 @@
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__class__</code>
       </p>
+    </td>
+  </tr>
+<tr bgcolor="#e8f0f8" >
+  <th colspan="2" class="group-header"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.object_api.Object-class.html">object_api.Object</a></th></tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.object_api.Object-class.html#id" class="summary-name">id</a><br />
+      The object's unique identifier.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.object_api.Object-class.html#session" class="summary-name">session</a><br />
+      The object's session which contains the list of security context 
+      objects.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.object_api.Object-class.html#type" class="summary-name">type</a><br />
+      The object's type identifier.
     </td>
   </tr>
 </table>
@@ -450,7 +493,7 @@
         <li><strong class="pname"><code>service</code></strong> - Currently, a container needs to be bound to a valid <a 
           href="bliss.saga.job.Service-class.html" 
           class="link">saga.job.Service</a> and can only hold jobs that are
-          known to that serivce.</li>
+          known to that service.</li>
     </ul></dd>
     <dt>Overrides:
         object.__init__
@@ -500,7 +543,16 @@
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>job</code></strong> - A saga.job.Job object in 'New' state.</li>
+        <li><strong class="pname"><code>job</code></strong> - A saga.job.Job object.  The job can be in any state.
+          <p>Example:</p>
+<pre class="literalblock">
+  ------------------------------------------------------------------
+  jc = saga.job.Container()
+
+  jc.add (job_1)               # add existing job
+  jc.add (js.create_job (jd))  # add new job from job service
+  ------------------------------------------------------------------
+</pre></li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -524,7 +576,13 @@
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>job</code></strong> - The saga.job.Job object to remove.</li>
+        <li><strong class="pname"><code>job</code></strong> - The saga.job.Job object to remove.
+          <p>Example:</p>
+<pre class="literalblock">
+  ------------------------------------------------------------------
+  jc.remove (job_1)            # remove existing job
+  ------------------------------------------------------------------
+</pre></li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -537,7 +595,7 @@
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">get_job</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">job_uid</span>)</span>
+        <span class="sig-arg">job_id</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.get_job">source&nbsp;code</a></span>&nbsp;
@@ -548,8 +606,133 @@
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>job_uid</code></strong> - The object uid itenifying the job.</li>
+        <li><strong class="pname"><code>job_id</code></strong> - The job id identifying the job.
+          <p>Example:</p>
+<pre class="literalblock">
+  ------------------------------------------------------------------
+  jc.get_job (&quot;[fork://]-[4452]&quot;)     # remove some local job
+  ------------------------------------------------------------------
+</pre></li>
     </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_states"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_states</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.get_states">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Get the states of all jobs in the container.</p>
+  <p>Example:</p>
+<pre class="literalblock">
+  ------------------------------------------------------------------
+  count = 0
+
+  for state in jc.get_states () :
+    if state == saga.job.Done :
+      count += 1
+  
+  print &quot;%d jobs are done, so far&quot; % count
+  ------------------------------------------------------------------
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="list"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">list</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.list">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>List all jobs that are in the container.</p>
+  <p>Example:</p>
+<pre class="literalblock">
+  ------------------------------------------------------------------
+  for id in jc.list () :
+    j = jc.get_job (id)
+    print &quot;job %s is in state %s&quot; % id, j.get_state ()
+  ------------------------------------------------------------------
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="size"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">size</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.size">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return the number of elements in the container.</p>
+  <p>Example:</p>
+<pre class="literalblock">
+  ------------------------------------------------------------------
+  print &quot;managing %d jobs&quot; % jc.size ()
+  ------------------------------------------------------------------
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="run"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">run</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.job.container_api-pysrc.html#Container.run">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Start all jobs in the container.</p>
+  <p>The job.run() operation can only be successful for 'New' jobs - this 
+  run() method on the Container class will thus only succeed if all jobs in
+  the container are in 'New' state.   In that case, this call will invoke 
+  run() on all jobs in the container.</p>
+  <p>Example:</p>
+<pre class="literalblock">
+  ------------------------------------------------------------------
+  jc = saga.job.Container()
+
+  jc.add (js.create_job (jd))    # add
+  jc.add (js.create_job (jd))    # new
+  jc.add (js.create_job (jd))    # jobs
+
+  jc.run ()
+  jc.wait (saga.job.All)
+  ------------------------------------------------------------------
+</pre>
+  <dl class="fields">
   </dl>
 </td></tr></table>
 </div>
@@ -572,7 +755,28 @@
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>timeout</code></strong> - Timeout in seconds.</li>
+        <li><strong class="pname"><code>timeout</code></strong> - Timeout in seconds.
+          <p>The cancel() method on the saga.job.Container class will 
+          invoke saga.job.cancel() on all jobs in the container.</p>
+          <p>The job.cancel() method will cancel all jobs in 'Running' and 
+          'Pending' state, but will not alter the state of jobs which have 
+          already finished ('Done', 'Failed' or 'Canceled' state).</p>
+          <p>Note that cancel() is not defined for jobs in 'New' state -- 
+          the application must thus ensure that no jobs in the container 
+          are 'New'.</p>
+          <p>Example:</p>
+<pre class="literalblock">
+  ------------------------------------------------------------------
+  jc = saga.job.Container()
+
+  jc.add (js.create_job (jd))    # add
+  jc.add (js.create_job (jd))    # new
+  jc.add (js.create_job (jd))    # jobs
+
+  jc.run ()
+  jc.cancel ()
+  ------------------------------------------------------------------
+</pre></li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -585,7 +789,7 @@
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">wait</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">wait_mode</span>=<span class="sig-default">WaitMode.All</span>,
+        <span class="sig-arg">wait_mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">saga.job.WaitMode.All</code><code class="variable-quote">'</code></span>,
         <span class="sig-arg">timeout</span>=<span class="sig-default">-1</span>)</span>
   </h3>
   </td><td align="right" valign="top"
@@ -600,6 +804,89 @@
         <li><strong class="pname"><code>wait_mode</code></strong> - Wait for any or for all jobs in the container.</li>
         <li><strong class="pname"><code>timeout</code></strong> - Timeout in seconds.</li>
     </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the call returns a job in a final state.  That job is then also 
+          removed from the container.
+          <p>The wait() method on saga.job.Container will inspect all jobs 
+          in the container, and will return whenever job(s) enter a final 
+          state (Done, Failed, Canceled).</p>
+          <p>The 'wait_mode' parameter determines when exactly the call 
+          will return:</p>
+          <ul>
+            <li>
+              All: wait() returns when *all* jobs reached a final state
+            </li>
+            <li>
+              Any: wait() returns when *one* jobs reached a final state
+            </li>
+          </ul>
+          <p>Example:</p>
+<pre class="literalblock">
+  ------------------------------------------------------------------
+  jc = saga.job.Container()
+
+  jc.add (js.create_job (jd))    # add
+  jc.add (js.create_job (jd))    # new
+  jc.add (js.create_job (jd))    # jobs
+
+  jc.run ()
+  
+  while j = jc.wait () :
+    print &quot;job %s returned: %s&quot; % j.get_id (), j.get_state ()
+
+  # jc is empty at this point
+  ------------------------------------------------------------------
+
+
+The wait() method can also be used for a non-blocking or timed wait,
+via the optional 'timeout' parameter.  That parameter is interpreted
+as:
+
+  - timeout &lt;  0 : blocking wait (default)
+  - timeout == 0 : non-blocking wait, tests if any job is final
+  - timeout &gt;  0 : block for 'timeout' seconds, then return no matter what
+</pre>
+          <p>Example:</p>
+<pre class="literalblock">
+  ------------------------------------------------------------------
+  jc = saga.job.Container()
+
+  jc.add (js.create_job (jd))    # add
+  jc.add (js.create_job (jd))    # new
+  jc.add (js.create_job (jd))    # jobs
+
+  jc.run ()
+  
+  try: 
+    j = jc.wait (5.0)   # wait for 5 seconds
+
+  except saga.exception.TimeOut :
+    print &quot;no job finished after 5 seconds&quot;
+  ------------------------------------------------------------------
+
+  ------------------------------------------------------------------
+  jc = saga.job.Container()
+
+  jc.add (js.create_job (jd))    # add
+  jc.add (js.create_job (jd))    # new
+  jc.add (js.create_job (jd))    # jobs
+
+  jc.run ()
+  
+  while jc.size () :
+    os.sleep (1)
+    print &quot;waiting for jobs&quot;
+
+    try: 
+      j = jc.wait (5.0)   # wait for 5 seconds
+      print &quot;job %s returned: %s&quot; % j.get_id (), j.get_state ()
+    except saga.exception.TimeOut :
+      # ignore timeout
+      pass
+
+  # jc is empty at this point
+  ------------------------------------------------------------------
+</pre></dd>
   </dl>
 </td></tr></table>
 </div>
@@ -628,7 +915,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://oweidner.github.com/bliss">Bliss</a></th>
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -636,7 +923,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Tue Apr  3 20:48:07 2012</a>
+    3.0.1 on Tue Apr 10 20:58:31 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

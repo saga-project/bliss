@@ -34,7 +34,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://oweidner.github.com/bliss">Bliss</a></th>
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -52,24 +52,15 @@
     <td>
       <table cellpadding="0" cellspacing="0">
         <!-- hide/show private -->
-        <tr><td align="right"><span class="options"
-            >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="bliss.saga.job.service_api.Service-class.html"
-            target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class Service</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.job.service_api-pysrc.html#Service">source&nbsp;code</a></span></p>
-<pre class="base-tree">
-       object --+    
-                |    
-<a href="bliss.saga.object_api.Object-class.html">object_api.Object</a> --+
-                    |
-                   <strong class="uidshort">Service</strong>
-</pre>
+<center>
 
+</center>
 <hr />
 <p>Loosely represents a SAGA job service as defined in GFD.90</p>
 
@@ -178,7 +169,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="list"></a><span class="summary-sig-name">list</span>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.job.service_api.Service-class.html#list" class="summary-sig-name">list</a>(<span class="summary-sig-arg">self</span>)</span><br />
       List all jobs managed by this service instance.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.job.service_api-pysrc.html#Service.list">source&nbsp;code</a></span>
@@ -308,39 +299,6 @@
     </td>
   </tr>
 </table>
-<!-- ==================== CLASS VARIABLES ==================== -->
-<a name="section-ClassVariables"></a>
-<table class="summary" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Class Variables</span></td>
-</tr>
-<tr bgcolor="#e8f0f8" >
-  <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.object_api.Object-class.html">object_api.Object</a></th></tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="id"></a><span class="summary-name">id</span> = <code title="property(** id())">property(** id())</code>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="session"></a><span class="summary-name">session</span> = <code title="property(** session())">property(** session())</code>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="type"></a><span class="summary-name">type</span> = <code title="property(** type())">property(** type())</code>
-    </td>
-  </tr>
-</table>
 <!-- ==================== PROPERTIES ==================== -->
 <a name="section-Properties"></a>
 <table class="summary" border="1" cellpadding="3"
@@ -354,6 +312,34 @@
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__class__</code>
       </p>
+    </td>
+  </tr>
+<tr bgcolor="#e8f0f8" >
+  <th colspan="2" class="group-header"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.object_api.Object-class.html">object_api.Object</a></th></tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.object_api.Object-class.html#id" class="summary-name">id</a><br />
+      The object's unique identifier.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.object_api.Object-class.html#session" class="summary-name">session</a><br />
+      The object's session which contains the list of security context 
+      objects.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.object_api.Object-class.html#type" class="summary-name">type</a><br />
+      The object's type identifier.
     </td>
   </tr>
 </table>
@@ -438,7 +424,30 @@
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>job_description</code></strong> (<a href="bliss.saga.job.Description-class.html" 
-          class="link">Description</a>) - The description for the new job.</li>
+          class="link">Description</a>
+          <p>create_job() accepts a job description, which described the 
+          application instance to be created by the backend.  The 
+          create_job() method is not actually attempting to *run* the job, 
+          but merely parses the job description for syntactic and semantic 
+          consistency.  The job returned object is thus not in 'Pending' or
+          'Running', but rather in 'New' state.  The actual submission is 
+          performed by calling run() on the job object.</p>
+          <p>Example:</p>
+<pre class="literalblock">
+ -------------------------------------------------------------------
+ js = saga.job.Service (&quot;sge://localhost&quot;)
+ j  = js.create_job    (jd)
+
+ if      j.state == saga.job.New      : print &quot;new&quot;
+ else                                 : print &quot;oops!&quot;
+
+ j.run ()
+
+ if      j.state == saga.job.Pending  : print &quot;pending&quot;
+ else if j.state == saga.job.Running  : print &quot;running&quot;
+ else                                 : print &quot;oops!&quot;
+ -------------------------------------------------------------------
+</pre>) - The description for the new job.</li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -462,8 +471,59 @@
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>job_id</code></strong> - The job id.</li>
+        <li><strong class="pname"><code>job_id</code></strong> - The job id.
+          <p>Job objects are a local representation of a remote stateful 
+          entity. The job.Service supports to reconnect to those remote 
+          entities:</p>
+<pre class="literalblock">
+ -------------------------------------------------------------------
+ js = saga.job.Service (&quot;sge://localhost&quot;)
+ j  = js.get_job       (my_job_id)
+
+ if      j.state == saga.job.Pending  : print &quot;pending&quot;
+ else if j.state == saga.job.Running  : print &quot;running&quot;
+ else                                 : print &quot;job is already final!&quot;
+ -------------------------------------------------------------------
+</pre></li>
     </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="list"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">list</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.job.service_api-pysrc.html#Service.list">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>List all jobs managed by this service instance.</p>
+  <p>As the job.Service represents a job management backend, list() will 
+  return a list of job IDs for all jobs which are known to the backend, and
+  which can potentially be accessed and managed by the application.</p>
+  <p>Example:</p>
+<pre class="literalblock">
+ -------------------------------------------------------------------
+ js  = saga.job.Service (&quot;sge://localhost&quot;)
+ ids = js.list ()
+
+ if my_job_id in ids :
+   print &quot;found my job again, wohhooo!&quot;
+
+   j = js.get_job (my_job_id)
+
+   if      j.state == saga.job.Pending  : print &quot;pending&quot;
+   else if j.state == saga.job.Running  : print &quot;running&quot;
+   else                                 : print &quot;job is already final!&quot;
+ -------------------------------------------------------------------
+</pre>
+  <dl class="fields">
   </dl>
 </td></tr></table>
 </div>
@@ -492,7 +552,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://oweidner.github.com/bliss">Bliss</a></th>
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -500,7 +560,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Tue Apr  3 20:48:07 2012</a>
+    3.0.1 on Tue Apr 10 20:58:31 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

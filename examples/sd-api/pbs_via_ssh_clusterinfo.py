@@ -64,7 +64,7 @@ def main():
                   % (service.name, service.type, service.url)
                 print "    |- Running Jobs         : %s" \
                   % (data.get_attribute("GlueCEStateRunningJobs"))      
-                print "    |- Waiting Jobs         : %s" \
+                print "    |- Pending Jobs         : %s" \
                   % (data.get_attribute("GlueCEStateWaitingJobs"))   
                 print "    |- Memory per Node      : %.2f GB" \
                   % (float(data.get_attribute("GlueHostMainMemoryRAMSize"))/1048576.0)     

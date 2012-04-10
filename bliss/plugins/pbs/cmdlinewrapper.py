@@ -24,17 +24,17 @@ def pbs_to_saga_jobstate(pbsjs):
     elif pbsjs == 'E':
         return bliss.saga.job.Job.Running
     elif pbsjs == 'H':
-        return bliss.saga.job.Job.Waiting
+        return bliss.saga.job.Job.Pending
     elif pbsjs == 'Q':
-        return bliss.saga.job.Job.Waiting
+        return bliss.saga.job.Job.Pending
     elif pbsjs == 'R':
         return bliss.saga.job.Job.Running 
     elif pbsjs == 'T': 
         return bliss.saga.job.Job.Running 
     elif pbsjs == 'W':
-        return bliss.saga.job.Job.Waiting
+        return bliss.saga.job.Job.Pending
     elif pbsjs == 'S':
-        return bliss.saga.job.Job.Waiting
+        return bliss.saga.job.Job.Pending
     elif pbsjs == 'X':
         return bliss.saga.job.Job.Canceled
     else:
