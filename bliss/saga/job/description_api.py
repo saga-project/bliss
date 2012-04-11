@@ -25,7 +25,7 @@ class Description(Object, AttributeInterface):
         ------------------------------------------------------------------------
         jd = saga.job.Description()
 
-        jd.executable          = /usr/local/bin/blast")
+        jd.executable          = ("/usr/local/bin/blast")
         jd.arguments           = ["-i", "/data/in/x_42"]
         jd.spmd_variation      = "MPI"
         jd.number_of_processed = 42
@@ -33,7 +33,35 @@ class Description(Object, AttributeInterface):
         js = saga.job.Service ("sge://localhost")
         j  = js.create_job    (jd)
         ------------------------------------------------------------------------
-      
+
+    A job description can of course also describe a remote shell command, but
+    unless a shell is specified as executable, that command will not get
+    expanded (wildcards, environment variables, I/O redirections etc).
+
+    The example below shows how to run complete shell command lines remotely::
+
+        ------------------------------------------------------------------------
+        script = '''
+          ls -la /tmp
+          find $HOME/data/ -name \*.dat -exec chmod g+r {} \;
+          du -a $HOME/data | grep -e '\.dat$' | wc -l
+        '''
+
+        jd = saga.job.Description()
+
+        jd.executable          = "/bin/sh"
+        jd.arguments           = ["-c", script]
+
+        js = saga.job.Service ("ssh://remote.host.net/")
+        j  = js.create_job    (jd)
+
+        j.run  ()
+        j.wait ()
+        ------------------------------------------------------------------------
+
+    Note that the above example uses /bin/sh explicitly, instead of, say,
+    /bin/bash.  It is good practice to use /bin/sh and sh compatible shell
+    scripts, as those are guaranteed to be available on all Unix systems.
     """
 
 #      - B{ProcessesPerHost:} I{number of processes to be started per host}

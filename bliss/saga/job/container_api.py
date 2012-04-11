@@ -240,7 +240,7 @@ class Container(Object):
               "Object not bound to a plugin")
 
     def __len__ (self) :
-        '''Pythonesque rendering of Container.size().'''
+        '''Returns the number of jobs in the container. Same as Container.size().'''
         return self.size ()
 
 

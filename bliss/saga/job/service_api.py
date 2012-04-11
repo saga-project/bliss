@@ -10,7 +10,31 @@ from bliss.saga import Url
 from bliss.saga.object_api import Object 
 
 class Service(Object):
-    '''Loosely represents a SAGA job service as defined in GFD.90'''
+    '''Loosely represents a SAGA job service as defined in GFD.90
+    
+    A job.Service represents anything which accepts job creation requests, and
+    which manages thus created jobs.  That can be a local shell, a remote ssh
+    shell, a cluster queuing system, a IaaS backend -- you name it.
+
+    The job.Service is identified by an URL, which usually points to the contact
+    endpoint for that service.
+
+    Example::
+
+        -------------------------------------------------------------------
+        js  = saga.job.Service ("sge://localhost")
+        ids = js.list ()
+
+        if my_job_id in ids :
+          print "found my job again, wohhooo!"
+
+          j = js.get_job (my_job_id)
+
+          if      j.state == saga.job.Pending  : print "pending"
+          else if j.state == saga.job.Running  : print "running"
+          else                                 : print "job is already final!"
+        -------------------------------------------------------------------
+    '''
 
     ######################################################################
     ## 
