@@ -1,11 +1,12 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import traceback
 import StringIO
+import subprocess
 
 from openssh_wrapper import SSHConnection
 
@@ -20,7 +21,7 @@ def get_traceback(prefix="\n*** "):
 
 class CommandWrapper(object):
     '''This class represent a wrapper for arbitrary commands.
-       It can either execute them local or via ssh.
+       It can either execute them locally or via ssh.
     '''
 
     ######################################################################
@@ -56,9 +57,22 @@ class CommandWrapper(object):
                                        returncode=result.returncode)
             return cwr                
         else:
-            #pass #popen.communicate()
-            cwr = CommandWrapperResult(command=cmd)
-            return cwr
+            job_error = None
+            job_output = None
+            returncode = None
+
+            pid = subprocess.Popen(cmd, shell=True, 
+                                      #executable=self.executable,
+                                      stderr=job_error, 
+                                      stdout=job_output)
+            returncode = pid.wait()
+
+            cwr = CommandWrapperResult(command=cmd,
+                                       stdout=job_output,
+                                       stderr=job_error,
+                                       returncode=returncode)
+            return cwr                
+
 
 class CommandWrapperResult(object):
     '''Represents a result.
