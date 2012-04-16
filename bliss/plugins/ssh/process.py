@@ -163,7 +163,7 @@ class SSHJobProcess(object):
         args = ""
         if self.arguments is not None:
             for arg in self.arguments:
-                cmdline += " %s" % arg 
+                cmdline += " %r" % arg 
 
         full_line = "echo $$ && ("+envline+"'"+cmdline+"')" + "> "+ jd.output + " 2> " + jd.error
 
