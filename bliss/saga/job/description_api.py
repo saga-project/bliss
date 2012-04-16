@@ -13,55 +13,53 @@ from bliss.saga.attributes_api import AttributeInterface
 
 class Description(Object, AttributeInterface):
     """
-    Loosely represents a SAGA job description as defined in GFD.90
+    Allows to define the properties and requirements for a job.
+  
+    The Description class allows the user to describes both the
+    resource requirements (e.g. number  of CPUs, working directory etc.), 
+    as well as the application properties (e.g. executable path, program 
+    arguments, environment etc.) of a job.
 
-    The job.Description class is essentially a table of key/value pairs (dict),
-    which describes both the resource (e.g. number of CPUs, working directory
-    etc.), and the application properties (e.g. executable path, program
-    arguments, environment etc.) of a job to be submitted.
+    B{Usage example 1} shows how to run a remote executable as a job::
 
-    Usage example::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
 
-        ------------------------------------------------------------------------
-        jd = saga.job.Description()
+      jd.executable          = "/usr/local/bin/blast"
+      jd.arguments           = ["-i", "/data/in/x_42"]
+      jd.spmd_variation      = "MPI"
+      jd.number_of_processes = 64
 
-        jd.executable          = ("/usr/local/bin/blast")
-        jd.arguments           = ["-i", "/data/in/x_42"]
-        jd.spmd_variation      = "MPI"
-        jd.number_of_processed = 42
+      js = saga.job.Service("sge://localhost")
+      j = js.create_job(jd)
 
-        js = saga.job.Service ("sge://localhost")
-        j  = js.create_job    (jd)
-        ------------------------------------------------------------------------
+      j.run()
+      --------------------------------------------------------------------------
 
-    A job description can of course also describe a remote shell command, but
-    unless a shell is specified as executable, that command will not get
-    expanded (wildcards, environment variables, I/O redirections etc).
+    B{Usage example 2} shows how to run a set of remote shell commands as a job::
 
-    The example below shows how to run complete shell command lines remotely::
+      --------------------------------------------------------------------------
+      script = '''
+       ls -la /tmp
+       find $HOME/data/ -name \*.dat -exec chmod g+r {} \;
+       du -a $HOME/data | grep -e '\.dat$' | wc -l
+      '''
 
-        ------------------------------------------------------------------------
-        script = '''
-          ls -la /tmp
-          find $HOME/data/ -name \*.dat -exec chmod g+r {} \;
-          du -a $HOME/data | grep -e '\.dat$' | wc -l
-        '''
+      jd = saga.job.Description()
 
-        jd = saga.job.Description()
+      jd.executable = "/bin/sh"
+      jd.arguments  = ["-c", script]
 
-        jd.executable          = "/bin/sh"
-        jd.arguments           = ["-c", script]
+      js = saga.job.Service("ssh://remote.host.net/")
+      j = js.create_job(jd)
 
-        js = saga.job.Service ("ssh://remote.host.net/")
-        j  = js.create_job    (jd)
-
-        j.run  ()
-        j.wait ()
-        ------------------------------------------------------------------------
+      j.run()
+      --------------------------------------------------------------------------
 
     Note that the above example uses /bin/sh explicitly, instead of, say,
     /bin/bash.  It is good practice to use /bin/sh and sh compatible shell
     scripts, as those are guaranteed to be available on all Unix systems.
+
     """
 
 #      - B{ProcessesPerHost:} I{number of processes to be started per host}
@@ -579,13 +577,13 @@ class Description(Object, AttributeInterface):
     B{Example} (using Python properties)::
       --------------------------------------------------------------------------
       jd = saga.job.Description()
-      jd.cpu_count = 42
+      jd.total_cpu_count = 64
       --------------------------------------------------------------------------
 
     B{Example} (using the attribute interface)::
       --------------------------------------------------------------------------
       jd = saga.job.Description()
-      jd.set_attribute("CpuCount", 42)
+      jd.set_attribute("TotalCpuCount", 64)
       --------------------------------------------------------------------------
     """
 
@@ -614,13 +612,13 @@ class Description(Object, AttributeInterface):
     B{Example} (using Python properties)::
       --------------------------------------------------------------------------
       jd = saga.job.Description()
-      jd.number_of_processes = 42
+      jd.number_of_processes = 8
       --------------------------------------------------------------------------
 
     B{Example} (using the attribute interface)::
       --------------------------------------------------------------------------
       jd = saga.job.Description()
-      jd.set_attribute("NumberOfProcesses", 42)
+      jd.set_attribute("NumberOfProcesses", 8)
       --------------------------------------------------------------------------
     """
 
@@ -639,9 +637,8 @@ class Description(Object, AttributeInterface):
         return locals()
     spmd_variation = property(**spmd_variation())
     """
-    SPMD job type and startup mechanism (MPI, OpenMP, None, ...)
-      - example values: MPI, GridMPI, IntelMPI, LAM-MPI, MPICH1, MPICH2, MPICH-G, 
-        OpenMP, PVM
+    SPMD job type and startup mechanism
+      - supported values: MPI, OpenMP, None
       - 'None' indicates that the application is not a SPMD application.
       - Specifying this value influences the mechanism the backend will use to
         create the application process instances (fork, mpirun, ...)
@@ -655,7 +652,7 @@ class Description(Object, AttributeInterface):
     B{Example} (using the attribute interface)::
       --------------------------------------------------------------------------
       jd = saga.job.Description()
-      jd.set_attribute("SpmdVariation", "MPI")
+      jd.set_attribute("SPMDVariation", "MPI")
       --------------------------------------------------------------------------
     """
 
