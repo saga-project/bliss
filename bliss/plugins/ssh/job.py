@@ -203,7 +203,7 @@ class SSHJobPlugin(JobPluginInterface):
             service = self.bookkeeper.get_service_for_job(job)
             self.log_info("job.run() called with %s" % service._url)
             self.bookkeeper.get_process_for_job(job).run(job.get_description(), service._url)  
-            self.log_info("Started local process: %s %s" % (job.get_description().executable, job.get_description().arguments))
+            self.log_info("Started process: %s %s" % (job.get_description().executable, job.get_description().arguments))
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't run job because: %s " % (str(ex)))
 
