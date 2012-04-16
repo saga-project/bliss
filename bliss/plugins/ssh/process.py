@@ -73,9 +73,23 @@ class SSHJobProcess(object):
 
         #load up ssh config file
         self.config = paramiko.SSHConfig()
-        config_file = os.path.expanduser(os.path.join("~", ".ssh", "config"))
-        self.pi.log_info("Loading SSH configuration file: %s" % config_file)
-        self.config.parse(open(config_file))
+        try:
+            config_file = os.path.expanduser(os.path.join("~", ".ssh", "config"))
+            self.pi.log_info("Attempting to load SSH configuration file: %s" % config_file)
+            self.config.parse(open(config_file))
+        except:
+            self.pi.log_info("Couldn't open SSH configuration file: %s" % config_file)
+
+        #see if we have any information on the host from the ssh config
+        # that must be loaded
+        hn = url.host
+        try:
+            temp = self.config.lookup(hn)['hostname']
+            self.pi.log_debug("Translating provided hostname %s to %s" % (hn, temp))
+            hn = temp
+        except Exception, ex:
+            self.pi.log_debug("No hostname lookup for %s" % hn)
+
 
         usable_ctx = None
 
@@ -124,16 +138,6 @@ class SSHJobProcess(object):
             else:
                 self.pi.log_info("Using context-provided username")
 
-        hn = url.host
-
-        #see if we have any information on the host from the ssh config
-        # that must be loaded
-        try:
-            temp = self.config.lookup(hn)['hostname']
-            self.pi.log_debug("Translating provided hostname %s to %s" % (hn, temp))
-            hn = temp
-        except Exception, ex:
-            self.pi.log_debug("No hostname lookup for %s" % hn)
 
         self.pi.log_info("Connecting to host %s" % hn)
 
