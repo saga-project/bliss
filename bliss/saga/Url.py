@@ -7,7 +7,7 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 from furl import furl
-from bliss.saga.object_api import Object 
+from bliss.saga.Object import Object 
 
 class Url(Object):
     '''Defines a SAGA Url class as defined in GFD.90.'''

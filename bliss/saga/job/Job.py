@@ -6,8 +6,8 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.object_api     import Object
-from bliss.saga.attributes_api import AttributeInterface
+from bliss.saga.Object     import Object
+from bliss.saga.Attributes import AttributeInterface
 
 class JobID(object):
     '''Represents a SAGA job ID (Not part of GFD.90)

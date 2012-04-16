@@ -6,8 +6,8 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.exception_api import Exception as SAGAException
-from bliss.saga.exception_api import Error as SAGAError
+from bliss.saga.Exception import Exception as SAGAException
+from bliss.saga.Exception import Error as SAGAError
 
 
 class AttributeInterface(object):
