@@ -12,7 +12,111 @@ from bliss.saga.object_api import Object
 from bliss.saga.attributes_api import AttributeInterface
 
 class Description(Object, AttributeInterface):
-    '''Loosely represents a SAGA job description as defined in GFD.90'''
+    """
+    Allows to define the properties and requirements for a job.
+  
+    The Description class allows the user to describes both the
+    resource requirements (e.g. number  of CPUs, working directory etc.), 
+    as well as the application properties (e.g. executable path, program 
+    arguments, environment etc.) of a job.
+
+    B{Usage example 1} shows how to run a remote executable as a job::
+
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+
+      jd.executable          = "/usr/local/bin/blast"
+      jd.arguments           = ["-i", "/data/in/x_42"]
+      jd.spmd_variation      = "MPI"
+      jd.number_of_processes = 64
+
+      js = saga.job.Service("sge://localhost")
+      j = js.create_job(jd)
+
+      j.run()
+      --------------------------------------------------------------------------
+
+    B{Usage example 2} shows how to run a set of remote shell commands as a job::
+
+      --------------------------------------------------------------------------
+      script = '''
+       ls -la /tmp
+       find $HOME/data/ -name \*.dat -exec chmod g+r {} \;
+       du -a $HOME/data | grep -e '\.dat$' | wc -l
+      '''
+
+      jd = saga.job.Description()
+
+      jd.executable = "/bin/sh"
+      jd.arguments  = ["-c", script]
+
+      js = saga.job.Service("ssh://remote.host.net/")
+      j = js.create_job(jd)
+
+      j.run()
+      --------------------------------------------------------------------------
+
+    Note that the above example uses /bin/sh explicitly, instead of, say,
+    /bin/bash.  It is good practice to use /bin/sh and sh compatible shell
+    scripts, as those are guaranteed to be available on all Unix systems.
+
+    """
+
+#      - B{ProcessesPerHost:} I{number of processes to be started per host}
+#
+#      - B{ThreadsPerProcess:} I{number of threads to start per process}
+#
+#      - B{Interactive:} I{run the job in interactive mode}
+#         - this implies that stdio streams will stay 
+#           connected to the submitter after job 
+#           submission, and during job execution. 
+#         - if an implementation cannot handle
+#           interactive jobs, and this attribute is
+#           present, and 'True', the job creation MUST
+#           throw an 'IncorrectParameter' error with a
+#           descriptive error message.
+#
+#      - B{Input:} I{pathname of the standard input file}
+#         - will not be used if 'Interactive' is 'True'
+#
+#      - B{Cleanup:} I{defines if output files get removed after the job finishes}
+#         - can have the Values 'True', 'False', and 
+#           'Default'
+#         - On 'False', output files MUST be kept 
+#           after job the finishes
+#         - On 'True', output files MUST be deleted
+#           after job the finishes
+#         - On 'Default', the behavior is defined by
+#           the implementation or the backend.
+#         - translates into 'DeleteOnTermination' elements
+#           in JSDL
+#
+#      - B{JobStartTime:} I{time at which a job should be scheduled}
+#         - Could be viewed as a desired job start 
+#           time, but that is up to the resource 
+#           manager. 
+#         - format: number of seconds since epoch
+#
+#      - B{TotalCPUTime:} I{estimate total number of CPU seconds which the job will
+#    require}
+#         - intended to provide hints to the scheduler. 
+#           scheduling policies.
+#
+#      - B{TotalPhysicalMemory:} I{Estimated amount of memory the job requires}
+#         - unit is in MegaByte
+#         - memory usage of the job is aggregated 
+#           across all processes of the job
+#
+#      - B{CPUArchitecture:} I{compatible processor for job submission}
+#         - allowed values as specified in JSDL
+#
+#      - B{OperatingSystemType:} I{compatible operating system for job submission}
+#         - allowed values as specified in JSDL
+#
+#      - B{CandidateHosts:} I{list of host names which are to be considered by the
+#    resource manager as candidate targets}
+
+
 
     ######################################################################
     ## 
@@ -93,7 +197,7 @@ class Description(Object, AttributeInterface):
     ######################################################################
     ## Property: 
     def executable():
-        doc = "The job executable."
+        doc = "Defines the command to execute."
         def fget(self):
             return self._executable
         def fset(self, val):
@@ -104,11 +208,30 @@ class Description(Object, AttributeInterface):
             self._executable = None
         return locals()
     executable = property(**executable())
+    """
+    Defines the command to execute.
+      - This his is the only required attribute/property.
+      - It can be a full pathname, a pathname relative to the working_directory as 
+        evaluated on the execution host, or a executable name to be searched in the
+        target host's PATH environment (if available).
+
+    B{Example} (using Python properties)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.executable = "/usr/local/bin/blast"
+      --------------------------------------------------------------------------
+
+    B{Example} (using the attribute interface)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.set_attribute("Executable", "/usr/local/bin/blast")
+      --------------------------------------------------------------------------
+    """
       
     ######################################################################
     ## Property: 
     def arguments():
-        doc = "The arguments to pass to the job executable."
+        doc = "List of arguments for the executable."
         def fget(self):
             return self._arguments
         def fset(self, val):
@@ -119,19 +242,25 @@ class Description(Object, AttributeInterface):
             self._arguments = None
         return locals()
     arguments = property(**arguments())
+    """
+    List of arguments for the executable
+      - This attribute is optional.
+      - The order of arguments is, in general, significant.
+      - The individual arguments are not expanded by the user environment (i.e.,
+        don't use environment variables like $HOME)
+      
+    B{Example} (using Python properties)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.arguments = ["--prefix", "/usr/local/bin"]
+      --------------------------------------------------------------------------
 
-    ######################################################################
-    ## Property: 
-    def file_transfer():
-        doc = "The arguments to pass to the file transfer directives."
-        def fget(self):
-            return self._file_transfer
-        def fset(self, val):
-            self._file_transfer = val
-        def fdel(self, val):
-            self._file_transfer = None
-        return locals()
-    file_transfer = property(**file_transfer())
+    B{Example} (using the attribute interface)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.set_attribute("Arguments". ["--prefix", "/usr/local/bin"])
+      --------------------------------------------------------------------------
+    """
 
     ######################################################################
     ## Property: 
@@ -147,7 +276,55 @@ class Description(Object, AttributeInterface):
             self._environment = None
         return locals()
     environment = property(**environment())
+    """
+    The environment variables to set in the job's execution context.
+      - exported into the job environment
+      - format: 'key=value'
+      - The individual variable values are not expanded by the user environment (i.e.,
+        don't use environment variables like $HOME in values)
+      
+    B{Example} (using Python properties)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.environment = ["PATH=/bin:/usr/bin", "TARGET=KingKong"]
+      --------------------------------------------------------------------------
 
+    B{Example} (using the attribute interface)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.set_attribute("Environment". ["PATH=/bin:/usr/bin", "TARGET=KingKong"])
+      --------------------------------------------------------------------------
+    """
+
+
+
+    ######################################################################
+    ## Property: 
+    def file_transfer():
+        doc = "Defines the file staging operations."
+        def fget(self):
+            return self._file_transfer
+        def fset(self, val):
+            self._file_transfer = val
+        def fdel(self, val):
+            self._file_transfer = None
+        return locals()
+    file_transfer = property(**file_transfer())
+    """
+    Defines the file staging operations.
+
+    B{Example} (using Python properties)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.arguments = ["--prefix", "/usr/local/bin"]
+      --------------------------------------------------------------------------
+
+    B{Example} (using the attribute interface)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.set_attribute("Arguments". ["--prefix", "/usr/local/bin"])
+      --------------------------------------------------------------------------
+    """
 
     ######################################################################
     ## Property: 
@@ -163,6 +340,21 @@ class Description(Object, AttributeInterface):
             self._output = None
         return locals()
     output = property(**output())
+    """
+    The file in which the job\'s stdout stream will be captured.
+
+    B{Example} (using Python properties)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.output = "/tmp/app.log"
+      --------------------------------------------------------------------------
+
+    B{Example} (using the attribute interface)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.set_attribute("Output", "/tmp/app.log")
+      --------------------------------------------------------------------------
+    """
 
     ######################################################################
     ## Property: 
@@ -178,6 +370,21 @@ class Description(Object, AttributeInterface):
             self._error = None
         return locals()
     error = property(**error())
+    """
+    The file in which the job\'s stderr stream will be captured.
+
+    B{Example} (using Python properties)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.error = "/tmp/app.err"
+      --------------------------------------------------------------------------
+
+    B{Example} (using the attribute interface)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.set_attribute("Error", "/tmp/app.err")
+      --------------------------------------------------------------------------
+    """
 
     ######################################################################
     ## Property: 
@@ -193,6 +400,23 @@ class Description(Object, AttributeInterface):
             self._project = None
         return locals()
     project = property(**project())
+    """
+    The project / allocation name the job should be credited to.
+      - This attribute is used by the scheduler backend to credit the allocated
+        resources to a specific project account.
+
+    B{Example} (using Python properties)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.project = "project_42"
+      --------------------------------------------------------------------------
+
+    B{Example} (using the attribute interface)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.set_attribute("Project", "project_42")
+      --------------------------------------------------------------------------
+    """
 
     ######################################################################
     ## Property: 
@@ -208,6 +432,23 @@ class Description(Object, AttributeInterface):
             self._queue = None
         return locals()
     queue = property(**queue())
+    """
+    The queue on the backend system to place the job in.
+      - Schedulers which support different queues (with different service
+        qualities) use this attribute.
+
+    B{Example} (using Python properties)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.queue = "Large"
+      --------------------------------------------------------------------------
+
+    B{Example} (using the attribute interface)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.set_attribute("Queue", "Large")
+      --------------------------------------------------------------------------
+    """
 
     ######################################################################
     ## Property:
@@ -223,6 +464,24 @@ class Description(Object, AttributeInterface):
             self._wall_time_limit = None
         return locals()
     wall_time_limit = property(**wall_time_limit())
+    """
+    The hard limit (in minutes) for the total job runtime.
+      - The job is not necessarily killed when it overruns the specified time,
+        but no guarantees are made.
+      - The value is used by the scheduler to optimized scheduling.
+
+    B{Example} (using Python properties)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.wall_time_limit = "42"
+      --------------------------------------------------------------------------
+
+    B{Example} (using the attribute interface)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.set_attribute("WallTimeLimit", "42")
+      --------------------------------------------------------------------------
+    """
 
     ######################################################################
     ## Property: 
@@ -238,7 +497,26 @@ class Description(Object, AttributeInterface):
             self._working_directory = None
         return locals()
     working_directory = property(**working_directory())
+    """
+    The working directory for the job.
+      - If the directory does not exist, it will be created.
+      - Relative path names (for output/error/file_staging) are relative to this
+        working directory.
+      - The backend may choose an arbitrary working directory if none is
+        explicitly specified. 
 
+    B{Example} (using Python properties)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.working_directory = "/scratch/cpt_hook/"
+      --------------------------------------------------------------------------
+
+    B{Example} (using the attribute interface)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.set_attribute("WorkingDirectory", "/scratch/cpt_hook/")
+      --------------------------------------------------------------------------
+    """
 
     ######################################################################
     ## Property: 
@@ -255,11 +533,28 @@ class Description(Object, AttributeInterface):
         return locals()
     contact = property(**contact())
 
+    """
+    Endpoint describing where to report job state transitions (e.g., email).
+      - This information is used to send notifications for job state changes, to
+        email or other notification endpoints.
+
+    B{Example} (using Python properties)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.contact = "cpt_hook@piratebay.org"
+      --------------------------------------------------------------------------
+
+    B{Example} (using the attribute interface)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.set_attribute("Contact", "cpt_hook@piratebay.org")
+      --------------------------------------------------------------------------
+    """
 
     ######################################################################
     ## Property: 
     def total_cpu_count():
-        doc = "Total number of cpus requested for this job."
+        doc = "Total number of CPUs requested for this job."
         def fget(self):
             return self._total_cpu_count
         def fset(self, val):
@@ -271,6 +566,26 @@ class Description(Object, AttributeInterface):
         return locals()
     total_cpu_count = property(**total_cpu_count())
 
+    """
+    Total number of cpus requested for this job.
+      - This attribute is used for jobs spanning more than one process instance,
+        such as for MPI jobs etc.
+      - The backend does not make any assumptions about the job distribution
+        over the requested processes, nor does it give any connectivity
+        guarantees (NUMA, shared memory, network interconnects etc.)
+
+    B{Example} (using Python properties)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.total_cpu_count = 64
+      --------------------------------------------------------------------------
+
+    B{Example} (using the attribute interface)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.set_attribute("TotalCpuCount", 64)
+      --------------------------------------------------------------------------
+    """
 
     ######################################################################
     ## Property: 
@@ -286,11 +601,31 @@ class Description(Object, AttributeInterface):
             self._number_of_processes = None
         return locals()
     number_of_processes = property(**number_of_processes())
+    """
+    Number of processes to launch
+      - This attribute specifies how many process instances the application is
+        expected to have.  
+      - Specifying this attribute does *not* automatically create those
+        instances, but instead acts as a hint (boundary condition) to the
+        scheduler.
+
+    B{Example} (using Python properties)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.number_of_processes = 8
+      --------------------------------------------------------------------------
+
+    B{Example} (using the attribute interface)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.set_attribute("NumberOfProcesses", 8)
+      --------------------------------------------------------------------------
+    """
 
     ######################################################################
     ## Property: 
     def spmd_variation():
-        doc = "SPMD variation (MPI, None, ...)"
+        doc = "SPMD job type and startup mechanism (MPI, OpenMP, None, ...)"
         def fget(self):
             return self._spmd_variation
         def fset(self, val):
@@ -301,3 +636,23 @@ class Description(Object, AttributeInterface):
             self._spmd_variation = None
         return locals()
     spmd_variation = property(**spmd_variation())
+    """
+    SPMD job type and startup mechanism
+      - supported values: MPI, OpenMP, None
+      - 'None' indicates that the application is not a SPMD application.
+      - Specifying this value influences the mechanism the backend will use to
+        create the application process instances (fork, mpirun, ...)
+
+    B{Example} (using Python properties)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.spmd_variation = "MPI"
+      --------------------------------------------------------------------------
+
+    B{Example} (using the attribute interface)::
+      --------------------------------------------------------------------------
+      jd = saga.job.Description()
+      jd.set_attribute("SPMDVariation", "MPI")
+      --------------------------------------------------------------------------
+    """
+

@@ -24,17 +24,17 @@ def sge_to_saga_jobstate(sgejs):
     elif sgejs == 'E':
         return bliss.saga.job.Job.Running
     elif sgejs == 'H':
-        return bliss.saga.job.Job.Waiting
+        return bliss.saga.job.Job.Pending
     elif sgejs == 'qw':
-        return bliss.saga.job.Job.Waiting
+        return bliss.saga.job.Job.Pending
     elif sgejs == 'r':
         return bliss.saga.job.Job.Running 
     elif sgejs == 'T': 
         return bliss.saga.job.Job.Running 
     elif sgejs == 'W':
-        return bliss.saga.job.Job.Waiting
+        return bliss.saga.job.Job.Pending
     elif sgejs == 'S':
-        return bliss.saga.job.Job.Waiting 
+        return bliss.saga.job.Job.Pending 
     elif sgejs == 'X':
         return bliss.saga.job.Job.Canceled
     else:
