@@ -3,7 +3,18 @@ Compliance Test Results
 
 Plug-In: SSH Job
 ----------------
+* URL: ssh://ranger from Lonestar
+   * By default, All tests fail with:
 
+Exception: Couldn't find a plugin for URL scheme 'ssh://' and API type 'saga.job'
+
+This is because the locally-installed BLISS is older than the version in the virtualenv, and the
+virtualenv still picks it up.
+
+You can work around this by doing:
+export PYTHONPATH=
+
+and then running the tests.
 
 Plug-In: Local (Fork) Job
 -------------------------
