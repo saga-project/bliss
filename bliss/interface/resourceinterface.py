@@ -8,8 +8,8 @@ __license__   = "MIT"
 
 from bliss.interface import PluginBaseInterface
 
-from bliss.saga.exception_api import Error as SAGAError
-from bliss.saga.exception_api import Exception as SAGAException
+from bliss.saga.Exception import Error as SAGAError
+from bliss.saga.Exception import Exception as SAGAException
 
 class ResourcePluginInterface(PluginBaseInterface):
     '''Abstract base class for all resource plugins'''
@@ -17,7 +17,7 @@ class ResourcePluginInterface(PluginBaseInterface):
     def __init__(self, name, schemas):
         '''Class constructor'''
         PluginBaseInterface.__init__(self, name=name, schemas=schemas,
-                                     api=PluginBaseInterface._api_type_saga_resource)
+                                     api=PluginBaseInterface.Exception_type_saga_resource)
     
     def register_manager_object(self, service_obj, url):
         errormsg = "Not implemented plugin method called: register_manager_object()"

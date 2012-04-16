@@ -8,8 +8,8 @@ __license__   = "MIT"
 
 from bliss.interface import PluginBaseInterface
 
-from bliss.saga.exception_api import Error as SAGAError
-from bliss.saga.exception_api import Exception as SAGAException
+from bliss.saga.Exception import Error as SAGAError
+from bliss.saga.Exception import Exception as SAGAException
 
 class FilesystemPluginInterface(PluginBaseInterface):
     '''Abstract base class for all filesystem plugins'''
@@ -17,7 +17,7 @@ class FilesystemPluginInterface(PluginBaseInterface):
     def __init__(self, name, schemas):
         '''Class constructor'''
         PluginBaseInterface.__init__(self, name=name, schemas=schemas,
-                                     api=PluginBaseInterface._api_type_saga_filesystem)
+                                     api=PluginBaseInterface.Exception_type_saga_filesystem)
     
     def register_file_object(self, file_obj):
         '''This method is called upon instantiation of a new file object

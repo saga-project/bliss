@@ -33,7 +33,7 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
 
     ## Define apis supported by this adaptor
     ##
-    _apis = ['saga.job', 'saga.sd']
+    Exceptions = ['saga.job', 'saga.sd']
 
 
     ######################################################################
@@ -98,7 +98,7 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
             desc._type = "org.ogf.saga.service.job"
             desc._name = "PBS Job Scheduler"
 
-            #desc._apiementor = 
+            #desc.Exceptionementor = 
             #desc._site = 
             #desc._uid = 
 

@@ -1,7 +1,7 @@
 Version 0.1.20 released 2012-04-04
 ----------------------------------------------------------------------
 
-* Abandoned '_api' filenames and API inheritance. The Bliss interface
+* Abandoned 'Exception' filenames and API inheritance. The Bliss interface
   looks much cleaner now. Compatibility with previous versions has
   been ensured
 * Improved (inline) API documentation

@@ -84,7 +84,7 @@ class Object(object) :
 
         self._plugin = None
         self._type = objtype
-        self._apitype = apitype
+        self.Exceptiontype = apitype
         self._logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')')
  
         if session is not None:
@@ -110,7 +110,7 @@ class Object(object) :
     def _get_plugin(self):
         '''Bind an object to the runtime'''
         try:
-            return self.__shared_state["runtime_instance"].get_plugin_for_url(self._url, self._apitype) 
+            return self.__shared_state["runtime_instance"].get_plugin_for_url(self._url, self.Exceptiontype) 
         except Exception, ex:
             error = ("%s %s" % (str(ex), utils.get_traceback()))
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, error)

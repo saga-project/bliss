@@ -15,26 +15,26 @@ from bliss.plugins.ssh import SSHJobPlugin
 _registry = []
 
 _registry.append({"class"   : LocalJobPlugin,
-                  "apis"    : LocalJobPlugin.supported_apis(),
+                  "apis"    : LocalJobPlugin.supportedExceptions(),
                   "name"    : LocalJobPlugin.plugin_name(),
                   "schemas" : LocalJobPlugin.supported_schemas()})
 
 _registry.append({"class"   : PBSJobAndSDPlugin,
-                  "apis"    : PBSJobAndSDPlugin.supported_apis(),
+                  "apis"    : PBSJobAndSDPlugin.supportedExceptions(),
                   "name"    : PBSJobAndSDPlugin.plugin_name(),
                   "schemas" : PBSJobAndSDPlugin.supported_schemas()})
 
 _registry.append({"class"   : SGEJobAndSDPlugin,
-                  "apis"    : SGEJobAndSDPlugin.supported_apis(),
+                  "apis"    : SGEJobAndSDPlugin.supportedExceptions(),
                   "name"    : SGEJobAndSDPlugin.plugin_name(),
                   "schemas" : SGEJobAndSDPlugin.supported_schemas()})
 
 _registry.append({"class"   : SFTPFilesystemPlugin,
-                  "apis"    : SFTPFilesystemPlugin.supported_apis(),
+                  "apis"    : SFTPFilesystemPlugin.supportedExceptions(),
                   "name"    : SFTPFilesystemPlugin.plugin_name(),
                   "schemas" : SFTPFilesystemPlugin.supported_schemas()})
 
 _registry.append({"class"   : SSHJobPlugin,
-                  "apis"    : SSHJobPlugin.supported_apis(),
+                  "apis"    : SSHJobPlugin.supportedExceptions(),
                   "name"    : SSHJobPlugin.plugin_name(),
                   "schemas" : SSHJobPlugin.supported_schemas()})
