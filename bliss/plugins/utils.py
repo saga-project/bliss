@@ -63,14 +63,14 @@ class CommandWrapper(object):
 
             pid = subprocess.Popen(cmd, shell=True, 
                                       #executable=self.executable,
-                                      stderr=job_error, 
-                                      stdout=job_output)
-            returncode = pid.wait()
+                                      stdout=subprocess.PIPE, 
+                                      stderr=subprocess.PIPE)
+            out, err = pid.communicate() 
 
             cwr = CommandWrapperResult(command=cmd,
-                                       stdout=job_output,
-                                       stderr=job_error,
-                                       returncode=returncode)
+                                       stdout=out,
+                                       stderr=err,
+                                       returncode=pid.returncode)
             return cwr                
 
 
