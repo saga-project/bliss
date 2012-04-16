@@ -1,6 +1,10 @@
 Version 0.1.20 released 2012-04-04
 ----------------------------------------------------------------------
 
+* Abandoned 'Exception' filenames and API inheritance. The Bliss interface
+  looks much cleaner now. Compatibility with previous versions has
+  been ensured
+* Improved (inline) API documentation
 * Swapped urlparse with furl in saga.Url class This hopefully fixes
   the problem with inconsistent parsing accross different Python versions
 * Merged SGE plug-in development branch 

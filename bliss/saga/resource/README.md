@@ -16,5 +16,3 @@
 
   - check all FIXMEs
 
-  - when is file names *_api, when not? (pool_description)
-  

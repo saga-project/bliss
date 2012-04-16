@@ -10,22 +10,22 @@ __license__   = "MIT"
 
 import logging
 from bliss.plugins import utils
-from bliss.saga.exception_api import Exception as SAGAException
+from bliss.saga.Exception import Exception as SAGAException
 
 class PluginBaseInterface:
     '''Abstract base class for all plugins'''
 
-    _api_type_saga_filesystem = "saga.filesystem.cpi"
-    _api_type_saga_resource   = "saga.resource.cpi"
-    _api_type_saga_job        = "saga.job.cpi"
-    _api_type_saga_sd         = "saga.sd.cpi"
+    Exception_type_saga_filesystem = "saga.filesystem.cpi"
+    Exception_type_saga_resource   = "saga.resource.cpi"
+    Exception_type_saga_job        = "saga.job.cpi"
+    Exception_type_saga_sd         = "saga.sd.cpi"
     
     def __init__(self, name, schemas, api):
         '''Class constructor'''
         self.name = name
         self.schemas = schemas
-        self.supported_apis = []
-        self.supported_apis.append(api)
+        self.supportedExceptions = []
+        self.supportedExceptions.append(api)
 
         self.__logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')')
 
@@ -57,9 +57,9 @@ class PluginBaseInterface:
  
 
     @classmethod
-    def supported_apis(self):
+    def supportedExceptions(self):
         '''Return the api packages this plugin supports'''
-        return self._apis
+        return self.Exceptions
 
     @classmethod
     def supported_schemas(self):

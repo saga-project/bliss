@@ -110,7 +110,7 @@ class BigJobPlugin(JobPluginInterface):
 
     ## Step 3: Define apis supported by this adaptor
     ##
-    _apis = ['saga.job']
+    Exceptions = ['saga.job']
 
     def __init__(self, url):
         '''Class constructor'''

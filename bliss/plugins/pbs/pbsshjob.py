@@ -33,7 +33,7 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
 
     ## Define apis supported by this adaptor
     ##
-    _apis = ['saga.job', 'saga.sd']
+    Exceptions = ['saga.job', 'saga.sd']
 
 
     ######################################################################
@@ -98,7 +98,7 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
             desc._type = "org.ogf.saga.service.job"
             desc._name = "PBS Job Scheduler"
 
-            #desc._apiementor = 
+            #desc.Exceptionementor = 
             #desc._site = 
             #desc._uid = 
 
@@ -288,7 +288,7 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
             while True:
                 state = self.job_get_state(job_obj)
                 if state == bliss.saga.job.Job.Running \
-                or state == bliss.saga.job.Job.Waiting:
+                or state == bliss.saga.job.Job.Pending:
                     time.sleep(2)
                 else:
                     break
@@ -438,7 +438,7 @@ class PBSJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
         #        for state in self.job_get_bulk_states(container_obj):
         #            jobs_not_done = 0
         #            if state == bliss.saga.job.Job.Running \
-        #            or state == bliss.saga.job.Job.Waiting:
+        #            or state == bliss.saga.job.Job.Pending:
         #                jobs_not_done += 1
         #            
         #            if jobs_not_done > 0:

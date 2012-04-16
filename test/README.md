@@ -36,7 +36,7 @@ In order to run the compliance tests for a specific adaptor, follow these steps:
      source /tmp/bliss-test/bin/activate```
 
 * Install Bliss into the virutalenv sandbox. From the Bliss 
-  **SOURCE ROOT DIRECTORY**: call:
+  **SOURCE ROOT DIRECTORY**, call:
   ```easy_install .```
 
 * Next, run the individual test scripts with the URL of the adaptor/remote 
