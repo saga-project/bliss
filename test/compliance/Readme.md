@@ -34,7 +34,7 @@ Which creates things like:
 
 If you change it to:
 
-args = ""
+    args = ""
         if self.arguments is not None:
             for arg in self.arguments:
                 cmdline += " %s" % arg
