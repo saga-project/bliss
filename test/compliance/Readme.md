@@ -4,20 +4,8 @@ Compliance Test Results
 Plug-In: SSH Job
 ----------------
 * URL: ssh://ranger from Lonestar
-   * All tests fail with:
+   * By default, All tests fail with:
 
-04/16/2012 09:13:07 AM - Runtime(0xeced050) - ERROR - Couldn't find a plugin for URL scheme 'ssh://' and API type 'saga.job'
-
-============================================
-The job seems to have FAILED!
-============================================
-                                            
-SAGA Exception (NoSuccess): Couldn't find a plugin for URL scheme 'ssh://' and API type 'saga.job' 
-*** Traceback (most recent call last):
-  File "/share1/projects/xsede/SAGA/saga/1.6/gcc-4.1.2/lib/python2.7/site-packages/bliss-0.1.17-py2.7.egg/bliss/saga/_object_impl.py", line 102, in _get_plugin
-    return self.__shared_state["runtime_instance"].get_plugin_for_url(self._url, self._apitype)
-  File "/share1/projects/xsede/SAGA/saga/1.6/gcc-4.1.2/lib/python2.7/site-packages/bliss-0.1.17-py2.7.egg/bliss/runtime/runtime.py", line 86, in get_plugin_for_url
-    raise Exception(error)
 Exception: Couldn't find a plugin for URL scheme 'ssh://' and API type 'saga.job'
 
 This is because the locally-installed BLISS is older than the version in the virtualenv, and the
