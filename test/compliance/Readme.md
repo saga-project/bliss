@@ -71,10 +71,14 @@ Plug-In: Local (Fork) Job
     * 04_run_python_command_newline.py: **PASS**
     * 05_run_python_command_multiline.py: **PASS**
 
+AM: can confirm fork to be working, output ok, on ubuntu-10.10 python 2.6.6
+
 Plug-In: PBS(+SSH) Job
 ----------------------
 
-** installation on india.fg **
+** installation on india.fg ** (AM)
+
+Red Hat ELS 5.8, Python 2.7
 
 pip, easy install and virtualenv are not available, neither with the
 default system python, nor with the python module loaded.
@@ -107,7 +111,7 @@ the default system python:
 python devel included).
 
 
-** testing on india.fg **
+** testing on india.fg ** (AM)
 
 * test 01:
 
@@ -168,6 +172,18 @@ Note that Bliss should never report invalid job IDs, like
 a valid ID or not (the native ID is opaque).  Bliss should in fact not report
 any job ID before the correct and final ID is known.
 
+
+Plug-In: PBS+SSH Job
+----------------------
+
+(AM)
+
+ssh+pbs:// should be the same as pbs+ssh://
+
+output/error files are not staged back
+
+tests 1-3 have the same problems as the pbs tests above (not surprising).
+tests 4,5 work.
 
 
 
