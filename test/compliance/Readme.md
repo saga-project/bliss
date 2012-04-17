@@ -74,6 +74,100 @@ Plug-In: Local (Fork) Job
 Plug-In: PBS(+SSH) Job
 ----------------------
 
+** installation on india.fg **
+
+pip, easy install and virtualenv are not available, neither with the
+default system python, nor with the python module loaded.
+So, installation has to be done via the pystrap script linked on
+https://github.com/saga-project/bliss/wiki/Installation, and then from
+git (which needs module load git)
+
+The pystrap script seems to work, but gives the following errors with
+the default system python:
+
+    ...
+    Running setup.py install for furl
+      File "/N/u/merzky/mypy_u10054/lib/python2.4/site-packages/furl/furl.py", line 92
+        self._isabsolute = True if segments else False
+                                 ^
+    SyntaxError: invalid syntax
+      File "/N/u/merzky/mypy_u10054/lib/python2.4/site-packages/furl/__init__.py", line 17
+        from .furl import *
+             ^
+    SyntaxError: invalid syntax
+    Running setup.py install for pycrypto-on-pypi
+    ...
+    src/MD2.c:31:20: error: Python.h: No such file or directory
+    ...
+    error: command 'gcc' failed with exit status 1
+    ...
+
+
+'module load python' gets pystrap running successfully (seems to have
+python devel included).
+
+
+** testing on india.fg **
+
+* test 01 *
+
+    (mypython_repo)[merzky@i136 job]$ python 01_run_remote_exe.py $P
+    Job ID    : [pbs://localhost]-[None]
+    Job State : saga.job.Job.New
+    
+    ...starting job...
+    
+    Job ID    : [pbs://localhost]-[389177.i136]
+    Job State : saga.job.Job.Pending
+    
+    ...waiting for job...
+    
+    Job State : saga.job.Job.Done
+    Exitcode  : 0
+
+The exitcode seems to indicate success, and state as well - but the stdout file
+is empty (just a newline).  qstat saya the job is done though:
+queue:
+
+    (mypython_repo)[merzky@i136 job]$ qstat
+    Job id                    Name             User            Time Use S Queue
+    ------------------------- ---------------- --------------- -------- - -----
+    389177.i136                bliss_job        merzky          00:00:00 C batch
+
+Debug shows:
+
+    04/17/2012 08:05:23 AM - bliss.PBSJobAndSDPlugin(0x1a8b6248) - INFO - Generated PBS script:
+    #!/bin/bash
+    #PBS -N bliss_job
+    #PBS -V
+    #PBS -v MYOUTPUT="Hello from Bliss",
+    #PBS -o bliss_job.01.stdout
+    #PBS -e bliss_job.01.stderr
+    
+    /bin/echo $MYOUTPUT
+    04/17/2012 08:05:23 AM - bliss.PBSJobAndSDPlugin(0x1a8b6248) - DEBUG - Got raw qstat output:
+    04/17/2012 08:05:23 AM - bliss.PBSJobAndSDPlugin(0x1a8b6248) - DEBUG - Got raw qstat output: Job Id: 389184.i136
+
+
+* test 02 *
+* test 03 *
+
+  Same result as for test 01
+
+
+* test 04 *
+* test 05 *
+
+  Tests pass, and output contains the correct information
+
+
+Note that Bliss should never report invalid job IDs, like
+'[pbs://localhost]-[None]' -- the application ha no means to decide if this is
+a valid ID or not (the native ID is opaque).  Bliss should in fact not report
+any job ID before the correct and final ID is known.
+
+
+
 
 Plug-In: SGE(+SSH) Job
 ----------------------
