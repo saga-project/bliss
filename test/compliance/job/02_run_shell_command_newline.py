@@ -25,8 +25,8 @@ def run(url):
         jd.arguments   = ['-c', '"echo $MYOUTPUT \n echo $MYOUTPUT \n date"']
 
         # output options
-        jd.output = "bliss_job.stdout"
-        jd.error  = "bliss_job.stderr"
+        jd.output = "bliss_job.02.stdout"
+        jd.error  = "bliss_job.02.stderr"
 
         # create the job (state: New)
         myjob = js.create_job(jd)
@@ -79,8 +79,8 @@ def run(url):
       print "NOW, SOME MANUAL CHECKING IS REQUIRED!      "
       print "                                            "
       print "(1) Login to %s                             " % (url)
-      print "(2) Make sure the file bliss_job.stdout exists"
-      print "(3) Make sure bliss_job.stdout contains:"
+      print "(2) Make sure the file bliss_job.02.stdout exists"
+      print "(3) Make sure bliss_job.02.stdout contains:"
       print "  Hello from Bliss" 
       print "  Hello from Bliss"
       print "  <The current date + time>"
