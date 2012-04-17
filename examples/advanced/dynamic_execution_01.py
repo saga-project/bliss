@@ -78,7 +78,7 @@ def main():
                   % (service.name, service.type, service.url)
                 print "    |- Running Jobs         : %s" \
                   % (data.get_attribute("GlueCEStateRunningJobs"))      
-                print "    |- Waiting Jobs         : %s" \
+                print "    |- Pending Jobs         : %s" \
                   % (data.get_attribute("GlueCEStateWaitingJobs"))    
                 print "    |- Total CPUs           : %s" \
                   % (data.get_attribute("GlueSubClusterPhysicalCPUs"))      

@@ -17,12 +17,9 @@ from bliss import version
 
 scripts = [] # ["bin/bliss-run"]
 
-# sdist is usually run on a non-Windows platform, but the buildslave.bat file
-# still needs to get packaged.
-
-#if 'sdist' in sys.argv or sys.platform == 'win32':
-#    scripts.append("contrib/windows/air-run.bat")
-#    scripts.append("contrib/windows/air-flow.bat")
+import sys
+if sys.hexversion < 0x02040000:
+    raise RuntimeError, "Bliss requires Python 2.4 or higher"
 
 class our_install_data(install_data):
 
@@ -51,7 +48,7 @@ setup_args = {
     'name': "bliss",
     'version': version,
     'description': "A native Python implementation of the OGF SAGA standard (GFD.90).",
-    'long_description': "Bliss (BLiss IS SagaA) is a pragmatic, light-weight implementation of the OGF SAGA standard (GFD.90). Bliss is written 100% in Python and focuses on usability and ease of deployment rather than on feature completeness or blind standard obedience.",
+    'long_description': "Bliss (BLiss IS Saga) is a pragmatic and light-weight implementation of the OGF GFD.90 SAGA standard. Bliss is written 100% in Python and focuses on usability and ease of deployment rather than on feature completeness or blind standard obedience.",
     'author': "Ole Christian Weidner, et al.",
     'author_email': "ole.weidner@me.com",
     'maintainer': "Ole Christian Weidner",
@@ -87,7 +84,6 @@ setup_args = {
     'packages': [
         "bliss",
         "bliss.saga",
-        "bliss.saga.sd",
         "bliss.saga.job",
         "bliss.saga.resource",
         "bliss.saga.filesystem",
@@ -129,7 +125,8 @@ except ImportError:
 else:
     setup_args['install_requires'] = [
         'openssh_wrapper',
-        'paramiko-on-pypi'
+        'paramiko-on-pypi',
+        'furl'
     ]
 
     if os.getenv('NO_INSTALL_REQS'):

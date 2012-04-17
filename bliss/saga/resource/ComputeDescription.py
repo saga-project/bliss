@@ -4,8 +4,8 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.object_api import Object
-from bliss.saga.attributes_api import AttributeInterface
+from bliss.saga.Object import Object
+from bliss.saga.Attributes import AttributeInterface
 
 class ComputeDescription(Object, AttributeInterface):
     '''Defines a SAGA compute_description as defined in GFD.xx

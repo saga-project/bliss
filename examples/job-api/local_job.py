@@ -2,8 +2,7 @@
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-'''This examples shows how to submit a job to a bigjob 
-   service using an (optional) custom security context. 
+'''This examples shows how to submit a job to the local machine
 
    If something doesn't work as expected, try to set 
    SAGA_VERBOSE=3 in your environment before you run the
@@ -14,7 +13,7 @@
 '''
 
 __author__    = "Ole Christian Weidner"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import time
@@ -23,33 +22,21 @@ import bliss.saga as saga
 def main():
     
     try:
-        # set up a security context (optional) that describes 
-        # our log-in credentials for the bigjob service. 
-        # if the bigjob service doesn't have security enabled,
-        # this is not necessary. 
-        ctx = saga.Context()
-        ctx.type = saga.Context.BigJob
-        ctx.userid   = 'oweidner' 
-        ctx.userpass = 'indianpaleale'
-
-        session = saga.Session()
-        session.contexts.append(ctx)
-
-        # create a job service that connects to a bigjob 
-        # server running.
-        js = saga.job.Service("bigjob://engage-submit3.renci.org:28082/engage.fork.test", session=session)
+        # create a job service for the local machine
+        js = saga.job.Service("fork://localhost")
 
         # describe our job
         jd = saga.job.Description()
         # resource requirements
-        jd.wall_time_limit  = "0:05:00"
-        jd.number_of_processes = 1     
+        jd.wall_time_limit  = 5 # minutes
+        jd.total_cpu_count = 1     
         # environment, executable & arguments
+        jd.environment = {'SLEEP_TIME':'10'}       
         jd.executable  = '/bin/sleep'
-        jd.arguments   = ['10']
+        jd.arguments   = ['$SLEEP_TIME']
         # output options
-        jd.output = "bigjob_via_saga_api.stdout"
-        jd.error  = "bigjob_via_saga_api.stderr"
+        jd.output = "bliss_pbssh_job.stdout"
+        jd.error  = "bliss_pbssh_job.stderr"
 
         # create the job (state: New)
         myjob = js.create_job(jd)
@@ -76,4 +63,17 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# INFO: The PBS script generated behind the scenes by the  
+#       plugin looks like this (SAGA_VERBOSE=6 shows it):
+#       
+#         #!/bin/bash 
+#         #PBS -N bliss_job 
+#         #PBS -V     
+#         #PBS -o bliss_pbssh_job.stdout 
+#         #PBS -e bliss_pbssh_job.stderr 
+#         #PBS -l walltime=0:05:00 
+#         #PBS -v SLEEP_TIME=10, 
+#       
+#         /bin/sleep $SLEEP_TIME 
 

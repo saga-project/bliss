@@ -10,7 +10,7 @@ import sys
 import unittest
 
 # import the test cases
-from api import *
+from unittest import *
 
 if __name__ == '__main__':
 

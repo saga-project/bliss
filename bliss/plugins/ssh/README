@@ -6,7 +6,7 @@ Issues:
   (will be fixed in the future)
 
 - Paramiko uses the same logging settings as SAGA_VERBOSE.
-  I think this may be unintended behavior which may need
-  to be changed in Bliss itself, will fix this when I can.
+  This behaves as intended, but I can add code to specifically
+  change the Paramiko logging if needed.
 
  

@@ -7,6 +7,41 @@ import os
 class SSHJobProcess(object):
     '''A wrapper around an SSH process'''
     def __init__(self, jobdescription,  plugin, service_object):
+        self.pi = plugin
+
+        #check for things we dont support
+        if jobdescription.file_transfer     != None: 
+            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+                                        "SSH Job adaptor doesn't support the file transfer attribute!") 
+
+        if jobdescription.project     != None: 
+            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+                                        "SSH Job adaptor doesn't support the project attribute!") 
+        
+        if jobdescription.queue     != None: 
+            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+                                        "SSH Job adaptor doesn't support the queue attribute!") 
+
+        if jobdescription.wall_time_limit     != None: 
+            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+                                        "SSH Job adaptor doesn't support the wall_time_limit attribute!") 
+              
+        if jobdescription.contact     != None: 
+            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+                                        "SSH Job adaptor doesn't support the contact attribute!")
+
+        if jobdescription.total_cpu_count     != None: 
+            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+                                        "SSH Job adaptor doesn't support the total_cpu_count attribute!")
+
+        if jobdescription.number_of_processes     != None: 
+            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+                                        "SSH Job adaptor doesn't support the number_of_processes attribute!")
+
+        if jobdescription.spmd_variation     != None: 
+            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+                                        "SSH Job adaptor doesn't support the spmd_variation attribute!")    
+
         self.executable  = jobdescription.executable
         self.arguments   = jobdescription.arguments
         self.environment = jobdescription.environment
@@ -17,7 +52,6 @@ class SSHJobProcess(object):
         self.pid = None
         self.returncode = None
         self.state = bliss.saga.job.Job.New
-        self.pi = plugin
         self._job_output=None
         self._job_error=None
 
@@ -35,11 +69,27 @@ class SSHJobProcess(object):
 
 
     def run(self, jd, url):
+        #check if there are things in the job descriptor that we don't support
+
         #load up ssh config file
         self.config = paramiko.SSHConfig()
-        config_file = os.path.expanduser(os.path.join("~", ".ssh", "config"))
-        self.pi.log_info("Loading SSH configuration file: %s" % config_file)
-        self.config.parse(open(config_file))
+        try:
+            config_file = os.path.expanduser(os.path.join("~", ".ssh", "config"))
+            self.pi.log_info("Attempting to load SSH configuration file: %s" % config_file)
+            self.config.parse(open(config_file))
+        except:
+            self.pi.log_info("Couldn't open SSH configuration file: %s" % config_file)
+
+        #see if we have any information on the host from the ssh config
+        # that must be loaded
+        hn = url.host
+        try:
+            temp = self.config.lookup(hn)['hostname']
+            self.pi.log_debug("Translating provided hostname %s to %s" % (hn, temp))
+            hn = temp
+        except Exception, ex:
+            self.pi.log_debug("No hostname lookup for %s" % hn)
+
 
         usable_ctx = None
 
@@ -59,6 +109,13 @@ class SSHJobProcess(object):
             if usable_ctx.userkey is not None:
                 userkey = usable_ctx.userkey
 
+        #overwrite the context username/password with our url-provided username/password
+        #(if they exist)
+        if url.username:
+            username = url.username
+        if url.password:
+            password = url.password
+
         #set missing host key policy to automatically add it
         self.sshclient=paramiko.SSHClient()
         self.sshclient.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -76,18 +133,11 @@ class SSHJobProcess(object):
         if not username:
             self.pi.log_info("Using default username")
         else:
-            self.pi.log_info("Using context-provided username")
+            if url.username:
+                self.pi.log_info("Using username from URL")
+            else:
+                self.pi.log_info("Using context-provided username")
 
-        hn = url.host
-
-        #see if we have any information on the host from the ssh config
-        # that must be loaded
-        try:
-            temp = self.config.lookup(hn)['hostname']
-            self.pi.log_debug("Translating provided hostname %s to %s" % (hn, temp))
-            hn = temp
-        except Exception, ex:
-            self.pi.log_debug("No hostname lookup for %s" % hn)
 
         self.pi.log_info("Connecting to host %s" % hn)
 
@@ -113,9 +163,7 @@ class SSHJobProcess(object):
         args = ""
         if self.arguments is not None:
             for arg in self.arguments:
-                cmdline += " %s" % arg 
-
-
+                cmdline += " %r" % arg 
 
         full_line = "echo $$ && ("+envline+"'"+cmdline+"')" + "> "+ jd.output + " 2> " + jd.error
 
@@ -171,7 +219,8 @@ class SSHJobProcess(object):
             t_beginning = time.time()
             seconds_passed = 0
             while True:
-                self.returncode = self.prochandle.poll()
+                if self.sshchannel.exit_status_ready():
+                    self.returncode = self.sshchannel.recv_exit_status()
                 if self.returncode is not None:
                     break
                 seconds_passed = time.time() - t_beginning
