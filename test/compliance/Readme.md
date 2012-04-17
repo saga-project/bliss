@@ -109,7 +109,9 @@ python devel included).
 
 ** testing on india.fg **
 
-* test 01 *
+* test 01:
+
+The test run showed:
 
     (mypython_repo)[merzky@i136 job]$ python 01_run_remote_exe.py $P
     Job ID    : [pbs://localhost]-[None]
@@ -149,14 +151,14 @@ Debug shows:
     04/17/2012 08:05:23 AM - bliss.PBSJobAndSDPlugin(0x1a8b6248) - DEBUG - Got raw qstat output: Job Id: 389184.i136
 
 
-* test 02 *
-* test 03 *
+* test 02:
+* test 03:
 
   Same result as for test 01
 
 
-* test 04 *
-* test 05 *
+* test 04:
+* test 05:
 
   Tests pass, and output contains the correct information
 
