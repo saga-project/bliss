@@ -189,3 +189,376 @@ tests 4,5 work.
 
 Plug-In: SGE(+SSH) Job
 ----------------------
+
+
+
+Bliss ( ssh and pbs+ssh ) test results on QueenBee.
+All jobs tested on queenbee from queenbee.
+
+Job submitted from queen bee to queen bee.
+
+(bliss-test)[pmantha@qb1 bliss]$ python test/compliance/job/01_run_remote_exe.py ssh://qb1.loni.org
+Job ID    : [ssh://qb1.loni.org]-[None]
+Job State : saga.job.Job.New
+
+...starting job...
+
+Job ID    : [ssh://qb1.loni.org]-[2907]
+Job State : saga.job.Job.Running
+
+...waiting for job...
+
+Job State : saga.job.Job.Done
+Exitcode  : 0
+
+============================================
+The job seems to have executed successfully!
+============================================
+                                            
+NOW, SOME MANUAL CHECKING IS REQUIRED!      
+                                            
+(1) Login to ssh://qb1.loni.org                             
+(2) Make sure the file bliss_job.stdout exists
+(3) Make sure bliss_job.stdout contains the string 'Hello from Bliss'
+
+If (1)-(3) are ok, this test can be considered as PASSED
+
+(bliss-test)[pmantha@qb1 bliss]$ cat ~/bliss
+bliss/            bliss_job.stderr  bliss_job.stdout  
+(bliss-test)[pmantha@qb1 bliss]$ cat ~/bliss_job.stdout 
+
+(bliss-test)[pmantha@qb1 bliss]$ cat ~/bliss_job.stderr 
+(bliss-test)[pmantha@qb1 bliss]$ cd
+
+--- No output is generated 
+
+2nd test - failed.
+
+(bliss-test)[pmantha@qb1 bliss]$ python test/compliance/job/02_run_shell_command_newline.py ssh://qb1.loni.org
+Job ID    : [ssh://qb1.loni.org]-[None]
+Job State : saga.job.Job.New
+
+...starting job...
+
+Job ID    : [ssh://qb1.loni.org]-[4981]
+Job State : saga.job.Job.Running
+
+...waiting for job...
+
+Job State : saga.job.Job.Done
+Exitcode  : 0
+
+============================================
+The job seems to have executed successfully!
+============================================
+                                            
+NOW, SOME MANUAL CHECKING IS REQUIRED!      
+                                            
+(1) Login to ssh://qb1.loni.org                             
+(2) Make sure the file bliss_job.stdout exists
+(3) Make sure bliss_job.stdout contains:
+  Hello from Bliss
+  Hello from Bliss
+  <The current date + time>
+
+If (1)-(3) are ok, this test can be considered as PASSED
+
+(bliss-test)[pmantha@qb1 bliss]$ cat ~/bliss_job.stdout 
+
+--- No output is generated 
+
+
+3rd test
+
+(bliss-test)[pmantha@qb1 bliss]$ export SAGA_VERBOSE=5; python test/compliance/job/03_run_shell_command_multiline.py ssh://qb1.loni.org
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - BLISS runtime instance created at 0x2a9ae09c68
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Found plugin saga.plugin.job.local supporting URL schmemas ['fork'] and API type(s) ['saga.job']
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Plugin saga.plugin.job.local internal sanity check passed
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.local as handler for URL schema fork://
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Found plugin saga.plugin.job.pbssh supporting URL schmemas ['pbs+ssh', 'pbs', 'torque', 'torque+ssh', 'xt5torque', 'xt5torque+ssh'] and API type(s) ['saga.job', 'saga.sd']
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Plugin saga.plugin.job.pbssh internal sanity check passed
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.pbssh as handler for URL schema pbs+ssh://
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.pbssh as handler for URL schema pbs://
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.pbssh as handler for URL schema torque://
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.pbssh as handler for URL schema torque+ssh://
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.pbssh as handler for URL schema xt5torque://
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.pbssh as handler for URL schema xt5torque+ssh://
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Found plugin saga.plugin.job.sgessh supporting URL schmemas ['sge+ssh', 'sge'] and API type(s) ['saga.job', 'saga.sd']
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Plugin saga.plugin.job.sgessh internal sanity check passed
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.sgessh as handler for URL schema sge+ssh://
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.sgessh as handler for URL schema sge://
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Found plugin saga.plugin.file.sftp supporting URL schmemas ['sftp'] and API type(s) ['saga.filesystem']
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Plugin saga.plugin.file.sftp internal sanity check passed
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.file.sftp as handler for URL schema sftp://
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Found plugin saga.plugin.job.ssh supporting URL schmemas ['ssh'] and API type(s) ['saga.job']
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Plugin saga.plugin.job.ssh internal sanity check passed
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.ssh as handler for URL schema ssh://
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Instantiated plugin 'saga.plugin.job.ssh' for URL scheme ssh:// and API type 'saga.job'
+04/16/2012 06:44:06 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Registered new service object <bliss.saga.job.Service.Service object at 0x2a9ae0d290>
+04/16/2012 06:44:06 PM - bliss.Service(0x2a9ae0d290) - INFO - Bound to plugin <bliss.plugins.ssh.job.SSHJobPlugin instance at 0x2a9ae133b0>
+04/16/2012 06:44:06 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Found an existing plugin instance for url scheme ssh://: <bliss.plugins.ssh.job.SSHJobPlugin instance at 0x2a9ae133b0>
+04/16/2012 06:44:06 PM - bliss.Job(0x2a9ae0d3b0) - INFO - Bound to plugin <bliss.plugins.ssh.job.SSHJobPlugin instance at 0x2a9ae133b0>
+04/16/2012 06:44:06 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - service.create_job() called
+04/16/2012 06:44:06 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_job_id() called
+Job ID    : [ssh://qb1.loni.org]-[None]
+04/16/2012 06:44:06 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_state() called
+Job State : saga.job.Job.New
+
+...starting job...
+
+04/16/2012 06:44:06 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.run() called with ssh://qb1.loni.org
+04/16/2012 06:44:06 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Attempting to load SSH configuration file: /home/pmantha/.ssh/config
+04/16/2012 06:44:06 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Couldn't open SSH configuration file: /home/pmantha/.ssh/config
+04/16/2012 06:44:06 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - DEBUG - No hostname lookup for qb1.loni.org
+04/16/2012 06:44:06 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Using default ssh key
+04/16/2012 06:44:06 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Using default username
+04/16/2012 06:44:06 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Connecting to host qb1.loni.org
+04/16/2012 06:44:06 PM - bliss.paramiko.transport - DEBUG - starting thread (client mode): 0x9ae0eed0L
+04/16/2012 06:44:06 PM - bliss.paramiko.transport - INFO - Connected (version 2.0, client OpenSSH_5.8p2-hpn13v11)
+04/16/2012 06:44:06 PM - bliss.paramiko.transport - DEBUG - kex algos:['gss-gex-sha1-dZuIebMjgUqaxvbF7hDbAw==', 'gss-group1-sha1-dZuIebMjgUqaxvbF7hDbAw==', 'gss-group14-sha1-dZuIebMjgUqaxvbF7hDbAw==', 'diffie-hellman-group-exchange-sha256', 'diffie-hellman-group-exchange-sha1', 'diffie-hellman-group14-sha1', 'diffie-hellman-group1-sha1'] server key:['ssh-rsa', 'ssh-dss'] client encrypt:['aes128-ctr', 'aes192-ctr', 'aes256-ctr', 'arcfour256', 'arcfour128', 'aes128-cbc', '3des-cbc', 'blowfish-cbc', 'cast128-cbc', 'aes192-cbc', 'aes256-cbc', 'arcfour', 'rijndael-cbc@lysator.liu.se'] server encrypt:['aes128-ctr', 'aes192-ctr', 'aes256-ctr', 'arcfour256', 'arcfour128', 'aes128-cbc', '3des-cbc', 'blowfish-cbc', 'cast128-cbc', 'aes192-cbc', 'aes256-cbc', 'arcfour', 'rijndael-cbc@lysator.liu.se'] client mac:['hmac-md5', 'hmac-sha1', 'umac-64@openssh.com', 'hmac-ripemd160', 'hmac-ripemd160@openssh.com', 'hmac-sha1-96', 'hmac-md5-96'] server mac:['hmac-md5', 'hmac-sha1', 'umac-64@openssh.com', 'hmac-ripemd160', 'hmac-ripemd160@openssh.com', 'hmac-sha1-96', 'hmac-md5-96'] client compress:['none', 'zlib@openssh.com'] server compress:['none', 'zlib@openssh.com'] client lang:[''] server lang:[''] kex follows?False
+04/16/2012 06:44:06 PM - bliss.paramiko.transport - DEBUG - Ciphers agreed: local=aes128-ctr, remote=aes128-ctr
+04/16/2012 06:44:06 PM - bliss.paramiko.transport - DEBUG - using kex diffie-hellman-group1-sha1; server key type ssh-rsa; cipher: local aes128-ctr, remote aes128-ctr; mac: local hmac-sha1, remote hmac-sha1; compression: local none, remote none
+04/16/2012 06:44:06 PM - bliss.paramiko.transport - DEBUG - Switch to new keys ...
+04/16/2012 06:44:06 PM - bliss.paramiko.transport - DEBUG - Trying discovered key 7a9a9bac262427b7cf03004935fea648 in /home/pmantha/.ssh/id_rsa
+04/16/2012 06:44:06 PM - bliss.paramiko.transport - DEBUG - userauth is OK
+04/16/2012 06:44:06 PM - bliss.paramiko.transport - INFO - Authentication (publickey) failed.
+04/16/2012 06:44:06 PM - bliss.paramiko.transport - DEBUG - Trying discovered key 7033b17f74f888fdfdb1666a72159e51 in /home/pmantha/.ssh/id_dsa
+04/16/2012 06:44:06 PM - bliss.paramiko.transport - DEBUG - userauth is OK
+04/16/2012 06:44:06 PM - bliss.paramiko.transport - INFO - Authentication (publickey) successful!
+04/16/2012 06:44:06 PM - bliss.paramiko.transport - DEBUG - [chan 1] Max packet in: 34816 bytes
+04/16/2012 06:44:06 PM - bliss.paramiko.transport - DEBUG - [chan 1] Max packet out: 32768 bytes
+04/16/2012 06:44:06 PM - bliss.paramiko.transport - INFO - Secsh channel 1 opened.
+04/16/2012 06:44:06 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - DEBUG - Sending command echo $$ && (env MYOUTPUT="Hello from Bliss"  /bin/sh -c '/bin/bash '-c' '"\necho $MYOUTPUT\necho $MYOUTPUT\ndate\n"'')> bliss_job.stdout 2> bliss_job.stderr to remote server:
+04/16/2012 06:44:06 PM - bliss.paramiko.transport - DEBUG - [chan 1] Sesch channel 1 request ok
+04/16/2012 06:44:06 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Started process: /bin/bash ['-c', '"\necho $MYOUTPUT\necho $MYOUTPUT\ndate\n"']
+04/16/2012 06:44:06 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_job_id() called
+Job ID    : [ssh://qb1.loni.org]-[21304]
+04/16/2012 06:44:06 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_state() called
+Job State : saga.job.Job.Running
+
+...waiting for job...
+
+04/16/2012 06:44:06 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.wait() called
+04/16/2012 06:44:06 PM - bliss.paramiko.transport - DEBUG - [chan 1] EOF received (1)
+04/16/2012 06:44:06 PM - bliss.paramiko.transport - DEBUG - [chan 1] EOF sent (1)
+04/16/2012 06:44:06 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_state() called
+Job State : saga.job.Job.Failed
+04/16/2012 06:44:06 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_exitcode() called
+Exitcode  : 127
+04/16/2012 06:44:06 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_state() called
+
+============================================
+The job seems to have FAILED!
+============================================
+                                            
+Job returned in state 'Failed'.
+Please run this test again with SAGA_VERBOSE=5 
+and report the results at: 
+
+https://github.com/saga-project/bliss/issues
+
+(bliss-test)[pmantha@qb1 bliss]$ 
+(bliss-test)[pmantha@qb1 ~]$ cat bliss_job.stderr 
+necho: necho: command not found
+(bliss-test)[pmantha@qb1 ~]$ 
+
+
+
+4rth test:
+
+(bliss-test)[pmantha@qb1 bliss]$ python test/compliance/job/04_run_python_command_newline.py ssh://qb1.loni.org
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - BLISS runtime instance created at 0x2a9ae09c68
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Found plugin saga.plugin.job.local supporting URL schmemas ['fork'] and API type(s) ['saga.job']
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Plugin saga.plugin.job.local internal sanity check passed
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.local as handler for URL schema fork://
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Found plugin saga.plugin.job.pbssh supporting URL schmemas ['pbs+ssh', 'pbs', 'torque', 'torque+ssh', 'xt5torque', 'xt5torque+ssh'] and API type(s) ['saga.job', 'saga.sd']
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Plugin saga.plugin.job.pbssh internal sanity check passed
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.pbssh as handler for URL schema pbs+ssh://
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.pbssh as handler for URL schema pbs://
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.pbssh as handler for URL schema torque://
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.pbssh as handler for URL schema torque+ssh://
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.pbssh as handler for URL schema xt5torque://
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.pbssh as handler for URL schema xt5torque+ssh://
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Found plugin saga.plugin.job.sgessh supporting URL schmemas ['sge+ssh', 'sge'] and API type(s) ['saga.job', 'saga.sd']
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Plugin saga.plugin.job.sgessh internal sanity check passed
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.sgessh as handler for URL schema sge+ssh://
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.sgessh as handler for URL schema sge://
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Found plugin saga.plugin.file.sftp supporting URL schmemas ['sftp'] and API type(s) ['saga.filesystem']
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Plugin saga.plugin.file.sftp internal sanity check passed
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.file.sftp as handler for URL schema sftp://
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Found plugin saga.plugin.job.ssh supporting URL schmemas ['ssh'] and API type(s) ['saga.job']
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Plugin saga.plugin.job.ssh internal sanity check passed
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.ssh as handler for URL schema ssh://
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Instantiated plugin 'saga.plugin.job.ssh' for URL scheme ssh:// and API type 'saga.job'
+04/16/2012 06:44:56 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Registered new service object <bliss.saga.job.Service.Service object at 0x2a9ae0d290>
+04/16/2012 06:44:56 PM - bliss.Service(0x2a9ae0d290) - INFO - Bound to plugin <bliss.plugins.ssh.job.SSHJobPlugin instance at 0x2a9ae133b0>
+04/16/2012 06:44:56 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Found an existing plugin instance for url scheme ssh://: <bliss.plugins.ssh.job.SSHJobPlugin instance at 0x2a9ae133b0>
+04/16/2012 06:44:56 PM - bliss.Job(0x2a9ae0d3b0) - INFO - Bound to plugin <bliss.plugins.ssh.job.SSHJobPlugin instance at 0x2a9ae133b0>
+04/16/2012 06:44:56 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - service.create_job() called
+04/16/2012 06:44:56 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_job_id() called
+Job ID    : [ssh://qb1.loni.org]-[None]
+04/16/2012 06:44:56 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_state() called
+Job State : saga.job.Job.New
+
+...starting job...
+
+04/16/2012 06:44:56 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.run() called with ssh://qb1.loni.org
+04/16/2012 06:44:56 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Attempting to load SSH configuration file: /home/pmantha/.ssh/config
+04/16/2012 06:44:56 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Couldn't open SSH configuration file: /home/pmantha/.ssh/config
+04/16/2012 06:44:56 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - DEBUG - No hostname lookup for qb1.loni.org
+04/16/2012 06:44:56 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Using default ssh key
+04/16/2012 06:44:56 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Using default username
+04/16/2012 06:44:56 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Connecting to host qb1.loni.org
+04/16/2012 06:44:56 PM - bliss.paramiko.transport - DEBUG - starting thread (client mode): 0x9ae0ee90L
+04/16/2012 06:44:56 PM - bliss.paramiko.transport - INFO - Connected (version 2.0, client OpenSSH_5.8p2-hpn13v11)
+04/16/2012 06:44:56 PM - bliss.paramiko.transport - DEBUG - kex algos:['gss-gex-sha1-dZuIebMjgUqaxvbF7hDbAw==', 'gss-group1-sha1-dZuIebMjgUqaxvbF7hDbAw==', 'gss-group14-sha1-dZuIebMjgUqaxvbF7hDbAw==', 'diffie-hellman-group-exchange-sha256', 'diffie-hellman-group-exchange-sha1', 'diffie-hellman-group14-sha1', 'diffie-hellman-group1-sha1'] server key:['ssh-rsa', 'ssh-dss'] client encrypt:['aes128-ctr', 'aes192-ctr', 'aes256-ctr', 'arcfour256', 'arcfour128', 'aes128-cbc', '3des-cbc', 'blowfish-cbc', 'cast128-cbc', 'aes192-cbc', 'aes256-cbc', 'arcfour', 'rijndael-cbc@lysator.liu.se'] server encrypt:['aes128-ctr', 'aes192-ctr', 'aes256-ctr', 'arcfour256', 'arcfour128', 'aes128-cbc', '3des-cbc', 'blowfish-cbc', 'cast128-cbc', 'aes192-cbc', 'aes256-cbc', 'arcfour', 'rijndael-cbc@lysator.liu.se'] client mac:['hmac-md5', 'hmac-sha1', 'umac-64@openssh.com', 'hmac-ripemd160', 'hmac-ripemd160@openssh.com', 'hmac-sha1-96', 'hmac-md5-96'] server mac:['hmac-md5', 'hmac-sha1', 'umac-64@openssh.com', 'hmac-ripemd160', 'hmac-ripemd160@openssh.com', 'hmac-sha1-96', 'hmac-md5-96'] client compress:['none', 'zlib@openssh.com'] server compress:['none', 'zlib@openssh.com'] client lang:[''] server lang:[''] kex follows?False
+04/16/2012 06:44:56 PM - bliss.paramiko.transport - DEBUG - Ciphers agreed: local=aes128-ctr, remote=aes128-ctr
+04/16/2012 06:44:56 PM - bliss.paramiko.transport - DEBUG - using kex diffie-hellman-group1-sha1; server key type ssh-rsa; cipher: local aes128-ctr, remote aes128-ctr; mac: local hmac-sha1, remote hmac-sha1; compression: local none, remote none
+04/16/2012 06:44:56 PM - bliss.paramiko.transport - DEBUG - Switch to new keys ...
+04/16/2012 06:44:56 PM - bliss.paramiko.transport - DEBUG - Trying discovered key 7a9a9bac262427b7cf03004935fea648 in /home/pmantha/.ssh/id_rsa
+04/16/2012 06:44:56 PM - bliss.paramiko.transport - DEBUG - userauth is OK
+04/16/2012 06:44:56 PM - bliss.paramiko.transport - INFO - Authentication (publickey) failed.
+04/16/2012 06:44:56 PM - bliss.paramiko.transport - DEBUG - Trying discovered key 7033b17f74f888fdfdb1666a72159e51 in /home/pmantha/.ssh/id_dsa
+04/16/2012 06:44:56 PM - bliss.paramiko.transport - DEBUG - userauth is OK
+04/16/2012 06:44:56 PM - bliss.paramiko.transport - INFO - Authentication (publickey) successful!
+04/16/2012 06:44:56 PM - bliss.paramiko.transport - DEBUG - [chan 1] Max packet in: 34816 bytes
+04/16/2012 06:44:56 PM - bliss.paramiko.transport - DEBUG - [chan 1] Max packet out: 32768 bytes
+04/16/2012 06:44:56 PM - bliss.paramiko.transport - INFO - Secsh channel 1 opened.
+04/16/2012 06:44:56 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - DEBUG - Sending command echo $$ && (env MYOUTPUT="Hello from Bliss"  /bin/sh -c 'python '-c' '"import sys \nimport os \nprint os.environ[\'MYOUTPUT\'] \nprint sys.version"'')> bliss_job.stdout 2> bliss_job.stderr to remote server:
+04/16/2012 06:44:56 PM - bliss.paramiko.transport - DEBUG - [chan 1] Sesch channel 1 request ok
+04/16/2012 06:44:56 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Started process: python ['-c', '"import sys \nimport os \nprint os.environ[\'MYOUTPUT\'] \nprint sys.version"']
+04/16/2012 06:44:56 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_job_id() called
+Job ID    : [ssh://qb1.loni.org]-[21357]
+04/16/2012 06:44:56 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_state() called
+Job State : saga.job.Job.Running
+
+...waiting for job...
+
+04/16/2012 06:44:56 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.wait() called
+04/16/2012 06:44:56 PM - bliss.paramiko.transport - DEBUG - [chan 1] EOF received (1)
+04/16/2012 06:44:56 PM - bliss.paramiko.transport - DEBUG - [chan 1] EOF sent (1)
+04/16/2012 06:44:56 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_state() called
+Job State : saga.job.Job.Failed
+04/16/2012 06:44:56 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_exitcode() called
+Exitcode  : 1
+04/16/2012 06:44:56 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_state() called
+
+============================================
+The job seems to have FAILED!
+============================================
+                                            
+Job returned in state 'Failed'.
+Please run this test again with SAGA_VERBOSE=5 
+and report the results at: 
+
+https://github.com/saga-project/bliss/issues
+
+Exception in thread Thread-1 (most likely raised during interpreter shutdown):(bliss-test)[pmantha@qb1 bliss]$ 
+
+(bliss-test)[pmantha@qb1 ~]$ vi bliss_job.stderr 
+  File "<string>", line 1
+    import
+         ^
+SyntaxError: invalid syntax
+~                                 
+
+
+
+
+5th test
+
+(bliss-test)[pmantha@qb1 bliss]$ python test/compliance/job/05_run_python_command_multiline.py ssh://qb1.loni.org
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - BLISS runtime instance created at 0x2a9ae09c68
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Found plugin saga.plugin.job.local supporting URL schmemas ['fork'] and API type(s) ['saga.job']
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Plugin saga.plugin.job.local internal sanity check passed
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.local as handler for URL schema fork://
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Found plugin saga.plugin.job.pbssh supporting URL schmemas ['pbs+ssh', 'pbs', 'torque', 'torque+ssh', 'xt5torque', 'xt5torque+ssh'] and API type(s) ['saga.job', 'saga.sd']
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Plugin saga.plugin.job.pbssh internal sanity check passed
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.pbssh as handler for URL schema pbs+ssh://
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.pbssh as handler for URL schema pbs://
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.pbssh as handler for URL schema torque://
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.pbssh as handler for URL schema torque+ssh://
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.pbssh as handler for URL schema xt5torque://
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.pbssh as handler for URL schema xt5torque+ssh://
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Found plugin saga.plugin.job.sgessh supporting URL schmemas ['sge+ssh', 'sge'] and API type(s) ['saga.job', 'saga.sd']
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Plugin saga.plugin.job.sgessh internal sanity check passed
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.sgessh as handler for URL schema sge+ssh://
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.sgessh as handler for URL schema sge://
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Found plugin saga.plugin.file.sftp supporting URL schmemas ['sftp'] and API type(s) ['saga.filesystem']
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Plugin saga.plugin.file.sftp internal sanity check passed
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.file.sftp as handler for URL schema sftp://
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Found plugin saga.plugin.job.ssh supporting URL schmemas ['ssh'] and API type(s) ['saga.job']
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Plugin saga.plugin.job.ssh internal sanity check passed
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Registered plugin saga.plugin.job.ssh as handler for URL schema ssh://
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Instantiated plugin 'saga.plugin.job.ssh' for URL scheme ssh:// and API type 'saga.job'
+04/16/2012 06:46:43 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Registered new service object <bliss.saga.job.Service.Service object at 0x2a9ae0d290>
+04/16/2012 06:46:43 PM - bliss.Service(0x2a9ae0d290) - INFO - Bound to plugin <bliss.plugins.ssh.job.SSHJobPlugin instance at 0x2a9ae133b0>
+04/16/2012 06:46:43 PM - bliss.Runtime(0x2a9ae09c68) - INFO - Found an existing plugin instance for url scheme ssh://: <bliss.plugins.ssh.job.SSHJobPlugin instance at 0x2a9ae133b0>
+04/16/2012 06:46:43 PM - bliss.Job(0x2a9ae0d3b0) - INFO - Bound to plugin <bliss.plugins.ssh.job.SSHJobPlugin instance at 0x2a9ae133b0>
+04/16/2012 06:46:43 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - service.create_job() called
+04/16/2012 06:46:43 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_job_id() called
+Job ID    : [ssh://qb1.loni.org]-[None]
+04/16/2012 06:46:43 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_state() called
+Job State : saga.job.Job.New
+
+...starting job...
+
+04/16/2012 06:46:43 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.run() called with ssh://qb1.loni.org
+04/16/2012 06:46:43 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Attempting to load SSH configuration file: /home/pmantha/.ssh/config
+04/16/2012 06:46:43 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Couldn't open SSH configuration file: /home/pmantha/.ssh/config
+04/16/2012 06:46:43 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - DEBUG - No hostname lookup for qb1.loni.org
+04/16/2012 06:46:43 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Using default ssh key
+04/16/2012 06:46:43 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Using default username
+04/16/2012 06:46:43 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Connecting to host qb1.loni.org
+04/16/2012 06:46:43 PM - bliss.paramiko.transport - DEBUG - starting thread (client mode): 0x9ae0ee90L
+04/16/2012 06:46:43 PM - bliss.paramiko.transport - INFO - Connected (version 2.0, client OpenSSH_5.8p2-hpn13v11)
+04/16/2012 06:46:43 PM - bliss.paramiko.transport - DEBUG - kex algos:['gss-gex-sha1-dZuIebMjgUqaxvbF7hDbAw==', 'gss-group1-sha1-dZuIebMjgUqaxvbF7hDbAw==', 'gss-group14-sha1-dZuIebMjgUqaxvbF7hDbAw==', 'diffie-hellman-group-exchange-sha256', 'diffie-hellman-group-exchange-sha1', 'diffie-hellman-group14-sha1', 'diffie-hellman-group1-sha1'] server key:['ssh-rsa', 'ssh-dss'] client encrypt:['aes128-ctr', 'aes192-ctr', 'aes256-ctr', 'arcfour256', 'arcfour128', 'aes128-cbc', '3des-cbc', 'blowfish-cbc', 'cast128-cbc', 'aes192-cbc', 'aes256-cbc', 'arcfour', 'rijndael-cbc@lysator.liu.se'] server encrypt:['aes128-ctr', 'aes192-ctr', 'aes256-ctr', 'arcfour256', 'arcfour128', 'aes128-cbc', '3des-cbc', 'blowfish-cbc', 'cast128-cbc', 'aes192-cbc', 'aes256-cbc', 'arcfour', 'rijndael-cbc@lysator.liu.se'] client mac:['hmac-md5', 'hmac-sha1', 'umac-64@openssh.com', 'hmac-ripemd160', 'hmac-ripemd160@openssh.com', 'hmac-sha1-96', 'hmac-md5-96'] server mac:['hmac-md5', 'hmac-sha1', 'umac-64@openssh.com', 'hmac-ripemd160', 'hmac-ripemd160@openssh.com', 'hmac-sha1-96', 'hmac-md5-96'] client compress:['none', 'zlib@openssh.com'] server compress:['none', 'zlib@openssh.com'] client lang:[''] server lang:[''] kex follows?False
+04/16/2012 06:46:43 PM - bliss.paramiko.transport - DEBUG - Ciphers agreed: local=aes128-ctr, remote=aes128-ctr
+04/16/2012 06:46:43 PM - bliss.paramiko.transport - DEBUG - using kex diffie-hellman-group1-sha1; server key type ssh-rsa; cipher: local aes128-ctr, remote aes128-ctr; mac: local hmac-sha1, remote hmac-sha1; compression: local none, remote none
+04/16/2012 06:46:43 PM - bliss.paramiko.transport - DEBUG - Switch to new keys ...
+04/16/2012 06:46:43 PM - bliss.paramiko.transport - DEBUG - Trying discovered key 7a9a9bac262427b7cf03004935fea648 in /home/pmantha/.ssh/id_rsa
+04/16/2012 06:46:43 PM - bliss.paramiko.transport - DEBUG - userauth is OK
+04/16/2012 06:46:43 PM - bliss.paramiko.transport - INFO - Authentication (publickey) failed.
+04/16/2012 06:46:43 PM - bliss.paramiko.transport - DEBUG - Trying discovered key 7033b17f74f888fdfdb1666a72159e51 in /home/pmantha/.ssh/id_dsa
+04/16/2012 06:46:43 PM - bliss.paramiko.transport - DEBUG - userauth is OK
+04/16/2012 06:46:43 PM - bliss.paramiko.transport - INFO - Authentication (publickey) successful!
+04/16/2012 06:46:43 PM - bliss.paramiko.transport - DEBUG - [chan 1] Max packet in: 34816 bytes
+04/16/2012 06:46:43 PM - bliss.paramiko.transport - DEBUG - [chan 1] Max packet out: 32768 bytes
+04/16/2012 06:46:43 PM - bliss.paramiko.transport - INFO - Secsh channel 1 opened.
+04/16/2012 06:46:43 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - DEBUG - Sending command echo $$ && (env MYOUTPUT="Hello from Bliss"  /bin/sh -c 'python '-c' '"\nimport sys\nimport os  \nprint os.environ[\'MYOUTPUT\']\nprint sys.version\n"'')> bliss_job.stdout 2> bliss_job.stderr to remote server:
+04/16/2012 06:46:43 PM - bliss.paramiko.transport - DEBUG - [chan 1] Sesch channel 1 request ok
+04/16/2012 06:46:43 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - Started process: python ['-c', '"\nimport sys\nimport os  \nprint os.environ[\'MYOUTPUT\']\nprint sys.version\n"']
+04/16/2012 06:46:43 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_job_id() called
+Job ID    : [ssh://qb1.loni.org]-[23537]
+04/16/2012 06:46:43 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_state() called
+Job State : saga.job.Job.Running
+
+...waiting for job...
+
+04/16/2012 06:46:43 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.wait() called
+04/16/2012 06:46:43 PM - bliss.paramiko.transport - DEBUG - [chan 1] EOF received (1)
+04/16/2012 06:46:43 PM - bliss.paramiko.transport - DEBUG - [chan 1] EOF sent (1)
+04/16/2012 06:46:43 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_state() called
+Job State : saga.job.Job.Failed
+04/16/2012 06:46:43 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_exitcode() called
+Exitcode  : 1
+04/16/2012 06:46:43 PM - bliss.SSHJobPlugin(0x2a9ae133b0) - INFO - job.get_state() called
+
+============================================
+The job seems to have FAILED!
+============================================
+                                            
+Job returned in state 'Failed'.
+Please run this test again with SAGA_VERBOSE=5 
+and report the results at: 
+
+https://github.com/saga-project/bliss/issues
+
+(bliss-test)[pmantha@qb1 bliss]$ 
+
+
+(bliss-test)[pmantha@qb1 ~]$ cat bliss_job.stderr 
+Traceback (most recent call last):
+  File "<string>", line 1, in ?
+NameError: name 'nimport' is not defined
+(bliss-test)[pmantha@qb1 ~]$ 
