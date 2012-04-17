@@ -24,7 +24,7 @@ class PBSPilotJobResourcePlugin(ResourcePluginInterface):
 
     ## Step 3: Define apis supported by this adaptor
     ##
-    _apis = ['saga.resource']
+    Exceptions = ['saga.resource']
 
     def __init__(self, url):
         '''Class constructor'''

@@ -31,7 +31,7 @@ class SGEJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
 
     ## Define apis supported by this adaptor
     ##
-    _apis = ['saga.job', 'saga.sd']
+    Exceptions = ['saga.job', 'saga.sd']
 
 
     ######################################################################

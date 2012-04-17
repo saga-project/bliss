@@ -248,7 +248,7 @@ class PBSService:
         '''sets self._cw to a usable access configuration or throws'''
         
         # see if we run stuff on the local machine 
-        if self._url.scheme == "pbs":
+        if self._url.scheme in ["pbs", "torque", "xt5torque"]:
             self._use_ssh = False
             cw = CommandWrapper(via_ssh=False)
             result = cw.run("which pbsnodes")#, ["--version"])
@@ -258,7 +258,7 @@ class PBSService:
             else:
                 self._cw = cw
 
-        elif self._url.scheme == "pbs+ssh":
+        elif self._url.scheme in ["pbs+ssh", "torque+ssh", "xt5torque+ssh"]:
             # iterate over all SSH contexts to see if one of them is
             # usable. we stop after we have found one.
             usable_ctx = None
@@ -520,15 +520,21 @@ class PBSService:
             pbs_params += "#PBS -A %s \n" % str(jd.project)
         if jd.contact is not None:
             pbs_params += "#PBS -m abe \n"
-        
-
-        if jd.total_cpu_count is not None:
-            tcc = int(jd.total_cpu_count)
-            tbd = float(tcc)/float(self._ppn)
-            if float(tbd) > int(tbd):
-                pbs_params += "#PBS -l nodes=%s:ppn=%s" % (str(int(tbd)+1), self._ppn)
-            else:
-                pbs_params += "#PBS -l nodes=%s:ppn=%s" % (str(int(tbd)), self._ppn)
+       
+        if self._url.scheme in ["xt5torque", "xt5torque+ssh"]:
+            # Special case for TORQUE on Cray XT5s
+            self._pi.log_info("Using Cray XT5 spepcific modifications, i.e., -l size=xx instead of -l nodes=x:ppn=yy ")
+            if jd.total_cpu_count is not None:
+                pbs_params += "#PBS -l size=%s" % jd.total_cpu_count
+        else:
+            # Default case (non-XT5)
+            if jd.total_cpu_count is not None:
+                tcc = int(jd.total_cpu_count)
+                tbd = float(tcc)/float(self._ppn)
+                if float(tbd) > int(tbd):
+                    pbs_params += "#PBS -l nodes=%s:ppn=%s" % (str(int(tbd)+1), self._ppn)
+                else:
+                    pbs_params += "#PBS -l nodes=%s:ppn=%s" % (str(int(tbd)), self._ppn)
 
         pbscript = "\n#!/bin/bash \n%s \n%s" % (pbs_params, exec_n_args)
         self._pi.log_info("Generated PBS script: %s" % (pbscript))

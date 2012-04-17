@@ -6,8 +6,8 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.object_api     import Object
-from bliss.saga.attributes_api import AttributeInterface
+from bliss.saga.Object     import Object
+from bliss.saga.Attributes import AttributeInterface
 
 class JobID(object):
     '''Represents a SAGA job ID (Not part of GFD.90)
@@ -28,12 +28,11 @@ class JobID(object):
        Example::
 
          -----------------------------------------------------------------------
-         js = saga.job.Service ('ssh://remote.host.net')
-         j  = js.create_job (jd)
-         id = j.get_job_id () 
+         js = saga.job.Service('ssh://remote.host.net')
+         j = js.create_job(jd)
+         id = j.get_job_id() 
 
          print "job id: %s"  %  id
-         # something like: [ssh://remote.host.net]-[2243]
 
          js_url = id.
          -----------------------------------------------------------------------
@@ -99,7 +98,7 @@ class Job(Object, AttributeInterface):
     Jobs can leave the 'Running' state in three different ways: they finish
     successfully on their own ('Done'), they finish unsuccessfully on their own,
     or get canceled by the job management backend ('Failed'), or they get
-    actively canceled by the user or the application ('Canaceled').
+    actively canceled by the user or the application ('Canceled').
 
     The methods defined on the Job object serve two purposes: inspecting the
     job's state, and initiating job state transitions.
@@ -169,21 +168,20 @@ class Job(Object, AttributeInterface):
 
     ######################################################################
     ##
-    def get_stderr(self):
-        '''B{Not Implemented:} Bliss does not support I/O streaming.  Please use
-           file staging to retrieve stdout and stderr files.
-        '''
-        raise bliss.saga.Exception(bliss.saga.Error.NotImplemented, 
-          "Bliss doesn't suppport get_stderr()")
+    #def get_stderr(self):
+    #    '''B{Not Implemented:} Bliss does not support I/O streaming.  Please use
+    #       file staging to retrieve stdout and stderr files.
+    #    '''
+    #    raise bliss.saga.Exception(bliss.saga.Error.NotImplemented, 
+    #      "Bliss doesn't suppport get_stderr()")
 
     ######################################################################
     ##
-    def get_stdout(self):
-        '''B{Not Implemented:} Bliss does not support I/O streaming.  Please use
-           file staging to retrieve stdout and stderr files.
-        '''
-        raise bliss.saga.Exception(bliss.saga.Error.NotImplemented, 
-          "Bliss doesn't suppport get_stdout()")
+    #def get_stdout(self):
+    #    '''B{Not Implemented:} Bliss does not support I/O streaming.
+    #    '''
+    #    raise bliss.saga.Exception(bliss.saga.Error.NotImplemented, 
+    #      "Bliss doesn't suppport get_stdout()")
 
     ######################################################################
     ##
@@ -201,18 +199,18 @@ class Job(Object, AttributeInterface):
         actual environment of the running job instance.
 
 
-        Example::
+        B{Example}::
 
           ----------------------------------------------------------------------
-          js = saga.job.Service ("sge://localhost")
-          j  = js.create_job    (jd)
+          js = saga.job.Service("sge://localhost")
 
-          j.run ()
+          j1 = js.create_job(jd)
+          j1.run()
 
-          live_jd = j.get_description ()
-
-          print "job ended up in the %s queue"  %  live_jd['Queue']
+          j2 = js.create_job(j1.get_description())
+          j2.run()
           ----------------------------------------------------------------------
+
         '''
         if self._plugin is not None:
             return self._job_description
@@ -225,20 +223,21 @@ class Job(Object, AttributeInterface):
     def get_state(self):
         '''Return the current state of the job.
 
-        Example::
+        B{Example}::
+
 
           ----------------------------------------------------------------------
-          js = saga.job.Service ("sge://localhost")
-          j  = js.create_job    (jd)
+          js = saga.job.Service("sge://localhost")
+          j  = js.create_job(jd)
 
-          if      j.get_state () == saga.job.New      : print "new"
-          else                                        : print "oops!"
+          if j.get_state() == saga.job.New : print "new"
+          else : print "oops!"
 
-          j.run ()
+          j.run()
 
-          if      j.get_state () == saga.job.Pending  : print "pending"
-          else if j.get_state () == saga.job.Running  : print "running"
-          else                                        : print "oops!"
+          if j.get_state() == saga.job.Pending : print "pending"
+          else if j.get_state() == saga.job.Running : print "running"
+          else : print "oops!"
           ----------------------------------------------------------------------
         '''
         if self._plugin is not None:
@@ -268,21 +267,22 @@ class Job(Object, AttributeInterface):
         job will be moved to 'Failed'.
 
 
-        Example::
+        B{Example}::
 
           ----------------------------------------------------------------------
-          js = saga.job.Service ("sge://localhost")
-          j  = js.create_job    (jd)
+          js = saga.job.Service("sge://localhost")
+          j  = js.create_job(jd)
 
-          if      j.state == saga.job.New      : print "new"
-          else                                 : print "oops!"
+          if j.state == saga.job.New : print "new"
+          else : print "oops!"
 
-          j.run ()
+          j.run()
 
-          if      j.state == saga.job.Pending  : print "pending"
-          else if j.state == saga.job.Running  : print "running"
-          else                                 : print "oops!"
+          if j.state == saga.job.Pending : print "pending"
+          else if j.state == saga.job.Running : print "running"
+          else : print "oops!"
           ----------------------------------------------------------------------
+
         '''
         if self._plugin is not None:
             return self._plugin.job_run(self)
@@ -295,24 +295,26 @@ class Job(Object, AttributeInterface):
     def cancel(self):
         '''Cancel the execution of the job.
 
-          ----------------------------------------------------------------------
-          js = saga.job.Service ("sge://localhost")
-          j  = js.create_job    (jd)
+           B{Example}::
+           
+             ----------------------------------------------------------------------
+             js = saga.job.Service("sge://localhost")
+             j = js.create_job(jd)
 
-          if      j.state == saga.job.New      : print "new"
-          else                                 : print "oops!"
+             if j.state == saga.job.New : print "new"
+             else : print "oops!"
 
-          j.run ()
+             j.run()
 
-          if      j.state == saga.job.Pending  : print "pending"
-          else if j.state == saga.job.Running  : print "running"
-          else                                 : print "oops!"
+             if j.state == saga.job.Pending  : print "pending"
+             else if j.state == saga.job.Running : print "running"
+             else : print "oops!"
 
-          j.cancel ()
+             j.cancel()
 
-          if      j.state == saga.job.Canceled : print "canceled"
-          else                                 : print "oops!"
-          ----------------------------------------------------------------------
+             if j.state == saga.job.Canceled : print "canceled"
+             else : print "oops!"
+             ----------------------------------------------------------------------
         '''
         if self._plugin is not None:
             return self._plugin.job_cancel(self, timeout)
@@ -338,27 +340,26 @@ class Job(Object, AttributeInterface):
         not in final state, and the application should check the actual job
         state.  The default timeout value is '-1.0' (blocking).
 
-
-        Example::
+        B{Example}::
 
           ----------------------------------------------------------------------
-          js = saga.job.Service ("sge://localhost")
-          j  = js.create_job    (jd)
+          js = saga.job.Service("sge://localhost")
+          j = js.create_job(jd)
 
-          if      j.state == saga.job.New      : print "new"
-          else                                 : print "oops!"
+          if j.state == saga.job.New : print "new"
+          else : print "oops!"
 
-          j.run ()
+          j.run()
 
-          if      j.state == saga.job.Pending  : print "pending"
-          else if j.state == saga.job.Running  : print "running"
-          else                                 : print "oops!"
+          if j.state == saga.job.Pending : print "pending"
+          else if j.state == saga.job.Running : print "running"
+          else : print "oops!"
 
-          j.wait (-1.0)
+          j.wait(-1.0)
 
-          if      j.state == saga.job.Done     : print "done"
-          if      j.state == saga.job.Failed   : print "failed"
-          else                                 : print "oops!"
+          if j.state == saga.job.Done : print "done"
+          if j.state == saga.job.Faile : print "failed"
+          else : print "oops!"
           ----------------------------------------------------------------------
         '''
         if self._plugin is not None:
@@ -375,18 +376,18 @@ class Job(Object, AttributeInterface):
         this attribute is only meaningful if the job is in 'Done' or 'Final'
         state - for all other job states, this attribute value is undefined.
 
-        Example::
+        B{Example}::
 
           ----------------------------------------------------------------------
-          js = saga.job.Service ("sge://localhost")
-          j  = js.create_job    (jd)
+          js = saga.job.Service("sge://localhost")
+          j = js.create_job(jd)
 
-          j.run  ()
-          j.wait ()
+          j.run()
+          j.wait()
 
           if j.state == saga.job.Failed :
-            if j.exitcode == "42"  : print "Ah, galaxy bypass error!"
-            else                   : print "oops!"
+            if j.exitcode == "42" : print "Ah, galaxy bypass error!"
+            else : print "oops!"
           ----------------------------------------------------------------------
         '''
 
@@ -421,14 +422,14 @@ class Job(Object, AttributeInterface):
         service can be contacted which owns the job.  The value is equivalent to
         the service part of the job_id.
 
-        Example::
+        B{Example}::
 
           ----------------------------------------------------------------------
-          js = saga.job.Service ("sge://localhost")
-          j  = js.create_job    (jd)
+          js = saga.job.Service("sge://localhost")
+          j = js.create_job(jd)
 
-          if      j.serviceurl == "sge://localhost"  : print "yes!"
-          else                                       : print "oops!"
+          if j.serviceurl == "sge://localhost" : print "yes!"
+          else : print "oops!"
           ----------------------------------------------------------------------
         '''
         doc = "The URL of the L{Service} instance managing this job."

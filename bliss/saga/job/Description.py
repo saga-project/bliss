@@ -8,8 +8,8 @@ __license__   = "MIT"
 
 import bliss.saga
 
-from bliss.saga.object_api import Object
-from bliss.saga.attributes_api import AttributeInterface
+from bliss.saga.Object import Object
+from bliss.saga.Attributes import AttributeInterface
 
 class Description(Object, AttributeInterface):
     """

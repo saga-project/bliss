@@ -7,7 +7,7 @@ __copyright__ = "Copyright 2012 Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.saga import Url
-from bliss.saga.object_api import Object 
+from bliss.saga.Object import Object 
 
 class Service(Object):
     '''Loosely represents a SAGA job service as defined in GFD.90

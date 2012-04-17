@@ -6,8 +6,8 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.object_api import Object
-from bliss.saga.attributes_api import AttributeInterface
+from bliss.saga.Object import Object
+from bliss.saga.Attributes import AttributeInterface
 
 class WaitMode:
     ''' Specifies the condition on which a wait() operation on

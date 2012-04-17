@@ -6,7 +6,7 @@ __license__   = "MIT"
 
 import bliss.saga 
 from bliss.saga import Url
-from bliss.saga.object_api import Object 
+from bliss.saga.Object import Object 
 
 class Manager(Object):
 

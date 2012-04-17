@@ -3,7 +3,6 @@ include *.py
 include bliss/*.py
 
 include bliss/saga/*.py
-include bliss/saga/sd/*.py
 include bliss/saga/job/*.py
 include bliss/saga/resource/*.py
 include bliss/saga/filesystem/*.py
@@ -16,7 +15,6 @@ include bliss/plugins/sftp/*.py
 include bliss/plugins/sge/*.py
 include bliss/plugins/pbs/*.py
 include bliss/plugins/local/*.py
-
 include bliss/plugins/ssh/*.py
 
 include MANIFEST.in README.md LICENSE.md CHANGES.md

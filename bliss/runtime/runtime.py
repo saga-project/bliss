@@ -3,7 +3,7 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import os
@@ -35,7 +35,7 @@ class Runtime:
             self.loglevel = logging.ERROR
   
         logging.basicConfig(level=self.loglevel, datefmt='%m/%d/%Y %I:%M:%S %p',
-                    	    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+                    	    format='%(asctime)s - bliss.%(name)s - %(levelname)s - %(message)s')
         address=str(hex(id(self)))
         self.logger = logging.getLogger(self.__class__.__name__+'('+address+')') 
         self.logger.info("BLISS runtime instance created at %s" % address)
@@ -60,6 +60,11 @@ class Runtime:
                 self.logger.error("Sanity check FAILED for plugin %s: %s. Disabled." \
                   % (plugin["name"], str(ex)))
 
+    def __del__(self):
+        '''Deletes runtime object'''
+        print "runtime -- delete"
+
+
     def get_plugin_for_url(self, url, apitype):
         '''Returns a plugin instance for a given url or throws'''
         # first let's check if there's already a plugin-instance active that can handle this url scheme
@@ -67,13 +72,11 @@ class Runtime:
             self.logger.info("Found an existing plugin instance for url scheme %s://: %s" \
               % (str(url.scheme), self.plugin_instance_list[url.scheme]))
 
-            #print "XXX %s XXX %s XXX" % ()
-
             return self.plugin_instance_list[url.scheme]
 
         elif url.scheme in self.plugin_class_list:
             plugin_obj = self.plugin_class_list[url.scheme](url)
-            if apitype in plugin_obj.__class__.supported_apis():                       
+            if apitype in plugin_obj.__class__.supportedExceptions():                       
                 self.logger.info("Instantiated plugin '%s' for URL scheme %s:// and API type '%s'" \
                   % (plugin_obj.name, str(url.scheme), apitype))
                 self.plugin_instance_list[url.scheme] = plugin_obj

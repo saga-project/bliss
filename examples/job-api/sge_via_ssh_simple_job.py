@@ -45,7 +45,7 @@ def main():
         jd.queue   = "development"
 
         # resource requirements
-        jd.wall_time_limit  = 5 # minutes
+        jd.wall_time_limit = 5 # minutes
         jd.total_cpu_count = 12
         # the email notification
         #jd.contact = "oweidner@cct.lsu.edu" 

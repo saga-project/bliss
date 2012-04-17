@@ -8,17 +8,17 @@ __license__   = "MIT"
 
 from bliss.interface import PluginBaseInterface
 
-from bliss.saga.exception_api import Error as SAGAError
-from bliss.saga.exception_api import Exception as SAGAException
+from bliss.saga.Exception import Error as SAGAError
+from bliss.saga.Exception import Exception as SAGAException
 
 class JobPluginInterface(PluginBaseInterface):
     '''Abstract base class for all job plugins'''
-    #PluginBaseInterface._supported_apis.append(PluginBaseInterface._api_type_saga_job)
+    #PluginBaseInterface._supportedExceptions.append(PluginBaseInterface.Exception_type_saga_job)
  
     def __init__(self, name, schemas):
         '''Class constructor'''
         PluginBaseInterface.__init__(self, name=name, schemas=schemas,
-                                     api=PluginBaseInterface._api_type_saga_job)
+                                     api=PluginBaseInterface.Exception_type_saga_job)
     
     def register_service_object(self, service_obj):
         errormsg = "Not implemented plugin method called: register_service_object()"
