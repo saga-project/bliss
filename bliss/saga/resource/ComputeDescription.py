@@ -9,6 +9,37 @@ from bliss.saga.Attributes import AttributeInterface
 
 class ComputeDescription(Object, AttributeInterface):
     '''Defines a SAGA compute_description as defined in GFD.xx
+
+    A compute description describes a compute resource -- which is, essentially,
+    anything which can run compute jobs.  The description is used to find or
+    create instances of compute resources with specific properties and
+    capabilities.
+
+    B{Usage example 1} shows how to find a cluster of a certain size::
+
+      # describe the resource requirements
+      cd = saga.resource.ComputeDescription ()
+      cd['Slots'] = 128
+
+      # obtain a handle to a suitable resource
+      rm = saga.resource.Manager ()
+      cr = rm.create_compute (cd)
+
+      # submit a large job
+      jd = saga.job.Description ()
+      jd['Executable']        = 'blast'
+      jd['NumberOfProcesses'] = 128
+      jd['SPMDVariation']     = MPI
+
+      js = saga.job.Service (cr)
+      j  = js.create_job    (jd)
+      j.run  ()
+      j.wait ()
+
+
+      # once the job is finished, we do not need the compute resource anymore:
+      cr.destroy ()
+
     '''
 
     ######################################################################
@@ -77,7 +108,12 @@ class ComputeDescription(Object, AttributeInterface):
     ######################################################################
     ## Property 
     def start():
-        doc = "Required start time for this resource reservation."
+        doc = "Required start time for this resource request.
+        
+        The resource is expected to be 'Running' at the specified point in time,
+        and thus ready to execute job requests.  A backend which cannot make
+        that promise will raise and exception.
+        "
         def fget(self):
             return self._start
         def fset(self, val):
@@ -90,7 +126,13 @@ class ComputeDescription(Object, AttributeInterface):
     ######################################################################
     ## Property 
     def end():
-        doc = "Required end time for this resource reservation."
+        doc = "Required end time for this resource request.
+        
+        The resource is expected to be available until at most that given point
+        in time.  A resource manager which cannot guarantee the resource to be
+        available before that point (- a given duration) will fail the resource
+        request.
+        "
         def fget(self):
             return self._end
         def fset(self, val):
@@ -103,7 +145,13 @@ class ComputeDescription(Object, AttributeInterface):
     ######################################################################
     ## Property 
     def duration():
-        doc = "Required duration for this resource reservation."
+        doc = "Required duration for this resource request.
+
+        The specified time span is the time the resource is expected to be
+        'Running' -- times spent in other states does not count toward this
+        limit.  A backend which cannot make that promise will raise and 
+        exception.
+        "
         def fget(self):
             return self._duration
         def fset(self, val):
@@ -116,7 +164,14 @@ class ComputeDescription(Object, AttributeInterface):
     ######################################################################
     ## Property 
     def dynamic():
-        doc = "Dynamic or not."
+        doc = "Dynamic or not.
+        
+        The 'dynamic' flag signals that the resource description provides
+        estimated values, but that the resource manager is allowed to choose
+        different initial values, and also can change the values during the
+        resource lifetime.  That flag is specifically targeting backends which
+        can resize the resources in response to the actual job workload.
+        "
         def fget(self):
             return self._dynamic
         def fset(self, val):
@@ -129,7 +184,7 @@ class ComputeDescription(Object, AttributeInterface):
     ######################################################################
     ## Property 
     def slots():
-        doc = "Required number of cores for this resource reservation."
+        doc = "Required number of cores for this resource request."
         def fget(self):
             return self._slots
         def fset(self, val):
@@ -142,7 +197,7 @@ class ComputeDescription(Object, AttributeInterface):
     ######################################################################
     ## Property 
     def memory():
-        doc = "Required amount of memory for this resource reservation."
+        doc = "Required amount of memory for this resource request."
         def fget(self):
             return self._memory
         def fset(self, val):
@@ -155,7 +210,12 @@ class ComputeDescription(Object, AttributeInterface):
     ######################################################################
     ## Property 
     def hostnames():
-        doc = "Allowed hostnames for this resource reservation (i.e., cluster nodes)."
+        doc = "Allowed hostnames for this resource request.
+        
+        With this attribute, one can specify specific and individual compute
+        nodes -- for example specific cluster nodes, specific sets of virtual
+        machine instances, etc.
+        "
         def fget(self):
             return self._hostnames
         def fset(self, val):
@@ -168,7 +228,7 @@ class ComputeDescription(Object, AttributeInterface):
     ######################################################################
     ## Property 
     def operating_system():
-        doc = "Allowed operating system(s) for this resource reservation."
+        doc = "Allowed operating system(s) for this resource request."
         def fget(self):
             return self._operating_system
         def fset(self, val):
@@ -181,7 +241,7 @@ class ComputeDescription(Object, AttributeInterface):
     ######################################################################
     ## Property 
     def architecture():
-        doc = "Allowed systems architecture(s) for this resource reservation."
+        doc = "Allowed systems architecture(s) for this resource request."
         def fget(self):
             return self._architecture
         def fset(self, val):

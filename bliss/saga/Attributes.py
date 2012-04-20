@@ -11,7 +11,56 @@ from bliss.saga.Exception import Error as SAGAError
 
 
 class AttributeInterface(object):
-    '''Loosely defines the SAGA attribute interface as defined in GFD.90.'''
+    '''
+    Loosely defines the SAGA attribute interface as defined in GFD.90.
+
+    The SAGA attribute interface behaves very similar to a hash table (or
+    'dictionary' in python), with the main difference that attribute names and
+    types are often (depending on the specific class providing that interface)
+    pre-defined.  The values are usually simple strings, integers or floats, or
+    lists of strings ('vector attributes').
+
+    Since the attribute interface matches the semantics of python dictionaries
+    so well, it is often mapped to the dictionary syntax, and is rendered as
+    class variables.  Sometimes, for frequently used variables, classes also
+    expose an explicit accessor method (see 'JobID' example below).
+
+    The most prominent example of the attribute interface is the job.Description
+    class, which is used to describe a job to be submitted to a job manager.
+    Other uses of the interface are resource descriptions, and the exposure of
+    object attributes like job.Job.JobID.
+
+
+    Example::
+
+
+        jd = saga::job::Description ()
+        jd.set_attribute        ("Executable", "/usr/bin/blast")
+        jd.set_vector_attribute ("Arguments", ["-i", "/data/in.dat"])
+
+        js = saga.job.Service ()
+        j  = js.create_job (jd);
+        j.run ()
+
+        print "job id: %s"  % j.get_attribute ("JobID")
+
+
+    This example is equivalent to::
+   
+
+        jd = saga::job::Description ()
+        jd.["Executable"] = "/usr/bin/blast"
+        jd.["Arguments"]  = ["-i", "/data/in.dat"]
+
+        js = saga.job.Service ()
+        j  = js.create_job (jd);
+        j.run ()
+
+        print "job id: %s"  % j.["JobID"]
+        print "job id: %s"  % j.get_job_id()
+
+    
+    '''
    
     ######################################################################
     # 
@@ -67,6 +116,32 @@ class AttributeInterface(object):
     #
     def remove_attribute(self, key):
         '''Remove the attribute.
+
+        Example::
+
+
+          d = saga.Attribute ()
+          d.set_attribute ("key", "val")
+          assert ( d.has_attribute ("key") )
+
+          # remove:
+          d.remove_attribute ("key")
+          assert ( not d.has_attribute ("key"))
+
+
+
+        This is semantically equivalent to::
+
+
+          d = dict ()
+          d["key"] = "val"
+          assert ("key" in d )
+
+          # remove:
+          d["key"] = None
+          assert ("key" in d )
+
+
         '''
         if not self.attribute_exists(key):
             raise SAGAException(SAGAError.DoesNotExist, 
@@ -82,6 +157,30 @@ class AttributeInterface(object):
     #
     def get_attribute(self, key):
         '''Return the value of a scalar attribute.
+
+        Example::
+
+
+          d = saga.Attribute ()
+          d.set_attribute ("key", "val")
+
+          # get
+          val = d.get_attribute ("key") == "val" )
+          assert ( val == "val" )
+
+
+
+        This is semantically equivalent to::
+
+
+          d = dict ()
+          d["key"] = "val"
+
+          # get
+          val = d["key"]
+          assert ( val == "val" )
+
+
         '''
         if not self.attribute_exists(key):
             raise SAGAException(SAGAError.DoesNotExist, 
@@ -96,6 +195,32 @@ class AttributeInterface(object):
     #    
     def set_attribute(self, key, value):
         '''Set the value of a scalar attribute.
+
+        Example::
+
+
+          d = saga.Attribute ()
+
+          # set
+          d.set_attribute ("key", "val")
+
+          assert ( d.has_attribute ("key") )
+          assert ( d.get_attribute ("key") == "val" )
+
+
+
+        This is semantically equivalent to::
+
+
+          d = dict ()
+
+          # set
+          d["key"] = "val"
+
+          assert ( "key" in d )
+          assert ( d["key" == "val" )
+
+
         '''
         if not self._valid_attribute_key(key):
             raise SAGAException(SAGAError.DoesNotExist, 
@@ -141,6 +266,28 @@ class AttributeInterface(object):
     #
     def attribute_exists(self, key):
         '''Check if an attribute exists.
+
+        Example::
+
+
+          d = saga.Attribute ()
+          d.set_attribute ("key", "val")
+
+          # check
+          assert ( d.attribute_exists ("key") )
+
+
+
+        This is semantically equivalent to::
+
+
+          d = dict ()
+          d["key"] = "val"
+
+          # check
+          assert ( "key" in d )
+
+
         '''
         if key in self._attributes:
             if self._attributes[key]['accessor'].fget(self) is not None: 
@@ -151,6 +298,33 @@ class AttributeInterface(object):
     #
     def attribute_is_writeable(self, key):
         '''Check if an attribute is writable.
+
+        Example::
+
+
+          d = saga.Attribute ()
+
+          # check
+          if d.attribute_is_writable ("key") :
+            d.set_attribute ("key", "val")
+          fi
+
+
+
+        There is no semantic equivalent in python's dicts., really -- dicts
+        allow to write to any key.  The dict implementation in bliss will still
+        fail though on ReadOnly keys, and will raise a 'PermissionDenied'
+        exception::
+
+
+          d = dict ()
+
+          try : 
+            d["key"] = "val" 
+          except Exception as e :
+            print "no no no!"
+
+
         '''
         if not self._valid_attribute_key(key):
             raise SAGAException(SAGAError.DoesNotExist, 
@@ -162,6 +336,33 @@ class AttributeInterface(object):
     #
     def attribute_is_readonly(self, key):
         '''Check if an attribute is read-only.
+
+        Example::
+
+
+          d = saga.Attribute ()
+
+          # check
+          if d.attribute_is_writable ("key") :
+            d.set_attribute ("key", "val")
+          fi
+
+
+
+        There is no semantic equivalent in python's dicts., really -- dicts
+        allow to write to any key.  The dict implementation in bliss will still
+        fail though on ReadOnly keys, and will raise a 'PermissionDenied'
+        exception::
+
+
+          d = dict ()
+
+          try : 
+            d["key"] = "val" 
+          except Exception as e :
+            print "no no no!"
+
+
         '''
         if not self._valid_attribute_key(key):
             raise SAGAException(SAGAError.DoesNotExist, 
@@ -176,6 +377,35 @@ class AttributeInterface(object):
     #
     def attribute_is_vector(self, key):
         '''Check if an attribute is a vector.
+
+        Python dicts don't  distinguish between vector and scalar values, but
+        the SAGA attribute interface in fact cares -- this is supposed to catch
+        incorrect attribute type setting as early as possible.
+
+        Example::
+
+
+          d = saga.Attribute ()
+
+          # check
+          if d.attribute_is_vector ("Arguments") :
+            d.set_attribute ("Arguments", ["-i", "/data/in.dat"])
+          fi
+
+
+
+        As there is no semantic equivalent in python's dicts, the Bliss
+        implementation will throw an exception on the wrong setting::
+
+
+          d = dict ()
+
+          try : 
+            d["Arguments"] = "scalar_value" 
+          except Exception as e :
+            print "no no no!  I want lists!"
+
+
         '''
         if not self._valid_attribute_key(key):
             raise SAGAException(SAGAError.DoesNotExist, 
@@ -190,6 +420,33 @@ class AttributeInterface(object):
     #
     def list_attributes(self): 
         '''List all defined attributes.
+
+        This method simply lists the names of all attributes currently defined.
+        Note that this method also lists predefined attributes, even if those
+        have no defined value, yet.  For example, the attribute 'JobID' is
+        always known on a job -- even if the specific job instance does not yet
+        have a defined job ID.
+
+        Example::
+
+
+          d = saga.Attribute ()
+
+          # list
+          print "keys: %s"  %  d.list_attributes ()
+
+
+
+        As there is no semantic equivalent in python's dicts, the Bliss
+        implementation will throw an exception on the wrong setting::
+
+
+          d = dict ()
+
+          # list
+          print "keys: %s"  %  d.keys () # FIXME
+
+
         '''
         list = []
         for att in self._attributes:

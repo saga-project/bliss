@@ -9,7 +9,50 @@ __license__   = "MIT"
 from bliss.saga.Attributes import AttributeInterface
 
 class Context(AttributeInterface, object):
-    '''Looesely defines a SAGA Context object as defined in GFD.90.
+    '''Loosely defines a SAGA Context object as defined in GFD.90.
+
+    A security context is a description of a security token.  It is important to
+    understand that, in general, a context really just *describes* a token, but
+    that a context *is not* a token (*). For example, a context may point to
+    a X509 certificate -- but it will in general not hold the certificate
+    contents.
+
+    Context classes are used to inform the backends used by Bliss on what
+    security tokens are expected to be used.  By default, Bliss will be able to
+    pick up such tokens from their default location, but in some cases it might
+    be necessary to explicitly point to them - then use a context instance to do
+    so.
+
+    The usage example for contexts is below::
+
+        # define an ssh context
+        c = saga.Context ()
+        c['Type']     = 'ssh'
+        c['UserCert'] = '$HOME/.ssh/special_id_rsa'
+        c['UserKey']  = '$HOME/.ssh/special_id_rsa.pub'
+
+        # add the context to a session
+        s = saga.Session ()
+        s.add_context (c)
+
+        # create a job service in this session -- that job service can now
+        # *only* use that ssh context. 
+        j = saga.job.Service ('ssh://remote.host.net/', s)
+
+
+    The 'session' argument to the job.Service constructor is fully optional --
+    if left out, Bliss will use default session, which picks up some default
+    contexts as described above -- that will suffice for the majority of use
+    cases.
+
+    ----
+
+    (*) The only exception to this rule is the 'UserPass' key, which is used to
+    hold plain-text passwords.  Use this key with care -- it is not good
+    practice to hard-code passwords in the code base, or in config files.
+    Also, be aware that the password may show up in log files, when debugging or
+    analyzing your application.
+
     '''
 
     SSH      = "SSH"
@@ -21,12 +64,17 @@ class Context(AttributeInterface, object):
     BigJob = "BigJob"
     '''A security context type for BigJob'''
 
+    # FIXME: What is different between X509 and ssh+X509?
+    # shouldn't the latter just a session with an ssh and an X509 context?  What
+    # is this used for?
+    # FIXME: What is a BigJob context??
+
 
     #__dict__ = {'_type', '_userkey', '_usercert', '_userproxy'}
   
-    def __init__(self):
+    def __init__(self, type=None):
         '''Constructor'''
-        self._type      = None
+        self._type      = type
         self._userid    = None
         self._userpass  = None
         self._usercert  = None
@@ -66,7 +114,36 @@ class Context(AttributeInterface, object):
     ######################################################################
     ## Property: type
     def type():
-        doc = "Context type."
+        doc = """Context type.
+        
+        This is a free-form string which describes the type of security token
+        this context describes.  This type is not bound to a specific backend --
+        for example, an 'SSH' context could be used by a number of backends,
+        such as ssh (obviously), aws, gsissh, https, etc. (*)
+
+
+        Example::
+
+
+            # define an ssh context
+            c = saga.Context ()
+            c['Type']     = 'ssh'
+            c['UserCert'] = '$HOME/.ssh/id_rsa'
+            c['UserKey']  = '$HOME/.ssh/id_rsa.pub'
+
+            # add it to a session
+            s = saga.Session
+            s.add_context (c)
+
+            # create a job service in this session -- that job service can now
+            # *only* use that ssh context. 
+            j = saga.job.Service (s, 'ssh://remote.host.net/')
+
+
+        (*) this is a list of transport protocols, not of backends, but
+        hopefully make the point clear.
+
+        """
         def fget(self):
             return self._type
         def fset(self, val):
@@ -89,7 +166,11 @@ class Context(AttributeInterface, object):
     ######################################################################
     ## Property: userpass
     def userpass():
-        doc = "User password (use with care)."
+        doc = """User password to use.
+        
+        Please use this option with care -- it is *not* good practice to encode
+        plain text passwords in source code!
+        """
         def fget(self):
             return self._userpass
         def fset(self, val):

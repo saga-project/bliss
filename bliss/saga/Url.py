@@ -9,6 +9,9 @@ __license__   = "MIT"
 from furl import furl
 from bliss.saga.Object import Object 
 
+# FIXME: if furl works, then 'typedef saga.Url furl' (AM)
+# FIXME: why are *all* methods legacy?  What is the point then?
+
 class Url(Object):
     '''Defines a SAGA Url class as defined in GFD.90.'''
 
@@ -121,6 +124,7 @@ class Url(Object):
 
     def get_url(self):
         '''(Ugly) legacy method: return the 'query' property.'''
+        # FIXME: uhm, why is that returning the query part?
         return self.url
 
 

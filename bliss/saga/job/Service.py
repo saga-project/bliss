@@ -21,7 +21,7 @@ class Service(Object):
 
     Example::
 
-        -------------------------------------------------------------------
+
         js  = saga.job.Service ("sge://localhost")
         ids = js.list ()
 
@@ -33,7 +33,7 @@ class Service(Object):
           if      j.state == saga.job.Pending  : print "pending"
           else if j.state == saga.job.Running  : print "running"
           else                                 : print "job is already final!"
-        -------------------------------------------------------------------
+
     '''
 
     ######################################################################
@@ -111,7 +111,7 @@ class Service(Object):
            the job object.  
 
            Example::
-             -------------------------------------------------------------------
+
              js = saga.job.Service ("sge://localhost")
              j  = js.create_job    (jd)
 
@@ -123,7 +123,7 @@ class Service(Object):
              if      j.state == saga.job.Pending  : print "pending"
              else if j.state == saga.job.Running  : print "running"
              else                                 : print "oops!"
-             -------------------------------------------------------------------
+
         '''
         if job_description.get_type() != Object.Type.JobDescription:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
@@ -145,14 +145,14 @@ class Service(Object):
            Job objects are a local representation of a remote stateful entity.
            The job.Service supports to reconnect to those remote entities::
 
-             -------------------------------------------------------------------
+
              js = saga.job.Service ("sge://localhost")
              j  = js.get_job       (my_job_id)
 
              if      j.state == saga.job.Pending  : print "pending"
              else if j.state == saga.job.Running  : print "running"
              else                                 : print "job is already final!"
-             -------------------------------------------------------------------
+
         '''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
@@ -172,7 +172,7 @@ class Service(Object):
 
            Example::
 
-             -------------------------------------------------------------------
+
              js  = saga.job.Service ("sge://localhost")
              ids = js.list ()
 
@@ -184,7 +184,7 @@ class Service(Object):
                if      j.state == saga.job.Pending  : print "pending"
                else if j.state == saga.job.Running  : print "running"
                else                                 : print "job is already final!"
-             -------------------------------------------------------------------
+
         '''
         if self._plugin is not None:
             return self._plugin.service_list(self)
