@@ -71,7 +71,7 @@ class ComputeDescription(Object, AttributeInterface):
         self._memory           = None
         self._hostnames        = None
         self._operating_system = 'Any'
-        self._arch             = 'Any'
+        self._architecture     = 'Any'
 
         self._register_rw_vec_attribute (name="OperatingSystem", 
                                          accessor=self.__class__.operating_system) 
