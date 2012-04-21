@@ -26,7 +26,7 @@ def run(url):
 """\"
 import sys
 import os  
-print os.environ['MYOUTPUT']
+print os.environ[\\"MYOUTPUT\\"]
 print sys.version
 \""""]
 

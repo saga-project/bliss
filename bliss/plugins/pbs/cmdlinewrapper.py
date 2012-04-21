@@ -481,6 +481,9 @@ class PBSService:
             states.append(jobinfo.state)
         return states
 
+    def shellquote(self, s):
+        return "'" + s.replace("'", "'\\''") + "'"
+
     ######################################################################
     ##
     def _pbscript_generator(self, jd):
@@ -551,9 +554,10 @@ class PBSService:
 
         script = self._pbscript_generator(job.get_description())
 
-        # filter the script
-        script = script.replace("\"", "\\\"")
-        result = self._cw.run("echo \"%s\" | qsub" % (script))
+        # filter the script - esapce problematic characters
+        #scprpt = script.replace("'", "\'")
+        #script = script.replace("\"", "\\\"")
+        result = self._cw.run("echo \'%s\' | qsub" % (script))
  
         if result.returncode != 0:
             if len(result.stderr) < 1:

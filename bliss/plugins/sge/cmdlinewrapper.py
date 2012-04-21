@@ -519,8 +519,9 @@ class SGEService:
         script = self._sge_script_generator(job.get_description())
 
         # filter the script
-        script = script.replace("\"", "\\\"")
-        result = self._cw.run("echo \"%s\" | qsub" % (script))
+        #scprpt = script.replace("'", "\'")
+        #script = script.replace("\"", "\\\"")
+        result = self._cw.run("echo \'%s\' | qsub" % (script))
         if result.returncode != 0:
             if len(result.stderr) < 1:
                 error = result.stdout
