@@ -19,7 +19,7 @@ from bliss.plugins.utils import CommandWrapper
 
 def sge_to_saga_jobstate(sgejs):
     '''translates a pbs one-letter state to saga'''
-    if sgejs == 'C':
+    if sgejs == 'c':
         return bliss.saga.job.Job.Done
     elif sgejs == 'E':
         return bliss.saga.job.Job.Running
@@ -29,14 +29,17 @@ def sge_to_saga_jobstate(sgejs):
         return bliss.saga.job.Job.Pending
     elif sgejs == 'r':
         return bliss.saga.job.Job.Running 
-    elif sgejs == 'T': 
+    elif sgejs == 't': 
         return bliss.saga.job.Job.Running 
-    elif sgejs == 'W':
+    elif sgejs == 'w':
         return bliss.saga.job.Job.Pending
-    elif sgejs == 'S':
+    elif sgejs == 's':
         return bliss.saga.job.Job.Pending 
     elif sgejs == 'X':
         return bliss.saga.job.Job.Canceled
+    elif sgejs == 'Eqw':
+        return bliss.saga.job.Job.Failed
+
     else:
         return bliss.saga.job.Job.Unknown
 
@@ -287,9 +290,10 @@ class SGEService:
                 self._pi.log_info("Found SGE command line tools on %s at %s" \
                   % (self._url, result.stdout.replace('/qstat', '')))
                
-                si = self.get_service_info()
-                if si.GlueHostArchitectureSMPSize != None:
-                    self._ppn = si.GlueHostArchitectureSMPSize
+                # SERVICE INFO DISABLED. 
+                #si = self.get_service_info()
+                #if si.GlueHostArchitectureSMPSize != None:
+                #    self._ppn = si.GlueHostArchitectureSMPSize
          
                     #self._ppn   = int(nodes[1].split(" = ")[1].strip())
                 #    self._pi.log_info("%s seems to have %s nodes and %s processors (cores) per node" \
@@ -370,14 +374,15 @@ class SGEService:
 
 
         result = self._cw.run("qstat | grep %s" % saga_jobid.native_id )
-        if (result.returncode != 0) or (len(result.stderr) > 1):
+
+        if (result.returncode != 0) or (len(result.stdout) == 0):
             if self._known_jobs_exists(saga_jobid.native_id):
                 ## if the job is on record but can't be reached anymore,
                 ## this probablty means that it has finished and already
                 ## kicked out qstat. in that case we just set it's state 
                 ## to done.
                 jobinfo = self._known_jobs[saga_jobid.native_id]
-                jobinfo._job_state = 'C' # PBS 'Complete'
+                jobinfo._job_state = 'c' # SGE 'Complete'
                 return jobinfo
             else:
                 ## something went wrong.
@@ -473,7 +478,7 @@ class SGEService:
                 exec_n_args += "%s " % (arg)
 
         sge_params += "#$ -N %s \n" % "bliss_job" 
-        sge_params += "#$ -V     \n"
+        sge_params += "#$ -V    \n"
 
         if jd.environment is not None:
             variable_list = str()
@@ -493,6 +498,18 @@ class SGEService:
             sge_params += "#$ -l h_rt=%s:%s:00 \n" % (str(hours), str(minutes))
         if jd.queue is not None:
             sge_params += "#$ -q %s \n" % jd.queue
+            # deterine the "wayness" of the SMP nodes for the queue
+            result = self._cw.run("qconf -sq %s | grep slots" % (jd.queue))
+            if result.returncode != 0:
+                raise Exception("Problem determining SMP wayness. Command was: %s" % ("qconf -sq %s | grep slots" % (jd.queue)))
+            else:
+                self._ppn = result.stdout.split()[1]
+                self._pi.log_info("Determined 'wayness' for queue '%s': %s" % (jd.queue, self._ppn))
+                
+        else:
+            raise Exception("No queue defined.")
+    
+
         if jd.project is not None:
             sge_params += "#$ -A %s \n" % str(jd.project)
         if jd.contact is not None:

@@ -41,7 +41,7 @@ def main():
         jd = saga.job.Description()
         # project to use
         jd.project = "TG-MCB090174"
-       
+        # queue name is mandatory for SGE adaptor (?) 
         jd.queue   = "development"
 
         # resource requirements
