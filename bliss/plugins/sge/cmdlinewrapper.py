@@ -516,9 +516,23 @@ class SGEService:
             sge_params += "#$ -m be \n"
             sge_params += "#$ -M %s \n" % jd.contact
         
+        # if no cores are requested at all, we default to one
+        if jd.total_cpu_count is None:
+            jd.total_cpu_count = 1
 
-        if jd.total_cpu_count is not None:
-            sge_params += "#$ -pe %sway %s" % (self._ppn, str(jd.total_cpu_count))
+        # we need to translate the # cores requested into 
+        # multiplicity, i.e., if one core is requested and 
+        # the cluster consists of 16-way SMP nodes, we will
+        # request 16. If 17 cores are requested, we will
+        # request 32... and so on ... self.__ppn represents 
+        # the core count per single node
+        count = int(int(jd.total_cpu_count)/int(self._ppn))
+        if int(jd.total_cpu_count)%int(self._ppn) != 0:
+            count = count + 1
+        count = count * int(self._ppn)
+
+        sge_params += "#$ -pe %sway %s" % (self._ppn, str(count))
+
 
         sgescript = "\n#!/bin/bash \n%s \n%s" % (sge_params, exec_n_args)
         self._pi.log_info("Generated SGE script: %s" % (sgescript))
