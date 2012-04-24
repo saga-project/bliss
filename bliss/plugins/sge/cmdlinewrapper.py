@@ -234,7 +234,7 @@ class SGEService:
         # see if we run stuff on the local machine 
         if self._url.scheme == "sge":
             self._use_ssh = False
-            cw = CommandWrapper(via_ssh=False)
+            cw = CommandWrapper(plugin=self._pi, via_ssh=False)
             result = cw.run("which qstat")#, ["--version"]) ### CHANGE to sge tool name
             if result.returncode != 0:
                 self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
@@ -249,7 +249,7 @@ class SGEService:
             for ctx in self._so.session.contexts:
                 if ctx.type is bliss.saga.Context.SSH:
                     try:
-                        cw = CommandWrapper(via_ssh=True,
+                        cw = CommandWrapper(plugin=self._pi, via_ssh=True,
                                             ssh_username=ctx.userid, 
                                             ssh_hostname=self._url.host, 
                                             ssh_key=ctx.userkey)
@@ -267,7 +267,7 @@ class SGEService:
             if usable_ctx is None:
                 # see if we can use system defaults to run
                 # stuff via ssh
-                cw = CommandWrapper(ssh_hostname=self._url.host, via_ssh=True)
+                cw = CommandWrapper(plugin=self._pi, ssh_hostname=self._url.host, via_ssh=True)
                 result = cw.run("true")
                 if result.returncode != 0:
                     self._pi.log_warning("Using no context %s to access %s failed because: %s" \
