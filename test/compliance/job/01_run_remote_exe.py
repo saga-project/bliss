@@ -7,17 +7,27 @@ __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import sys
+import getpass
 import bliss.saga as saga
 
-def run(url):
+def run(url, username, queue, project):
     """Test if we can execute a remote bash script via 'bash -c'
     """
     try:
+        ctx = saga.Context()
+        ctx.type = saga.Context.SSH
+        ctx.userid  = username # like 'ssh username@host ...'
+
         js = saga.job.Service(url)
-    
+        js.session.contexts.append(ctx)
+
         # describe our job
         jd = saga.job.Description()
 
+        jd.queue   = queue
+        jd.project = project
+        jd.wall_time_limit = 5 # minutes
+    
         # environment, executable & arguments
         jd.environment = {'MYOUTPUT':'"Hello from Bliss"'}       
         jd.executable  = '/bin/echo'
@@ -85,14 +95,33 @@ def run(url):
 
 
 def usage():
-    print 'Usage: python run_remote_exe.py <URL>'
-    sys.exit(-1)
+    print 'Usage: python %s ' % __file__
+    print '                <URL>'
+    print '                <REMOTEUSERNAME (default: local username)>'
+    print '                <QUEUE (default: None)>'
+    print '                <PROJECT (default: None)>'
 
 def main():
+    remoteusername = getpass.getuser()
+    queue = None
+    project = None
+    js_url = None
+
     args = sys.argv[1:]
-    if len(args) != 1:
+    if len(args) < 1:
         usage()
-    run(args[0])
+        sys.exit(-1)
+    else:
+        js_url = args[0]
+
+    try:
+        remoteusername = args[1]
+        queue = args[2]
+        project = args[3]
+    except Exception:
+        pass      
+
+    run(js_url, remoteusername, queue, project)
 
 if __name__ == '__main__':
     main()
