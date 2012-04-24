@@ -1,13 +1,14 @@
 Version 0.1.20 released 2012-04-04
 ----------------------------------------------------------------------
 
+* Added supoprt for ssh re-connection after timeout (issue #29)
 * Abandoned 'Exception' filenames and API inheritance. The Bliss interface
   looks much cleaner now. Compatibility with previous versions has
   been ensured
 * Improved (inline) API documentation
 * Swapped urlparse with furl in saga.Url class This hopefully fixes
   the problem with inconsistent parsing accross different Python versions
-* Merged SGE plug-in development branch 
+* Added SGE (Sun Grid Engine) plug-in (issue #11)
 * Removed sagacompat compatibility API
 * Log source names now all start with 'bliss.'. This should make 
   filtering much easier

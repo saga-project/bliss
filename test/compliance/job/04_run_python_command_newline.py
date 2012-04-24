@@ -21,7 +21,7 @@ def run(url):
         # environment, executable & arguments
         jd.environment = {'MYOUTPUT':'"Hello from Bliss"'}       
         jd.executable  = 'python'
-        jd.arguments   = ['-c', '"import sys \nimport os \nprint os.environ[\'MYOUTPUT\'] \nprint sys.version"']
+        jd.arguments   = ['-c', '"import sys \nimport os \nprint os.environ[\\"MYOUTPUT\\"] \nprint sys.version"']
 
         # output options
         jd.output = "bliss_job.04.stdout"

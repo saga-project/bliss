@@ -76,6 +76,14 @@ AM: can confirm fork to be working, output ok, on ubuntu-10.10 python 2.6.6
 Plug-In: PBS(+SSH) Job
 ----------------------
 
+  * URL: **pbs+ssh://alamo.futuregrid.org**, Info: FutureGrid Alamo Cluster, PBS 2.4.8, Date: 04/21/2012, 
+    Git hash (git log -1): de149e866eae6b22be1ea2162742fec08f9927e3 
+    * 01_run_remote_exe.py: **PASS**
+    * 02_run_shell_command_newline.py: **PASS**
+    * 03_run_shell_command_multiline.py: **PASS**
+    * 04_run_python_command_newline.py: **PASS**
+    * 05_run_python_command_multiline.py: **PASS**
+
 ** installation on india.fg ** (AM)
 
 Red Hat ELS 5.8, Python 2.7

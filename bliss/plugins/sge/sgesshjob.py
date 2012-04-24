@@ -18,7 +18,7 @@ import bliss.saga
 ################################################################################
 ################################################################################
 
-class SGEJobAndSDPlugin(JobPluginInterface, SDPluginInterface):
+class SGEJobPlugin(JobPluginInterface, SDPluginInterface):
     '''Implements a job plugin that can submit jobs to remote SGE cluster via SSH
     '''
     ## Define adaptor name. Convention is:

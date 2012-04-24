@@ -41,12 +41,12 @@ def main():
         jd = saga.job.Description()
         # project to use
         jd.project = "TG-MCB090174"
-       
+        # queue name is mandatory for SGE adaptor (?) 
         jd.queue   = "development"
 
         # resource requirements
         jd.wall_time_limit = 5 # minutes
-        jd.total_cpu_count = 12
+        #jd.total_cpu_count = 13
         # the email notification
         #jd.contact = "oweidner@cct.lsu.edu" 
         # environment, executable & arguments

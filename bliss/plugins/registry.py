@@ -3,11 +3,11 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__copyright__ = "Copyright 2012, Ole Christian Weidner"
+__copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.plugins.pbs import PBSJobAndSDPlugin
-from bliss.plugins.sge import SGEJobAndSDPlugin
+from bliss.plugins.pbs import PBSJobPlugin
+from bliss.plugins.sge import SGEJobPlugin
 from bliss.plugins.sftp import SFTPFilesystemPlugin
 from bliss.plugins.local import LocalJobPlugin
 from bliss.plugins.ssh import SSHJobPlugin
@@ -19,15 +19,15 @@ _registry.append({"class"   : LocalJobPlugin,
                   "name"    : LocalJobPlugin.plugin_name(),
                   "schemas" : LocalJobPlugin.supported_schemas()})
 
-_registry.append({"class"   : PBSJobAndSDPlugin,
-                  "apis"    : PBSJobAndSDPlugin.supportedExceptions(),
-                  "name"    : PBSJobAndSDPlugin.plugin_name(),
-                  "schemas" : PBSJobAndSDPlugin.supported_schemas()})
+_registry.append({"class"   : PBSJobPlugin,
+                  "apis"    : PBSJobPlugin.supportedExceptions(),
+                  "name"    : PBSJobPlugin.plugin_name(),
+                  "schemas" : PBSJobPlugin.supported_schemas()})
 
-_registry.append({"class"   : SGEJobAndSDPlugin,
-                  "apis"    : SGEJobAndSDPlugin.supportedExceptions(),
-                  "name"    : SGEJobAndSDPlugin.plugin_name(),
-                  "schemas" : SGEJobAndSDPlugin.supported_schemas()})
+_registry.append({"class"   : SGEJobPlugin,
+                  "apis"    : SGEJobPlugin.supportedExceptions(),
+                  "name"    : SGEJobPlugin.plugin_name(),
+                  "schemas" : SGEJobPlugin.supported_schemas()})
 
 _registry.append({"class"   : SFTPFilesystemPlugin,
                   "apis"    : SFTPFilesystemPlugin.supportedExceptions(),

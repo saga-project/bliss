@@ -250,7 +250,7 @@ class PBSService:
         # see if we run stuff on the local machine 
         if self._url.scheme in ["pbs", "torque", "xt5torque"]:
             self._use_ssh = False
-            cw = CommandWrapper(via_ssh=False)
+            cw = CommandWrapper(plugin=self._pi, via_ssh=False)
             result = cw.run("which pbsnodes")#, ["--version"])
             if result.returncode != 0:
                 self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
@@ -270,7 +270,7 @@ class PBSService:
                             self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
                                                          "Userkey %s doesn't exist." % ctx.userkey)
                     try:
-                        cw = CommandWrapper(via_ssh=True,
+                        cw = CommandWrapper(plugin=self._pi, via_ssh=True,
                                             ssh_username=ctx.userid, 
                                             ssh_hostname=self._url.host, 
                                             ssh_key=ctx.userkey)
@@ -288,7 +288,7 @@ class PBSService:
             if usable_ctx is None:
                 # see if we can use system defaults to run
                 # stuff via ssh
-                cw = CommandWrapper(ssh_hostname=self._url.host, via_ssh=True)
+                cw = CommandWrapper(plugin=self._pi, ssh_hostname=self._url.host, via_ssh=True)
                 result = cw.run("true")
                 if result.returncode != 0:
                     self._pi.log_warning("Using no context %s to access %s failed because: %s" \
@@ -481,6 +481,9 @@ class PBSService:
             states.append(jobinfo.state)
         return states
 
+    def shellquote(self, s):
+        return "'" + s.replace("'", "'\\''") + "'"
+
     ######################################################################
     ##
     def _pbscript_generator(self, jd):
@@ -551,9 +554,10 @@ class PBSService:
 
         script = self._pbscript_generator(job.get_description())
 
-        # filter the script
-        script = script.replace("\"", "\\\"")
-        result = self._cw.run("echo \"%s\" | qsub" % (script))
+        # filter the script - esapce problematic characters
+        #scprpt = script.replace("'", "\'")
+        #script = script.replace("\"", "\\\"")
+        result = self._cw.run("echo \'%s\' | qsub" % (script))
  
         if result.returncode != 0:
             if len(result.stderr) < 1:

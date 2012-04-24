@@ -19,7 +19,7 @@ from bliss.plugins.utils import CommandWrapper
 
 def sge_to_saga_jobstate(sgejs):
     '''translates a pbs one-letter state to saga'''
-    if sgejs == 'C':
+    if sgejs == 'c':
         return bliss.saga.job.Job.Done
     elif sgejs == 'E':
         return bliss.saga.job.Job.Running
@@ -29,14 +29,17 @@ def sge_to_saga_jobstate(sgejs):
         return bliss.saga.job.Job.Pending
     elif sgejs == 'r':
         return bliss.saga.job.Job.Running 
-    elif sgejs == 'T': 
+    elif sgejs == 't': 
         return bliss.saga.job.Job.Running 
-    elif sgejs == 'W':
+    elif sgejs == 'w':
         return bliss.saga.job.Job.Pending
-    elif sgejs == 'S':
+    elif sgejs == 's':
         return bliss.saga.job.Job.Pending 
     elif sgejs == 'X':
         return bliss.saga.job.Job.Canceled
+    elif sgejs == 'Eqw':
+        return bliss.saga.job.Job.Failed
+
     else:
         return bliss.saga.job.Job.Unknown
 
@@ -231,7 +234,7 @@ class SGEService:
         # see if we run stuff on the local machine 
         if self._url.scheme == "sge":
             self._use_ssh = False
-            cw = CommandWrapper(via_ssh=False)
+            cw = CommandWrapper(plugin=self._pi, via_ssh=False)
             result = cw.run("which qstat")#, ["--version"]) ### CHANGE to sge tool name
             if result.returncode != 0:
                 self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
@@ -246,7 +249,7 @@ class SGEService:
             for ctx in self._so.session.contexts:
                 if ctx.type is bliss.saga.Context.SSH:
                     try:
-                        cw = CommandWrapper(via_ssh=True,
+                        cw = CommandWrapper(plugin=self._pi, via_ssh=True,
                                             ssh_username=ctx.userid, 
                                             ssh_hostname=self._url.host, 
                                             ssh_key=ctx.userkey)
@@ -264,7 +267,7 @@ class SGEService:
             if usable_ctx is None:
                 # see if we can use system defaults to run
                 # stuff via ssh
-                cw = CommandWrapper(ssh_hostname=self._url.host, via_ssh=True)
+                cw = CommandWrapper(plugin=self._pi, ssh_hostname=self._url.host, via_ssh=True)
                 result = cw.run("true")
                 if result.returncode != 0:
                     self._pi.log_warning("Using no context %s to access %s failed because: %s" \
@@ -287,9 +290,10 @@ class SGEService:
                 self._pi.log_info("Found SGE command line tools on %s at %s" \
                   % (self._url, result.stdout.replace('/qstat', '')))
                
-                si = self.get_service_info()
-                if si.GlueHostArchitectureSMPSize != None:
-                    self._ppn = si.GlueHostArchitectureSMPSize
+                # SERVICE INFO DISABLED. 
+                #si = self.get_service_info()
+                #if si.GlueHostArchitectureSMPSize != None:
+                #    self._ppn = si.GlueHostArchitectureSMPSize
          
                     #self._ppn   = int(nodes[1].split(" = ")[1].strip())
                 #    self._pi.log_info("%s seems to have %s nodes and %s processors (cores) per node" \
@@ -370,14 +374,15 @@ class SGEService:
 
 
         result = self._cw.run("qstat | grep %s" % saga_jobid.native_id )
-        if (result.returncode != 0) or (len(result.stderr) > 1):
+
+        if (result.returncode != 0) or (len(result.stdout) == 0):
             if self._known_jobs_exists(saga_jobid.native_id):
                 ## if the job is on record but can't be reached anymore,
                 ## this probablty means that it has finished and already
                 ## kicked out qstat. in that case we just set it's state 
                 ## to done.
                 jobinfo = self._known_jobs[saga_jobid.native_id]
-                jobinfo._job_state = 'C' # PBS 'Complete'
+                jobinfo._job_state = 'c' # SGE 'Complete'
                 return jobinfo
             else:
                 ## something went wrong.
@@ -473,7 +478,7 @@ class SGEService:
                 exec_n_args += "%s " % (arg)
 
         sge_params += "#$ -N %s \n" % "bliss_job" 
-        sge_params += "#$ -V     \n"
+        sge_params += "#$ -V    \n"
 
         if jd.environment is not None:
             variable_list = str()
@@ -493,15 +498,41 @@ class SGEService:
             sge_params += "#$ -l h_rt=%s:%s:00 \n" % (str(hours), str(minutes))
         if jd.queue is not None:
             sge_params += "#$ -q %s \n" % jd.queue
+            # deterine the "wayness" of the SMP nodes for the queue
+            result = self._cw.run("qconf -sq %s | grep slots" % (jd.queue))
+            if result.returncode != 0:
+                raise Exception("Problem determining SMP wayness. Command was: %s" % ("qconf -sq %s | grep slots" % (jd.queue)))
+            else:
+                self._ppn = result.stdout.split()[1]
+                self._pi.log_info("Determined 'wayness' for queue '%s': %s" % (jd.queue, self._ppn))
+                
+        else:
+            raise Exception("No queue defined.")
+    
+
         if jd.project is not None:
             sge_params += "#$ -A %s \n" % str(jd.project)
         if jd.contact is not None:
             sge_params += "#$ -m be \n"
             sge_params += "#$ -M %s \n" % jd.contact
         
+        # if no cores are requested at all, we default to one
+        if jd.total_cpu_count is None:
+            jd.total_cpu_count = 1
 
-        if jd.total_cpu_count is not None:
-            sge_params += "#$ -pe %sway %s" % (self._ppn, str(jd.total_cpu_count))
+        # we need to translate the # cores requested into 
+        # multiplicity, i.e., if one core is requested and 
+        # the cluster consists of 16-way SMP nodes, we will
+        # request 16. If 17 cores are requested, we will
+        # request 32... and so on ... self.__ppn represents 
+        # the core count per single node
+        count = int(int(jd.total_cpu_count)/int(self._ppn))
+        if int(jd.total_cpu_count)%int(self._ppn) != 0:
+            count = count + 1
+        count = count * int(self._ppn)
+
+        sge_params += "#$ -pe %sway %s" % (self._ppn, str(count))
+
 
         sgescript = "\n#!/bin/bash \n%s \n%s" % (sge_params, exec_n_args)
         self._pi.log_info("Generated SGE script: %s" % (sgescript))
@@ -519,8 +550,9 @@ class SGEService:
         script = self._sge_script_generator(job.get_description())
 
         # filter the script
-        script = script.replace("\"", "\\\"")
-        result = self._cw.run("echo \"%s\" | qsub" % (script))
+        #scprpt = script.replace("'", "\'")
+        #script = script.replace("\"", "\\\"")
+        result = self._cw.run("echo \'%s\' | qsub" % (script))
         if result.returncode != 0:
             if len(result.stderr) < 1:
                 error = result.stdout
