@@ -19,12 +19,15 @@ class SSHJobProcess(object):
                                         "SSH Job adaptor doesn't support the project attribute!") 
         
         if jobdescription.queue     != None: 
-            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
-                                        "SSH Job adaptor doesn't support the queue attribute!") 
+            self.pi.log_info("Silently ignoring the queue sent to the SSH adaptor.")
+            # queue and wall_time_limit blocks commented out per ole's request
+            #self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+            #                            "SSH Job adaptor doesn't support the queue attribute!") 
 
-        if jobdescription.wall_time_limit     != None: 
-            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
-                                        "SSH Job adaptor doesn't support the wall_time_limit attribute!") 
+        if jobdescription.wall_time_limit     != None:
+            self.pi.log_info("Silently ignoring the walltime limit sent to the SSH adaptor.")
+            #self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+            #                            "SSH Job adaptor doesn't support the wall_time_limit attribute!") 
               
         if jobdescription.contact     != None: 
             self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
@@ -168,7 +171,17 @@ class SSHJobProcess(object):
         args = ""
         if self.arguments is not None:
             for arg in self.arguments:
-                cmdline += " %r" % arg 
+                #if we're just working with a string
+                arg = "%s" % arg
+                if isinstance(arg, basestring):
+                    #make it a list so that if we get a list of strings, we can iterate
+                    s=[arg]
+                else:
+                    #leave it be if it's already a list
+                    s=arg
+                for a in s:
+                    #iterate across the list of strings
+                    cmdline += " %s" % a 
 
         full_line = "echo $$ && ("+envline+"'"+cmdline+"')" + "> "+ jd.output + " 2> " + jd.error
 
