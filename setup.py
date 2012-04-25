@@ -91,6 +91,7 @@ setup_args = {
         #"bliss.sagacompat.sd",
         #"bliss.sagacompat.job",
         #"bliss.sagacompat.filesystem",
+        "bliss.utils",
         "bliss.runtime",
         "bliss.interface",
         "bliss.plugins",

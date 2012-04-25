@@ -8,7 +8,7 @@ __license__   = "MIT"
 from bliss.interface import JobPluginInterface
 from bliss.plugins.local.process import LocalJobProcess
 
-from bliss.plugins import utils
+from bliss.utils import openssh_wrapper
 import bliss.saga 
 
 class LocalJobPlugin(JobPluginInterface):
