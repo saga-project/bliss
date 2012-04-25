@@ -37,7 +37,8 @@ class LocalJobPlugin(JobPluginInterface):
             job_id = hex(id(job_obj))
             try:
                 self.objects[service_id]['jobs'].append(job_obj)
-                self.processes[job_id] = LocalJobProcess(jobdescription=job_obj.get_description(), plugin=self.parent)
+                self.processes[job_id] = LocalJobProcess(jobdescription=job_obj.get_description(), 
+                                                         plugin=self.parent)
             except Exception, ex:
                 self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
                   "Can't register job: %s" % (ex))   

@@ -6,7 +6,7 @@ __copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import logging
-from bliss.utils import traceback
+from bliss.utils import tback
 from bliss.saga.Exception import Exception as SAGAException
 
 class PluginBaseInterface:
@@ -32,7 +32,7 @@ class PluginBaseInterface:
 
     def log_error_and_raise(self, error, message):
         '''Writes an ERROR to the plugin log and raises an exception'''
-        msg = "[%s] %s %s" % (self.name, message, traceback.get_traceback())
+        msg = "[%s] %s %s" % (self.name, message, tback.get_traceback())
         self.__logger.error(message)
         raise SAGAException(error, msg)
 

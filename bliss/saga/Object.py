@@ -10,7 +10,7 @@ import logging
 import bliss.saga
 import bliss.runtime
 
-from bliss.utils import traceback
+from bliss.utils import tback
 
 
 class Object(object) :

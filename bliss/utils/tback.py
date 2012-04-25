@@ -8,7 +8,7 @@ __license__   = "MIT"
 import traceback
 import StringIO
 
-def plugin_traceback(prefix="\n*** "):
+def get_traceback(prefix="\n*** "):
     '''returns the last traceback as a string with a given prefix'''
     fp = StringIO.StringIO()
     traceback.print_exc(file=fp)
