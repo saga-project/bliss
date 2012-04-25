@@ -56,16 +56,21 @@ class SSHJobProcess(object):
         self._job_error=None
 
     def __del__(self):
-        if self._job_output is not None:
-            self._job_output.close()
-        if self._job_error is not None:
-            self._job_error.close()
-        if self.sshchannel is not None:
-            self.pi.log_debug("Closing SSH channel")   
-            self.sshchannel.close()
-        if self.sshclient is not None:
-            self.pi.log_debug("Closing SSH client")
-            self.sshclient.close()
+        try:
+            if self.sshchannel is not None:
+                self.pi.log_debug("Closing SSH channel")   
+                self.sshchannel.close()
+                
+        except Exception, ex:
+            self.pi.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't close SSH channel because %s" % str(ex))
+
+        try:
+            if self.sshclient is not None:
+                self.pi.log_debug("Closing SSH client")
+                self.sshclient.close()
+                
+        except Exception ,ex:
+            self.pi.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't close SSH client because %s" % str(ex))
 
 
     def run(self, jd, url):
