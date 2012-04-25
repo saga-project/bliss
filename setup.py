@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 """
-Setup script.
+Bliss setup script.
 """
 
 import os
@@ -124,7 +124,6 @@ except ImportError:
     pass
 else:
     setup_args['install_requires'] = [
-        'openssh_wrapper',
         'paramiko-on-pypi',
         'furl'
     ]

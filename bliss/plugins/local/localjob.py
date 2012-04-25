@@ -1,9 +1,8 @@
-#!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.interface import JobPluginInterface
@@ -41,7 +40,7 @@ class LocalJobPlugin(JobPluginInterface):
                 self.processes[job_id] = LocalJobProcess(jobdescription=job_obj.get_description(), plugin=self.parent)
             except Exception, ex:
                 self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                  "Can't register job: %s %s" % (ex, utils.get_traceback()))   
+                  "Can't register job: %s" % (ex))   
 
         def del_job_object(self, job_obj):
             pass
@@ -52,7 +51,7 @@ class LocalJobPlugin(JobPluginInterface):
                 if job_obj in self.objects[key]['jobs']:
                     return self.objects[key]['instance']
             self.parrent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-              "INTERNAL ERROR: Job object %s is not known by this plugin %s" % (job, utils.get_traceback())) 
+              "INTERNAL ERROR: Job object %s is not known by this plugin" % (job)) 
 
         def get_job_for_jobid(self, service_obj, job_id):
             '''Return the job object associated with the given job id'''
@@ -75,7 +74,7 @@ class LocalJobPlugin(JobPluginInterface):
                 return self.processes[hex(id(job_obj))]
             except Exception, ex:
                 self.parrent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                "INTERNAL ERROR: Job object %s is not associated with a process %s" % (job_obj, utils.get_traceback()))   
+                "INTERNAL ERROR: Job object %s is not associated with a process" % (job_obj))   
     ##
     ########################################
 

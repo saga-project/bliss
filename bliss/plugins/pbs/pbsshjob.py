@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
@@ -10,7 +9,6 @@ from bliss.interface import JobPluginInterface, SDPluginInterface
 
 from bliss.plugins.pbs.cmdlinewrapper import PBSService
 from bliss.plugins.pbs.bookkeeper import BookKeeper
-from bliss.plugins import utils
 
 import time
 import bliss.saga
