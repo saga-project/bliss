@@ -59,10 +59,12 @@ class JobDescriptionTests(unittest.TestCase):
                     self.fail("Attribute Error - unexpected value")
                 if jd.get_attribute(attr_key) != svalue:
                     self.fail("Attribute Error - unexpected value")
-
-                with self.assertRaises(saga.Exception):
+ 
+                try:
                     setattr(jd, attr_val, 12)  # shouldn't accept anything but str
-
+                    self.fail("Attribute Error - shouldn't except non-str value")
+                except saga.Exception:
+                    pass
                 jd.set_attribute(attr_key, "XX")
                 if getattr(jd, attr_val) != "XX":
                     self.fail("Attribute Error - unexpected value")
@@ -104,8 +106,11 @@ class JobDescriptionTests(unittest.TestCase):
                 if jd.get_attribute(attr_key) != svalue:
                     self.fail("Attribute Error - unexpected value")
 
-                with self.assertRaises(saga.Exception):
+                try:
                     setattr(jd, attr_val, "adads")  # shouldn't accept anything but int
+                    self.fail("Attribute Error - shouldn't except non-int value")
+                except saga.Exception:
+                    pass 
 
                 jd.set_attribute(attr_key, 16)
                 if getattr(jd, attr_val) != 16:
@@ -146,8 +151,11 @@ class JobDescriptionTests(unittest.TestCase):
                 if jd.get_vector_attribute(attr_key) != svalue:
                     self.fail("Attribute Error - unexpected value")
 
-                with self.assertRaises(saga.Exception):
+                try:
                     setattr(jd, attr_val,["ss", "gg"])  # shouldn't accept anything but int
+                    self.fail("Attribute Error - shouldn't except non-int value")
+                except saga.Exception:
+                    pass
 
                 jd.set_vector_attribute(attr_key, {"x":"z"})
                 if getattr(jd, attr_val) != {"x":"z"}:
@@ -190,8 +198,11 @@ class JobDescriptionTests(unittest.TestCase):
                 if jd.get_vector_attribute(attr_key) != svalue:
                     self.fail("Attribute Error - unexpected value")
 
-                with self.assertRaises(saga.Exception):
+                try:
                     setattr(jd, attr_val, {"ss":"gg"})  # shouldn't accept anything but list
+                    self.fail("Attribute Error - shouldn't except non-list value")
+                except saga.Exception:
+                    pass
 
                 jd.set_vector_attribute(attr_key, ["x","z"])
                 if getattr(jd, attr_val) != ["x","z"]:
