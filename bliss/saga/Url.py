@@ -44,7 +44,7 @@ class Url(Object):
         '''The query part of the Url.'''
         self.fragment = self._urlobj.fragment
         '''The fragment part of the Url.'''
-        self.url      = str(self._urlobj)
+        self.url      = str(self._urlobj.geturl())
         '''The Url as string (same as __str__).'''
 
     # Old-style accessors
