@@ -118,8 +118,8 @@ def main():
         remoteusername = args[1]
         queue = args[2]
         project = args[3]
-    except Exception:
-        pass      
+    except IndexError:
+        print "hi" 
 
     run(js_url, remoteusername, queue, project)
 

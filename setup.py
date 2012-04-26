@@ -126,7 +126,7 @@ except ImportError:
 else:
     setup_args['install_requires'] = [
         'paramiko-on-pypi',
-        'furl'
+        #'furl'
     ]
 
     if os.getenv('NO_INSTALL_REQS'):
