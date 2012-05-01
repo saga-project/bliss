@@ -3,6 +3,15 @@ Compliance Test Results
 
 Plug-In: SSH Job
 ----------------
+
+  * URL: **ssh://192.168.2.112**, Info: OS X 10.7, Date: 05/01/2012, 
+    Git hash (git log -1): 991b5b8670fc2702ccd5c16c794e5b6b2eac37f9
+    * 01_run_remote_exe.py ssh://192.168.2.112 s1063117: **PASS**
+    * 02_run_shell_command_newline.py ssh://192.168.2.112 s1063117: **PASS**
+    * 03_run_shell_command_multiline.py ssh://192.168.2.112 s1063117: **PASS**
+    * 04_run_python_command_newline.py ssh://192.168.2.112 s1063117: **PASS**
+    * 05_run_python_command_multiline.py ssh://192.168.2.112 s1063117: **PASS**
+
 * URL: ssh://ranger from Lonestar
    * By default, All tests fail with:
 
