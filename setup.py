@@ -126,10 +126,10 @@ except ImportError:
 else:
     setup_args['install_requires'] = [
         'paramiko-on-pypi',
-        #'furl'
     ]
+    
 
-    if os.getenv('NO_INSTALL_REQS'):
+    if os.getenv('BLISS_NO_INSTALL_REQS'):
         setup_args['install_requires'] = None
 
 ##
