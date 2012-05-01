@@ -12,7 +12,7 @@ Plug-In: SSH Job
     * 04_run_python_command_newline.py ssh://192.168.2.112 s1063117: **PASS**
     * 05_run_python_command_multiline.py ssh://192.168.2.112 s1063117: **PASS**
 
-* URL: ssh://ranger from Lonestar
+  * URL: ssh://ranger from Lonestar
    * By default, All tests fail with:
 
 Exception: Couldn't find a plugin for URL scheme 'ssh://' and API type 'saga.job'
