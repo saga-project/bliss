@@ -40,6 +40,12 @@ class ContextTests(unittest.TestCase):
         c1 = saga.Context()
         c1.type = saga.Context.SSH
         c1.userkey=("/tmp/bliss-test.file1")
+        try:
+            c1.userkey=("non_existing_file_2345435")
+            self.fail("'userkey' shouldn't accept a non-exsisting file'")
+        except saga.Exception, e: 
+            pass
+
         s1 = saga.Session()
         s1.add_context(c1)
 
@@ -68,7 +74,19 @@ class ContextTests(unittest.TestCase):
         c1 = saga.Context()
         c1.type = saga.Context.EC2
         c1.userkey  = "/tmp/bliss-test.file1"
+        try:
+            c1.userkey=("non_existing_file_2345435")
+            self.fail("'userkey' shouldn't accept a non-exsisting file'")
+        except saga.Exception, e: 
+            pass
+
         c1.usercert = "/tmp/bliss-test.file2"        
+        try:
+            c1.usercert=("non_existing_file_2345435")
+            self.fail("'usercert' shouldn't accept a non-exsisting file'")
+        except saga.Exception, e: 
+            pass
+
         s1 = saga.Session()
         s1.add_context(c1)
 
@@ -98,7 +116,19 @@ class ContextTests(unittest.TestCase):
         c1 = saga.Context()
         c1.type = saga.Context.X509
         c1.userkey  = "/tmp/bliss-test.file1"
-        c1.usercert = "/tmp/bliss-test.file2"        
+        try:
+            c1.userkey=("non_existing_file_2345435")
+            self.fail("'userkey' shouldn't accept a non-exsisting file'")
+        except saga.Exception, e: 
+            pass
+
+        c1.usercert = "/tmp/bliss-test.file2"     
+        try:
+            c1.usercert=("non_existing_file_2345435")
+            self.fail("'usercert' shouldn't accept a non-exsisting file'")
+        except saga.Exception, e: 
+            pass
+   
         s1 = saga.Session()
         s1.add_context(c1)
 
