@@ -154,10 +154,13 @@ class SSHJobProcess(object):
         self.sshchannel = self.sshclient.get_transport().open_session()
 
         #parse environment variables
-        envline="env "
-        for k in self.environment.keys():
-            envline += k+"="+self.environment[k]+" "
-        envline += " /bin/sh -c "
+
+        envline=""
+        if self.environment:
+            envline = "env "
+            for k in self.environment.keys():
+                envline += k+"="+self.environment[k]+" "
+            envline += " /bin/sh -c "
         
         #set up our commandline
         cmdline = ""
@@ -169,6 +172,7 @@ class SSHJobProcess(object):
 
         #make a list of arguments
         args = ""
+        argline=""
         if self.arguments is not None:
             for arg in self.arguments:
                 #if we're just working with a string
@@ -181,10 +185,15 @@ class SSHJobProcess(object):
                     s=arg
                 for a in s:
                     #iterate across the list of strings
-                    cmdline += " %s" % a 
+                    argline += " %s" % a 
 
-        full_line = "echo $$ && ("+envline+"'"+cmdline+"')" + "> "+ jd.output + " 2> " + jd.error
+        full_line=""
 
+        #change the executed command depending on if we're using env or not
+        if envline=="":
+            full_line = "echo $$ && ("+envline+"'"+cmdline+"' "+argline+")" + "> "+ jd.output + " 2> " + jd.error
+        else:
+            full_line = "echo $$ && ("+envline+"'"+cmdline+" "+argline+"')" + "> "+ jd.output + " 2> " + jd.error
         self.pi.log_debug("Sending command %s to remote server:" % full_line)
         self.sshchannel.exec_command(full_line)
         
