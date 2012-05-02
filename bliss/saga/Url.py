@@ -6,7 +6,8 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-from furl import furl
+# Using urlparse from Python 2.5
+from bliss.utils import urlparse25 as urlparse
 from bliss.saga.Object import Object 
 
 # FIXME: if furl works, then 'typedef saga.Url furl' (AM)
@@ -22,18 +23,18 @@ class Url(Object):
 
         Object.__init__(self, objtype=Object.Type.Url, apitype=Object.Type.BaseAPI)
 
-        self._urlobj  = furl(urlstring)
-        
+        self._urlobj  = urlparse.urlparse(urlstring)
+         
         self.scheme   = self._urlobj.scheme
         '''The scheme part of the Url.'''
-        self.host     = self._urlobj.host #host
+        self.host     = self._urlobj.hostname #host
         '''The host part of the Url.'''
 
         if self._urlobj.port is not None:
-            self.port     = int(self._urlobj.port) # int(port)
+            self.port = int(self._urlobj.port) # int(port)
             '''The port part of the Url.'''
         else:
-            self.port     = None
+            self.port = None
 
         '''The port part of the Url.'''
         self.username = self._urlobj.username
@@ -46,7 +47,7 @@ class Url(Object):
         '''The query part of the Url.'''
         self.fragment = self._urlobj.fragment
         '''The fragment part of the Url.'''
-        self.url      = str(self._urlobj)
+        self.url      = str(self._urlobj.geturl())
         '''The Url as string (same as __str__).'''
 
     # Old-style accessors

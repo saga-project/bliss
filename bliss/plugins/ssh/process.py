@@ -19,12 +19,15 @@ class SSHJobProcess(object):
                                         "SSH Job adaptor doesn't support the project attribute!") 
         
         if jobdescription.queue     != None: 
-            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
-                                        "SSH Job adaptor doesn't support the queue attribute!") 
+            self.pi.log_info("Silently ignoring the queue sent to the SSH adaptor.")
+            # queue and wall_time_limit blocks commented out per ole's request
+            #self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+            #                            "SSH Job adaptor doesn't support the queue attribute!") 
 
-        if jobdescription.wall_time_limit     != None: 
-            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
-                                        "SSH Job adaptor doesn't support the wall_time_limit attribute!") 
+        if jobdescription.wall_time_limit     != None:
+            self.pi.log_info("Silently ignoring the walltime limit sent to the SSH adaptor.")
+            #self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
+            #                            "SSH Job adaptor doesn't support the wall_time_limit attribute!") 
               
         if jobdescription.contact     != None: 
             self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
@@ -56,16 +59,21 @@ class SSHJobProcess(object):
         self._job_error=None
 
     def __del__(self):
-        if self._job_output is not None:
-            self._job_output.close()
-        if self._job_error is not None:
-            self._job_error.close()
-        if self.sshchannel is not None:
-            self.pi.log_debug("Closing SSH channel")   
-            self.sshchannel.close()
-        if self.sshclient is not None:
-            self.pi.log_debug("Closing SSH client")
-            self.sshclient.close()
+        try:
+            if self.sshchannel is not None:
+                self.pi.log_debug("Closing SSH channel")   
+                self.sshchannel.close()
+                
+        except Exception, ex:
+            self.pi.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't close SSH channel because %s" % str(ex))
+
+        try:
+            if self.sshclient is not None:
+                self.pi.log_debug("Closing SSH client")
+                self.sshclient.close()
+                
+        except Exception ,ex:
+            self.pi.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't close SSH client because %s" % str(ex))
 
 
     def run(self, jd, url):
@@ -163,7 +171,17 @@ class SSHJobProcess(object):
         args = ""
         if self.arguments is not None:
             for arg in self.arguments:
-                cmdline += " %r" % arg 
+                #if we're just working with a string
+                arg = "%s" % arg
+                if isinstance(arg, basestring):
+                    #make it a list so that if we get a list of strings, we can iterate
+                    s=[arg]
+                else:
+                    #leave it be if it's already a list
+                    s=arg
+                for a in s:
+                    #iterate across the list of strings
+                    cmdline += " %s" % a 
 
         full_line = "echo $$ && ("+envline+"'"+cmdline+"')" + "> "+ jd.output + " 2> " + jd.error
 

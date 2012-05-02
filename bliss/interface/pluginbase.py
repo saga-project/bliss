@@ -1,15 +1,12 @@
-#!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-
-
 import logging
-from bliss.plugins import utils
+from bliss.utils import tback
 from bliss.saga.Exception import Exception as SAGAException
 
 class PluginBaseInterface:
@@ -35,7 +32,7 @@ class PluginBaseInterface:
 
     def log_error_and_raise(self, error, message):
         '''Writes an ERROR to the plugin log and raises an exception'''
-        msg = "[%s] %s %s" % (self.name, message, utils.get_traceback())
+        msg = "[%s] %s %s" % (self.name, message, tback.get_traceback())
         self.__logger.error(message)
         raise SAGAException(error, msg)
 

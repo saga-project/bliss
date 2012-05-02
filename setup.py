@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 """
-Setup script.
+Bliss setup script.
 """
 
 import os
@@ -91,6 +91,7 @@ setup_args = {
         #"bliss.sagacompat.sd",
         #"bliss.sagacompat.job",
         #"bliss.sagacompat.filesystem",
+        "bliss.utils",
         "bliss.runtime",
         "bliss.interface",
         "bliss.plugins",
@@ -124,12 +125,11 @@ except ImportError:
     pass
 else:
     setup_args['install_requires'] = [
-        'openssh_wrapper',
         'paramiko-on-pypi',
-        'furl'
     ]
+    
 
-    if os.getenv('NO_INSTALL_REQS'):
+    if os.getenv('BLISS_NO_INSTALL_REQS'):
         setup_args['install_requires'] = None
 
 ##

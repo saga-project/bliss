@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ashley Zebrowski"
@@ -7,7 +6,6 @@ __copyright__ = "Copyright 2012, Ashley Zebrowski"
 __license__   = "MIT"
 
 import bliss.saga 
-from bliss.plugins import utils
 from bliss.interface import JobPluginInterface
 from bliss.plugins.ssh.process import SSHJobProcess
 
@@ -40,7 +38,7 @@ class SSHJobPlugin(JobPluginInterface):
                 self.processes[job_id] = SSHJobProcess(jobdescription=job_obj.get_description(), plugin=self.parent, service_object=service_obj)
             except Exception, ex:
                 self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                  "Can't register job: %s %s" % (ex, utils.get_traceback()))   
+                  "Can't register job: %s" % (ex))   
 
         def del_job_object(self, job_obj):
             pass
@@ -51,7 +49,7 @@ class SSHJobPlugin(JobPluginInterface):
                 if job_obj in self.objects[key]['jobs']:
                     return self.objects[key]['instance']
             self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-              "INTERNAL ERROR: Job object %s is not known by this plugin %s" % (job, utils.get_traceback())) 
+              "INTERNAL ERROR: Job object %s is not known by this plugin" % (job)) 
 
         def get_job_for_jobid(self, service_obj, job_id):
             '''Return the job object associated with the given job id'''
@@ -74,7 +72,7 @@ class SSHJobPlugin(JobPluginInterface):
                 return self.processes[hex(id(job_obj))]
             except Exception, ex:
                 self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                "INTERNAL ERROR: Job object %s is not associated with a process %s" % (job_obj, utils.get_traceback()))   
+                "INTERNAL ERROR: Job object %s is not associated with a process" % (job_obj))   
     ##
     ########################################
 

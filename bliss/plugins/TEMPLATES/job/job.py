@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
@@ -7,7 +6,6 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 import bliss.saga 
-from bliss.plugins import utils
 from bliss.interface import JobPluginInterface
 
 class NullJobPlugin(JobPluginInterface):

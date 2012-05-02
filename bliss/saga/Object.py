@@ -10,7 +10,7 @@ import logging
 import bliss.saga
 import bliss.runtime
 
-from bliss.plugins import utils
+from bliss.utils import tback
 
 # FIXME: I don't think that, in python, the object needs anything else besides
 # get_session()... (AM)
