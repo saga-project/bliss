@@ -119,7 +119,7 @@ def main():
         queue = args[2]
         project = args[3]
     except IndexError:
-        print "hi" 
+        pass 
 
     run(js_url, remoteusername, queue, project)
 
