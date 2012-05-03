@@ -26,7 +26,7 @@ class SSHConnection(object):
 
         - `server`: server name or IP address to send commands to (required).
         - `login`: user login (by default, current login)
-        - `confgfile`: local configuration file (by default ~/.ssh/config is used)
+        - `configfile`: local configuration file (by default ~/.ssh/config is used)
         - `identity_file`: identity file (by default ~/.ssh/id_rsa)
         - `ssh_agent_socket`: address of the socket to connect to ssh agent,
            if you want to use one. ``SSH_AUTH_SOCK`` environment variable is
@@ -144,6 +144,25 @@ class SSHConnection(object):
             raise SSHError(err.strip())
 
     def ssh_command(self, interpreter, forward_ssh_agent):
+        """ Build the command string to connect to the server
+        and start the given interpreter. """
+        interpreter = str(interpreter)
+        cmd = ['/usr/bin/ssh', ]
+        if self.login:
+            cmd += [ '-l', self.login ]
+        if self.configfile:
+            cmd += [ '-F', self.configfile ]
+        if self.identity_file:
+            cmd += [ '-i', self.identity_file ]
+        if forward_ssh_agent:
+            cmd.append('-A')
+        if self.port:
+            cmd += [ '-p', str(self.port) ]
+        cmd.append(self.server)
+        cmd.append(interpreter)
+        return cmd
+
+    def gsissh_command(self, interpreter, forward_ssh_agent):
         """ Build the command string to connect to the server
         and start the given interpreter. """
         interpreter = str(interpreter)

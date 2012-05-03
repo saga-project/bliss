@@ -15,7 +15,6 @@ import logging
 import paramiko
 
 ################################################################################
-################################################################################
 
 class SSHConnectionPool:
     '''Encapsulates SSH connections
@@ -120,7 +119,8 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
             import paramiko
         except Exception, ex:
             raise Exception("paramiko module missing")
- 
+    ######################################################################
+    ##  
     def entry_getstat(self, obj, entry_path=None):
         # if no path is given, use the one from
         # the object's url
@@ -154,7 +154,8 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
                 self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
                 "Couldn't access entry: %s " % (str(ex)))
 
-
+    ######################################################################
+    ## 
     def register_file_object(self, file_obj):
         '''Implements interface from FilesystemPluginInterface
         '''
@@ -165,13 +166,15 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
         else:
             pass
         
-
+    ######################################################################
+    ## 
     def unregister_file_object(self, service_obj):
         '''Implements interface from FilesystemPluginInterface
         '''
         pass
 
-
+    ######################################################################
+    ## 
     def register_directory_object(self, dir_obj):
         '''Implements interface from FilesystemPluginInterface
         '''
@@ -183,13 +186,15 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
             self.log_error_and_raise(bliss.saga.Error.BadParameter, 
             "Couldn't open %s. Entry is a file and not a directory." % (dir_obj._url))
             
-
+    ######################################################################
+    ## 
     def unregister_directory_object(self, dir_obj):
         '''Implements interface from FilesystemPluginInterface
         '''
         pass
 
-
+    ######################################################################
+    ## 
     def dir_list(self, dir_obj, pattern):
         path = "."
         if dir_obj._url.path is not None:
@@ -202,7 +207,8 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
             "Couldn't list directory: %s " % (str(ex)))
 
-
+    ######################################################################
+    ## 
     def dir_get_size(self, dir_obj, path):
         '''Implements interface from FilesystemPluginInterface
         '''
@@ -218,7 +224,8 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
             "Couldn't determine size for '%s': %s " % (path, (str(ex))))
 
-
+    ######################################################################
+    ## 
     def dir_make_dir(self, dir_obj, path, flags):
         '''Implements interface from FilesystemPluginInterface
         '''
@@ -242,7 +249,8 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
             "Couldn't create directory: %s " % (str(ex)))
 
-
+    ######################################################################
+    ## 
     def dir_copy(self, dir_obj, source, target):
         '''Implements interface from FilesystemPluginInterface
         '''

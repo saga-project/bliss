@@ -1,9 +1,8 @@
-#!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__copyright__ = "Copyright 2012, Ole Christian Weidner"
+__copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.saga import Url
@@ -22,10 +21,13 @@ class File(Object):
         Object.__init__(self, Object.Type.FilesystemFile, 
                         apitype=Object.Type.FilesystemAPI, session=session)
 
-        if(type(url) == str):
-            self._url = Url(str(url))
-        else:
+        if type(url) == str:
+            self._url = bliss.saga.Url(str(url))
+        elif type(url) == bliss.saga.Url:
             self._url = url
+        else:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess,
+              "File constructor expects str or bliss.saga.Url type as 'url' parameter")
 
         self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
         self._plugin.register_file_object(self)
@@ -44,7 +46,39 @@ class File(Object):
     ######################################################################
     ## 
     def copy(self, target):
-        '''Copy the file
+        '''Copy the file to another location
+           @param target: Url of the copy target.
+        '''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+        else:
+            if type(target) == str:
+                target_url = bliss.saga.Url(str(target))
+            elif type(target) == bliss.saga.Url:
+                target_url = url
+            else:
+                raise bliss.saga.Exception(bliss.saga.Error.NoSuccess,
+                  "File.copy() expects str or bliss.saga.Url type as 'target' parameter")
+
+            return self._plugin.file_copy(self, target)
+
+    ######################################################################
+    ## 
+    def move(self, target):
+        '''Move the file to another location
+           @param target: Url of the copy target.
+        '''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+        else:
+            return self._plugin.file_copy(self, target)
+
+    ######################################################################
+    ## 
+    def remove(self):
+        '''Delete the file
            @param target: Url of the copy target.
         '''
         if self._plugin is None:

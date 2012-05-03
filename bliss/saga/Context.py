@@ -14,7 +14,7 @@ from bliss.saga.Attributes import AttributeInterface
 from bliss.saga.Exception import Exception as SAGAException
 from bliss.saga.Exception import Error as SAGAError
 
-class Context(AttributeInterface, object):
+class Context(AttributeInterface, Object):
     '''Loosely defines a SAGA Context object as defined in GFD.90.
 
     A security context is a description of a security token.  It is important to
