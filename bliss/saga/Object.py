@@ -17,7 +17,7 @@ from bliss.utils import tback
 class Object(object) :
     '''Loosely resembles a SAGA object as defined in GFD.90
     
-    The Object base class' main function is to support the use of Sessions.  In
+    The Object base class' main function is to support the use of L{Session}s.  In
     particular, this class allows to obtain the session any object is living in,
     to re-use that for other objects and operations.
 

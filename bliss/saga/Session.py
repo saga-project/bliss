@@ -13,8 +13,8 @@ class Session(object):
 
     A Bliss session has the purpose of scoping the use of security credentials
     for remote operations.  In other words, a session instance acts as
-    a container for security context instances -- Bliss objects (such as
-    job.Service or filesystem.File) created in that session will then use
+    a container for security L{Context} instances -- Bliss objects (such as
+    L{job.Service} or L{filesystem.File}) created in that session will then use
     exactly the security contexts from that session (and no others).
 
     That way, the session serves two purposes:  (1) it helps Bliss to decide
@@ -43,7 +43,7 @@ class Session(object):
         j = saga.job.Service ('ssh://remote.host.net/', s)
 
 
-    The session argument to the job.Service constructor is fully optional --
+    The session argument to the L{job.Service} constructor is fully optional --
     if left out, Bliss will use default session, which picks up some default
     contexts as described above -- that will suffice for the majority of use
     cases.

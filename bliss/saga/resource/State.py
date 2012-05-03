@@ -6,6 +6,10 @@ __license__   = "MIT"
 
 class State:
 
+    ''' The State attribute is used to describe the state of resource instances,
+    in particular of instances of L{resource.Compute} and L{resource.Storage}.
+    '''
+
     Unknown   =  0  
     '''wut?'''
     Pending   =  1  

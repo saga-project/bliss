@@ -26,8 +26,8 @@ class WaitMode:
 class Container(Object):
     """Loosely represents a SAGA task container as defined in GFD.90.
    
-       The job.Container class allows to manage collections of jobs efficiently.
-       It supports:
+       The job.Container class allows to manage collections of L{job.Job}s
+       efficiently.  It supports:
    
          - management of the job collection::
          
@@ -101,7 +101,7 @@ class Container(Object):
     def add(self, job):
         '''Add a job to the container.
 
-           @param job: A saga.job.Job object.  The job can be in any state.
+           @param job: A L{job.Job} object.  The job can be in any state.
 
            Example:: 
              
@@ -133,7 +133,7 @@ class Container(Object):
     def remove(self, job):
         '''Remove a job from the container.
 
-           @param job: The saga.job.Job object to remove.
+           @param job: The L{job.Job} object to remove.
 
            Example:: 
              
@@ -159,7 +159,7 @@ class Container(Object):
     def get_job(self, job_id):
         '''Get a single job from the job container.
 
-           @param job_id: The job id identifying the job.
+           @param job_id: The job id identifying the L{job.Job} to return.
 
            Example:: 
              
@@ -179,7 +179,7 @@ class Container(Object):
     ######################################################################
     ##
     def get_states(self):
-        '''Get the states of all jobs in the container.
+        '''Get the state of all jobs in the container.
 
            Example:: 
              
@@ -204,7 +204,7 @@ class Container(Object):
     ######################################################################
     ##
     def list(self):
-        '''List all jobs that are in the container.
+        '''List all L{job.Job}s that are in the container.
 
            Example:: 
              
@@ -249,10 +249,10 @@ class Container(Object):
     def run(self):
         '''Start all jobs in the container.
 
-           The job.run() operation can only be successful for 'New' jobs - this
-           run() method on the Container class will thus only succeed if all
-           jobs in the container are in 'New' state.   In that case, this call
-           will invoke run() on all jobs in the container.
+           The L{job.Job}.run() operation can only be successful for 'New' jobs -
+           this L{run()<run>} method on the Container class will thus only succeed if
+           all jobs in the container are in 'New' state   In that case,
+           this call will invoke run() on all jobs in the container.
 
            Example:: 
              
@@ -281,12 +281,12 @@ class Container(Object):
 
            @param timeout: Timeout in seconds.
 
-           The cancel() method on the saga.job.Container class will invoke
-           saga.job.cancel() on all jobs in the container.
+           The cancel() method on the job.Container class will invoke
+           L{job.Job}.cancel() on all jobs in the container.
 
            The job.cancel() method will cancel all jobs in 'Running' and
-           'Pending' state, but will not alter the state of jobs which have
-           already finished ('Done', 'Failed' or 'Canceled' state).
+           'Pending' state but will not alter the state of jobs which
+           have already finished ('Done', 'Failed' or 'Canceled' state).
 
            Note that cancel() is not defined for jobs in 'New' state -- the
            application must thus ensure that no jobs in the container are 'New'.
@@ -318,12 +318,14 @@ class Container(Object):
     def wait(self, wait_mode=WaitMode.All, timeout=-1):
         '''Wait for jobs in the task container to finish execution.
 
-           @param wait_mode: Wait for any or for all jobs in the container.
+           @param wait_mode: Wait for 'Any' or for 'All' jobs in the container.
 
            @param timeout: Timeout in seconds.
 
            @return: the call returns a job in a final state.  That job is then
-           also removed from the container.
+           also removed from the container.  On 'All', it is not specified which
+           job is returned.  On 'Any', the job which finished first is returned.
+           On timeout, 'None' is returned.
 
 
            The wait() method on saga.job.Container will inspect all jobs in the

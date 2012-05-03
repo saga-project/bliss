@@ -32,9 +32,7 @@ from   bliss.saga.Object import Object
 #
 class Manager(Object):
 
-    """ 
-    
-    The resource manager class, as the name suggests, manages resource
+    ''' The resource manager class, as the name suggests, manages resource
     instances.  It may be responsible for managing the lifetime of such
     instances 
     ( L{create<create_compute>} 
@@ -60,7 +58,7 @@ class Manager(Object):
         - L{resource.Compute}
         - L{resource.ComputeDescription}
 
-    """
+    '''
 
     ######################################################################
     ## 

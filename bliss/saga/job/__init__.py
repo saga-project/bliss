@@ -4,11 +4,11 @@
 
 '''SAGA Job Package API.
 
-The SAGA job package provides, as the name suggests, the ability to create and
-manage jobs.  A job is, for the purpose of the SAGA API, an instance of
-a specific application, i.e. one or more processes of a specific executable.
-The example below gives a hopefully intuitive overview over the package's
-capabilities::
+The SAGA job package provides, as the name suggests, the ability (via
+a L{job.Service}) to create and manage L{job.Job}s.  A job is, for the purpose
+of the SAGA API, an instance of a specific application, i.e. one or more
+processes of a specific executable.  The example below gives a hopefully
+intuitive overview over the package's capabilities::
 
     # create a job description...
     jd = saga.job.Description()

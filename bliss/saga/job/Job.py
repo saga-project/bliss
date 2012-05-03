@@ -12,14 +12,14 @@ from bliss.saga.Attributes import AttributeInterface
 class JobID(object):
     '''Represents a SAGA job ID (Not part of GFD.90)
       
-       The SAGA job ID is usually considered to be an opaque string, but in
-       general is expected to be formatted as::
+       The SAGA L{job.Job} ID is usually considered to be an opaque string, but
+       in general is expected to be formatted as::
 
          '[backend-url]-[native-id]'
 
        (including brackets!), where 'backend-url' is the contact URL for the job
-       manager who 'owns' the job, and 'native-id' is the job id as issued and
-       understood by that job manager.
+       manager (L{job.Service}) who 'owns' the job, and 'native-id' is the job
+       id as issued and understood by that job manager.
 
        Bliss exposes those components of the job ID in this class, which allows
        to create new IDs and to parse / split existing IDs.

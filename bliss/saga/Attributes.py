@@ -25,10 +25,11 @@ class AttributeInterface(object):
     class variables.  Sometimes, for frequently used variables, classes also
     expose an explicit accessor method (see 'JobID' example below).
 
-    The most prominent example of the attribute interface is the job.Description
-    class, which is used to describe a job to be submitted to a job manager.
-    Other uses of the interface are resource descriptions, and the exposure of
-    object attributes like job.Job.JobID.
+    The most prominent example of the attribute interface is the
+    L{job.Description} class, which is used to describe a L{job.Job} to be
+    submitted to a L{job.Service}.  Other uses of the interface are
+    L{resource.StorageDescription}s, and the exposure of object attributes like
+    L{job.Job}.JobID.
 
 
     Example::

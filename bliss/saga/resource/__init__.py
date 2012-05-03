@@ -3,8 +3,9 @@
 ''' SAGA Resource API Package
 
     The resource API provides the means to create, discover, manage and use
-    resources, in particular compute and storage resources.  A resource manager
-    class acts as resource provider, providing stateful resource instances.
+    resources, in particular compute and storage resources (L{resource.Compute},
+    L{resource.Storage}).  A L{resource.Manager} class acts as resource
+    provider, providing stateful resource instances.
 
     B{Usage example 1} shows how to use a large compute resource::
 

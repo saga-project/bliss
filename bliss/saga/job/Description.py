@@ -15,10 +15,10 @@ class Description(Object, AttributeInterface):
     """
     Allows to define the properties and requirements for a job.
   
-    The Description class allows the user to describes both the
-    resource requirements (e.g. number  of CPUs, working directory etc.), 
-    as well as the application properties (e.g. executable path, program 
-    arguments, environment etc.) of a job.
+    The Description class allows the user to describes both the resource
+    requirements (e.g. number  of CPUs, working directory etc.), as well as the
+    application properties (e.g. executable path, program arguments, environment
+    etc.) of a L{job.Job} to be create by a L{job.Service}.
 
     B{Usage example 1} shows how to run a remote executable as a job::
 

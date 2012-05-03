@@ -7,7 +7,8 @@ __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
 # Using urlparse from Python 2.5
-from bliss.utils import urlparse25 as urlparse
+# FIXME: how will that work with, say, python 2.4?
+from bliss.utils       import urlparse25 as urlparse  
 from bliss.saga.Object import Object 
 
 # FIXME: if furl works, then 'typedef saga.Url furl' (AM)

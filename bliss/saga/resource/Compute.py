@@ -9,8 +9,8 @@ from bliss.saga.Object import Object
 
 class Compute(Object):
     ''' Compute resources represent stateful entities which can run compute
-    jobs.  A resource.Manager instance can create them according to
-    a resource.ComputeDescription, as shown below::
+    jobs.  A L{resource.Manager} instance can create them according to
+    a L{resource.ComputeDescription}, as shown below::
 
       # describe the resource requirements
       cd = saga.resource.ComputeDescription ()
