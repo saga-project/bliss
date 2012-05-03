@@ -9,6 +9,31 @@ from bliss.saga.Attributes import AttributeInterface
 
 class StorageDescription(Object, AttributeInterface):
     '''Defines a SAGA storage_description as defined in GFD.xx
+
+    A storage description describes a storage resource -- which is, essentially,
+    anything which can run store data.  The description is used to find or
+    create instances of storage resources with specific properties and
+    capabilities.
+
+    B{Usage example 1} shows how to obtain some storage of a certain size::
+
+      # describe the resource requirements
+      sd = saga.resource.StorageDescription ()
+      sd['Size'] = 1024 # MB
+
+      # obtain a handle to a suitable resource
+      rm = saga.resource.Manager ()
+      sr = rm.create_storage (sd)
+
+      # stage some data onto the storage
+      d  = sr.get_filesystem ()
+      d.copy ("file://localhost/data/input.dat", "/data/")
+
+      # ...
+
+      # once the application is done, we do not need the storage resource anymore:
+      sr.destroy ()
+
     '''
 
     ######################################################################
@@ -69,7 +94,12 @@ class StorageDescription(Object, AttributeInterface):
     ######################################################################
     ## Property 
     def start():
-        doc = "Required start time for this resource reservation."
+        doc = '''Required start time for this resource reservation.
+        
+        The resource is expected to be 'Running' at the specified point in time,
+        and thus ready to execute job requests.  A backend which cannot make
+        that promise will raise and exception.
+        '''
         def fget(self):
             return self._start
         def fset(self, val):
@@ -82,7 +112,13 @@ class StorageDescription(Object, AttributeInterface):
     ######################################################################
     ## Property 
     def end():
-        doc = "Required end time for this resource reservation."
+        doc = '''Required end time for this resource request.
+        
+        The resource is expected to be available until at most that given point
+        in time.  A resource manager which cannot guarantee the resource to be
+        available before that point (- a given duration) will fail the resource
+        request.
+        '''
         def fget(self):
             return self._end
         def fset(self, val):
@@ -95,7 +131,13 @@ class StorageDescription(Object, AttributeInterface):
     ######################################################################
     ## Property 
     def duration():
-        doc = "Required duration for this resource reservation."
+        doc = '''Required duration for this resource request.
+
+        The specified time span is the time the resource is expected to be
+        'Running' -- times spent in other states does not count toward this
+        limit.  A backend which cannot make that promise will raise and 
+        exception.
+        '''
         def fget(self):
             return self._duration
         def fset(self, val):
@@ -108,7 +150,14 @@ class StorageDescription(Object, AttributeInterface):
     ######################################################################
     ## Property 
     def dynamic():
-        doc = "Dynamic or not."
+        doc = '''Dynamic or not.
+        
+        The 'dynamic' flag signals that the resource description provides
+        estimated values, but that the resource manager is allowed to choose
+        different initial values, and also can change the values during the
+        resource lifetime.  That flag is specifically targeting backends which
+        can resize the resources in response to actual storage requirements.
+        '''
         def fget(self):
             return self._dynamic
         def fset(self, val):
@@ -121,7 +170,7 @@ class StorageDescription(Object, AttributeInterface):
     ######################################################################
     ## Property 
     def size():
-        doc = "Required size of storage."
+        doc = "Required size of storage, in MegaBytes."
         def fget(self):
             return self._size
         def fset(self, val):
@@ -134,6 +183,8 @@ class StorageDescription(Object, AttributeInterface):
     ######################################################################
     ## Property 
     def mountpoint():
+        # FIXME: as storages cannot be bound to compute resources in Bliss, this
+        # property does not make sense anymore. 
         doc = "Mountpoint of storage."
         def fget(self):
             return self._mountpoint

@@ -1,9 +1,7 @@
-#!/usr/bin/env python
-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import logging
@@ -146,7 +144,7 @@ class Object(object) :
         try:
             return self.__shared_state["runtime_instance"].get_plugin_for_url(self._url, self.Exceptiontype) 
         except Exception, ex:
-            error = ("%s %s" % (str(ex), utils.get_traceback()))
+            error = ("%s %s" % (str(ex), tback.get_traceback()))
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, error)
 
     ######################################################################

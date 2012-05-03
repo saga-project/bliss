@@ -196,3 +196,4 @@ class Compute(Object):
                                        "Object not bound to a plugin")
         
         return self._plugin.compute_resource_wait(self, state)
+

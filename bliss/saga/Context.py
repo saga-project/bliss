@@ -1,12 +1,18 @@
-#!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
+import logging
+import os.path
+
+from bliss.saga.Object import Object 
+
 from bliss.saga.Attributes import AttributeInterface
+from bliss.saga.Exception import Exception as SAGAException
+from bliss.saga.Exception import Error as SAGAError
 
 class Context(AttributeInterface, object):
     '''Loosely defines a SAGA Context object as defined in GFD.90.
@@ -59,13 +65,15 @@ class Context(AttributeInterface, object):
     '''A security context type based on public/private keys.''' 
     EC2      = "EC2"
     '''A security context type for Eucalyptus / EC2 applications.'''
-
-    #X509     = "X509"
-    #'''A security context type based on X.509 certificates.'''
-    #X509_SSH = "X509+SSH"
-    #'''A security context type for X.509 via SSH.'''
-    #BigJob = "BigJob"
-    #'''A security context type for BigJob'''
+    X509     = "X509"
+    '''A security context type based on X.509 certificates.'''
+    
+    # X509     = "X509"
+    # '''A security context type based on X.509 certificates.'''
+    # X509_SSH = "X509+SSH"
+    # '''A security context type for X.509 via SSH.'''
+    # BigJob = "BigJob"
+    # '''A security context type for BigJob'''
 
     # FIXME: What is different between X509 and ssh+X509?
     # shouldn't the latter just a session with an ssh and an X509 context?  What
@@ -73,18 +81,21 @@ class Context(AttributeInterface, object):
     # FIXME: What is a BigJob context??
 
 
-    #__dict__ = {'_type', '_userkey', '_usercert', '_userproxy'}
-  
-    def __init__(self, type=None):
+    ######################################################################
+    ## 
+    def __init__(self):
         '''Constructor'''
-        self._type      = type
+
+        Object.__init__(self, objtype=Object.Type.Context, apitype=Object.Type.BaseAPI)
+        AttributeInterface.__init__(self)
+
+        self._type      = None
         self._userid    = None
         self._userpass  = None
         self._usercert  = None
         self._userkey   = None
         self._userproxy = None
 
-        AttributeInterface.__init__(self)
       
         # register properties with the attribute interface 
         self._register_rw_attribute     (name="Type", 
@@ -99,6 +110,17 @@ class Context(AttributeInterface, object):
                                          accessor=self.__class__.userkey)  
         self._register_rw_attribute     (name="UserProxy", 
                                          accessor=self.__class__.userproxy)  
+
+        self.__logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')')
+
+
+    ######################################################################
+    ##
+    def _log_and_raise_if_file_doesnt_exist(self, filename):
+        '''Logs and raises an error if "filename" doesn't exist'''
+        msg = "File '%s' doesn't exist." % (filename)
+        self.__logger.error(msg)
+        raise SAGAException(msg, SAGAError.DoesNotExist)
 
     ######################################################################
     ##
@@ -188,7 +210,10 @@ class Context(AttributeInterface, object):
         def fget(self):
             return self._usercert
         def fset(self, val):
-            self._usercert = val
+            if not os.path.isfile(val):
+                self._log_and_raise_if_file_doesnt_exist(val)
+            else:
+                self._usercert = val
         return locals()
     usercert = property(**usercert())
 
@@ -199,7 +224,10 @@ class Context(AttributeInterface, object):
         def fget(self):
             return self._userkey
         def fset(self, val):
-            self._userkey = val
+            if not os.path.isfile(val):
+                self._log_and_raise_if_file_doesnt_exist(val)
+            else:
+                self._userkey = val
         return locals()
     userkey = property(**userkey())
 
@@ -210,7 +238,10 @@ class Context(AttributeInterface, object):
         def fget(self):
             return self._userproxy
         def fset(self, val):
-            self._userproxy = val
+            if not os.path.isfile(val):
+                self._log_and_raise_if_file_doesnt_exist(val)
+            else: 
+                self._userproxy = val
         return locals()
     userproxy = property(**userproxy())
 

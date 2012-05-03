@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
@@ -12,6 +11,7 @@ import bliss.plugins.registry
 
 class Runtime:
     '''Implements the Bliss runtime system'''
+
     def __init__(self):
         '''Constructs a runtime object'''
 
