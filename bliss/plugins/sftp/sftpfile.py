@@ -69,18 +69,18 @@ class SSHConnectionPool:
               % fsobj_key)
             return self._connections[fsobj_key]
         else:
-            try: 
-                ssh = paramiko.SSHClient()
-                ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-                ssh.load_host_keys(os.path.expanduser(os.path.join("~", ".ssh", "known_hosts")))
-                ssh.connect(hostname=hostname, port=int(port), username=username, allow_agent=True, look_for_keys=True)
-                self._parent.log_info("Created new connection object for %s" % fsobj_key)
+            #try:  
+            ssh = paramiko.SSHClient()
+            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            ssh.load_host_keys(os.path.expanduser(os.path.join("~", ".ssh", "known_hosts")))
+            ssh.connect(hostname=hostname, port=int(port), username=username, allow_agent=True, look_for_keys=True)
+            self._parent.log_info("Created new connection object for %s" % fsobj_key)
                 # add connection to connection pool
-                self._connections[fsobj_key] = ssh
-                return self._connections[fsobj_key] 
-            except Exception, ex:
-                self._parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                "Couldn't create SFTP connection: %s " % (str(ex)))
+            self._connections[fsobj_key] = ssh
+            return self._connections[fsobj_key] 
+            #except Exception, ex:
+            #    self._parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+            #    "Couldn't create SFTP connection: %s " % (str(ex)))
 
 
 ################################################################################

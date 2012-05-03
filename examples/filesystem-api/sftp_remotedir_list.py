@@ -40,7 +40,7 @@ def main():
             print entry
 
     except saga.Exception, ex:
-        print "Oh, snap! An error occured: %s" % (str(ex))
+        print "EXCEPTION CAUGHT: %s" % (str(ex))
 
 if __name__ == "__main__":
     main()
