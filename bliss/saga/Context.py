@@ -32,8 +32,8 @@ class Context(AttributeInterface, object):
         c['UserKey']  = '$HOME/.ssh/special_id_rsa.pub'
 
         # add the context to a session
-        s = saga.Session ()
-        s.add_context (c)
+        s = saga.Session  ( )
+        s.contexts.append (c)
 
         # create a job service in this session -- that job service can now
         # *only* use that ssh context. 

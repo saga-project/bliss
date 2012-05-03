@@ -6,7 +6,7 @@
     resources, in particular compute and storage resources.  A resource manager
     class acts as resource provider, providing stateful resource instances.
 
-    B{Usage example 1} shows how to use a large compute resource,
+    B{Usage example 1} shows how to use a large compute resource::
 
       # describe the resource requirements
       cd = saga.resource.ComputeDescription ()

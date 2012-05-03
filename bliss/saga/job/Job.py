@@ -15,7 +15,6 @@ class JobID(object):
        The SAGA job ID is usually considered to be an opaque string, but in
        general is expected to be formatted as::
 
-         
          '[backend-url]-[native-id]'
 
        (including brackets!), where 'backend-url' is the contact URL for the job

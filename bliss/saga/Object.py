@@ -189,6 +189,11 @@ class Object(object) :
  
            It is encouraged to use the L{session} property instead.
         '''
+        # FIXME: 'Legacy' means 'out of date but still used'.  I don't think
+        # this is the intended meaning here (and almost anywhere else in the
+        # API)?  If it is deprecated, say so.  If it is normally used, don't
+        # mark it.  If you want to say that this is from the SAGA spec, then say
+        # so -- but this is a SAGA implementation after all...
         return self.session
 
     ######################################################################
@@ -198,6 +203,9 @@ class Object(object) :
 
            It is encouraged to use the L{type} property instead.
         '''
+
+        # FIXME: type inspection is built into Python, so this method is not
+        # needed.
         return self.type
 
     ######################################################################

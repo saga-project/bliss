@@ -5,10 +5,62 @@ __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import bliss.saga 
-from bliss.saga import Url
-from bliss.saga.Object import Object 
+from   bliss.saga        import Url
+from   bliss.saga.Object import Object 
 
+# FIXME: why is the above asymmetric?  It should be either:
+#
+#   from   bliss.saga import Url
+#   from   bliss.saga import Object 
+#
+# or
+#
+#   from   bliss.saga.URL    import Url
+#   from   bliss.saga.Object import Object 
+# !
+#
+#
+# FIXME: why has the manager create_compute / create_storage?
+# Python / duck typing should not need that...  Removing it would simplify the
+# API to
+#
+#   mgr.get      (id)
+#   mgr.create   (cd|sd)
+#   mgr.destroy  (id)
+#   mgr.list     (type=Compute|Storage|ComputeTemplates|StorageTemplates)
+#   mgr.get_tmp_d(tmp_id)
+#
 class Manager(Object):
+
+    """ 
+    
+    The resource manager class, as the name suggests, manages resource
+    instances.  It may be responsible for managing the lifetime of such
+    instances 
+    ( L{create<create_compute>} 
+    / L{destroy<destroy_compute>}
+    / L{get<get_compute>}
+    ), and for inspecting them
+    ( L{list<list_compute_resources>}
+    / L{list_templates<list_compute_templates>}
+    / L{get_template_details<get_template_details>}
+    ) [method links are for compute resources]::
+
+      # obtain a handle to a suitable resource, and wait until it is active
+      rm = saga.resource.Manager (url)
+      cr = rm.create_compute (cd)
+      cr.wait (saga.resource.State.Active)
+
+    The resources managed by the manager can have different types -- they can be
+    storage or compute resources.  For the respective differences and the
+    resource description details, see
+
+        - L{resource.Storage}
+        - L{resource.StorageDescription}
+        - L{resource.Compute}
+        - L{resource.ComputeDescription}
+
+    """
 
     ######################################################################
     ## 
