@@ -97,6 +97,9 @@ def run(url, username, queue, project):
       print ""
       print "If (1)-(3) are ok, this test can be considered as PASSED\n"
 
+    return failed
+
+
 def usage():
     print 'Usage: python %s ' % __file__
     print '                <URL>'
@@ -124,8 +127,9 @@ def main():
     except Exception:
         pass      
 
-    run(js_url, remoteusername, queue, project)
+    return run(js_url, remoteusername, queue, project)
+
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
 

@@ -102,12 +102,16 @@ print sys.version
       print ""
       print "If (1)-(3) are ok, this test can be considered as PASSED\n"
 
+    return failed
+
+
 def usage():
     print 'Usage: python %s ' % __file__
     print '                <URL>'
     print '                <REMOTEUSERNAME (default: local username)>'
     print '                <QUEUE (default: None)>'
     print '                <PROJECT (default: None)>'
+
 
 def main():
     remoteusername = getpass.getuser()
@@ -129,8 +133,8 @@ def main():
     except Exception:
         pass      
 
-    run(js_url, remoteusername, queue, project)
+    return run(js_url, remoteusername, queue, project)
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
 
