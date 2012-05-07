@@ -37,11 +37,11 @@ def main():
         # credentials of the user, i.e., ~/.ssh/id_rsa
         ctx = saga.Context()
         ctx.type = saga.Context.SSH
-        ctx.userid  = 'oweidner' # like 'ssh username@host ...'
+        ctx.userid  = 'tg802352' # like 'ssh username@host ...'
  
         # create a job service for Futuregrid's 'india' PBS cluster
         # and attach the SSH security context to it
-        js = saga.job.Service("pbs+ssh://alamo.futuregrid.org")
+        js = saga.job.Service("sge+ssh://lonestar.tacc.utexas.edu")
         js.session.contexts.append(ctx)
 
         # describe our job
@@ -53,12 +53,13 @@ def main():
         jd.environment = {'SLEEP_TIME':'10'}       
         jd.executable  = '/bin/sleep'
         jd.arguments   = ['$SLEEP_TIME']
+        jd.queue       = 'development'
 
         # create a new job container
         container = saga.job.Container(js)
 
         # create 16 jobs
-        for i in range(16):
+        for i in range(4):
             container.add(js.create_job(jd))
 
         print "\n...starting jobs...\n"
