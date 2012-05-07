@@ -6,6 +6,7 @@ __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import copy
+import socket
 import time
 import string
 import subprocess
@@ -190,9 +191,9 @@ class SGEService:
         self._nodes = 1 # total number of nodes. defaults to 1
 
         if self._url.scheme == "sge":
-            if self._url.host != "localhost":
+            if (self._url.host != "localhost") and (self._url.host != socket.gethostname()):
                 self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                "Can't use %s as hostname in conjunction with sge:// schema. Try sge+ssh:// instead" \
+                "Can't use %s as (non-local) hostname in conjunction with the sge:// schema. Try sge+ssh:// instead" \
                   % (self._url.host))
 
         # Indicates when the service information was last updated
