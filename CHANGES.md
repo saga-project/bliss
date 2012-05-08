@@ -1,4 +1,4 @@
-Version 0.1.20 released 2012-04-04
+Version 0.2.0 released 2012-5-13
 ----------------------------------------------------------------------
 
 * Added supoprt for ssh re-connection after timeout (issue #29)
