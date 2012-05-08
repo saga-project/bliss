@@ -73,7 +73,7 @@ Plug-In: Local (Fork) Job
     * 05_run_python_command_multiline.py: **PASS**
     * 06_job_container_01.py **FAIL** (Containers not implemented)
     * 07_work_directory.py fork://localhost /tmp **PASS**
-    * 08_absolute_output.py fork://localhost /tmp/F
+    * 08_absolute_output.py fork://localhost /tmp/F **PASS**
 
   * URL: **fork://localhost**, Info: Ubuntu Server 10.11, Date: 04/08/2012, 
     Git hash (git log -1): 823a82b1b0c797bc97063530cc17a84b35d0dc92
