@@ -134,79 +134,487 @@ the default system python:
 python devel included).
 
 
-** testing on india.fg ** (AM)
+** Plug-In: PBS, PBS+SSH Job**
 
-* test 01:
-
-The test run showed:
-
-    (mypython_repo)[merzky@i136 job]$ python 01_run_remote_exe.py $P
-    Job ID    : [pbs://localhost]-[None]
-    Job State : saga.job.Job.New
+---------------------------------------
+### hotel ###
+   
+results::
+  
+    log file                  /gpfs/software/x86_64/el5/hotel/SAGA/csa//test/test.saga-1.6.gcc-4.1.2.hotel.2012-05-08.bliss.log
+    hostname                  hotel
+    time stamp                2012-05-08
+    csa  location             /gpfs/software/x86_64/el5/hotel/SAGA
+    csa  target               /gpfs/software/x86_64/el5/hotel/SAGA/saga/
+    saga version              1.6
+    make version              GNU Make 3.81
+    compiler version          gcc-4.1.2
+    using /gpfs/software/x86_64/el5/hotel/SAGA/csa///test/x509_test.pem as X509_USER_PROXY
+    +--------------+---------+------------+---------------------------------------------------------+-----+ 
+    | TEST SUMMARY                                                                                        |
+    +--------------+---------+------------+---------------------------------------------------------+-----+ 
+    | host         | type    | name       | info                                                    | res | 
+    +--------------+---------+------------+---------------------------------------------------------+-----+ 
+    | running bliss tests                                                                                 |
+    |                                                                                                     |
+    | csa_test_bliss_core_00.py                                                                           |
+    | hotel        | core    | -          | -                                                       |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_01.sh                                                                            |
+    | hotel        | job     | fork       | fork://localhost/                                       |  ok |
+    | hotel        | job     | ssh        | ssh://localhost/                                        |  ok |
+    | hotel        | job     | pbs        | pbs://localhost/                                        |  ok |
+    | hotel        | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | hotel        | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | hotel        | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
+    | hotel        | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_02.sh                                                                            |
+    | hotel        | job     | fork       | fork://localhost/                                       |  ok |
+    | hotel        | job     | ssh        | ssh://localhost/                                        |  ok |
+    | hotel        | job     | pbs        | pbs://localhost/                                        |  ok |
+    | hotel        | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | hotel        | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | hotel        | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
+    | hotel        | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_03.sh                                                                            |
+    | hotel        | job     | fork       | fork://localhost/                                       |  ok |
+    | hotel        | job     | ssh        | ssh://localhost/                                        |  ok |
+    | hotel        | job     | pbs        | pbs://localhost/                                        |  ok |
+    | hotel        | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | hotel        | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | hotel        | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
+    | hotel        | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_04.sh                                                                            |
+    | hotel        | job     | fork       | fork://localhost/                                       |  ok |
+    | hotel        | job     | ssh        | ssh://localhost/                                        |  ok |
+    | hotel        | job     | pbs        | pbs://localhost/                                        |  ok |
+    | hotel        | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | hotel        | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | hotel        | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
+    | hotel        | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_05.sh                                                                            |
+    | hotel        | job     | fork       | fork://localhost/                                       |  ok |
+    | hotel        | job     | ssh        | ssh://localhost/                                        |  ok |
+    | hotel        | job     | pbs        | pbs://localhost/                                        |  ok |
+    | hotel        | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | hotel        | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | hotel        | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
+    | hotel        | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
+    | hotel        | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         |  ok |
+    +--------------+---------+------------+---------------------------------------------------------+-----+ 
+    | ok : 51                                                                                             |
+    | nok: 5                                                                                              |
+    +--------------+---------+------------+---------------------------------------------------------+-----+ 
     
-    ...starting job...
     
-    Job ID    : [pbs://localhost]-[389177.i136]
-    Job State : saga.job.Job.Pending
+    +--------------+---------+------------+---------------------------------------------------------+-----+ 
+    | DETAILED ERROR LOG                                                                                  |
+    +--------------+---------+------------+---------------------------------------------------------+-----+ 
+    | hotel        | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
+    | bash -c '. /gpfs/software/x86_64/el5/hotel/SAGA/csa///../saga/bliss/pyvirt/bin/activate ; bash /gpfs/software/x86_64/el5/hotel/SAGA/csa///test/csa_test_bliss_job_01.sh pbs+ssh://alamo.futuregrid.org/'
+    | stdout / stderr: 
+    05/08/2012 01:30:09 AM - bliss.PBSJobPlugin(0x10142c68) - ERROR - Couldn't find PBS command line tools on pbs+ssh://alamo.futuregrid.org/: which: no pbsnodes in (/usr/local/bin:/bin:/usr/bin)
+    05/08/2012 01:30:09 AM - bliss.PBSJobPlugin(0x10142c68) - ERROR - Couldn't run job because: SAGA Exception (11): [saga.plugin.job.pbssh] Couldn't find PBS command line tools on pbs+ssh://alamo.futuregrid.org/: which: no pbsnodes in (/usr/local/bin:/bin:/usr/bin) 
+      *********************
+      * BLISS STACK TRACE *
+      *********************
+      File "/gpfs/software/x86_64/el5/hotel/SAGA/saga//bliss//bliss/test/compliance/job/01_run_remote_exe.py", line 130, in <module>
+        sys.exit(main())
+      File "/gpfs/software/x86_64/el5/hotel/SAGA/saga//bliss//bliss/test/compliance/job/01_run_remote_exe.py", line 126, in main
+        return run(js_url, remoteusername, queue, project)
+      File "/gpfs/software/x86_64/el5/hotel/SAGA/saga//bliss//bliss/test/compliance/job/01_run_remote_exe.py", line 48, in run
+        myjob.run()
+      File "/gpfs/software/x86_64/el5/hotel/SAGA/saga/bliss/pyvirt/lib/python2.7/site-packages/bliss-0.1.21-py2.7.egg/bliss/saga/job/Job.py", line 287, in run
+        return self._plugin.job_run(self)
+      File "/gpfs/software/x86_64/el5/hotel/SAGA/saga/bliss/pyvirt/lib/python2.7/site-packages/bliss-0.1.21-py2.7.egg/bliss/plugins/pbs/pbsshjob.py", line 253, in job_run
+        jobinfo = pbs.submit_job(job)
+      File "/gpfs/software/x86_64/el5/hotel/SAGA/saga/bliss/pyvirt/lib/python2.7/site-packages/bliss-0.1.21-py2.7.egg/bliss/plugins/pbs/cmdlinewrapper.py", line 553, in submit_job
+        self._check_context()
+      File "/gpfs/software/x86_64/el5/hotel/SAGA/saga/bliss/pyvirt/lib/python2.7/site-packages/bliss-0.1.21-py2.7.egg/bliss/plugins/pbs/cmdlinewrapper.py", line 309, in _check_context
+        % (self._url, result.stderr))
+      File "/gpfs/software/x86_64/el5/hotel/SAGA/saga/bliss/pyvirt/lib/python2.7/site-packages/bliss-0.1.21-py2.7.egg/bliss/interface/pluginbase.py", line 35, in log_error_and_raise
+        msg = "[%s] %s %s" % (self.name, message, tback.get_traceback())
+      File "/gpfs/software/x86_64/el5/hotel/SAGA/saga/bliss/pyvirt/lib/python2.7/site-packages/bliss-0.1.21-py2.7.egg/bliss/utils/tback.py", line 14, in get_traceback
+        traceback.print_stack(file=fp)
+     
+      ...
+      
+All other pbs tests on alamo failed with the same error.
+  
+  
+---------------------------------------
+### sierra ###
+  
+results:
+  
+    log file                  /N/soft/SAGA/csa//test/test.saga-1.6.gcc-4.1.2.sierra.2012-05-07.bliss.log
+    hostname                  sierra
+    time stamp                2012-05-07
+    csa  location             /N/soft/SAGA
+    csa  target               /N/soft/SAGA/saga/
+    saga version              1.6
+    make version              GNU Make 3.81
+    compiler version          gcc-4.1.2
+    using /N/soft/SAGA/csa///test/x509_test.pem as X509_USER_PROXY
+    +--------------+---------+------------+---------------------------------------------------------+-----+ 
+    | TEST SUMMARY                                                                                        |
+    +--------------+---------+------------+---------------------------------------------------------+-----+ 
+    | host         | type    | name       | info                                                    | res | 
+    +--------------+---------+------------+---------------------------------------------------------+-----+ 
+    | running bliss tests                                                                                 |
+    |                                                                                                     |
+    | csa_test_bliss_core_00.py                                                                           |
+    | sierra       | core    | -          | -                                                       |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_01.sh                                                                            |
+    | sierra       | job     | fork       | fork://localhost/                                       |  ok |
+    | sierra       | job     | ssh        | ssh://localhost/                                        |  ok |
+    | sierra       | job     | pbs        | pbs://localhost/                                        |  ok |
+    | sierra       | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | sierra       | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | sierra       | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
+    | sierra       | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_02.sh                                                                            |
+    | sierra       | job     | fork       | fork://localhost/                                       |  ok |
+    | sierra       | job     | ssh        | ssh://localhost/                                        |  ok |
+    | sierra       | job     | pbs        | pbs://localhost/                                        |  ok |
+    | sierra       | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | sierra       | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | sierra       | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
+    | sierra       | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_03.sh                                                                            |
+    | sierra       | job     | fork       | fork://localhost/                                       |  ok |
+    | sierra       | job     | ssh        | ssh://localhost/                                        |  ok |
+    | sierra       | job     | pbs        | pbs://localhost/                                        |  ok |
+    | sierra       | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | sierra       | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | sierra       | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
+    | sierra       | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_04.sh                                                                            |
+    | sierra       | job     | fork       | fork://localhost/                                       |  ok |
+    | sierra       | job     | ssh        | ssh://localhost/                                        |  ok |
+    | sierra       | job     | pbs        | pbs://localhost/                                        |  ok |
+    | sierra       | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | sierra       | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | sierra       | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
+    | sierra       | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_05.sh                                                                            |
+    | sierra       | job     | fork       | fork://localhost/                                       |  ok |
+    | sierra       | job     | ssh        | ssh://localhost/                                        |  ok |
+    | sierra       | job     | pbs        | pbs://localhost/                                        |  ok |
+    | sierra       | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | sierra       | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | sierra       | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
+    | sierra       | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
+    | sierra       | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         |  ok |
+    +--------------+---------+------------+---------------------------------------------------------+-----+ 
+    | ok : 51                                                                                             |
+    | nok: 5                                                                                              |
+    +--------------+---------+------------+---------------------------------------------------------+-----+ 
+  
     
-    ...waiting for job...
+All pbs tests on alamo failed with the same error as above (hotel).
+  
+  
+---------------------------------------
+### alamo ###
+  
+Could not install bliss, as there is no devel version of python, thus paramiko
+does not compile.  I did not investigate further...
+  
+  
+---------------------------------------
+### india ###
+  
+results::
+  
+    log file                  /N/soft/SAGA/csa//test/test.saga-1.6.gcc-4.1.2.india.2012-05-08.bliss.log
+    hostname                  india
+    time stamp                2012-05-08
+    csa  location             /N/soft/SAGA
+    csa  target               /N/soft/SAGA/saga/
+    saga version              1.6
+    make version              GNU Make 3.81
+    compiler version          gcc-4.1.2
+    using /N/soft/SAGA/csa///test/x509_test.pem as X509_USER_PROXY
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | TEST SUMMARY                                                                                        |
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | host         | type    | name       | info                                                    | res |
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | running bliss tests                                                                                 |
+    |                                                                                                     |
+    | csa_test_bliss_core_00.py                                                                           |
+    | india        | core    | -          | -                                                       |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_01.sh                                                                            |
+    | india        | job     | fork       | fork://localhost/                                       |  ok |
+    | india        | job     | ssh        | ssh://localhost/                                        |  ok |
+    | india        | job     | pbs        | pbs://localhost/                                        |  ok |
+    | india        | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | india        | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | india        | job     | ssh        | ssh://hotel.futuregrid.org/                             | nok |
+    | india        | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | india        | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    | india        | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
+    | india        | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
+    | india        | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         | nok |
+    |                                                                                                     |
+    | csa_test_bliss_job_02.sh                                                                            |
+    | india        | job     | fork       | fork://localhost/                                       |  ok |
+    | india        | job     | ssh        | ssh://localhost/                                        |  ok |
+    | india        | job     | pbs        | pbs://localhost/                                        |  ok |
+    | india        | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | india        | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | india        | job     | ssh        | ssh://hotel.futuregrid.org/                             | nok |
+    | india        | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | india        | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    | india        | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
+    | india        | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
+    | india        | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         | nok |
+    |                                                                                                     |
+    | csa_test_bliss_job_03.sh                                                                            |
+    | india        | job     | fork       | fork://localhost/                                       |  ok |
+    | india        | job     | ssh        | ssh://localhost/                                        |  ok |
+    | india        | job     | pbs        | pbs://localhost/                                        |  ok |
+    | india        | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | india        | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | india        | job     | ssh        | ssh://hotel.futuregrid.org/                             | nok |
+    | india        | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | india        | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    | india        | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
+    | india        | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
+    | india        | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         | nok |
+    |                                                                                                     |
+    | csa_test_bliss_job_04.sh                                                                            |
+    | india        | job     | fork       | fork://localhost/                                       |  ok |
+    | india        | job     | ssh        | ssh://localhost/                                        |  ok |
+    | india        | job     | pbs        | pbs://localhost/                                        |  ok |
+    | india        | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | india        | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | india        | job     | ssh        | ssh://hotel.futuregrid.org/                             | nok |
+    | india        | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | india        | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    | india        | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
+    | india        | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
+    | india        | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         | nok |
+    |                                                                                                     |
+    | csa_test_bliss_job_05.sh                                                                            |
+    | india        | job     | fork       | fork://localhost/                                       |  ok |
+    | india        | job     | ssh        | ssh://localhost/                                        |  ok |
+    | india        | job     | pbs        | pbs://localhost/                                        |  ok |
+    | india        | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | india        | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | india        | job     | ssh        | ssh://hotel.futuregrid.org/                             | nok |
+    | india        | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | india        | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    | india        | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
+    | india        | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
+    | india        | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         | nok |
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | ok : 41                                                                                             |
+    | nok: 15                                                                                             |
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+  
+  
+For some reason, the home FS on hotel is mounted RO right now, and thus I could
+not setup ssh propely - thus ssh from india to hotel failed.
+  
+  
+All pbs tests on alamo failed with the same error as above (hotel).
+  
+  
+  
+---------------------------------------
+### kraken ###
+  
+results::
+  
+    log file                  /lustre/scratch/proj/saga/csa//test/test.saga-1.6.gcc-4.3.2.kraken.2012-05-08.bliss.log
+    hostname                  kraken
+    time stamp                2012-05-08
+    csa  location             /lustre/scratch/proj/saga
+    csa  target               /lustre/scratch/proj/saga/saga/
+    saga version              1.6
+    make version              GNU Make 3.81
+    compiler version          gcc-4.3.2
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | TEST SUMMARY                                                                                        |
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | host         | type    | name       | info                                                    | res |
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | running bliss tests                                                                                 |
+    |                                                                                                     |
+    | csa_test_bliss_core_00.py                                                                           |
+    | kraken       | core    | -          | -                                                       |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_01.sh                                                                            |
+    | kraken       | job     | fork       | fork://localhost/                                       |  ok |
+    | kraken       | job     | pbs        | pbs://localhost/                                        |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_02.sh                                                                            |
+    | kraken       | job     | fork       | fork://localhost/                                       |  ok |
+    | kraken       | job     | pbs        | pbs://localhost/                                        |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_03.sh                                                                            |
+    | kraken       | job     | fork       | fork://localhost/                                       |  ok |
+    | kraken       | job     | pbs        | pbs://localhost/                                        |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_04.sh                                                                            |
+    | kraken       | job     | fork       | fork://localhost/                                       |  ok |
+    | kraken       | job     | pbs        | pbs://localhost/                                        |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_05.sh                                                                            |
+    | kraken       | job     | fork       | fork://localhost/                                       |  ok |
+    | kraken       | job     | pbs        | pbs://localhost/                                        |  ok |
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | ok : 11                                                                                             |
+    | nok: 0                                                                                              |
+    +--------------+---------+------------+---------------------------------------------------------+-----+
     
-    Job State : saga.job.Job.Done
-    Exitcode  : 0
-
-The exitcode seems to indicate success, and state as well - but the stdout file
-is empty (just a newline).  qstat saya the job is done though:
-queue:
-
-    (mypython_repo)[merzky@i136 job]$ qstat
-    Job id                    Name             User            Time Use S Queue
-    ------------------------- ---------------- --------------- -------- - -----
-    389177.i136                bliss_job        merzky          00:00:00 C batch
-
-Debug shows:
-
-    04/17/2012 08:05:23 AM - bliss.PBSJobAndSDPlugin(0x1a8b6248) - INFO - Generated PBS script:
-    #!/bin/bash
-    #PBS -N bliss_job
-    #PBS -V
-    #PBS -v MYOUTPUT="Hello from Bliss",
-    #PBS -o bliss_job.01.stdout
-    #PBS -e bliss_job.01.stderr
     
-    /bin/echo $MYOUTPUT
-    04/17/2012 08:05:23 AM - bliss.PBSJobAndSDPlugin(0x1a8b6248) - DEBUG - Got raw qstat output:
-    04/17/2012 08:05:23 AM - bliss.PBSJobAndSDPlugin(0x1a8b6248) - DEBUG - Got raw qstat output: Job Id: 389184.i136
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | DETAILED ERROR LOG                                                                                  |
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | ok : 11                                                                                             |
+    | nok: 0                                                                                              |
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+  
+  
+---------------------------------------
+### lonestar ###
+  
+results::
+  
+    log file                  /share1/projects/xsede/SAGA/csa//test/test.saga-1.6.gcc-4.1.2.lonestar.2012-05-08.bliss.log
+    hostname                  lonestar
+    time stamp                2012-05-08
+    csa  location             /share1/projects/xsede/SAGA
+    csa  target               /share1/projects/xsede/SAGA/saga/
+    saga version              1.6
+    make version              GNU Make 3.81
+    compiler version          gcc-4.1.2
+    using /share1/projects/xsede/SAGA/csa///test/x509_test.pem as X509_USER_PROXY
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | TEST SUMMARY                                                                                        |
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | host         | type    | name       | info                                                    | res |
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | running bliss tests                                                                                 |
+    |                                                                                                     |
+    | csa_test_bliss_core_00.py                                                                           |
+    | lonestar     | core    | -          | -                                                       |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_01.sh                                                                            |
+    | lonestar     | job     | fork       | fork://localhost/                                       |  ok |
+    | lonestar     | job     | ssh        | ssh://localhost/                                        |  ok |
+    | lonestar     | job     | pbs        | pbs://localhost/                                        | nok |
+    |                                                                                                     |
+    | csa_test_bliss_job_02.sh                                                                            |
+    | lonestar     | job     | fork       | fork://localhost/                                       |  ok |
+    | lonestar     | job     | ssh        | ssh://localhost/                                        |  ok |
+    | lonestar     | job     | pbs        | pbs://localhost/                                        | nok |
+    |                                                                                                     |
+    | csa_test_bliss_job_03.sh                                                                            |
+    | lonestar     | job     | fork       | fork://localhost/                                       |  ok |
+    | lonestar     | job     | ssh        | ssh://localhost/                                        |  ok |
+    | lonestar     | job     | pbs        | pbs://localhost/                                        | nok |
+    |                                                                                                     |
+    | csa_test_bliss_job_04.sh                                                                            |
+    | lonestar     | job     | fork       | fork://localhost/                                       |  ok |
+    | lonestar     | job     | ssh        | ssh://localhost/                                        |  ok |
+    | lonestar     | job     | pbs        | pbs://localhost/                                        | nok |
+    |                                                                                                     |
+    | csa_test_bliss_job_05.sh                                                                            |
+    | lonestar     | job     | fork       | fork://localhost/                                       |  ok |
+    | lonestar     | job     | ssh        | ssh://localhost/                                        |  ok |
+    | lonestar     | job     | pbs        | pbs://localhost/                                        | nok |
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | ok : 11                                                                                             |
+    | nok: 10                                                                                             |
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    
+    
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | DETAILED ERROR LOG                                                                                  |
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | lonestar     | job     | pbs        | pbs://localhost/                                        | nok |
+    | bash -c '. /share1/projects/xsede/SAGA/csa///../saga/bliss/pyvirt/bin/activate ; bash /share1/projects/xsede/SAGA/csa///test/csa_test_bliss_job_01.sh pbs://localhost/'
+    | stdout / stderr:
+    05/08/2012 12:33:22 PM - bliss.PBSJobPlugin(0x1d16d248) - ERROR - Couldn't find PBS tools on pbs://localhost/
+    05/08/2012 12:33:22 PM - bliss.PBSJobPlugin(0x1d16d248) - ERROR - Couldn't run job because: SAGA Exception (NoSuccess): [saga.plugin.job.pbssh] Couldn't find PBS tools on pbs://localhost/
+      *********************
+      * BLISS STACK TRACE *
+      *********************
+      File "/share1/projects/xsede/SAGA/saga//bliss//bliss/test/compliance/job/01_run_remote_exe.py", line 130, in <module>
+        sys.exit(main())
+      File "/share1/projects/xsede/SAGA/saga//bliss//bliss/test/compliance/job/01_run_remote_exe.py", line 126, in main
+        return run(js_url, remoteusername, queue, project)
+      File "/share1/projects/xsede/SAGA/saga//bliss//bliss/test/compliance/job/01_run_remote_exe.py", line 48, in run
+        myjob.run()
+      File "/share1/projects/xsede/SAGA/saga/bliss/pyvirt/lib/python2.7/site-packages/bliss-0.1.21-py2.7.egg/bliss/saga/job/Job.py", line 287, in run
+        return self._plugin.job_run(self)
+      File "/share1/projects/xsede/SAGA/saga/bliss/pyvirt/lib/python2.7/site-packages/bliss-0.1.21-py2.7.egg/bliss/plugins/pbs/pbsshjob.py", line 253, in job_run
+        jobinfo = pbs.submit_job(job)
+      File "/share1/projects/xsede/SAGA/saga/bliss/pyvirt/lib/python2.7/site-packages/bliss-0.1.21-py2.7.egg/bliss/plugins/pbs/cmdlinewrapper.py", line 553, in submit_job
+        self._check_context()
+      File "/share1/projects/xsede/SAGA/saga/bliss/pyvirt/lib/python2.7/site-packages/bliss-0.1.21-py2.7.egg/bliss/plugins/pbs/cmdlinewrapper.py", line 257, in _check_context
+        "Couldn't find PBS tools on %s" % (self._url))
+      File "/share1/projects/xsede/SAGA/saga/bliss/pyvirt/lib/python2.7/site-packages/bliss-0.1.21-py2.7.egg/bliss/interface/pluginbase.py", line 35, in log_error_and_raise
+        msg = "[%s] %s %s" % (self.name, message, tback.get_traceback())
+      File "/share1/projects/xsede/SAGA/saga/bliss/pyvirt/lib/python2.7/site-packages/bliss-0.1.21-py2.7.egg/bliss/utils/tback.py", line 14, in get_traceback
+        traceback.print_stack(file=fp)
+    
+      ...
 
-
-* test 02:
-* test 03:
-
-  Same result as for test 01
-
-
-* test 04:
-* test 05:
-
-  Tests pass, and output contains the correct information
-
-
-Note that Bliss should never report invalid job IDs, like
-'[pbs://localhost]-[None]' -- the application ha no means to decide if this is
-a valid ID or not (the native ID is opaque).  Bliss should in fact not report
-any job ID before the correct and final ID is known.
-
-
-Plug-In: PBS+SSH Job
-----------------------
-
-(AM)
-
-ssh+pbs:// should be the same as pbs+ssh://
-
-output/error files are not staged back
-
-tests 1-3 have the same problems as the pbs tests above (not surprising).
-tests 4,5 work.
+All other pbs tests failed with the same error.
+  
 
 
 
