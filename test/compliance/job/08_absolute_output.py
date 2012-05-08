@@ -10,7 +10,7 @@ import sys
 import getpass
 import bliss.saga as saga
 
-def run(url, workingdir, username, queue, project):
+def run(url, outprefix, username, queue, project):
     """Test if we can execute a remote bash script via 'bash -c'
     """
     try:
@@ -29,14 +29,14 @@ def run(url, workingdir, username, queue, project):
         jd.wall_time_limit = 5 # minutes
     
         # environment, executable & arguments
-        jd.working_directory = workingdir
+        jd.working_directory = "/tmp"
         jd.environment = {'MYOUTPUT':'"Hello from Bliss"'}       
         jd.executable  = '/bin/echo'
         jd.arguments   = ['$MYOUTPUT']
 
         # output options
-        jd.output = "bliss_job.07.stdout"
-        jd.error  = "bliss_job.07.stderr"
+        jd.output = "%s/bliss_job.08.stdout" % (outprefix)
+        jd.error  = "%s/bliss_job.08.stderr" % (outprefix)
 
         # create the job (state: New)
         myjob = js.create_job(jd)
@@ -89,8 +89,8 @@ def run(url, workingdir, username, queue, project):
       print "NOW, SOME MANUAL CHECKING IS REQUIRED!      "
       print "                                            "
       print "(1) Login to %s                             " % (url)
-      print "(2) Make sure the %s/file bliss_job.07.stdout exists" % (workingdir)
-      print "(3) Make sure %s/bliss_job.01.stdout contains the string 'Hello from Bliss'" % (workingdir)
+      print "(2) Make sure %s exists" % (jd.output)
+      print "(3) Make sure %s contains the string 'Hello from Bliss'" % (jd.output)
       print ""
       print "If (1)-(3) are ok, this test can be considered as PASSED\n"
 
@@ -100,7 +100,7 @@ def run(url, workingdir, username, queue, project):
 def usage():
     print 'Usage: python %s ' % __file__
     print '                <URL>'
-    print '                <WORKINGDIR> (must exist on the target machine)'
+    print '                <OUTPUT_PREFIX> (absolute path for output -- must exist on remote machine)'
     print '                <REMOTEUSERNAME (default: local username)>'
     print '                <QUEUE (default: None)>'
     print '                <PROJECT (default: None)>'
@@ -119,14 +119,14 @@ def main():
         js_url = args[0]
 
     try:
-        workingdir     = args[1]
+        outprefix      = args[1]
         remoteusername = args[2]
         queue          = args[3]
         project        = args[4]
     except IndexError:
         pass 
 
-    return run(js_url, workingdir, remoteusername, queue, project)
+    return run(js_url, outprefix, remoteusername, queue, project)
 
 
 if __name__ == '__main__':
