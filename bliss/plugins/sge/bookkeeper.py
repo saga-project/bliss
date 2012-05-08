@@ -36,6 +36,7 @@ class BookKeeper:
         service_key = service_obj.id  
         if self.objects != {}:
              self.objects.remove(service_key)
+
     ######################################################################
     ## 
     def remove_job_object(self, job_obj):

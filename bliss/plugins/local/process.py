@@ -6,6 +6,7 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
+import os.path
 import copy
 import time
 import subprocess
@@ -23,6 +24,7 @@ class LocalJobProcess(object):
         self.executable  = jobdescription.executable
         self.arguments   = jobdescription.arguments
         self.environment = jobdescription.environment
+        self.cwd         = jobdescription.working_directory
         
         self.prochandle = None
         self.pid = None
@@ -40,14 +42,24 @@ class LocalJobProcess(object):
 
     def run(self, jd):
         if jd.output is not None:
-            self._job_output = open(jd.output,"w")  
+            if os.path.isabs(jd.output):
+                self._job_output = open(jd.output,"w")  
+            else:
+                if self.cwd is not None:
+                    self._job_output = open(os.path.join(self.cwd, jd.output),"w")
+                else:
+                    self._job_output = open(jd.output,"w")  
         else:
             self._job_output = None 
 
         if jd.error is not None:
-            self._job_error = open(jd.error,"w")  
-        else:
-            self._job_error = None 
+            if os.path.isabs(jd.error):
+                self._job_error = open(jd.error,"w")  
+            else:
+                if self.cwd is not None:
+                    self._job_error = open(os.path.join(self.cwd, jd.error),"w")
+                else:
+                    self._job_error = open(jd.error,"w")  
 
         cmdline = str(self.executable)
         args = ""
@@ -56,12 +68,15 @@ class LocalJobProcess(object):
                 cmdline += " %s" % arg 
 
         self.pi.log_info("Trying to run: %s" % cmdline)   
+ 
+        print self.cwd
 
         self.prochandle = subprocess.Popen(cmdline, shell=True, 
                                            #executable=self.executable,
                                            stderr=self._job_error, 
                                            stdout=self._job_output, 
-                                           env=self.environment)
+                                           env=self.environment,
+                                           cwd=self.cwd)
         self.pid = self.prochandle.pid
         self.state = bliss.saga.job.Job.Running
 

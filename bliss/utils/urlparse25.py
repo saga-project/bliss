@@ -16,7 +16,7 @@ uses_netloc = ['ftp', 'http', 'gopher', 'nntp', 'telnet',
                'snews', 'prospero', 'rtsp', 'rtspu', 'rsync', '',
                'svn', 'svn+ssh', 'sftp', 'pbs', 'pbs+ssh', 'sge', 'sge+ssh',
                'fork', 'ssh', 'xt5torque', 'ec2', 'euca', 'pbs+gsissh', 'sge+gsissh',
-               'xt5torque+gsissh', 'xt5torque+ssh']
+               'xt5torque+gsissh', 'xt5torque+ssh', 'redis']
 non_hierarchical = ['gopher', 'hdl', 'mailto', 'news',
                     'telnet', 'wais', 'imap', 'snews', 'sip', 'sips']
 uses_params = ['ftp', 'hdl', 'prospero', 'http', 'imap',
