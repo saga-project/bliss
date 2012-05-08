@@ -17,8 +17,9 @@ In order to run the unit tests, execute the following commands:
 * We assume that you have a locally cloned copy of Bliss (refered to as **[BLISS ROOT DIR]**).
 
 * Create a virtual environment for testing:
-  ```virtualenv /tmp/bliss-test
-     source /tmp/bliss-test/bin/activate```
+
+        virtualenv /tmp/bliss-test
+        source /tmp/bliss-test/bin/activate
 
 * Install Bliss into the virutalenv sandbox. From the Bliss 
   **[BLISS ROOT DIR]** call:
@@ -36,8 +37,9 @@ In order to run the compliance tests for a specific adaptor, follow these steps:
 * We assume that you have a locally cloned copy of Bliss (refered to as **[BLISS ROOT DIR]**).
 
 * Create a virtual environment for testing (if not already done):
-  ```virtualenv /tmp/bliss-test
-     source /tmp/bliss-test/bin/activate```
+
+        virtualenv /tmp/bliss-test
+        source /tmp/bliss-test/bin/activate
 
 * Install Bliss into the virutalenv sandbox. From the Bliss 
   **[BLISS ROOT DIR]**, call:

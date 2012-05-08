@@ -554,7 +554,7 @@ class SGEService:
         #script = script.replace("\"", "\\\"")
         result = self._cw.run("echo \'%s\' | qsub" % (script))
         if result.returncode != 0:
-            if len(result.stderr) < 1:
+            if len(result.stdout) > 1:
                 error = result.stdout
             else:
                 error = result.stderr
