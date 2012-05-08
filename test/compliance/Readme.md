@@ -136,91 +136,8 @@ python devel included).
 
 ** Plug-In: PBS, PBS+SSH Job**
 
-*** hotel ***
- 
-results::
-
-    bash -c '. /gpfs/software/x86_64/el5/hotel/SAGA/csa///../saga/bliss/pyvirt/bin/activate ; bash /gpfs/software/x86_64/el5/hotel/SAGA/csa///test/csa_test_bliss_core_00.py pbs+ssh://hotel.futuregrid.org/'
-    | hotel        | core    | -          | -                                                       |  ok |
-  
-    bash -c '. /gpfs/software/x86_64/el5/hotel/SAGA/csa///../saga/bliss/pyvirt/bin/activate ; bash /gpfs/software/x86_64/el5/hotel/SAGA/csa///test/csa_test_bliss_job_01.sh pbs+ssh://hotel.futuregrid.org/'
-  
-    | hotel        | job     | fork       | fork://localhost/                                       |  ok |
-    | hotel        | job     | ssh        | ssh://localhost/                                        |  ok |
-    | hotel        | job     | pbs        | pbs://localhost/                                        |  ok |
-    | hotel        | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
-    | hotel        | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
-    | hotel        | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
-    | hotel        | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
-    | hotel        | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
-    | hotel        | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
-    | hotel        | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
-      SAGA Exception (NoSuccess): [saga.plugin.job.pbssh] Couldn't run job because: SAGA Exception (11): [saga.plugin.job.pbssh] Couldn't find PBS command line tools on pbs+ssh://alamo.futuregrid.org/: which: no pbsnodes in (/usr/local/bin:/bin:/usr/bin)
-  
-    | hotel        | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         |  ok |
-  
-    bash -c '. /gpfs/software/x86_64/el5/hotel/SAGA/csa///../saga/bliss/pyvirt/bin/activate ; bash /gpfs/software/x86_64/el5/hotel/SAGA/csa///test/csa_test_bliss_job_02.sh pbs+ssh://hotel.futuregrid.org/'
-    | hotel        | job     | fork       | fork://localhost/                                       |  ok |
-    | hotel        | job     | ssh        | ssh://localhost/                                        |  ok |
-    | hotel        | job     | pbs        | pbs://localhost/                                        |  ok |
-    | hotel        | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
-    | hotel        | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
-    | hotel        | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
-    | hotel        | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
-    | hotel        | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
-    | hotel        | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
-    | hotel        | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
-      SAGA Exception (NoSuccess): [saga.plugin.job.pbssh] Couldn't run job because: SAGA Exception (11): [saga.plugin.job.pbssh] Couldn't find PBS command line tools on pbs+ssh://alamo.futuregrid.org/: which: no pbsnodes in (/usr/local/bin:/bin:/usr/bin)
-  
-    | hotel        | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         |  ok |
-  
-    bash -c '. /gpfs/software/x86_64/el5/hotel/SAGA/csa///../saga/bliss/pyvirt/bin/activate ; bash /gpfs/software/x86_64/el5/hotel/SAGA/csa///test/csa_test_bliss_job_03.sh pbs+ssh://hotel.futuregrid.org/'
-    | hotel        | job     | fork       | fork://localhost/                                       |  ok |
-    | hotel        | job     | ssh        | ssh://localhost/                                        |  ok |
-    | hotel        | job     | pbs        | pbs://localhost/                                        |  ok |
-    | hotel        | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
-    | hotel        | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
-    | hotel        | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
-    | hotel        | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
-    | hotel        | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
-    | hotel        | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
-    | hotel        | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
-      SAGA Exception (NoSuccess): [saga.plugin.job.pbssh] Couldn't run job because: SAGA Exception (11): [saga.plugin.job.pbssh] Couldn't find PBS command line tools on pbs+ssh://alamo.futuregrid.org/: which: no pbsnodes in (/usr/local/bin:/bin:/usr/bin)
-  
-    | hotel        | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         |  ok |
-  
-    bash -c '. /gpfs/software/x86_64/el5/hotel/SAGA/csa///../saga/bliss/pyvirt/bin/activate ; bash /gpfs/software/x86_64/el5/hotel/SAGA/csa///test/csa_test_bliss_job_05.sh pbs+ssh://hotel.futuregrid.org/'
-    | hotel        | job     | fork       | fork://localhost/                                       |  ok |
-    | hotel        | job     | ssh        | ssh://localhost/                                        |  ok |
-    | hotel        | job     | pbs        | pbs://localhost/                                        |  ok |
-    | hotel        | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
-    | hotel        | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
-    | hotel        | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
-    | hotel        | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
-    | hotel        | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
-    | hotel        | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
-    | hotel        | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
-      SAGA Exception (NoSuccess): [saga.plugin.job.pbssh] Couldn't run job because: SAGA Exception (11): [saga.plugin.job.pbssh] Couldn't find PBS command line tools on pbs+ssh://alamo.futuregrid.org/: which: no pbsnodes in (/usr/local/bin:/bin:/usr/bin)
-  
-    | hotel        | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         |  ok |
-  
-    bash -c '. /gpfs/software/x86_64/el5/hotel/SAGA/csa///../saga/bliss/pyvirt/bin/activate ; bash /gpfs/software/x86_64/el5/hotel/SAGA/csa///test/csa_test_bliss_job_04.sh pbs+ssh://hotel.futuregrid.org/'
-    | hotel        | job     | fork       | fork://localhost/                                       |  ok |
-    | hotel        | job     | ssh        | ssh://localhost/                                        |  ok |
-    | hotel        | job     | pbs        | pbs://localhost/                                        |  ok |
-    | hotel        | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
-    | hotel        | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
-    | hotel        | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
-    | hotel        | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
-    | hotel        | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
-    | hotel        | job     | pbs+ssh    | pbs+ssh://sierra.futuregrid.org/                        |  ok |
-    | hotel        | job     | pbs+ssh    | pbs+ssh://alamo.futuregrid.org/                         | nok |
-      SAGA Exception (NoSuccess): [saga.plugin.job.pbssh] Couldn't run job because: SAGA Exception (11): [saga.plugin.job.pbssh] Couldn't find PBS command line tools on pbs+ssh://alamo.futuregrid.org/: which: no pbsnodes in (/usr/local/bin:/bin:/usr/bin)
-  
-    | hotel        | job     | pbs+ssh    | pbs+ssh://hotel.futuregrid.org/                         |  ok |
-  
-  
-*** hotel ***
+---------------------------------------
+### hotel ###
    
 results::
   
@@ -345,10 +262,11 @@ results::
      
       ...
       
-*All other pbs tests on alamo failed with the same error*
+All other pbs tests on alamo failed with the same error.
   
   
-*** sierra ***
+---------------------------------------
+### sierra ###
   
 results:
   
@@ -441,16 +359,18 @@ results:
     +--------------+---------+------------+---------------------------------------------------------+-----+ 
   
     
-*All pbs tests on alamo failed with the same error as above (hotel)*
+All pbs tests on alamo failed with the same error as above (hotel).
   
   
-*** alamo ***
+---------------------------------------
+### alamo ###
   
 Could not install bliss, as there is no devel version of python, thus paramiko
 does not compile.  I did not investigate further...
   
   
-*** india ***
+---------------------------------------
+### india ###
   
 results::
   
@@ -547,11 +467,12 @@ For some reason, the home FS on hotel is mounted RO right now, and thus I could
 not setup ssh propely - thus ssh from india to hotel failed.
   
   
-*All pbs tests on alamo failed with the same error as above (hotel)*
+All pbs tests on alamo failed with the same error as above (hotel).
   
   
   
-*** kraken ***
+---------------------------------------
+### kraken ###
   
 results::
   
@@ -606,7 +527,8 @@ results::
     +--------------+---------+------------+---------------------------------------------------------+-----+
   
   
-*** lonestar ***
+---------------------------------------
+### lonestar ###
   
 results::
   
@@ -691,7 +613,7 @@ results::
     
       ...
 
-*All other pbs tests failed with the same error*
+All other pbs tests failed with the same error.
   
 
 
