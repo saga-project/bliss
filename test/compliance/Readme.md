@@ -616,6 +616,99 @@ results::
 All other pbs tests failed with the same error.
   
 
+----------------------------------------
+### thinkie (localhost AM) ###
+
+results::
+
+    log file                  /home/merzky/test/csa/csa//test/test.saga-1.6.gcc-4.4.5.thinkie.2012-05-08.bliss.log
+    hostname                  thinkie
+    time stamp                2012-05-08
+    csa  location             /home/merzky/test/csa
+    csa  target               /home/merzky/test/csa/saga/
+    saga version              1.6
+    make version              GNU Make 3.81
+    compiler version          gcc-4.4.5
+    using /home/merzky/test/csa/csa///test/x509_test.pem as X509_USER_PROXY
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | TEST SUMMARY                                                                                        |
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | host         | type    | name       | info                                                    | res |
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | running bliss tests                                                                                 |
+    |                                                                                                     |
+    | csa_test_bliss_core_00.py                                                                           |
+    | thinkie      | core    | -          | -                                                       |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job.sh                                                                               |
+    | thinkie      | job     | fork       | fork://localhost/                                       |  ok |
+    | thinkie      | job     | ssh        | ssh://localhost/                                        |  ok |
+    | thinkie      | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | thinkie      | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | thinkie      | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
+    | thinkie      | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | thinkie      | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_01.py                                                                            |
+    | thinkie      | job     | fork       | fork://localhost/                                       |  ok |
+    | thinkie      | job     | ssh        | ssh://localhost/                                        |  ok |
+    | thinkie      | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | thinkie      | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | thinkie      | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
+    | thinkie      | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | thinkie      | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_01.sh                                                                            |
+    | thinkie      | job     | fork       | fork://localhost/                                       |  ok |
+    | thinkie      | job     | ssh        | ssh://localhost/                                        |  ok |
+    | thinkie      | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | thinkie      | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | thinkie      | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
+    | thinkie      | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | thinkie      | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_02.sh                                                                            |
+    | thinkie      | job     | fork       | fork://localhost/                                       |  ok |
+    | thinkie      | job     | ssh        | ssh://localhost/                                        |  ok |
+    | thinkie      | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | thinkie      | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | thinkie      | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
+    | thinkie      | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | thinkie      | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_03.sh                                                                            |
+    | thinkie      | job     | fork       | fork://localhost/                                       |  ok |
+    | thinkie      | job     | ssh        | ssh://localhost/                                        |  ok |
+    | thinkie      | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | thinkie      | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | thinkie      | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
+    | thinkie      | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | thinkie      | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_04.sh                                                                            |
+    | thinkie      | job     | fork       | fork://localhost/                                       |  ok |
+    | thinkie      | job     | ssh        | ssh://localhost/                                        |  ok |
+    | thinkie      | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | thinkie      | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | thinkie      | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
+    | thinkie      | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | thinkie      | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    |                                                                                                     |
+    | csa_test_bliss_job_05.sh                                                                            |
+    | thinkie      | job     | fork       | fork://localhost/                                       |  ok |
+    | thinkie      | job     | ssh        | ssh://localhost/                                        |  ok |
+    | thinkie      | job     | ssh        | ssh://sierra.futuregrid.org/                            |  ok |
+    | thinkie      | job     | ssh        | ssh://india.futuregrid.org/                             |  ok |
+    | thinkie      | job     | ssh        | ssh://hotel.futuregrid.org/                             |  ok |
+    | thinkie      | job     | ssh        | ssh://alamo.futuregrid.org/                             |  ok |
+    | thinkie      | job     | pbs+ssh    | pbs+ssh://india.futuregrid.org/                         |  ok |
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+    | ok : 55                                                                                             |
+    | nok:  0                                                                                             |
+    +--------------+---------+------------+---------------------------------------------------------+-----+
+
+
+
 
 
 Plug-In: SGE(+SSH) Job
