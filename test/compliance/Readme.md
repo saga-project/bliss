@@ -89,12 +89,15 @@ Plug-In: PBS(+SSH) Job
 ----------------------
 
   * URL: **pbs+ssh://alamo.futuregrid.org**, Info: FutureGrid Alamo Cluster, PBS 2.4.8, Date: 04/21/2012, 
-    Git hash (git log -1): de149e866eae6b22be1ea2162742fec08f9927e3 
+    Git hash (git log -1): 81b5df0eff27ade309416afb066c4e691c8d5f70 
     * 01_run_remote_exe.py: **PASS**
     * 02_run_shell_command_newline.py: **PASS**
     * 03_run_shell_command_multiline.py: **PASS**
     * 04_run_python_command_newline.py: **PASS**
     * 05_run_python_command_multiline.py: **PASS**
+    * 06_
+    * 07_
+    * 08_absolute_output.py pbs+ssh://alamo.futuregrid.org /tmp/ **PASS**
 
 ** installation on india.fg ** (AM)
 
