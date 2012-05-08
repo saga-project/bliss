@@ -487,7 +487,7 @@ class SGEService:
             sge_params += "#$ -v %s \n" % variable_list
 
         if jd.working_directory is not None:
-            sge_params += "#$ -d %s \n" % jd.working_directory 
+            sge_params += "#$ -cwd %s \n" % jd.working_directory 
         if jd.output is not None:
             sge_params += "#$ -o %s \n" % jd.output
         if jd.error is not None:
