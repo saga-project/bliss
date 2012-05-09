@@ -31,8 +31,11 @@ class Runtime:
         elif SAGA_VERBOSE == 2:
             self.loglevel = logging.WARNING
         # 1 = ERROR ONLY
-        elif SAGA_VERBOSE <= 1:
+        elif SAGA_VERBOSE == 1:
             self.loglevel = logging.ERROR
+        # 0 = No Logging
+        else:
+            self.loglevel = None
   
         logging.basicConfig(level=self.loglevel, datefmt='%m/%d/%Y %I:%M:%S %p',
                     	    format='%(asctime)s - bliss.%(name)s - %(levelname)s - %(message)s')

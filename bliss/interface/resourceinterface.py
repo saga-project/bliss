@@ -1,14 +1,13 @@
-#!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.interface import PluginBaseInterface
 
-from bliss.saga.Exception import Error as SAGAError
+from bliss.saga.Error import Error as SAGAError
 from bliss.saga.Exception import Exception as SAGAException
 
 class ResourcePluginInterface(PluginBaseInterface):
