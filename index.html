@@ -1,140 +1,41 @@
+<!-- vim: filetype=html expandtab shiftwidth=4 softtabstop=4 -->
+
 <DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
-  <head>
-    <title>Bliss &mdash; BLiss IS Saga</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
-    <meta name="dc.creator" content="Ole Weidner"/>
-    <link rel="shortcut icon" href="./images/A_48.ico" />
-    <link rel="apple-touch-icon" href="./images/A_114.png" />
-    <link rel="stylesheet" href="./css/screen.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="./css/fonts/ballpark/ballpark_weiner_webfont.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="./css/lightbox.css" type="text/css" media="screen" />
-    <script type="text/javascript" src="./js/prototype.js"></script>
-    <script type="text/javascript" src="./js/scriptaculous.js?load=effects,builder"></script>
-    <script type="text/javascript" src="./js/lightbox.js"></script>
+    <head>
+        <title>SAGA Project &mdash; Distributed Computing Research</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+        <meta name="dc.creator" content="Ole Weidner"/>
+        <link rel="shortcut icon" href="./images/A_48.ico" />
+        <link rel="apple-touch-icon" href="./images/A_114.png" />
+        <link rel="stylesheet" href="./css/screen.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="./css/fonts/ballpark/ballpark_weiner_webfont.css" type=
+        "text/css" media="screen" />
+        <link rel="stylesheet" href="./css/lightbox.css" type="text/css" media="screen" />
+        <script type="text/javascript" src="./js/prototype.js">
+        </script>
+        <script type="text/javascript" src="./js/scriptaculous.js?load=effects,builder">
+        </script>
+        <script type="text/javascript" src="./js/lightbox.js">
+        </script>
 
-    <script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-31602138-2']);
-      _gaq.push(['_trackPageview']);
+        <script type="text/javascript">
 
-      (function() {
-       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-       })();
-     </script>
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-31602138-2']);
+            _gaq.push(['_trackPageview']);
 
-     <style type="text/css">
-       img.c2 {position: absolute; top: 0; right: 0; border: 0;}
-       span.c1 {color: #e3d796;}
-     </style>
-   </head>
-
-   <body>
-     <div id="wrap">
-       <div id="header">
-         <h1><a href="./">Bliss</a></h1>
-
-         <p id="subtitle"><strong>A Light-Weight SAGA Implementation for Python</strong></p>
-       </div>
-
-       <div id="informations">
-         <ul>
-
-           <li>
-           <div class="group row">
-             <div class="col-1">
-               <p class="button"><a href="http://wiki.github.com/saga-project/bliss">Documentation and Wiki</a></p>
-
-             </div>
-             <div class="col-2">
-               <p class="button"><a href="http://saga-project.github.com/bliss/apidoc/">&nbsp;&nbsp;&nbsp;&nbsp;Bliss API Reference&nbsp;&nbsp;&nbsp;&nbsp;</a></p>
-             </div>
-           </div>
-           </li>
-
-           <li>
-           <div class="group row">
-             <p><b><em>What is Bliss?</em></b></p>
-
-             <p>Bliss (<em>BLiss IS Saga</em>) is a light-weight and pragmatic
-             implementation of the <a href="http://www.ogf.org/documents/GFD.90.pdf">OGF
-               GFD.90</a> SAGA standard. Bliss is written 100% in Python and
-             focuses on usability and simple deployment rather than on feature
-             completeness and strict standard obedience.</p>
-
-             <p>The SAGA standard and its extensions define a high-level API for 
-             uniform acess to the building-blocks of distributed computing: (1) <em>job execution and managegment</em>, (2)
-             <em>file/data management</em>, (3) <em>resource provisioning and management</em> (4) <em>distributed coordination and
-               orchestration</em>. Bliss is a native Python implementation of this API with
-             flexible <a href="https://github.com/saga-project/bliss/wiki/Plugins">plug-in</a> 
-             mechanism to support different distributed backends.</p>
-
-             <!--p><b><em>Why should I use Bliss?</em></b></p>
-
-             <P>Bliss allows you to write distributed applications and workflows
-             that are portable accross distributed systems. With Bliss you can finally say
-             goodbye to all those awful, error-prone glue-code scripts that you use to 
-             handle compute and data provisioning and management for your application.</p>
-
-             <p>Bliss is also a great tool to carry out your distributed computing 
-             and computational science research: 
-             you have great idea for an algorithm that does data/compute co-scheduling 
-             in a heterogeneous resource environment? You want to test it in a real-life
-             scenario? Bliss allows you to encapsulate heterogeneous resource access 
-             details and lets you focus on the exciting part of your work!</p-->
-           </div>
-           </li>
-
-           <li>
-           <div class="group row">
-             <div class="col-1">
-               <p>Bliss installs in seconds with easy_install:<br />
-               <em><a href=
-                   "http://wiki.github.com/saga-project/bliss/Installation">Installation
-                   instructions</a></em></p>
-             </div>
-
-             <div class="col-2">
-               <pre>
-<code><span class="c1">$ </span>easy_install bliss</code>
-</pre>
-             </div>
-           </div>
-           </li>
-
-           <li>
-           <div class="group row">
-             <p>Running a remote job on a PBS cluster using the <a href=
-               "http://saga-project.github.com/bliss/apidoc/">Job API</a><br />
-             <em><a href="http://wiki.github.com/saga-project/bliss">More examples &amp;
-                 documentation</a></em></p><script src=
-               "https://gist.github.com/1353955.js?file=pbssh.py" type="text/javascript">
-             </script>
-           </div>
-           </li>
-
-           <li>
-           <div class="group row">
-             <p align="center"> &copy; Copyright
-             <script type="text/javascript">
-               var d = new Date()
-document.write(d.getFullYear())
-  </script>
-
-  <a href="http://saga-project.github.com">The SAGA Project</a> </p>
-
-</div>
-</li>
-
-      </ul>
-    </div>
-    </div><a href="http://github.com/saga-project/bliss"><img class="c2" src=
-    "http://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt=
-    "Fork me on GitHub" /></a>
-</body>
-</html>
+            (function() {
+             var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+             })();
+         </script>
+     </head>
+     <body>
+         Hi there!
+     </body>
+ </html>
 
