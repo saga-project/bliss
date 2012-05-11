@@ -14,36 +14,28 @@ class SSHJobProcess(object):
             self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
                                         "SSH Job adaptor doesn't support the file transfer attribute!") 
 
-        if jobdescription.project     != None: 
-            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
-                                        "SSH Job adaptor doesn't support the project attribute!") 
-        
-        if jobdescription.queue     != None: 
-            self.pi.log_info("Silently ignoring the queue sent to the SSH adaptor.")
-            # queue and wall_time_limit blocks commented out per ole's request
-            #self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
-            #                            "SSH Job adaptor doesn't support the queue attribute!") 
-
-        if jobdescription.wall_time_limit     != None:
-            self.pi.log_info("Silently ignoring the walltime limit sent to the SSH adaptor.")
-            #self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
-            #                            "SSH Job adaptor doesn't support the wall_time_limit attribute!") 
-              
         if jobdescription.contact     != None: 
             self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
                                         "SSH Job adaptor doesn't support the contact attribute!")
 
+        if jobdescription.wall_time_limit     != None:
+            self.pi.log_warning("Silently ignoring the walltime_limit attribute. It's not supported by SSH.")
+              
         if jobdescription.total_cpu_count     != None: 
-            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
-                                        "SSH Job adaptor doesn't support the total_cpu_count attribute!")
+            self.pi.log_warning("Silently ignoring the total_cpu_count attribute. It's not supported by SSH.")
 
         if jobdescription.number_of_processes     != None: 
-            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
-                                        "SSH Job adaptor doesn't support the number_of_processes attribute!")
+            self.pi.log_warning("Silently ignoring the number_of_processes attribute. It's not supported by SSH.")        
 
         if jobdescription.spmd_variation     != None: 
-            self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
-                                        "SSH Job adaptor doesn't support the spmd_variation attribute!")    
+            self.pi.log_warning("Silently ignoring the spmd_variation attribute. It's not supported by SSH.")
+
+        if jobdescription.project     != None: 
+            self.pi.log_warning("Silently ignoring the project attribute. It's not supported by SSH.")
+        
+        if jobdescription.queue     != None: 
+            self.pi.log_warning("Silently ignoring the queue attribute. It's not supported by SSH.")
+
 
         self.executable  = jobdescription.executable
         self.arguments   = jobdescription.arguments

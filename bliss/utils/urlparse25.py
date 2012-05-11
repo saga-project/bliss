@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
+
 """Parse (absolute and relative) URLs.
 
 See RFC 1808: "Relative Uniform Resource Locators", by R. Fielding,
@@ -211,7 +214,7 @@ def urlsplit(url, scheme='', allow_fragments=True):
                 break
         else:
             scheme, url = url[:i].lower(), url[i+1:]
-    if scheme in uses_netloc and url[:2] == '//':
+    if url[:2] == '//':
         netloc, url = _splitnetloc(url, 2)
     if allow_fragments and scheme in uses_fragment and '#' in url:
         url, fragment = url.split('#', 1)
@@ -231,7 +234,7 @@ def urlunparse((scheme, netloc, url, params, query, fragment)):
     return urlunsplit((scheme, netloc, url, query, fragment))
 
 def urlunsplit((scheme, netloc, url, query, fragment)):
-    if netloc or (scheme and scheme in uses_netloc and url[:2] != '//'):
+    if netloc or (scheme and url[:2] != '//'):
         if url and url[:1] != '/': url = '/' + url
         url = '//' + (netloc or '') + url
     if scheme:
@@ -255,11 +258,11 @@ def urljoin(base, url, allow_fragments=True):
             urlparse(url, bscheme, allow_fragments)
     if scheme != bscheme or scheme not in uses_relative:
         return url
-    if scheme in uses_netloc:
-        if netloc:
-            return urlunparse((scheme, netloc, path,
+    #if scheme in uses_netloc:
+    if netloc:
+        return urlunparse((scheme, netloc, path,
                                params, query, fragment))
-        netloc = bnetloc
+    netloc = bnetloc
     if path[:1] == '/':
         return urlunparse((scheme, netloc, path,
                            params, query, fragment))

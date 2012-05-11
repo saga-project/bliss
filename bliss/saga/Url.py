@@ -1,9 +1,8 @@
-#!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 # Using urlparse from Python 2.5
@@ -15,8 +14,10 @@ class Url(Object):
 
     #__slots__ = ('_urlobj', 'scheme', 'host', 'port', 'path', 'params', 'query', 'fragment', 'url')
 
+    ######################################################################
+    ##
     def __init__(self, urlstring=''):
-        '''Construct a new Url from a string'''
+        '''Create a new Url object.'''
 
         Object.__init__(self, objtype=Object.Type.Url, apitype=Object.Type.BaseAPI)
 
@@ -47,13 +48,18 @@ class Url(Object):
         self.url      = str(self._urlobj.geturl())
         '''The Url as string (same as __str__).'''
 
-    # Old-style accessors
-    def __del__(self):
-        '''Destructor (tear-down the Url object).'''
-
+    ######################################################################
+    ##
     def __str__(self):
-        '''Return Url as string.'''
-        return self.url
+        """String representation (utf-8)."""
+        return unicode(self).decode('utf-8', 'ignore')
+
+    ######################################################################
+    ##
+    def __unicode__(self):
+        """Unicode representation."""
+        ucstring = u'%s' % unicode(self.url)
+        return ucstring
 
     def get_scheme(self):
         '''return the 'scheme' property.'''

@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
@@ -16,7 +15,9 @@ if __name__ == '__main__':
 
     # All non-package tests (session, context, etc)
     suite_lnf = unittest.TestLoader().loadTestsFromTestCase(SessionTests)
-    suite_lnf = unittest.TestLoader().loadTestsFromTestCase(ContextTests)
+    suite_lnf.addTests(unittest.TestLoader().loadTestsFromTestCase(ContextTests))
+    suite_lnf.addTests(unittest.TestLoader().loadTestsFromTestCase(ExceptionTests))
+    suite_lnf.addTests(unittest.TestLoader().loadTestsFromTestCase(UrlTests))
 
     # Job package tests
     suite_job = unittest.TestLoader().loadTestsFromTestCase(JobDescriptionTests)

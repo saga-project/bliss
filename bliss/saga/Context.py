@@ -12,7 +12,7 @@ from bliss.saga.Object import Object
 
 from bliss.saga.Attributes import AttributeInterface
 from bliss.saga.Exception import Exception as SAGAException
-from bliss.saga.Exception import Error as SAGAError
+from bliss.saga.Error import Error as SAGAError
 
 class Context(AttributeInterface, Object):
     '''Loosely defines a SAGA Context object as defined in GFD.90.

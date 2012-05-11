@@ -1,107 +1,91 @@
-#!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
-
 
 import traceback
 import StringIO
 
-def _get_traceback(prefix="\n*** "):
-    # FIXME: prefix by default should be empty
+def _get_exception_traceback():
     '''returns the last traceback as a string with a given prefix'''
     fp = StringIO.StringIO()
     traceback.print_exc(file=fp)
     if fp.getvalue() == "None\n":
         return "(No Traceback)"
     else:
-        return prefix+fp.getvalue() 
-
-
-class Error:
-
-    # entity errors
-    AlreadyExists        = 'AlreadyExists'
-    ''' The entity to be created already exists. '''
-
-    DoesNotExist         = 'DoesNotExist'
-    ''' An operation tried to access a non-existing entity. '''
-
-    IncorrectState       = 'IncorrectState'
-    ''' The operation is not allowed on the entity in its current state. '''
-
-    
-    # parameter errors
-    BadParameter         = 'BadParameter'
-    ''' A given parameter is out of bound or ill formatted. '''
-
-    IncorrectURL         = 'IncorrectURL'
-    ''' The given URL could not be interpreted, for example due to an incorrect schema.''' 
-
-
-    # security errors
-    AuthenticationFailed = 'AuthenticationFailed'
-    ''' The backend could not establish a valid identity. '''
-
-    AuthorizationFailed  = 'AuthorizationFailed'
-    ''' The used identity is not allowed to use the backend, '''
-
-    PermissionDenied     = 'PermissionDenied'
-    ''' The used identity is not permitted to perform the requested operation.  '''
-
-
-    # implementation / backend errors
-    Timeout              =  'Timeout'
-    ''' The interaction with the backend times out. '''
-
-    NoSuccess            = 'NoSuccess'
-    ''' Some other error occurred. '''
-
-    NotImplemented       = 'NotImplemented'
-    ''' Bliss does not (yet) implement this method, for the backend in use. '''
-
+        return fp.getvalue() 
 
 
 class Exception(Exception):
-       ''' The Exception class encapsulates information about error conditions
-       encountered by Bliss.
+    """ The Exception class encapsulates information about error conditions
+        encountered in SAGA/Bliss.
 
-       Additionally to the error message (e.msg), the exception also provides
-       a trace to the code location where the error condition got raised
-       (e.traceback), and an error code (e.error) which identifies the type of
-       error encountered.  That error code reduces the need to parse the error
-       message, and helps the application to react on specific conditions.
-
-       Example::
-
-         dir = saga..filesystem.Directory ("ssh://remote.host.net/data/")
-
-         try :
-           dir.mkdir ('stage')
-           dir.cd ('stage/')
-         except Exception as e :
-           if e.error == saga.Error.AlreadyExists :
-             # that's ok
-             dir.cd ('stage/')
-           else
-             # oy, can't do that - so lets use /tmp
-             dir.cd ('/tmp/')
-           fi
-
-       '''
-       def __init__(self, error, msg):
-           self.error     = error
-           '''Contains the L{Error} type.'''
-           self.msg       = msg
-           '''Contains the error message.'''
-           self.traceback = _get_traceback()
-           '''Contains the traceback (if existent).'''
+        Additionally to the error message (e.message), the exception also provides
+        a trace to the code location where the error condition got raised
+        (e.traceback), and an error code (e.error) which identifies the type of
+        error encountered.
  
-       def __str__(self):
-           '''String representation.'''
-           string = "SAGA Exception (%s): %s" % (str(self.error), str(self.msg))
-           return (string)
+        B{Example}::
 
+          try :
+              js = saga.job.Service("ssh://alamo.futuregrid.org")
+
+          except saga.Exception, e :
+              if e.error == saga.Error.Timeout:
+                  # maybe the network is down?
+                  try_again(...)
+              else:
+                  # something else went wrong
+                  print "Exception occured: %s %s" % (str(e), e.stacktrace)
+
+        """
+
+    ######################################################################
+    ##
+    def __init__(self, error, message):
+        """Create a new Exception object.
+
+           @param error:   The type of error
+           @type  error:   L{Error}
+           @param message: The error message
+           @type  message: str
+        """
+        self._error     = error
+        self._message   = message
+        self._traceback = _get_exception_traceback()
+
+    ######################################################################
+    ##
+    def __str__(self):
+        """String representation (utf-8)."""
+        return unicode(self).decode('utf-8', 'ignore')
+
+    ######################################################################
+    ##
+    def __unicode__(self):
+        """Unicode representation."""
+        ucstring = u'SAGA Exception (%s): %s' % (unicode(self.error), unicode(self.message))
+        return ucstring
+
+    ######################################################################
+    ##
+    @property
+    def message(self):
+        """The Exception's error message."""
+        return self._message
+
+    ######################################################################
+    ##
+    @property
+    def error(self):
+        """The Exception's L{Error} type."""
+        return self._error
+
+    ######################################################################
+    ##
+    @property
+    def traceback(self):
+        """The Exception's stack trace (if available)."""
+        return self._traceback
