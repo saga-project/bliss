@@ -113,9 +113,6 @@ class Container(Object):
 
 
         '''
-        # FIXME: the job does not need to be in New state, as was documented
-        # before
-
         # parameter checks
         if job._get_type() != Object.Type.Job:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
@@ -168,7 +165,6 @@ class Container(Object):
 
 
         '''
-        # FIXME: this is the job id, not the object uid as documented before
         if self._plugin is not None:
             return self._plugin.container_get_job(self, job_id)
         else:

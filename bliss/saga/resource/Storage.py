@@ -159,25 +159,20 @@ class Storage(Object):
     
     ######################################################################
     ##
-    def destroy(self, drain=False):
-        # FIXME: as Bliss does not have async ops, the drain semantics described
-        # below does not make much sense.... - TODO raus
+    def destroy(self):
         '''Destroy (close) the resource.
         
         This method is *not* just a destructor for the Bliss API object, but
         rather signals the backend that the resource is not needed anymore, and
-        can be released.  All data on that resource will subsequently be purged
-        -- but setting the optional 'drain' flag to 'True' can request that the
-        actual resource release is delayed by the backend until all current data
-        transfer operations have reached a final state.  Either way, no new 
-        data transfer requests can be started for the resource after calling 
-        destroy().
+        can be released.  All data on that resource will subsequently be purged,
+        and no new data transfer requests can be started for the resource after 
+        calling destroy().
         '''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
                                        "Object not bound to a plugin")
         
-        return self._plugin.storage_resource_destroy(self, drain)
+        return self._plugin.storage_resource_destroy(self)
     
     
     ######################################################################

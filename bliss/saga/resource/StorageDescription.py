@@ -49,6 +49,7 @@ class StorageDescription(Object, AttributeInterface):
         self._start          = None
         self._end            = None
         self._duration       = None
+        self._template       = None
         
         self._register_rw_attribute     (name="Dynamic", 
                                          accessor=self.__class__.dynamic) 
@@ -58,14 +59,13 @@ class StorageDescription(Object, AttributeInterface):
                                          accessor=self.__class__.end) 
         self._register_rw_attribute     (name="Duration", 
                                          accessor=self.__class__.duration) 
+        self._register_rw_attribute     (name="Template", 
+                                         accessor=self.__class__.template) 
         
         self._size           = ''
-        self._mountpoint     = None
         
         self._register_rw_attribute     (name="Size", 
                                          accessor=self.__class__.size) 
-        self._register_rw_attribute     (name="Mountpoint",
-                                         accessor=self.__class__.mountpoint) 
 
 
     ######################################################################
@@ -147,6 +147,26 @@ class StorageDescription(Object, AttributeInterface):
     
     ######################################################################
     ## Property 
+    def template():
+        doc = '''Required template for this resource request.
+
+        The specified template is to be used to fill in certain elements of 
+        this storage resource description.  If the template is not known by 
+        the backend, a 'BadParameter' exception will be raised upon resource 
+        creation.  Specific values in the compute resource description will 
+        supersede the values specified by the template.
+        '''
+        def fget(self):
+            return self._template
+        def fset(self, val):
+            self._template = val
+        def fdel(self, val):
+            self._template = None
+        return locals()
+    template = property(**template())
+
+    ######################################################################
+    ## Property 
     def dynamic():
         doc = '''Dynamic or not.
         
@@ -178,18 +198,3 @@ class StorageDescription(Object, AttributeInterface):
         return locals()
     size = property(**size())
     
-    ######################################################################
-    ## Property 
-    def mountpoint():
-        # FIXME: as storages cannot be bound to compute resources in Bliss, this
-        # property does not make sense anymore.  - TODO raus
-        doc = "Mountpoint of storage."
-        def fget(self):
-            return self._mountpoint
-        def fset(self, val):
-            self._mountpoint = val
-        def fdel(self, val):
-            self._mountpoint = None
-        return locals()
-    mountpoint = property(**mountpoint())
-

@@ -147,13 +147,13 @@ class Manager(Object):
 
     ######################################################################
     ## 
-    def destroy_compute(self, compute_id, drain=False):
+    def destroy_compute(self, compute_id):
         '''Destroy (close) an existing compute resource'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
 
-        return self._plugin.manager_destroy_compute(self, compute_id, drain)
+        return self._plugin.manager_destroy_compute(self, compute_id)
 
 
     ######################################################################
@@ -186,12 +186,12 @@ class Manager(Object):
 
     ######################################################################
     ## 
-    def destroy_storage(self, storage_id, drain=False):
+    def destroy_storage(self, storage_id):
         '''Destroy (close) an existing storage resource'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
 
-        return self._plugin.manager_destroy_storage(self, storage_id, drain)
+        return self._plugin.manager_destroy_storage(self, storage_id)
 
 

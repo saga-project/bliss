@@ -159,22 +159,20 @@ class Compute(Object):
     
     ######################################################################
     ##
-    def destroy(self, drain=False):
+    def destroy(self):
         '''Destroy (close) the resource.
         
         This method is *not* just a destructor for the Bliss API object, but
         rather signals the backend that the resource is not needed anymore, and
-        can be released.  All jobs on that resource will subsequently be killed
-        -- but setting the optional 'drain' flag to 'True' can request that the
-        actual resource release is delayed by the backend until all jobs have
-        reached a final state.  Either way, no new job requests can be scheduled
-        for the resource after calling destroy().
+        can be released.  All jobs on that resource will subsequently be killed,
+        and no new job requests can be scheduled for the resource after calling 
+        destroy().
         '''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
                                        "Object not bound to a plugin")
         
-        return self._plugin.compute_resource_destroy(self, drain)
+        return self._plugin.compute_resource_destroy(self)
     
     
     ######################################################################
@@ -195,4 +193,14 @@ class Compute(Object):
                                        "Object not bound to a plugin")
         
         return self._plugin.compute_resource_wait(self, state)
+
+    ######################################################################
+    ##
+    def get_job_service(self): 
+        '''get access to the resource's job manager.'''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+
+        return self._plugin.compute_resource_get_job_service (self) 
 

@@ -80,13 +80,13 @@ class ResourcePluginInterface(PluginBaseInterface):
         errormsg = "Not implemented plugin method called: manager_get_storage()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
-    def manager_destroy_compute(self, manager_obj, compute_id, drain):
+    def manager_destroy_compute(self, manager_obj, compute_id):
         errormsg = "Not implemented plugin method called: manager_destroy_compute()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
-    def manager_destroy_storage(self, manager_obj, storage_id, drain):
+    def manager_destroy_storage(self, manager_obj, storage_id):
         errormsg = "Not implemented plugin method called: manager_destroy_compute()"
-        self.log_error_and_raise(SAGAError.NotImplemented, errormsg, drain) 
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
 
     ######## Method templates for saga.resource.Compute functionality 
@@ -111,12 +111,16 @@ class ResourcePluginInterface(PluginBaseInterface):
         errormsg = "Not implemented plugin method called: compute_resource_get_description()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg)  
 
-    def compute_resource_destroy(self, res_obj, drain):
+    def compute_resource_destroy(self, res_obj):
         errormsg = "Not implemented plugin method called: compute_resource_destroy()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def compute_resource_wait(self, res_obj, filter):
         errormsg = "Not implemented plugin method called: compute_resource_wait()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
+    def compute_resource_get_job_service(self, res_obj):
+        errormsg = "Not implemented plugin method called: compute_resource_get_job_service()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     ######## Method templates for saga.resource.Storage functionality 
@@ -141,11 +145,15 @@ class ResourcePluginInterface(PluginBaseInterface):
         errormsg = "Not implemented plugin method called: storage_resource_get_description()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg)  
 
-    def storage_resource_destroy(self, res_obj, drain):
+    def storage_resource_destroy(self, res_obj):
         errormsg = "Not implemented plugin method called: storage_resource_destroy()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def storage_resource_wait(self, res_obj, filter):
         errormsg = "Not implemented plugin method called: storage_resource_wait()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
+
+    def storage_resource_get_filesystem(self, res_obj):
+        errormsg = "Not implemented plugin method called: storage_resource_get_filesystem()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
