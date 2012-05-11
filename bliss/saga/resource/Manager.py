@@ -5,31 +5,9 @@ __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import bliss.saga 
-from   bliss.saga        import Url
+from   bliss.saga.Url    import Url
 from   bliss.saga.Object import Object 
 
-# FIXME: why is the above asymmetric?  It should be either:
-#
-#   from   bliss.saga import Url
-#   from   bliss.saga import Object 
-#
-# or
-#
-#   from   bliss.saga.URL    import Url
-#   from   bliss.saga.Object import Object 
-# !
-#
-#
-# FIXME: why has the manager create_compute / create_storage?
-# Python / duck typing should not need that...  Removing it would simplify the
-# API to
-#
-#   mgr.get      (id)
-#   mgr.create   (cd|sd)
-#   mgr.destroy  (id)
-#   mgr.list     (type=Compute|Storage|ComputeTemplates|StorageTemplates)
-#   mgr.get_tmp_d(tmp_id)
-#
 class Manager(Object):
 
     ''' The resource manager class, as the name suggests, manages resource
@@ -144,7 +122,7 @@ class Manager(Object):
     def create_compute(self, compute_description):
         '''Instantiate (request) a new compute resource'''
 
-        if compute_description.get_type() != Object.Type.ResourceComputeDescription:
+        if compute_description._get_type() != Object.Type.ResourceComputeDescription:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
                   "create_compute() expects %s object as parameter" 
                   % (Object.Type.ResourceComputeDescription))
@@ -183,7 +161,7 @@ class Manager(Object):
     def create_storage(self, storage_description):
         '''Instantiate (request) a new storage resource'''
 
-        if storage_description.get_type() != Object.Type.ResourceStorageDescription:
+        if storage_description._get_type() != Object.Type.ResourceStorageDescription:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
                   "create_storage() expects %s object as parameter" 
                   % (Object.Type.ResourceStorageDescription))

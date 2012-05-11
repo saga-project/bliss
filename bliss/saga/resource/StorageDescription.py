@@ -38,8 +38,6 @@ class StorageDescription(Object, AttributeInterface):
 
     ######################################################################
     ## 
-    # FIXME: not sure if inheritance for the attribute interface is supposed 
-    # to work this way...
     def __init__(self):
         '''Create a new (empty) storage resource description.'''
         Object.__init__(self, Object.Type.ResourceStorageDescription, 
@@ -184,7 +182,7 @@ class StorageDescription(Object, AttributeInterface):
     ## Property 
     def mountpoint():
         # FIXME: as storages cannot be bound to compute resources in Bliss, this
-        # property does not make sense anymore. 
+        # property does not make sense anymore.  - TODO raus
         doc = "Mountpoint of storage."
         def fget(self):
             return self._mountpoint

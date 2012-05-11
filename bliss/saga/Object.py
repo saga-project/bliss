@@ -10,16 +10,13 @@ import bliss.runtime
 
 from bliss.utils import tback
 
-# FIXME: I don't think that, in python, the object needs anything else besides
-# get_session()... (AM)
-
-
 class Object(object) :
-    '''Loosely resembles a SAGA object as defined in GFD.90
-    
-    The Object base class' main function is to support the use of L{Session}s.  In
-    particular, this class allows to obtain the session any object is living in,
-    to re-use that for other objects and operations.
+    '''SAGA base object as defined in GFD.90 
+
+    As Python natively provides most functionality of the SAGA base object class
+    as specified in GFD.90, this object's only function is to support the use of
+    L{Session}s.  In particular, this class allows to obtain the session any
+    object is living in, to re-use that for other objects and operations.
 
     Example::
 
@@ -163,7 +160,7 @@ class Object(object) :
 
     ######################################################################
     ## Property: type
-    def type():
+    def _type():
         doc = "The object's type identifier."
         def fget(self):
             return self._type
@@ -172,46 +169,19 @@ class Object(object) :
 
 
     ######################################################################
-    ## Property: id
-    def id():
-        doc = "The object's unique identifier."
-        def fget(self):
-            return ("%s_%s") % (self.__class__.__name__, str(hex(id(self))))
-        return locals()
-    id = property(**id())
-
-    ######################################################################
     ##
     def get_session(self):
-        '''Legacy GFD.90 method: return the object's session.
+        '''return the object's session.
  
            It is encouraged to use the L{session} property instead.
         '''
-        # FIXME: 'Legacy' means 'out of date but still used'.  I don't think
-        # this is the intended meaning here (and almost anywhere else in the
-        # API)?  If it is deprecated, say so.  If it is normally used, don't
-        # mark it.  If you want to say that this is from the SAGA spec, then say
-        # so -- but this is a SAGA implementation after all...
         return self.session
 
     ######################################################################
     ##
-    def get_type(self):
-        '''Legacy GFD.90 method: return the object type.
-
+    def _get_type(self):
+        '''return the object type.
            It is encouraged to use the L{type} property instead.
         '''
-
-        # FIXME: type inspection is built into Python, so this method is not
-        # needed.
         return self.type
-
-    ######################################################################
-    ##
-    def get_id(self):
-        '''Legacy GFD.90 method: return the object identifier.
-
-           It is encouraged to use the L{id} property instead.
-        '''
-        return self.id 
 

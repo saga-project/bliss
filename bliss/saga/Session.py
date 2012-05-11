@@ -73,9 +73,7 @@ class Session(object):
     def __str__(self):
         '''String represenation.
         '''
-        return "Registered contexts: % s" % (str(self.contexts))
-       # FIXME : the 'Registerd context: ' string should be removed -- that 
-       # makes using the __str__ method awkward (serialization, parsing, ...)
+        return "Registered contexts: %s" % (str(self.contexts))
 
     ######################################################################
     ## Property: type
@@ -103,7 +101,7 @@ class Session(object):
     ######################################################################
     ## 
     def add_context(self, context):
-        '''Legacy GFD.90 method: add a security L{Context} to the session.
+        '''add a security L{Context} to the session.
 
            It is encouraged to use the L{contexts} property instead. 
         '''
@@ -112,7 +110,7 @@ class Session(object):
     ######################################################################
     ## 
     def remove_context(self, context):
-        '''Legacy GFD.90 method: remove a security L{Context} from the session.
+        '''remove a security L{Context} from the session.
 
            It is encouraged to use the L{contexts} property instead.
         '''
@@ -121,7 +119,7 @@ class Session(object):
     ######################################################################
     ## 
     def list_contexts(self):
-        '''Legacy GFD.90 method: retrieve all L{Context} objects attached to the session.
+        '''retrieve all L{Context} objects attached to the session.
 
 
            It is encouraged to use the L{contexts} property instead.

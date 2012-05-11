@@ -445,7 +445,7 @@ class AttributeInterface(object):
           d = dict ()
 
           # list
-          print "keys: %s"  %  d.keys () # FIXME
+          print "keys: %s"  %  d.keys () # throws
 
 
         '''

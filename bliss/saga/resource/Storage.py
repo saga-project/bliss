@@ -47,8 +47,6 @@ class Storage(Object):
     ######################################################################
     ##
     def get_state(self):
-        # FIXME: as Bliss does not have async ops, the semantics descriped
-        # below does not make much sense....
         '''Return the state of the resource.
         
         A resource will only be able to store data when in Active state -- but it may
@@ -163,7 +161,7 @@ class Storage(Object):
     ##
     def destroy(self, drain=False):
         # FIXME: as Bliss does not have async ops, the drain semantics described
-        # below does not make much sense....
+        # below does not make much sense.... - TODO raus
         '''Destroy (close) the resource.
         
         This method is *not* just a destructor for the Bliss API object, but
@@ -203,7 +201,7 @@ class Storage(Object):
     ######################################################################
     ##
     def get_filesystem(self): 
-        # FIXME: this is assymetric: either have
+        # FIXME: this is assymetric: either have - TODO: get
         #
         #   d  = saga.filesystem.Directory (sr)
         #   js = saga.job.Service          (cr)

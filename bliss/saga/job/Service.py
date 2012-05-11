@@ -73,11 +73,6 @@ class Service(Object):
     @classmethod
     def from_compute(self, compute_obj, session=None):
         '''Create a job service from a saga.resource.Compute object.'''
-        #if compute_obj.get_type() != Object.Type.ResourceCompute:
-        #    raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
-        #          "Service.fromcompute() expects %s object as parameter" 
-        #          % (Object.Type.ResourceComputeDescription))
-        
         
         service = Service(compute_obj, session=session)
         service._from_compute = True
@@ -125,7 +120,7 @@ class Service(Object):
              else                                 : print "oops!"
 
         '''
-        if job_description.get_type() != Object.Type.JobDescription:
+        if job_description._get_type() != Object.Type.JobDescription:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
                   "create_job() expects %s object as parameter" 
                   % (Object.Type.JobDescription))

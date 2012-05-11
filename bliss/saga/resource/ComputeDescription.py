@@ -44,8 +44,6 @@ class ComputeDescription(Object, AttributeInterface):
 
     ######################################################################
     ## 
-    # FIXME: not sure if inheritance for the attrib interface is supposed 
-    # to work this way...
     def __init__(self):
         '''Create a new (empty) compute resource description.'''
         Object.__init__(self, Object.Type.ResourceComputeDescription, 

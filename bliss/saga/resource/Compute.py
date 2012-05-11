@@ -35,7 +35,6 @@ class Compute(Object):
 
     ######################################################################
     ##
-    #  FIXME: not sure if that should be overloaded or not...
     def __init_from_manager(self, manager_obj, compute_description):
         '''(Hidden) Constructor'''
         self._manager = manager_obj

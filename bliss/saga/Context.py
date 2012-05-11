@@ -68,17 +68,6 @@ class Context(AttributeInterface, Object):
     X509     = "X509"
     '''A security context type based on X.509 certificates.'''
     
-    # X509     = "X509"
-    # '''A security context type based on X.509 certificates.'''
-    # X509_SSH = "X509+SSH"
-    # '''A security context type for X.509 via SSH.'''
-    # BigJob = "BigJob"
-    # '''A security context type for BigJob'''
-
-    # FIXME: What is different between X509 and ssh+X509?
-    # shouldn't the latter just a session with an ssh and an X509 context?  What
-    # is this used for?
-    # FIXME: What is a BigJob context??
 
 
     ######################################################################

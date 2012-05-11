@@ -89,7 +89,7 @@ class JobPluginInterface(PluginBaseInterface):
         errormsg = "Not implemented plugin method called: container_run()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
-    def container_cancel(self, container_obj, timeout):
+    def container_cancel(self, container_obj):
         errormsg = "Not implemented plugin method called: container_cancel()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 

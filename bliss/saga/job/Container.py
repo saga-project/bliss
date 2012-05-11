@@ -76,7 +76,7 @@ class Container(Object):
         Object.__init__(self, Object.Type.JobContainer, apitype=Object.Type.JobAPI)
         
         # parameter checks
-        if service.get_type() != Object.Type.JobService:
+        if service._get_type() != Object.Type.JobService:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
                   "Container c'tor expects %s object as parameter" 
                   % (Object.Type.JobService))
@@ -117,7 +117,7 @@ class Container(Object):
         # before
 
         # parameter checks
-        if job.get_type() != Object.Type.Job:
+        if job._get_type() != Object.Type.Job:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
               "add() expects %s object as parameter" % (Object.Type.Job))
 
@@ -143,7 +143,7 @@ class Container(Object):
 
         '''
         # parameter checks
-        if job.get_type() != Object.Type.Job:
+        if job._get_type() != Object.Type.Job:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
               "remove() expects %s object as parameter" % (Object.Type.Job))
 
@@ -232,7 +232,6 @@ class Container(Object):
               print "managing %d jobs" % jc.size ()
 
         '''
-        # FIXME: shouldn't that be rendered as len(jc) ?
         if self._plugin is not None:
             return self._plugin.container_size(self)
         else:
@@ -276,10 +275,8 @@ class Container(Object):
 
     ######################################################################
     ##
-    def cancel(self, timeout=0):
+    def cancel(self):
         '''Cancel the execution of all jobs in the container.
-
-           @param timeout: Timeout in seconds.
 
            The cancel() method on the job.Container class will invoke
            L{job.Job}.cancel() on all jobs in the container.
@@ -304,9 +301,8 @@ class Container(Object):
               jc.cancel ()
 
         '''
-        # FIXME: we may want to get rid of timeout
         if self._plugin is not None:
-            return self._plugin.container_cancel(self, timeout)
+            return self._plugin.container_cancel(self)
             return None
         else:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
@@ -350,7 +346,7 @@ class Container(Object):
               jc.run ()
               
               while j = jc.wait () :
-                print "job %s returned: %s" % j.get_id (), j.get_state ()
+                print "job %s returned: %s" % j.get_job_id (), j.get_state ()
 
               # jc is empty at this point
 
@@ -397,7 +393,7 @@ class Container(Object):
 
                 try: 
                   j = jc.wait (5.0)   # wait for 5 seconds
-                  print "job %s returned: %s" % j.get_id (), j.get_state ()
+                  print "job %s returned: %s" % j.get_job_id (), j.get_state ()
                 except saga.exception.TimeOut :
                   # ignore timeout
                   pass
