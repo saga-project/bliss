@@ -160,7 +160,7 @@ class Object(object) :
 
     ######################################################################
     ## Property: type
-    def _type():
+    def type():
         doc = "The object's type identifier."
         def fget(self):
             return self._type
