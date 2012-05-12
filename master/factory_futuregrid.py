@@ -8,32 +8,31 @@ activate_keychain = "keychain $HOME/.ssh/id_rsa --host sagaproj && source $HOME/
 activate_venv = ". blissenv/bin/activate"
 
 factory = BuildFactory()
-# check out the source
-factory.addStep(Git(repourl='git://github.com/saga-project/bliss.git', mode='copy', progress=True))
 
-factory.addStep(ShellCommand(command=["/bin/bash", "-l", "-c" ,"/usr/bin/curl --insecure -s https://raw.github.com/pypa/virtualenv/master/virtualenv.py | python - blissenv"],
-                             description="Bootstrapping virtualenv.py via cURL"))
+import factory_common_steps
+factory.addStep(factory_common_steps.run_git_checkout)
+factory.addStep(factory_common_steps.run_bootstrap_virtualenv)
+factory.addStep(factory_common_steps.run_pip_install)
+factory.addStep(factory_common_steps.run_unittests)
 
-factory.addStep(ShellCommand(command=["/bin/bash", "-l", "-c" ,". blissenv/bin/activate && pip install -e git://github.com/saga-project/bliss.git#egg=bliss"],
-                             description="pip install -e git://github.com/saga-project/bliss.git#egg=bliss"))
+# check if the keychain is active. fail and skip remaining tests if not.
+factory.addStep(factory_common_steps.run_check_keychain)
 
-factory.addStep(ShellCommand(command=["/bin/bash", "-l", "-c" ,". blissenv/bin/activate && python ./test/unittests.py"],
-                             description="Running Bliss unit-tests in test/unittests"))
 
 for url in job_test_urls:
 
     factory.addStep(ShellCommand(command=["/bin/bash", "-l", "-c" ,"%s && python ./test/compliance/job/01_run_remote_exe.py %s" % (activate_venv+" && "+activate_keychain, url)],
-                             description="Running test: job/01_run_remote_exe.py %s" % (url) ))
+                             description="Running test: job/01_run_remote_exe.py %s" % (url), name="test_job/01"))
 
     factory.addStep(ShellCommand(command=["/bin/bash", "-l", "-c" ,"%s && python ./test/compliance/job/02_run_shell_command_newline.py %s" % (activate_venv+" && "+activate_keychain, url)],
-                             description="Running test: job/02_run_shell_command_newline.py %s" % (url)))
+                             description="Running test: job/02_run_shell_command_newline.py %s" % (url), name="test_job/02"))
 
     factory.addStep(ShellCommand(command=["/bin/bash", "-l", "-c" ,"%s && python ./test/compliance/job/03_run_shell_command_multiline.py %s" % (activate_venv+" && "+activate_keychain, url)],
-                             description="Running test: job/03_run_shell_command_multiline.py %s" % (url)))
+                             description="Running test: job/03_run_shell_command_multiline.py %s" % (url), name="test_job/03"))
 
     factory.addStep(ShellCommand(command=["/bin/bash", "-l", "-c" ,"%s && python ./test/compliance/job/04_run_python_command_newline.py %s" % (activate_venv+" && "+activate_keychain, url)],
-                             description="Running test: job/04_run_python_command_newline.py %s" % (url)))
+                             description="Running test: job/04_run_python_command_newline.py %s" % (url), name="test_job/04"))
 
     factory.addStep(ShellCommand(command=["/bin/bash", "-l", "-c" ,"%s && python ./test/compliance/job/05_run_python_command_multiline.py %s" % (activate_venv+" && "+activate_keychain, url)],
-                             description="Running test: job/05_run_python_command_multiline.py %s " % (url)))
+                             description="Running test: job/05_run_python_command_multiline.py %s " % (url), name="test_job/05"))
 

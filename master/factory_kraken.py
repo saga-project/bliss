@@ -2,7 +2,7 @@ from buildbot.process.factory import BuildFactory
 from buildbot.steps.source import Git
 from buildbot.steps.shell import ShellCommand
 
-job_test_urls = ['sge+ssh://ranger.tacc.xsede.org', 'sge+ssh://lonestar.tacc.xsede.org']
+job_test_urls = ['torque+gsissh://kraken.nics.xsede.org']
 
 activate_keychain = "keychain $HOME/.ssh/id_rsa --host sagaproj && source $HOME/.keychain/sagaproj-sh"
 activate_venv = ". blissenv/bin/activate"
@@ -16,7 +16,9 @@ factory.addStep(factory_common_steps.run_pip_install)
 factory.addStep(factory_common_steps.run_unittests)
 
 # check if the keychain is active. fail and skip remaining tests if not.
-factory.addStep(factory_common_steps.run_check_keychain)
+factory.addStep(ShellCommand(command=["/bin/bash", "-l", "-c" ,"keychain  --quiet --eval ~/.ssh/id_rsa | grep false;"],
+                             name="check_x509proxy",
+                             description="Check for valid/active X.509 proxy", haltOnFailure=True))
 
 
 for url in job_test_urls:
