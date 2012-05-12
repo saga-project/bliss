@@ -50,6 +50,8 @@ table td {
 
 .LastBuild,.Activity,.Builder,.BuildStep {
 	min-width: 5em;
+        max-width: 25em;
+
 }
 
 /* Chromium Specific styles */
