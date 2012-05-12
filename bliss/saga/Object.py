@@ -168,6 +168,14 @@ class Object(object) :
     type = property(**type())
 
 
+
+    ######################################################################	  	
+    ## Property: id
+	  	
+    def _id(self):
+        doc = "The object's unique identifier."
+        return ("%s_%s") % (self.__class__.__name__, str(hex(id(self))))  	
+
     ######################################################################
     ##
     def get_session(self):
