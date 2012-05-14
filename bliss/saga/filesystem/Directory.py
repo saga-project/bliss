@@ -90,3 +90,15 @@ class Directory(Object):
         else:
             return self._plugin.dir_get_size(self, path)
 
+
+    ######################################################################
+    ## 
+    def close(self):
+        '''Closes the directory. 
+        '''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+        else:
+            return self._plugin.dir_close(self)
+

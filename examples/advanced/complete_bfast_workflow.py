@@ -17,12 +17,12 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-import time
+import sys, time
 import bliss.saga as saga
 
 def main(jobno, session, jobservice):
    
-    bfast_base_dir = saga.Url("sftp://queenbee.loni.org/work/oweidner/bfast")
+    bfast_base_dir = saga.Url("sftp://india.futuregrid.org/N/u/oweidner/software/bfast/")
  
     try:
         workdir = "%s/tmp/run/%s" % (bfast_base_dir.path, str(int(time.time())))
@@ -30,7 +30,7 @@ def main(jobno, session, jobservice):
         basedir.make_dir(workdir)
 
         jd = saga.job.Description()
-        jd.wall_time_limit   = "0:05:00"
+        jd.wall_time_limit   = 5 # wall-time in minutes
         jd.total_cpu_count   = 1     
         jd.environment       = {'BFAST_DIR':bfast_base_dir.path}
         jd.working_directory = workdir     
@@ -42,7 +42,6 @@ def main(jobno, session, jobservice):
         myjob = js.create_job(jd)
         myjob.run()
 
-        time.sleep(1)
         print "Job #%s started with ID '%s' and working directory: '%s'"\
           % (jobno, myjob.jobid, workdir)
 
@@ -51,19 +50,19 @@ def main(jobno, session, jobservice):
         print "Job #%s with ID '%s' finished (RC: %s). Output available in: '%s'"\
           % (jobno, myjob.jobid, myjob.exitcode, workdir)
 
-        # copy result to local machine: basedir.copy(...)
-        #basedir.close()
+        basedir.close()
 
     except saga.Exception, ex:
-        print "Oh, snap! An error occured: %s" % (str(ex))
+        print "An error occured: %s" % (str(ex))
+        sys.exit(-1)
 
 if __name__ == "__main__":
 
-    execution_host = saga.Url("pbs+ssh://queenbee.loni.org") 
+    execution_host = saga.Url("pbs+ssh://india.futuregrid.org") 
     ctx = saga.Context()
     ctx.type = saga.Context.SSH
     ctx.userid  = 'oweidner' # like 'ssh username@host ...'
-    ctx.userkey = '/Users/s1063117/.ssh/id_rsa' # like ssh -i ...'
+    ctx.userkey = '/Users/oweidner/.ssh/rsa_work' # like ssh -i ...'
 
     session = saga.Session()
     session.contexts.append(ctx)
@@ -71,6 +70,6 @@ if __name__ == "__main__":
     js = saga.job.Service(execution_host, session)
     
 
-    for i in range (0,64):
+    for i in range (0, 4):
         main(i, session, js)
 

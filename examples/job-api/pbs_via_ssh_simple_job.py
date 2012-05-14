@@ -17,7 +17,7 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-import time
+import sys, time
 import bliss.saga as saga
 
 def main():
@@ -66,7 +66,8 @@ def main():
         print "Exitcode  : %s" % (myjob.exitcode)
 
     except saga.Exception, ex:
-        print "Oh, snap! An error occured: %s" % (str(ex))
+        print "An error occured during job execution: %s" % (str(ex))
+        sys.exit(-1)
 
 if __name__ == "__main__":
     main()

@@ -33,7 +33,6 @@ class CommandWrapper(object):
         if self._via_ssh is True:
             if self._ssh_hostname is None:
                 raise Exception("No hostname defined")  
-          
             self._ssh_connection = SSHConnection(server=self._ssh_hostname, 
                                                  identity_file=self._ssh_key,
                                                  login=self._ssh_username)

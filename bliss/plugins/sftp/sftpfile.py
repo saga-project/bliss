@@ -56,10 +56,25 @@ class SSHConnectionPool:
         # keys have the format username@hostname:port
         return (username, hostname, port)
 
+    def remove_connection(self, fsobj): 
+        '''Remove a connection from the pool. If it is still open, it 
+           is closed automatically'''
+        (username, hostname, port) = self.key_from_object(fsobj)
+        fsobj_key = "%s@%s:%s" % (username, hostname, port)
+
+        if self._connections.has_key(fsobj_key):
+            try:
+                # try to close connection, but ignore any errors
+                conn = self.get_connection(fsobj)
+                conn.close()
+            except Exception:
+                pass
+            # delete the connection from dict
+            del self._connections[fsobj_key]
     
     def get_connection(self, fsobj):
-        '''Return a connection object for a given file object.
-           If it doesn't exist, it will get created
+        '''Return a connection object for a given file/dir object.
+           If it doesn't exist, it is created
         '''
         (username, hostname, port) = self.key_from_object(fsobj)
         fsobj_key = "%s@%s:%s" % (username, hostname, port)
@@ -178,6 +193,14 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
     def register_directory_object(self, dir_obj):
         '''Implements interface from FilesystemPluginInterface
         '''
+        try:
+            ssh = self._cp.get_connection(dir_obj)
+            sftp = ssh.open_sftp()
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+            "Couldn't open directory: %s " % (str(ex)))
+
+
         stat = self.entry_getstat(dir_obj)
         if stat == None:
             self.log_error_and_raise(bliss.saga.Error.DoesNotExist, 
@@ -192,6 +215,11 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
         '''Implements interface from FilesystemPluginInterface
         '''
         pass
+
+    ######################################################################
+    ## 
+    def dir_close(self, dir_obj):
+        ssh = self._cp.remove_connection(dir_obj)
 
     ######################################################################
     ## 
@@ -247,7 +275,7 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
             sftp.mkdir(complete_path)
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-            "Couldn't create directory: %s " % (str(ex)))
+            "Couldn't create directory '%s': %s " % (complete_path, str(ex)))
 
     ######################################################################
     ## 

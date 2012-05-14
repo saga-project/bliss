@@ -57,7 +57,9 @@ def run_bfast(jobno, session, jobservice):
         return diff
 
     except saga.Exception, ex:
-        print "Oh, snap! An error occured: %s" % (str(ex))
+        print "An error occured: %s" % (str(ex))
+        sys.exit(-1)
+
 
 if __name__ == "__main__":
 

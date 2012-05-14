@@ -48,6 +48,12 @@ class FilesystemPluginInterface(PluginBaseInterface):
         errormsg = "Not implemented plugin method called: file_copy()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
+    def dir_close(self, dir_obj):
+        '''This methid is called upon dir.close()
+        ''' 
+        errormsg = "Not implemented plugin method called: dir_close()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
+
     def dir_list(self, dir_obj, pattern):
         '''This method is called upon file.copy()
         '''
