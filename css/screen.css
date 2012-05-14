@@ -17,7 +17,7 @@ html, body { height: 100%; }
 body {
     font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
 	font-size: 150%;
-	line-height: 21px;
+	line-height: 23px;
 	color: #d2d4d6;
     background: #333 url("../images/background.jpg") /*fixed*/;
 	position: relative;
@@ -28,7 +28,7 @@ body {
 
 
 
-p,ul,ol,dl,table,pre { margin-bottom: 1em; }
+p,ul,ol,dl,table,pre { margin-bottom: 0.7em; margin-top: 0.7em;}
 ul { margin-left: 20px; }
 a { text-decoration: none; cursor: pointer; color:  #a1804c; font-weight: normal; }
 a:focus { outline: 1px dotted; }
@@ -148,7 +148,7 @@ pre code {
 #informations .row {
 	border-bottom: 1px solid rgba(0,0,0,0.5);
 	border-top: 1px solid rgba(255,255,255,0.08);
-	padding: 2em 20px 0;
+	padding: 1em 20px 1em;
 }
  
 #informations .row .col-1 {
