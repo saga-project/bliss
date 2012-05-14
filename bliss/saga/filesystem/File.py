@@ -5,7 +5,7 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga import Url
+import bliss.saga 
 from bliss.saga.Object import Object 
 
 class File(Object):

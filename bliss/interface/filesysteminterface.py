@@ -55,9 +55,15 @@ class FilesystemPluginInterface(PluginBaseInterface):
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
 
     def dir_list(self, dir_obj, pattern):
-        '''This method is called upon file.copy()
+        '''This method is called upon dir.list()
         '''
         errormsg = "Not implemented plugin method called: dir_list()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
+
+    def dir_remove(self, dir_obj, path=None):
+        '''This method is called upon dir.remove()
+        '''
+        errormsg = "Not implemented plugin method called: dir_remove()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
 
     def dir_make_dir(self, dir_obj, path, flags):

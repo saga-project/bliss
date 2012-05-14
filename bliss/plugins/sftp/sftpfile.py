@@ -43,6 +43,10 @@ class SSHConnectionPool:
             if usable_ctx.userid is not None:
                 username = usable_ctx.userid
 
+        # url username always overwrites everything else!
+        if fsobj._url.username is not None:
+            username = fsobj._url.username
+
         # get port or default to 22
         port = str(22)
         if fsobj._url.port is not None:
@@ -69,7 +73,7 @@ class SSHConnectionPool:
                 conn.close()
             except Exception:
                 pass
-            # delete the connection from dict
+            #delete the connection from dict
             del self._connections[fsobj_key]
     
     def get_connection(self, fsobj):
@@ -78,7 +82,6 @@ class SSHConnectionPool:
         '''
         (username, hostname, port) = self.key_from_object(fsobj)
         fsobj_key = "%s@%s:%s" % (username, hostname, port)
-
         if fsobj_key in self._connections:
             self._parent.log_debug("Found exisitng connection object for %s"\
               % fsobj_key)
@@ -174,13 +177,37 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
     def register_file_object(self, file_obj):
         '''Implements interface from FilesystemPluginInterface
         '''
-        stat = self.entry_getstat(file_obj)
-        if stat == None:
-            self.log_error_and_raise(bliss.saga.Error.DoesNotExist, 
-            "Couldn't open %s. Entry doesn't exist." % file_obj._url)
+        furl = file_obj._url
+        if (furl.host == "localhost") or (furl.host == None):
+            # This is a local file!
+            file_obj.is_local = True
+
+            if os.path.exists(furl.path):
+                if os.path.isdir(furl.path) == True:
+                    self.log_error_and_raise(bliss.saga.Error.BadParameter, 
+                     "Couldn't open %s. URL points to a directory." % (file_obj._url))       
+            else:                        
+                self.log_error_and_raise(bliss.saga.Error.DoesNotExist, 
+                 "Couldn't open %s. File doesn't exist." % (file_obj._url))
+
         else:
-            pass
-        
+            file_obj.is_local = False
+
+            try:
+                ssh = self._cp.get_connection(file_obj)
+                sftp = ssh.open_sftp()
+            except Exception, ex:
+                self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+                "Couldn't open file: %s " % (str(ex)))
+
+            stat = self.entry_getstat(file_obj)
+            if stat == None:
+                self.log_error_and_raise(bliss.saga.Error.DoesNotExist, 
+                 "Couldn't open %s. File doesn't exist." % (file_obj._url))
+            elif str(stat).startswith("d") is True:
+                self.log_error_and_raise(bliss.saga.Error.BadParameter, 
+                 "Couldn't open %s. URL points to a directory." % (file_obj._url))       
+ 
     ######################################################################
     ## 
     def unregister_file_object(self, service_obj):
@@ -198,7 +225,7 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
             sftp = ssh.open_sftp()
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-            "Couldn't open directory: %s " % (str(ex)))
+            "Couldn't open directory '%s': %s " % (dir_obj._url, str(ex)))
 
 
         stat = self.entry_getstat(dir_obj)
@@ -228,12 +255,45 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
         if dir_obj._url.path is not None:
             path = dir_obj._url.path
         try:
+            self.log_info("Trying to LSDIR '%s'" % (path))
             ssh = self._cp.get_connection(dir_obj)
             sftp = ssh.open_sftp()
             return sftp.listdir(path)
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
             "Couldn't list directory: %s " % (str(ex)))
+
+    def _rmtree(self, sftp, path):
+        from stat import S_ISDIR
+        '''Recursively delete contents of remote path'''
+        
+        for attr in sftp.listdir_attr(path):
+            fullname = '%s/%s' % (path, attr.filename)
+            if S_ISDIR(attr.st_mode):
+                self._rmtree(sftp, fullname)
+                self.log_info("Trying to RMDIR '%s'" % (fullname))
+                sftp.rmdir(fullname)
+            else:
+                self.log_info("Trying to RM '%s'" % (fullname))
+                sftp.remove(fullname)                
+
+
+    ######################################################################
+    ## 
+    def dir_remove(self, dir_obj, path):
+        if path != None:
+            rmpath = os.path.join(dir_obj._url.path, path)
+        else:
+            rmpath = dir_obj._url.path
+        try:
+            self.log_info("Trying to (recursively) RMDIR '%s'" % (rmpath))
+            ssh = self._cp.get_connection(dir_obj)
+            sftp = ssh.open_sftp()
+            self._rmtree(sftp, rmpath)
+            sftp.rmdir(rmpath)
+        except Exception, ex:
+            self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+            "Couldn't remove directory: %s " % (str(ex)))
 
     ######################################################################
     ## 
@@ -275,7 +335,105 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
             sftp.mkdir(complete_path)
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-            "Couldn't create directory '%s': %s " % (complete_path, str(ex)))
+             "Couldn't create directory '%s': %s " % (complete_path, str(ex)))
+
+    ######################################################################
+    ## 
+    def file_copy(self, file_obj, target):
+        '''Implements interface from FilesystemPluginInterface
+        '''
+        surl = file_obj._url
+        turl = bliss.saga.Url(target)
+      
+        # remote -> local copy 
+        # we allow the following operations:
+        # sftp://host/file -> sftp://localhost/dir/(file)
+        # sftp://host/file -> sftp://localhost/dir/(file) 
+        # sftp://host/file -> sftp:///dir/(file)
+
+        if surl.host != 'localhost' and surl.host != None:
+            if (turl.scheme == 'sftp' and turl.host == 'localhost') or \
+               (turl.scheme == 'sftp' and turl.host == None):
+                
+                dest = '.'
+                sftp_get_target = ''
+                if turl.path != None: 
+                    dest = turl.path
+                if os.path.exists(dest):
+                    if os.path.isdir(dest) == True:
+                        # copy to existing directory
+                        name = os.path.basename(surl.path)
+                        path = os.path.dirname(dest)
+                        sftp_get_target = os.path.join(path, name)
+                        self.log_info("Trying to copy remote file '%s' into local dir '%s' as file '%s'" % (surl, path, name))
+                    else:
+                        # target file exists. 'Overwrite' flag must be set
+                        name = os.path.basename(dest)
+                        path = os.path.dirname(dest)
+                        sftp_get_target = os.path.join(path, name)
+                        self.log_info("Trying to copy remote file '%s' to local dir '%s' as file '%s'" % (surl, path, name))
+                else:
+                    name = os.path.basename(surl.path)
+                    path = os.path.dirname(dest)
+                    sftp_get_target = os.path.join(path, name)
+                    self.log_info("Trying to copy remote file '%s' to local dir '%s' as file '%s'" % (surl, path, name))
+                    if os.path.exists(os.path.dirname(dest)) != True:
+                        self.log_error_and_raise(bliss.saga.Error.BadParameter, 
+                          "Can't copy remote file '%s' to non-existing local directory '%s'." % (surl, path))
+
+            else:
+                self.log_error_and_raise(bliss.saga.Error.BadParameter, 
+                 "Can't copy remote file '%s' to non-local location '%s'." % (surl, turl))
+
+            # At this point we're good to execute the remote -> local copy operation
+            try:
+                ssh = self._cp.get_connection(file_obj)
+                sftp = ssh.open_sftp()
+                sftp.get(surl.path, sftp_get_target)
+            except Exception, ex:
+                self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+                 "Couldn't copy file '%s' to '%s': %s " % (surl, turl, str(ex)))
+
+        # local -> remote copy
+        # we allow the following operations:
+        # sftp://localhost/file -> sftp://host/dir/(file)
+        # sftp:////file -> sftp://localhost/dir/ (remote -> local copy)
+
+        else:
+            # we know that the source path exists, however, we don't have
+            # a connection to the target server yet, since the object 
+            # was constructed with a 'local' URL. We need to do that manually
+
+            sftp_put_source = surl.path
+            sftp_put_target = turl.path
+            if os.path.basename(turl.path) == '':
+                sftp_put_target = os.path.join(sftp_put_target, os.path.basename(sftp_put_source))
+
+            hostname = turl.host
+            if turl.port != None:
+                port = turl.port
+            else:
+                port = 22
+            if turl.username != None:
+                username = turl.username
+            else:
+                username = pwd.getpwuid(os.getuid()).pw_name
+
+            try:
+                ssh = paramiko.SSHClient()
+                ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                ssh.load_host_keys(os.path.expanduser(os.path.join("~", ".ssh", "known_hosts")))
+                ssh.connect(hostname=hostname, port=int(port), username=username, allow_agent=True, look_for_keys=True)
+                sftp = ssh.open_sftp()
+                self.log_info("Trying to PUT '%s' -> '%s'" % (sftp_put_source, sftp_put_target))
+                sftp.put(sftp_put_source, sftp_put_target)
+                sftp.close()
+            except Exception, ex:
+                self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+                 "Couldn't copy file '%s' to '%s': %s " % (surl, turl, str(ex)))
+
+
+
 
     ######################################################################
     ## 
@@ -293,7 +451,7 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
         if target_url.host != 'localhost':
             error = 'Only sftp://localhost/... supported as target'
             self.log_error_and_raise(bliss.saga.Error.BadParameter, 
-            "Couldn't copy '%s' to '%s': %s " % (full_path, target_url, error))
+             "Couldn't copy '%s' to '%s': %s " % (full_path, target_url, error))
 
         target_path = str(target_url.path)
         if os.path.exists(target_path):
@@ -311,5 +469,7 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
             "Couldn't copy '%s' to '%s': %s " % (full_path, target_path, str(ex)))
+
+
 
 

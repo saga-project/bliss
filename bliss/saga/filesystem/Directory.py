@@ -54,6 +54,23 @@ class Directory(Object):
 
     ######################################################################
     ## 
+    def remove(self, path=None):
+        '''Removes the directory
+
+           If no path is given, the remote directory associated with
+           the object is removed. If a relative or absolute path is given,
+           it is removed instead.
+
+           @param path: (relative or absolute) path to a directory
+        '''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+        else:
+            return self._plugin.dir_remove(self, path)
+
+    ######################################################################
+    ## 
     def make_dir(self, path, flags=None):
         '''Create a new directoy
            @param path: name/path of the new directory
