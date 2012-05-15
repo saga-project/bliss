@@ -4,7 +4,7 @@ import os
 from twisted.application import service
 from buildslave.bot import BuildSlave
 
-basedir = r'/Users/sagaproj/buildbot/slave-local'
+basedir = r'/home/sagaproj/buildbot/slave-local'
 rotateLength = 10000000
 maxRotatedFiles = 10
 

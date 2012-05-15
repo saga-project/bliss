@@ -4,7 +4,7 @@ from buildbot.steps.shell import ShellCommand
 
 job_test_urls = ['pbs+ssh://india.futuregrid.org', 'pbs+ssh://alamo.futuregrid.org']
 
-activate_keychain = "keychain $HOME/.ssh/id_rsa --host sagaproj && source $HOME/.keychain/sagaproj-sh"
+activate_keychain = "keychain $HOME/.ssh/id_rsa && source $HOME/.keychain/faust-sh"
 activate_venv = ". blissenv/bin/activate"
 
 factory = BuildFactory()
@@ -35,4 +35,11 @@ for url in job_test_urls:
 
     factory.addStep(ShellCommand(command=["/bin/bash", "-l", "-c" ,"%s && python ./test/compliance/job/05_run_python_command_multiline.py %s" % (activate_venv+" && "+activate_keychain, url)],
                              description="Running test: job/05_run_python_command_multiline.py %s " % (url), name="test_job/05"))
+
+file_test_urls = ['sftp://india.futuregrid.org/tmp/ /home/sagaproj/.ssh/id_rsa.pub', 'sftp://alamo.futuregrid.org/tmp/ /home/sagaproj/.ssh/id_rsa.pub']
+
+for url in file_test_urls:
+
+    factory.addStep(ShellCommand(command=["/bin/bash", "-l", "-c" ,"%s && python ./test/compliance/file/03_copy_local_remote_etc.py %s" % (activate_venv+" && "+activate_keychain, url)],
+                             description="Running test: file/03_copy_local_remote_etc.py %s" % (url), name="test_file/03"))
 
