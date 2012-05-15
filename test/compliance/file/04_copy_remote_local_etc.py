@@ -9,37 +9,35 @@ import sys, time, uuid
 import getpass
 import bliss.saga as saga
 
-def run(remote_base_url, local_file_to_copy):
+def run(local_base_url, remote_file_to_copy):
     """Test if we can lists a (remote) directory
     """
     try:
         failed = False
         tmpdirname = "sagaproj-%s" % uuid.uuid1()
 
-        remote_tdir = saga.filesystem.Directory(remote_base_url)
-        remote_tdir.make_dir(tmpdirname)
-        print "Size: %s" %str(remote_tdir.get_size())
+        local_tdir = saga.filesystem.Directory('%s' % local_base_url)
+        local_tdir.make_dir(tmpdirname)
+        print "Size: %s" %str(local_tdir.get_size())
 
-        mylocalfile = saga.filesystem.File("sftp://localhost/%s" % local_file_to_copy)
-        print "File Size: %s" %str(mylocalfile.get_size())
+        myremotefile = saga.filesystem.File("%s" % remote_file_to_copy) 
+        print "Size: %s" %str(myremotefile.get_size())
+        
+        myremotefile.copy("%s/%s/" % (local_base_url, tmpdirname))
+        myremotefile.copy("%s/%s/bh-copy" % (local_base_url, tmpdirname))
 
-        mylocalfile.copy("%s/%s/" % (remote_base_url, tmpdirname))
-        mylocalfile.copy("%s/%s/bh-copy" % (remote_base_url, tmpdirname))
+        local_tdir = saga.filesystem.Directory("%s/%s/" % (local_base_url, tmpdirname)) 
+        local_tdir.make_dir("A")
+        local_tdir.make_dir("B")
 
-        remote_tdir = saga.filesystem.Directory("%s/%s/" % (remote_base_url, tmpdirname)) 
-        remote_tdir.make_dir("A")
-        remote_tdir.make_dir("B")
+        print local_tdir.list()       
+        local_tdir.remove("A")
+        local_tdir.remove("B")      
 
-        print remote_tdir.list()    
-        print "Size: %s" %str(remote_tdir.get_size())   
-        remote_tdir.remove("A")
-        remote_tdir.remove("B")      
+        print local_tdir.list()        
+        local_tdir.remove()
 
-        print remote_tdir.list()        
-        print "Size: %s" %str(remote_tdir.get_size())
-        remote_tdir.remove()
-
-        remote_tdir.close()
+        local_tdir.close()
 
     except saga.Exception, ex:
         failed = True
@@ -63,13 +61,13 @@ def run(remote_base_url, local_file_to_copy):
       print "File / directory tests have passed!"
       print "============================================"
       print "                                            "
-    
+   
     return failed
 
 def usage():
     print 'Usage: python %s ' % __file__
-    print '                <REMOTEURL> (e.g., sftp://oweidner@qb.loni.org)'
-    print '                <LOCAL_FILE_TO_COPY>'
+    print '                <LOCALDIR> (e.g., sftp:///tmp/'
+    print '                <REMOTEFILE> (e.g., sftp://oweidner@qb.loni.org/etc/passwd)'
 
 def main():
     remoteusername = getpass.getuser()
@@ -79,10 +77,10 @@ def main():
         usage()
         sys.exit(-1)
     else:
-        remoteurl = args[0]
-        local_file_to_copy = args[1]
+        local_base_url = args[0]
+        remote_file_to_copy = args[1]
 
-    return run(remoteurl, local_file_to_copy)
+    return run(local_base_url, remote_file_to_copy)
 
 if __name__ == '__main__':
     sys.exit(main())

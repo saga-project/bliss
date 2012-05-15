@@ -87,3 +87,14 @@ class File(Object):
         else:
             return self._plugin.file_copy(self, target)
 
+    ######################################################################
+    ## 
+    def get_size(self):
+        '''Returns the size of a file (in bytes)
+           @param path: path of the file
+        '''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+        else:
+            return self._plugin.file_get_size(self)

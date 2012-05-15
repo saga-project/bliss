@@ -97,8 +97,8 @@ class Directory(Object):
 
     ######################################################################
     ## 
-    def get_size(self, path):
-        '''Returns the size of a file (in bytes)
+    def get_size(self, path=None):
+        '''Returns the size of a directory (in bytes)
            @param path: path of the file
         '''
         if self._plugin is None:

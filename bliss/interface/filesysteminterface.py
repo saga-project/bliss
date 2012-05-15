@@ -46,6 +46,12 @@ class FilesystemPluginInterface(PluginBaseInterface):
         '''This method is called upon file.copy()
         '''
         errormsg = "Not implemented plugin method called: file_copy()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
+
+    def file_get_size(self, file_obj):
+        '''This methid is called upon file.get_size()
+        ''' 
+        errormsg = "Not implemented plugin method called: file_get_size()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
     def dir_close(self, dir_obj):
@@ -81,6 +87,6 @@ class FilesystemPluginInterface(PluginBaseInterface):
     def dir_get_size(self, dir_obj, path):
         '''This methid is called upon dir.get_size()
         ''' 
-        errormsg = "Not implemented plugin method called: dir_copy()"
+        errormsg = "Not implemented plugin method called: dir_get_size()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
 
