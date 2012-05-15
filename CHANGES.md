@@ -1,6 +1,7 @@
-Version 0.2.0 released 2012-5-13
+Version 0.2.0 released 2012-5-15
 ----------------------------------------------------------------------
 
+* SFTP support for local <-> remote copy operations, mkdir, get_size
 * Added supoprt for ssh re-connection after timeout (issue #29)
 * Abandoned 'Exception' filenames and API inheritance. The Bliss interface
   looks much cleaner now. Compatibility with previous versions has
