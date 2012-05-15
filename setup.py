@@ -48,7 +48,10 @@ setup_args = {
     'name': "bliss",
     'version': version,
     'description': "A native Python implementation of the OGF SAGA standard (GFD.90).",
-    'long_description': "Bliss (BLiss IS Saga) is a pragmatic and light-weight implementation of the OGF GFD.90 SAGA standard. Bliss is written 100% in Python and focuses on usability and ease of deployment rather than on feature completeness or blind standard obedience.",
+    'long_description': "Bliss (BLiss IS Saga) is a pragmatic and light-weight
+    implementation of the OGF GFD.90 SAGA standard. Bliss is written 100% in
+    Python and focuses on usability and ease of deployment rather than on
+    feature completeness or strict standard obedience.",
     'author': "Ole Christian Weidner, et al.",
     'author_email': "ole.weidner@me.com",
     'maintainer': "Ole Christian Weidner",
@@ -56,7 +59,7 @@ setup_args = {
     'url': "http://saga-project.github.com/bliss/",
     'license': "MIT",
     'classifiers': [
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: No Input/Output (Daemon)',
         'Intended Audience :: Developers',
         'Programming Language :: Python',
