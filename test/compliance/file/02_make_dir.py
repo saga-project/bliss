@@ -40,6 +40,7 @@ def run(url, username):
        print "and report the results at: "
        print ""
        print "https://github.com/saga-project/bliss/issues\n"
+       return 255
 
     else: 
       print ""
@@ -47,6 +48,7 @@ def run(url, username):
       print "The job seems to have executed successfully!"
       print "============================================"
       print "                                            "
+      return 0
 
 def usage():
     print 'Usage: python %s ' % __file__
@@ -68,7 +70,7 @@ def main():
     except IndexError:
         pass 
 
-    run(js_url, remoteusername)
+    return run(js_url, remoteusername)
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

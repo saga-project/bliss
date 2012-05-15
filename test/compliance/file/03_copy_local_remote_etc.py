@@ -51,6 +51,7 @@ def run(remote_base_url, local_file_to_copy):
        print "and report the results at: "
        print ""
        print "https://github.com/saga-project/bliss/issues\n"
+       return 255
 
     else: 
       print ""
@@ -58,6 +59,7 @@ def run(remote_base_url, local_file_to_copy):
       print "File / directory tests have passed!"
       print "============================================"
       print "                                            "
+      return 0
 
 def usage():
     print 'Usage: python %s ' % __file__
@@ -75,8 +77,8 @@ def main():
         remoteurl = args[0]
         local_file_to_copy = args[1]
 
-    run(remoteurl, local_file_to_copy)
+    return run(remoteurl, local_file_to_copy)
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
 
