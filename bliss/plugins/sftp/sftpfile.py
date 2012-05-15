@@ -438,9 +438,6 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
                     dest = turl.path
                 if os.path.exists(dest):
                     if os.path.isdir(dest) == True:
-                        print "SSSSSSS: %s" % surl
-                        print "SSSSSSS: %s" % turl
-
                         # copy to existing directory
                         name = os.path.basename(surl.path)
                         path = os.path.dirname(dest)
