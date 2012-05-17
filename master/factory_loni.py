@@ -2,7 +2,12 @@ from buildbot.process.factory import BuildFactory
 from buildbot.steps.source import Git
 from buildbot.steps.shell import ShellCommand
 
-job_test_urls = ['pbs+ssh://india.futuregrid.org', 'pbs+ssh://alamo.futuregrid.org']
+job_test_urls = ['pbs+ssh://eric.loni.org oweidner single', 
+                 'pbs+ssh://oliver.loni.org oweidner single',
+                 'pbs+ssh://louie.loni.org oweidner single',
+                 'pbs+ssh://poseidon.loni.org oweidner single',
+                 'pbs+ssh://painter.loni.org oweidner single',
+                 'pbs+ssh://queenbee.loni.org oweidner single']
 
 activate_keychain = "keychain $HOME/.ssh/id_rsa && source $HOME/.keychain/faust-sh"
 activate_venv = ". blissenv/bin/activate"
@@ -36,14 +41,17 @@ for url in job_test_urls:
     factory.addStep(ShellCommand(command=["/bin/bash", "-l", "-c" ,"%s && SAGA_VERBOSE=5 python ./test/compliance/job/05_run_python_command_multiline.py %s" % (activate_venv+" && "+activate_keychain, url)],
                              description="Running test: job/05_run_python_command_multiline.py %s " % (url), name="test_job/05"))
 
-file_test3_urls = ['sftp://india.futuregrid.org/tmp/ /home/sagaproj/.ssh/id_rsa.pub', 'sftp://alamo.futuregrid.org/tmp/ /home/sagaproj/.ssh/id_rsa.pub']
+
+
+file_test3_urls = ['sftp://oweidner@eric.loni.org/tmp/ /home/sagaproj/.ssh/id_rsa.pub', 
+                   'sftp://oweidner@oliver.loni.org/tmp/ /home/sagaproj/.ssh/id_rsa.pub']
 
 for url in file_test3_urls:
 
     factory.addStep(ShellCommand(command=["/bin/bash", "-l", "-c" ,"%s && SAGA_VERBOSE=5 python ./test/compliance/file/03_copy_local_remote_etc.py %s" % (activate_venv+" && "+activate_keychain, url)],
                              description="Running test: file/03_copy_local_remote_etc.py %s" % (url), name="test_file/03"))
 
-file_test4_urls = ['sftp:///tmp/ sftp://sagaproj@india.futuregrid.org/etc/passwd', 'sftp:///tmp/ sftp://sagaproj@alamo.futuregrid.org/etc/passwd']
+file_test4_urls = ['sftp:///tmp/ sftp://oweidner@eric.loni.org/etc/passwd', 'sftp:///tmp/ sftp://oweidner@oliver.org/etc/passwd']
 
 for url in file_test4_urls:
 
