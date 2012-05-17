@@ -114,9 +114,6 @@ class BookKeeper:
           'jobid':saga_jobid 
         }
 
-        print "ADD ##### %s" % self.objects
-
-    
     ######################################################################
     ## 
     def get_service_for_job(self, job_obj):
