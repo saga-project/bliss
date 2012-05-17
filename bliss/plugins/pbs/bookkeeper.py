@@ -113,23 +113,28 @@ class BookKeeper:
           'instance':job_obj,
           'jobid':saga_jobid 
         }
+
+        print "ADD ##### %s" % self.objects
+
     
     ######################################################################
     ## 
     def get_service_for_job(self, job_obj):
         '''Return the service object the job is registered with'''
+
         for key in self.objects.keys():
           job_key = job_obj._id()
           if job_key in self.objects[key]['jobs']:
               return self.objects[key]['saga_instance']
-          self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-            "INTERNAL ERROR: Job object %s is not known by this plugin. Known jobs: %s" \
-            % (job_obj, repr(self.objects[key]['jobs'])))
+        self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+          "INTERNAL ERROR: Job object %s is not known by this plugin. Known jobs: %s" \
+           % (job_obj, repr(self.objects[key]['jobs'])))
     
     ######################################################################
     ## 
     def get_jobid_for_job(self, job_obj):
         '''Return the local process object for a given job'''
+
         try:
             service_key = self.get_service_for_job(job_obj)._id()
             job_key = job_obj._id()  

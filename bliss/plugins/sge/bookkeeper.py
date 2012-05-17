@@ -122,9 +122,9 @@ class BookKeeper:
           job_key = job_obj._id()
           if job_key in self.objects[key]['jobs']:
               return self.objects[key]['saga_instance']
-          self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-            "INTERNAL ERROR: Job object %s is not known by this plugin. Known jobs: %s" \
-            % (job_obj, repr(self.objects[key]['jobs'])))
+        self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+          "INTERNAL ERROR: Job object %s is not known by this plugin. Known jobs: %s" \
+           % (job_obj, repr(self.objects[key]['jobs'])))
     
     ######################################################################
     ## 
