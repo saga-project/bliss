@@ -18,6 +18,7 @@ if __name__ == '__main__':
     suite_lnf.addTests(unittest.TestLoader().loadTestsFromTestCase(ContextTests))
     suite_lnf.addTests(unittest.TestLoader().loadTestsFromTestCase(ExceptionTests))
     suite_lnf.addTests(unittest.TestLoader().loadTestsFromTestCase(UrlTests))
+    suite_lnf.addTests(unittest.TestLoader().loadTestsFromTestCase(AttributeTests))
 
     # Job package tests
     suite_job = unittest.TestLoader().loadTestsFromTestCase(JobDescriptionTests)

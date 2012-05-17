@@ -5,10 +5,11 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from session   import *
-from context   import *
-from exception import *
-from url       import *
+from attributes import *
+from session    import *
+from context    import *
+from exception  import *
+from url        import *
 
 from job.description import *
 

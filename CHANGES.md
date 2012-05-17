@@ -2,6 +2,7 @@ Version 0.2.1 released 2012-5-16
 ----------------------------------------------------------------------
 
 * Fixed https://github.com/saga-project/bliss/issues/5
+* Fixed https://github.com/saga-project/bliss/issues/13
 
 Version 0.2.0 released 2012-5-15
 ----------------------------------------------------------------------

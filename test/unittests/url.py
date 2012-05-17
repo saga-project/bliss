@@ -47,7 +47,6 @@ class UrlTests(unittest.TestCase):
     def test_url_scheme_issue(self):
     
         u1 = saga.Url("unknownscheme://user:pwd@hostname.domain:9999/path")
-        print u1.scheme
         if u1.scheme != "unknownscheme":
             self.fail("unexpected value for scheme")
 

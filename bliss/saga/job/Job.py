@@ -32,8 +32,7 @@ class JobID(object):
          id = j.get_job_id() 
 
          print "job id: %s"  %  id
-
-         js_url = id.
+         
 
     '''
     
