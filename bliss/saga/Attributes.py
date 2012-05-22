@@ -35,8 +35,8 @@ class AttributeInterface(object):
 
 
         jd = saga.job.Description()
-        jd.executable = "/usr/bin/blast"
-        jd.arguments  = ["-i", "/data/in.dat"]
+        jd.executable = "/bin/date"
+        jd.arguments  = ["-u", "-R"]
 
         js = saga.job.Service("fork://localhost/")
         j  = js.create_job(jd)
