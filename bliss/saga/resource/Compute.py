@@ -13,15 +13,15 @@ class Compute(Object):
     a L{resource.ComputeDescription}, as shown below::
 
       # describe the resource requirements
-      cd = saga.resource.ComputeDescription ()
+      cd = saga.resource.ComputeDescription()
       cd['Slots'] = 1024
 
       # obtain a handle to a suitable resource...
-      rm = saga.resource.Manager (url)
-      cr = rm.create_compute (cd)
+      rm = saga.resource.Manager(url)
+      cr = rm.create_compute(cd)
 
       # ... and wait until it is active
-      cr.wait (saga.resource.State.Active)
+      cr.wait(saga.resource.State.Active)
     '''
 
     ######################################################################
@@ -38,7 +38,7 @@ class Compute(Object):
     def __init_from_manager(self, manager_obj, compute_description):
         '''(Hidden) Constructor'''
         self._manager = manager_obj
-        self._url     = manager_obj._url
+        self._url = manager_obj._url
         self._compute_description = compute_description
 
         self._plugin  = Object._get_plugin(self) # throws 'NoSuccess' on error
@@ -86,17 +86,17 @@ class Compute(Object):
         
           
           # obtain a handle to a suitable resource and print it's id
-          rm = saga.resource.Manager (url)
-          cr = rm.create_compute (cd)
-          id = cr.get_id ()
+          rm = saga.resource.Manager(url)
+          cr = rm.create_compute(cd)
+          id = cr.get_id()
           print "resource id: %s"  %  id
 
 
         ...and can in particular be used to reconnect to that existing
         resource::
 
-          rm = saga.resource.Manager (url)
-          cr = rm.get_compute (id)
+          rm = saga.resource.Manager(url)
+          cr = rm.get_compute(id)
         '''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
@@ -114,11 +114,11 @@ class Compute(Object):
         resource::
         
           # obtain a handle to a suitable resource and print it's id
-          rm1 = saga.resource.Manager (url)
-          cr  = rm.create_compute (cd)
-          rm2 = cr.get_manager ()
+          rm1 = saga.resource.Manager(url)
+          cr  = rm.create_compute(cd)
+          rm2 = cr.get_manager()
 
-          assert ( rm1 == rm2 )
+          assert(rm1 == rm2)
         
         '''
         if self._plugin is None:
@@ -139,12 +139,12 @@ class Compute(Object):
         resource properties, which may differ from the ones defined initially::
         
           # describe the resource requirements
-          cd = saga.resource.ComputeDescription ()
+          cd = saga.resource.ComputeDescription()
           cd['Slots'] = 1000
 
           # obtain a handle to a suitable resource, and inspect it
-          rm1 = saga.resource.Manager (url)
-          cr  = rm.create_compute (cd)
+          rm1 = saga.resource.Manager(url)
+          cr  = rm.create_compute(cd)
           cd2 = cr.get_description
 
           print   " requested : %d   / allocated : %d"    %  1024, cd2['Slots']
@@ -202,5 +202,5 @@ class Compute(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
 
-        return self._plugin.compute_resource_get_job_service (self) 
+        return self._plugin.compute_resource_get_job_service(self) 
 

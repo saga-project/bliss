@@ -13,15 +13,15 @@ class Storage(Object):
     a L{resource.StorageDescription}, as shown below::
 
       # describe the resource requirements
-      sd = saga.resource.StorageDescription ()
+      sd = saga.resource.StorageDescription()
       sd['Size'] = 1024    # MB
 
       # obtain a handle to a suitable resource...
-      rm = saga.resource.Manager (url)
-      sr = rm.create_storage (sd)
+      rm = saga.resource.Manager(url)
+      sr = rm.create_storage(sd)
 
       # ... and wait until the storage space is available
-      sr.wait (saga.resource.State.Active)
+      sr.wait(saga.resource.State.Active)
     '''
 
     ######################################################################
@@ -38,7 +38,7 @@ class Storage(Object):
     def __init_from_manager(self, manager_obj, storage_description):
         '''(Hidden) Constructor'''
         self._manager = manager_obj
-        self._url     = manager_obj._url
+        self._url = manager_obj._url
         self._storage_description = storage_description
         
         self._plugin  = Object._get_plugin(self) # throws 'NoSuccess' on error
@@ -86,17 +86,17 @@ class Storage(Object):
         
           
           # obtain a handle to a suitable resource and print it's id
-          rm = saga.resource.Manager (url)
-          sr = rm.create_storage (sd)
-          id = sr.get_id ()
+          rm = saga.resource.Manager(url)
+          sr = rm.create_storage(sd)
+          id = sr.get_id()
           print "resource id: %s"  %  id
 
 
         ...and can in particular be used to reconnect to that existing
         resource::
 
-          rm = saga.resource.Manager (url)
-          sr = rm.get_storage (id)
+          rm = saga.resource.Manager(url)
+          sr = rm.get_storage(id)
         '''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
@@ -114,11 +114,11 @@ class Storage(Object):
         resource::
         
           # obtain a handle to a suitable resource and print it's id
-          rm1 = saga.resource.Manager (url)
-          sr  = rm.create_storage (sd)
-          rm2 = sr.get_manager ()
+          rm1 = saga.resource.Manager(url)
+          sr  = rm.create_storage(sd)
+          rm2 = sr.get_manager()
 
-          assert ( rm1 == rm2 )
+          assert(rm1 == rm2)
         
         '''
         if self._plugin is None:
@@ -139,12 +139,12 @@ class Storage(Object):
         resource properties, which may differ from the ones defined initially::
         
           # describe the resource requirements
-          sd = saga.resource.StorageDescription ()
+          sd = saga.resource.StorageDescription()
           sd['Size'] = 1024 # MB
 
           # obtain a handle to a suitable resource, and inspect it
-          rm1 = saga.resource.Manager (url)
-          sr  = rm.create_compute (sd)
+          rm1 = saga.resource.Manager(url)
+          sr  = rm.create_compute(sd)
           sd2 = sr.get_description
 
           print   " requested : %d   / allocated : %d"    %  1024, sd2['Size']
@@ -211,5 +211,5 @@ class Storage(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
 
-        return self._plugin.storage_resource_get_filesystem (self) 
+        return self._plugin.storage_resource_get_filesystem(self) 
 

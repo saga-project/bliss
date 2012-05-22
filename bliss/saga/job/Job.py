@@ -139,12 +139,12 @@ class Job(Object, AttributeInterface):
         AttributeInterface.__init__(self)
       
         # register properties with the attribute interface 
-        self._register_ro_attribute     (name="Exitcode", 
-                                         accessor=self.__class__.exitcode) 
-        self._register_ro_attribute     (name="JobID", 
-                                         accessor=self.__class__.jobid)  
-        self._register_ro_attribute     (name="ServiceURL", 
-                                         accessor=self.__class__.serviceurl)  
+        self._register_ro_attribute(name="Exitcode", 
+                                    accessor=self.__class__.exitcode) 
+        self._register_ro_attribute(name="JobID", 
+                                    accessor=self.__class__.jobid)  
+        self._register_ro_attribute(name="ServiceURL", 
+                                    accessor=self.__class__.serviceurl)  
 
     ######################################################################
     ##

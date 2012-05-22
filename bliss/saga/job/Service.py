@@ -22,13 +22,13 @@ class Service(Object):
     Example::
 
 
-        js  = saga.job.Service ("sge://localhost")
-        ids = js.list ()
+        js  = saga.job.Service("sge://localhost")
+        ids = js.list()
 
         if my_job_id in ids :
           print "found my job again, wohhooo!"
 
-          j = js.get_job (my_job_id)
+          j = js.get_job(my_job_id)
 
           if      j.state == saga.job.Pending  : print "pending"
           else if j.state == saga.job.Running  : print "running"
@@ -107,13 +107,13 @@ class Service(Object):
 
            Example::
 
-             js = saga.job.Service ("sge://localhost")
-             j  = js.create_job    (jd)
+             js = saga.job.Service("sge://localhost")
+             j  = js.create_job(jd)
 
              if      j.state == saga.job.New      : print "new"
              else                                 : print "oops!"
 
-             j.run ()
+             j.run()
 
              if      j.state == saga.job.Pending  : print "pending"
              else if j.state == saga.job.Running  : print "running"
@@ -141,8 +141,8 @@ class Service(Object):
            The job.Service supports to reconnect to those remote entities::
 
 
-             js = saga.job.Service ("sge://localhost")
-             j  = js.get_job       (my_job_id)
+             js = saga.job.Service("sge://localhost")
+             j  = js.get_job(my_job_id)
 
              if      j.state == saga.job.Pending  : print "pending"
              else if j.state == saga.job.Running  : print "running"
@@ -168,13 +168,13 @@ class Service(Object):
            Example::
 
 
-             js  = saga.job.Service ("sge://localhost")
-             ids = js.list ()
+             js  = saga.job.Service("sge://localhost")
+             ids = js.list()
 
              if my_job_id in ids :
                print "found my job again, wohhooo!"
 
-               j = js.get_job (my_job_id)
+               j = js.get_job(my_job_id)
 
                if      j.state == saga.job.Pending  : print "pending"
                else if j.state == saga.job.Running  : print "running"

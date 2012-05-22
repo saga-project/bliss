@@ -32,18 +32,18 @@ class Context(AttributeInterface, Object):
     The usage example for contexts is below::
 
         # define an ssh context
-        c = saga.Context ()
-        c.type     = 'ssh'
+        c = saga.Context()
+        c.type = 'ssh'
         c.usercert = '$HOME/.ssh/special_id_rsa'
-        c.userkey  = '$HOME/.ssh/special_id_rsa.pub'
+        c.userkey = '$HOME/.ssh/special_id_rsa.pub'
 
         # add the context to a session
-        s = saga.Session  ( )
-        s.contexts.append (c)
+        s = saga.Session()
+        s.contexts.append(c)
 
         # create a job service in this session -- that job service can now
         # *only* use that ssh context. 
-        j = saga.job.Service ('ssh://remote.host.net/', s)
+        j = saga.job.Service('ssh://remote.host.net/', s)
 
 
     The L{Session} argument to the L{job.Service} constructor is fully optional
@@ -87,18 +87,18 @@ class Context(AttributeInterface, Object):
 
       
         # register properties with the attribute interface 
-        self._register_rw_attribute     (name="Type", 
-                                         accessor=self.__class__.type) 
-        self._register_rw_attribute     (name="UserID", 
-                                         accessor=self.__class__.userid)  
-        self._register_rw_attribute     (name="UserPass", 
-                                         accessor=self.__class__.userpass)  
-        self._register_rw_attribute     (name="UserCert", 
-                                         accessor=self.__class__.usercert)  
-        self._register_rw_attribute     (name="UserKey", 
-                                         accessor=self.__class__.userkey)  
-        self._register_rw_attribute     (name="UserProxy", 
-                                         accessor=self.__class__.userproxy)  
+        self._register_rw_attribute(name="Type", 
+                                    accessor=self.__class__.type) 
+        self._register_rw_attribute(name="UserID", 
+                                    accessor=self.__class__.userid)  
+        self._register_rw_attribute(name="UserPass", 
+                                    accessor=self.__class__.userpass)  
+        self._register_rw_attribute(name="UserCert", 
+                                    accessor=self.__class__.usercert)  
+        self._register_rw_attribute(name="UserKey", 
+                                    accessor=self.__class__.userkey)  
+        self._register_rw_attribute(name="UserProxy", 
+                                    accessor=self.__class__.userproxy)  
 
         self.__logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')')
 
@@ -140,18 +140,18 @@ class Context(AttributeInterface, Object):
 
 
             # define an ssh context
-            c = saga.Context ()
-            c.type     = 'ssh'
+            c = saga.Context()
+            c.type = 'ssh'
             c.usercert = '$HOME/.ssh/id_rsa'
-            c.userkey' = '$HOME/.ssh/id_rsa.pub'
+            c.userkey = '$HOME/.ssh/id_rsa.pub'
 
             # add it to a session
             s = saga.Session
-            s.add_context (c)
+            s.add_context(c)
 
             # create a job service in this session -- that job service can now
             # *only* use that ssh context. 
-            j = saga.job.Service (s, 'ssh://remote.host.net/')
+            j = saga.job.Service(s, 'ssh://remote.host.net/')
 
 
         (*) this is a list of transport protocols, not of backends, but

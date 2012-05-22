@@ -24,8 +24,8 @@ class Description(Object, AttributeInterface):
 
       jd = saga.job.Description()
 
-      jd.executable          = "/bin/date"
-      jd.arguments           = ["-u", "-R"]
+      jd.executable = "/bin/date"
+      jd.arguments = ["-u", "-R"]
 
       js = saga.job.Service("fork://localhost")
       j = js.create_job(jd)
@@ -137,35 +137,35 @@ class Description(Object, AttributeInterface):
         self._spmd_variation = None
 
         # register properties with the attribute interface
-        self._register_rw_attribute     (name="Executable", 
-                                         accessor=self.__class__.executable) 
-        self._register_rw_attribute     (name="Output", 
-                                         accessor=self.__class__.output) 
-        self._register_rw_attribute     (name="Error", 
-                                         accessor=self.__class__.error) 
-        self._register_rw_attribute     (name="Queue", 
-                                         accessor=self.__class__.queue) 
-        self._register_rw_attribute     (name="WallTimeLimit", 
-                                         accessor=self.__class__.wall_time_limit) 
-        self._register_rw_attribute     (name="WorkingDirectory", 
-                                         accessor=self.__class__.working_directory) 
-        self._register_rw_attribute     (name="Contact", 
-                                         accessor=self.__class__.contact) 
-        self._register_rw_attribute     (name="TotalCPUCount", 
-                                         accessor=self.__class__.total_cpu_count) 
-        self._register_rw_attribute     (name="NumberOfProcesses", 
-                                         accessor=self.__class__.number_of_processes) 
-        self._register_rw_attribute     (name="SPMDVariation", 
-                                         accessor=self.__class__.spmd_variation) 
-        self._register_rw_attribute     (name="Project", 
-                                         accessor=self.__class__.project) 
+        self._register_rw_attribute(name="Executable", 
+                                    accessor=self.__class__.executable) 
+        self._register_rw_attribute(name="Output", 
+                                    accessor=self.__class__.output) 
+        self._register_rw_attribute(name="Error", 
+                                    accessor=self.__class__.error) 
+        self._register_rw_attribute(name="Queue", 
+                                    accessor=self.__class__.queue) 
+        self._register_rw_attribute(name="WallTimeLimit", 
+                                    accessor=self.__class__.wall_time_limit) 
+        self._register_rw_attribute(name="WorkingDirectory", 
+                                    accessor=self.__class__.working_directory) 
+        self._register_rw_attribute(name="Contact", 
+                                    accessor=self.__class__.contact) 
+        self._register_rw_attribute(name="TotalCPUCount", 
+                                    accessor=self.__class__.total_cpu_count) 
+        self._register_rw_attribute(name="NumberOfProcesses", 
+                                    accessor=self.__class__.number_of_processes) 
+        self._register_rw_attribute(name="SPMDVariation", 
+                                    accessor=self.__class__.spmd_variation) 
+        self._register_rw_attribute(name="Project", 
+                                    accessor=self.__class__.project) 
 
-        self._register_rw_vec_attribute (name="Arguments", 
-                                         accessor=self.__class__.arguments) 
-        self._register_rw_vec_attribute (name="FileTransfer", 
-                                         accessor=self.__class__.file_transfer) 
-        self._register_rw_vec_attribute (name="Environment", 
-                                         accessor=self.__class__.environment) 
+        self._register_rw_vec_attribute(name="Arguments", 
+                                        accessor=self.__class__.arguments) 
+        self._register_rw_vec_attribute(name="FileTransfer", 
+                                        accessor=self.__class__.file_transfer) 
+        self._register_rw_vec_attribute(name="Environment", 
+                                        accessor=self.__class__.environment) 
 
     ######################################################################
     ## 

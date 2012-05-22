@@ -52,8 +52,8 @@ class Exception(Exception):
            @param message: The error message
            @type  message: str
         """
-        self._error     = error
-        self._message   = message
+        self._error = error
+        self._message = message
         self._traceback = _get_exception_traceback()
 
     ######################################################################
