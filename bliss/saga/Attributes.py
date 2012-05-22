@@ -34,29 +34,15 @@ class AttributeInterface(object):
     Example::
 
 
-        jd = saga::job::Description ()
-        jd.set_attribute        ("Executable", "/usr/bin/blast")
-        jd.set_vector_attribute ("Arguments", ["-i", "/data/in.dat"])
+        jd = saga.job.Description()
+        jd.executable = "/usr/bin/blast"
+        jd.arguments  = ["-i", "/data/in.dat"]
 
-        js = saga.job.Service ()
-        j  = js.create_job (jd);
-        j.run ()
+        js = saga.job.Service("fork://localhost/")
+        j  = js.create_job(jd)
+        j.run()
 
-        print "job id: %s"  % j.get_attribute ("JobID")
-
-
-    This example is equivalent to::
-   
-
-        jd = saga::job::Description ()
-        jd.["Executable"] = "/usr/bin/blast"
-        jd.["Arguments"]  = ["-i", "/data/in.dat"]
-
-        js = saga.job.Service ()
-        j  = js.create_job (jd);
-        j.run ()
-
-        print "job id: %s"  % j.["JobID"]
+        print "job id: %s"  % j.jobid
         print "job id: %s"  % j.get_job_id()
 
     
@@ -134,27 +120,26 @@ class AttributeInterface(object):
 
         Example::
 
-
-          d = saga.Attribute ()
-          d.set_attribute ("key", "val")
-          assert ( d.has_attribute ("key") )
+          d = saga.Attribute()
+          d.set_attribute("key", "val")
+          assert(d.has_attribute("key"))
 
           # remove:
-          d.remove_attribute ("key")
-          assert ( not d.has_attribute ("key"))
+          d.remove_attribute("key")
+          assert(not d.has_attribute("key"))
 
 
 
         This is semantically equivalent to::
 
 
-          d = dict ()
+          d = dict()
           d["key"] = "val"
-          assert ("key" in d )
+          assert("key" in d )
 
           # remove:
           d["key"] = None
-          assert ("key" in d )
+          assert("key" in d )
 
 
         '''
@@ -176,24 +161,24 @@ class AttributeInterface(object):
         Example::
 
 
-          d = saga.Attribute ()
-          d.set_attribute ("key", "val")
+          d = saga.Attribute()
+          d.set_attribute("key", "val")
 
           # get
-          val = d.get_attribute ("key") == "val" )
-          assert ( val == "val" )
+          val = d.get_attribute("key") == "val" )
+          assert(val == "val" )
 
 
 
         This is semantically equivalent to::
 
 
-          d = dict ()
+          d = dict()
           d["key"] = "val"
 
           # get
           val = d["key"]
-          assert ( val == "val" )
+          assert(val == "val" )
 
 
         '''
@@ -214,26 +199,26 @@ class AttributeInterface(object):
         Example::
 
 
-          d = saga.Attribute ()
+          d = saga.Attribute()
 
           # set
-          d.set_attribute ("key", "val")
+          d.set_attribute("key", "val")
 
-          assert ( d.has_attribute ("key") )
-          assert ( d.get_attribute ("key") == "val" )
+          assert(d.has_attribute("key"))
+          assert(d.get_attribute("key") == "val" )
 
 
 
         This is semantically equivalent to::
 
 
-          d = dict ()
+          d = dict()
 
           # set
           d["key"] = "val"
 
-          assert ( "key" in d )
-          assert ( d["key" == "val" )
+          assert("key" in d )
+          assert(d["key" == "val" )
 
 
         '''
@@ -285,22 +270,22 @@ class AttributeInterface(object):
         Example::
 
 
-          d = saga.Attribute ()
-          d.set_attribute ("key", "val")
+          d = saga.Attribute()
+          d.set_attribute("key", "val")
 
           # check
-          assert ( d.attribute_exists ("key") )
+          assert(d.attribute_exists("key"))
 
 
 
         This is semantically equivalent to::
 
 
-          d = dict ()
+          d = dict()
           d["key"] = "val"
 
           # check
-          assert ( "key" in d )
+          assert("key" in d )
 
 
         '''
@@ -317,11 +302,11 @@ class AttributeInterface(object):
         Example::
 
 
-          d = saga.Attribute ()
+          d = saga.Attribute()
 
           # check
-          if d.attribute_is_writable ("key") :
-            d.set_attribute ("key", "val")
+          if d.attribute_is_writable("key") :
+            d.set_attribute("key", "val")
           fi
 
 
@@ -332,7 +317,7 @@ class AttributeInterface(object):
         exception::
 
 
-          d = dict ()
+          d = dict()
 
           try : 
             d["key"] = "val" 
@@ -355,11 +340,11 @@ class AttributeInterface(object):
         Example::
 
 
-          d = saga.Attribute ()
+          d = saga.Attribute()
 
           # check
-          if d.attribute_is_writable ("key") :
-            d.set_attribute ("key", "val")
+          if d.attribute_is_writable("key") :
+            d.set_attribute("key", "val")
           fi
 
 
@@ -370,7 +355,7 @@ class AttributeInterface(object):
         exception::
 
 
-          d = dict ()
+          d = dict()
 
           try : 
             d["key"] = "val" 
@@ -400,20 +385,19 @@ class AttributeInterface(object):
         Example::
 
 
-          d = saga.Attribute ()
+          d = saga.Attribute()
 
           # check
-          if d.attribute_is_vector ("Arguments") :
-            d.set_attribute ("Arguments", ["-i", "/data/in.dat"])
-          fi
+          if d.attribute_is_vector("Arguments") :
+            d.set_attribute("Arguments", ["-i", "/data/in.dat"])
 
 
 
         As there is no semantic equivalent in python's dicts, the Bliss
-        implementation will throw an exception on the wrong setting::
+        implementation will throw an exception on incorrect setting::
 
 
-          d = dict ()
+          d = dict()
 
           try : 
             d["Arguments"] = "scalar_value" 
@@ -445,10 +429,10 @@ class AttributeInterface(object):
         Example::
 
 
-          d = saga.Attribute ()
+          d = saga.Attribute()
 
           # list
-          print "keys: %s"  %  d.list_attributes ()
+          print "keys: %s"  %  d.list_attributes()
 
 
 
@@ -456,10 +440,10 @@ class AttributeInterface(object):
         implementation will throw an exception on the wrong setting::
 
 
-          d = dict ()
+          d = dict()
 
           # list
-          print "keys: %s"  %  d.keys () # throws
+          print "keys: %s"  %  d.keys() # throws
 
 
         '''
