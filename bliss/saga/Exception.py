@@ -38,7 +38,7 @@ class Exception(Exception):
                   try_again(...)
               else:
                   # something else went wrong
-                  print "Exception occured: %s %s" % (str(e), e.stacktrace)
+                  print "Exception occurred: %s %s" % (str(e), e.stacktrace)
 
         """
 

@@ -22,7 +22,8 @@ class Service(Object):
     Example::
 
 
-        js  = saga.job.Service("sge://localhost")
+        my_job_id = "[fork://localhost]-[12345]"
+        js  = saga.job.Service("fork://localhost")
         ids = js.list()
 
         if my_job_id in ids :
@@ -107,7 +108,7 @@ class Service(Object):
 
            Example::
 
-             js = saga.job.Service("sge://localhost")
+             js = saga.job.Service("fork://localhost")
              j  = js.create_job(jd)
 
              if      j.state == saga.job.New      : print "new"
@@ -141,7 +142,7 @@ class Service(Object):
            The job.Service supports to reconnect to those remote entities::
 
 
-             js = saga.job.Service("sge://localhost")
+             js = saga.job.Service("fork://localhost")
              j  = js.get_job(my_job_id)
 
              if      j.state == saga.job.Pending  : print "pending"
@@ -168,7 +169,7 @@ class Service(Object):
            Example::
 
 
-             js  = saga.job.Service("sge://localhost")
+             js  = saga.job.Service("fork://localhost")
              ids = js.list()
 
              if my_job_id in ids :
