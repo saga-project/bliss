@@ -306,7 +306,7 @@ class AttributeInterface(object):
 
           # check
           if d.attribute_is_writable("key") :
-            d.set_attribute("key", "val")
+              d.set_attribute("key", "val")
           fi
 
 
@@ -320,9 +320,9 @@ class AttributeInterface(object):
           d = dict()
 
           try : 
-            d["key"] = "val" 
+              d["key"] = "val" 
           except Exception as e :
-            print "no no no!"
+              print "no no no!"
 
 
         '''
@@ -344,7 +344,7 @@ class AttributeInterface(object):
 
           # check
           if d.attribute_is_writable("key") :
-            d.set_attribute("key", "val")
+              d.set_attribute("key", "val")
           fi
 
 
@@ -358,9 +358,9 @@ class AttributeInterface(object):
           d = dict()
 
           try : 
-            d["key"] = "val" 
+              d["key"] = "val" 
           except Exception as e :
-            print "no no no!"
+              print "no no no!"
 
 
         '''
@@ -389,7 +389,7 @@ class AttributeInterface(object):
 
           # check
           if d.attribute_is_vector("Arguments") :
-            d.set_attribute("Arguments", ["-i", "/data/in.dat"])
+              d.set_attribute("Arguments", ["-i", "/data/in.dat"])
 
 
 
@@ -400,9 +400,9 @@ class AttributeInterface(object):
           d = dict()
 
           try : 
-            d["Arguments"] = "scalar_value" 
+              d["Arguments"] = "scalar_value" 
           except Exception as e :
-            print "no no no!  I want lists!"
+              print "no no no!  I want lists!"
 
 
         '''
