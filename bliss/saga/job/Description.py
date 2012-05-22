@@ -20,26 +20,24 @@ class Description(Object, AttributeInterface):
     application properties (e.g. executable path, program arguments, environment
     etc.) of a L{job.Job} to be create by a L{job.Service}.
 
-    B{Usage example 1} shows how to run a remote executable as a job::
+    B{Usage example 1} shows how to run a /bin/date job::
 
       jd = saga.job.Description()
 
-      jd.executable          = "/usr/local/bin/blast"
-      jd.arguments           = ["-i", "/data/in/x_42"]
-      jd.spmd_variation      = "MPI"
-      jd.number_of_processes = 64
+      jd.executable          = "/bin/date"
+      jd.arguments           = ["-u", "-R"]
 
-      js = saga.job.Service("sge://localhost")
+      js = saga.job.Service("fork://localhost")
       j = js.create_job(jd)
 
       j.run()
 
-    B{Usage example 2} shows how to run a set of remote shell commands as a job::
+    B{Usage example 2} shows how to run a set of shell commands as a job::
 
       script = '''
        ls -la /tmp
-       find  $HOME/data/ -name  \*.dat -exec chmod g+r {} \;
-       du -a $HOME/data | egrep '\.dat$' | wc -l
+       find  /tmp/ -name  \*.pdf -exec echo "found {}" \;
+       du -a /tmp/ | egrep '\.pdf$' | wc -l
       '''
 
       jd = saga.job.Description()
@@ -47,8 +45,8 @@ class Description(Object, AttributeInterface):
       jd.executable = "/bin/sh"
       jd.arguments  = ["-c", script]
 
-      js = saga.job.Service("ssh://remote.host.net/")
-      j = js.create_job(jd)
+      js = saga.job.Service("fork://localhost")
+      j  = js.create_job(jd)
 
       j.run()
 
