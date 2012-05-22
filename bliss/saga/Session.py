@@ -30,9 +30,9 @@ class Session(object):
 
         # define an ssh context
         c = saga.Context ()
-        c['Type']     = 'ssh'
-        c['UserCert'] = '$HOME/.ssh/special_id_rsa'
-        c['UserKey']  = '$HOME/.ssh/special_id_rsa.pub'
+        c.type     = 'ssh'
+        c.usercert = '$HOME/.ssh/special_id_rsa'
+        c.userkey  = '$HOME/.ssh/special_id_rsa.pub'
 
         # add it to a session
         s = saga.Session

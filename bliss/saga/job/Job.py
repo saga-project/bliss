@@ -309,7 +309,7 @@ class Job(Object, AttributeInterface):
            
 
              js = saga.job.Service("fork://localhost")
-             j = js.create_job(jd)
+             j  = js.create_job(jd)
 
              if j.state == saga.job.New :
                  print "new"
@@ -361,7 +361,7 @@ class Job(Object, AttributeInterface):
 
 
           js = saga.job.Service("fork://localhost")
-          j = js.create_job(jd)
+          j  = js.create_job(jd)
 
           if j.state == saga.job.New :
               print "new"
@@ -405,7 +405,7 @@ class Job(Object, AttributeInterface):
 
 
           js = saga.job.Service("fork://localhost")
-          j = js.create_job(jd)
+          j  = js.create_job(jd)
 
           j.run()
           j.wait()
@@ -453,7 +453,7 @@ class Job(Object, AttributeInterface):
 
 
           js = saga.job.Service("fork://localhost")
-          j = js.create_job(jd)
+          j  = js.create_job(jd)
 
           if j.serviceurl == "fork://localhost" :
               print "yes!"

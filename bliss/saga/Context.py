@@ -33,9 +33,9 @@ class Context(AttributeInterface, Object):
 
         # define an ssh context
         c = saga.Context ()
-        c['Type']     = 'ssh'
-        c['UserCert'] = '$HOME/.ssh/special_id_rsa'
-        c['UserKey']  = '$HOME/.ssh/special_id_rsa.pub'
+        c.type     = 'ssh'
+        c.usercert = '$HOME/.ssh/special_id_rsa'
+        c.userkey  = '$HOME/.ssh/special_id_rsa.pub'
 
         # add the context to a session
         s = saga.Session  ( )
@@ -141,9 +141,9 @@ class Context(AttributeInterface, Object):
 
             # define an ssh context
             c = saga.Context ()
-            c['Type']     = 'ssh'
-            c['UserCert'] = '$HOME/.ssh/id_rsa'
-            c['UserKey']  = '$HOME/.ssh/id_rsa.pub'
+            c.type     = 'ssh'
+            c.usercert = '$HOME/.ssh/id_rsa'
+            c.userkey' = '$HOME/.ssh/id_rsa.pub'
 
             # add it to a session
             s = saga.Session
