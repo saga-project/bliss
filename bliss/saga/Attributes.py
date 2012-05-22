@@ -435,15 +435,13 @@ class AttributeInterface(object):
           print "keys: %s"  %  d.list_attributes()
 
 
-
-        As there is no semantic equivalent in python's dicts, the Bliss
-        implementation will throw an exception on the wrong setting::
+        This is semantically equivalent to::
 
 
           d = dict()
 
           # list
-          print "keys: %s"  %  d.keys() # throws
+          print "keys: %s"  %  d.keys()
 
 
         '''
