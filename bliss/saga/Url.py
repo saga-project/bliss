@@ -10,7 +10,31 @@ from bliss.utils       import urlparse25 as urlparse
 from bliss.saga.Object import Object 
 
 class Url(Object):
-    '''Defines a SAGA Url class as defined in GFD.90.'''
+    '''Defines a SAGA Url class as defined in GFD.90.
+    
+    URLs are used in several places in the SAGA API -- to specify service
+    endpoints for job submission or resource management, for file or directory
+    locations, etc.  This class is designed to simplify URL management for these
+    purposes -- it allows to manipulate individual URL elements, while ensuring
+    that the resulting URL is well formatted::
+
+        # create a URL from user input
+        url = saga.URL (argv[1])
+
+
+    An URL has the following components::
+
+        <scheme>://<user>:<pass>@<host>:<port>/<path>?<query>#<fragment>
+
+    For each of those components, the URL class offers a setter and a getter.
+    For example::
+
+        url = saga.Url ("scheme://pass:user@host:123/dir/file?query#fragment")
+        print " host   : " + url.get_host   ()
+        print " scheme : " + url.get_scheme ()
+        print " path   : " + url.get_path   ()
+
+    '''
 
     #__slots__ = ('_urlobj', 'scheme', 'host', 'port', 'path', 'params', 'query', 'fragment', 'url')
 
@@ -103,7 +127,7 @@ class Url(Object):
 
     def get_query(self):
         '''return the 'query' property.'''
-        return self.quey
+        return self.query
 
     def set_query(self, query):
         '''set the 'query' property.'''
@@ -119,7 +143,7 @@ class Url(Object):
 
     def get_password(self):
         '''return the 'username' property.'''
-        return self.username
+        return self.password
 
     def set_password(self, val):
         '''set the 'password' property.'''
