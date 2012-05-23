@@ -61,3 +61,82 @@ class UrlTests(unittest.TestCase):
 
         if u1.port != int(9999):
             self.fail("unexpected value for port")
+
+    ###########################################################################
+    #
+    def test_url_issue_49(self): 
+
+        url = saga.Url ("scheme://pass:user@host:123/dir/file?query#fragment")
+        url.set_host ('remote.host.net')
+        url.set_scheme ('sftp') 
+        url.set_path ('/tmp/data')
+        
+        if str(url) != "sftp://pass:user@remote.host.net:123/tmp/data":
+            self.fail("unexpected url")
+
+    def test_url_properties(self):
+
+       url = saga.Url("")
+       if str(url) != "": 
+           self.fail("unexpected url")
+
+       url.scheme = "scheme"
+       if str(url) != "scheme://":
+           self.fail("unexpected url")
+       if url.get_scheme() != "scheme":
+           self.fail("unexpected scheme")       
+       url.set_scheme("tscheme")
+       if url.get_scheme() != "tscheme":
+           self.fail("unexpected scheme")
+       url.scheme = "scheme"
+
+       url.host = "host"
+       if str(url) != "scheme://host": 
+           self.fail("unexpected url")
+       if url.get_host() != "host":
+           self.fail("unexpected host")       
+       url.set_host("thost")
+       if url.get_host() != "thost":
+           self.fail("unexpected host")
+       url.host = "host"
+
+       url.port = 42
+       if str(url) != "scheme://host:42":
+           self.fail("unexpected url")
+       if url.get_port() != 42:
+           self.fail("unexpected port")       
+       url.set_port(43)
+       if url.get_port() != 43:
+           self.fail("unexpected port")
+       url.port = 42
+
+       url.username = "username"
+       if str(url) != "scheme://username@host:42": 
+           self.fail("unexpected url")
+       if url.get_username() != "username":
+           self.fail("unexpected username")       
+       url.set_username("tusername")
+       if url.get_username() != "tusername":
+           self.fail("unexpected username")
+       url.username = "username"
+
+       url.password = "password"
+       if str(url) != "scheme://username:password@host:42":
+           self.fail("unexpected url")
+       if url.get_password() != "password":
+           self.fail("unexpected password")       
+       url.set_password("tpassword")
+       if url.get_password() != "tpassword":
+           self.fail("unexpected passsword")
+       url.password = "password"
+
+       url.path = "/path/"
+       if str(url) != "scheme://username:password@host:42/path/":
+           self.fail("unexpected url")
+       if url.get_path() != "/path/":
+           self.fail("unexpected path")       
+       url.set_path("tpath")
+       if url.get_path() != "/tpath":
+           self.fail("unexpected path")
+       url.path = "/path/"
+
