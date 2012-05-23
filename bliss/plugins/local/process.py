@@ -59,7 +59,9 @@ class LocalJobProcess(object):
                 if self.cwd is not None:
                     self._job_error = open(os.path.join(self.cwd, jd.error),"w")
                 else:
-                    self._job_error = open(jd.error,"w")  
+                    self._job_error = open(jd.error,"w") 
+        else:
+            self._job_error = None 
 
         cmdline = str(self.executable)
         args = ""
