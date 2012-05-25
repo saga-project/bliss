@@ -25,7 +25,7 @@ def run_bfast_p(numjobs, session, jobservice):
             basedir.make_dir(workdir)
 
             jd = saga.job.Description()
-            jd.wall_time_limit   = "0:05:00"
+            jd.wall_time_limit   = 5 #minutes
             jd.total_cpu_count   = 1     
             jd.environment       = {'BFAST_DIR':bfast_base_dir.path}
             jd.working_directory = workdir     
