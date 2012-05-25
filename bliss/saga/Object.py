@@ -21,15 +21,15 @@ class Object(object) :
     Example::
 
         # run a job service in a session
-        c = saga.Context ('X509')
+        c = saga.Context('X509')
         c['UserCert'] = '/tmp/x509_special.pem'
 
-        s = saga.Session ()
-        s.add_context (c)
+        s = saga.Session()
+        s.add_context(c)
 
-        js = saga.job.Service (s)
-        j  = js.create_job (...)   # the job inherits the js' session!
-        j.run ()
+        js = saga.job.Service(s)
+        j  = js.create_job(...)   # the job inherits the js' session!
+        j.run()
 
         ...
 
@@ -37,12 +37,12 @@ class Object(object) :
         # job, once it finished.  To use the same credentials (which presumably
         # worked for the job's backend), we obtain the job's session, and re-use
         # it for file staging.
-        j.wait ()
-        s = j.get_session ()
-        d = j.get_description ()['WorkingDirectory']
+        j.wait()
+        s = j.get_session()
+        d = j.get_description()['WorkingDirectory']
         
-        remote = saga.filesystem.Directory (s, d)
-        remote.copy ('output', 'file://localhost/tmp/output')
+        remote = saga.filesystem.Directory(s, d)
+        remote.copy('output', 'file://localhost/tmp/output')
     '''
 
     class Type :

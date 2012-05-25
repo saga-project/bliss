@@ -18,27 +18,27 @@ class ComputeDescription(Object, AttributeInterface):
     B{Usage example 1} shows how to obtain a handle to a cluster of a certain size::
 
       # describe the resource requirements
-      cd = saga.resource.ComputeDescription ()
+      cd = saga.resource.ComputeDescription()
       cd['Slots'] = 128
 
       # obtain a handle to a suitable resource
-      rm = saga.resource.Manager ()
-      cr = rm.create_compute (cd)
+      rm = saga.resource.Manager()
+      cr = rm.create_compute(cd)
 
       # submit a large job
-      jd = saga.job.Description ()
-      jd['Executable']        = 'blast'
+      jd = saga.job.Description()
+      jd['Executable'] = 'blast'
       jd['NumberOfProcesses'] = 128
-      jd['SPMDVariation']     = MPI
+      jd['SPMDVariation'] = MPI
 
-      js = saga.job.Service (cr)
-      j  = js.create_job    (jd)
-      j.run  ()
-      j.wait ()
+      js = saga.job.Service(cr)
+      j  = js.create_job(jd)
+      j.run()
+      j.wait()
 
 
       # once the job is finished, we do not need the compute resource anymore:
-      cr.destroy ()
+      cr.destroy()
 
     '''
 
@@ -57,33 +57,33 @@ class ComputeDescription(Object, AttributeInterface):
         self._duration       = None
         self._template       = ''
 
-        self._register_rw_attribute     (name="Dynamic", 
-                                             accessor=self.__class__.dynamic) 
-        self._register_rw_attribute     (name="Start", 
-                                             accessor=self.__class__.start) 
-        self._register_rw_attribute     (name="End", 
-                                             accessor=self.__class__.end) 
-        self._register_rw_attribute     (name="Duration", 
-                                             accessor=self.__class__.duration) 
-        self._register_rw_attribute     (name="Template", 
-                                             accessor=self.__class__.template) 
+        self._register_rw_attribute(name="Dynamic", 
+                                        accessor=self.__class__.dynamic) 
+        self._register_rw_attribute(name="Start", 
+                                        accessor=self.__class__.start) 
+        self._register_rw_attribute(name="End", 
+                                        accessor=self.__class__.end) 
+        self._register_rw_attribute(name="Duration", 
+                                        accessor=self.__class__.duration) 
+        self._register_rw_attribute(name="Template", 
+                                        accessor=self.__class__.template) 
         
-        self._slots            = 1
-        self._memory           = None
-        self._hostnames        = None
+        self._slots = 1
+        self._memory = None
+        self._hostnames = None
         self._operating_system = 'Any'
-        self._architecture     = 'Any'
+        self._architecture = 'Any'
 
-        self._register_rw_vec_attribute (name="OperatingSystem", 
-                                         accessor=self.__class__.operating_system) 
-        self._register_rw_vec_attribute (name="Architecture", 
-                                         accessor=self.__class__.architecture)
-        self._register_rw_vec_attribute (name="Hostnames", 
-                                         accessor=self.__class__.hostnames)
-        self._register_rw_attribute     (name="Slots", 
-                                         accessor=self.__class__.slots)
-        self._register_rw_attribute     (name="Memory", 
-                                         accessor=self.__class__.memory) 
+        self._register_rw_vec_attribute(name="OperatingSystem", 
+                                        accessor=self.__class__.operating_system) 
+        self._register_rw_vec_attribute(name="Architecture", 
+                                        accessor=self.__class__.architecture)
+        self._register_rw_vec_attribute(name="Hostnames", 
+                                        accessor=self.__class__.hostnames)
+        self._register_rw_attribute(name="Slots", 
+                                    accessor=self.__class__.slots)
+        self._register_rw_attribute(name="Memory", 
+                                    accessor=self.__class__.memory) 
     
     ######################################################################
     ## 

@@ -26,13 +26,15 @@ class JobID(object):
 
        Example::
 
+         jd = saga.job.Description()
+         jd.executable = "/bin/date"
+         jd.arguments  = ["-u", "-R"]
 
-         js = saga.job.Service('ssh://remote.host.net')
-         j = js.create_job(jd)
-         id = j.get_job_id() 
+         js = saga.job.Service("fork://localhost/")
+         j  = js.create_job(jd)
+         j.run()
 
-         print "job id: %s"  %  id
-         
+         print "job id: %s"  % j.jobid
 
     '''
     
@@ -137,12 +139,12 @@ class Job(Object, AttributeInterface):
         AttributeInterface.__init__(self)
       
         # register properties with the attribute interface 
-        self._register_ro_attribute     (name="Exitcode", 
-                                         accessor=self.__class__.exitcode) 
-        self._register_ro_attribute     (name="JobID", 
-                                         accessor=self.__class__.jobid)  
-        self._register_ro_attribute     (name="ServiceURL", 
-                                         accessor=self.__class__.serviceurl)  
+        self._register_ro_attribute(name="Exitcode", 
+                                    accessor=self.__class__.exitcode) 
+        self._register_ro_attribute(name="JobID", 
+                                    accessor=self.__class__.jobid)  
+        self._register_ro_attribute(name="ServiceURL", 
+                                    accessor=self.__class__.serviceurl)  
 
     ######################################################################
     ##
@@ -200,7 +202,7 @@ class Job(Object, AttributeInterface):
         B{Example}::
 
 
-          js = saga.job.Service("sge://localhost")
+          js = saga.job.Service("fork://localhost")
 
           j1 = js.create_job(jd)
           j1.run()
@@ -225,17 +227,22 @@ class Job(Object, AttributeInterface):
 
 
 
-          js = saga.job.Service("sge://localhost")
+          js = saga.job.Service("fork://localhost")
           j  = js.create_job(jd)
 
-          if j.get_state() == saga.job.New : print "new"
-          else : print "oops!"
+          if j.get_state() == saga.job.New : 
+              print "new"
+          else : 
+              print "oops!"
 
           j.run()
 
-          if j.get_state() == saga.job.Pending : print "pending"
-          else if j.get_state() == saga.job.Running : print "running"
-          else : print "oops!"
+          if j.get_state() == saga.job.Pending : 
+              print "pending"
+          else if j.get_state() == saga.job.Running : 
+              print "running"
+          else :
+              print "oops!"
 
         '''
         if self._plugin is not None:
@@ -268,17 +275,22 @@ class Job(Object, AttributeInterface):
         B{Example}::
 
 
-          js = saga.job.Service("sge://localhost")
+          js = saga.job.Service("fork://localhost")
           j  = js.create_job(jd)
 
-          if j.state == saga.job.New : print "new"
-          else : print "oops!"
+          if j.state == saga.job.New : 
+              print "new"
+          else : 
+              print "oops!"
 
           j.run()
 
-          if j.state == saga.job.Pending : print "pending"
-          else if j.state == saga.job.Running : print "running"
-          else : print "oops!"
+          if j.state == saga.job.Pending :
+              print "pending"
+          else if j.state == saga.job.Running :
+              print "running"
+          else :
+              print "oops!"
 
 
         '''
@@ -296,22 +308,29 @@ class Job(Object, AttributeInterface):
            B{Example}::
            
 
-             js = saga.job.Service("sge://localhost")
-             j = js.create_job(jd)
+             js = saga.job.Service("fork://localhost")
+             j  = js.create_job(jd)
 
-             if j.state == saga.job.New : print "new"
-             else : print "oops!"
+             if j.state == saga.job.New :
+                 print "new"
+             else :
+                 print "oops!"
 
              j.run()
 
-             if j.state == saga.job.Pending  : print "pending"
-             else if j.state == saga.job.Running : print "running"
-             else : print "oops!"
+             if j.state == saga.job.Pending  :
+                 print "pending"
+             else if j.state == saga.job.Running :
+                 print "running"
+             else :
+                 print "oops!"
 
              j.cancel()
 
-             if j.state == saga.job.Canceled : print "canceled"
-             else : print "oops!"
+             if j.state == saga.job.Canceled :
+                 print "canceled"
+             else :
+                 print "oops!"
 
         '''
         if self._plugin is not None:
@@ -341,23 +360,31 @@ class Job(Object, AttributeInterface):
         B{Example}::
 
 
-          js = saga.job.Service("sge://localhost")
-          j = js.create_job(jd)
+          js = saga.job.Service("fork://localhost")
+          j  = js.create_job(jd)
 
-          if j.state == saga.job.New : print "new"
-          else : print "oops!"
+          if j.state == saga.job.New :
+              print "new"
+          else :
+              print "oops!"
 
           j.run()
 
-          if j.state == saga.job.Pending : print "pending"
-          else if j.state == saga.job.Running : print "running"
-          else : print "oops!"
+          if j.state == saga.job.Pending :
+              print "pending"
+          else if j.state == saga.job.Running :
+              print "running"
+          else :
+              print "oops!"
 
           j.wait(-1.0)
 
-          if j.state == saga.job.Done : print "done"
-          if j.state == saga.job.Faile : print "failed"
-          else : print "oops!"
+          if j.state == saga.job.Done :
+              print "done"
+          if j.state == saga.job.Faile :
+              print "failed"
+          else :
+              print "oops!"
 
         '''
         if self._plugin is not None:
@@ -377,15 +404,17 @@ class Job(Object, AttributeInterface):
         B{Example}::
 
 
-          js = saga.job.Service("sge://localhost")
-          j = js.create_job(jd)
+          js = saga.job.Service("fork://localhost")
+          j  = js.create_job(jd)
 
           j.run()
           j.wait()
 
           if j.state == saga.job.Failed :
-            if j.exitcode == "42" : print "Ah, galaxy bypass error!"
-            else : print "oops!"
+            if j.exitcode == "42" :
+                print "Ah, galaxy bypass error!"
+            else :
+                print "oops!"
 
         '''
 
@@ -423,11 +452,13 @@ class Job(Object, AttributeInterface):
         B{Example}::
 
 
-          js = saga.job.Service("sge://localhost")
-          j = js.create_job(jd)
+          js = saga.job.Service("fork://localhost")
+          j  = js.create_job(jd)
 
-          if j.serviceurl == "sge://localhost" : print "yes!"
-          else : print "oops!"
+          if j.serviceurl == "fork://localhost" :
+              print "yes!"
+          else :
+              print "oops!"
 
         '''
         doc = "The URL of the L{Service} instance managing this job."

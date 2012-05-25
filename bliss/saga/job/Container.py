@@ -34,40 +34,40 @@ class Container(Object):
 
             jc = saga.job.Container()    # new container
    
-            jc.add (job_1)               # add
-            jc.add (job_2)               # some
-            jc.add (job_3)               # jobs
+            jc.add(job_1)               # add
+            jc.add(job_2)               # some
+            jc.add(job_3)               # jobs
    
-            j = jc.get_job (id)          # retrieve job
+            j = jc.get_job(id)          # retrieve job
    
-            jc.remove (job_1)            # remove job
+            jc.remove(job_1)            # remove job
    
-            print str(jc.size ())        # get number of jobs
-            print str(jc.list ())        # get all job ids
-            print str(jc.get_states ())  # get all job states
+            print str(jc.size())        # get number of jobs
+            print str(jc.list())        # get all job ids
+            print str(jc.get_states())  # get all job states
 
    
    
          - collective operations::
    
 
-            jc.run ()                    # run all jobs in container
-            jc.cancel ()                 # cancel all jobs in container
+            jc.run()                    # run all jobs in container
+            jc.cancel()                 # cancel all jobs in container
 
    
    
          - event driven programming::
    
 
-            jc.wait (saga.job.Any)       # wait until any job in container finishes
-            jc.wait (saga.job.All)       # wait until all job in container finish
+            jc.wait(saga.job.Any)       # wait until any job in container finishes
+            jc.wait(saga.job.All)       # wait until all job in container finish
 
     """
    
     ######################################################################
     ## 
     def __init__(self, service):
-        '''Create a new job (a.k.a. 'task') container.
+        '''Create a new job(a.k.a. 'task') container.
 
            @param service: Currently, a container needs to be bound to
                            a valid L{saga.job.Service} and can only hold 
@@ -108,8 +108,8 @@ class Container(Object):
 
               jc = saga.job.Container()
    
-              jc.add (job_1)               # add existing job
-              jc.add (js.create_job (jd))  # add new job from job service
+              jc.add(job_1)              # add existing job
+              jc.add(js.create_job(jd))  # add new job from job service
 
 
         '''
@@ -135,7 +135,7 @@ class Container(Object):
            Example:: 
              
 
-              jc.remove (job_1)            # remove existing job
+              jc.remove(job_1)            # remove existing job
 
 
         '''
@@ -161,7 +161,7 @@ class Container(Object):
            Example:: 
              
 
-              jc.get_job ("[fork://]-[4452]")     # remove some local job
+              jc.get_job("[fork://]-[4452]")     # remove some local job
 
 
         '''
@@ -182,7 +182,7 @@ class Container(Object):
 
               count = 0
 
-              for state in jc.get_states () :
+              for state in jc.get_states() :
                 if state == saga.job.Done :
                   count += 1
               
@@ -205,9 +205,9 @@ class Container(Object):
            Example:: 
              
 
-              for id in jc.list () :
-                j = jc.get_job (id)
-                print "job %s is in state %s" % id, j.get_state ()
+              for id in jc.list() :
+                j = jc.get_job(id)
+                print "job %s is in state %s" % id, j.get_state()
 
         '''
         if self._plugin is not None:
@@ -225,7 +225,7 @@ class Container(Object):
            Example:: 
              
 
-              print "managing %d jobs" % jc.size ()
+              print "managing %d jobs" % jc.size()
 
         '''
         if self._plugin is not None:
@@ -234,9 +234,9 @@ class Container(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
 
-    def __len__ (self) :
+    def __len__(self) :
         '''Returns the number of jobs in the container. Same as Container.size().'''
-        return self.size ()
+        return self.size()
 
 
     ######################################################################
@@ -254,12 +254,12 @@ class Container(Object):
 
               jc = saga.job.Container()
    
-              jc.add (js.create_job (jd))    # add
-              jc.add (js.create_job (jd))    # new
-              jc.add (js.create_job (jd))    # jobs
+              jc.add(js.create_job(jd))    # add
+              jc.add(js.create_job(jd))    # new
+              jc.add(js.create_job(jd))    # jobs
 
-              jc.run ()
-              jc.wait (saga.job.All)
+              jc.run()
+              jc.wait(saga.job.All)
 
         '''
         if self._plugin is not None:
@@ -289,12 +289,12 @@ class Container(Object):
 
               jc = saga.job.Container()
    
-              jc.add (js.create_job (jd))    # add
-              jc.add (js.create_job (jd))    # new
-              jc.add (js.create_job (jd))    # jobs
+              jc.add(js.create_job(jd))    # add
+              jc.add(js.create_job(jd))    # new
+              jc.add(js.create_job(jd))    # jobs
 
-              jc.run ()
-              jc.cancel ()
+              jc.run()
+              jc.cancel()
 
         '''
         if self._plugin is not None:
@@ -335,14 +335,14 @@ class Container(Object):
 
               jc = saga.job.Container()
    
-              jc.add (js.create_job (jd))    # add
-              jc.add (js.create_job (jd))    # new
-              jc.add (js.create_job (jd))    # jobs
+              jc.add(js.create_job(jd))    # add
+              jc.add(js.create_job(jd))    # new
+              jc.add(js.create_job(jd))    # jobs
 
-              jc.run ()
+              jc.run()
               
-              while j = jc.wait () :
-                print "job %s returned: %s" % j.get_job_id (), j.get_state ()
+              while j = jc.wait() :
+                print "job %s returned: %s" % j.get_job_id(), j.get_state()
 
               # jc is empty at this point
 
@@ -361,14 +361,14 @@ class Container(Object):
 
               jc = saga.job.Container()
    
-              jc.add (js.create_job (jd))    # add
-              jc.add (js.create_job (jd))    # new
-              jc.add (js.create_job (jd))    # jobs
+              jc.add(js.create_job(jd))    # add
+              jc.add(js.create_job(jd))    # new
+              jc.add(js.create_job(jd))    # jobs
 
-              jc.run ()
+              jc.run()
               
               try: 
-                j = jc.wait (5.0)   # wait for 5 seconds
+                j = jc.wait(5.0)   # wait for 5 seconds
 
               except saga.exception.TimeOut :
                 print "no job finished after 5 seconds"
@@ -377,19 +377,19 @@ class Container(Object):
 
               jc = saga.job.Container()
    
-              jc.add (js.create_job (jd))    # add
-              jc.add (js.create_job (jd))    # new
-              jc.add (js.create_job (jd))    # jobs
+              jc.add(js.create_job(jd))    # add
+              jc.add(js.create_job(jd))    # new
+              jc.add(js.create_job(jd))    # jobs
 
-              jc.run ()
+              jc.run()
               
-              while jc.size () :
-                os.sleep (1)
+              while jc.size() :
+                os.sleep(1)
                 print "waiting for jobs"
 
                 try: 
-                  j = jc.wait (5.0)   # wait for 5 seconds
-                  print "job %s returned: %s" % j.get_job_id (), j.get_state ()
+                  j = jc.wait(5.0)   # wait for 5 seconds
+                  print "job %s returned: %s" % j.get_job_id(), j.get_state()
                 except saga.exception.TimeOut :
                   # ignore timeout
                   pass

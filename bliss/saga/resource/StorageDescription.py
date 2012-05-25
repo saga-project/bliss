@@ -18,21 +18,21 @@ class StorageDescription(Object, AttributeInterface):
     B{Usage example 1} shows how to obtain some storage of a certain size::
 
       # describe the resource requirements
-      sd = saga.resource.StorageDescription ()
+      sd = saga.resource.StorageDescription()
       sd['Size'] = 1024 # MB
 
       # obtain a handle to a suitable resource
-      rm = saga.resource.Manager ()
-      sr = rm.create_storage (sd)
+      rm = saga.resource.Manager()
+      sr = rm.create_storage(sd)
 
       # stage some data onto the storage
-      d  = sr.get_filesystem ()
-      d.copy ("file://localhost/data/input.dat", "/data/")
+      d  = sr.get_filesystem()
+      d.copy("file://localhost/data/input.dat", "/data/")
 
       # ...
 
       # once the application is done, we do not need the storage resource anymore:
-      sr.destroy ()
+      sr.destroy()
 
     '''
 
@@ -51,21 +51,21 @@ class StorageDescription(Object, AttributeInterface):
         self._duration       = None
         self._template       = None
         
-        self._register_rw_attribute     (name="Dynamic", 
-                                         accessor=self.__class__.dynamic) 
-        self._register_rw_attribute     (name="Start", 
-                                         accessor=self.__class__.start) 
-        self._register_rw_attribute     (name="End", 
-                                         accessor=self.__class__.end) 
-        self._register_rw_attribute     (name="Duration", 
-                                         accessor=self.__class__.duration) 
-        self._register_rw_attribute     (name="Template", 
-                                         accessor=self.__class__.template) 
+        self._register_rw_attribute(name="Dynamic", 
+                                    accessor=self.__class__.dynamic) 
+        self._register_rw_attribute(name="Start", 
+                                    accessor=self.__class__.start) 
+        self._register_rw_attribute(name="End", 
+                                    accessor=self.__class__.end) 
+        self._register_rw_attribute(name="Duration", 
+                                    accessor=self.__class__.duration) 
+        self._register_rw_attribute(name="Template", 
+                                    accessor=self.__class__.template) 
         
-        self._size           = ''
+        self._size = ''
         
-        self._register_rw_attribute     (name="Size", 
-                                         accessor=self.__class__.size) 
+        self._register_rw_attribute(name="Size", 
+                                    accessor=self.__class__.size) 
 
 
     ######################################################################

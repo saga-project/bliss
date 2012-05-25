@@ -29,18 +29,18 @@ class Session(object):
 
 
         # define an ssh context
-        c = saga.Context ()
-        c['Type']     = 'ssh'
-        c['UserCert'] = '$HOME/.ssh/special_id_rsa'
-        c['UserKey']  = '$HOME/.ssh/special_id_rsa.pub'
+        c = saga.Context()
+        c.type = 'ssh'
+        c.usercert = '$HOME/.ssh/special_id_rsa'
+        c.userkey = '$HOME/.ssh/special_id_rsa.pub'
 
         # add it to a session
         s = saga.Session
-        s.add_context (c)
+        s.add_context(c)
 
         # create a job service in this session -- that job service can now
         # *only* use that ssh context. 
-        j = saga.job.Service ('ssh://remote.host.net/', s)
+        j = saga.job.Service('ssh://remote.host.net/', s)
 
 
     The session argument to the L{job.Service} constructor is fully optional --

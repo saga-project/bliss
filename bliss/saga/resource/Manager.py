@@ -23,9 +23,9 @@ class Manager(Object):
     ) [method links are for compute resources]::
 
       # obtain a handle to a suitable resource, and wait until it is active
-      rm = saga.resource.Manager (url)
-      cr = rm.create_compute (cd)
-      cr.wait (saga.resource.State.Active)
+      rm = saga.resource.Manager(url)
+      cr = rm.create_compute(cd)
+      cr.wait(saga.resource.State.Active)
 
     The resources managed by the manager can have different types -- they can be
     storage or compute resources.  For the respective differences and the

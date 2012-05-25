@@ -10,27 +10,27 @@
     B{Usage example 1} shows how to use a large compute resource::
 
       # describe the resource requirements
-      cd = saga.resource.ComputeDescription ()
+      cd = saga.resource.ComputeDescription()
       cd['Slots'] = 1024
 
       # obtain a handle to a suitable resource, and wait until it is active
-      rm = saga.resource.Manager (url)
-      cr = rm.create_compute (cd)
-      cr.wait (saga.resource.State.Active)
+      rm = saga.resource.Manager(url)
+      cr = rm.create_compute(cd)
+      cr.wait(saga.resource.State.Active)
 
       # submit a large job onto the now active resource
-      jd = saga.job.Description ()
-      jd['Executable']        = 'blast'
+      jd = saga.job.Description()
+      jd['Executable'] = 'blast'
       jd['NumberOfProcesses'] = 1024
-      jd['SPMDVariation']     = MPI
+      jd['SPMDVariation'] = MPI
 
-      js = saga.job.Service (cr)
-      j  = js.create_job    (jd)
-      j.run  ()
-      j.wait ()
+      js = saga.job.Service(cr)
+      j  = js.create_job(jd)
+      j.run()
+      j.wait()
 
       # once the job is finished, we do not need the compute resource anymore:
-      cr.destroy ()
+      cr.destroy()
 
 
     Note that in the example above, there is no indication on how the resource

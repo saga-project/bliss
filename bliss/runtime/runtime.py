@@ -35,7 +35,7 @@ class Runtime:
             self.loglevel = logging.ERROR
         # 0 = No Logging
         else:
-            self.loglevel = None
+            self.loglevel = logging.CRITICAL
   
         logging.basicConfig(level=self.loglevel, datefmt='%m/%d/%Y %I:%M:%S %p',
                     	    format='%(asctime)s - bliss.%(name)s - %(levelname)s - %(message)s')

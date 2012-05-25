@@ -30,15 +30,15 @@ class Exception(Exception):
         B{Example}::
 
           try :
-              js = saga.job.Service("ssh://alamo.futuregrid.org")
+              file = saga.filesystem.File("sftp://alamo.futuregrid.org/tmp/data1.dat")
 
           except saga.Exception, e :
               if e.error == saga.Error.Timeout:
                   # maybe the network is down?
-                  try_again(...)
+                  print "connection timed out"
               else:
                   # something else went wrong
-                  print "Exception occured: %s %s" % (str(e), e.stacktrace)
+                  print "Exception occurred: %s %s" % (str(e), e.traceback)
 
         """
 
@@ -52,8 +52,8 @@ class Exception(Exception):
            @param message: The error message
            @type  message: str
         """
-        self._error     = error
-        self._message   = message
+        self._error = error
+        self._message = message
         self._traceback = _get_exception_traceback()
 
     ######################################################################

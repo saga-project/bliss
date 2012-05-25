@@ -20,26 +20,24 @@ class Description(Object, AttributeInterface):
     application properties (e.g. executable path, program arguments, environment
     etc.) of a L{job.Job} to be create by a L{job.Service}.
 
-    B{Usage example 1} shows how to run a remote executable as a job::
+    B{Usage example 1} shows how to run a /bin/date job::
 
       jd = saga.job.Description()
 
-      jd.executable          = "/usr/local/bin/blast"
-      jd.arguments           = ["-i", "/data/in/x_42"]
-      jd.spmd_variation      = "MPI"
-      jd.number_of_processes = 64
+      jd.executable = "/bin/date"
+      jd.arguments = ["-u", "-R"]
 
-      js = saga.job.Service("sge://localhost")
+      js = saga.job.Service("fork://localhost")
       j = js.create_job(jd)
 
       j.run()
 
-    B{Usage example 2} shows how to run a set of remote shell commands as a job::
+    B{Usage example 2} shows how to run a set of shell commands as a job::
 
       script = '''
        ls -la /tmp
-       find  $HOME/data/ -name  \*.dat -exec chmod g+r {} \;
-       du -a $HOME/data | egrep '\.dat$' | wc -l
+       find  /tmp/ -name  \*.pdf -exec echo "found {}" \;
+       du -a /tmp/ | egrep '\.pdf$' | wc -l
       '''
 
       jd = saga.job.Description()
@@ -47,8 +45,8 @@ class Description(Object, AttributeInterface):
       jd.executable = "/bin/sh"
       jd.arguments  = ["-c", script]
 
-      js = saga.job.Service("ssh://remote.host.net/")
-      j = js.create_job(jd)
+      js = saga.job.Service("fork://localhost")
+      j  = js.create_job(jd)
 
       j.run()
 
@@ -139,35 +137,35 @@ class Description(Object, AttributeInterface):
         self._spmd_variation = None
 
         # register properties with the attribute interface
-        self._register_rw_attribute     (name="Executable", 
-                                         accessor=self.__class__.executable) 
-        self._register_rw_attribute     (name="Output", 
-                                         accessor=self.__class__.output) 
-        self._register_rw_attribute     (name="Error", 
-                                         accessor=self.__class__.error) 
-        self._register_rw_attribute     (name="Queue", 
-                                         accessor=self.__class__.queue) 
-        self._register_rw_attribute     (name="WallTimeLimit", 
-                                         accessor=self.__class__.wall_time_limit) 
-        self._register_rw_attribute     (name="WorkingDirectory", 
-                                         accessor=self.__class__.working_directory) 
-        self._register_rw_attribute     (name="Contact", 
-                                         accessor=self.__class__.contact) 
-        self._register_rw_attribute     (name="TotalCPUCount", 
-                                         accessor=self.__class__.total_cpu_count) 
-        self._register_rw_attribute     (name="NumberOfProcesses", 
-                                         accessor=self.__class__.number_of_processes) 
-        self._register_rw_attribute     (name="SPMDVariation", 
-                                         accessor=self.__class__.spmd_variation) 
-        self._register_rw_attribute     (name="Project", 
-                                         accessor=self.__class__.project) 
+        self._register_rw_attribute(name="Executable", 
+                                    accessor=self.__class__.executable) 
+        self._register_rw_attribute(name="Output", 
+                                    accessor=self.__class__.output) 
+        self._register_rw_attribute(name="Error", 
+                                    accessor=self.__class__.error) 
+        self._register_rw_attribute(name="Queue", 
+                                    accessor=self.__class__.queue) 
+        self._register_rw_attribute(name="WallTimeLimit", 
+                                    accessor=self.__class__.wall_time_limit) 
+        self._register_rw_attribute(name="WorkingDirectory", 
+                                    accessor=self.__class__.working_directory) 
+        self._register_rw_attribute(name="Contact", 
+                                    accessor=self.__class__.contact) 
+        self._register_rw_attribute(name="TotalCPUCount", 
+                                    accessor=self.__class__.total_cpu_count) 
+        self._register_rw_attribute(name="NumberOfProcesses", 
+                                    accessor=self.__class__.number_of_processes) 
+        self._register_rw_attribute(name="SPMDVariation", 
+                                    accessor=self.__class__.spmd_variation) 
+        self._register_rw_attribute(name="Project", 
+                                    accessor=self.__class__.project) 
 
-        self._register_rw_vec_attribute (name="Arguments", 
-                                         accessor=self.__class__.arguments) 
-        self._register_rw_vec_attribute (name="FileTransfer", 
-                                         accessor=self.__class__.file_transfer) 
-        self._register_rw_vec_attribute (name="Environment", 
-                                         accessor=self.__class__.environment) 
+        self._register_rw_vec_attribute(name="Arguments", 
+                                        accessor=self.__class__.arguments) 
+        self._register_rw_vec_attribute(name="FileTransfer", 
+                                        accessor=self.__class__.file_transfer) 
+        self._register_rw_vec_attribute(name="Environment", 
+                                        accessor=self.__class__.environment) 
 
     ######################################################################
     ## 
@@ -198,13 +196,10 @@ class Description(Object, AttributeInterface):
         evaluated on the execution host, or a executable name to be searched in the
         target host's PATH environment (if available).
 
-    B{Example} (using Python properties)::
+    B{Example}::
       jd = saga.job.Description()
       jd.executable = "/usr/local/bin/blast"
 
-    B{Example} (using the attribute interface)::
-      jd = saga.job.Description()
-      jd.set_attribute("Executable", "/usr/local/bin/blast")
     """
       
     ######################################################################
@@ -228,13 +223,10 @@ class Description(Object, AttributeInterface):
       - The individual arguments are not expanded by the user environment (i.e.,
         don't use environment variables like $HOME)
       
-    B{Example} (using Python properties)::
+    B{Example}::
       jd = saga.job.Description()
       jd.arguments = ["--prefix", "/usr/local/bin"]
 
-    B{Example} (using the attribute interface)::
-      jd = saga.job.Description()
-      jd.set_attribute("Arguments". ["--prefix", "/usr/local/bin"])
     """
 
     ######################################################################
@@ -258,13 +250,10 @@ class Description(Object, AttributeInterface):
       - The individual variable values are not expanded by the user environment (i.e.,
         don't use environment variables like $HOME in values)
       
-    B{Example} (using Python properties)::
+    B{Example}::
       jd = saga.job.Description()
       jd.environment = ["PATH=/bin:/usr/bin", "TARGET=KingKong"]
 
-    B{Example} (using the attribute interface)::
-      jd = saga.job.Description()
-      jd.set_attribute("Environment". ["PATH=/bin:/usr/bin", "TARGET=KingKong"])
     """
 
 
@@ -284,13 +273,10 @@ class Description(Object, AttributeInterface):
     """
     Defines the file staging operations.
 
-    B{Example} (using Python properties)::
+    B{Example}::
       jd = saga.job.Description()
       jd.arguments = ["--prefix", "/usr/local/bin"]
 
-    B{Example} (using the attribute interface)::
-      jd = saga.job.Description()
-      jd.set_attribute("Arguments". ["--prefix", "/usr/local/bin"])
     """
 
     ######################################################################
@@ -310,13 +296,10 @@ class Description(Object, AttributeInterface):
     """
     The file in which the job\'s stdout stream will be captured.
 
-    B{Example} (using Python properties)::
+    B{Example}::
       jd = saga.job.Description()
       jd.output = "/tmp/app.log"
 
-    B{Example} (using the attribute interface)::
-      jd = saga.job.Description()
-      jd.set_attribute("Output", "/tmp/app.log")
     """
 
     ######################################################################
@@ -336,13 +319,10 @@ class Description(Object, AttributeInterface):
     """
     The file in which the job\'s stderr stream will be captured.
 
-    B{Example} (using Python properties)::
+    B{Example}::
       jd = saga.job.Description()
       jd.error = "/tmp/app.err"
 
-    B{Example} (using the attribute interface)::
-      jd = saga.job.Description()
-      jd.set_attribute("Error", "/tmp/app.err")
     """
 
     ######################################################################
@@ -364,13 +344,10 @@ class Description(Object, AttributeInterface):
       - This attribute is used by the scheduler backend to credit the allocated
         resources to a specific project account.
 
-    B{Example} (using Python properties)::
+    B{Example}::
       jd = saga.job.Description()
       jd.project = "project_42"
 
-    B{Example} (using the attribute interface)::
-      jd = saga.job.Description()
-      jd.set_attribute("Project", "project_42")
     """
 
     ######################################################################
@@ -392,13 +369,10 @@ class Description(Object, AttributeInterface):
       - Schedulers which support different queues (with different service
         qualities) use this attribute.
 
-    B{Example} (using Python properties)::
+    B{Example}::
       jd = saga.job.Description()
       jd.queue = "Large"
 
-    B{Example} (using the attribute interface)::
-      jd = saga.job.Description()
-      jd.set_attribute("Queue", "Large")
     """
 
     ######################################################################
@@ -421,13 +395,10 @@ class Description(Object, AttributeInterface):
         but no guarantees are made.
       - The value is used by the scheduler to optimized scheduling.
 
-    B{Example} (using Python properties)::
+    B{Example}::
       jd = saga.job.Description()
       jd.wall_time_limit = "42"
 
-    B{Example} (using the attribute interface)::
-      jd = saga.job.Description()
-      jd.set_attribute("WallTimeLimit", "42")
     """
 
     ######################################################################
@@ -452,13 +423,10 @@ class Description(Object, AttributeInterface):
       - The backend may choose an arbitrary working directory if none is
         explicitly specified. 
 
-    B{Example} (using Python properties)::
+    B{Example}::
       jd = saga.job.Description()
       jd.working_directory = "/scratch/cpt_hook/"
 
-    B{Example} (using the attribute interface)::
-      jd = saga.job.Description()
-      jd.set_attribute("WorkingDirectory", "/scratch/cpt_hook/")
     """
 
     ######################################################################
@@ -481,13 +449,10 @@ class Description(Object, AttributeInterface):
       - This information is used to send notifications for job state changes, to
         email or other notification endpoints.
 
-    B{Example} (using Python properties)::
+    B{Example}::
       jd = saga.job.Description()
       jd.contact = "cpt_hook@piratebay.org"
 
-    B{Example} (using the attribute interface)::
-      jd = saga.job.Description()
-      jd.set_attribute("Contact", "cpt_hook@piratebay.org")
     """
 
     ######################################################################
@@ -513,13 +478,10 @@ class Description(Object, AttributeInterface):
         over the requested processes, nor does it give any connectivity
         guarantees (NUMA, shared memory, network interconnects etc.)
 
-    B{Example} (using Python properties)::
+    B{Example}::
       jd = saga.job.Description()
       jd.total_cpu_count = 64
 
-    B{Example} (using the attribute interface)::
-      jd = saga.job.Description()
-      jd.set_attribute("TotalCpuCount", 64)
     """
 
     ######################################################################
@@ -544,13 +506,10 @@ class Description(Object, AttributeInterface):
         instances, but instead acts as a hint (boundary condition) to the
         scheduler.
 
-    B{Example} (using Python properties)::
+    B{Example}::
       jd = saga.job.Description()
       jd.number_of_processes = 8
 
-    B{Example} (using the attribute interface)::
-      jd = saga.job.Description()
-      jd.set_attribute("NumberOfProcesses", 8)
     """
 
     ######################################################################
@@ -574,12 +533,9 @@ class Description(Object, AttributeInterface):
       - Specifying this value influences the mechanism the backend will use to
         create the application process instances (fork, mpirun, ...)
 
-    B{Example} (using Python properties)::
+    B{Example}::
       jd = saga.job.Description()
       jd.spmd_variation = "MPI"
 
-    B{Example} (using the attribute interface)::
-      jd = saga.job.Description()
-      jd.set_attribute("SPMDVariation", "MPI")
     """
 

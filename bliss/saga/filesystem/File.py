@@ -9,14 +9,43 @@ import bliss.saga
 from bliss.saga.Object import Object 
 
 class File(Object):
-    '''Loosely represents a SAGA file as defined in GFD.90'''
+    '''Loosely represents a SAGA file as defined in GFD.90
+
+    The saga.filesystem.File class represents, as the name indicates,
+    a file on some (local or remote) filesystem.  That class offers
+    a number of operations on that file, such as copy, move and remove::
+    
+        # get a file handle
+        file = saga.filesystem.File("sftp://localhost/tmp/data/data.bin")
+    
+        # copy the file
+        file.copy ("sftp://localhost/tmp/data/data.bak")
+
+        # move the file
+        file.move ("sftp://localhost/tmp/data/data.new")
+
+    '''
 
     ######################################################################
     ## 
     def __init__(self, url, session=None):
         '''Construct a new file object
-           @param url: Url of the (remote) job manager.
+
+           @param url: Url of the (remote) file
            @type  url: L{Url} 
+
+           The specified file is expected to exist -- otherwise a DoesNotExist
+           exception is raised.  Also, the URL must point to a file (not to
+           a directory), otherwise a BadParameter exception is raised.
+
+           Example::
+
+               # get a file handle
+               file = saga.filesystem.File("sftp://localhost/tmp/data/data.bin")
+    
+               # print the file's size
+               print file.get_size ()
+
         '''
         Object.__init__(self, Object.Type.FilesystemFile, 
                         apitype=Object.Type.FilesystemAPI, session=session)
@@ -47,7 +76,16 @@ class File(Object):
     ## 
     def copy(self, target):
         '''Copy the file to another location
+
            @param target: Url of the copy target.
+
+           The file is copied to the given target location.  The target URL must
+           be an absolute path, and can be a target file name or target
+           directory name.  If the target file exists, it is overwritten:
+
+               # copy a file
+               file = saga.filesystem.Directory("sftp://localhost/tmp/data/data.bin")
+               file.copy ("sftp://localhost/tmp/data/data.bak")
         '''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
@@ -66,35 +104,51 @@ class File(Object):
     ######################################################################
     ## 
     def move(self, target):
-        '''Move the file to another location
-           @param target: Url of the copy target.
-        '''
+        '''Move the file to another location'''
+
+        #   @param target: Url of the move target.
+        #
+        #   The file is moved to the given target location.  The target URL must
+        #   be an absolute path, and can be a target file name or target
+        #   directory name.  If the target file exists, it is overwritten:
+        #
+        #       # copy a file
+        #       file = saga.filesystem.Directory("sftp://localhost/tmp/data/data.bin")
+        #       file.copy ("sftp://localhost/tmp/data/data.bak")
+        #'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
         else:
-            return self._plugin.file_copy(self, target)
+            return self._plugin.file_move(self, target)
 
     ######################################################################
     ## 
     def remove(self):
-        '''Delete the file
-           @param target: Url of the copy target.
-        '''
+        '''Delete the file '''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
         else:
-            return self._plugin.file_copy(self, target)
+            return self._plugin.file_remove(self)
 
     ######################################################################
     ## 
     def get_size(self):
         '''Returns the size of a file (in bytes)
-           @param path: path of the file
+
+           Example::
+
+               # get a file handle
+               file = saga.filesystem.File("sftp://localhost/tmp/data/data.bin")
+    
+               # print the file's size
+               print file.get_size ()
+
         '''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
         else:
             return self._plugin.file_get_size(self)
+
