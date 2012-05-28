@@ -121,8 +121,11 @@ class SSHJobProcess(object):
         self.sshclient.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
         #have paramiko load host keys from .ssh directory
-        self.sshclient.load_host_keys(os.path.expanduser(os.path.join("~", ".ssh", "known_hosts")))    
-          
+        try:
+            self.sshclient.load_host_keys(os.path.expanduser(os.path.join("~", ".ssh", "known_hosts")))
+        except Exception, ex:
+            self.pi.log_warning("Could not load known_hosts from ~/.ssh, exception: %s" % ex)
+            
         #if the context provides a userkey, let us know that we're using it
         if not userkey:
             self.pi.log_info("Using default ssh key")    
