@@ -24,7 +24,7 @@ def main():
     
     try:
         # set up a security context (optional)
-        # if no security context is defined, the PBS
+        # if no security context is defined, the SSH
         # plugin will pick up the default set of ssh 
         # credentials of the user, i.e., ~/.ssh/id_rsa
         ctx = saga.Context()
@@ -32,7 +32,7 @@ def main():
         ctx.userid  = 'ashley' # like 'ssh username@host ...'
         ctx.userkey = '/home/ashley/.ssh/id_rsa_special' # like ssh -i ...'
  
-        # create a job service for Futuregrid's 'india' PBS cluster
+        # create a job service for Futuregrid's 'alamo' machine
         # and attach the SSH security context to it
         js = saga.job.Service("ssh://alamo.futuregrid.org")
         js.session.contexts.append(ctx)
@@ -56,7 +56,7 @@ def main():
         print "Job State : %s" % (myjob.get_state())
 
         print "\n...starting job...\n"
-        # run the job (submit the job to PBS)
+        # run the job (submit the job via SSH)
         myjob.run()
 
         print "Job ID    : %s" % (myjob.jobid)
