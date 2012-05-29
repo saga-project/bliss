@@ -21,9 +21,7 @@ body {
 	color: #d2d4d6;
     background: #333 url("../images/background.jpg") /*fixed*/;
 	position: relative;
-	behavior: url("/js/ie6/csshover.htc");
 	padding: 0 30px;
-    text-rendering: optimizeLegibility;
 }
 
 
