@@ -159,11 +159,12 @@ class SSHJobProcess(object):
         
         #set up our commandline
         cmdline = ""
+        cmdline+= str(self.executable)
 
+        cdline = ""
         #do we have a working directory to cd into?
         if(self.working_directory):
-            cmdline+="cd "+self.working_directory + " && "
-        cmdline+= str(self.executable)
+            cdline+="cd "+self.working_directory + " && "
 
         #make a list of arguments
         args = ""
@@ -186,9 +187,9 @@ class SSHJobProcess(object):
 
         #change the executed command depending on if we're using env or not
         if envline=="":
-            full_line = "echo $$ && ("+envline+" "+cmdline+" "+argline+")" + "> "+ jd.output + " 2> " + jd.error
+            full_line = "echo $$ && " + cdline + "("+envline+" "+cmdline+" "+argline+")" + "> "+ jd.output + " 2> " + jd.error
         else:
-            full_line = "echo $$ && ("+envline+"'"+cmdline+" "+argline+"')" + "> "+ jd.output + " 2> " + jd.error
+            full_line = "echo $$ && " + cdline + "("+envline+"'"+cmdline+" "+argline+"')" + "> "+ jd.output + " 2> " + jd.error
         self.pi.log_debug("Sending command %s to remote server:" % full_line)
         self.sshchannel.exec_command(full_line)
         
