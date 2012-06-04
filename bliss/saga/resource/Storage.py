@@ -196,16 +196,6 @@ class Storage(Object):
     ######################################################################
     ##
     def get_filesystem(self): 
-        # FIXME: this is assymetric: either have - TODO: get
-        #
-        #   d  = saga.filesystem.Directory (sr)
-        #   js = saga.job.Service          (cr)
-        #
-        # or
-        #
-        #   d  = sr.get_filesystem  ()
-        #   js = cr.get_job_service ()
-        #
         '''get access to the storage resource's file system.'''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
