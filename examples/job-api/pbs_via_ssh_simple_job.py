@@ -14,7 +14,7 @@
 '''
 
 __author__    = "Ole Christian Weidner"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import sys, time
@@ -27,20 +27,25 @@ def main():
         # if no security context is defined, the PBS
         # plugin will pick up the default set of ssh 
         # credentials of the user, i.e., ~/.ssh/id_rsa
- 
+        ctx = saga.Context()
+        ctx.type = saga.Context.SSH
+        ctx.userid  = 'oweidner' # like 'ssh username@host ...'
+
+
         # create a job service for Futuregrid's 'india' PBS cluster
         # and attach the SSH security context to it
         js = saga.job.Service("pbs+ssh://india.futuregrid.org")
+        js.session.contexts.append(ctx)
 
         # describe our job
         jd = saga.job.Description()
         # resource requirements
         jd.wall_time_limit = 5 #minutes
-        jd.total_cpu_count = 1     
+        jd.total_cpu_count = 16     
         # environment, executable & arguments
-        jd.environment = {'SLEEP_TIME':"hello_saga"}       
-        jd.executable  = '/bin/cat'
-        jd.arguments   = ['$SLEEP_TIME']
+        jd.environment = {'HELLO':"hello_saga"}       
+        jd.executable  = '/bin/echo'
+        jd.arguments   = ['$HELLO']
         # output options
         jd.output = "bliss_pbssh_job.stdout"
         jd.error  = "bliss_pbssh_job.stderr"

@@ -2,7 +2,7 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
-__copyright__ = "Copyright 2011, Ole Christian Weidner"
+__copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import copy
@@ -251,6 +251,7 @@ class PBSService:
         if self._url.scheme in ["pbs", "torque", "xt5torque"]:
             self._use_ssh = False
             cw = CommandWrapper(plugin=self._pi, via_ssh=False)
+            
             result = cw.run("which pbsnodes")#, ["--version"])
             if result.returncode != 0:
                 self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
@@ -300,20 +301,21 @@ class PBSService:
             if self._cw is None:
                 # at this point, either self._cw contains a usable 
                 # configuration, or the whole thing should go to shit
-                self._pi.log_error_and_raise("11", "Couldn't find a way to access %s" % (self._url))
+                self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+                  "Couldn't find a way to access %s" % (self._url))
             
             # now let's see if we can find PBS
             result = self._cw.run("which pbsnodes")# --version")
             if result.returncode != 0:
-                self._pi.log_error_and_raise("11", "Couldn't find PBS command line tools on %s: %s" \
-                  % (self._url, result.stderr))
+                self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+                  "Couldn't find PBS command line tools on %s: %s" % (self._url, result.stderr))
             else:
                 self._pi.log_info("Found PBS command line tools on %s at %s" \
                   % (self._url, result.stdout.replace('/pbsnodes', '')))
                
-                si = self.get_service_info()
-                if si.GlueHostArchitectureSMPSize != None:
-                    self._ppn = si.GlueHostArchitectureSMPSize
+        si = self.get_service_info()
+        if si.GlueHostArchitectureSMPSize != None:
+            self._ppn = si.GlueHostArchitectureSMPSize
          
                     #self._ppn   = int(nodes[1].split(" = ")[1].strip())
                 #    self._pi.log_info("%s seems to have %s nodes and %s processors (cores) per node" \
