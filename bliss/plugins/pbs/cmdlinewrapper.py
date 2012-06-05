@@ -103,16 +103,20 @@ class PBSServiceInfo(object):
                     key = key.strip()
                     node_data[key] = value
                 self._nodeinfo.append(node_data)
-                cpus_total += int(node_data['np'])
-                if node_data['state'] == 'free':
-                    try:
-                        cpus_free += int(node_data['np'])
-                        for item in node_data['status'].split(','):
-                            (key, val) = item.split("=")
-                            if key == 'physmem':
-                                self.GlueHostMainMemoryRAMSize = val.replace('kb','')
-                    except Exception, ex:
-                        plugin.log_wrning("Can't determine GlueHostMainMemoryRAMSize.")
+                
+                try: 
+                    cpus_total += int(node_data['np'])
+                    if node_data['state'] == 'free':
+                        try:
+                            cpus_free += int(node_data['np'])
+                            for item in node_data['status'].split(','):
+                                (key, val) = item.split("=")
+                                if key == 'physmem':
+                                    self.GlueHostMainMemoryRAMSize = val.replace('kb','')
+                        except Exception, ex:
+                            plugin.log_wrning("Can't determine GlueHostMainMemoryRAMSize.")
+                except Exception, ex:
+                    pass # this is messy, but it seems to work
 
             self.GlueSubClusterPhysicalCPUs = str(cpus_total)
             self.GlueCEStateFreeCPUs = str(cpus_free)
