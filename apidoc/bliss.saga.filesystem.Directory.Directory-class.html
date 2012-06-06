@@ -60,28 +60,29 @@
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class Directory</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.filesystem.Directory-pysrc.html#Directory">source&nbsp;code</a></span></p>
 <center>
-<center>  <map id="uml_class_diagram_for_bliss_sa_7" name="uml_class_diagram_for_bliss_sa_7">
-<area shape="rect" id="node1_13" href="bliss.saga.filesystem.Directory.Directory-class.html#__init__" title="Construct a new file object" alt="" coords="17,223,216,241"/>
-<area shape="rect" id="node1_14" href="bliss.saga.filesystem.Directory.Directory-class.html#__del__" title="Delete the file object in a civilised fashion." alt="" coords="17,241,216,260"/>
-<area shape="rect" id="node1_15" href="bliss.saga.filesystem.Directory.Directory-class.html#list" title="List the directory&#39;s content" alt="" coords="17,260,216,279"/>
-<area shape="rect" id="node1_16" href="bliss.saga.filesystem.Directory.Directory-class.html#make_dir" title="Create a new directoy" alt="" coords="17,279,216,297"/>
-<area shape="rect" id="node1_17" href="bliss.saga.filesystem.Directory.Directory-class.html#copy" title="Copy a file from source to target" alt="" coords="17,297,216,316"/>
-<area shape="rect" id="node1_18" href="bliss.saga.filesystem.Directory.Directory-class.html#get_size" title="Returns the size of a file (in bytes)" alt="" coords="17,316,216,335"/>
-<area shape="rect" id="node1" href="bliss.saga.filesystem.Directory.Directory-class.html" title="Loosely represents a SAGA directory as defined in GFD.90" alt="" coords="5,190,227,341"/>
-<area shape="rect" id="node2_19" href="bliss.saga.Object.Object.Type-class.html" title="bliss.saga.Object.Object.Type" alt="" coords="64,31,171,49"/>
-<area shape="rect" id="node2_20" href="bliss.saga.Object.Object-class.html#session" title="bliss.saga.Object.Object.session" alt="" coords="64,49,171,68"/>
-<area shape="rect" id="node2_21" href="bliss.saga.Object.Object-class.html#type" title="bliss.saga.Object.Object.type" alt="" coords="64,68,171,87"/>
-<area shape="rect" id="node2_22" href="bliss.saga.Object.Object-class.html#id" title="bliss.saga.Object.Object.id" alt="" coords="64,87,171,105"/>
-<area shape="rect" id="node2_23" href="bliss.saga.Object.Object-class.html#get_session" title="Legacy GFD.90 method: return the object&#39;s session." alt="" coords="64,108,171,127"/>
-<area shape="rect" id="node2_24" href="bliss.saga.Object.Object-class.html#get_type" title="Legacy GFD.90 method: return the object type." alt="" coords="64,127,171,145"/>
-<area shape="rect" id="node2_25" href="bliss.saga.Object.Object-class.html#get_id" title="Legacy GFD.90 method: return the object identifier." alt="" coords="64,145,171,164"/>
-<area shape="rect" id="node2" href="bliss.saga.Object.Object-class.html" title="Loosely resembles a SAGA object as defined in GFD.90" alt="" coords="52,6,183,170"/>
-</map>
-  <img src="uml_class_diagram_for_bliss_sa_7.gif" alt='' usemap="#uml_class_diagram_for_bliss_sa_7" ismap="ismap" class="graph-without-title" />
-</center>
+
 </center>
 <hr />
 <p>Loosely represents a SAGA directory as defined in GFD.90</p>
+  <p>The saga.filesystem.Directory class represents, as the name indicates,
+  a directory on some (local or remote) filesystem.  That class offers a 
+  number of operations on that directory, such as listing its contents, 
+  copying files, or creating subdirectories:</p>
+<pre class="literalblock">
+   # get a directory handle
+   dir = saga.filesystem.Directory(&quot;sftp://localhost/tmp/&quot;)
+
+   # create a subdir
+   dir.make_dir (&quot;data/&quot;)
+
+   # list contents of the directory
+   files = dir.list ()
+
+   # copy *.dat files into the subdir
+   for f in files :
+       if f ^ '^.*\.dat$' :
+           dir.copy (f, &quot;sftp://localhost/tmp/data/&quot;)
+</pre>
 
 <!-- ==================== NESTED CLASSES ==================== -->
 <a name="section-NestedClasses"></a>
@@ -117,7 +118,7 @@
           <td><span class="summary-sig"><a href="bliss.saga.filesystem.Directory.Directory-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">url</span>,
         <span class="summary-sig-arg">session</span>=<span class="summary-sig-default">None</span>)</span><br />
-      Construct a new file object</td>
+      Construct a new directory object</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.filesystem.Directory-pysrc.html#Directory.__init__">source&nbsp;code</a></span>
             
@@ -155,6 +156,24 @@
       List the directory's content</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.filesystem.Directory-pysrc.html#Directory.list">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.filesystem.Directory.Directory-class.html#remove" class="summary-sig-name">remove</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">path</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Removes the directory</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.filesystem.Directory-pysrc.html#Directory.remove">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -207,8 +226,8 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="bliss.saga.filesystem.Directory.Directory-class.html#get_size" class="summary-sig-name">get_size</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">path</span>)</span><br />
-      Returns the size of a file (in bytes)</td>
+        <span class="summary-sig-arg">path</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns the size of a file or directory (in bytes)</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.filesystem.Directory-pysrc.html#Directory.get_size">source&nbsp;code</a></span>
             
@@ -224,11 +243,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.Object.Object-class.html#get_id" class="summary-sig-name">get_id</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy GFD.90 method: return the object identifier.
-      <em>(Inherited from <a href="bliss.saga.Object.Object-class.html">bliss.saga.Object.Object</a>)</em></td>
+          <td><span class="summary-sig"><a name="close"></a><span class="summary-sig-name">close</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Closes the directory.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.Object-pysrc.html#Object.get_id">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.filesystem.Directory-pysrc.html#Directory.close">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -243,28 +261,10 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="bliss.saga.Object.Object-class.html#get_session" class="summary-sig-name">get_session</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy GFD.90 method: return the object's session.
+      return the object's session.
       <em>(Inherited from <a href="bliss.saga.Object.Object-class.html">bliss.saga.Object.Object</a>)</em></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.Object-pysrc.html#Object.get_session">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.Object.Object-class.html#get_type" class="summary-sig-name">get_type</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy GFD.90 method: return the object type.
-      <em>(Inherited from <a href="bliss.saga.Object.Object-class.html">bliss.saga.Object.Object</a>)</em></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.Object-pysrc.html#Object.get_type">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -299,14 +299,6 @@
   <td align="left" colspan="2" class="table-header">
     <span class="table-header">Class Variables</span></td>
 </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="id"></a><span class="summary-name">id</span> = <code title="property(** id())">property(** id())</code>
-      <em>(Inherited from <a href="bliss.saga.Object.Object-class.html">bliss.saga.Object.Object</a>)</em>
-    </td>
-  </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
@@ -366,11 +358,23 @@
     </td>
   </tr></table>
   
-  <p>Construct a new file object</p>
+  <p>Construct a new directory object</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>url</code></strong> (Url) - Url of the (remote) job manager.</li>
+        <li><strong class="pname"><code>url</code></strong> (Url
+          <p>The specified directory is expected to exist -- otherwise a 
+          DoesNotExist exception is raised.  Also, the URL must point to a 
+          directory (not to a file), otherwise a BadParameter exception is 
+          raised.</p>
+          <p>Example:</p>
+<pre class="literalblock">
+   # open some directory
+   dir = saga.filesystem.Directory(&quot;sftp://localhost/tmp/&quot;)
+
+   # and list its contents
+   files = dir.list ()
+</pre>) - Url of the (remote) file system.</li>
     </ul></dd>
     <dt>Overrides:
         object.__init__
@@ -420,7 +424,47 @@
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>pattern</code></strong> - File name pattern (like POSIX 'ls')</li>
+        <li><strong class="pname"><code>pattern</code></strong> - File name pattern (like POSIX 'ls')
+          <p>The call will return a list of files and subdirectories within
+          the directory:</p>
+<pre class="literalblock">
+   # list contents of the directory
+   for f in dir.list() :
+       print f
+</pre></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="remove"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">remove</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">path</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.filesystem.Directory-pysrc.html#Directory.remove">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes the directory</p>
+  <p>If no path is given, the remote directory associated with the object 
+  is removed. If a relative or absolute path is given, that given target is
+  removed instead.  The target must be a directory.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>path</code></strong> - (relative or absolute) path to a directory
+          <p>Example:</p>
+<pre class="literalblock">
+   # remove a subdir 'data' in /tmp
+   dir = saga.filesystem.Directory(&quot;sftp://localhost/tmp/&quot;)
+   dir.remove ('data/')
+</pre></li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -446,7 +490,17 @@
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>path</code></strong> - name/path of the new directory</li>
-        <li><strong class="pname"><code>flags</code></strong> - directory creation flags</li>
+        <li><strong class="pname"><code>flags</code></strong> - directory creation flags
+          <p>The call creates a directory at the given location.  The 
+          parent directory must exist, the target directory itself must not
+          yet exist.</p>
+          <p>The 'flags' parameter is not evaluated at the moment.</p>
+          <p>Example:</p>
+<pre class="literalblock">
+   # create a subdir 'data' in /tmp
+   dir = saga.filesystem.Directory(&quot;sftp://localhost/tmp/&quot;)
+   dir.make_dir ('data/')
+</pre></li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -472,7 +526,14 @@
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>source</code></strong> - path of the file to copy</li>
-        <li><strong class="pname"><code>target</code></strong> - destination path</li>
+        <li><strong class="pname"><code>target</code></strong> - absolute URL of target directory
+          <p>The source is copied to the given target directory.  The path 
+          of the source can be relative:</p>
+<pre class="literalblock">
+   # copy a file
+   dir = saga.filesystem.Directory(&quot;sftp://localhost/tmp/&quot;)
+   dir.copy (&quot;./data.bin&quot;, &quot;sftp://localhost/tmp/data/&quot;)
+</pre></li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -485,18 +546,25 @@
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">get_size</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">path</span>)</span>
+        <span class="sig-arg">path</span>=<span class="sig-default">None</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="bliss.saga.filesystem.Directory-pysrc.html#Directory.get_size">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Returns the size of a file (in bytes)</p>
+  <p>Returns the size of a file or directory (in bytes)</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>path</code></strong> - path of the file</li>
+        <li><strong class="pname"><code>path</code></strong> - path of the file or directory
+          <p>Example:</p>
+<pre class="literalblock">
+   # inspect a file for its size
+   dir  = saga.filesystem.Directory(&quot;sftp://localhost/tmp/&quot;)
+   size = dir.get_size ('data/data.bin')
+   print size
+</pre></li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -534,7 +602,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Mon Apr 16 19:12:54 2012</a>
+    3.0.1 on Wed Jun  6 08:20:42 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

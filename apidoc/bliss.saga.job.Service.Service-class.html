@@ -60,49 +60,31 @@
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class Service</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.job.Service-pysrc.html#Service">source&nbsp;code</a></span></p>
 <center>
-<center>  <map id="uml_class_diagram_for_bliss_sa_13" name="uml_class_diagram_for_bliss_sa_13">
-<area shape="rect" id="node1_14" href="bliss.saga.job.Service.Service-class.html#__init__" title="Construct a new job service object" alt="" coords="17,223,315,241"/>
-<area shape="rect" id="node1_15" href="bliss.saga.job.Service.Service-class.html#from_url" title="Initialize a new job service from (resource manager) URL." alt="" coords="17,241,315,260"/>
-<area shape="rect" id="node1_16" href="bliss.saga.job.Service.Service-class.html#from_compute" title="Create a job service from a saga.resource.Compute object." alt="" coords="17,260,315,279"/>
-<area shape="rect" id="node1_17" href="bliss.saga.job.Service.Service-class.html#__del__" title="Delete the service in a civilised fashion." alt="" coords="17,279,315,297"/>
-<area shape="rect" id="node1_18" href="bliss.saga.job.Service.Service-class.html#create_job" title="Create a new job object." alt="" coords="17,297,315,316"/>
-<area shape="rect" id="node1_19" href="bliss.saga.job.Service.Service-class.html#get_job" title="Return the job object for the given job id." alt="" coords="17,316,315,335"/>
-<area shape="rect" id="node1_20" href="bliss.saga.job.Service.Service-class.html#list" title="List all jobs managed by this service instance." alt="" coords="17,335,315,353"/>
-<area shape="rect" id="node1" href="bliss.saga.job.Service.Service-class.html" title="Loosely represents a SAGA job service as defined in GFD.90" alt="" coords="5,190,326,359"/>
-<area shape="rect" id="node2_21" href="bliss.saga.Object.Object.Type-class.html" title="bliss.saga.Object.Object.Type" alt="" coords="113,31,220,49"/>
-<area shape="rect" id="node2_22" href="bliss.saga.Object.Object-class.html#session" title="bliss.saga.Object.Object.session" alt="" coords="113,49,220,68"/>
-<area shape="rect" id="node2_23" href="bliss.saga.Object.Object-class.html#type" title="bliss.saga.Object.Object.type" alt="" coords="113,68,220,87"/>
-<area shape="rect" id="node2_24" href="bliss.saga.Object.Object-class.html#id" title="bliss.saga.Object.Object.id" alt="" coords="113,87,220,105"/>
-<area shape="rect" id="node2_25" href="bliss.saga.Object.Object-class.html#get_session" title="Legacy GFD.90 method: return the object&#39;s session." alt="" coords="113,108,220,127"/>
-<area shape="rect" id="node2_26" href="bliss.saga.Object.Object-class.html#get_type" title="Legacy GFD.90 method: return the object type." alt="" coords="113,127,220,145"/>
-<area shape="rect" id="node2_27" href="bliss.saga.Object.Object-class.html#get_id" title="Legacy GFD.90 method: return the object identifier." alt="" coords="113,145,220,164"/>
-<area shape="rect" id="node2" href="bliss.saga.Object.Object-class.html" title="Loosely resembles a SAGA object as defined in GFD.90" alt="" coords="101,6,232,170"/>
-</map>
-  <img src="uml_class_diagram_for_bliss_sa_13.gif" alt='' usemap="#uml_class_diagram_for_bliss_sa_13" ismap="ismap" class="graph-without-title" />
-</center>
+
 </center>
 <hr />
 <p>Loosely represents a SAGA job service as defined in GFD.90</p>
   <p>A job.Service represents anything which accepts job creation requests,
-  and which manages thus created jobs.  That can be a local shell, a remote
-  ssh shell, a cluster queuing system, a IaaS backend -- you name it.</p>
+  and which manages thus created <a 
+  href="bliss.saga.job.Job.Job-class.html" class="link">job.Job</a>s.  That
+  can be a local shell, a remote ssh shell, a cluster queuing system, a 
+  IaaS backend -- you name it.</p>
   <p>The job.Service is identified by an URL, which usually points to the 
   contact endpoint for that service.</p>
   <p>Example:</p>
 <pre class="literalblock">
-   -------------------------------------------------------------------
-   js  = saga.job.Service (&quot;sge://localhost&quot;)
-   ids = js.list ()
+   my_job_id = &quot;[fork://localhost]-[12345]&quot;
+   js  = saga.job.Service(&quot;fork://localhost&quot;)
+   ids = js.list()
 
    if my_job_id in ids :
      print &quot;found my job again, wohhooo!&quot;
 
-     j = js.get_job (my_job_id)
+     j = js.get_job(my_job_id)
 
      if      j.state == saga.job.Pending  : print &quot;pending&quot;
      else if j.state == saga.job.Running  : print &quot;running&quot;
      else                                 : print &quot;job is already final!&quot;
-   -------------------------------------------------------------------
 </pre>
 
 <!-- ==================== NESTED CLASSES ==================== -->
@@ -225,47 +207,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.Object.Object-class.html#get_id" class="summary-sig-name">get_id</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy GFD.90 method: return the object identifier.
-      <em>(Inherited from <a href="bliss.saga.Object.Object-class.html">bliss.saga.Object.Object</a>)</em></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.Object-pysrc.html#Object.get_id">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
           <td><span class="summary-sig"><a href="bliss.saga.Object.Object-class.html#get_session" class="summary-sig-name">get_session</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy GFD.90 method: return the object's session.
+      return the object's session.
       <em>(Inherited from <a href="bliss.saga.Object.Object-class.html">bliss.saga.Object.Object</a>)</em></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.Object-pysrc.html#Object.get_session">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.Object.Object-class.html#get_type" class="summary-sig-name">get_type</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy GFD.90 method: return the object type.
-      <em>(Inherited from <a href="bliss.saga.Object.Object-class.html">bliss.saga.Object.Object</a>)</em></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.Object-pysrc.html#Object.get_type">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -346,14 +292,6 @@
   <td align="left" colspan="2" class="table-header">
     <span class="table-header">Class Variables</span></td>
 </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="id"></a><span class="summary-name">id</span> = <code title="property(** id())">property(** id())</code>
-      <em>(Inherited from <a href="bliss.saga.Object.Object-class.html">bliss.saga.Object.Object</a>)</em>
-    </td>
-  </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
@@ -478,19 +416,17 @@
           performed by calling run() on the job object.</p>
           <p>Example:</p>
 <pre class="literalblock">
- -------------------------------------------------------------------
- js = saga.job.Service (&quot;sge://localhost&quot;)
- j  = js.create_job    (jd)
+ js = saga.job.Service(&quot;fork://localhost&quot;)
+ j  = js.create_job(jd)
 
  if      j.state == saga.job.New      : print &quot;new&quot;
  else                                 : print &quot;oops!&quot;
 
- j.run ()
+ j.run()
 
  if      j.state == saga.job.Pending  : print &quot;pending&quot;
  else if j.state == saga.job.Running  : print &quot;running&quot;
  else                                 : print &quot;oops!&quot;
- -------------------------------------------------------------------
 </pre>) - The description for the new job.</li>
     </ul></dd>
   </dl>
@@ -520,14 +456,12 @@
           entity. The job.Service supports to reconnect to those remote 
           entities:</p>
 <pre class="literalblock">
- -------------------------------------------------------------------
- js = saga.job.Service (&quot;sge://localhost&quot;)
- j  = js.get_job       (my_job_id)
+ js = saga.job.Service(&quot;fork://localhost&quot;)
+ j  = js.get_job(my_job_id)
 
  if      j.state == saga.job.Pending  : print &quot;pending&quot;
  else if j.state == saga.job.Running  : print &quot;running&quot;
  else                                 : print &quot;job is already final!&quot;
- -------------------------------------------------------------------
 </pre></li>
     </ul></dd>
   </dl>
@@ -553,19 +487,17 @@
   which can potentially be accessed and managed by the application.</p>
   <p>Example:</p>
 <pre class="literalblock">
- -------------------------------------------------------------------
- js  = saga.job.Service (&quot;sge://localhost&quot;)
- ids = js.list ()
+ js  = saga.job.Service(&quot;fork://localhost&quot;)
+ ids = js.list()
 
  if my_job_id in ids :
    print &quot;found my job again, wohhooo!&quot;
 
-   j = js.get_job (my_job_id)
+   j = js.get_job(my_job_id)
 
    if      j.state == saga.job.Pending  : print &quot;pending&quot;
    else if j.state == saga.job.Running  : print &quot;running&quot;
    else                                 : print &quot;job is already final!&quot;
- -------------------------------------------------------------------
 </pre>
   <dl class="fields">
   </dl>
@@ -604,7 +536,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Mon Apr 16 19:12:54 2012</a>
+    3.0.1 on Wed Jun  6 08:20:42 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

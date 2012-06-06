@@ -60,25 +60,23 @@
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class File</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.filesystem.File-pysrc.html#File">source&nbsp;code</a></span></p>
 <center>
-<center>  <map id="uml_class_diagram_for_bliss_sa_8" name="uml_class_diagram_for_bliss_sa_8">
-<area shape="rect" id="node1_10" href="bliss.saga.filesystem.File.File-class.html#__init__" title="Construct a new file object" alt="" coords="17,223,215,241"/>
-<area shape="rect" id="node1_11" href="bliss.saga.filesystem.File.File-class.html#__del__" title="Delete the file object in a civilised fashion." alt="" coords="17,241,215,260"/>
-<area shape="rect" id="node1_12" href="bliss.saga.filesystem.File.File-class.html#copy" title="Copy the file" alt="" coords="17,260,215,279"/>
-<area shape="rect" id="node1" href="bliss.saga.filesystem.File.File-class.html" title="Loosely represents a SAGA file as defined in GFD.90" alt="" coords="5,190,227,285"/>
-<area shape="rect" id="node2_13" href="bliss.saga.Object.Object.Type-class.html" title="bliss.saga.Object.Object.Type" alt="" coords="63,31,169,49"/>
-<area shape="rect" id="node2_14" href="bliss.saga.Object.Object-class.html#session" title="bliss.saga.Object.Object.session" alt="" coords="63,49,169,68"/>
-<area shape="rect" id="node2_15" href="bliss.saga.Object.Object-class.html#type" title="bliss.saga.Object.Object.type" alt="" coords="63,68,169,87"/>
-<area shape="rect" id="node2_16" href="bliss.saga.Object.Object-class.html#id" title="bliss.saga.Object.Object.id" alt="" coords="63,87,169,105"/>
-<area shape="rect" id="node2_17" href="bliss.saga.Object.Object-class.html#get_session" title="Legacy GFD.90 method: return the object&#39;s session." alt="" coords="63,108,169,127"/>
-<area shape="rect" id="node2_18" href="bliss.saga.Object.Object-class.html#get_type" title="Legacy GFD.90 method: return the object type." alt="" coords="63,127,169,145"/>
-<area shape="rect" id="node2_19" href="bliss.saga.Object.Object-class.html#get_id" title="Legacy GFD.90 method: return the object identifier." alt="" coords="63,145,169,164"/>
-<area shape="rect" id="node2" href="bliss.saga.Object.Object-class.html" title="Loosely resembles a SAGA object as defined in GFD.90" alt="" coords="51,6,181,170"/>
-</map>
-  <img src="uml_class_diagram_for_bliss_sa_8.gif" alt='' usemap="#uml_class_diagram_for_bliss_sa_8" ismap="ismap" class="graph-without-title" />
-</center>
+
 </center>
 <hr />
 <p>Loosely represents a SAGA file as defined in GFD.90</p>
+  <p>The saga.filesystem.File class represents, as the name indicates, a 
+  file on some (local or remote) filesystem.  That class offers a number of
+  operations on that file, such as copy, move and remove:</p>
+<pre class="literalblock">
+   # get a file handle
+   file = saga.filesystem.File(&quot;sftp://localhost/tmp/data/data.bin&quot;)
+
+   # copy the file
+   file.copy (&quot;sftp://localhost/tmp/data/data.bak&quot;)
+
+   # move the file
+   file.move (&quot;sftp://localhost/tmp/data/data.new&quot;)
+</pre>
 
 <!-- ==================== NESTED CLASSES ==================== -->
 <a name="section-NestedClasses"></a>
@@ -149,7 +147,7 @@
         <tr>
           <td><span class="summary-sig"><a href="bliss.saga.filesystem.File.File-class.html#copy" class="summary-sig-name">copy</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">target</span>)</span><br />
-      Copy the file</td>
+      Copy the file to another location</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.filesystem.File-pysrc.html#File.copy">source&nbsp;code</a></span>
             
@@ -165,11 +163,45 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.Object.Object-class.html#get_id" class="summary-sig-name">get_id</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy GFD.90 method: return the object identifier.
-      <em>(Inherited from <a href="bliss.saga.Object.Object-class.html">bliss.saga.Object.Object</a>)</em></td>
+          <td><span class="summary-sig"><a name="move"></a><span class="summary-sig-name">move</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">target</span>)</span><br />
+      Move the file to another location</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.Object-pysrc.html#Object.get_id">source&nbsp;code</a></span>
+            <span class="codelink"><a href="bliss.saga.filesystem.File-pysrc.html#File.move">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="remove"></a><span class="summary-sig-name">remove</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Delete the file</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.filesystem.File-pysrc.html#File.remove">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.filesystem.File.File-class.html#get_size" class="summary-sig-name">get_size</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the size of a file (in bytes)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.filesystem.File-pysrc.html#File.get_size">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -184,28 +216,10 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="bliss.saga.Object.Object-class.html#get_session" class="summary-sig-name">get_session</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy GFD.90 method: return the object's session.
+      return the object's session.
       <em>(Inherited from <a href="bliss.saga.Object.Object-class.html">bliss.saga.Object.Object</a>)</em></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.Object-pysrc.html#Object.get_session">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.Object.Object-class.html#get_type" class="summary-sig-name">get_type</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy GFD.90 method: return the object type.
-      <em>(Inherited from <a href="bliss.saga.Object.Object-class.html">bliss.saga.Object.Object</a>)</em></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.Object-pysrc.html#Object.get_type">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -240,14 +254,6 @@
   <td align="left" colspan="2" class="table-header">
     <span class="table-header">Class Variables</span></td>
 </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="id"></a><span class="summary-name">id</span> = <code title="property(** id())">property(** id())</code>
-      <em>(Inherited from <a href="bliss.saga.Object.Object-class.html">bliss.saga.Object.Object</a>)</em>
-    </td>
-  </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
@@ -311,7 +317,19 @@
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>url</code></strong> (Url) - Url of the (remote) job manager.</li>
+        <li><strong class="pname"><code>url</code></strong> (<a href="bliss.saga.Url.Url-class.html" class="link">Url</a>
+          <p>The specified file is expected to exist -- otherwise a 
+          DoesNotExist exception is raised.  Also, the URL must point to a 
+          file (not to a directory), otherwise a BadParameter exception is 
+          raised.</p>
+          <p>Example:</p>
+<pre class="literalblock">
+   # get a file handle
+   file = saga.filesystem.File(&quot;sftp://localhost/tmp/data/data.bin&quot;)
+
+   # print the file's size
+   print file.get_size ()
+</pre>) - Url of the (remote) file</li>
     </ul></dd>
     <dt>Overrides:
         object.__init__
@@ -357,12 +375,48 @@
     </td>
   </tr></table>
   
-  <p>Copy the file</p>
+  <pre class="literalblock">
+Copy the file to another location
+
+@param target: Url of the copy target.
+
+The file is copied to the given target location.  The target URL must
+be an absolute path, and can be a target file name or target
+directory name.  If the target file exists, it is overwritten:
+
+    # copy a file
+    file = saga.filesystem.Directory(&quot;sftp://localhost/tmp/data/data.bin&quot;)
+    file.copy (&quot;sftp://localhost/tmp/data/data.bak&quot;)
+
+</pre>
   <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>target</code></strong> - Url of the copy target.</li>
-    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_size"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_size</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.filesystem.File-pysrc.html#File.get_size">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the size of a file (in bytes)</p>
+  <p>Example:</p>
+<pre class="literalblock">
+   # get a file handle
+   file = saga.filesystem.File(&quot;sftp://localhost/tmp/data/data.bin&quot;)
+
+   # print the file's size
+   print file.get_size ()
+</pre>
+  <dl class="fields">
   </dl>
 </td></tr></table>
 </div>
@@ -399,7 +453,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Mon Apr 16 19:12:54 2012</a>
+    3.0.1 on Wed Jun  6 08:20:42 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

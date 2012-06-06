@@ -59,39 +59,68 @@
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class Context</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.Context-pysrc.html#Context">source&nbsp;code</a></span></p>
 <center>
-<center>  <map id="uml_class_diagram_for_bliss_sa_2" name="uml_class_diagram_for_bliss_sa_2">
-<area shape="rect" id="node1_23" href="bliss.saga.Context.Context-class.html#SSH" title="A security context type based on public/private keys." alt="" coords="85,276,168,295"/>
-<area shape="rect" id="node1_24" href="bliss.saga.Context.Context-class.html#X509" title="A security context type based on X.509 certificates." alt="" coords="85,295,168,313"/>
-<area shape="rect" id="node1_25" href="bliss.saga.Context.Context-class.html#X509_SSH" title="A security context type for X.509 via SSH." alt="" coords="85,313,168,332"/>
-<area shape="rect" id="node1_26" href="bliss.saga.Context.Context-class.html#BigJob" title="A security context type for BigJob" alt="" coords="85,332,168,351"/>
-<area shape="rect" id="node1_27" href="bliss.saga.Context.Context-class.html#type" title="bliss.saga.Context.Context.type" alt="" coords="85,351,168,369"/>
-<area shape="rect" id="node1_28" href="bliss.saga.Context.Context-class.html#userid" title="bliss.saga.Context.Context.userid" alt="" coords="85,369,168,388"/>
-<area shape="rect" id="node1_29" href="bliss.saga.Context.Context-class.html#userpass" title="bliss.saga.Context.Context.userpass" alt="" coords="85,388,168,407"/>
-<area shape="rect" id="node1_30" href="bliss.saga.Context.Context-class.html#usercert" title="bliss.saga.Context.Context.usercert" alt="" coords="85,407,168,425"/>
-<area shape="rect" id="node1_31" href="bliss.saga.Context.Context-class.html#userkey" title="bliss.saga.Context.Context.userkey" alt="" coords="85,425,168,444"/>
-<area shape="rect" id="node1_32" href="bliss.saga.Context.Context-class.html#userproxy" title="bliss.saga.Context.Context.userproxy" alt="" coords="85,444,168,463"/>
-<area shape="rect" id="node1_33" href="bliss.saga.Context.Context-class.html#__init__" title="Constructor" alt="" coords="85,465,168,484"/>
-<area shape="rect" id="node1_34" href="bliss.saga.Context.Context-class.html#__del__" title="Destructor." alt="" coords="85,484,168,503"/>
-<area shape="rect" id="node1_35" href="bliss.saga.Context.Context-class.html#__str__" title="String represenation." alt="" coords="85,503,168,521"/>
-<area shape="rect" id="node1" href="bliss.saga.Context.Context-class.html" title="Looesely defines a SAGA Context object as defined in GFD.90." alt="" coords="73,251,180,527"/>
-<area shape="rect" id="node2_36" href="bliss.saga.Attributes.AttributeInterface-class.html#remove_attribute" title="Remove the attribute." alt="" coords="17,39,236,57"/>
-<area shape="rect" id="node2_37" href="bliss.saga.Attributes.AttributeInterface-class.html#get_attribute" title="Return the value of a scalar attribute." alt="" coords="17,57,236,76"/>
-<area shape="rect" id="node2_38" href="bliss.saga.Attributes.AttributeInterface-class.html#set_attribute" title="Set the value of a scalar attribute." alt="" coords="17,76,236,95"/>
-<area shape="rect" id="node2_39" href="bliss.saga.Attributes.AttributeInterface-class.html#get_vector_attribute" title="Return the value of a vector attribute." alt="" coords="17,95,236,113"/>
-<area shape="rect" id="node2_40" href="bliss.saga.Attributes.AttributeInterface-class.html#set_vector_attribute" title="Set the value of a vector attribute." alt="" coords="17,113,236,132"/>
-<area shape="rect" id="node2_41" href="bliss.saga.Attributes.AttributeInterface-class.html#attribute_exists" title="Check if an attribute exists." alt="" coords="17,132,236,151"/>
-<area shape="rect" id="node2_42" href="bliss.saga.Attributes.AttributeInterface-class.html#attribute_is_writeable" title="Check if an attribute is writable." alt="" coords="17,151,236,169"/>
-<area shape="rect" id="node2_43" href="bliss.saga.Attributes.AttributeInterface-class.html#attribute_is_readonly" title="Check if an attribute is read&#45;only." alt="" coords="17,169,236,188"/>
-<area shape="rect" id="node2_44" href="bliss.saga.Attributes.AttributeInterface-class.html#attribute_is_vector" title="Check if an attribute is a vector." alt="" coords="17,188,236,207"/>
-<area shape="rect" id="node2_45" href="bliss.saga.Attributes.AttributeInterface-class.html#list_attributes" title="List all defined attributes." alt="" coords="17,207,236,225"/>
-<area shape="rect" id="node2" href="bliss.saga.Attributes.AttributeInterface-class.html" title="Loosely defines the SAGA attribute interface as defined in GFD.90." alt="" coords="5,6,248,231"/>
-</map>
-  <img src="uml_class_diagram_for_bliss_sa_2.gif" alt='' usemap="#uml_class_diagram_for_bliss_sa_2" ismap="ismap" class="graph-without-title" />
-</center>
+
 </center>
 <hr />
-<p>Looesely defines a SAGA Context object as defined in GFD.90.</p>
+<p>Loosely defines a SAGA Context object as defined in GFD.90.</p>
+  <p>A security context is a description of a security token.  It is 
+  important to understand that, in general, a context really just 
+  *describes* a token, but that a context *is not* a token (*). For 
+  example, a context may point to a X509 certificate -- but it will in 
+  general not hold the certificate contents.</p>
+  <p>Context classes are used to inform the backends used by Bliss on what 
+  security tokens are expected to be used.  By default, Bliss will be able 
+  to pick up such tokens from their default location, but in some cases it 
+  might be necessary to explicitly point to them - then use a <a 
+  href="bliss.saga.Session.Session-class.html" class="link">Session</a> 
+  with context instances to do so.</p>
+  <p>The usage example for contexts is below:</p>
+<pre class="literalblock">
+   # define an ssh context
+   c = saga.Context()
+   c.type = 'ssh'
+   c.usercert = '$HOME/.ssh/special_id_rsa'
+   c.userkey = '$HOME/.ssh/special_id_rsa.pub'
 
+   # add the context to a session
+   s = saga.Session()
+   s.contexts.append(c)
+
+   # create a job service in this session -- that job service can now
+   # *only* use that ssh context. 
+   j = saga.job.Service('ssh://remote.host.net/', s)
+</pre>
+  <p>The <a href="bliss.saga.Session.Session-class.html" 
+  class="link">Session</a> argument to the <a 
+  href="bliss.saga.job.Service.Service-class.html" 
+  class="link">job.Service</a> constructor is fully optional -- if left 
+  out, Bliss will use default session, which picks up some default contexts
+  as described above -- that will suffice for the majority of use 
+  cases.</p>
+  <p>----</p>
+  <p>(*) The only exception to this rule is the 'UserPass' key, which is 
+  used to hold plain-text passwords.  Use this key with care -- it is not 
+  good practice to hard-code passwords in the code base, or in config 
+  files. Also, be aware that the password may show up in log files, when 
+  debugging or analyzing your application.</p>
+
+<!-- ==================== NESTED CLASSES ==================== -->
+<a name="section-NestedClasses"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Nested Classes</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.Object.Object.Type-class.html" class="summary-name">Type</a>
+      <em>(Inherited from <a href="bliss.saga.Object.Object-class.html">bliss.saga.Object.Object</a>)</em>
+    </td>
+  </tr>
+</table>
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
 <table class="summary" border="1" cellpadding="3"
@@ -123,7 +152,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="__del__"></a><span class="summary-sig-name">__del__</span>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.Context.Context-class.html#__del__" class="summary-sig-name">__del__</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Destructor.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.Context-pysrc.html#Context.__del__">source&nbsp;code</a></span>
@@ -157,7 +186,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="attribute_exists"></a><span class="summary-sig-name">attribute_exists</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="bliss.saga.Attributes.AttributeInterface-class.html#attribute_exists" class="summary-sig-name">attribute_exists</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span><br />
       Check if an attribute exists.
       <em>(Inherited from <a href="bliss.saga.Attributes.AttributeInterface-class.html">bliss.saga.Attributes.AttributeInterface</a>)</em></td>
@@ -176,7 +205,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="attribute_is_readonly"></a><span class="summary-sig-name">attribute_is_readonly</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="bliss.saga.Attributes.AttributeInterface-class.html#attribute_is_readonly" class="summary-sig-name">attribute_is_readonly</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span><br />
       Check if an attribute is read-only.
       <em>(Inherited from <a href="bliss.saga.Attributes.AttributeInterface-class.html">bliss.saga.Attributes.AttributeInterface</a>)</em></td>
@@ -195,7 +224,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="attribute_is_vector"></a><span class="summary-sig-name">attribute_is_vector</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="bliss.saga.Attributes.AttributeInterface-class.html#attribute_is_vector" class="summary-sig-name">attribute_is_vector</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span><br />
       Check if an attribute is a vector.
       <em>(Inherited from <a href="bliss.saga.Attributes.AttributeInterface-class.html">bliss.saga.Attributes.AttributeInterface</a>)</em></td>
@@ -214,7 +243,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="attribute_is_writeable"></a><span class="summary-sig-name">attribute_is_writeable</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="bliss.saga.Attributes.AttributeInterface-class.html#attribute_is_writeable" class="summary-sig-name">attribute_is_writeable</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span><br />
       Check if an attribute is writable.
       <em>(Inherited from <a href="bliss.saga.Attributes.AttributeInterface-class.html">bliss.saga.Attributes.AttributeInterface</a>)</em></td>
@@ -233,12 +262,30 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="get_attribute"></a><span class="summary-sig-name">get_attribute</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="bliss.saga.Attributes.AttributeInterface-class.html#get_attribute" class="summary-sig-name">get_attribute</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span><br />
       Return the value of a scalar attribute.
       <em>(Inherited from <a href="bliss.saga.Attributes.AttributeInterface-class.html">bliss.saga.Attributes.AttributeInterface</a>)</em></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.Attributes-pysrc.html#AttributeInterface.get_attribute">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.Object.Object-class.html#get_session" class="summary-sig-name">get_session</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      return the object's session.
+      <em>(Inherited from <a href="bliss.saga.Object.Object-class.html">bliss.saga.Object.Object</a>)</em></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.Object-pysrc.html#Object.get_session">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -271,7 +318,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="list_attributes"></a><span class="summary-sig-name">list_attributes</span>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="bliss.saga.Attributes.AttributeInterface-class.html#list_attributes" class="summary-sig-name">list_attributes</a>(<span class="summary-sig-arg">self</span>)</span><br />
       List all defined attributes.
       <em>(Inherited from <a href="bliss.saga.Attributes.AttributeInterface-class.html">bliss.saga.Attributes.AttributeInterface</a>)</em></td>
           <td align="right" valign="top">
@@ -289,7 +336,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="remove_attribute"></a><span class="summary-sig-name">remove_attribute</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="bliss.saga.Attributes.AttributeInterface-class.html#remove_attribute" class="summary-sig-name">remove_attribute</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span><br />
       Remove the attribute.
       <em>(Inherited from <a href="bliss.saga.Attributes.AttributeInterface-class.html">bliss.saga.Attributes.AttributeInterface</a>)</em></td>
@@ -308,7 +355,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="set_attribute"></a><span class="summary-sig-name">set_attribute</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="bliss.saga.Attributes.AttributeInterface-class.html#set_attribute" class="summary-sig-name">set_attribute</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>,
         <span class="summary-sig-arg">value</span>)</span><br />
       Set the value of a scalar attribute.
@@ -380,24 +427,16 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
+        <a name="EC2"></a><span class="summary-name">EC2</span> = <code title="&quot;EC2&quot;">&quot;EC2&quot;</code><br />
+      A security context type for Eucalyptus / EC2 applications.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
         <a name="X509"></a><span class="summary-name">X509</span> = <code title="&quot;X509&quot;">&quot;X509&quot;</code><br />
       A security context type based on X.509 certificates.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="X509_SSH"></a><span class="summary-name">X509_SSH</span> = <code title="&quot;X509+SSH&quot;">&quot;X509+SSH&quot;</code><br />
-      A security context type for X.509 via SSH.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="BigJob"></a><span class="summary-name">BigJob</span> = <code title="&quot;BigJob&quot;">&quot;BigJob&quot;</code><br />
-      A security context type for BigJob
     </td>
   </tr>
 <tr>
@@ -440,6 +479,14 @@
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a name="userproxy"></a><span class="summary-name">userproxy</span> = <code title="property(** userproxy())">property(** userproxy())</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="session"></a><span class="summary-name">session</span> = <code title="property(** session())">property(** session())</code>
+      <em>(Inherited from <a href="bliss.saga.Object.Object-class.html">bliss.saga.Object.Object</a>)</em>
     </td>
   </tr>
 </table>
@@ -487,6 +534,29 @@
   <dl class="fields">
     <dt>Overrides:
         object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__del__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__del__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Destructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.Context-pysrc.html#Context.__del__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Destructor.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="bliss.saga.Object.Object-class.html#__del__">Object.Object.__del__</a>
     </dt>
   </dl>
 </td></tr></table>
@@ -547,7 +617,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Mon Apr 16 19:12:53 2012</a>
+    3.0.1 on Wed Jun  6 08:20:41 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

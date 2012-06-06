@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>bliss.saga.Exception.Error</title>
+  <title>bliss.saga.Error.Error</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -44,7 +44,7 @@
       <span class="breadcrumbs">
         bliss ::
         saga ::
-        Exception ::
+        Error ::
         Error ::
         Class&nbsp;Error
       </span>
@@ -57,7 +57,13 @@
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class Error</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.Exception-pysrc.html#Error">source&nbsp;code</a></span></p>
+<h1 class="epydoc">Class Error</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.Error-pysrc.html#Error">source&nbsp;code</a></span></p>
+<p>The SAGA error types.</p>
+  <p>SAGA error types are used by the <a 
+  href="bliss.saga.Exception.Exception-class.html" 
+  class="link">Exception</a> class to indicate the type of error that has 
+  occured.</p>
+
 <!-- ==================== CLASS VARIABLES ==================== -->
 <a name="section-ClassVariables"></a>
 <table class="summary" border="1" cellpadding="3"
@@ -70,77 +76,90 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="AlreadyExists"></a><span class="summary-name">AlreadyExists</span> = <code title="'AlreadyExists'">'AlreadyExists'</code>
+        <a name="AlreadyExists"></a><span class="summary-name">AlreadyExists</span> = <code title="'AlreadyExists'">'AlreadyExists'</code><br />
+      The entity to be created already exists.
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="AuthenticationFailed"></a><span class="summary-name">AuthenticationFailed</span> = <code title="'AuthenticationFailed'">'AuthenticationFailed'</code>
+        <a name="DoesNotExist"></a><span class="summary-name">DoesNotExist</span> = <code title="'DoesNotExist'">'DoesNotExist'</code><br />
+      An operation tried to access a non-existing entity.
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="AuthorizationFailed"></a><span class="summary-name">AuthorizationFailed</span> = <code title="'AuthorizationFailed'">'AuthorizationFailed'</code>
+        <a name="IncorrectState"></a><span class="summary-name">IncorrectState</span> = <code title="'IncorrectState'">'IncorrectState'</code><br />
+      The operation is not allowed on the entity in its current state.
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="BadParameter"></a><span class="summary-name">BadParameter</span> = <code title="'BadParameter'">'BadParameter'</code>
+        <a name="BadParameter"></a><span class="summary-name">BadParameter</span> = <code title="'BadParameter'">'BadParameter'</code><br />
+      A given parameter is out of bound or ill formatted.
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="DoesNotExist"></a><span class="summary-name">DoesNotExist</span> = <code title="'DoesNotExist'">'DoesNotExist'</code>
+        <a name="IncorrectURL"></a><span class="summary-name">IncorrectURL</span> = <code title="'IncorrectURL'">'IncorrectURL'</code><br />
+      The given URL could not be interpreted, for example due to an 
+      incorrect schema.
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="IncorrectState"></a><span class="summary-name">IncorrectState</span> = <code title="'IncorrectState'">'IncorrectState'</code>
+        <a name="AuthenticationFailed"></a><span class="summary-name">AuthenticationFailed</span> = <code title="'AuthenticationFailed'">'AuthenticationFailed'</code><br />
+      The backend could not establish a valid identity.
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="IncorrectURL"></a><span class="summary-name">IncorrectURL</span> = <code title="'IncorrectURL'">'IncorrectURL'</code>
+        <a name="AuthorizationFailed"></a><span class="summary-name">AuthorizationFailed</span> = <code title="'AuthorizationFailed'">'AuthorizationFailed'</code><br />
+      The used identity is not allowed to use the backend,
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="NoSuccess"></a><span class="summary-name">NoSuccess</span> = <code title="'NoSuccess'">'NoSuccess'</code>
+        <a name="PermissionDenied"></a><span class="summary-name">PermissionDenied</span> = <code title="'PermissionDenied'">'PermissionDenied'</code><br />
+      The used identity is not permitted to perform the requested 
+      operation.
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="NotImplemented"></a><span class="summary-name">NotImplemented</span> = <code title="'NotImplemented'">'NotImplemented'</code>
+        <a name="Timeout"></a><span class="summary-name">Timeout</span> = <code title="'Timeout'">'Timeout'</code><br />
+      The interaction with the backend times out.
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="PermissionDenied"></a><span class="summary-name">PermissionDenied</span> = <code title="'PermissionDenied'">'PermissionDenied'</code>
+        <a name="NoSuccess"></a><span class="summary-name">NoSuccess</span> = <code title="'NoSuccess'">'NoSuccess'</code><br />
+      Some other error occurred.
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="Timeout"></a><span class="summary-name">Timeout</span> = <code title="'Timeout'">'Timeout'</code>
+        <a name="NotImplemented"></a><span class="summary-name">NotImplemented</span> = <code title="'NotImplemented'">'NotImplemented'</code><br />
+      Bliss does not implement this method.
     </td>
   </tr>
 </table>
@@ -176,7 +195,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Mon Apr 16 19:12:53 2012</a>
+    3.0.1 on Wed Jun  6 08:20:41 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

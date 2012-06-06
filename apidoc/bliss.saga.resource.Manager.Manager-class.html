@@ -60,34 +60,55 @@
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class Manager</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.resource.Manager-pysrc.html#Manager">source&nbsp;code</a></span></p>
 <center>
-<center>  <map id="uml_class_diagram_for_bliss_sa_16" name="uml_class_diagram_for_bliss_sa_16">
-<area shape="rect" id="node1_20" href="bliss.saga.resource.Manager.Manager-class.html#__init__" title="Construct a new resource manager object" alt="" coords="17,223,309,241"/>
-<area shape="rect" id="node1_21" href="bliss.saga.resource.Manager.Manager-class.html#__del__" title="Delete the manager in a civilised fashion." alt="" coords="17,241,309,260"/>
-<area shape="rect" id="node1_22" href="bliss.saga.resource.Manager.Manager-class.html#list_compute_resources" title="List known compute resource ids" alt="" coords="17,260,309,279"/>
-<area shape="rect" id="node1_23" href="bliss.saga.resource.Manager.Manager-class.html#list_storage_resources" title="List known resource storage ids" alt="" coords="17,279,309,297"/>
-<area shape="rect" id="node1_24" href="bliss.saga.resource.Manager.Manager-class.html#list_compute_templates" title="List available template names" alt="" coords="17,297,309,316"/>
-<area shape="rect" id="node1_25" href="bliss.saga.resource.Manager.Manager-class.html#list_storage_templates" title="List available template names" alt="" coords="17,316,309,335"/>
-<area shape="rect" id="node1_26" href="bliss.saga.resource.Manager.Manager-class.html#get_template_details" title="get template description" alt="" coords="17,335,309,353"/>
-<area shape="rect" id="node1_27" href="bliss.saga.resource.Manager.Manager-class.html#create_compute" title="Instantiate (request) a new compute resource" alt="" coords="17,353,309,372"/>
-<area shape="rect" id="node1_28" href="bliss.saga.resource.Manager.Manager-class.html#get_compute" title="Return the resource handle for an existing compute resource" alt="" coords="17,372,309,391"/>
-<area shape="rect" id="node1_29" href="bliss.saga.resource.Manager.Manager-class.html#destroy_compute" title="Destroy (close) an existing compute resource" alt="" coords="17,391,309,409"/>
-<area shape="rect" id="node1_30" href="bliss.saga.resource.Manager.Manager-class.html#create_storage" title="Instantiate (request) a new storage resource" alt="" coords="17,409,309,428"/>
-<area shape="rect" id="node1_31" href="bliss.saga.resource.Manager.Manager-class.html#get_storage" title="Return the resource handle for an existing storage resource" alt="" coords="17,428,309,447"/>
-<area shape="rect" id="node1_32" href="bliss.saga.resource.Manager.Manager-class.html#destroy_storage" title="Destroy (close) an existing storage resource" alt="" coords="17,447,309,465"/>
-<area shape="rect" id="node1" href="bliss.saga.resource.Manager.Manager-class.html" title="bliss.saga.resource.Manager.Manager" alt="" coords="5,190,321,471"/>
-<area shape="rect" id="node2_33" href="bliss.saga.Object.Object.Type-class.html" title="bliss.saga.Object.Object.Type" alt="" coords="111,31,217,49"/>
-<area shape="rect" id="node2_34" href="bliss.saga.Object.Object-class.html#session" title="bliss.saga.Object.Object.session" alt="" coords="111,49,217,68"/>
-<area shape="rect" id="node2_35" href="bliss.saga.Object.Object-class.html#type" title="bliss.saga.Object.Object.type" alt="" coords="111,68,217,87"/>
-<area shape="rect" id="node2_36" href="bliss.saga.Object.Object-class.html#id" title="bliss.saga.Object.Object.id" alt="" coords="111,87,217,105"/>
-<area shape="rect" id="node2_37" href="bliss.saga.Object.Object-class.html#get_session" title="Legacy GFD.90 method: return the object&#39;s session." alt="" coords="111,108,217,127"/>
-<area shape="rect" id="node2_38" href="bliss.saga.Object.Object-class.html#get_type" title="Legacy GFD.90 method: return the object type." alt="" coords="111,127,217,145"/>
-<area shape="rect" id="node2_39" href="bliss.saga.Object.Object-class.html#get_id" title="Legacy GFD.90 method: return the object identifier." alt="" coords="111,145,217,164"/>
-<area shape="rect" id="node2" href="bliss.saga.Object.Object-class.html" title="Loosely resembles a SAGA object as defined in GFD.90" alt="" coords="99,6,229,170"/>
-</map>
-  <img src="uml_class_diagram_for_bliss_sa_16.gif" alt='' usemap="#uml_class_diagram_for_bliss_sa_16" ismap="ismap" class="graph-without-title" />
-</center>
+
 </center>
 <hr />
+<p>The resource manager class, as the name suggests, manages resource 
+  instances.  It may be responsible for managing the lifetime of such 
+  instances ( <a 
+  href="bliss.saga.resource.Manager.Manager-class.html#create_compute" 
+  class="link">create</a> / <a 
+  href="bliss.saga.resource.Manager.Manager-class.html#destroy_compute" 
+  class="link">destroy</a> / <a 
+  href="bliss.saga.resource.Manager.Manager-class.html#get_compute" 
+  class="link">get</a> ), and for inspecting them ( <a 
+  href="bliss.saga.resource.Manager.Manager-class.html#list_compute_resources"
+  class="link">list</a> / <a 
+  href="bliss.saga.resource.Manager.Manager-class.html#list_compute_templates"
+  class="link">list_templates</a> / <a 
+  href="bliss.saga.resource.Manager.Manager-class.html#get_template_details"
+  class="link">get_template_details</a> ) [method links are for compute 
+  resources]:</p>
+<pre class="literalblock">
+ # obtain a handle to a suitable resource, and wait until it is active
+ rm = saga.resource.Manager(url)
+ cr = rm.create_compute(cd)
+ cr.wait(saga.resource.State.Active)
+</pre>
+  <p>The resources managed by the manager can have different types -- they 
+  can be storage or compute resources.  For the respective differences and 
+  the resource description details, see</p>
+  <ul>
+    <li>
+      <a href="bliss.saga.resource.Storage.Storage-class.html" 
+      class="link">resource.Storage</a>
+    </li>
+    <li>
+      <a 
+      href="bliss.saga.resource.StorageDescription.StorageDescription-class.html"
+      class="link">resource.StorageDescription</a>
+    </li>
+    <li>
+      <a href="bliss.saga.resource.Compute.Compute-class.html" 
+      class="link">resource.Compute</a>
+    </li>
+    <li>
+      <a 
+      href="bliss.saga.resource.ComputeDescription.ComputeDescription-class.html"
+      class="link">resource.ComputeDescription</a>
+    </li>
+  </ul>
+
 <!-- ==================== NESTED CLASSES ==================== -->
 <a name="section-NestedClasses"></a>
 <table class="summary" border="1" cellpadding="3"
@@ -278,8 +299,7 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="destroy_compute"></a><span class="summary-sig-name">destroy_compute</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">compute_id</span>,
-        <span class="summary-sig-arg">drain</span>=<span class="summary-sig-default">False</span>)</span><br />
+        <span class="summary-sig-arg">compute_id</span>)</span><br />
       Destroy (close) an existing compute resource</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.resource.Manager-pysrc.html#Manager.destroy_compute">source&nbsp;code</a></span>
@@ -333,8 +353,7 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="destroy_storage"></a><span class="summary-sig-name">destroy_storage</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">storage_id</span>,
-        <span class="summary-sig-arg">drain</span>=<span class="summary-sig-default">False</span>)</span><br />
+        <span class="summary-sig-arg">storage_id</span>)</span><br />
       Destroy (close) an existing storage resource</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.resource.Manager-pysrc.html#Manager.destroy_storage">source&nbsp;code</a></span>
@@ -351,47 +370,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.Object.Object-class.html#get_id" class="summary-sig-name">get_id</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy GFD.90 method: return the object identifier.
-      <em>(Inherited from <a href="bliss.saga.Object.Object-class.html">bliss.saga.Object.Object</a>)</em></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.Object-pysrc.html#Object.get_id">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
           <td><span class="summary-sig"><a href="bliss.saga.Object.Object-class.html#get_session" class="summary-sig-name">get_session</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy GFD.90 method: return the object's session.
+      return the object's session.
       <em>(Inherited from <a href="bliss.saga.Object.Object-class.html">bliss.saga.Object.Object</a>)</em></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.Object-pysrc.html#Object.get_session">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="bliss.saga.Object.Object-class.html#get_type" class="summary-sig-name">get_type</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Legacy GFD.90 method: return the object type.
-      <em>(Inherited from <a href="bliss.saga.Object.Object-class.html">bliss.saga.Object.Object</a>)</em></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="bliss.saga.Object-pysrc.html#Object.get_type">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -426,14 +409,6 @@
   <td align="left" colspan="2" class="table-header">
     <span class="table-header">Class Variables</span></td>
 </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="id"></a><span class="summary-name">id</span> = <code title="property(** id())">property(** id())</code>
-      <em>(Inherited from <a href="bliss.saga.Object.Object-class.html">bliss.saga.Object.Object</a>)</em>
-    </td>
-  </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
@@ -497,7 +472,7 @@
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>url</code></strong> (Url) - Url of the (remote) resource manager.</li>
+        <li><strong class="pname"><code>url</code></strong> (<a href="bliss.saga.Url.Url-class.html" class="link">Url</a>) - Url of the (remote) resource manager.</li>
     </ul></dd>
     <dt>Overrides:
         object.__init__
@@ -561,7 +536,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Mon Apr 16 19:12:54 2012</a>
+    3.0.1 on Wed Jun  6 08:20:42 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
