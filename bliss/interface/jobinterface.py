@@ -12,7 +12,7 @@ from bliss.saga.Exception import Exception as SAGAException
 
 class JobPluginInterface(PluginBaseInterface):
     '''Abstract base class for all job plugins'''
-    #PluginBaseInterface._supportedExceptions.append(PluginBaseInterface.Exception_type_saga_job)
+    #PluginBaseInterface._supported_apis.append(PluginBaseInterface.Exception_type_saga_job)
  
     def __init__(self, name, schemas):
         '''Class constructor'''

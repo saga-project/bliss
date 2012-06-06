@@ -117,7 +117,7 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
 
     ## Define apis supported by this adaptor
     ##
-    Exceptions = ['saga.filesystem']
+    _apis = ['saga.filesystem']
 
 
     ##

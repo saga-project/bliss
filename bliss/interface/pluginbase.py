@@ -21,8 +21,8 @@ class PluginBaseInterface:
         '''Class constructor'''
         self.name = name
         self.schemas = schemas
-        self.supportedExceptions = []
-        self.supportedExceptions.append(api)
+        self.supported_apis = []
+        self.supported_apis.append(api)
 
         self.__logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')')
 
@@ -54,9 +54,9 @@ class PluginBaseInterface:
  
 
     @classmethod
-    def supportedExceptions(self):
+    def supported_apis(self):
         '''Return the api packages this plugin supports'''
-        return self.Exceptions
+        return self._apis
 
     @classmethod
     def supported_schemas(self):

@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
@@ -15,26 +14,26 @@ from bliss.plugins.ssh import SSHJobPlugin
 _registry = []
 
 _registry.append({"class"   : LocalJobPlugin,
-                  "apis"    : LocalJobPlugin.supportedExceptions(),
+                  "apis"    : LocalJobPlugin.supported_apis(),
                   "name"    : LocalJobPlugin.plugin_name(),
                   "schemas" : LocalJobPlugin.supported_schemas()})
 
 _registry.append({"class"   : PBSJobPlugin,
-                  "apis"    : PBSJobPlugin.supportedExceptions(),
+                  "apis"    : PBSJobPlugin.supported_apis(),
                   "name"    : PBSJobPlugin.plugin_name(),
                   "schemas" : PBSJobPlugin.supported_schemas()})
 
 _registry.append({"class"   : SGEJobPlugin,
-                  "apis"    : SGEJobPlugin.supportedExceptions(),
+                  "apis"    : SGEJobPlugin.supported_apis(),
                   "name"    : SGEJobPlugin.plugin_name(),
                   "schemas" : SGEJobPlugin.supported_schemas()})
 
 _registry.append({"class"   : SFTPFilesystemPlugin,
-                  "apis"    : SFTPFilesystemPlugin.supportedExceptions(),
+                  "apis"    : SFTPFilesystemPlugin.supported_apis(),
                   "name"    : SFTPFilesystemPlugin.plugin_name(),
                   "schemas" : SFTPFilesystemPlugin.supported_schemas()})
 
 _registry.append({"class"   : SSHJobPlugin,
-                  "apis"    : SSHJobPlugin.supportedExceptions(),
+                  "apis"    : SSHJobPlugin.supported_apis(),
                   "name"    : SSHJobPlugin.plugin_name(),
                   "schemas" : SSHJobPlugin.supported_schemas()})

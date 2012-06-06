@@ -78,7 +78,7 @@ class SSHJobPlugin(JobPluginInterface):
 
     _name = 'saga.plugin.job.ssh'
     _schemas = ['ssh']
-    Exceptions = ['saga.job']
+    _apis = ['saga.job']
 
     def __init__(self, url):
         '''Class constructor'''

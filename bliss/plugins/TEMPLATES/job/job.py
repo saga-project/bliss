@@ -22,7 +22,7 @@ class NullJobPlugin(JobPluginInterface):
 
     ## Step 3: Define apis supported by this adaptor
     ##
-    Exceptions = ['saga.job']
+    _apis = ['saga.job']
 
     def __init__(self, url):
         '''Class constructor'''

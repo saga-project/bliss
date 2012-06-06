@@ -79,7 +79,7 @@ class Runtime:
 
         elif url.scheme in self.plugin_class_list:
             plugin_obj = self.plugin_class_list[url.scheme](url)
-            if apitype in plugin_obj.__class__.supportedExceptions():                       
+            if apitype in plugin_obj.__class__.supported_apis():                       
                 self.logger.info("Instantiated plugin '%s' for URL scheme %s:// and API type '%s'" \
                   % (plugin_obj.name, str(url.scheme), apitype))
                 self.plugin_instance_list[url.scheme] = plugin_obj
