@@ -11,7 +11,7 @@
 
       # describe the resource requirements
       cd = saga.resource.ComputeDescription()
-      cd['Slots'] = 1024
+      cd.slots = 16
 
       # obtain a handle to a suitable resource, and wait until it is active
       rm = saga.resource.Manager(url)
@@ -20,9 +20,8 @@
 
       # submit a large job onto the now active resource
       jd = saga.job.Description()
-      jd['Executable'] = 'blast'
-      jd['NumberOfProcesses'] = 1024
-      jd['SPMDVariation'] = MPI
+      jd.executable = /bin/date
+      jd.number_of_processes = 16
 
       js = saga.job.Service(cr)
       j  = js.create_job(jd)
