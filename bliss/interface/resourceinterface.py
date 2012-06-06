@@ -18,15 +18,15 @@ class ResourcePluginInterface(PluginBaseInterface):
         PluginBaseInterface.__init__(self, name=name, schemas=schemas,
                                      api=PluginBaseInterface.Exception_type_saga_resource)
     
-    def register_manager_object(self, service_obj, url):
+    def register_manager_object(self, manager_obj, url):
         errormsg = "Not implemented plugin method called: register_manager_object()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
 
-    def unregister_manager_object(self, manager_obj, url):
+    def unregister_manager_object(self, manager_obj):
         '''This method is called upon deletion of a manager object'''
         self.log_error("Not implemented plugin method called: unregister_manager_object()")
-        # don't throw -- destructor context
+        # don't throw here -- destructor context
 
     #def unregister_compute_object(self, compute_obj):
     #    '''This method is called upon deletion of a compute object'''
