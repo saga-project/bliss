@@ -70,7 +70,7 @@ class ComputeDescription(Object, AttributeInterface):
         
         self._slots = 1
         self._memory = None
-        self._hostnames = None
+        self._hostnames = list()
         self._operating_system = 'Any'
         self._architecture = 'Any'
 
