@@ -179,7 +179,7 @@ class Compute(Object):
     
     ######################################################################
     ##
-    def wait(self, timeout=-1, state="Final"):
+    def wait(self, timeout=-1, state=2):
         '''Wait for the resource to reach a specific state.
 
         As resources are stateful entities, and several actions (such as job
@@ -194,7 +194,7 @@ class Compute(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
                                        "Object not bound to a plugin")
         
-        return self._plugin.compute_resource_wait(self, state)
+        return self._plugin.compute_resource_wait(self, timeout, state)
 
     ######################################################################
     ##

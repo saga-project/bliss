@@ -115,7 +115,7 @@ class ResourcePluginInterface(PluginBaseInterface):
         errormsg = "Not implemented plugin method called: compute_resource_destroy()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 
-    def compute_resource_wait(self, res_obj, filter):
+    def compute_resource_wait(self, res_obj, timeout, filter):
         errormsg = "Not implemented plugin method called: compute_resource_wait()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 

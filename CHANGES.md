@@ -1,3 +1,11 @@
+Version 0.2.1 released 2012-6-08
+----------------------------------------------------------------------
+
+* job.Decription now accepts strings for int values. This has been
+  implemented for backwards compatibility
+* Fixed resource.Compute.wait() timeout issue
+
+
 Version 0.2.1 released 2012-5-16
 ----------------------------------------------------------------------
 
