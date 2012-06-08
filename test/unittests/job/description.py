@@ -152,10 +152,9 @@ class JobDescriptionTests(unittest.TestCase):
                     self.fail("Attribute Error - unexpected value")
 
                 try:
-                    setattr(jd, attr_val,["ss", "gg"])  # shouldn't accept anything but int
-                    self.fail("Attribute Error - shouldn't except non-int value")
+                    setattr(jd, attr_val,["ss=1", "gg=2"])  # this should work, too.
                 except saga.Exception:
-                    pass
+                    self.fail("Attribute Error - list -> dict conversion failed")
 
                 jd.set_vector_attribute(attr_key, {"x":"z"})
                 if getattr(jd, attr_val) != {"x":"z"}:

@@ -236,9 +236,16 @@ class Description(Object, AttributeInterface):
         def fget(self):
             return self._environment
         def fset(self, val):
-            if type(val) is not dict and type(val) is not type(None):
+            if type(val) is dict or type(val) is type(None):
+                self._environment = val
+            elif type(val) is list:
+                d = dict()
+                for list_item in val:
+                    (key, val) = list_item.split("=")
+                    d[key] = val
+                self._environment = d
+            else:
                 raise bliss.saga.Exception(bliss.saga.Error.BadParameter, "'environment' attribute expects 'dict' type.")
-            self._environment = val
         def fdel(self, val):
             self._environment = None
         return locals()
