@@ -83,8 +83,8 @@ class JobDescriptionTests(unittest.TestCase):
         Tests the saga.job.description attribute interface (scalar int attributes)
         """
  
-        properties = {"TotalCPUCount"    : "total_cpu_count",
-                      "NumberOfProcesses": "number_of_processes",
+        properties = {#"TotalCPUCount"    : "total_cpu_count",
+                      #"NumberOfProcesses": "number_of_processes",
                       "WallTimeLimit"    : "wall_time_limit"
         }
 
@@ -107,7 +107,7 @@ class JobDescriptionTests(unittest.TestCase):
                     self.fail("Attribute Error - unexpected value")
 
                 try:
-                    setattr(jd, attr_val, "adads")  # shouldn't accept anything but int
+                    setattr(jd, attr_val, [1])  # shouldn't accept anything but int
                     self.fail("Attribute Error - shouldn't except non-int value")
                 except saga.Exception:
                     pass 

@@ -462,14 +462,16 @@ class Description(Object, AttributeInterface):
         def fget(self):
             return self._total_cpu_count
         def fset(self, val):
-            if type(val) is not int and type(val) is not type(None):
-                raise bliss.saga.Exception(bliss.saga.Error.BadParameter, "'total_cpu_count' attribute expects 'int' type.")
-            self._total_cpu_count = val
+            if type(val) is int or type(val) is None:
+                self._total_cpu_count = val
+            elif type(val) is str:
+                self._total_cpu_count = int(val)
+            else: 
+                raise bliss.saga.Exception(bliss.saga.Error.BadParameter, "'total_cpu_count' attribute expects 'int' or 'str' type.")
         def fdel(self, val):
             self._total_cpu_count = None
         return locals()
     total_cpu_count = property(**total_cpu_count())
-
     """
     Total number of cpus requested for this job.
       - This attribute is used for jobs spanning more than one process instance,
@@ -491,9 +493,12 @@ class Description(Object, AttributeInterface):
         def fget(self):
             return self._number_of_processes
         def fset(self, val):
-            if type(val) is not int and type(val) is not type(None):
-                raise bliss.saga.Exception(bliss.saga.Error.BadParameter, "'number_of_processes' attribute expects 'int' type.")
-            self._number_of_processes = val
+            if type(val) is int or type(val) is None:
+                self._total_cpu_count = val
+            elif type(val) is str:
+                self._total_cpu_count = int(val)
+            else:
+                raise bliss.saga.Exception(bliss.saga.Error.BadParameter, "'number_of_processes' attribute expects 'int' or 'str' type.")
         def fdel(self, val):
             self._number_of_processes = None
         return locals()
