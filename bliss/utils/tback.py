@@ -8,10 +8,10 @@ __license__   = "MIT"
 import traceback
 import StringIO
 
-def get_traceback(prefix="\n  *********************\n  * BLISS STACK TRACE *\n  *********************\n"):
+def get_traceback(prefix="\n"):
     '''returns the last traceback as a string with a given prefix'''
     fp = StringIO.StringIO()
-    traceback.print_stack(file=fp)
+    traceback.print_exc(file=fp)
     if fp.getvalue() == "None\n":
         return "(No Stacktrace)"
     else:

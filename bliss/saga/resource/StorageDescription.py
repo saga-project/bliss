@@ -76,20 +76,6 @@ class StorageDescription(Object, AttributeInterface):
         pass
     
     ######################################################################
-    ## 
-    def __str__(self):
-        '''String representation.'''
-        result = str("{")
-        for attribute in self.list_attributes():
-            if self.attribute_is_vector(attribute):
-                value = repr(self.get_vector_attribute(attribute))
-            else:
-                value = str(self.get_attribute(attribute))
-            result += str("'%s' : '%s'," % (str(attribute), value))
-        result += "}"
-        return result
-    
-    ######################################################################
     ## Property 
     def start():
         doc = '''Required start time for this resource reservation.

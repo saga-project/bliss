@@ -55,7 +55,7 @@ class ComputeDescription(Object, AttributeInterface):
         self._start          = None
         self._end            = None
         self._duration       = None
-        self._template       = ''
+        self._template       = None
 
         self._register_rw_attribute(name="Dynamic", 
                                         accessor=self.__class__.dynamic) 
@@ -91,20 +91,6 @@ class ComputeDescription(Object, AttributeInterface):
         '''Delete this resource description.'''
         # nothing to do here 
         pass
-
-    ######################################################################
-    ## 
-    def __str__(self):
-        '''String representation.'''
-        result = str("{")
-        for attribute in self.list_attributes():
-            if self.attribute_is_vector(attribute):
-                value = repr(self.get_vector_attribute(attribute))
-            else:
-                value = str(self.get_attribute(attribute))
-            result += str("'%s' : '%s'," % (str(attribute), value))
-        result += "}"
-        return result
 
     ######################################################################
     ## Property 

@@ -114,6 +114,19 @@ class AttributeInterface(object):
         return result
 
     ######################################################################
+    ## 
+    def as_dict(self):
+        '''Standard Python dictionary representation.'''
+        d = dict()
+        for attribute in self.list_attributes():
+            if self.attribute_is_vector(attribute):
+                value = repr(self.get_vector_attribute(attribute))
+            else:
+                value = str(self.get_attribute(attribute))
+            d[attribute] = value
+        return d
+
+    ######################################################################
     #
     def remove_attribute(self, key):
         '''Remove the attribute.
