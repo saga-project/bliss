@@ -389,24 +389,37 @@ class PBSService:
     ######################################################################
     ##
     def get_jobinfo(self, saga_jobid):
-
         '''Returns a running PBS job as saga object'''
         if self._cw == None:
             self._check_context()
 
-        if self._known_jobs_exists(saga_jobid.native_id):
-            if self._known_jobs_is_final(saga_jobid.native_id):
-                return self._known_jobs[saga_jobid.native_id]
+        if type(saga_jobid) == str:
+            try:
+                (p1, native_id) = saga_jobid.split(']-[')
+                if native_id[-1] != ']':
+                    raise Exception()
+                else:
+                   native_id = native_id.rstrip(']')    
+            except Exception:
+                raise Exception("Unsupported job ID format: %s. Expected format: [service_url]-[native_id]." % saga_jobid)
+        elif type(saga_jobid) == bliss.saga.job.JobID:
+            native_id = saga_jobid.native_id
+        else:
+            raise Exception("Unsupported job ID format: %s. Expected format: [service_url]-[native_id]." % saga_jobid)
+
+        if self._known_jobs_exists(native_id):
+            if self._known_jobs_is_final(native_id):
+                return self._known_jobs[native_id]
 
 
-        result = self._cw.run("qstat -f1 %s" % (saga_jobid.native_id))
+        result = self._cw.run("qstat -f1 %s" % (native_id))
         if result.returncode != 0:
-            if self._known_jobs_exists(saga_jobid.native_id):
+            if self._known_jobs_exists(native_id):
                 ## if the job is on record but can't be reached anymore,
                 ## this probablty means that it has finished and already
                 ## kicked out qstat. in that case we just set it's state 
                 ## to done.
-                jobinfo = self._known_jobs[saga_jobid.native_id]
+                jobinfo = self._known_jobs[native_id]
                 jobinfo._job_state = 'C' # PBS 'Complete'
                 return jobinfo
             else:
