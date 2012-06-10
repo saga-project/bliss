@@ -12,10 +12,10 @@ from bliss.saga.Exception import Exception as SAGAException
 class PluginBaseInterface:
     '''Abstract base class for all plugins'''
 
-    Exception_type_saga_filesystem = "saga.filesystem.cpi"
-    Exception_type_saga_resource   = "saga.resource.cpi"
-    Exception_type_saga_job        = "saga.job.cpi"
-    Exception_type_saga_sd         = "saga.sd.cpi"
+    api_type_saga_filesystem = "saga.filesystem"
+    api_type_saga_resource   = "saga.resource"
+    api_type_saga_job        = "saga.job"
+    api_type_saga_sd         = "saga.sd"
     
     def __init__(self, name, schemas, api):
         '''Class constructor'''
@@ -24,7 +24,7 @@ class PluginBaseInterface:
         self.supported_apis = []
         self.supported_apis.append(api)
 
-        self.__logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')')
+        self.__logger = logging.getLogger(self.__class__.__name__)#+'('+str(hex(id(self)))+')')
 
     def get_logger(self):
         '''Return the logger object'''

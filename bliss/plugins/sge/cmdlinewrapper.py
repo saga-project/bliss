@@ -120,7 +120,7 @@ class SGEJobInfo(object):
         self._job_state = None
         self._jobid = None
 
-        plugin.log_debug("Got raw qstat output: %s" % qstat_output)
+        #plugin.log_debug("Got raw qstat output: %s" % qstat_output)
         #if len(qstat_f_output) > 0:
         #    try:
         #        lines = qstat_f_output.split("\n")

@@ -143,7 +143,7 @@ class PBSJobInfo(object):
         '''Constructor: initialize from qstat -f <jobid> string.
         '''
         
-        plugin.log_debug("Got raw qstat output: %s" % qstat_f_output)
+        #plugin.log_debug("Got raw qstat output: %s" % qstat_f_output)
         if len(qstat_f_output) > 0:
             try:
                 lines = qstat_f_output.split("\n")
@@ -159,7 +159,7 @@ class PBSJobInfo(object):
                     self.__dict__[key] = value
                 except Exception, ex:
                     pass
-            plugin.log_debug("Parsed qstat output: %s" % str(self.__dict__))
+            #plugin.log_debug("Parsed qstat output: %s" % str(self.__dict__))
 
 
     @property 

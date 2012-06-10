@@ -16,7 +16,7 @@ class SDPluginInterface(PluginBaseInterface):
     def __init__(self, name, schemas):
         '''Class constructor'''
         PluginBaseInterface.__init__(self, name=name, schemas=schemas, 
-                                     api=PluginBaseInterface.Exception_type_saga_sd)
+                                     api=PluginBaseInterface.api_type_saga_sd)
     
     def register_discoverer_object(self, discoverer_obj):
         errormsg = "Not implemented plugin method called: register_discoverer_object()"

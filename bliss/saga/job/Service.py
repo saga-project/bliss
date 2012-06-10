@@ -7,6 +7,7 @@ __copyright__ = "Copyright 2012 Ole Christian Weidner"
 __license__   = "MIT"
 
 from bliss.saga import Url
+from bliss.saga.resource import Compute
 from bliss.saga.Object import Object 
 
 class Service(Object):
@@ -47,10 +48,16 @@ class Service(Object):
         Object.__init__(self, Object.Type.JobService, 
                             apitype=Object.Type.JobAPI, session=session)
 
-        if(type(url) == str):
+        if type(url) == str:
             self._url = Url(str(url))
-        else:
+        elif type(url) == Url:
             self._url = url
+        elif type(url) == Compute:
+            self._url = url._url
+        else:
+            raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
+             "A job.Service object must either be initialized with a URL or a resource.Compute object.")
+
 
         self._from_compute = False
         self._compute_obj = None

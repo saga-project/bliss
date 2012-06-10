@@ -16,7 +16,7 @@ class ResourcePluginInterface(PluginBaseInterface):
     def __init__(self, name, schemas):
         '''Class constructor'''
         PluginBaseInterface.__init__(self, name=name, schemas=schemas,
-                                     api=PluginBaseInterface.Exception_type_saga_resource)
+                                     api=PluginBaseInterface.api_type_saga_resource)
     
     def register_manager_object(self, manager_obj, url):
         errormsg = "Not implemented plugin method called: register_manager_object()"

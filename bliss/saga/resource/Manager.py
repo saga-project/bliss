@@ -48,13 +48,17 @@ class Manager(Object):
         Object.__init__(self, Object.Type.ResourceManager, 
                         apitype=Object.Type.ResourceAPI, session=session)
 
-        if(type(url) == str):
+        if type(url) == str:
             self._url = Url(str(url))
-        else:
+        elif type(url) == Url:
             self._url = url
+        else:
+            raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
+             "A resource.Manager object must be initialized with a URL.")
+
 
         self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
-        self._plugin.register_manager_object(self, url)
+        self._plugin.register_manager_object(self, self._url)
         self._logger.info("Bound to plugin %s" % (repr(self._plugin)))
 
     ######################################################################

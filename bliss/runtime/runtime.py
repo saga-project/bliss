@@ -40,7 +40,7 @@ class Runtime:
         logging.basicConfig(level=self.loglevel, datefmt='%m/%d/%Y %I:%M:%S %p',
                     	    format='%(asctime)s - bliss.%(name)s - %(levelname)s - %(message)s')
         address=str(hex(id(self)))
-        self.logger = logging.getLogger(self.__class__.__name__+'('+address+')') 
+        self.logger = logging.getLogger(self.__class__.__name__)#+'('+address+')') 
         self.logger.info("BLISS runtime instance created at %s" % address)
         self.plugin_class_list = {}
         self.plugin_instance_list = {}
@@ -72,10 +72,11 @@ class Runtime:
         '''Returns a plugin instance for a given url or throws'''
         # first let's check if there's already a plugin-instance active that can handle this url scheme
         if url.scheme in self.plugin_instance_list:
-            self.logger.info("Found an existing plugin instance for url scheme %s://: %s" \
-              % (str(url.scheme), self.plugin_instance_list[url.scheme]))
-
-            return self.plugin_instance_list[url.scheme]
+            plugin_obj = self.plugin_instance_list[url.scheme]
+            if apitype in plugin_obj.supported_apis:                       
+                self.logger.info("Found an existing plugin instance for url scheme %s://: %s" \
+                  % (str(url.scheme), self.plugin_instance_list[url.scheme]))
+                return self.plugin_instance_list[url.scheme]
 
         elif url.scheme in self.plugin_class_list:
             plugin_obj = self.plugin_class_list[url.scheme](url)
