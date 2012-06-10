@@ -1,10 +1,11 @@
-Version 0.2.1 released 2012-6-08
+Version 0.2.2 released 2012-6-11
 ----------------------------------------------------------------------
 
 * job.Decription now accepts strings for int values. This has been
   implemented for backwards compatibility
 * Fixed resource.Compute.wait() timeout issue
-
+* Removed excessive SGE/PBS plug-in logging
+* job.Service can now be created from a resource.Manager
 
 Version 0.2.1 released 2012-5-16
 ----------------------------------------------------------------------
