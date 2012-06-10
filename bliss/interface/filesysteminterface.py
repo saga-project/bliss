@@ -16,7 +16,7 @@ class FilesystemPluginInterface(PluginBaseInterface):
     def __init__(self, name, schemas):
         '''Class constructor'''
         PluginBaseInterface.__init__(self, name=name, schemas=schemas,
-                                     api=PluginBaseInterface.Exception_type_saga_filesystem)
+                                     api=PluginBaseInterface.api_type_saga_filesystem)
     
     def register_file_object(self, file_obj):
         '''This method is called upon instantiation of a new file object
