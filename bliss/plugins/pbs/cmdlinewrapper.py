@@ -559,7 +559,7 @@ class PBSService:
                     pbs_params += "#PBS -l nodes=%s:ppn=%s" % (str(int(tbd)), self._ppn)
 
         pbscript = "\n#!/bin/bash \n%s \n%s" % (pbs_params, exec_n_args)
-        self._pi.log_info("Generated PBS script: %s" % (pbscript))
+        self._pi.log_debug("Generated PBS script: %s" % (pbscript))
         return pbscript
 
 

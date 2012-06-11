@@ -535,7 +535,7 @@ class SGEService:
 
 
         sgescript = "\n#!/bin/bash \n%s \n%s" % (sge_params, exec_n_args)
-        self._pi.log_info("Generated SGE script: %s" % (sgescript))
+        self._pi.log_debug("Generated SGE script: %s" % (sgescript))
         return sgescript
 
 
