@@ -159,7 +159,7 @@ class Compute(Object):
                                        "Object not bound to a plugin")
        
         cd = self._plugin.compute_resource_get_description(self)
-        cd_copy = bliss.saga.resource.ComputeDescription._deep_copy(sd) 
+        cd_copy = bliss.saga.resource.ComputeDescription._deep_copy(cd) 
         return cd
     
     ######################################################################
