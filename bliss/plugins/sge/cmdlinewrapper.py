@@ -257,11 +257,11 @@ class SGEService:
                         if result.returncode == 0:
                             usable_ctx = ctx
                             self._cw = cw
-                            self._pi.log_info("Using context %s to access %s succeeded" \
+                            self._pi.log_debug("Using context %s to access %s succeeded" \
                               % (ctx, self._url))
                             break
                     except Exception, ex:
-                        self._pi.log_warning("Using context %s to access %s failed." \
+                        self._pi.log_debug("Using context %s to access %s failed." \
                           % (ctx, self._url))
 
             if usable_ctx is None:

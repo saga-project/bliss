@@ -90,7 +90,7 @@ class AttributeInterface(object):
     ######################################################################
     #
     def _attribute_defined(self, name):
-        if key in self._attributes:
+        if name in self._attributes:
             if self._attributes['name']['accessor'] is not None:
                 return True
         else:
