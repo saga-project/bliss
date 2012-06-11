@@ -5,7 +5,8 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-import bliss.saga.Exception
+import bliss.saga
+
 from bliss.saga import Url
 from bliss.saga.Object import Object 
 
@@ -156,8 +157,10 @@ class Compute(Object):
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
                                        "Object not bound to a plugin")
-        
-        return self._plugin.compute_resource_get_description(self)
+       
+        cd = self._plugin.compute_resource_get_description(self)
+        cd_copy = bliss.saga.resource.ComputeDescription._deep_copy(sd) 
+        return cd
     
     ######################################################################
     ##

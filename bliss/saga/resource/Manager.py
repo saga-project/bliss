@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
@@ -5,6 +6,7 @@ __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import bliss.saga 
+
 from   bliss.saga.Url    import Url
 from   bliss.saga.Object import Object 
 
@@ -126,16 +128,15 @@ class Manager(Object):
     def create_compute(self, compute_description):
         '''Instantiate (request) a new compute resource'''
 
-        if compute_description._get_type() != Object.Type.ResourceComputeDescription:
+        if type(compute_description) != bliss.saga.resource.ComputeDescription:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
-                  "create_compute() expects %s object as parameter" 
-                  % (Object.Type.ResourceComputeDescription))
-
+              "create_compute() expects resource.ComputeDescription object as parameter.")
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
 
-        return self._plugin.manager_create_compute(self, compute_description)
+        cd = bliss.saga.resource.ComputeDescription._deep_copy(compute_description)
+        return self._plugin.manager_create_compute(self, cd)
 
 
     ######################################################################
@@ -165,16 +166,16 @@ class Manager(Object):
     def create_storage(self, storage_description):
         '''Instantiate (request) a new storage resource'''
 
-        if storage_description._get_type() != Object.Type.ResourceStorageDescription:
+        if type(storage_description) != bliss.saga.resource.StorageDescription:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
-                  "create_storage() expects %s object as parameter" 
-                  % (Object.Type.ResourceStorageDescription))
+              "create_storage() expects resource.StorageDescription object as parameter")
 
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
 
-        return self._plugin.manager_create_storage(self, storage_description)
+        sd = bliss.saga.resource.StorageDescription._deep_copy(compute_description)
+        return self._plugin.manager_create_storage(self, sd)
 
 
     ######################################################################

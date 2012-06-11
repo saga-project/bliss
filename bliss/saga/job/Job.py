@@ -6,6 +6,7 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
+import bliss.saga
 from bliss.saga.Object     import Object
 from bliss.saga.Attributes import AttributeInterface
 
@@ -213,7 +214,8 @@ class Job(Object, AttributeInterface):
 
         '''
         if self._plugin is not None:
-            return self._job_description
+            jd = bliss.saga.job.Description._deep_copy(self._job_description)
+            return jd
         else:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")

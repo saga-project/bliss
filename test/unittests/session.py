@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
@@ -31,8 +30,8 @@ class SessionTests(unittest.TestCase):
     #
     def test_session(self):
 
-        js = saga.job.Description()
-        jd = saga.job.Description()
+        js = saga.job.Service("fork://localhost")
+        jd = saga.job.Service("fork://localhost")
         
         if js.get_session() != jd.get_session():
             self.fail("Both objects should return the same (default) session")

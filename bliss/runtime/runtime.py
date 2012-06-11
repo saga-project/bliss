@@ -56,7 +56,11 @@ class Runtime:
                   % (plugin["name"]))
                 # passed. add it to the list
                 for schema in plugin["schemas"]:
-                    self.plugin_class_list[schema] = plugin["class"]
+                    if schema in self.plugin_class_list:
+                        self.plugin_class_list[schema].append(plugin["class"])
+                    else:
+                        self.plugin_class_list[schema] = list()
+                        self.plugin_class_list[schema].append(plugin["class"])
                     self.logger.info("Registered plugin %s as handler for URL schema %s://" \
                       % (plugin["name"], schema))
             except Exception, ex:
@@ -72,19 +76,26 @@ class Runtime:
         '''Returns a plugin instance for a given url or throws'''
         # first let's check if there's already a plugin-instance active that can handle this url scheme
         if url.scheme in self.plugin_instance_list:
-            plugin_obj = self.plugin_instance_list[url.scheme]
-            if apitype in plugin_obj.supported_apis:                       
-                self.logger.info("Found an existing plugin instance for url scheme %s://: %s" \
-                  % (str(url.scheme), self.plugin_instance_list[url.scheme]))
-                return self.plugin_instance_list[url.scheme]
+            for plugin_obj in self.plugin_instance_list[url.scheme]:
+                if apitype in plugin_obj.supported_apis:                       
+                    self.logger.info("Found an existing plugin instance for url scheme %s://: %s" \
+                      % (str(url.scheme), self.plugin_instance_list[url.scheme]))
+                    return plugin_obj
 
-        elif url.scheme in self.plugin_class_list:
-            plugin_obj = self.plugin_class_list[url.scheme](url)
-            if apitype in plugin_obj.__class__.supported_apis():                       
-                self.logger.info("Instantiated plugin '%s' for URL scheme %s:// and API type '%s'" \
-                  % (plugin_obj.name, str(url.scheme), apitype))
-                self.plugin_instance_list[url.scheme] = plugin_obj
-                return plugin_obj
+        if url.scheme in self.plugin_class_list:
+            for plugin in self.plugin_class_list[url.scheme]:
+                plugin_obj = plugin(url)
+                if apitype in plugin_obj.__class__.supported_apis():                       
+                    self.logger.info("Instantiated plugin '%s' for URL scheme %s:// and API type '%s'" \
+                      % (plugin_obj.name, str(url.scheme), apitype))
+
+                    if url.scheme in self.plugin_instance_list: 
+                        self.plugin_instance_list[url.scheme].append(plugin_obj)
+                    else:
+                        self.plugin_instance_list[url.scheme] = list()
+                        self.plugin_instance_list[url.scheme].append(plugin_obj)
+
+                    return plugin_obj
 
         # Only reached if both conditions above failed
         error = ("Couldn't find a plugin for URL scheme '%s://' and API type '%s'" % (url.scheme, apitype))

@@ -10,6 +10,8 @@ from bliss.saga import Url
 from bliss.saga.resource import Compute
 from bliss.saga.Object import Object 
 
+import bliss.saga
+
 class Service(Object):
     '''Loosely represents a SAGA job service as defined in GFD.90
     
@@ -128,16 +130,16 @@ class Service(Object):
              else                                 : print "oops!"
 
         '''
-        if job_description._get_type() != Object.Type.JobDescription:
+        if type(job_description) != bliss.saga.job.Description:
             raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
-                  "create_job() expects %s object as parameter" 
-                  % (Object.Type.JobDescription))
+                  "create_job() expects job.Description as parameter.")
 
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
         else:
-            return self._plugin.service_create_job(self, job_description)
+            jd = bliss.saga.job.Description._deep_copy(job_description)
+            return self._plugin.service_create_job(self, jd)
 
     ######################################################################
     ##

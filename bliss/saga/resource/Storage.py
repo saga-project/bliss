@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
+
+import bliss.saga
 
 from bliss.saga import Url
 from bliss.saga.Object import Object 
@@ -154,8 +157,10 @@ class Storage(Object):
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
                                        "Object not bound to a plugin")
-        
-        return self._plugin.storage_resource_get_description(self)
+       
+        sd = self._plugin.storage_resource_get_description(self)
+        sd_copy = bliss.saga.resource.StorageDescription._deep_copy(sd) 
+        return sd
     
     ######################################################################
     ##

@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
@@ -111,6 +110,28 @@ class Description(Object, AttributeInterface):
 #    resource manager as candidate targets}
 
 
+    @staticmethod
+    def _deep_copy(jd):
+        jd_copy = bliss.saga.job.Description()
+
+        # properties
+        jd_copy._executable          = jd._executable
+        jd_copy._arguments           = jd._arguments
+        jd_copy._environment         = jd._environment
+        jd_copy._file_transfer       = jd._file_transfer
+        jd_copy._project             = jd._project
+        jd_copy._output              = jd._output
+        jd_copy._error               = jd._error
+        jd_copy._working_directory   = jd._working_directory
+        jd_copy._contact             = jd._contact
+        # requirements 
+        jd_copy._total_cpu_count     = jd._total_cpu_count
+        jd_copy._wall_time_limit     = jd._wall_time_limit
+        jd_copy._number_of_processes = jd._number_of_processes
+        jd_copy._spmd_variation      = jd._spmd_variation
+        jd_copy._queue               = jd._queue
+
+        return jd_copy
 
     ######################################################################
     ## 
@@ -120,21 +141,24 @@ class Description(Object, AttributeInterface):
                         apitype=Object.Type.JobAPI,)
         AttributeInterface.__init__(self)
 
-        self._executable        = None
-        self._arguments         = None
-        self._environment       = None
-        self._file_transfer     = None
-        self._project           = None
-        self._output            = None
-        self._error             = None
-        self._queue             = None
-        self._wall_time_limit   = None
-        self._working_directory = None
-        self._contact           = None
-        self._total_cpu_count   = None
+        # properties
+        self._executable          = None
+        self._arguments           = None
+        self._environment         = None
+        self._file_transfer       = None
+        self._project             = None
+        self._output              = None
+        self._error               = None
+        self._working_directory   = None
+        self._contact             = None
 
+        # requirements 
+        self._total_cpu_count     = None
+        self._wall_time_limit     = None
         self._number_of_processes = None
-        self._spmd_variation = None
+        self._spmd_variation      = None
+        self._queue               = None
+
 
         # register properties with the attribute interface
         self._register_rw_attribute(name="Executable", 

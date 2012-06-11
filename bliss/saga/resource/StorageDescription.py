@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
+
+import bliss.saga
 
 from bliss.saga.Object import Object
 from bliss.saga.Attributes import AttributeInterface
@@ -35,6 +38,20 @@ class StorageDescription(Object, AttributeInterface):
       sr.destroy()
 
     '''
+
+    @staticmethod
+    def _deep_copy(sd):
+        sd_copy = bliss.saga.resource.StorageDescription()
+
+        sd_copy._dynamic        = sd._dynamic
+        sd_copy._start          = sd._start
+        sd_copy._end            = sd._end
+        sd_copy._duration       = sd._duration
+        sd_copy._template       = sd._template
+        sd_copy._size            = sd._size
+
+        return sd_copy
+
 
     ######################################################################
     ## 
