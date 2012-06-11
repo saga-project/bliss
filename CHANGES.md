@@ -6,6 +6,8 @@ Version 0.2.2 released 2012-6-11
 * Fixed resource.Compute.wait() timeout issue
 * Removed excessive SGE/PBS plug-in logging
 * job.Service can now be created from a resource.Manager
+* Implemented deep copy for description objects
+* Runtime now supports multiple plug-ins for the same schema
 
 Version 0.2.1 released 2012-5-16
 ----------------------------------------------------------------------
