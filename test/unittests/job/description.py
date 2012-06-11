@@ -214,3 +214,28 @@ class JobDescriptionTests(unittest.TestCase):
         except saga.Exception, e: 
             self.fail(e)
 
+    ###########################################################################
+    #
+    def test_deep_copy(self) :
+        """ Test if job description is deep copy on create_job() as required by GFD.90 """
+
+        try :
+            jd = saga.job.Description()
+            jd.executable = '/bin/true'
+
+            js = saga.job.Service ('fork://localhost')
+            j  = js.create_job (jd)
+            j.run  ()
+            j.wait ()
+
+            jd.executable = '/bin/false'
+
+            jd_ret = j.get_description()
+
+            if jd_ret.executable != '/bin/true' : 
+                self.fail("Deep Copy Error: job description has changed unexpectedly")
+
+        except saga.Exception, e : 
+            self.fail(e)
+
+
