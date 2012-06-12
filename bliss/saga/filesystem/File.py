@@ -81,7 +81,7 @@ class File(Object):
 
            The file is copied to the given target location.  The target URL must
            be an absolute path, and can be a target file name or target
-           directory name.  If the target file exists, it is overwritten:
+           directory name.  If the target file exists, it is overwritten::
 
                # copy a file
                file = saga.filesystem.Directory("sftp://localhost/tmp/data/data.bin")

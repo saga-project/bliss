@@ -286,7 +286,7 @@ class Url(Object):
 
     ######################################################################
     ## Query property
-    def set_query(self, path):
+    def set_query(self, query):
         """Set the 'query' component of the URL.
            @type query: str
         """
