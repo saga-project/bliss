@@ -59,46 +59,45 @@
 <a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment"># -*- coding: utf-8 -*-</tt> </tt>
 <a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"># vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4</tt> </tt>
 <a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"> </tt>
-<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-docstring">'''SAGA Filesystem Package API.</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-docstring">''' B{File/Directory Management}</tt> </tt>
 <a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-docstring">The SAGA filesystem package provides the ability to interact with (local and</tt> </tt>
-<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-docstring">remote) file systems.  The two provided classes, L{filesystem.Directory} and</tt> </tt>
-<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-docstring">L{filesystem.File} represent the well known abstractions common to all different</tt> </tt>
-<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-docstring">types of file systems.  The API provides a number of operations, which all</tt> </tt>
-<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-docstring">behave like the common unix command line tools (copy, list, remove etc)::</tt> </tt>
-<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-docstring">    # get a directory handle</tt> </tt>
-<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-docstring">    dir = saga.filesystem.Directory("sftp://localhost/tmp/")</tt> </tt>
-<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-docstring">    # create a subdir</tt> </tt>
-<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-docstring">    dir.make_dir ("data/")</tt> </tt>
-<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-docstring">    # list contents of the directory</tt> </tt>
-<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-docstring">    files = dir.list ()</tt> </tt>
-<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-docstring">    # copy *.dat files into the subdir</tt> </tt>
-<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-docstring">    for f in files :</tt> </tt>
-<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-docstring">        if re.match ('^.*\.dat$', f) :</tt> </tt>
-<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-docstring">            dir.copy (f, "sftp://localhost/tmp/data/")</tt> </tt>
-<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-docstring">    The file managment API provides the ability to interact with (local and</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-docstring">    remote) file systems via the two classes, L{filesystem.Directory} and</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-docstring">    L{filesystem.File}. The API provides a number of operations, which all</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-docstring">    behave similar to the common unix command line tools (cp, ls, rm etc).</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-docstring">    B{Example}::</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-docstring">      # get a directory handle</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-docstring">      dir = saga.filesystem.Directory("sftp://localhost/tmp/")</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-docstring">      # create a subdir</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-docstring">      dir.make_dir ("data/")</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-docstring">      # list contents of the directory</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-docstring">      files = dir.list ()</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-docstring">      # copy *.dat files into the subdir</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-docstring">      for f in files :</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-docstring">          if re.match ('^.*\.dat$', f) :</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-docstring">              dir.copy (f, "sftp://localhost/tmp/data/")</tt> </tt>
 <a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-docstring">The above example covers most of the semantics of the filesystem package --</tt> </tt>
-<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-docstring">additional capabilities, such get_size() or move(), can be found in the</tt> </tt>
-<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-docstring">individual class documentations.</tt> </tt>
-<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"><tt class="py-docstring">'''</tt> </tt>
-<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"> </tt>
-<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"><tt class="py-name">__author__</tt>    <tt class="py-op">=</tt> <tt class="py-string">"Ole Christian Weidner"</tt> </tt>
-<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"><tt class="py-name">__copyright__</tt> <tt class="py-op">=</tt> <tt class="py-string">"Copyright 2011-2012, Ole Christian Weidner"</tt> </tt>
-<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"><tt class="py-name">__license__</tt>   <tt class="py-op">=</tt> <tt class="py-string">"MIT"</tt> </tt>
-<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"> </tt>
-<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Package bliss.saga=bliss.saga-module.html"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-0', 'saga', 'link-0');">saga</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package bliss.saga.filesystem=bliss.saga.filesystem-module.html"><a title="bliss.saga.filesystem" class="py-name" href="#" onclick="return doclink('link-1', 'filesystem', 'link-1');">filesystem</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module bliss.saga.filesystem.File=bliss.saga.filesystem.File-module.html,Class bliss.saga.filesystem.File.File=bliss.saga.filesystem.File.File-class.html"><a title="bliss.saga.filesystem.File
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-docstring">    The above example covers most of the semantics of the filesystem package --</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-docstring">    additional capabilities, such get_size() or move(), can be found in the</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-docstring">    individual class documentations.</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-docstring">'''</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"><tt class="py-name">__author__</tt>    <tt class="py-op">=</tt> <tt class="py-string">"Ole Christian Weidner"</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"><tt class="py-name">__copyright__</tt> <tt class="py-op">=</tt> <tt class="py-string">"Copyright 2011-2012, Ole Christian Weidner"</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"><tt class="py-name">__license__</tt>   <tt class="py-op">=</tt> <tt class="py-string">"MIT"</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Package bliss.saga=bliss.saga-module.html"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-0', 'saga', 'link-0');">saga</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package bliss.saga.filesystem=bliss.saga.filesystem-module.html"><a title="bliss.saga.filesystem" class="py-name" href="#" onclick="return doclink('link-1', 'filesystem', 'link-1');">filesystem</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module bliss.saga.filesystem.File=bliss.saga.filesystem.File-module.html,Class bliss.saga.filesystem.File.File=bliss.saga.filesystem.File.File-class.html"><a title="bliss.saga.filesystem.File
 bliss.saga.filesystem.File.File" class="py-name" href="#" onclick="return doclink('link-2', 'File', 'link-2');">File</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name"><a title="bliss.saga.filesystem.File
 bliss.saga.filesystem.File.File" class="py-name" href="#" onclick="return doclink('link-3', 'File', 'link-2');">File</a></tt> </tt>
-<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-4" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-4', 'saga', 'link-0');">saga</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name"><a title="bliss.saga.filesystem" class="py-name" href="#" onclick="return doclink('link-5', 'filesystem', 'link-1');">filesystem</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name" targets="Module bliss.saga.filesystem.Directory=bliss.saga.filesystem.Directory-module.html,Class bliss.saga.filesystem.Directory.Directory=bliss.saga.filesystem.Directory.Directory-class.html"><a title="bliss.saga.filesystem.Directory
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-4" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-4', 'saga', 'link-0');">saga</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name"><a title="bliss.saga.filesystem" class="py-name" href="#" onclick="return doclink('link-5', 'filesystem', 'link-1');">filesystem</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name" targets="Module bliss.saga.filesystem.Directory=bliss.saga.filesystem.Directory-module.html,Class bliss.saga.filesystem.Directory.Directory=bliss.saga.filesystem.Directory.Directory-class.html"><a title="bliss.saga.filesystem.Directory
 bliss.saga.filesystem.Directory.Directory" class="py-name" href="#" onclick="return doclink('link-6', 'Directory', 'link-6');">Directory</a></tt> <tt class="py-keyword">import</tt> <tt id="link-7" class="py-name"><a title="bliss.saga.filesystem.Directory
 bliss.saga.filesystem.Directory.Directory" class="py-name" href="#" onclick="return doclink('link-7', 'Directory', 'link-6');">Directory</a></tt> </tt>
-<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"> </tt><script type="text/javascript">
 <!--
 expandto(location.href);
 // -->
@@ -137,7 +136,7 @@ expandto(location.href);
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Wed Jun  6 08:20:42 2012</a>
+    3.0.1 on Tue Jun 12 11:21:38 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
