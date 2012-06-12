@@ -34,7 +34,7 @@ class ComputeDescription(Object, AttributeInterface):
       jd['NumberOfProcesses'] = 128
       jd['SPMDVariation'] = MPI
 
-      js = saga.job.Service(cr)
+      js = cr.get_job_service()
       j  = js.create_job(jd)
       j.run()
       j.wait()
