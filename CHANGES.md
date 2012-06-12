@@ -1,4 +1,4 @@
-Version 0.2.2 released 2012-6-11
+Version 0.2.2 released 2012-6-12
 ----------------------------------------------------------------------
 
 * job.Decription now accepts strings for int values. This has been
