@@ -49,8 +49,6 @@ class ExceptionTests(unittest.TestCase):
         if e1.traceback != "(No Traceback)":
             self.fail("There shouldn't be a traceback!")
 
-        print e1
-
     ###########################################################################
     #
     def test_exception_string_rep(self): 

@@ -71,8 +71,6 @@ class LocalJobProcess(object):
 
         self.pi.log_info("Trying to run: %s" % cmdline)   
  
-        print self.cwd
-
         self.prochandle = subprocess.Popen(cmdline, shell=True, 
                                            #executable=self.executable,
                                            stderr=self._job_error, 
