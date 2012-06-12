@@ -1,13 +1,14 @@
-    #v .im: tabstop=8 expandtab shiftwidth=4 softtabstop=4
+# -*- coding: utf-8 -*-
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-''' SAGA Resource API Package
+''' B{Resource Management}
 
     The resource API provides the means to create, discover, manage and use
     resources, in particular compute and storage resources (L{resource.Compute},
     L{resource.Storage}).  A L{resource.Manager} class acts as resource
     provider, providing stateful resource instances.
 
-    B{Usage example 1} shows how to use a large compute resource::
+    B{Example}::
 
       # describe the resource requirements
       cd = saga.resource.ComputeDescription()
@@ -20,7 +21,7 @@
 
       # submit a large job onto the now active resource
       jd = saga.job.Description()
-      jd.executable = /bin/date
+      jd.executable = '/bin/my/executable'
       jd.number_of_processes = 16
 
       js = saga.job.Service(cr)

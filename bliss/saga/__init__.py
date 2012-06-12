@@ -1,10 +1,18 @@
 # -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-"""Bliss (BLiss IS SagaA) is a pragmatic and light-weight implementation of the OGF SAGA standard (GFD.90).
+''' B{SAGA - A Simple API for Grid Applications}
+
+    SAGA-Bliss is a light-weight Python package that implements parts of the U{OGF
+    GFD.90 SAGA<www.gridforum.org/documents/GFD.90.pdf>}
+    interface specification and provides plug-ins for different
+    distributed middleware systems and services. SAGA-Bliss implements the most
+    commonly used features of GFD.90 based upon extensive use-case analysis, and
+    focuses on usability and simple deployment in real-world heterogeneous
+    distributed computing environments and application scenarios.
    
-   More information can be found at: U{http://saga-project.github.com/bliss}
-"""
+    More information can be found at: U{http://saga-project.github.com/bliss}
+'''
 
 __author__    = "Ole Christian Weidner, et al."
 __copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
