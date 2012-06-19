@@ -187,9 +187,15 @@ class SSHJobProcess(object):
 
         #change the executed command depending on if we're using env or not
         if envline=="":
-            full_line = "echo $$ && " + cdline + "("+envline+" "+cmdline+" "+argline+")" + "> "+ jd.output + " 2> " + jd.error
+            full_line = "echo $$ && " + cdline + "("+envline+" "+cmdline+" "+argline+")"
         else:
-            full_line = "echo $$ && " + cdline + "("+envline+"'"+cmdline+" "+argline+"')" + "> "+ jd.output + " 2> " + jd.error
+            full_line = "echo $$ && " + cdline + "("+envline+"'"+cmdline+" "+argline+"')"
+
+        if jd.output:
+            full_line +=  " > " + jd.output
+        if jd.error:
+            full_line += " 2> " + jd.error
+            
         self.pi.log_debug("Sending command %s to remote server:" % full_line)
         self.sshchannel.exec_command(full_line)
         
