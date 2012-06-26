@@ -10,31 +10,31 @@ class SSHJobProcess(object):
         self.pi = plugin
 
         #check for things we dont support
-        if jobdescription.file_transfer     != None: 
+        if jobdescription.file_transfer != None: 
             self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
                                         "SSH Job adaptor doesn't support the file transfer attribute!") 
 
-        if jobdescription.contact     != None: 
+        if jobdescription.contact != None: 
             self.pi.log_error_and_raise(bliss.saga.Error.NotImplemented,
                                         "SSH Job adaptor doesn't support the contact attribute!")
 
-        if jobdescription.wall_time_limit     != None:
-            self.pi.log_warning("Silently ignoring the walltime_limit attribute. It's not supported by SSH.")
+        if jobdescription.wall_time_limit != None:
+            self.pi.log_debug("Silently ignoring the walltime_limit attribute. It's not supported by SSH.")
               
-        if jobdescription.total_cpu_count     != None: 
-            self.pi.log_warning("Silently ignoring the total_cpu_count attribute. It's not supported by SSH.")
+        if jobdescription.total_cpu_count != None: 
+            self.pi.log_debug("Silently ignoring the total_cpu_count attribute. It's not supported by SSH.")
 
-        if jobdescription.number_of_processes     != None: 
-            self.pi.log_warning("Silently ignoring the number_of_processes attribute. It's not supported by SSH.")        
+        if jobdescription.number_of_processes != None: 
+            self.pi.log_debug("Silently ignoring the number_of_processes attribute. It's not supported by SSH.")        
 
-        if jobdescription.spmd_variation     != None: 
-            self.pi.log_warning("Silently ignoring the spmd_variation attribute. It's not supported by SSH.")
+        if jobdescription.spmd_variation != None: 
+            self.pi.log_debug("Silently ignoring the spmd_variation attribute. It's not supported by SSH.")
 
-        if jobdescription.project     != None: 
-            self.pi.log_warning("Silently ignoring the project attribute. It's not supported by SSH.")
+        if jobdescription.project != None: 
+            self.pi.log_debug("Silently ignoring the project attribute. It's not supported by SSH.")
         
-        if jobdescription.queue     != None: 
-            self.pi.log_warning("Silently ignoring the queue attribute. It's not supported by SSH.")
+        if jobdescription.queue != None: 
+            self.pi.log_debug("Silently ignoring the queue attribute. It's not supported by SSH.")
 
 
         self.executable  = jobdescription.executable
