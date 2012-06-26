@@ -525,9 +525,9 @@ class Description(Object, AttributeInterface):
             return self._number_of_processes
         def fset(self, val):
             if type(val) is int or type(val) is None:
-                self._total_cpu_count = val
+                self._number_of_processes = val
             elif type(val) is str:
-                self._total_cpu_count = int(val)
+                self._number_of_processes = int(val)
             else:
                 raise bliss.saga.Exception(bliss.saga.Error.BadParameter, "'number_of_processes' attribute expects 'int' or 'str' type.")
         def fdel(self, val):
