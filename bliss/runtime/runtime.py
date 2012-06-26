@@ -15,7 +15,6 @@ class Runtime:
     def __init__(self):
         '''Constructs a runtime object'''
 
-        #BLISS_VERBOSE = int(os.getenv('BLISS_VERBOSE'))
         try: 
             SAGA_VERBOSE = int(os.getenv('SAGA_VERBOSE'))
         except Exception:
@@ -36,11 +35,19 @@ class Runtime:
         # 0 = No Logging
         else:
             self.loglevel = logging.CRITICAL
-  
-        logging.basicConfig(level=self.loglevel, datefmt='%m/%d/%Y %I:%M:%S %p',
-                    	    format='%(asctime)s - bliss.%(name)s - %(levelname)s - %(message)s')
+
+        ## set up the bliss base logger
+        ##
+        log = logging.getLogger('bliss')
+        log.setLevel(self.loglevel)
+        formatter = logging.Formatter(fmt='%(asctime)s %(name)s: [%(levelname)s] %(message)s', 
+                                      datefmt='%m/%d/%Y %I:%M:%S %p')
+        handler = logging.StreamHandler()
+        handler.setFormatter(formatter)
+        log.addHandler(handler)
+
         address=str(hex(id(self)))
-        self.logger = logging.getLogger(self.__class__.__name__)#+'('+address+')') 
+        self.logger = logging.getLogger('bliss.'+self.__class__.__name__)#+'('+address+')') 
         self.logger.info("BLISS runtime instance created at %s" % address)
         self.plugin_class_list = {}
         self.plugin_instance_list = {}

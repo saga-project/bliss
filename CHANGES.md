@@ -1,3 +1,9 @@
+Version 0.2.3 released 2012-6-26
+----------------------------------------------------------------------
+
+* Improved logging. No root logger hijacking anymore (issue #62)
+* Fixed job.Description.number_of_processes (issue #63)
+
 Version 0.2.2 released 2012-6-12
 ----------------------------------------------------------------------
 

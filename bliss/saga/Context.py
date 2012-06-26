@@ -100,7 +100,7 @@ class Context(AttributeInterface, Object):
         self._register_rw_attribute(name="UserProxy", 
                                     accessor=self.__class__.userproxy)  
 
-        self.__logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')')
+        self.__logger = logging.getLogger('bliss.'+self.__class__.__name__)
 
 
     ######################################################################

@@ -114,7 +114,7 @@ class Object(object) :
         self._plugin = None
         self._type = objtype
         self.Exceptiontype = apitype
-        self._logger = logging.getLogger(self.__class__.__name__+'('+str(hex(id(self)))+')')
+        self._logger = logging.getLogger('bliss.'+self.__class__.__name__)
  
         if session is not None:
             self._session = session
