@@ -60,7 +60,6 @@ class Url(Object):
         '''Create a new Url object.'''
 
         Object.__init__(self, objtype=Object.Type.Url, apitype=Object.Type.BaseAPI)
-
         self._urlobj = urlparse.urlparse(urlstring)
          
     ######################################################################
@@ -90,8 +89,7 @@ class Url(Object):
             netloc += host
         if port is not None:
             netloc += ":%s" % (port)
-        return netloc
-                
+        return netloc                
 
     ######################################################################
     ## Scheme property
@@ -277,7 +275,11 @@ class Url(Object):
         """Return the 'path' component of the URL.
            @return: str
         """
-        return self._urlobj.path
+        if '?' in self._urlobj.path:
+            (path, query) = self._urlobj.path.split('?')
+            return path
+        else:
+            return self._urlobj.path
 
     path=property(get_path, set_path)
     """The path component of the URL.
@@ -286,7 +288,7 @@ class Url(Object):
 
     ######################################################################
     ## Query property
-    def set_query(self, query):
+    def set_query(self, path):
         """Set the 'query' component of the URL.
            @type query: str
         """
@@ -302,7 +304,12 @@ class Url(Object):
         """Return the 'query' component of the URL.
            @return: str
         """
-        return self._urlobj.query
+        if self._urlobj.query == '':
+            if '?' in self._urlobj.path:
+                (path, query) = self._urlobj.path.split('?')
+                return query
+        else:
+            return self._urlobj.query
 
     query=property(get_query, set_query)
     """The query component of the URL.

@@ -74,6 +74,17 @@ class UrlTests(unittest.TestCase):
         if str(url) != "sftp://pass:user@remote.host.net:123/tmp/data":
             self.fail("unexpected url")
 
+    ###########################################################################
+    #
+    def test_url_issue_61(self): 
+
+        url = saga.Url ("advert://localhost/?dbtype=sqlite3")
+        
+        if url.query != "dbtype=sqlite3":
+            self.fail("unexpected url")
+
+    ###########################################################################
+    #
     def test_url_properties(self):
 
        url = saga.Url("")
