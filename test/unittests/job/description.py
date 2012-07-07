@@ -39,7 +39,7 @@ class JobDescriptionTests(unittest.TestCase):
                       "Error"            : "error",
                       "WorkingDirectory" : "working_directory",
                       "Contact"          : "contact",
-                      "SPMDVariation"    : "spmd_variation",
+                      #"SPMDVariation"    : "spmd_variation",
         }
 
         try:
@@ -240,4 +240,34 @@ class JobDescriptionTests(unittest.TestCase):
         except saga.Exception, e : 
             self.fail(e)
 
+    ###########################################################################
+    #
+    def test_spmd_variation(self) :
+        """
+        Test if job description spmd_variation works as expected
+        """
 
+        try :
+            jd = saga.job.Description()
+
+            jd.spmd_variation = 'MPI'
+            if jd.get_attribute("SPMDVariation") != 'MPI':
+                self.fail("Unexpected SPMDVariation attribute")
+            if jd.spmd_variation != 'MPI':
+                self.fail("Unexpected SPMDVariation attribute")
+
+            jd.spmd_variation = "OpenMP"
+            if jd.get_attribute("SPMDVariation") != 'OpenMP':
+                self.fail("Unexpected SPMDVariation attribute")
+            if jd.spmd_variation != 'OpenMP':
+                self.fail("Unexpected SPMDVariation attribute")
+        
+        except saga.Exception, e:
+            print "XXXX: " + jd.spmd_variation
+            self.fail(e)
+
+        try:
+            jd.spmd_variation = 'now what?'
+            self.fail("Exception in case of unsupported attribute value expected!")
+        except saga.Exception, e:
+            pass

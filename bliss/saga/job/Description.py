@@ -556,7 +556,12 @@ class Description(Object, AttributeInterface):
             return self._spmd_variation
         def fset(self, val):
             if type(val) is not str and type(val) is not type(None):
-                raise bliss.saga.Exception(bliss.saga.Error.BadParameter, "'spmd_variation' attribute expects 'string' type.")
+                raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
+                "'spmd_variation' attribute expects 'string' type.")
+            if type(val) is str:
+                if val != "MPI" and val != "OpenMP":
+                    raise bliss.saga.Exception(bliss.saga.Error.BadParameter,
+                    "'spmd_variation must eiter be 'MPI' or 'OpenMP'")
             self._spmd_variation = val
         def fdel(self, val):
             self._spmd_variation = None

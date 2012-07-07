@@ -208,7 +208,7 @@ class LocalJobPlugin(JobPluginInterface):
         try:
             service = self.bookkeeper.get_service_for_job(job)
             return self.bookkeeper.get_process_for_job(job).getpid(str(service._url))  
-            self.log_info("Started local process: %s %s" % (job.get_description().executable, job.get_description().arguments)) 
+            #self.log_info("Started local process: %s %s" % (job.get_description().executable, job.get_description().arguments)) 
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't get job id because: %s " % (str(ex)))
 
@@ -221,7 +221,7 @@ class LocalJobPlugin(JobPluginInterface):
         try:
             service = self.bookkeeper.get_service_for_job(job)
             self.bookkeeper.get_process_for_job(job).run(job.get_description())  
-            self.log_info("Started local process: %s %s" % (job.get_description().executable, job.get_description().arguments))
+            #self.log_info("Started local process: %s %s" % (job.get_description().executable, job.get_description().arguments))
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't run job because: %s " % (str(ex)))
 

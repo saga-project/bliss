@@ -8,34 +8,53 @@ __license__   = "MIT"
 
 import bliss.saga as saga
 import unittest
+import os
 
 ###############################################################################
 #
-class JobIssueTests(unittest.TestCase):
+class JobMiscTests(unittest.TestCase):
     """
-    Tests for job-related issues filed at https://github.com/saga-project/bliss/issues
+    Misc. job tests
     """
     def setUp(self):
         # Fixture:
         # called immediately before calling the test method
-        pass 
+        if os.path.exists("/tmp/bliss_unittest_tmpfile"):
+            os.remove("/tmp/bliss_unittest_tmpfile")
 
     def tearDown(self):
         # Fixture:
         # called immediately after the test method has been called
-        pass
+        #if os.path.exists("/tmp/bliss_unittest_tmpfile"):
+        #    os.remove("/tmp/bliss_unittest_tmpfile")
+        pass 
+
+    def _file_len(self, fname):
+        with open(fname) as f:
+            for i, l in enumerate(f):
+                pass
+        return i + 1
+
 
     ###########################################################################
     #
-    def test_issue_46(self):
+    def test_spmd_variation(self):
         """
         https://github.com/saga-project/bliss/issues/46
         """
 
         jd = saga.job.Description()
-        jd.executable = "/bin/date"
-        jd.output = "/dev/null"
+        jd.executable          = "/bin/date"
+        jd.spmd_variation      = "MPI"
+        jd.number_of_processes = 8
+        jd.output              = "/tmp/bliss_unittest_tmpfile"
+
+
         js = saga.job.Service ("fork://localhost/") 
         j = js.create_job (jd)
         j.run ()
         j.wait()
+
+        if self._file_len("/tmp/bliss_unittest_tmpfile") <= 1:
+            self.fail("Unexpected output for SPMDVariation=8")
+

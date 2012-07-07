@@ -12,4 +12,5 @@ from exception  import *
 from url        import *
 
 from job.description import *
-from job.issues import * 
+from job.issues      import *
+from job.misc        import * 

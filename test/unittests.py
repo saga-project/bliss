@@ -23,6 +23,7 @@ if __name__ == '__main__':
     # Job package tests
     suite_job = unittest.TestLoader().loadTestsFromTestCase(JobDescriptionTests)
     suite_job.addTests(unittest.TestLoader().loadTestsFromTestCase(JobIssueTests))
+    suite_job.addTests(unittest.TestLoader().loadTestsFromTestCase(JobMiscTests))
     alltests = unittest.TestSuite([suite_lnf, 
                                    suite_job])
 

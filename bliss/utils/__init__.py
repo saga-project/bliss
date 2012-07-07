@@ -6,3 +6,4 @@ __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 from logger import *
+from which  import which

@@ -12,6 +12,7 @@ import time
 import subprocess
 import bliss.saga
 
+from bliss.utils import which
 
 class LocalJobProcess(object):
     '''A wrapper around a subprocess'''
@@ -32,6 +33,8 @@ class LocalJobProcess(object):
         self.state = bliss.saga.job.Job.New
         self.pi = plugin
         
+        self.number_of_processes = 1
+        self.use_mpirun = False
 
     def __del__(self):
         if self._job_output is not None:
@@ -61,15 +64,38 @@ class LocalJobProcess(object):
                 else:
                     self._job_error = open(jd.error,"w") 
         else:
-            self._job_error = None 
+            self._job_error = None
 
-        cmdline = str(self.executable)
+        if jd.spmd_variation is not None:
+            if jd.spmd_variation == "MPI":
+                if jd.number_of_processes is not None:
+                    self.number_of_processes = jd.number_of_processes
+                    self.use_mpirun = True
+                self.pi.log_info("SPMDVariation=%s requested. Job will execute via 'mpirun -np %d'." % (jd.spmd_variation, self.number_of_processes))
+            else:
+                self.pi.log_info("SPMDVariation=%s: unknown SPMD variation. Ignoring." % jd.spmd_variation)
+
+        # check if executable exists.
+        if which(self.executable) == None:
+            self.pi.log_error_and_raise(bliss.saga.Error.BadParameter, 
+            "Executable doesn't exist: %s" % self.executable)        
+            
+
+        if self.use_mpirun is True:
+            mpirun = which('mpirun')
+            if mpirun == None:
+                self.pi.log_error_and_raise(bliss.saga.Error.BadParameter, 
+                "Can't find 'mpirun' in path.")        
+            else:
+                cmdline = '%s -np %d %s' % (mpirun, self.number_of_processes, str(self.executable))
+        else:
+            cmdline = str(self.executable)
         args = ""
         if self.arguments is not None:
             for arg in self.arguments:
                 cmdline += " %s" % arg 
 
-        self.pi.log_info("Trying to run: %s" % cmdline)   
+        self.pi.log_info("Trying to run: %s" % cmdline) 
  
         self.prochandle = subprocess.Popen(cmdline, shell=True, 
                                            #executable=self.executable,
@@ -77,6 +103,7 @@ class LocalJobProcess(object):
                                            stdout=self._job_output, 
                                            env=self.environment,
                                            cwd=self.cwd)
+
         self.pid = self.prochandle.pid
         self.state = bliss.saga.job.Job.Running
 
