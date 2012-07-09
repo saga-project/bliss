@@ -65,6 +65,10 @@ class Directory(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess,
               "File constructor expects str or bliss.saga.Url type as 'url' parameter")
 
+        # Directory paths end with "/" by convention
+        if self._url.path.endswith("/") != True :
+            self._url.path = "%s/" % self._url.path
+
         if flags is None:
             _flags = 0
         else:
@@ -87,14 +91,14 @@ class Directory(Object):
     ######################################################################
     ## 
     def get_url(self):
-        '''Return the complete url pointing to the entry.
+        '''Return the complete url pointing to the directory.
 
            The call will return the complete url pointing to
            this directory as a saga.Url object::
 
-               # get URL of a directory
+               # print URL of a directory
                dir = saga.filesystem.Directory("sftp://localhost/tmp/")
-               dir.get_url()
+               print dir.get_url()
         '''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 

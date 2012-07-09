@@ -28,7 +28,7 @@ class File(Object):
 
     ######################################################################
     ## 
-    def __init__(self, url, falgs=None, session=None):
+    def __init__(self, url, flags=None, session=None):
         '''Construct a new file object
 
            @param url: Url of the (remote) file
@@ -79,6 +79,24 @@ class File(Object):
 
     ######################################################################
     ## 
+    def get_url(self):
+        '''Return the complete url pointing to the file.
+
+           The call will return the complete url pointing to
+           this file as a saga.Url object::
+
+               # print URL of a file
+               file = saga.filesystem.File("sftp://localhost/etc/passwd")
+               print file.get_url()
+        '''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+        else:
+            return self._url
+
+    ######################################################################
+    ## 
     def copy(self, target):
         '''Copy the file to another location
 
@@ -99,7 +117,7 @@ class File(Object):
             if type(target) == str:
                 target_url = bliss.saga.Url(str(target))
             elif type(target) == bliss.saga.Url:
-                target_url = url
+                target_url = target
             else:
                 raise bliss.saga.Exception(bliss.saga.Error.NoSuccess,
                   "File.copy() expects str or bliss.saga.Url type as 'target' parameter")
