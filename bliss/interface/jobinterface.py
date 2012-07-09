@@ -115,7 +115,7 @@ class JobPluginInterface(PluginBaseInterface):
         errormsg = "Not implemented plugin method called: job_wait()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
 
-    def job_cancel(self, job_obj, timeout):
+    def job_cancel(self, job_obj):
         errormsg = "Not implemented plugin method called: job_cancel()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg) 
 

@@ -264,7 +264,7 @@ class PBSJobPlugin(JobPluginInterface, SDPluginInterface):
 
     ######################################################################
     ##
-    def job_cancel(self, job_obj, timeout):
+    def job_cancel(self, job_obj):
         '''Implements interface from _JobPluginBase.
            This method is called for saga.Job.cancel().
         '''

@@ -5,7 +5,7 @@ Version 0.2.4 released 2012-7-??
 * Added 'mpirun' support for local job plug-in (via SPMDVariation)
 * Added some of the missing methods and flags to filesystem package
 * An URL object can now be constructed from another URL object
-
+* Fixed job.cancel()
 
 Version 0.2.3 released 2012-6-26
 ----------------------------------------------------------------------

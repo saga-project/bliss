@@ -336,7 +336,7 @@ class Job(Object, AttributeInterface):
 
         '''
         if self._plugin is not None:
-            return self._plugin.job_cancel(self, timeout)
+            return self._plugin.job_cancel(self)
         else:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")

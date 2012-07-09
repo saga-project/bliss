@@ -45,13 +45,9 @@ tilesy = 1
 ##
 if __name__ == "__main__":
 
-    logger = bliss.utils.logger.get_logger()
-    logger.setLevel(logging.INFO)
-
-    # the total time to calculate all tiles:
-    t_total = 0.0
-
     try:
+        jobs = []
+ 
         ctx = saga.Context()
         ctx.type = saga.Context.SSH
         ctx.userid  = 'oweidner' # like 'ssh username@host ...'
@@ -61,15 +57,13 @@ if __name__ == "__main__":
         jobservice = saga.job.Service("pbs+ssh://oweidner@india.futuregrid.org")
         jobservice.session.contexts.append(ctx)
 
-        # the saga job container allows the convenient handling 
-        # of multiple saga jobs at once:
-        jcontainer = saga.job.Container(jobservice)
 
         for x in range(0, tilesx):
             for y in range(0, tilesy):
                 # the saga job description is used to describe the parameters 
                 # and requirements of a compute job. Here, we describe how we
                 # want to run the Mandelbrot generator:
+                outputfile = 'tile_x%s_y%s.png' % (x,y)
                 jd = saga.job.Description()
                 jd.wall_time_limit   = 5
                 jd.total_cpu_count   = 1     
@@ -77,30 +71,23 @@ if __name__ == "__main__":
                 jd.arguments         = ['mandelbrot.py', imgx, imgy, 
                                         (imgx/tilesx*x), (imgx/tilesx*(x+1)),
                                         (imgy/tilesy*y), (imgy/tilesy*(y+1)),
-                                        'tile_x%s_y%s.png']
+                                        outputfile]
 
-                # next, we create a saga job object from the description above
-                # and add it to our job container. The new job is not 
-                # running (yet):
-                jcontainer.add(jobservice.create_job(jd))
+                job = jobservice.create_job(jd)
+                job.run()
+                jobs.append(job)
 
-                # this is where we call the Mandelbrot fractal generator
-                # directly via its module function makemandel().
-                t0 = time.time()
-                #container.run()
-                #container.wait()
-                dt = time.time() - t0
-                t_total += dt
-                print "Jobs finished after %s seconds." % dt
+                print " * Submitted 'tile-job' with ID %s. Output will be written to: %s" % (job.jobid, outputfile)
 
-        # execute the job container
-        #jcontainer.run()
+        while len(jobs) > 0:
+            for job in jobs:
+                jobstate = job.get_state()
+                print " * Job %s status: %s" % (job.jobid, jobstate)
+                if jobstate is saga.job.Job.Done:
+                    jobs.remove(job)
+                
+            time.sleep(5)
 
-        # wait for all container jobs to finish
-        #jcontainer.wait()
-
-
-        print "Total execution time to generate a %sx%s Mandelbrot fractal: %s" % (imgx, imgy, t_total)
         #print "Saving master image as 'mandel_full.png (this might take a while)'..."
         #fullimage.save("mandel_full.png", "PNG")
         sys.exit(0)
@@ -111,7 +98,8 @@ if __name__ == "__main__":
 
     except KeyboardInterrupt:
 	# Ctrl-C caught. Try to save what we already have and exit. 
-	print "Total execution time until Ctrl-C was hit: %s" % (t_total) 
         #print "Saving partial master image as 'mandel_full.png' (this might take a while)..."
-        #fullimage.save("mandel_full.png", "PNG") 
+        #fullimage.save("mandel_full.png", "PNG")
+        for job in jobs:
+            job.cancel()
         sys.exit(-1)

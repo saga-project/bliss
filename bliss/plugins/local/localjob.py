@@ -226,7 +226,7 @@ class LocalJobPlugin(JobPluginInterface):
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, "Couldn't run job because: %s " % (str(ex)))
 
 
-    def job_cancel(self, job, timeout):
+    def job_cancel(self, job):
         '''Implements interface from _JobPluginBase'''
         ## Step X: implement job.cancel()
         try:
