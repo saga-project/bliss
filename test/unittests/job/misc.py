@@ -10,6 +10,8 @@ import bliss.saga as saga
 import unittest
 import os
 
+from bliss.utils.which import which
+
 ###############################################################################
 #
 class JobMiscTests(unittest.TestCase):
@@ -42,6 +44,9 @@ class JobMiscTests(unittest.TestCase):
         """
         https://github.com/saga-project/bliss/issues/46
         """
+
+        if which('mpirun') == None:
+            self.skipTest("MPI is not installed.")
 
         jd = saga.job.Description()
         jd.executable          = "/bin/date"

@@ -5,6 +5,7 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
+import bliss.saga 
 from bliss.saga import Url
 from bliss.saga.Object import Object 
 
@@ -33,7 +34,7 @@ class Directory(Object):
 
     ######################################################################
     ## 
-    def __init__(self, url, session=None):
+    def __init__(self, url, flags=None, session=None):
         '''Construct a new directory object
 
            @param url: Url of the (remote) file system.
@@ -56,13 +57,21 @@ class Directory(Object):
         Object.__init__(self, Object.Type.FilesystemDirectory, 
                         apitype=Object.Type.FilesystemAPI, session=session)
 
-        if(type(url) == str):
-            self._url = Url(str(url))
-        else:
+        if type(url) == str:
+            self._url = bliss.saga.Url(str(url))
+        elif type(url) == bliss.saga.Url:
             self._url = url
+        else:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess,
+              "File constructor expects str or bliss.saga.Url type as 'url' parameter")
+
+        if flags is None:
+            _flags = 0
+        else:
+            _flags = flags
 
         self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
-        self._plugin.register_directory_object(self)
+        self._plugin.register_directory_object(self, _flags)
         self._logger.info("Bound to plugin %s" % (repr(self._plugin)))
 
     ######################################################################
@@ -74,6 +83,25 @@ class Directory(Object):
             self._plugin.unregister_file_object(self)
         else:
             pass # can't throw here
+
+    ######################################################################
+    ## 
+    def get_url(self):
+        '''Return the complete url pointing to the entry.
+
+           The call will return the complete url pointing to
+           this directory as a saga.Url object::
+
+               # get URL of a directory
+               dir = saga.filesystem.Directory("sftp://localhost/tmp/")
+               dir.get_url()
+        '''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+        else:
+            return self._url
+
 
     ######################################################################
     ## 
@@ -127,10 +155,7 @@ class Directory(Object):
            @param path: name/path of the new directory
            @param flags: directory creation flags
 
-           The call creates a directory at the given location.  The parent
-           directory must exist, the target directory itself must not yet exist.
-
-           The 'flags' parameter is not evaluated at the moment.  
+           The call creates a directory at the given location.
 
            Example::
 
@@ -148,6 +173,33 @@ class Directory(Object):
             else:
                 _flags = flags
             return self._plugin.dir_make_dir(self, path, _flags)
+
+
+    ######################################################################
+    ## 
+    def open_dir(self, path, flags=None):
+        '''Open and return a new directoy
+           @param path: name/path of the directory to open
+           @param flags: directory creation flags
+
+           The call opens and returns a directory at the given location.
+
+           Example::
+
+               # create a subdir 'data' in /tmp
+               dir = saga.filesystem.Directory("sftp://localhost/tmp/")
+               data = dir.open_dir ('data/', saga.filesystem.Create)
+        '''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+        else:
+            if flags is None:
+                _flags = 0
+            else:
+                _flags = flags
+            return self._plugin.dir_open_dir(self, path, _flags)
+
 
     ######################################################################
     ## 

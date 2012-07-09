@@ -28,7 +28,7 @@ class File(Object):
 
     ######################################################################
     ## 
-    def __init__(self, url, session=None):
+    def __init__(self, url, falgs=None, session=None):
         '''Construct a new file object
 
            @param url: Url of the (remote) file
@@ -58,8 +58,13 @@ class File(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess,
               "File constructor expects str or bliss.saga.Url type as 'url' parameter")
 
+        if flags is None:
+            _flags = 0
+        else:
+            _flags = flags
+
         self._plugin = Object._get_plugin(self) # throws 'NoSuccess' on error
-        self._plugin.register_file_object(self)
+        self._plugin.register_file_object(self, flags)
         self._logger.info("Bound to plugin %s" % (repr(self._plugin)))
 
     ######################################################################

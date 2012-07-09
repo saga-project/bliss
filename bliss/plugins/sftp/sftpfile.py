@@ -174,7 +174,7 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
 
     ######################################################################
     ## 
-    def register_file_object(self, file_obj):
+    def register_file_object(self, file_obj, flags):
         '''Implements interface from FilesystemPluginInterface
         '''
         furl = file_obj._url
@@ -206,7 +206,7 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
                  "Couldn't open %s. File doesn't exist." % (file_obj._url))
             elif str(stat).startswith("d") is True:
                 self.log_error_and_raise(bliss.saga.Error.BadParameter, 
-                 "Couldn't open %s. URL points to a directory." % (file_obj._url))       
+                 "Couldn't open file %s. URL points to a directory." % (file_obj._url))       
  
     ######################################################################
     ## 
@@ -217,7 +217,7 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
 
     ######################################################################
     ## 
-    def register_directory_object(self, dir_obj):
+    def register_directory_object(self, dir_obj, flags):
         '''Implements interface from FilesystemPluginInterface
         '''
         furl = dir_obj._url
@@ -229,13 +229,16 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
                 if os.path.isdir(furl.path) == False:
                     self.log_error_and_raise(bliss.saga.Error.BadParameter, 
                      "Couldn't open directory %s. URL points to a file." % (dir_obj._url))       
-            else:                        
-                self.log_error_and_raise(bliss.saga.Error.DoesNotExist, 
-                 "Couldn't open %s. File doesn't exist." % (dir_obj._url))
+            else:                   
+                if flags & bliss.saga.filesystem.Create:
+                    self.dir_make_dir(dir_obj, furl.path, flags)
+                else:
+                    self.log_error_and_raise(bliss.saga.Error.DoesNotExist, 
+                    "Couldn't open %s. File doesn't exist." % (dir_obj._url))
 
         else:
             dir_obj.is_local = False
-
+            # This is a remote file
             try:
                 ssh = self._cp.get_connection(dir_obj)
                 sftp = ssh.open_sftp()
@@ -245,11 +248,14 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
 
             stat = self.entry_getstat(dir_obj)
             if stat == None:
-                self.log_error_and_raise(bliss.saga.Error.DoesNotExist, 
-                 "Couldn't open %s. File doesn't exist." % (dir_obj._url))
+                if flags & bliss.saga.filesystem.Create:
+                    self.dir_make_dir(dir_obj, furl.path, flags)
+                else:
+                    self.log_error_and_raise(bliss.saga.Error.DoesNotExist, 
+                    "Couldn't open %s. File doesn't exist." % (dir_obj._url))
             elif str(stat).startswith("d") is False:
                 self.log_error_and_raise(bliss.saga.Error.BadParameter, 
-                 "Couldn't open %s. URL points to a directory." % (dir_obj._url))       
+                 "Couldn't open directory %s. URL points to a file." % (dir_obj._url))       
 
         #try:
         #    ssh = self._cp.get_connection(dir_obj)
@@ -382,6 +388,21 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
             except Exception, ex:
                 self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
                 "Couldn't determine size for '%s': %s " % (complete_path, (str(ex))))
+
+    ######################################################################
+    ## 
+    def dir_open_dir(self, dir_obj, path, flags):
+        '''Implements interface from FilesystemPluginInterface
+        '''
+        if path != None:
+            complete_path = os.path.join(dir_obj._url.path, path)
+        else:
+            complete_path = dir_obj._url.path
+
+        url = bliss.saga.Url(dir_obj._url)
+        url.path = complete_path
+
+        return bliss.saga.filesystem.Directory(url, flags)    
 
     ######################################################################
     ## 

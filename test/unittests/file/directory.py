@@ -19,12 +19,64 @@ class FilesystemDirectoryTests(unittest.TestCase):
         # Fixture:
         # called immediately before calling the test method
         self._dir1 = "/tmp/"+str(uuid.uuid1())
+        self._dir2 = "/tmp/"+str(uuid.uuid1())
+        self._dir3 = "/tmp/"+str(uuid.uuid1())
+
 
     def tearDown(self):
         # Fixture:
         # called immediately after the test method has been called
         if os.path.exists(self._dir1):
             os.removedirs(self._dir1)
+        if os.path.exists(self._dir2):
+            os.removedirs(self._dir2)
+        if os.path.exists(self._dir3):
+            os.removedirs(self._dir3)
+
+
+    ###########################################################################
+    #
+    def test_ctor(self):
+        """
+        Tests directory constructor
+        """
+        try:
+            d = saga.filesystem.Directory("sftp://localhost/"+self._dir2)
+            self.fail("ctor should have failed without 'Create' flag set")
+        except saga.Exception, ex:
+            # should fail bc dir doesn't exist
+            pass
+
+        try:
+            d = saga.filesystem.Directory("sftp://localhost/"+self._dir2, saga.filesystem.Create)
+            d.list()
+        except saga.Exception, ex:
+            # should not fail bc 'Create' flag was set
+            self.fail("Unexpected exception: %s" % ex)            
+    
+
+    ###########################################################################
+    #
+    def test_open(self):
+        """
+        Tests directory open_dir
+        """
+        try:
+            d = saga.filesystem.Directory("sftp://localhost/")
+            d2 = d.open_dir(self._dir3)
+            self.fail("open_dir should have failed without 'Create' flag set")
+        except saga.Exception, ex:
+            # should fail bc dir doesn't exist
+            pass
+
+        try:
+            d = saga.filesystem.Directory("sftp://localhost/")
+            d2 = d.open_dir(self._dir3, saga.filesystem.Create)
+            d2.get_size()
+            d2.get_url()
+        except saga.Exception, ex:
+            # should not fail bc 'Create' flag was set
+            self.fail("Unexpected exception: %s" % ex)            
 
     ###########################################################################
     #
@@ -51,4 +103,5 @@ class FilesystemDirectoryTests(unittest.TestCase):
             d.make_dir(self._dir1, saga.filesystem.Overwrite)
         except saga.Exception, ex:
             self.fail("Unexpected exception: %s" % ex)
-            
+           
+

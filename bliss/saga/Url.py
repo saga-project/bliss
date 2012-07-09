@@ -56,12 +56,19 @@ class Url(Object):
 
     ######################################################################
     ##
-    def __init__(self, urlstring=''):
+    def __init__(self, url=''):
         '''Create a new Url object.'''
-
         Object.__init__(self, objtype=Object.Type.Url, apitype=Object.Type.BaseAPI)
-        self._urlobj = urlparse.urlparse(urlstring)
-         
+
+
+        if type(url) == str:
+            self._urlobj = urlparse.urlparse(url)    
+        elif type(url) == Url:
+            self._urlobj = urlparse.urlparse(str(url))        
+        else:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess,
+              "URL constructor expects str or bliss.saga.Url type as parameter")
+
     ######################################################################
     ##
     def __str__(self):
