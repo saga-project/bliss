@@ -3,6 +3,7 @@ Version 0.2.4 released 2012-7-??
 
 * Added unit-tests for SPMDVariation
 * Added 'mpirun' support for local job plug-in (via SPMDVariation)
+* Added missing flags to filesystem package
 
 Version 0.2.3 released 2012-6-26
 ----------------------------------------------------------------------

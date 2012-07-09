@@ -393,8 +393,11 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
         # LOCAL FILESYSTEM
         if dir_obj.is_local:
             if os.path.exists(complete_path):
-                self.log_error_and_raise(bliss.saga.Error.AlreadyExists, 
-                 "Couldn't create directory '%s'. Entry already exist." % (complete_path))
+                if flags & bliss.saga.filesystem.Overwrite:
+                    pass # do nothing
+                else:
+                    self.log_error_and_raise(bliss.saga.Error.AlreadyExists, 
+                    "Couldn't create directory '%s'. Entry already exist." % (complete_path))
             else:
                 os.mkdir(complete_path)
 
@@ -403,8 +406,11 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
             # throw exception if directory already exists
             stat = self.entry_getstat(dir_obj, path)
             if stat != None:
-                self.log_error_and_raise(bliss.saga.Error.AlreadyExists, 
-                 "Couldn't create directory '%s'. Entry already exist." % (complete_path))
+                if flags & bliss.saga.filesystem.Overwrite:
+                    pass # do nothing
+                else:            
+                    self.log_error_and_raise(bliss.saga.Error.AlreadyExists, 
+                    "Couldn't create directory '%s'. Entry already exist." % (complete_path))
 
             try:
                 ssh = self._cp.get_connection(dir_obj)

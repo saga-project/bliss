@@ -24,8 +24,13 @@ if __name__ == '__main__':
     suite_job = unittest.TestLoader().loadTestsFromTestCase(JobDescriptionTests)
     suite_job.addTests(unittest.TestLoader().loadTestsFromTestCase(JobIssueTests))
     suite_job.addTests(unittest.TestLoader().loadTestsFromTestCase(JobMiscTests))
+
+    # Filesystem package tests
+    suite_file = unittest.TestLoader().loadTestsFromTestCase(FilesystemDirectoryTests)
+ 
     alltests = unittest.TestSuite([suite_lnf, 
-                                   suite_job])
+                                   suite_job,
+                                   suite_file])
 
     result = unittest.TextTestRunner(verbosity=10).run(alltests)
     sys.exit(not result.wasSuccessful())

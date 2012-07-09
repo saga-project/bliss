@@ -143,7 +143,11 @@ class Directory(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
         else:
-            return self._plugin.dir_make_dir(self, path, flags)
+            if flags is None:
+                _flags = 0
+            else:
+                _flags = flags
+            return self._plugin.dir_make_dir(self, path, _flags)
 
     ######################################################################
     ## 
