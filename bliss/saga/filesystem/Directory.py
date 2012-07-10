@@ -5,6 +5,7 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
+import fnmatch
 import bliss.saga 
 from bliss.saga import Url
 from bliss.saga.Object import Object 
@@ -111,7 +112,7 @@ class Directory(Object):
     ## 
     def list(self, pattern=None):
         '''List the directory's content
-           @param pattern: File name pattern (like POSIX 'ls')
+           @param pattern: File name pattern (like POSIX 'ls', e.g. '*.txt')
 
            The call will return a list of files and subdirectories within the
            directory::
@@ -125,7 +126,18 @@ class Directory(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
         else:
-            return self._plugin.dir_list(self, pattern)
+            if pattern != None:
+                try:
+                    filtered_entries = []
+                    for entry in self._plugin.dir_list(self):
+                        if fnmatch.fnmatch(entry, pattern):
+                            filtered_entries.append(entry)
+                    return filtered_entries
+                except Exception, ex:
+                    raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
+                    "Problem with filter pattern '%s': %s" % (pattern, ex))
+            else:   
+                return self._plugin.dir_list(self)
 
     ######################################################################
     ## 

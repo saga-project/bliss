@@ -6,6 +6,7 @@ Version 0.2.4 released 2012-7-??
 * Added some of the missing methods and flags to filesystem package
 * An URL object can now be constructed from another URL object
 * Fixed job.cancel()
+* Wildcard support for Directory.list()
 
 Version 0.2.3 released 2012-6-26
 ----------------------------------------------------------------------

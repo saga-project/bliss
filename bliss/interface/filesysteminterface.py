@@ -60,7 +60,7 @@ class FilesystemPluginInterface(PluginBaseInterface):
         errormsg = "Not implemented plugin method called: dir_close()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
 
-    def dir_list(self, dir_obj, pattern):
+    def dir_list(self, dir_obj):
         '''This method is called upon dir.list()
         '''
         errormsg = "Not implemented plugin method called: dir_list()"

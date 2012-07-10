@@ -287,7 +287,7 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
 
     ######################################################################
     ## 
-    def dir_list(self, dir_obj, pattern):
+    def dir_list(self, dir_obj):
         
         complete_path = dir_obj._url.path
 
