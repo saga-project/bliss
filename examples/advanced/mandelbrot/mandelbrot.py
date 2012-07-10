@@ -93,21 +93,3 @@ if __name__ == "__main__":
     
     makemandel(imgX, imgY, xBeg, xEnd, yBeg, yEnd, filename)
     sys.exit(0)
-
-
-    #tilesx = 1
-    #tilesy = 1
-
-    #fullimage = Image.new("RGB", (imgx, imgy))
-
-    #for x in range(0, tilesx):
-    #    for y in range(0, tilesy):
-    #        partimage = makemandel(imgx, imgy, (imgx/tilesx*x), (imgx/tilesx*(x+1)), 
-    #                                           (imgy/tilesy*y), (imgy/tilesy*(y+1)))
-    #        fullimage.paste(partimage, ( imgx/tilesx*x, imgy/tilesy*y, imgx/tilesx*(x+1), imgy/tilesy*(y+1) ))
-    #
-    #fullimage.save("mandel_full.png", "PNG")
-
-     
-
-
