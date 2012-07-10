@@ -1,4 +1,4 @@
-Version 0.2.4 released 2012-7-??
+Version 0.2.4 released 2012-7-10
 ----------------------------------------------------------------------
 
 * Added unit-tests for SPMDVariation
