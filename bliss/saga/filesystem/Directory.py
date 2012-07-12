@@ -219,7 +219,7 @@ class Directory(Object):
 
     ######################################################################
     ## 
-    def copy(self, source, target):
+    def copy(self, source, target, flags=None):
         '''Copy a file from source to target
            @param source: path of the file to copy
            @param target: absolute URL of target directory
@@ -236,7 +236,70 @@ class Directory(Object):
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
         else:
-            return self._plugin.dir_copy(self, source, target)
+            if type(target) == str:
+                _target_url = bliss.saga.Url(str(target))
+            elif type(target) == bliss.saga.Url:
+                _target_url = target
+            else:
+                raise bliss.saga.Exception(bliss.saga.Error.NoSuccess,
+                  "Directory.copy() expects str or bliss.saga.Url type as 'target' parameter")
+
+            if type(source) == str:
+                _source_url = bliss.saga.Url(str(source))
+            elif type(source) == bliss.saga.Url:
+                _source_url = source
+            else:
+                raise bliss.saga.Exception(bliss.saga.Error.NoSuccess,
+                  "Directory.copy() expects str or bliss.saga.Url type as 'source' parameter")
+
+            if flags is None:
+                _flags = 0
+            else:
+                _flags = flags
+
+            return self._plugin.dir_copy(self, _source_url, _target_url, _flags)
+
+    ######################################################################
+    ## 
+    def move(self, source, target, flags=None):
+        '''Move a file from source to target
+           @param source: path of the file to copy
+           @param target: absolute URL of target directory
+
+           The source is moved to the given target directory.  The path of the
+           source can be relative::
+
+               # copy a file
+               dir = saga.filesystem.Directory("sftp://localhost/tmp/")
+               dir.move ("./data.bin", "sftp://localhost/tmp/data/")
+
+        '''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+        else:
+            if type(target) == str:
+                target_url = bliss.saga.Url(str(target))
+            elif type(target) == bliss.saga.Url:
+                target_url = target
+            else:
+                raise bliss.saga.Exception(bliss.saga.Error.NoSuccess,
+                  "Directory.move() expects str or bliss.saga.Url type as 'target' parameter")
+
+            if type(source) == str:
+                _source_url = bliss.saga.Url(str(source))
+            elif type(source) == bliss.saga.Url:
+                _source_url = source
+            else:
+                raise bliss.saga.Exception(bliss.saga.Error.NoSuccess,
+                  "Directory.move() expects str or bliss.saga.Url type as 'source' parameter")
+
+            if flags is None:
+                _flags = 0
+            else:
+                _flags = flags
+
+            return self._plugin.dir_move(self, _source_url, _target_url, _flags)
 
     ######################################################################
     ## 

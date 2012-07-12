@@ -42,7 +42,13 @@ class FilesystemPluginInterface(PluginBaseInterface):
         self.log_error("Not implemented plugin method called: unregister_directory_object()")
         # don't throw -- destructor context
 
-    def file_copy(self, file_obj, target_url):
+    def file_copy(self, file_obj, target_url, flags):
+        '''This method is called upon file.copy()
+        '''
+        errormsg = "Not implemented plugin method called: file_copy()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
+
+    def file_move(self, file_obj, target_url, flags):
         '''This method is called upon file.copy()
         '''
         errormsg = "Not implemented plugin method called: file_copy()"
@@ -78,7 +84,13 @@ class FilesystemPluginInterface(PluginBaseInterface):
         errormsg = "Not implemented plugin method called: dir_make_dir()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
 
-    def dir_copy(self, dir_obj, source, target):
+    def dir_copy(self, dir_obj, source, target, flags):
+        '''This methid is called upon dir.copy()
+        ''' 
+        errormsg = "Not implemented plugin method called: dir_copy()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
+
+    def dir_copy(self, dir_obj, source, target, flags):
         '''This methid is called upon dir.copy()
         ''' 
         errormsg = "Not implemented plugin method called: dir_copy()"

@@ -97,10 +97,12 @@ class File(Object):
 
     ######################################################################
     ## 
-    def copy(self, target):
+    def copy(self, target, flags=None):
         '''Copy the file to another location
 
            @param target: Url of the copy target.
+           @param flags: Flags to use for the operation.
+
 
            The file is copied to the given target location.  The target URL must
            be an absolute path, and can be a target file name or target
@@ -115,35 +117,55 @@ class File(Object):
               "Object not bound to a plugin")
         else:
             if type(target) == str:
-                target_url = bliss.saga.Url(str(target))
+                _target_url = bliss.saga.Url(str(target))
             elif type(target) == bliss.saga.Url:
-                target_url = target
+                _target_url = target
             else:
                 raise bliss.saga.Exception(bliss.saga.Error.NoSuccess,
                   "File.copy() expects str or bliss.saga.Url type as 'target' parameter")
 
-            return self._plugin.file_copy(self, target)
+            if flags is None:
+                _flags = 0
+            else:
+                _flags = flags
+
+            return self._plugin.file_copy(self, _target_url, _flags)
 
     ######################################################################
     ## 
-    def move(self, target):
-        '''Move the file to another location'''
+    def move(self, target, flags=None):
+        '''Move the file to another location
 
-        #   @param target: Url of the move target.
-        #
-        #   The file is moved to the given target location.  The target URL must
-        #   be an absolute path, and can be a target file name or target
-        #   directory name.  If the target file exists, it is overwritten:
-        #
-        #       # copy a file
-        #       file = saga.filesystem.Directory("sftp://localhost/tmp/data/data.bin")
-        #       file.copy ("sftp://localhost/tmp/data/data.bak")
-        #'''
+           @param target: Url of the move target.
+           @param flags: Flags to use for the operation.
+
+           The file is copied to the given target location.  The target URL must
+           be an absolute path, and can be a target file name or target
+           directory name.  If the target file exists, it is overwritten::
+
+               # copy a file
+               file = saga.filesystem.Directory("sftp://localhost/tmp/data/data.bin")
+               file.move ("sftp://localhost/tmp/data/data.bak")
+        '''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")
         else:
-            return self._plugin.file_move(self, target)
+            if type(target) == str:
+                _target_url = bliss.saga.Url(str(target))
+            elif type(target) == bliss.saga.Url:
+                _target_url = target
+            else:
+                raise bliss.saga.Exception(bliss.saga.Error.NoSuccess,
+                  "File.move() expects str or bliss.saga.Url type as 'target' parameter")
+
+            if flags is None:
+                _flags = 0
+            else:
+                _flags = flags
+
+        else:
+            return self._plugin.file_move(self, _target_url, _flags)
 
     ######################################################################
     ## 

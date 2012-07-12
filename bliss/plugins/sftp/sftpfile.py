@@ -443,7 +443,7 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
 
     ######################################################################
     ## 
-    def file_copy(self, file_obj, target):
+    def file_copy(self, file_obj, target, flags):
         '''Implements interface from FilesystemPluginInterface
         '''
         surl = file_obj._url
@@ -544,7 +544,7 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
 
     ######################################################################
     ## 
-    def dir_copy(self, dir_obj, source, target):
+    def dir_copy(self, dir_obj, source, target, flags):
         '''Implements interface from FilesystemPluginInterface
         '''
         basepath = dir_obj._url.path
