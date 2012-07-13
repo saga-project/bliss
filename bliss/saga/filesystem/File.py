@@ -164,7 +164,6 @@ class File(Object):
             else:
                 _flags = flags
 
-        else:
             return self._plugin.file_move(self, _target_url, _flags)
 
     ######################################################################
