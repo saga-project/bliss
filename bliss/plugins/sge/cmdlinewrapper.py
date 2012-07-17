@@ -139,8 +139,8 @@ class SGEJobInfo(object):
         #    plugin.log_debug("Parsed qstat output: %s" % str(self.__dict__))
         self._qstat_output = qstat_output
         for line in self._qstat_output.split('\n'):
-            #if line.find("bliss_job") != -1:
-            self._job_state = line.split()[4]  
+            if line.find("bliss_job") != -1:
+                self._job_state = line.split()[4]  
 
     @property 
     def state(self):
