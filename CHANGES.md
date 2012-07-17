@@ -2,6 +2,7 @@ Version 0.2.5 released 2012-X-YY
 ----------------------------------------------------------------------
 
 * Updates to Filesystem API
+* Added JobDescription.name attribute (as defined in DRMAA)
 
 Version 0.2.4 released 2012-7-10
 ----------------------------------------------------------------------

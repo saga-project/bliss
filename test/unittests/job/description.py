@@ -39,7 +39,7 @@ class JobDescriptionTests(unittest.TestCase):
                       "Error"            : "error",
                       "WorkingDirectory" : "working_directory",
                       "Contact"          : "contact",
-                      #"SPMDVariation"    : "spmd_variation",
+                      "Name"             : "name"
         }
 
         try:

@@ -517,7 +517,11 @@ class PBSService:
             for arg in jd.arguments:
                 exec_n_args += "%s " % (arg)
 
-        pbs_params += "#PBS -N %s \n" % "bliss_job" 
+        if jd.name is not None:
+            pbs_params += "#PBS -N %s \n" % jd.name
+        else:
+            pbs_params += "#PBS -N %s \n" % "bliss_job"
+ 
         pbs_params += "#PBS -V     \n"
 
         if jd.environment is not None:

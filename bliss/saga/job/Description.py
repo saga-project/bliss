@@ -151,6 +151,7 @@ class Description(Object, AttributeInterface):
         self._error               = None
         self._working_directory   = None
         self._contact             = None
+        self._name                = None
 
         # requirements 
         self._total_cpu_count     = None
@@ -174,7 +175,9 @@ class Description(Object, AttributeInterface):
         self._register_rw_attribute(name="WorkingDirectory", 
                                     accessor=self.__class__.working_directory) 
         self._register_rw_attribute(name="Contact", 
-                                    accessor=self.__class__.contact) 
+                                    accessor=self.__class__.contact)
+        self._register_rw_attribute(name="Name", 
+                                    accessor=self.__class__.name) 
         self._register_rw_attribute(name="TotalCPUCount", 
                                     accessor=self.__class__.total_cpu_count) 
         self._register_rw_attribute(name="NumberOfProcesses", 
@@ -483,6 +486,30 @@ class Description(Object, AttributeInterface):
     B{Example}::
       jd = saga.job.Description()
       jd.contact = "cpt_hook@piratebay.org"
+
+    """
+
+    ######################################################################
+    ## Property: 
+    def name():
+        doc = "Define a name for the job (if supported by the backend)"
+        def fget(self):
+            return self._name
+        def fset(self, val):
+            if type(val) is not str and type(val) is not type(None):
+                raise bliss.saga.Exception(bliss.saga.Error.BadParameter, "'name' attribute expects 'string' type.")
+            self._name = val
+        def fdel(self, val):
+            self._name = None
+        return locals()
+    name = property(**name())
+
+    """
+    Define a name for the job.
+      - Defining an explicit name can help debugging on the backend system.
+    B{Example}::
+      jd = saga.job.Description()
+      jd.name = "myblastjob_01"
 
     """
 
