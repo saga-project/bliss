@@ -111,6 +111,156 @@
 </table>
 
 <br />
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Variables</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="Overwrite"></a><span class="summary-name">Overwrite</span> = <code title="1">1</code><br />
+      Enforces an operation to continue even if the target entry does 
+      already exist &#8211; if that flag is not given, an &#8217;AlreadyExists&#8217; 
+      exception would result from such an operation.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="Recursive"></a><span class="summary-name">Recursive</span> = <code title="2">2</code><br />
+      Enforces an operation to apply recursively on a directory tree &#8211; if 
+      that flag is not given, the same operation would only apply to the 
+      given directory, and not to its children.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="Dereference"></a><span class="summary-name">Dereference</span> = <code title="4">4</code><br />
+      Enforces an operation to apply not to the entry pointed to by the 
+      target name, but to the link target of that entry &#8211; if that flag is 
+      not given, the same operation would apply to the entry directly, and 
+      its link target stays unaffected.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.filesystem-module.html#Create" class="summary-name">Create</a> = <code title="8">8</code><br />
+      Allows a namespace entry to be created while opening it, if it does 
+      not already exist &#8211; if that flag is not given, the same open 
+      operation would cause a &#8217;DoesNotExist&#8217; exception.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="Exclusive"></a><span class="summary-name">Exclusive</span> = <code title="16">16</code><br />
+      Implies a modification to the meaning of the Create flag: if the 
+      entry already exists, the Create flag is is no longer silently 
+      ignored, but causes an &#8217;AlreadyExists&#8217; exception.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.filesystem-module.html#Lock" class="summary-name">Lock</a> = <code title="32">32</code><br />
+      Enforces a lock on the name space entry when it is opened.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.filesystem-module.html#CreateParents" class="summary-name">CreateParents</a> = <code title="64">64</code><br />
+      An operation which would create a name space entry would normally 
+      fail if any path element in the targets name does not yet exist.
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Variables Details</span></td>
+</tr>
+</table>
+<a name="Create"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Create</h3>
+  <p>Allows a namespace entry to be created while opening it, if it does 
+  not already exist &#8211; if that flag is not given, the same open operation 
+  would cause a &#8217;DoesNotExist&#8217; exception. If the entry exists, the flag is 
+  ig- nored. This flag implies the &#8217;Write&#8217; flag.</p>
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+8
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Lock"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Lock</h3>
+  <p>Enforces a lock on the name space entry when it is opened. Locks are 
+  advisory in SAGA, semantic details for locking are defined in the 
+  description of the open() call.</p>
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+32
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="CreateParents"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">CreateParents</h3>
+  <p>An operation which would create a name space entry would normally fail
+  if any path element in the targets name does not yet exist. If this flag 
+  is given, such an operation would not fail, but would imply that the 
+  missing path elements are created on the fly. This flag implies the 
+  &#8217;Create&#8217; flag.</p>
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+64
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
        bgcolor="#a0c0ff" cellspacing="0">
@@ -143,7 +293,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Tue Jun 12 11:21:36 2012</a>
+    3.0.1 on Thu Jul 19 09:30:37 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
