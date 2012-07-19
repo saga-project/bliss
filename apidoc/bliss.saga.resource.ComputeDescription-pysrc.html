@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>bliss.saga.resource.ComputeDescription</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="bliss.saga-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;bliss ::
+        <a href="bliss.saga-module.html">Package&nbsp;saga</a> ::
+        <a href="bliss.saga.resource-module.html">Package&nbsp;resource</a> ::
+        Module&nbsp;ComputeDescription
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="bliss.saga.resource.ComputeDescription-module.html">Module bliss.saga.resource.ComputeDescription</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-comment"># -*- coding: utf-8 -*-</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-comment"># vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-name">__author__</tt>    <tt class="py-op">=</tt> <tt class="py-docstring">"Ole Christian Weidner"</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-name">__copyright__</tt> <tt class="py-op">=</tt> <tt class="py-string">"Copyright 2012, Ole Christian Weidner"</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-name">__license__</tt>   <tt class="py-op">=</tt> <tt class="py-string">"MIT"</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Package bliss.saga=bliss.saga-module.html"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-0', 'saga', 'link-0');">saga</a></tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-1', 'saga', 'link-0');">saga</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module bliss.saga.Object=bliss.saga.Object-module.html,Class bliss.saga.Object.Object=bliss.saga.Object.Object-class.html"><a title="bliss.saga.Object
+bliss.saga.Object.Object" class="py-name" href="#" onclick="return doclink('link-2', 'Object', 'link-2');">Object</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name"><a title="bliss.saga.Object
+bliss.saga.Object.Object" class="py-name" href="#" onclick="return doclink('link-3', 'Object', 'link-2');">Object</a></tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-4" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-4', 'saga', 'link-0');">saga</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Module bliss.saga.Attributes=bliss.saga.Attributes-module.html"><a title="bliss.saga.Attributes" class="py-name" href="#" onclick="return doclink('link-5', 'Attributes', 'link-5');">Attributes</a></tt> <tt class="py-keyword">import</tt> <tt id="link-6" class="py-name" targets="Class bliss.saga.Attributes.AttributeInterface=bliss.saga.Attributes.AttributeInterface-class.html"><a title="bliss.saga.Attributes.AttributeInterface" class="py-name" href="#" onclick="return doclink('link-6', 'AttributeInterface', 'link-6');">AttributeInterface</a></tt> </tt>
+<a name="ComputeDescription"></a><div id="ComputeDescription-def"><a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt> <a class="py-toggle" href="#" id="ComputeDescription-toggle" onclick="return toggle('ComputeDescription');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="bliss.saga.resource.ComputeDescription.ComputeDescription-class.html">ComputeDescription</a><tt class="py-op">(</tt><tt class="py-base-class">Object</tt><tt class="py-op">,</tt> <tt class="py-base-class">AttributeInterface</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ComputeDescription-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="ComputeDescription-expanded"><a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line">    <tt class="py-docstring">'''Defines a SAGA compute_description as defined in GFD.xx</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-docstring">    A compute description describes a L{resource.Compute} -- which is, essentially,</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-docstring">    anything which can run compute jobs.  The description is used to find or</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-docstring">    create instances of compute resources with specific properties and</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"><tt class="py-docstring">    capabilities (see L{resource.Manager}).</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt class="py-docstring">    B{Usage example 1} shows how to obtain a handle to a cluster of a certain size::</tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt class="py-docstring">      # describe the resource requirements</tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"><tt class="py-docstring">      cd = saga.resource.ComputeDescription()</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt class="py-docstring">      cd['Slots'] = 128</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-docstring">      # obtain a handle to a suitable resource</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"><tt class="py-docstring">      rm = saga.resource.Manager()</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"><tt class="py-docstring">      cr = rm.create_compute(cd)</tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"><tt class="py-docstring">      # submit a large job</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"><tt class="py-docstring">      jd = saga.job.Description()</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt class="py-docstring">      jd['Executable'] = 'blast'</tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"><tt class="py-docstring">      jd['NumberOfProcesses'] = 128</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-docstring">      jd['SPMDVariation'] = MPI</tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"><tt class="py-docstring">      js = cr.get_job_service()</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-docstring">      j  = js.create_job(jd)</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"><tt class="py-docstring">      j.run()</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"><tt class="py-docstring">      j.wait()</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"><tt class="py-docstring">      # once the job is finished, we do not need the compute resource anymore:</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"><tt class="py-docstring">      cr.destroy()</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line"><tt class="py-docstring">    '''</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line">    <tt class="py-decorator">@</tt><tt class="py-decorator">staticmethod</tt> </tt>
+<a name="ComputeDescription._deep_copy"></a><div id="ComputeDescription._deep_copy-def"><a name="L49"></a><tt class="py-lineno"> 49</tt> <a class="py-toggle" href="#" id="ComputeDescription._deep_copy-toggle" onclick="return toggle('ComputeDescription._deep_copy');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#_deep_copy">_deep_copy</a><tt class="py-op">(</tt><tt class="py-param">cd</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ComputeDescription._deep_copy-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ComputeDescription._deep_copy-expanded"><a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line">        <tt class="py-name">cd_copy</tt> <tt class="py-op">=</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-7" class="py-name"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-7', 'saga', 'link-0');">saga</a></tt><tt class="py-op">.</tt><tt id="link-8" class="py-name" targets="Package bliss.saga.resource=bliss.saga.resource-module.html"><a title="bliss.saga.resource" class="py-name" href="#" onclick="return doclink('link-8', 'resource', 'link-8');">resource</a></tt><tt class="py-op">.</tt><tt id="link-9" class="py-name" targets="Module bliss.saga.resource.ComputeDescription=bliss.saga.resource.ComputeDescription-module.html,Class bliss.saga.resource.ComputeDescription.ComputeDescription=bliss.saga.resource.ComputeDescription.ComputeDescription-class.html"><a title="bliss.saga.resource.ComputeDescription
+bliss.saga.resource.ComputeDescription.ComputeDescription" class="py-name" href="#" onclick="return doclink('link-9', 'ComputeDescription', 'link-9');">ComputeDescription</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line">        <tt class="py-name">cd_copy</tt><tt class="py-op">.</tt><tt class="py-name">_dynamic</tt>          <tt class="py-op">=</tt> <tt class="py-name">cd</tt><tt class="py-op">.</tt><tt class="py-name">_dynamic</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line">        <tt class="py-name">cd_copy</tt><tt class="py-op">.</tt><tt class="py-name">_start</tt>            <tt class="py-op">=</tt> <tt class="py-name">cd</tt><tt class="py-op">.</tt><tt class="py-name">_start</tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line">        <tt class="py-name">cd_copy</tt><tt class="py-op">.</tt><tt class="py-name">_end</tt>              <tt class="py-op">=</tt> <tt class="py-name">cd</tt><tt class="py-op">.</tt><tt class="py-name">_end</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line">        <tt class="py-name">cd_copy</tt><tt class="py-op">.</tt><tt class="py-name">_duration</tt>         <tt class="py-op">=</tt> <tt class="py-name">cd</tt><tt class="py-op">.</tt><tt class="py-name">_duration</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line">        <tt class="py-name">cd_copy</tt><tt class="py-op">.</tt><tt class="py-name">_template</tt>         <tt class="py-op">=</tt> <tt class="py-name">cd</tt><tt class="py-op">.</tt><tt class="py-name">_template</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line">        <tt class="py-name">cd_copy</tt><tt class="py-op">.</tt><tt class="py-name">_slots</tt>            <tt class="py-op">=</tt> <tt class="py-name">cd</tt><tt class="py-op">.</tt><tt class="py-name">_slots</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line">        <tt class="py-name">cd_copy</tt><tt class="py-op">.</tt><tt class="py-name">_memory</tt>           <tt class="py-op">=</tt> <tt class="py-name">cd</tt><tt class="py-op">.</tt><tt class="py-name">_memory</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line">        <tt class="py-name">cd_copy</tt><tt class="py-op">.</tt><tt class="py-name">_hostnames</tt>        <tt class="py-op">=</tt> <tt class="py-name">cd</tt><tt class="py-op">.</tt><tt class="py-name">_hostnames</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line">        <tt class="py-name">cd_copy</tt><tt class="py-op">.</tt><tt class="py-name">_operating_system</tt> <tt class="py-op">=</tt> <tt class="py-name">cd</tt><tt class="py-op">.</tt><tt class="py-name">_operating_system</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line">        <tt class="py-name">cd_copy</tt><tt class="py-op">.</tt><tt class="py-name">_architecture</tt>     <tt class="py-op">=</tt> <tt class="py-name">cd</tt><tt class="py-op">.</tt><tt class="py-name">_architecture</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line"> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">cd_copy</tt> </tt>
+</div><a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line"> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line">    <tt class="py-comment">## </tt> </tt>
+<a name="ComputeDescription.__init__"></a><div id="ComputeDescription.__init__-def"><a name="L67"></a><tt class="py-lineno"> 67</tt> <a class="py-toggle" href="#" id="ComputeDescription.__init__-toggle" onclick="return toggle('ComputeDescription.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ComputeDescription.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ComputeDescription.__init__-expanded"><a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line">        <tt class="py-docstring">'''Create a new (empty) compute resource description.'''</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line">        <tt id="link-10" class="py-name"><a title="bliss.saga.Object
+bliss.saga.Object.Object" class="py-name" href="#" onclick="return doclink('link-10', 'Object', 'link-2');">Object</a></tt><tt class="py-op">.</tt><tt id="link-11" class="py-name" targets="Method bliss.saga.Attributes.AttributeInterface.__init__()=bliss.saga.Attributes.AttributeInterface-class.html#__init__,Method bliss.saga.Context.Context.__init__()=bliss.saga.Context.Context-class.html#__init__,Method bliss.saga.Exception.Exception.__init__()=bliss.saga.Exception.Exception-class.html#__init__,Method bliss.saga.Object.Object.__init__()=bliss.saga.Object.Object-class.html#__init__,Method bliss.saga.Session.Session.__init__()=bliss.saga.Session.Session-class.html#__init__,Method bliss.saga.Url.Url.__init__()=bliss.saga.Url.Url-class.html#__init__,Method bliss.saga.filesystem.Directory.Directory.__init__()=bliss.saga.filesystem.Directory.Directory-class.html#__init__,Method bliss.saga.filesystem.File.File.__init__()=bliss.saga.filesystem.File.File-class.html#__init__,Method bliss.saga.job.Container.Container.__init__()=bliss.saga.job.Container.Container-class.html#__init__,Method bliss.saga.job.Description.Description.__init__()=bliss.saga.job.Description.Description-class.html#__init__,Method bliss.saga.job.Job.Job.__init__()=bliss.saga.job.Job.Job-class.html#__init__,Method bliss.saga.job.Job.JobID.__init__()=bliss.saga.job.Job.JobID-class.html#__init__,Method bliss.saga.job.Service.Service.__init__()=bliss.saga.job.Service.Service-class.html#__init__,Method bliss.saga.resource.Compute.Compute.__init__()=bliss.saga.resource.Compute.Compute-class.html#__init__,Method bliss.saga.resource.ComputeDescription.ComputeDescription.__init__()=bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#__init__,Method bliss.saga.resource.Manager.Manager.__init__()=bliss.saga.resource.Manager.Manager-class.html#__init__,Method bliss.saga.resource.Storage.Storage.__init__()=bliss.saga.resource.Storage.Storage-class.html#__init__,Method bliss.saga.resource.StorageDescription.StorageDescription.__init__()=bliss.saga.resource.StorageDescription.StorageDescription-class.html#__init__"><a title="bliss.saga.Attributes.AttributeInterface.__init__
+bliss.saga.Context.Context.__init__
+bliss.saga.Exception.Exception.__init__
+bliss.saga.Object.Object.__init__
+bliss.saga.Session.Session.__init__
+bliss.saga.Url.Url.__init__
+bliss.saga.filesystem.Directory.Directory.__init__
+bliss.saga.filesystem.File.File.__init__
+bliss.saga.job.Container.Container.__init__
+bliss.saga.job.Description.Description.__init__
+bliss.saga.job.Job.Job.__init__
+bliss.saga.job.Job.JobID.__init__
+bliss.saga.job.Service.Service.__init__
+bliss.saga.resource.Compute.Compute.__init__
+bliss.saga.resource.ComputeDescription.ComputeDescription.__init__
+bliss.saga.resource.Manager.Manager.__init__
+bliss.saga.resource.Storage.Storage.__init__
+bliss.saga.resource.StorageDescription.StorageDescription.__init__" class="py-name" href="#" onclick="return doclink('link-11', '__init__', 'link-11');">__init__</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">,</tt> <tt id="link-12" class="py-name"><a title="bliss.saga.Object
+bliss.saga.Object.Object" class="py-name" href="#" onclick="return doclink('link-12', 'Object', 'link-2');">Object</a></tt><tt class="py-op">.</tt><tt id="link-13" class="py-name" targets="Class bliss.saga.Object.Object.Type=bliss.saga.Object.Object.Type-class.html"><a title="bliss.saga.Object.Object.Type" class="py-name" href="#" onclick="return doclink('link-13', 'Type', 'link-13');">Type</a></tt><tt class="py-op">.</tt><tt id="link-14" class="py-name" targets="Variable bliss.saga.Object.Object.Type.ResourceComputeDescription=bliss.saga.Object.Object.Type-class.html#ResourceComputeDescription"><a title="bliss.saga.Object.Object.Type.ResourceComputeDescription" class="py-name" href="#" onclick="return doclink('link-14', 'ResourceComputeDescription', 'link-14');">ResourceComputeDescription</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line">                        <tt class="py-name">apitype</tt><tt class="py-op">=</tt><tt id="link-15" class="py-name"><a title="bliss.saga.Object
+bliss.saga.Object.Object" class="py-name" href="#" onclick="return doclink('link-15', 'Object', 'link-2');">Object</a></tt><tt class="py-op">.</tt><tt id="link-16" class="py-name"><a title="bliss.saga.Object.Object.Type" class="py-name" href="#" onclick="return doclink('link-16', 'Type', 'link-13');">Type</a></tt><tt class="py-op">.</tt><tt id="link-17" class="py-name" targets="Variable bliss.saga.Object.Object.Type.ResourceAPI=bliss.saga.Object.Object.Type-class.html#ResourceAPI"><a title="bliss.saga.Object.Object.Type.ResourceAPI" class="py-name" href="#" onclick="return doclink('link-17', 'ResourceAPI', 'link-17');">ResourceAPI</a></tt><tt class="py-op">,</tt><tt class="py-op">)</tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line"> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line">        <tt id="link-18" class="py-name"><a title="bliss.saga.Attributes.AttributeInterface" class="py-name" href="#" onclick="return doclink('link-18', 'AttributeInterface', 'link-6');">AttributeInterface</a></tt><tt class="py-op">.</tt><tt id="link-19" class="py-name"><a title="bliss.saga.Attributes.AttributeInterface.__init__
+bliss.saga.Context.Context.__init__
+bliss.saga.Exception.Exception.__init__
+bliss.saga.Object.Object.__init__
+bliss.saga.Session.Session.__init__
+bliss.saga.Url.Url.__init__
+bliss.saga.filesystem.Directory.Directory.__init__
+bliss.saga.filesystem.File.File.__init__
+bliss.saga.job.Container.Container.__init__
+bliss.saga.job.Description.Description.__init__
+bliss.saga.job.Job.Job.__init__
+bliss.saga.job.Job.JobID.__init__
+bliss.saga.job.Service.Service.__init__
+bliss.saga.resource.Compute.Compute.__init__
+bliss.saga.resource.ComputeDescription.ComputeDescription.__init__
+bliss.saga.resource.Manager.Manager.__init__
+bliss.saga.resource.Storage.Storage.__init__
+bliss.saga.resource.StorageDescription.StorageDescription.__init__" class="py-name" href="#" onclick="return doclink('link-19', '__init__', 'link-11');">__init__</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line"> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_dynamic</tt>        <tt class="py-op">=</tt> <tt class="py-name">False</tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_start</tt>          <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_end</tt>            <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_duration</tt>       <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_template</tt>       <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line"> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_register_rw_attribute</tt><tt class="py-op">(</tt><tt id="link-20" class="py-name" targets="Variable bliss.saga.job.Description.Description.name=bliss.saga.job.Description.Description-class.html#name"><a title="bliss.saga.job.Description.Description.name" class="py-name" href="#" onclick="return doclink('link-20', 'name', 'link-20');">name</a></tt><tt class="py-op">=</tt><tt class="py-string">"Dynamic"</tt><tt class="py-op">,</tt>  </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">                                        <tt class="py-name">accessor</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">.</tt><tt id="link-21" class="py-name" targets="Variable bliss.saga.resource.ComputeDescription.ComputeDescription.dynamic=bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#dynamic,Variable bliss.saga.resource.StorageDescription.StorageDescription.dynamic=bliss.saga.resource.StorageDescription.StorageDescription-class.html#dynamic"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.dynamic
+bliss.saga.resource.StorageDescription.StorageDescription.dynamic" class="py-name" href="#" onclick="return doclink('link-21', 'dynamic', 'link-21');">dynamic</a></tt><tt class="py-op">)</tt>  </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_register_rw_attribute</tt><tt class="py-op">(</tt><tt id="link-22" class="py-name"><a title="bliss.saga.job.Description.Description.name" class="py-name" href="#" onclick="return doclink('link-22', 'name', 'link-20');">name</a></tt><tt class="py-op">=</tt><tt class="py-string">"Start"</tt><tt class="py-op">,</tt>  </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line">                                        <tt class="py-name">accessor</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">.</tt><tt id="link-23" class="py-name" targets="Variable bliss.saga.resource.ComputeDescription.ComputeDescription.start=bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#start,Variable bliss.saga.resource.StorageDescription.StorageDescription.start=bliss.saga.resource.StorageDescription.StorageDescription-class.html#start"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.start
+bliss.saga.resource.StorageDescription.StorageDescription.start" class="py-name" href="#" onclick="return doclink('link-23', 'start', 'link-23');">start</a></tt><tt class="py-op">)</tt>  </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_register_rw_attribute</tt><tt class="py-op">(</tt><tt id="link-24" class="py-name"><a title="bliss.saga.job.Description.Description.name" class="py-name" href="#" onclick="return doclink('link-24', 'name', 'link-20');">name</a></tt><tt class="py-op">=</tt><tt class="py-string">"End"</tt><tt class="py-op">,</tt>  </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">                                        <tt class="py-name">accessor</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">.</tt><tt id="link-25" class="py-name" targets="Variable bliss.saga.resource.ComputeDescription.ComputeDescription.end=bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#end,Variable bliss.saga.resource.StorageDescription.StorageDescription.end=bliss.saga.resource.StorageDescription.StorageDescription-class.html#end"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.end
+bliss.saga.resource.StorageDescription.StorageDescription.end" class="py-name" href="#" onclick="return doclink('link-25', 'end', 'link-25');">end</a></tt><tt class="py-op">)</tt>  </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_register_rw_attribute</tt><tt class="py-op">(</tt><tt id="link-26" class="py-name"><a title="bliss.saga.job.Description.Description.name" class="py-name" href="#" onclick="return doclink('link-26', 'name', 'link-20');">name</a></tt><tt class="py-op">=</tt><tt class="py-string">"Duration"</tt><tt class="py-op">,</tt>  </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">                                        <tt class="py-name">accessor</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">.</tt><tt id="link-27" class="py-name" targets="Variable bliss.saga.resource.ComputeDescription.ComputeDescription.duration=bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#duration,Variable bliss.saga.resource.StorageDescription.StorageDescription.duration=bliss.saga.resource.StorageDescription.StorageDescription-class.html#duration"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.duration
+bliss.saga.resource.StorageDescription.StorageDescription.duration" class="py-name" href="#" onclick="return doclink('link-27', 'duration', 'link-27');">duration</a></tt><tt class="py-op">)</tt>  </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_register_rw_attribute</tt><tt class="py-op">(</tt><tt id="link-28" class="py-name"><a title="bliss.saga.job.Description.Description.name" class="py-name" href="#" onclick="return doclink('link-28', 'name', 'link-20');">name</a></tt><tt class="py-op">=</tt><tt class="py-string">"Template"</tt><tt class="py-op">,</tt>  </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">                                        <tt class="py-name">accessor</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">.</tt><tt id="link-29" class="py-name" targets="Variable bliss.saga.resource.ComputeDescription.ComputeDescription.template=bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#template,Variable bliss.saga.resource.StorageDescription.StorageDescription.template=bliss.saga.resource.StorageDescription.StorageDescription-class.html#template"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.template
+bliss.saga.resource.StorageDescription.StorageDescription.template" class="py-name" href="#" onclick="return doclink('link-29', 'template', 'link-29');">template</a></tt><tt class="py-op">)</tt>  </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line">         </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_slots</tt> <tt class="py-op">=</tt> <tt class="py-number">1</tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_memory</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_hostnames</tt> <tt class="py-op">=</tt> <tt id="link-30" class="py-name" targets="Method bliss.saga.filesystem.Directory.Directory.list()=bliss.saga.filesystem.Directory.Directory-class.html#list,Method bliss.saga.job.Container.Container.list()=bliss.saga.job.Container.Container-class.html#list,Method bliss.saga.job.Service.Service.list()=bliss.saga.job.Service.Service-class.html#list"><a title="bliss.saga.filesystem.Directory.Directory.list
+bliss.saga.job.Container.Container.list
+bliss.saga.job.Service.Service.list" class="py-name" href="#" onclick="return doclink('link-30', 'list', 'link-30');">list</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_operating_system</tt> <tt class="py-op">=</tt> <tt class="py-string">'Any'</tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_architecture</tt> <tt class="py-op">=</tt> <tt class="py-string">'Any'</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line"> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_register_rw_vec_attribute</tt><tt class="py-op">(</tt><tt id="link-31" class="py-name"><a title="bliss.saga.job.Description.Description.name" class="py-name" href="#" onclick="return doclink('link-31', 'name', 'link-20');">name</a></tt><tt class="py-op">=</tt><tt class="py-string">"OperatingSystem"</tt><tt class="py-op">,</tt>  </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">                                        <tt class="py-name">accessor</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">.</tt><tt id="link-32" class="py-name" targets="Variable bliss.saga.resource.ComputeDescription.ComputeDescription.operating_system=bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#operating_system"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.operating_system" class="py-name" href="#" onclick="return doclink('link-32', 'operating_system', 'link-32');">operating_system</a></tt><tt class="py-op">)</tt>  </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_register_rw_vec_attribute</tt><tt class="py-op">(</tt><tt id="link-33" class="py-name"><a title="bliss.saga.job.Description.Description.name" class="py-name" href="#" onclick="return doclink('link-33', 'name', 'link-20');">name</a></tt><tt class="py-op">=</tt><tt class="py-string">"Architecture"</tt><tt class="py-op">,</tt>  </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">                                        <tt class="py-name">accessor</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">.</tt><tt id="link-34" class="py-name" targets="Variable bliss.saga.resource.ComputeDescription.ComputeDescription.architecture=bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#architecture"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.architecture" class="py-name" href="#" onclick="return doclink('link-34', 'architecture', 'link-34');">architecture</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_register_rw_vec_attribute</tt><tt class="py-op">(</tt><tt id="link-35" class="py-name"><a title="bliss.saga.job.Description.Description.name" class="py-name" href="#" onclick="return doclink('link-35', 'name', 'link-20');">name</a></tt><tt class="py-op">=</tt><tt class="py-string">"Hostnames"</tt><tt class="py-op">,</tt>  </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line">                                        <tt class="py-name">accessor</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">.</tt><tt id="link-36" class="py-name" targets="Variable bliss.saga.resource.ComputeDescription.ComputeDescription.hostnames=bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#hostnames"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.hostnames" class="py-name" href="#" onclick="return doclink('link-36', 'hostnames', 'link-36');">hostnames</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_register_rw_attribute</tt><tt class="py-op">(</tt><tt id="link-37" class="py-name"><a title="bliss.saga.job.Description.Description.name" class="py-name" href="#" onclick="return doclink('link-37', 'name', 'link-20');">name</a></tt><tt class="py-op">=</tt><tt class="py-string">"Slots"</tt><tt class="py-op">,</tt>  </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line">                                    <tt class="py-name">accessor</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">.</tt><tt id="link-38" class="py-name" targets="Variable bliss.saga.resource.ComputeDescription.ComputeDescription.slots=bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#slots"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.slots" class="py-name" href="#" onclick="return doclink('link-38', 'slots', 'link-38');">slots</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_register_rw_attribute</tt><tt class="py-op">(</tt><tt id="link-39" class="py-name"><a title="bliss.saga.job.Description.Description.name" class="py-name" href="#" onclick="return doclink('link-39', 'name', 'link-20');">name</a></tt><tt class="py-op">=</tt><tt class="py-string">"Memory"</tt><tt class="py-op">,</tt>  </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">                                    <tt class="py-name">accessor</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">.</tt><tt id="link-40" class="py-name" targets="Variable bliss.saga.resource.ComputeDescription.ComputeDescription.memory=bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#memory"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.memory" class="py-name" href="#" onclick="return doclink('link-40', 'memory', 'link-40');">memory</a></tt><tt class="py-op">)</tt>  </tt>
+</div><a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line">     </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line">    <tt class="py-comment">## </tt> </tt>
+<a name="ComputeDescription.__del__"></a><div id="ComputeDescription.__del__-def"><a name="L110"></a><tt class="py-lineno">110</tt> <a class="py-toggle" href="#" id="ComputeDescription.__del__-toggle" onclick="return toggle('ComputeDescription.__del__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#__del__">__del__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ComputeDescription.__del__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ComputeDescription.__del__-expanded"><a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line">        <tt class="py-docstring">'''Delete this resource description.'''</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line">        <tt class="py-comment"># nothing to do here </tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line">    <tt class="py-comment">## Property </tt> </tt>
+<a name="ComputeDescription.start"></a><div id="ComputeDescription.start-def"><a name="L117"></a><tt class="py-lineno">117</tt> <a class="py-toggle" href="#" id="ComputeDescription.start-toggle" onclick="return toggle('ComputeDescription.start');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#start">start</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ComputeDescription.start-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ComputeDescription.start-expanded"><a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">        <tt class="py-name">doc</tt> <tt class="py-op">=</tt> <tt class="py-string">'''Required start time for this resource request.</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line"><tt class="py-string">        </tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line"><tt class="py-string">        The resource is expected to be 'Running' at the specified point in time,</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line"><tt class="py-string">        and thus ready to execute job requests.  A backend which cannot make</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line"><tt class="py-string">        that promise will raise and exception.</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line"><tt class="py-string">        '''</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fget</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_start</tt> </tt>
+</div><a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fset</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_start</tt> <tt class="py-op">=</tt> <tt class="py-name">val</tt> </tt>
+</div><a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fdel</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_start</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">locals</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line">    <tt id="link-41" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.start
+bliss.saga.resource.StorageDescription.StorageDescription.start" class="py-name" href="#" onclick="return doclink('link-41', 'start', 'link-23');">start</a></tt> <tt class="py-op">=</tt> <tt class="py-name">property</tt><tt class="py-op">(</tt><tt class="py-op">**</tt><tt id="link-42" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.start
+bliss.saga.resource.StorageDescription.StorageDescription.start" class="py-name" href="#" onclick="return doclink('link-42', 'start', 'link-23');">start</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line">     </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line">    <tt class="py-comment">## Property </tt> </tt>
+<a name="ComputeDescription.end"></a><div id="ComputeDescription.end-def"><a name="L135"></a><tt class="py-lineno">135</tt> <a class="py-toggle" href="#" id="ComputeDescription.end-toggle" onclick="return toggle('ComputeDescription.end');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#end">end</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ComputeDescription.end-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ComputeDescription.end-expanded"><a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line">        <tt class="py-name">doc</tt> <tt class="py-op">=</tt> <tt class="py-string">'''Required end time for this resource request.</tt> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line"><tt class="py-string">        </tt> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line"><tt class="py-string">        The resource is expected to be available until at most that given point</tt> </tt>
+<a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line"><tt class="py-string">        in time.  A resource manager which cannot guarantee the resource to be</tt> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line"><tt class="py-string">        available before that point (- a given duration) will fail the resource</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line"><tt class="py-string">        request.</tt> </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line"><tt class="py-string">        '''</tt> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fget</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_end</tt> </tt>
+</div><a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fset</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_end</tt> <tt class="py-op">=</tt> <tt class="py-name">val</tt> </tt>
+</div><a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fdel</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_end</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">locals</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line">    <tt id="link-43" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.end
+bliss.saga.resource.StorageDescription.StorageDescription.end" class="py-name" href="#" onclick="return doclink('link-43', 'end', 'link-25');">end</a></tt> <tt class="py-op">=</tt> <tt class="py-name">property</tt><tt class="py-op">(</tt><tt class="py-op">**</tt><tt id="link-44" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.end
+bliss.saga.resource.StorageDescription.StorageDescription.end" class="py-name" href="#" onclick="return doclink('link-44', 'end', 'link-25');">end</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line">     </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line">    <tt class="py-comment">## Property </tt> </tt>
+<a name="ComputeDescription.duration"></a><div id="ComputeDescription.duration-def"><a name="L154"></a><tt class="py-lineno">154</tt> <a class="py-toggle" href="#" id="ComputeDescription.duration-toggle" onclick="return toggle('ComputeDescription.duration');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#duration">duration</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ComputeDescription.duration-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ComputeDescription.duration-expanded"><a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line">        <tt class="py-name">doc</tt> <tt class="py-op">=</tt> <tt class="py-string">'''Required duration for this resource request.</tt> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line"><tt class="py-string"></tt> </tt>
+<a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line"><tt class="py-string">        The specified time span is the time the resource is expected to be</tt> </tt>
+<a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line"><tt class="py-string">        'Running' -- times spent in other states does not count toward this</tt> </tt>
+<a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line"><tt class="py-string">        limit.  A backend which cannot make that promise will raise and </tt> </tt>
+<a name="L160"></a><tt class="py-lineno">160</tt>  <tt class="py-line"><tt class="py-string">        exception.</tt> </tt>
+<a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line"><tt class="py-string">        '''</tt> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fget</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_duration</tt> </tt>
+</div><a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fset</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L165"></a><tt class="py-lineno">165</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_duration</tt> <tt class="py-op">=</tt> <tt class="py-name">val</tt> </tt>
+</div><a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fdel</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_duration</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">locals</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line">    <tt id="link-45" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.duration
+bliss.saga.resource.StorageDescription.StorageDescription.duration" class="py-name" href="#" onclick="return doclink('link-45', 'duration', 'link-27');">duration</a></tt> <tt class="py-op">=</tt> <tt class="py-name">property</tt><tt class="py-op">(</tt><tt class="py-op">**</tt><tt id="link-46" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.duration
+bliss.saga.resource.StorageDescription.StorageDescription.duration" class="py-name" href="#" onclick="return doclink('link-46', 'duration', 'link-27');">duration</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line"> </tt>
+<a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line">    <tt class="py-comment">## Property </tt> </tt>
+<a name="ComputeDescription.template"></a><div id="ComputeDescription.template-def"><a name="L173"></a><tt class="py-lineno">173</tt> <a class="py-toggle" href="#" id="ComputeDescription.template-toggle" onclick="return toggle('ComputeDescription.template');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#template">template</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ComputeDescription.template-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ComputeDescription.template-expanded"><a name="L174"></a><tt class="py-lineno">174</tt>  <tt class="py-line">        <tt class="py-name">doc</tt> <tt class="py-op">=</tt> <tt class="py-string">'''Required template for this resource request.</tt> </tt>
+<a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line"><tt class="py-string"></tt> </tt>
+<a name="L176"></a><tt class="py-lineno">176</tt>  <tt class="py-line"><tt class="py-string">        The specified template is to be used to fill in certain elements of </tt> </tt>
+<a name="L177"></a><tt class="py-lineno">177</tt>  <tt class="py-line"><tt class="py-string">        this compute resource description.  For example, the EC2 'c1.xlarge'</tt> </tt>
+<a name="L178"></a><tt class="py-lineno">178</tt>  <tt class="py-line"><tt class="py-string">        instance template implies a certain number of CPU cores and memory, </tt> </tt>
+<a name="L179"></a><tt class="py-lineno">179</tt>  <tt class="py-line"><tt class="py-string">        etc.  If the template is not known by the backend, a 'BadParameter'</tt> </tt>
+<a name="L180"></a><tt class="py-lineno">180</tt>  <tt class="py-line"><tt class="py-string">        exception will be raised upon resource creation.  Specific values </tt> </tt>
+<a name="L181"></a><tt class="py-lineno">181</tt>  <tt class="py-line"><tt class="py-string">        in the compute resource description will supersede the values </tt> </tt>
+<a name="L182"></a><tt class="py-lineno">182</tt>  <tt class="py-line"><tt class="py-string">        specified by the template.</tt> </tt>
+<a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line"><tt class="py-string">        '''</tt> </tt>
+<a name="L184"></a><tt class="py-lineno">184</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fget</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_template</tt> </tt>
+</div><a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fset</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L187"></a><tt class="py-lineno">187</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_template</tt> <tt class="py-op">=</tt> <tt class="py-name">val</tt> </tt>
+</div><a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fdel</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L189"></a><tt class="py-lineno">189</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_template</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L190"></a><tt class="py-lineno">190</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">locals</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L191"></a><tt class="py-lineno">191</tt>  <tt class="py-line">    <tt id="link-47" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.template
+bliss.saga.resource.StorageDescription.StorageDescription.template" class="py-name" href="#" onclick="return doclink('link-47', 'template', 'link-29');">template</a></tt> <tt class="py-op">=</tt> <tt class="py-name">property</tt><tt class="py-op">(</tt><tt class="py-op">**</tt><tt id="link-48" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.template
+bliss.saga.resource.StorageDescription.StorageDescription.template" class="py-name" href="#" onclick="return doclink('link-48', 'template', 'link-29');">template</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L192"></a><tt class="py-lineno">192</tt>  <tt class="py-line"> </tt>
+<a name="L193"></a><tt class="py-lineno">193</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L194"></a><tt class="py-lineno">194</tt>  <tt class="py-line">    <tt class="py-comment">## Property </tt> </tt>
+<a name="ComputeDescription.dynamic"></a><div id="ComputeDescription.dynamic-def"><a name="L195"></a><tt class="py-lineno">195</tt> <a class="py-toggle" href="#" id="ComputeDescription.dynamic-toggle" onclick="return toggle('ComputeDescription.dynamic');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#dynamic">dynamic</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ComputeDescription.dynamic-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ComputeDescription.dynamic-expanded"><a name="L196"></a><tt class="py-lineno">196</tt>  <tt class="py-line">        <tt class="py-name">doc</tt> <tt class="py-op">=</tt> <tt class="py-string">'''Dynamic or not.</tt> </tt>
+<a name="L197"></a><tt class="py-lineno">197</tt>  <tt class="py-line"><tt class="py-string">        </tt> </tt>
+<a name="L198"></a><tt class="py-lineno">198</tt>  <tt class="py-line"><tt class="py-string">        The 'dynamic' flag signals that the resource description provides</tt> </tt>
+<a name="L199"></a><tt class="py-lineno">199</tt>  <tt class="py-line"><tt class="py-string">        estimated values, but that the resource manager is allowed to choose</tt> </tt>
+<a name="L200"></a><tt class="py-lineno">200</tt>  <tt class="py-line"><tt class="py-string">        different initial values, and also can change the values during the</tt> </tt>
+<a name="L201"></a><tt class="py-lineno">201</tt>  <tt class="py-line"><tt class="py-string">        resource lifetime.  That flag is specifically targeting backends which</tt> </tt>
+<a name="L202"></a><tt class="py-lineno">202</tt>  <tt class="py-line"><tt class="py-string">        can resize the resources in response to the actual job workload.</tt> </tt>
+<a name="L203"></a><tt class="py-lineno">203</tt>  <tt class="py-line"><tt class="py-string">        '''</tt> </tt>
+<a name="L204"></a><tt class="py-lineno">204</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fget</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L205"></a><tt class="py-lineno">205</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_dynamic</tt> </tt>
+</div><a name="L206"></a><tt class="py-lineno">206</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fset</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L207"></a><tt class="py-lineno">207</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_dynamic</tt> <tt class="py-op">=</tt> <tt class="py-name">val</tt> </tt>
+</div><a name="L208"></a><tt class="py-lineno">208</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fdel</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L209"></a><tt class="py-lineno">209</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_dynamic</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L210"></a><tt class="py-lineno">210</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">locals</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L211"></a><tt class="py-lineno">211</tt>  <tt class="py-line">    <tt id="link-49" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.dynamic
+bliss.saga.resource.StorageDescription.StorageDescription.dynamic" class="py-name" href="#" onclick="return doclink('link-49', 'dynamic', 'link-21');">dynamic</a></tt> <tt class="py-op">=</tt> <tt class="py-name">property</tt><tt class="py-op">(</tt><tt class="py-op">**</tt><tt id="link-50" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.dynamic
+bliss.saga.resource.StorageDescription.StorageDescription.dynamic" class="py-name" href="#" onclick="return doclink('link-50', 'dynamic', 'link-21');">dynamic</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L212"></a><tt class="py-lineno">212</tt>  <tt class="py-line">     </tt>
+<a name="L213"></a><tt class="py-lineno">213</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L214"></a><tt class="py-lineno">214</tt>  <tt class="py-line">    <tt class="py-comment">## Property </tt> </tt>
+<a name="ComputeDescription.slots"></a><div id="ComputeDescription.slots-def"><a name="L215"></a><tt class="py-lineno">215</tt> <a class="py-toggle" href="#" id="ComputeDescription.slots-toggle" onclick="return toggle('ComputeDescription.slots');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#slots">slots</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ComputeDescription.slots-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ComputeDescription.slots-expanded"><a name="L216"></a><tt class="py-lineno">216</tt>  <tt class="py-line">        <tt class="py-name">doc</tt> <tt class="py-op">=</tt> <tt class="py-string">'''Required number of cores for this resource request.'''</tt> </tt>
+<a name="L217"></a><tt class="py-lineno">217</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fget</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L218"></a><tt class="py-lineno">218</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_slots</tt> </tt>
+</div><a name="L219"></a><tt class="py-lineno">219</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fset</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L220"></a><tt class="py-lineno">220</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_slots</tt> <tt class="py-op">=</tt> <tt class="py-name">val</tt> </tt>
+</div><a name="L221"></a><tt class="py-lineno">221</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fdel</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L222"></a><tt class="py-lineno">222</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_slots</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L223"></a><tt class="py-lineno">223</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">locals</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L224"></a><tt class="py-lineno">224</tt>  <tt class="py-line">    <tt id="link-51" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.slots" class="py-name" href="#" onclick="return doclink('link-51', 'slots', 'link-38');">slots</a></tt> <tt class="py-op">=</tt> <tt class="py-name">property</tt><tt class="py-op">(</tt><tt class="py-op">**</tt><tt id="link-52" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.slots" class="py-name" href="#" onclick="return doclink('link-52', 'slots', 'link-38');">slots</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L225"></a><tt class="py-lineno">225</tt>  <tt class="py-line"> </tt>
+<a name="L226"></a><tt class="py-lineno">226</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L227"></a><tt class="py-lineno">227</tt>  <tt class="py-line">    <tt class="py-comment">## Property </tt> </tt>
+<a name="ComputeDescription.memory"></a><div id="ComputeDescription.memory-def"><a name="L228"></a><tt class="py-lineno">228</tt> <a class="py-toggle" href="#" id="ComputeDescription.memory-toggle" onclick="return toggle('ComputeDescription.memory');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#memory">memory</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ComputeDescription.memory-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ComputeDescription.memory-expanded"><a name="L229"></a><tt class="py-lineno">229</tt>  <tt class="py-line">        <tt class="py-name">doc</tt> <tt class="py-op">=</tt> <tt class="py-string">'''Required amount of memory for this resource request.'''</tt> </tt>
+<a name="L230"></a><tt class="py-lineno">230</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fget</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L231"></a><tt class="py-lineno">231</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_memory</tt> </tt>
+</div><a name="L232"></a><tt class="py-lineno">232</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fset</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L233"></a><tt class="py-lineno">233</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_memory</tt> <tt class="py-op">=</tt> <tt class="py-name">val</tt> </tt>
+</div><a name="L234"></a><tt class="py-lineno">234</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fdel</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L235"></a><tt class="py-lineno">235</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_memory</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L236"></a><tt class="py-lineno">236</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">locals</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L237"></a><tt class="py-lineno">237</tt>  <tt class="py-line">    <tt id="link-53" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.memory" class="py-name" href="#" onclick="return doclink('link-53', 'memory', 'link-40');">memory</a></tt> <tt class="py-op">=</tt> <tt class="py-name">property</tt><tt class="py-op">(</tt><tt class="py-op">**</tt><tt id="link-54" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.memory" class="py-name" href="#" onclick="return doclink('link-54', 'memory', 'link-40');">memory</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L238"></a><tt class="py-lineno">238</tt>  <tt class="py-line"> </tt>
+<a name="L239"></a><tt class="py-lineno">239</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L240"></a><tt class="py-lineno">240</tt>  <tt class="py-line">    <tt class="py-comment">## Property </tt> </tt>
+<a name="ComputeDescription.hostnames"></a><div id="ComputeDescription.hostnames-def"><a name="L241"></a><tt class="py-lineno">241</tt> <a class="py-toggle" href="#" id="ComputeDescription.hostnames-toggle" onclick="return toggle('ComputeDescription.hostnames');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#hostnames">hostnames</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ComputeDescription.hostnames-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ComputeDescription.hostnames-expanded"><a name="L242"></a><tt class="py-lineno">242</tt>  <tt class="py-line">        <tt class="py-name">doc</tt> <tt class="py-op">=</tt> <tt class="py-string">'''Allowed hostnames for this resource request.</tt> </tt>
+<a name="L243"></a><tt class="py-lineno">243</tt>  <tt class="py-line"><tt class="py-string">        </tt> </tt>
+<a name="L244"></a><tt class="py-lineno">244</tt>  <tt class="py-line"><tt class="py-string">        With this attribute, one can specify specific and individual compute</tt> </tt>
+<a name="L245"></a><tt class="py-lineno">245</tt>  <tt class="py-line"><tt class="py-string">        nodes -- for example specific cluster nodes, specific sets of virtual</tt> </tt>
+<a name="L246"></a><tt class="py-lineno">246</tt>  <tt class="py-line"><tt class="py-string">        machine instances, etc.</tt> </tt>
+<a name="L247"></a><tt class="py-lineno">247</tt>  <tt class="py-line"><tt class="py-string">        '''</tt> </tt>
+<a name="L248"></a><tt class="py-lineno">248</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fget</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L249"></a><tt class="py-lineno">249</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_hostnames</tt> </tt>
+</div><a name="L250"></a><tt class="py-lineno">250</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fset</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L251"></a><tt class="py-lineno">251</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_hostnames</tt> <tt class="py-op">=</tt> <tt class="py-name">val</tt> </tt>
+</div><a name="L252"></a><tt class="py-lineno">252</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fdel</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L253"></a><tt class="py-lineno">253</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_hostnames</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L254"></a><tt class="py-lineno">254</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">locals</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L255"></a><tt class="py-lineno">255</tt>  <tt class="py-line">    <tt id="link-55" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.hostnames" class="py-name" href="#" onclick="return doclink('link-55', 'hostnames', 'link-36');">hostnames</a></tt> <tt class="py-op">=</tt> <tt class="py-name">property</tt><tt class="py-op">(</tt><tt class="py-op">**</tt><tt id="link-56" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.hostnames" class="py-name" href="#" onclick="return doclink('link-56', 'hostnames', 'link-36');">hostnames</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L256"></a><tt class="py-lineno">256</tt>  <tt class="py-line"> </tt>
+<a name="L257"></a><tt class="py-lineno">257</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L258"></a><tt class="py-lineno">258</tt>  <tt class="py-line">    <tt class="py-comment">## Property </tt> </tt>
+<a name="ComputeDescription.operating_system"></a><div id="ComputeDescription.operating_system-def"><a name="L259"></a><tt class="py-lineno">259</tt> <a class="py-toggle" href="#" id="ComputeDescription.operating_system-toggle" onclick="return toggle('ComputeDescription.operating_system');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#operating_system">operating_system</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ComputeDescription.operating_system-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ComputeDescription.operating_system-expanded"><a name="L260"></a><tt class="py-lineno">260</tt>  <tt class="py-line">        <tt class="py-name">doc</tt> <tt class="py-op">=</tt> <tt class="py-string">'''Allowed operating system(s) for this resource request.'''</tt> </tt>
+<a name="L261"></a><tt class="py-lineno">261</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fget</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L262"></a><tt class="py-lineno">262</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_operating_system</tt> </tt>
+</div><a name="L263"></a><tt class="py-lineno">263</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fset</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L264"></a><tt class="py-lineno">264</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_operating_system</tt> <tt class="py-op">=</tt> <tt class="py-name">val</tt> </tt>
+</div><a name="L265"></a><tt class="py-lineno">265</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fdel</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L266"></a><tt class="py-lineno">266</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_operating_system</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L267"></a><tt class="py-lineno">267</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">locals</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L268"></a><tt class="py-lineno">268</tt>  <tt class="py-line">    <tt id="link-57" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.operating_system" class="py-name" href="#" onclick="return doclink('link-57', 'operating_system', 'link-32');">operating_system</a></tt> <tt class="py-op">=</tt> <tt class="py-name">property</tt><tt class="py-op">(</tt><tt class="py-op">**</tt><tt id="link-58" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.operating_system" class="py-name" href="#" onclick="return doclink('link-58', 'operating_system', 'link-32');">operating_system</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L269"></a><tt class="py-lineno">269</tt>  <tt class="py-line"> </tt>
+<a name="L270"></a><tt class="py-lineno">270</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
+<a name="L271"></a><tt class="py-lineno">271</tt>  <tt class="py-line">    <tt class="py-comment">## Property </tt> </tt>
+<a name="ComputeDescription.architecture"></a><div id="ComputeDescription.architecture-def"><a name="L272"></a><tt class="py-lineno">272</tt> <a class="py-toggle" href="#" id="ComputeDescription.architecture-toggle" onclick="return toggle('ComputeDescription.architecture');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.resource.ComputeDescription.ComputeDescription-class.html#architecture">architecture</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ComputeDescription.architecture-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ComputeDescription.architecture-expanded"><a name="L273"></a><tt class="py-lineno">273</tt>  <tt class="py-line">        <tt class="py-name">doc</tt> <tt class="py-op">=</tt> <tt class="py-string">'''Allowed systems architecture(s) for this resource request.'''</tt> </tt>
+<a name="L274"></a><tt class="py-lineno">274</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fget</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L275"></a><tt class="py-lineno">275</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_architecture</tt> </tt>
+</div><a name="L276"></a><tt class="py-lineno">276</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fset</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L277"></a><tt class="py-lineno">277</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_architecture</tt> <tt class="py-op">=</tt> <tt class="py-name">val</tt> </tt>
+</div><a name="L278"></a><tt class="py-lineno">278</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">fdel</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L279"></a><tt class="py-lineno">279</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_architecture</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L280"></a><tt class="py-lineno">280</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">locals</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L281"></a><tt class="py-lineno">281</tt>  <tt class="py-line">    <tt id="link-59" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.architecture" class="py-name" href="#" onclick="return doclink('link-59', 'architecture', 'link-34');">architecture</a></tt> <tt class="py-op">=</tt> <tt class="py-name">property</tt><tt class="py-op">(</tt><tt class="py-op">**</tt><tt id="link-60" class="py-name"><a title="bliss.saga.resource.ComputeDescription.ComputeDescription.architecture" class="py-name" href="#" onclick="return doclink('link-60', 'architecture', 'link-34');">architecture</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L282"></a><tt class="py-lineno">282</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="bliss.saga-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    <a href="epydoc-log.html">Generated by Epydoc
+    3.0.1 on Thu Jul 19 09:40:19 2012</a>
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
