@@ -5,11 +5,13 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.plugins.pbs import PBSJobPlugin
-from bliss.plugins.sge import SGEJobPlugin
-from bliss.plugins.sftp import SFTPFilesystemPlugin
+from bliss.plugins.pbs   import PBSJobPlugin
+from bliss.plugins.sge   import SGEJobPlugin
+from bliss.plugins.sftp  import SFTPFilesystemPlugin
 from bliss.plugins.local import LocalJobPlugin
-from bliss.plugins.ssh import SSHJobPlugin
+from bliss.plugins.ssh   import SSHJobPlugin
+from bliss.plugins.euca  import EucaResourcePlugin
+
 
 _registry = []
 
@@ -37,3 +39,9 @@ _registry.append({"class"   : SSHJobPlugin,
                   "apis"    : SSHJobPlugin.supported_apis(),
                   "name"    : SSHJobPlugin.plugin_name(),
                   "schemas" : SSHJobPlugin.supported_schemas()})
+
+_registry.append({"class"   : EucaResourcePlugin,
+                  "apis"    : EucaResourcePlugin.supportedExceptions(),
+                  "name"    : EucaResourcePlugin.plugin_name(),
+                  "schemas" : EucaResourcePlugin.supported_schemas()})
+

@@ -87,10 +87,6 @@ setup_args = {
         "bliss.saga.job",
         "bliss.saga.resource",
         "bliss.saga.filesystem",
-        #"bliss.sagacompat",
-        #"bliss.sagacompat.sd",
-        #"bliss.sagacompat.job",
-        #"bliss.sagacompat.filesystem",
         "bliss.utils",
         "bliss.runtime",
         "bliss.interface",
@@ -99,7 +95,8 @@ setup_args = {
         "bliss.plugins.sge",
         "bliss.plugins.pbs",
         "bliss.plugins.sftp",
-        "bliss.plugins.ssh"
+        "bliss.plugins.ssh",
+        "bliss.plugins.euca"
     ],
     'scripts': scripts,
     # mention data_files, even if empty, so install_data is called and
