@@ -10,7 +10,6 @@ from bliss.plugins.sge   import SGEJobPlugin
 from bliss.plugins.sftp  import SFTPFilesystemPlugin
 from bliss.plugins.local import LocalJobPlugin
 from bliss.plugins.ssh   import SSHJobPlugin
-from bliss.plugins.euca  import EucaResourcePlugin
 
 
 _registry = []
@@ -40,8 +39,14 @@ _registry.append({"class"   : SSHJobPlugin,
                   "name"    : SSHJobPlugin.plugin_name(),
                   "schemas" : SSHJobPlugin.supported_schemas()})
 
-_registry.append({"class"   : EucaResourcePlugin,
-                  "apis"    : EucaResourcePlugin.supportedExceptions(),
-                  "name"    : EucaResourcePlugin.plugin_name(),
-                  "schemas" : EucaResourcePlugin.supported_schemas()})
+try:
+    from bliss.plugins.euca  import EucaResourcePlugin
+    _registry.append({"class"   : EucaResourcePlugin,
+                      "apis"    : EucaResourcePlugin.supportedExceptions(),
+                      "name"    : EucaResourcePlugin.plugin_name(),
+                      "schemas" : EucaResourcePlugin.supported_schemas()})
+
+except Exception, ex:
+    print "Can't load plug-in %s: %s" % ('EucaResourcePlugin', ex)
+
 

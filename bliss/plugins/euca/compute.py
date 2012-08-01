@@ -8,7 +8,7 @@ import copy
 import time
 import bliss.saga
 import os 
-from furl import furl 
+#from furl import furl 
 import boto
 
 class EucaCompute(object):
@@ -24,8 +24,8 @@ class EucaCompute(object):
         #print "url.path:", url.path
         #print "url.fragment:", url.fragment
 
-        
-        self.image = furl(self.url.__str__()).path.segments[-1]
+        # TODO: Validate if the line below actually works!
+        self.image = self.url.path # furl(self.url.__str__()).path.segments[-1]
         self.reservation = None
 
         self.access_key = self.url.username

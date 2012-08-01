@@ -8,7 +8,7 @@ import bliss.saga
 import collections
 
 from bliss.interface import ResourcePluginInterface
-from bliss.plugins import utils
+#from bliss.plugins import utils
 from bliss.plugins.euca.compute import EucaCompute
 
 #object = manager
@@ -213,7 +213,12 @@ class EucaResourcePlugin(ResourcePluginInterface):
         ##         Bliss startup. Here you should check if everything this 
         ##         adaptor needs is available, e.g., certain command line tools,
         ##         python modules and so on.
-        ##         
+        ## 
+        try: 
+            import boto
+        except ImportError, ie:
+            self.log_error("Required Python module 'boto' missing: %s" % ie)
+            return False
         return True
 
     def get_runtime_info(self): 
