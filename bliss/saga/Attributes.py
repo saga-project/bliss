@@ -5,11 +5,11 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.Exception import Exception as SAGAException
-from bliss.saga.Error     import Error     as SAGAError
+from bliss.saga.Exception import Exception as MyException
+from bliss.saga.Error     import Error     as MyError
 
 
-##########################################################################
+################################################################################
 
 import inspect
 import re
@@ -64,7 +64,7 @@ class Callback () :
 
           mcb = MyCallback ("Hello Pilot, how is your state?")
 
-          cp.attributes_register_cb ('state', mcb)
+          cp.add_callback ('state', mcb)
 
     See documentation of the L{Attributes} interface for further details and
     examples.
@@ -75,8 +75,8 @@ class Callback () :
             to signal that the application needs to inherit the callback class
             in a custom class in order to use notifications.
         """
-        raise TroyException (Error.IncorrectState,
-                             "Callback class must be inherited before use!")
+        raise MyException ("Callback class must be inherited before use!", 
+                           MyError.IncorrectState)
 
 
     def cb (self, wu, member, value) :
@@ -176,7 +176,7 @@ class AttributeInterface (AttributesBase_) :
             trans.apple = 'Abbel'
             print trans.apple 
         
-            trans.attributes_register_cb ('apple', cb)
+            trans.add_callback ('apple', cb)
             trans.apple = ['Abbel', 'Appel']
             trans.apple = 'Apfel'
         
@@ -333,8 +333,8 @@ class AttributeInterface (AttributesBase_) :
         # check if we know about that attribute
         if key :
             if not key in d['attributes_'] :
-                raise SAGAException (" attribute key is invalid: %s"  %  (key),
-                                     SAGAError.DoesNotExist)
+                raise MyException (" attribute key is invalid: %s"  %  (key),
+                                     MyError.DoesNotExist)
         # all is well
         return d
 
@@ -360,7 +360,7 @@ class AttributeInterface (AttributesBase_) :
                issubclass (cb, Callback) :
                 ret = cb.cb (key, self.__get_attr__ (key), self)
             else :
-                ret = cb (key, self.__get_attr__ (key), self)
+                ret = cb (key, self.__getattr__ (key), self)
 
             # remove callbacks which return 'False'
             if not ret :
@@ -426,8 +426,8 @@ class AttributeInterface (AttributesBase_) :
         for check in d['attributes_'][key]['checks'] :
             ret = check (key, val)
             if ret != True :
-                raise SAGAException (" attribute value %s is not valid: %s"  %  (key, ret),
-                                     SAGAError.BadParameter)
+                raise MyException (" attribute value %s is not valid: %s"  %  (key, ret),
+                                     MyError.BadParameter)
 
         # aaaand done
         return val
@@ -497,8 +497,8 @@ class AttributeInterface (AttributesBase_) :
 
 
         # we should never get here...
-        raise SAGAException (" Cannot evaluate attribute flavor (%s) : %s"  %  (key, str(f)),
-                             SAGAError.NoSuccess)
+        raise MyException (" Cannot evaluate attribute flavor (%s) : %s"  %  (key, str(f)),
+                             MyError.NoSuccess)
 
 
     ####################################
@@ -519,8 +519,8 @@ class AttributeInterface (AttributesBase_) :
             elif t == self.String : ret = str   (val) 
             else                  : ret =        val  
         except ValueError as e:
-            raise SAGAException (" attribute value %s has incorrect type: %s" %  (key, val),
-                                 SAGAError.BadParameter)
+            raise MyException (" attribute value %s has incorrect type: %s" %  (key, val),
+                                 MyError.BadParameter)
 
         return ret
 
@@ -1071,6 +1071,10 @@ class AttributeInterface (AttributesBase_) :
     ####################################
     def __setattr__ (self, key, val) :
         return self.attributes_i_set_ (key, val)
+
+    ####################################
+    def __delattr__ (self, key) :
+        return self.attributes_unregister_ (key)
 
 
 
