@@ -76,29 +76,17 @@ class Context(AttributeInterface, Object):
         '''Constructor'''
 
         Object.__init__(self, objtype=Object.Type.Context, apitype=Object.Type.BaseAPI)
-        AttributeInterface.__init__(self)
 
-        self._type      = None
-        self._userid    = None
-        self._userpass  = None
-        self._usercert  = None
-        self._userkey   = None
-        self._userproxy = None
-
+        self.attributes_extensible_  (True)
+        self.attributes_camelcasing_ (True)
       
         # register properties with the attribute interface 
-        self._register_rw_attribute(name="Type", 
-                                    accessor=self.__class__.type) 
-        self._register_rw_attribute(name="UserID", 
-                                    accessor=self.__class__.userid)  
-        self._register_rw_attribute(name="UserPass", 
-                                    accessor=self.__class__.userpass)  
-        self._register_rw_attribute(name="UserCert", 
-                                    accessor=self.__class__.usercert)  
-        self._register_rw_attribute(name="UserKey", 
-                                    accessor=self.__class__.userkey)  
-        self._register_rw_attribute(name="UserProxy", 
-                                    accessor=self.__class__.userproxy)  
+        self.attributes_register_  ('Type',      None, self.String, self.Scalar, self.Writeable)
+        self.attributes_register_  ('UserID',    None, self.String, self.Scalar, self.Writeable)
+        self.attributes_register_  ('UserPass',  None, self.String, self.Scalar, self.Writeable)
+        self.attributes_register_  ('UserCert',  None, self.String, self.Scalar, self.Writeable)
+        self.attributes_register_  ('UserKey',   None, self.String, self.Scalar, self.Writeable)
+        self.attributes_register_  ('userProxy', None, self.String, self.Scalar, self.Writeable)
 
         self.__logger = logging.getLogger('bliss.'+self.__class__.__name__)
 
@@ -127,8 +115,7 @@ class Context(AttributeInterface, Object):
 
     ######################################################################
     ## Property: type
-    def type():
-        doc = """Context type.
+        """Context type.
         
         This is a free-form string which describes the type of security token
         this context describes.  This type is not bound to a specific backend --
@@ -158,79 +145,39 @@ class Context(AttributeInterface, Object):
         hopefully make the point clear.
 
         """
-        def fget(self):
-            return self._type
-        def fset(self, val):
-            self._type = val
-        return locals()
-    type = property(**type())
 
 
     ######################################################################
     ## Property: userid
-    def userid():
-        doc = "User ID or user name to use."
-        def fget(self):
-            return self._userid
-        def fset(self, val):
-            self._userid = val
-        return locals()
-    userid = property(**userid())
+        """
+        UserID
+
+        User ID or user name to use.
+        """
 
     ######################################################################
     ## Property: userpass
-    def userpass():
-        doc = """User password to use.
+        """User password to use.
         
         Please use this option with care -- it is *not* good practice to encode
         plain text passwords in source code!
         """
-        def fget(self):
-            return self._userpass
-        def fset(self, val):
-            self._userpass = val
-        return locals()
-    userpass = property(**userpass())
 
     ######################################################################
     ## Property: usercert
-    def usercert():
-        doc = "Location of a user certificate."
-        def fget(self):
-            return self._usercert
-        def fset(self, val):
-            if not os.path.isfile(val):
-                self._log_and_raise_if_file_doesnt_exist(val)
-            else:
-                self._usercert = val
-        return locals()
-    usercert = property(**usercert())
+        """Location of a user certificate."""
 
     ######################################################################
     ## Property: userkey
-    def userkey():
-        doc = "Location of a user key."
-        def fget(self):
-            return self._userkey
-        def fset(self, val):
-            if not os.path.isfile(val):
-                self._log_and_raise_if_file_doesnt_exist(val)
-            else:
-                self._userkey = val
-        return locals()
-    userkey = property(**userkey())
+        """Location of a user key."""
+        # FIXME: add test:
+        #     if not os.path.isfile(val):
+        #         self._log_and_raise_if_file_doesnt_exist(val)
 
     ######################################################################
     ## Property: userproxy
-    def userproxy():
-        doc = "Location of a user proxy."
-        def fget(self):
-            return self._userproxy
-        def fset(self, val):
-            if not os.path.isfile(val):
-                self._log_and_raise_if_file_doesnt_exist(val)
-            else: 
-                self._userproxy = val
-        return locals()
-    userproxy = property(**userproxy())
+        """Location of a user proxy."""
+        # FIXME: add test:
+        #   if not os.path.isfile(val):
+        #       self._log_and_raise_if_file_doesnt_exist(val)
 
