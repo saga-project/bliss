@@ -14,19 +14,22 @@ from unittests import *
 if __name__ == '__main__':
 
     # All non-package tests (session, context, etc)
-    suite_lnf = unittest.TestLoader().loadTestsFromTestCase(SessionTests)
+    suite_lnf = unittest.TestSuite()
+    suite_lnf.addTests(unittest.TestLoader().loadTestsFromTestCase(SessionTests))
     suite_lnf.addTests(unittest.TestLoader().loadTestsFromTestCase(ContextTests))
     suite_lnf.addTests(unittest.TestLoader().loadTestsFromTestCase(ExceptionTests))
     suite_lnf.addTests(unittest.TestLoader().loadTestsFromTestCase(UrlTests))
     suite_lnf.addTests(unittest.TestLoader().loadTestsFromTestCase(AttributeTests))
 
     # Job package tests
-    suite_job = unittest.TestLoader().loadTestsFromTestCase(JobDescriptionTests)
+    suite_job = unittest.TestSuite()
+    suite_job.addTests(unittest.TestLoader().loadTestsFromTestCase(JobDescriptionTests))
     suite_job.addTests(unittest.TestLoader().loadTestsFromTestCase(JobIssueTests))
-    suite_job.addTests(unittest.TestLoader().loadTestsFromTestCase(JobMiscTests))
+ #  suite_job.addTests(unittest.TestLoader().loadTestsFromTestCase(JobMiscTests))
 
     # Filesystem package tests
-    suite_file = unittest.TestLoader().loadTestsFromTestCase(FilesystemDirectoryTests)
+    suite_file = unittest.TestSuite()
+    suite_file.addTests(unittest.TestLoader().loadTestsFromTestCase(FilesystemDirectoryTests))
  
     alltests = unittest.TestSuite([suite_lnf, 
                                    suite_job,

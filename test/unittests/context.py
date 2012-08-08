@@ -38,11 +38,11 @@ class ContextTests(unittest.TestCase):
     def test_context_type_SSH(self):
 
         c1 = saga.Context()
-        c1.type = saga.Context.SSH
-        c1.userkey=("/tmp/bliss-test.file1")
+        c1.context_type = saga.Context.SSH
+        c1.user_key=("/tmp/bliss-test.file1")
         try:
-            c1.userkey=("non_existing_file_2345435")
-            self.fail("'userkey' shouldn't accept a non-exsisting file'")
+            c1.user_key=("non_existing_file_2345435")
+            self.fail("'user_key' shouldn't accept a non-existing file'")
         except saga.Exception, e: 
             pass
 
@@ -59,10 +59,10 @@ class ContextTests(unittest.TestCase):
         jk = saga.job.Service("fork://localhost")
         found = False
         for ctx in js.get_session().list_contexts():
-            if ctx.type == saga.Context.SSH:
+            if ctx.context_type == saga.Context.SSH:
                 if ctx == c1:
                     found = True
-                    assert(ctx.userkey == "/tmp/bliss-test.file1")
+                    assert(ctx.user_key == "/tmp/bliss-test.file1")
 
         if not found:
             self.fail("Coulnd't find context!")
@@ -72,18 +72,18 @@ class ContextTests(unittest.TestCase):
     def test_context_type_EC2(self):
 
         c1 = saga.Context()
-        c1.type = saga.Context.EC2
-        c1.userkey  = "/tmp/bliss-test.file1"
+        c1.context_type = saga.Context.EC2
+        c1.user_key  = "/tmp/bliss-test.file1"
         try:
-            c1.userkey=("non_existing_file_2345435")
-            self.fail("'userkey' shouldn't accept a non-exsisting file'")
+            c1.user_key=("non_existing_file_2345435")
+            self.fail("'user_key' shouldn't accept a non-existing file'")
         except saga.Exception, e: 
             pass
 
-        c1.usercert = "/tmp/bliss-test.file2"        
+        c1.user_cert = "/tmp/bliss-test.file2"        
         try:
-            c1.usercert=("non_existing_file_2345435")
-            self.fail("'usercert' shouldn't accept a non-exsisting file'")
+            c1.user_cert=("non_existing_file_2345435")
+            self.fail("'user_cert' shouldn't accept a non-existing file'")
         except saga.Exception, e: 
             pass
 
@@ -100,11 +100,11 @@ class ContextTests(unittest.TestCase):
         jk = saga.job.Service("fork://localhost")
         found = False
         for ctx in js.get_session().list_contexts():
-            if ctx.type == saga.Context.EC2:
+            if ctx.context_type == saga.Context.EC2:
                 if ctx == c1:
                     found = True
-                    assert(ctx.userkey == "/tmp/bliss-test.file1")
-                    assert(ctx.usercert == "/tmp/bliss-test.file2")
+                    assert(ctx.user_key == "/tmp/bliss-test.file1")
+                    assert(ctx.user_cert == "/tmp/bliss-test.file2")
 
         if not found:
             self.fail("Coulnd't find context!")
@@ -114,18 +114,18 @@ class ContextTests(unittest.TestCase):
     def test_context_type_X509(self):
 
         c1 = saga.Context()
-        c1.type = saga.Context.X509
-        c1.userkey  = "/tmp/bliss-test.file1"
+        c1.context_type = saga.Context.X509
+        c1.user_key  = "/tmp/bliss-test.file1"
         try:
-            c1.userkey=("non_existing_file_2345435")
-            self.fail("'userkey' shouldn't accept a non-exsisting file'")
+            c1.user_key=("non_existing_file_2345435")
+            self.fail("'user_key' shouldn't accept a non-existing file'")
         except saga.Exception, e: 
             pass
 
-        c1.usercert = "/tmp/bliss-test.file2"     
+        c1.user_cert = "/tmp/bliss-test.file2"     
         try:
-            c1.usercert=("non_existing_file_2345435")
-            self.fail("'usercert' shouldn't accept a non-exsisting file'")
+            c1.user_cert=("non_existing_file_2345435")
+            self.fail("'user_cert' shouldn't accept a non-existing file'")
         except saga.Exception, e: 
             pass
    
@@ -142,11 +142,11 @@ class ContextTests(unittest.TestCase):
         jk = saga.job.Service("fork://localhost")
         found = False
         for ctx in js.get_session().list_contexts():
-            if ctx.type == saga.Context.X509:
+            if ctx.context_type == saga.Context.X509:
                 if ctx == c1:
                     found = True
-                    assert(ctx.userkey == "/tmp/bliss-test.file1")
-                    assert(ctx.usercert == "/tmp/bliss-test.file2")
+                    assert(ctx.user_key == "/tmp/bliss-test.file1")
+                    assert(ctx.user_cert == "/tmp/bliss-test.file2")
 
         if not found:
             self.fail("Coulnd't find context!")

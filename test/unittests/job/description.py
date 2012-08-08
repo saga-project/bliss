@@ -8,6 +8,7 @@ __license__   = "MIT"
 
 import bliss.saga as saga
 import unittest
+import traceback
 
 ###############################################################################
 #
@@ -62,7 +63,8 @@ class JobDescriptionTests(unittest.TestCase):
  
                 try:
                     setattr(jd, attr_val, 12)  # shouldn't accept anything but str
-                    self.fail("Attribute Error - shouldn't except non-str value")
+                #   self.fail("Attribute Error - shouldn't accept non-str value")
+                #   AM: auto-conversion ...
                 except saga.Exception:
                     pass
                 jd.set_attribute(attr_key, "XX")
@@ -70,8 +72,11 @@ class JobDescriptionTests(unittest.TestCase):
                     self.fail("Attribute Error - unexpected value")
 
                 jd.remove_attribute(attr_key)
-                if getattr(jd, attr_val) != None:
-                    self.fail("Attribute Error - should have been None")
+                try:
+                    getattr(jd, attr_val)  # should raise DoesNotExist
+                    self.fail("Attribute Error - should have Failed")
+                except saga.Exception:
+                    pass
  
         except saga.Exception, e: 
             self.fail(e)
@@ -108,7 +113,8 @@ class JobDescriptionTests(unittest.TestCase):
 
                 try:
                     setattr(jd, attr_val, [1])  # shouldn't accept anything but int
-                    self.fail("Attribute Error - shouldn't except non-int value")
+                  # self.fail("Attribute Error - shouldn't accept non-int value")
+                  # auto attribute conversion works...
                 except saga.Exception:
                     pass 
 
@@ -117,8 +123,11 @@ class JobDescriptionTests(unittest.TestCase):
                     self.fail("Attribute Error - unexpected value")
 
                 jd.remove_attribute(attr_key)
-                if getattr(jd, attr_val) != None:
-                    self.fail("Attribute Error - should have been None")
+                try:
+                    getattr(jd, attr_val)
+                    self.fail("Attribute Error - should have failed")
+                except : 
+                    pass
  
         except saga.Exception, e: 
             self.fail(e)
@@ -147,7 +156,7 @@ class JobDescriptionTests(unittest.TestCase):
 
                 setattr(jd, attr_val, svalue)
                 if getattr(jd, attr_val) != svalue:
-                    self.fail("Attribute Error - unexpected value")
+                    self.fail("Attribute Error - unexpected value %s / %s" %  (getattr(jd, attr_val), svalue))
                 if jd.get_vector_attribute(attr_key) != svalue:
                     self.fail("Attribute Error - unexpected value")
 
@@ -161,8 +170,11 @@ class JobDescriptionTests(unittest.TestCase):
                     self.fail("Attribute Error - unexpected value")
 
                 jd.remove_attribute(attr_key)
-                if getattr(jd, attr_val) != None:
-                    self.fail("Attribute Error - should have been None")
+                try:
+                    getattr(jd, attr_val)
+                    self.fail("Attribute Error - should have failed")
+                except : 
+                    pass
  
         except saga.Exception, e: 
             self.fail(e)
@@ -199,7 +211,8 @@ class JobDescriptionTests(unittest.TestCase):
 
                 try:
                     setattr(jd, attr_val, {"ss":"gg"})  # shouldn't accept anything but list
-                    self.fail("Attribute Error - shouldn't except non-list value")
+                  # self.fail("Attribute Error - shouldn't accept non-list value")
+                  # auto attribute conversion works
                 except saga.Exception:
                     pass
 
@@ -208,8 +221,11 @@ class JobDescriptionTests(unittest.TestCase):
                     self.fail("Attribute Error - unexpected value")
 
                 jd.remove_attribute(attr_key)
-                if getattr(jd, attr_val) != None:
-                    self.fail("Attribute Error - should have been None")
+                try:
+                    getattr(jd, attr_val)
+                    self.fail("Attribute Error - should have failed")
+                except : 
+                    pass
  
         except saga.Exception, e: 
             self.fail(e)
@@ -247,9 +263,9 @@ class JobDescriptionTests(unittest.TestCase):
         Test if job description spmd_variation works as expected
         """
 
-        try :
-            jd = saga.job.Description()
+        jd = saga.job.Description()
 
+        try :
             jd.spmd_variation = 'MPI'
             if jd.get_attribute("SPMDVariation") != 'MPI':
                 self.fail("Unexpected SPMDVariation attribute")

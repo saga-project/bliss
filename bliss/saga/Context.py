@@ -14,7 +14,7 @@ from bliss.saga.Attributes import AttributeInterface
 from bliss.saga.Exception import Exception as SAGAException
 from bliss.saga.Error import Error as SAGAError
 
-class Context(AttributeInterface, Object):
+class Context(Object, AttributeInterface):
     '''Loosely defines a SAGA Context object as defined in GFD.90.
 
     A security context is a description of a security token.  It is important to
@@ -33,9 +33,9 @@ class Context(AttributeInterface, Object):
 
         # define an ssh context
         c = saga.Context()
-        c.type = 'ssh'
-        c.usercert = '$HOME/.ssh/special_id_rsa'
-        c.userkey = '$HOME/.ssh/special_id_rsa.pub'
+        c.context_type = 'ssh'
+        c.user_cert = '$HOME/.ssh/special_id_rsa'
+        c.user_key = '$HOME/.ssh/special_id_rsa.pub'
 
         # add the context to a session
         s = saga.Session()
@@ -77,27 +77,35 @@ class Context(AttributeInterface, Object):
 
         Object.__init__(self, objtype=Object.Type.Context, apitype=Object.Type.BaseAPI)
 
+        self.__logger = logging.getLogger('bliss.'+self.__class__.__name__)
+
         self.attributes_extensible_  (True)
         self.attributes_camelcasing_ (True)
       
         # register properties with the attribute interface 
-        self.attributes_register_  ('Type',      None, self.String, self.Scalar, self.Writeable)
-        self.attributes_register_  ('UserID',    None, self.String, self.Scalar, self.Writeable)
-        self.attributes_register_  ('UserPass',  None, self.String, self.Scalar, self.Writeable)
-        self.attributes_register_  ('UserCert',  None, self.String, self.Scalar, self.Writeable)
-        self.attributes_register_  ('UserKey',   None, self.String, self.Scalar, self.Writeable)
-        self.attributes_register_  ('userProxy', None, self.String, self.Scalar, self.Writeable)
+        self.attributes_register_ ('ContextType', None, self.String, self.Scalar, self.Writeable)
+        self.attributes_register_ ('UserID',      None, self.String, self.Scalar, self.Writeable)
+        self.attributes_register_ ('UserPass',    None, self.String, self.Scalar, self.Writeable)
+        self.attributes_register_ ('UserCert',    None, self.String, self.Scalar, self.Writeable)
+        self.attributes_register_ ('UserKey',     None, self.String, self.Scalar, self.Writeable)
+        self.attributes_register_ ('UserProxy',   None, self.String, self.Scalar, self.Writeable)
 
-        self.__logger = logging.getLogger('bliss.'+self.__class__.__name__)
+        ##########################################
+        # some attributes point to files which must exist - so we add a test for
+        # those attributes
+        #
+        def test_file_existence_ (key, val) :
+            if not val :
+                return "File %s = '' doesn't exist."  %  (key)
+            if not os.path.isfile (val) :
+                return "File %s = '%s' doesn't exist."  %  (key, val)
+            return True
+        ##########################################
 
+        self.attributes_check_add_ ('UserKey',   test_file_existence_)
+        self.attributes_check_add_ ('UserCert',  test_file_existence_)
+        self.attributes_check_add_ ('UserProxy', test_file_existence_)
 
-    ######################################################################
-    ##
-    def _log_and_raise_if_file_doesnt_exist(self, filename):
-        '''Logs and raises an error if "filename" doesn't exist'''
-        msg = "File '%s' doesn't exist." % (filename)
-        self.__logger.error(msg)
-        raise SAGAException(msg, SAGAError.DoesNotExist)
 
     ######################################################################
     ##
@@ -111,7 +119,7 @@ class Context(AttributeInterface, Object):
         '''String represenation.
         '''
         return "\n[\n Context Type: %s\n UserID: %s\n UserPass: %s\n UserCert: %s\n UserKey: %s\n UserProxy: %s\n]" % \
-                (self.type, self.userid, self.userpass, self.usercert, self.userkey, self.userproxy)
+                (self.context_type, self.user_id, self.user_pass, self.user_cert, self.user_key, self.user_proxy)
 
     ######################################################################
     ## Property: type
@@ -128,9 +136,9 @@ class Context(AttributeInterface, Object):
 
             # define an ssh context
             c = saga.Context()
-            c.type = 'ssh'
-            c.usercert = '$HOME/.ssh/id_rsa'
-            c.userkey = '$HOME/.ssh/id_rsa.pub'
+            c.context_type = 'ssh'
+            c.user_cert = '$HOME/.ssh/id_rsa'
+            c.user_key = '$HOME/.ssh/id_rsa.pub'
 
             # add it to a session
             s = saga.Session
@@ -148,7 +156,7 @@ class Context(AttributeInterface, Object):
 
 
     ######################################################################
-    ## Property: userid
+    ## Property: user_id
         """
         UserID
 
@@ -156,7 +164,7 @@ class Context(AttributeInterface, Object):
         """
 
     ######################################################################
-    ## Property: userpass
+    ## Property: user_pass
         """User password to use.
         
         Please use this option with care -- it is *not* good practice to encode
@@ -164,20 +172,14 @@ class Context(AttributeInterface, Object):
         """
 
     ######################################################################
-    ## Property: usercert
+    ## Property: user_cert
         """Location of a user certificate."""
 
     ######################################################################
-    ## Property: userkey
+    ## Property: user_key
         """Location of a user key."""
-        # FIXME: add test:
-        #     if not os.path.isfile(val):
-        #         self._log_and_raise_if_file_doesnt_exist(val)
 
     ######################################################################
-    ## Property: userproxy
+    ## Property: user_proxy
         """Location of a user proxy."""
-        # FIXME: add test:
-        #   if not os.path.isfile(val):
-        #       self._log_and_raise_if_file_doesnt_exist(val)
 

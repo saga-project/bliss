@@ -131,20 +131,22 @@ class Description(Object, AttributeInterface):
 
         # register properties with the attribute interface
         self.attributes_register_  ('Executable',        None, self.String, self.Scalar, self.Writeable)
+        self.attributes_register_  ('Environment',       None, self.Any,    self.Scalar, self.Writeable)
+        self.attributes_register_  ('Arguments',         None, self.String, self.Vector, self.Writeable)
+        self.attributes_register_  ('WorkingDirectory',  None, self.String, self.Scalar, self.Writeable)
+        self.attributes_register_  ('FileTransfer',      None, self.String, self.Vector, self.Writeable)
         self.attributes_register_  ('Output',            None, self.String, self.Scalar, self.Writeable)
         self.attributes_register_  ('Error',             None, self.String, self.Scalar, self.Writeable)
         self.attributes_register_  ('Queue',             None, self.String, self.Scalar, self.Writeable)
-        self.attributes_register_  ('WallTimeLimit',     None, self.String, self.Time,   self.Writeable)
-        self.attributes_register_  ('WorkingDirectory',  None, self.String, self.Scalar, self.Writeable)
+        self.attributes_register_  ('Project',           None, self.String, self.Scalar, self.Writeable)
+        self.attributes_register_  ('WallTimeLimit',     None, self.Time,   self.Scalar, self.Writeable)
         self.attributes_register_  ('Contact',           None, self.String, self.Scalar, self.Writeable)
         self.attributes_register_  ('Name',              None, self.String, self.Scalar, self.Writeable)
-        self.attributes_register_  ('TotalCPUCount',     None, self.String, self.Int,    self.Writeable)
-        self.attributes_register_  ('NumberOfProcesses', None, self.String, self.Int,    self.Writeable)
-        self.attributes_register_  ('SPMDVariation',     None, self.String, self.Scalar, self.Writeable)
-        self.attributes_register_  ('Arguments',         None, self.String, self.Vector, self.Writeable)
-        self.attributes_register_  ('FileTransfer',      None, self.String, self.Vector, self.Writeable)
-        self.attributes_register_  ('Environment',       None, self.String, self.Vector, self.Writeable)
+        self.attributes_register_  ('TotalCPUCount',     None, self.Int,    self.Scalar, self.Writeable)
+        self.attributes_register_  ('NumberOfProcesses', None, self.Int,    self.Scalar, self.Writeable)
+        self.attributes_register_  ('SPMDVariation',     None, self.Enum,   self.Scalar, self.Writeable)
 
+        self.attributes_set_enum_  ('SPMDVariation',     ['MPI', 'OpenMP', 'None'])
 
     ######################################################################
     ## 
