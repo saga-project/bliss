@@ -65,17 +65,17 @@ class ComputeDescription(Object, AttributeInterface):
         self.attributes_camelcasing_ (True)
 
         # register properties with the attribute interface 
-        self.attributes_register_  ('Dynamic',         False, self.Bool,   self.Scalar, self.Writeable)
-        self.attributes_register_  ('Start',           None,  self.Time,   self.Scalar, self.Writeable)
-        self.attributes_register_  ('End',             None,  self.Time,   self.Scalar, self.Writeable)
-        self.attributes_register_  ('Duration',        None,  self.Time,   self.Scalar, self.Writeable)
-        self.attributes_register_  ('Template',        None,  self.String, self.Scalar, self.Writeable)
+        self.attributes_register_  ('Dynamic',         False, self.Bool,   self.Scalar, self.Writable)
+        self.attributes_register_  ('Start',           None,  self.Time,   self.Scalar, self.Writable)
+        self.attributes_register_  ('End',             None,  self.Time,   self.Scalar, self.Writable)
+        self.attributes_register_  ('Duration',        None,  self.Time,   self.Scalar, self.Writable)
+        self.attributes_register_  ('Template',        None,  self.String, self.Scalar, self.Writable)
 
-        self.attributes_register_  ('Slots',           1,     self.Int,    self.Scalar, self.Writeable)
-        self.attributes_register_  ('OperatingSystem', 'Any', self.Enum,   self.Scalar, self.Writeable)
-        self.attributes_register_  ('Architecture',    'Any', self.Enum,   self.Scalar, self.Writeable)
-        self.attributes_register_  ('Hostnames',       [],    self.String, self.Vector, self.Writeable)
-        self.attributes_register_  ('Memory',          None,  self.Int,    self.Scalar, self.Writeable)
+        self.attributes_register_  ('Slots',           1,     self.Int,    self.Scalar, self.Writable)
+        self.attributes_register_  ('OperatingSystem', 'Any', self.Enum,   self.Scalar, self.Writable)
+        self.attributes_register_  ('Architecture',    'Any', self.Enum,   self.Scalar, self.Writable)
+        self.attributes_register_  ('Hostnames',       [],    self.String, self.Vector, self.Writable)
+        self.attributes_register_  ('Memory',          None,  self.Int,    self.Scalar, self.Writable)
 
     ######################################################################
     ## 

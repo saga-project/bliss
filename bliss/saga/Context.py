@@ -83,12 +83,12 @@ class Context(Object, AttributeInterface):
         self.attributes_camelcasing_ (True)
       
         # register properties with the attribute interface 
-        self.attributes_register_ ('ContextType', None, self.String, self.Scalar, self.Writeable)
-        self.attributes_register_ ('UserID',      None, self.String, self.Scalar, self.Writeable)
-        self.attributes_register_ ('UserPass',    None, self.String, self.Scalar, self.Writeable)
-        self.attributes_register_ ('UserCert',    None, self.String, self.Scalar, self.Writeable)
-        self.attributes_register_ ('UserKey',     None, self.String, self.Scalar, self.Writeable)
-        self.attributes_register_ ('UserProxy',   None, self.String, self.Scalar, self.Writeable)
+        self.attributes_register_ ('ContextType', None, self.String, self.Scalar, self.Writable)
+        self.attributes_register_ ('UserID',      None, self.String, self.Scalar, self.Writable)
+        self.attributes_register_ ('UserPass',    None, self.String, self.Scalar, self.Writable)
+        self.attributes_register_ ('UserCert',    None, self.String, self.Scalar, self.Writable)
+        self.attributes_register_ ('UserKey',     None, self.String, self.Scalar, self.Writable)
+        self.attributes_register_ ('UserProxy',   None, self.String, self.Scalar, self.Writable)
 
         ##########################################
         # some attributes point to files which must exist - so we add a test for

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
@@ -15,8 +14,6 @@ import inspect
 import re
 
 # FIXME: add a tagging 'Monitorable' interface, which enables callbacks.
-# FIXME: add a flag to mark attributes as fixed, so that app cannot change flags (type...)
-#        also: __delattr__
 
 ################################################################################
 #
@@ -97,9 +94,9 @@ class Callback () :
             thread -- so the application need to make sure that the callback
             code is thread-safe.
 
-            The boolean return value is used to signal Troy if the callback
-            should continue to listen for events (return True) , or if it rather
-            should get unregistered after this invocation (return False).
+            The boolean return value is used to signal if the callback should
+            continue to listen for events (return True) , or if it rather should
+            get unregistered after this invocation (return False).
         """
         pass
 
@@ -112,7 +109,7 @@ class Callback () :
 class AttributesBase_ (object) :
     """ 
     This class only exists to host properties -- as object itself does *not* have
-    properties!  This class is not part of the public Troy API.
+    properties!  This class is not part of the public attribute API.
     """
     def __init__ (self) :
         pass
@@ -120,19 +117,19 @@ class AttributesBase_ (object) :
 
 class AttributeInterface (AttributesBase_) :
     """
-    This base class implements most of the semantics of the L{Attributes}
-    interface.  That interface
     Attribute Interface Class
 
-    The Attributes interface has a very simple API -- it can be used as a Python
-    dictionary.  In fact, in inherits from 'dict', and can thus interchangeably
-    used.  By overloading the dictionary setter and getter methods it provides,
-    however, some additional semantics.
+    The Attributes interface implements the attribute semantics of the SAGA Core
+    API specification (http://ogf.org/documents/GFD.90.pdf).  Additionally, this
+    implementation provides that semantics via two different interfaces: the
+    python dictionary interface, and the python property interface.  Note that
+    a *simgle* set of attributes is internally managed, no matter what interface
+    is used for access.
 
-    In particular, a class which uses this interface can internally specify
-    which attributes can be set, and what type they have.  Also, default values
-    can be specified, and the class provides a rudimentary support for
-    converting scalar attributes into vector attributes and back.
+    A class which uses this interface can internally specify which attributes
+    can be set, and what type they have.  Also, default values can be specified,
+    and the class provides a rudimentary support for converting scalar
+    attributes into vector attributes and back.
 
     Also, the consumer of this API can register callbacks, which get triggered
     on changes to specific attribute values.
@@ -144,55 +141,84 @@ class AttributeInterface (AttributesBase_) :
         class Transliterator ( pilot.Attributes ) :
             
             def __init__ (self, *args, **kwargs) :
-              # setting attribs to non-extensible will cause the cal to init below to
-              # complain if attributes are specified.  Default is extensible.
+                # setting attribs to non-extensible will cause the cal to init below to
+                # complain if attributes are specified.  Default is extensible.
               # self.attributes_extensible_ (False)
         
-                # pass args to base class init (implies extensible)
+                # pass args to base class init (requires 'extensible')
                 super (Transliterator, self).__init__ (*args, **kwargs)
         
                 # setup class attribs
-                self.attributes_register_   ('apple', 'Appel', self.Url,    self.Scalar, self.Writeable)
+                self.attributes_register_   ('apple', 'Appel', self.Url,    self.Scalar, self.Writable)
                 self.attributes_register_   ('plum',  'Pruim', self.String, self.Scalar, self.ReadOnly)
         
-              # setting attribs to non-extensible at *this* point will have allowed
-              # custom user attribs on __init__ time (via args), but will then forbid
-              # any additional custom attributes
+                # setting attribs to non-extensible at *this* point will have allowed
+                # custom user attribs on __init__ time (via args), but will then forbid
+                # any additional custom attributes.
               # self.attributes_extensible_ (False)
         
         
         ###########################################
         if __name__ == "__main__":
         
-            def cb (key, val, obj) :
-                print "called: %s - %s - %s"  %  (key, val, type (obj))
-                return True
+            # define a callback method.  This callback can get registered for
+            # attribute changes later.
         
+            #################################
+            def cb (key, val, obj) :
+                # the callback gets information about what attribute was changed
+                # on what object:
+                print "called: %s - %s - %s"  %  (key, str(val), type (obj))
+
+                # returning True will keep the callback registered for further
+                # attribute changes.
+                return True
+            #################################
+        
+            # create a class instance and add a 'cherry' attribute/value on
+            # creation.  
             trans = Transliterator (cherry='Kersche')
         
+            # use the property and the dict interface to mess with the pre-defined
+            # 'apple' attribute
             print "\\n -- apple"
             print trans.apple 
             print trans['apple']
             trans.apple = 'Abbel'
             print trans.apple 
         
+            # add our callback to the apple attribute, and trigger some changes.
+            # Note that the callback is also triggered when the attribute's
+            # value changes w/o user control, e.g. by some internal state
+            # changes.
             trans.add_callback ('apple', cb)
             trans.apple = ['Abbel', 'Appel']
             trans.apple = 'Apfel'
         
+            # Setting an attribute final is actually an internal method, used by
+            # the implementation to signal that no further changes on that
+            # attribute are expected.  We use that here for demonstrating the
+            # concept though.  Callback is invoked on set_final_.
             trans.attributes_set_final_ ('apple')
             trans.apple = 'Abbel'
             print trans.apple 
         
+            # mess around with the 'plum' attribute, which was marked as
+            # ReadOnly on registration time.
             print "\\n -- plum"
             print trans.plum
           # trans.plum    = 'Pflaume'  # raises readonly exception
           # trans['plum'] = 'Pflaume'  # raises readonly exception
             print trans.plum
         
+            # check if the 'cherry' attribute exists, which got created on
+            # instantiation time.
             print "\\n -- cherry"
             print trans.cherry
         
+            # as we have 'extensible' set, we can add a attribute on the fly,
+            # via either the property or the dict interface, or via the GFD.90
+            # API of course.
             print "\\n -- peach"
             trans['peach'] = 'Berne'
             print trans.peach
@@ -205,8 +231,10 @@ class AttributeInterface (AttributesBase_) :
         -- apple
         Appel
         Appel
-        Apfel
-        called: apple - ['Boskop', 'Jonas'] - <class '__main__.Transliterator'>
+        Abbel
+        called: apple - Abbel Appel  - <class '__main__.Transliterator'>
+        called: apple - Apfel - <class '__main__.Transliterator'>
+        called: apple - Apfel - <class '__main__.Transliterator'>
         Apfel
         
         -- plum
@@ -227,12 +255,6 @@ class AttributeInterface (AttributesBase_) :
     getters) is probably a bad idea.
     """
 
-    # FIXME: need an internal method to set readonly attributes from within
-    # Troy.  That in turn means we have to move the checks/conversions into
-    # a separate private routine, to use them consistently for public and
-    # private setters.
-
-
     ############################################################################
     #
     # define a couple of constants for the attribute API, mostly for registering
@@ -248,9 +270,10 @@ class AttributeInterface (AttributesBase_) :
     Enum        = 'enum'       # value is any one of a list of candidates
     Time        = 'time'       # seconds since epoch, or any py time thing
                                # which can be converted into such
+                               # FIXME: conversion not implemented
 
     # mode enums
-    Writeable   = 'writeable'  # the consumer of the interface can change
+    Writable    = 'writable'   # the consumer of the interface can change
                                # the attrib value
     ReadOnly    = 'readonly'   # the consumer of the interface can not
                                # change the attrib value.  The
@@ -267,6 +290,8 @@ class AttributeInterface (AttributesBase_) :
     Vector      = 'vector'     # the attribute value is a list of data elements
 
 
+    # two regexes for converting CamelCase into under_score_casing, as static
+    # class vars to avoid frequent recompilation
     camel_case_regex_1_ = re.compile('(.)([A-Z][a-z]+)')
     camel_case_regex_2_ = re.compile('([a-z0-9])([A-Z])')
 
@@ -278,19 +303,17 @@ class AttributeInterface (AttributesBase_) :
     def __init__ (self, *args, **kwargs) :
         """
         This method is not supposed to be directly called by the consumer of
-        this API -- it is called indirectly via derived object construction.
+        this API -- it should be called via derived object construction.
 
-        init makes sure that the basic structures are in place on the attribute
-        dictionary - this saves us ton of safety checks later on.
+        attributes_t_init_ makes sure that the basic structures are in place on
+        the attribute dictionary - this saves us ton of safety checks later on.
         """
-
-        # self.attributes_dump_ ("init")
 
         # initialize state
         d = self.attributes_t_init_ ()
 
         # call to update and the args/kwargs handling seems to be part of the
-        # dict interface conventions
+        # dict interface conventions *shrug*
         self.update (*args, **kwargs)
 
 
@@ -298,15 +321,14 @@ class AttributeInterface (AttributesBase_) :
     #
     # Internal interface tools.
     #
-    # Those tools (attributes_t_*) are only for internal use, and should never
-    # be called from the outside.
+    # These tools are only for internal use, and should never be called from 
+    # outside of this module.
     #
     # Naming: attributes_t_*_
     #
     def attributes_t_init_ (self, key=None) :
         """
-        This method is not supposed to be directly called by the consumer of
-        this API.
+        This internal function is not to be used by the consumer of this API.
 
         The attributes_t_init_ method initializes the interface's internal data
         structures.  We always need the attribute dict, and the extensible flag.
@@ -315,6 +337,10 @@ class AttributeInterface (AttributesBase_) :
 
         If a key is given, the existence of this key is checked.  An exception
         is raised if the key does not exist.
+
+        The internal data are stored as property on the AttributesBase_ class.
+        Storing them as property on *this* class would obviously result in
+        recursion...
         """
 
         d = {}
@@ -330,11 +356,11 @@ class AttributeInterface (AttributesBase_) :
             AttributesBase_.__setattr__ (self, 'd_', d)
 
 
-        # check if we know about that attribute
+        # check if we know about the given attribute
         if key :
             if not key in d['attributes_'] :
-                raise MyException (" attribute key is invalid: %s"  %  (key),
-                                     MyError.DoesNotExist)
+                raise MyException ("attribute key is invalid: %s"  %  (key),
+                                    MyError.DoesNotExist)
         # all is well
         return d
 
@@ -370,10 +396,9 @@ class AttributeInterface (AttributesBase_) :
     ####################################
     def attributes_t_underscore_ (self, key) :
         """ 
-        This is an internal method, and should not be called outside this
-        interface implementation.
+        This internal function is not to be used by the consumer of this API.
 
-        The method accepts a 'CamelCase'd word, and translates that into
+        The method accepts a CamelCased word, and translates that into
         'under_score' notation -- IFF 'camelcasing_' is set
 
         Kudos: http://stackoverflow.com/questions/1175208/elegant-python-function-to-convert-camelcase-to-camel-case
@@ -396,20 +421,25 @@ class AttributeInterface (AttributesBase_) :
     ####################################
     def attributes_t_conversion_ (self, key, val) :
         """
-        This is an internal method, and should not be called outside this
-        interface implementation.
+        This internal function is not to be used by the consumer of this API.
 
         The method checks a given attribute value against the attribute's
         flags, and performs some simple type conversion as needed.  Also, the
         method will restore a 'None' value to the attribute's default value.
+
+        A deriving class can add additional value checks for attributes by
+        calling L{attributes_check_add_} (key, check).
         """
-        # make sure interface is ready to use
+
+        # make sure interface is ready to use.  We do not check for keys, that
+        # needs to be done in the calling method.  For example, on 'set', type
+        # conversions will be performed, but the key will not exist previously.
         d = self.attributes_t_init_ ()
-        orig = val
 
         # if the key is not known
         if not key in d['attributes_'] :
-            # cannot handle unknown attributes
+            # cannot handle unknown attributes.  Attributes which have been
+            # registered earlier will be fine, as they have type information.
             return val
 
         # check if a value is given.  If not, revert to the default value
@@ -426,8 +456,8 @@ class AttributeInterface (AttributesBase_) :
         for check in d['attributes_'][key]['checks'] :
             ret = check (key, val)
             if ret != True :
-                raise MyException (" attribute value %s is not valid: %s"  %  (key, ret),
-                                     MyError.BadParameter)
+                raise MyException ("attribute value %s is not valid: %s"  %  (key, ret),
+                                    MyError.BadParameter)
 
         # aaaand done
         return val
@@ -435,23 +465,31 @@ class AttributeInterface (AttributesBase_) :
 
     ####################################
     def attributes_t_conversion_flavor_ (self, key, val) :
-        """ This method should ONLY be called by attributes_t_conversion_! """
-        # FIXME: there are certainly nicer and more reversible ways to
+        """ 
+        This internal function is not to be used by the consumer of this API.
+        This method should ONLY be called by attributes_t_conversion_! 
+        """
+        # FIXME: there are possibly nicer and more reversible ways to
         #        convert the flavors...
-        # TODO: consider splitting strings?
-
-        d = self.attributes_t_init_ (key)
-        f = d['attributes_'][key]['flavor']
 
         # easiest conversion of them all... ;-)
         if val == None :
             return None
 
+        # make sure interface is ready to use.
+        d = self.attributes_t_init_ (key)
 
         # check if we need to serialize a list into a scalar
+        f = d['attributes_'][key]['flavor']
         if f == self.Vector :
             # we want a vector
-            if not isinstance (val, list) :
+            if isinstance (val, list) :
+                # val is already vec - apply type conversion on all elems
+                ret = []
+                for elem in val :
+                    ret.append (self.attributes_t_conversion_type_ (key, elem))
+                return ret
+            else :
                 # need to create vec from scalar
                 if isinstance (val, basestring) :
                     # for string values, we split on white spaces and type-convert 
@@ -462,15 +500,9 @@ class AttributeInterface (AttributesBase_) :
                         ret.append (self.attributes_t_conversion_type_ (key, element))
                     return ret
                 else :   
-                    # all non-string types are interpreted as elements of
+                    # all non-string types are interpreted as only element of
                     # a single-member list
                     return [self.attributes_t_conversion_type_ (key, val)]
-            else :
-                # val is already vec - apply type conversion on all elems
-                ret = []
-                for elem in val :
-                    ret.append (self.attributes_t_conversion_type_ (key, elem))
-                return ret
 
 
         elif f == self.Scalar :
@@ -480,6 +512,8 @@ class AttributeInterface (AttributesBase_) :
                 if len (val) > 1 :
                     # if the list has more than one element, we use an intermediate
                     # string representation of the list before converting to a scalar
+                    # This is the weakest conversion mode, and will not very
+                    # likely yield useful results.
                     tmp = ""
                     for i in val :
                         tmp += str(i) + " "
@@ -489,7 +523,7 @@ class AttributeInterface (AttributesBase_) :
                     # scalar value 
                     return self.attributes_t_conversion_type_ (key, val[0])
                 else :
-                    # no value...
+                    # no value in list
                     return None
             else :
                 # scalar is already scalar, just do type conversion
@@ -497,32 +531,85 @@ class AttributeInterface (AttributesBase_) :
 
 
         # we should never get here...
-        raise MyException (" Cannot evaluate attribute flavor (%s) : %s"  %  (key, str(f)),
-                             MyError.NoSuccess)
+        raise MyException ("Cannot evaluate attribute flavor (%s) : %s"  %  (key, str(f)),
+                            MyError.NoSuccess)
 
 
     ####################################
     def attributes_t_conversion_type_ (self, key, val) :
-        """ This method should ONLY be called by attributes_t_conversion_! """
-        d = self.attributes_t_init_ (key)
-        t = d['attributes_'][key]['type']
+        """ 
+        This internal function is not to be used by the consumer of this API.
+        This method should ONLY be called by attributes_t_conversion_!
+        """
 
-        # oh python...
+        # make sure interface is ready to use.
+        d = self.attributes_t_init_ (key)
+
+        # oh python, how about a decent switch statement???
+        t   = d['attributes_'][key]['type']
         ret = None
-        
         try :
             # FIXME: add time/date conversion to/from string
-            if   t == self.Any    : ret =        val  
-            elif t == self.Int    : ret = int   (val) 
-            elif t == self.Float  : ret = float (val) 
-            elif t == self.Bool   : ret = bool  (val) 
-            elif t == self.String : ret = str   (val) 
-            else                  : ret =        val  
+            if   t == self.Any    : return        val  
+            elif t == self.Int    : return int   (val) 
+            elif t == self.Float  : return float (val) 
+            elif t == self.Bool   : return bool  (val) 
+            elif t == self.String : return str   (val) 
+            else                  : return        val  
         except ValueError as e:
-            raise MyException (" attribute value %s has incorrect type: %s" %  (key, val),
-                                 MyError.BadParameter)
+            raise MyException ("attribute value %s has incorrect type: %s" %  (key, val),
+                                MyError.BadParameter)
 
-        return ret
+        # we should never get here...
+        raise MyException ("Cannot evaluate attribute type (%s) : %s"  %  (key, str(t)),
+                            MyError.NoSuccess)
+
+    ####################################
+    def attributes_t_wildcard2regex_ (self, pattern) :
+        """ 
+        This internal function is not to be used by the consumer of this API.
+
+        This method converts a string containing POSIX shell wildcards into
+        a regular expression with the same matching properties::
+
+            *       -> .*
+            ?       -> .
+            {a,b,c} -> (a|b|c)
+            [abc]   -> [abc]   
+            [!abc]  -> [^abc]   
+        """
+
+        re = pattern
+
+        re.replace ('*', '.*')  # set of characters
+        re.replace ('?', '.' )  # single character
+
+        # character classes
+        match = re.find ('[', 0)
+        while match >= 0 :
+            if  re[first + 1] == '!' :
+                re[first + 1] =  '^'
+            match = re.find ('[', match + 1)
+
+        # find opening { and closing }
+        first = re.find ('{', 0)
+        last  = re.find ('}', first + 1)
+
+        # while match
+        while first >= 0 and last  >= 0 :
+            # replace with ()
+            re[first] = '('
+            re[last] = '('
+
+            # also, replace all ',' with with '|' for alternatives
+            comma = re.find (',', first)
+            while comma >= 0 :
+                re[comma] = '|'
+                comma = re.find (',', comma + 1)
+
+            # done - find next bracket pair...
+            first = re.find ('{', last + 1)
+            last  = re.find ('}', first + 1)
 
 
     ###########################################################################
@@ -537,112 +624,45 @@ class AttributeInterface (AttributesBase_) :
     # Naming: attributes_i_*_
     #
     ####################################
-    def attributes_i_get_ (self, key) :
+    def attributes_i_set_ (self, key, val=None) :
         """
         This internal method should not be explicitly called by consumers of
-        this API, but is implicitly used via the dictionary interface.
+        this API, but is indirectly used via the different public interfaces.
 
-        The getattr method returns the value of the specified attribute.  If
-        that attribute does not exist, an AttributeError is raised.  It is not
-        an error to query an unset attribute though -- that will result in
-        'None' to be returned.
+        See L{set_attribute} (key, val) for details.
 
-        Note that this method is not performing any checks or conversions --
-        those are all performed when *setting* an attribute.  So, any attribute
-        flags (type, mode, flavor) are evaluated on setting, not on getting.
-        """
-
-        # make sure interface is ready to use
-        d = self.attributes_t_init_ (key)
-
-        if not 'value' in d['attributes_'][key] :
-            return None
-
-        return d['attributes_'][key]['value']
-
-
-
-    ####################################
-    def attributes_i_set_ (self, key, val=None, force=False) :
-        """
-        This internal method should not be explicitly called by consumers of
-        this API, but is implicitly used via the dictionary interface.
-
-        The setattr method sets the value of the specified attribute.  If that
-        attribute does not exist, an AttributeError is raised -- unless the
-        attribute set is marked 'extensible' -- in that case, the attribute is
-        created and set on the fly.  It is not an error to query unset attribute
-        though -- that is done by setting it to 'None'.  If a default is
-        specified for an attribute, setting 'None' will in fact restore the
-        default value.
-
-        Note that this method is performing a number of checks and conversions,
-        to match the value type to the attribute flags (type, mode, flavor).
-        Those conversions are not guaranteed to yield the expected result -- for
-        example, the conversion from 'scalar' to 'vector' is, for complex types,
-        ambiguous at best, and very likely stupid.  The consumer of the API
-        SHOULD ensure correct attribute values.  The conversions are intended to
-        support the most trivial and simple use cases (int to string etc).
-        Failed conversions will result in an Attribute Error.
-
-        Checks can be added dynamically, and per attribute, by calling
-        attributes_check_add_ (key, callable).  'callable' needs to be a python
-        callable, and will be invoked as::
-
-            callable (key, val)
-
-        If that call returns 'True', the value is accepted.  Otherwise, the
-        value will be considered to be invalid, which usually results in an
-        exception.  'callable' can in this case return a string as error
-        message.
-
-
-        Note::
-
-            Conversions and checks are incomplete at this point!
-            See code documentation (FIXMEs) for details.
-
-        Attempts to set a 'final' attribute are silently ignored.  Attempts to
-        set a 'readonly' attribute will result in an AttributeError being
-        raised.
-
-        The 'force' flag can be set internally if the attribute should be set
-        irrespectively of its mode and permissions.
-
-        If no value is provided, the attribute's value is set to 'None'.  Note
-        that attributes_set_() will trigger callbacks, if a new value (different
-        from the old value) is given.  For new attributes, the default value
-        will be 'None'.
+        New value checks can be added dynamically, and per attribute, by calling
+        L{attributes_check_add_} (key, callable).
         """
 
         # make sure interface is ready to use
         d = self.attributes_t_init_ ()
 
-        # only perform perm and mode checks if not in 'force' mode
-        if not force :
-            # if the key is not known
-            if not key in d['attributes_'] :
-                if not d['extensible_'] :
-                    # we cannot add new keys on non-extensible sets
-                    raise AttributeError(" attribute set is not extensible (key %s)" %  key)
-                else :
-                    # if the set is extensible, we can register the new key.  It
-                    # won't have any callbacks at this point.
-                    self.attributes_register_ (key, None, self.Any, self.Scalar, self.Writeable, self.Extended)
+        # if the key is not known
+        if not key in d['attributes_'] :
+            if not d['extensible_'] :
+                # we cannot add new keys on non-extensible sets
+                raise MyException ("attribute set is not extensible (key %s)" %  key,
+                                   MyError.IncorrectState)
+            else :
+                # if the set is extensible, we can register the new key.  It
+                # won't have any callbacks at this point.
+                self.attributes_register_ (key, None, self.Any, self.Scalar, self.Writable, self.Extended)
 
-            # known attribute - attempt to set if
-            else:
+        # known attribute - attempt to set its value
+        else:
 
-                # check if we are allowed to change the attribute - complain if not.
-                # Also, simply ignore write attempts to finalized keys.
-                if 'mode' in  d['attributes_'][key] :
+            # check if we are allowed to change the attribute - complain if not.
+            # Also, simply ignore write attempts to finalized keys.
+            if 'mode' in  d['attributes_'][key] :
 
-                    mode = d['attributes_'][key]['mode']
+                mode = d['attributes_'][key]['mode']
+                if self.Final == mode :
+                    return
+                elif self.ReadOnly == mode :
+                    raise MyException ("attribute %s is not writable" %  key, 
+                                       MyError.BadParameter)
 
-                    if   self.Final == mode :
-                        return
-                    elif self.Writeable != mode :
-                        raise AttributeError(" attribute %s is not writeable" %  key)
 
         # permissions are confirmed, set the attribute with conversion etc.
 
@@ -659,17 +679,50 @@ class AttributeInterface (AttributesBase_) :
 
         # only actually change the attribute when the new value differs --
         # and only then invoke any callbacks.
-
         if val != d['attributes_'][key]['value'] :
             d['attributes_'][key]['value'] = val
             self.attributes_t_call_cb_ (key)
 
 
     ####################################
-    def attributes_i_list_ (self) :
+    def attributes_i_get_ (self, key) :
         """
-        List all attributes which have been set explicitly -- registration alone
-        does not qualify.
+        This internal method should not be explicitly called by consumers of
+        this API, but is indirectly used via the different public interfaces.
+
+        see L{get_attribute} (key) for details.
+
+        Note that this method is not performing any checks or conversions --
+        those are all performed when *setting* an attribute.  So, any attribute
+        flags (type, mode, flavor) are evaluated on setting, not on getting.
+        This implementation does not account for resulting race conditions
+        (changing attribute types after setting for example) -- but the public
+        API does not allow that anyway.
+        """
+
+        # make sure interface is ready to use
+        d = self.attributes_t_init_ (key)
+
+        if 'value' in d['attributes_'][key] :
+            return d['attributes_'][key]['value']
+
+        if 'default' in d['attributes_'][key] :
+            return d['attributes_'][key]['default']
+                
+        return None
+
+
+
+    ####################################
+    def attributes_i_list_ (self, ext=True) :
+        """
+        This internal method should not be explicitly called by consumers of
+        this API, but is indirectly used via the different public interfaces.
+
+        see L{list_attributes} () for details.
+
+        Note that registration alone does not qualify for listing.  If 'ext' is
+        True (default),extended attributes are listed, too.
         """
 
         # make sure interface is ready to use
@@ -679,7 +732,8 @@ class AttributeInterface (AttributesBase_) :
 
         for key in sorted(d['attributes_'].iterkeys()) :
             if d['attributes_'][key]['exists'] :
-                ret.append (key)
+                if ext or not d['attributes_'][key]['extended'] :
+                    ret.append (key)
 
         return ret
 
@@ -687,12 +741,13 @@ class AttributeInterface (AttributesBase_) :
     ####################################
     def attributes_i_find_ (self, pattern) :
         """
-        Similar to list(), but also grep for a given attribute name pattern.
-        That pattern is of the form 'key=val', where both 'key' and 'val' can
-        contain POSIX shell wildcards.  Vor non-string typed attributes, the
-        pattern is applied to a string serialization of the typed value, if that
-        exists.
+        This internal method should not be explicitly called by consumers of
+        this API, but is indirectly used via the different public interfaces.
+
+        see L{find_attributes} (pattern) for details.
         """
+
+        # FIXME: wildcard-to-regex
 
         # make sure interface is ready to use
         d = self.attributes_t_init_ ()
@@ -706,16 +761,23 @@ class AttributeInterface (AttributesBase_) :
 
 
         if pattern[0] == '=' :
-            p_val = pattern[1:]
+            # no key pattern present, only grep on values
+              p_val = self.attributes_t_wildcard2regex_ (pattern[1:])
         else :
           p = re.compile (r'[^\]=')
-          tmp = p.split (pattern, 2)
-          if len (tmp) > 0 : p_key = tmp[0]
-          if len (tmp) > 1 : p_val = tmp[1]
+          tmp = p.split (pattern, 2)  # only split on first '='
+          
+          if len (tmp) >  0 : 
+              # at least one elem: only key pattern present
+              p_key = self.attributes_t_wildcard2regex_ (tmp[0])  
+          
+          if len (tmp) == 2 :
+              # two elems: val pattern is also present
+              p_val = self.attributes_t_wildcard2regex_ (tmp[1])
 
         # compile the found pattern
-        if len(p_key) : pc_key = re.compile (p_key)
-        if len(p_val) : pc_val = re.compile (p_val)
+        if len (p_key) : pc_key = re.compile (p_key)
+        if len (p_val) : pc_val = re.compile (p_val)
 
         # now dig out matching keys
         matches = []
@@ -732,8 +794,13 @@ class AttributeInterface (AttributesBase_) :
     ####################################
     def attributes_i_exists_ (self, key) :
         """
-        This method will check if the given key is known and was set explicitly.
-        The call will also return 'True' if the value for that key is 'None'.
+        This internal method should not be explicitly called by consumers of
+        this API, but is indirectly used via the different public interfaces.
+
+        see L{attribute_exists} (key) for details.
+
+        Registered keys which have never been explicitly set to a value do not
+        exist for the purpose of this call.
         """
 
         # make sure interface is ready to use
@@ -747,8 +814,31 @@ class AttributeInterface (AttributesBase_) :
 
 
     ####################################
+    def attributes_i_is_extended_ (self, key) :
+        """
+        This internal method should not be explicitly called by consumers of
+        this API, but is indirectly used via the different public interfaces.
+
+        This method will check if the given key is extended, i.e. was registered
+        on the fly, vs. registered explicitly.
+
+        This method is not used by, and not exposed via the public API, yet.
+        """
+
+        # make sure interface is ready to use
+        d = self.attributes_t_init_ (key)
+
+        return d['attributes_'][key]['extended']
+
+
+    ####################################
     def attributes_i_is_readonly_ (self, key) :
         """
+        This internal method should not be explicitly called by consumers of
+        this API, but is indirectly used via the different public interfaces.
+
+        see L{attribute_is_readonly} (key) for details.
+
         This method will check if the given key is readonly, i.e. cannot be
         'set'.  The call will also return 'True' if the attribute is final
         """
@@ -767,6 +857,11 @@ class AttributeInterface (AttributesBase_) :
     ####################################
     def attributes_i_is_writable_ (self, key) :
         """
+        This internal method should not be explicitly called by consumers of
+        this API, but is indirectly used via the different public interfaces.
+
+        see L{attribute_is_writable} (key) for details.
+
         This method will check if the given key is writable - i.e. not readonly.
         """
 
@@ -776,17 +871,27 @@ class AttributeInterface (AttributesBase_) :
     ####################################
     def attributes_i_is_removable_ (self, key) :
         """
-        Removability is actually ill-defined in GFD.90 - so we return 
-        'True' if the attrib is Writeable
+        This internal method should not be explicitly called by consumers of
+        this API, but is indirectly used via the different public interfaces.
+
+        see L{attribute_is_removable} (key) for details.
+
+        'True' if the attrib is Writable and Extended.
         """
 
-        return self.attributes_i_is_writable_ (key)
+        if self.attributes_i_is_writable_ (key) and \
+           self.attributes_i_is_extended_ (key)     :
+            return True
 
+        return False
 
     ####################################
     def attributes_i_is_vector_ (self, key) :
         """
-        Check if the attribute has scalar or vector typed values.
+        This internal method should not be explicitly called by consumers of
+        this API, but is indirectly used via the different public interfaces.
+
+        see L{attribute_is_vector} (key) for details.
         """
 
         # make sure interface is ready to use
@@ -802,8 +907,13 @@ class AttributeInterface (AttributesBase_) :
     ####################################
     def attributes_i_is_final_ (self, key) :
         """
-        This method will query the 'final' flag for an attribute, which signals that
-        the attribute will never change again.
+        This internal method should not be explicitly called by consumers of
+        this API, but is indirectly used via the different public interfaces.
+
+        This method will query the 'final' flag for an attribute, which signals
+        that the attribute will never change again.
+
+        This method is not used by, and not exposed via the public API, yet.
         """
 
         # make sure interface is ready to use
@@ -819,11 +929,567 @@ class AttributeInterface (AttributesBase_) :
     ####################################
     def attributes_i_add_cb_ (self, key, cb) :
         """
+        This internal method should not be explicitly called by consumers of
+        this API, but is indirectly used via the different public interfaces.
+
+        see L{add_callback} (key, cb) for details.
+        """
+
+        # make sure interface is ready to use
+        d = self.attributes_t_init_ (key)
+
+        d['attributes_'][key]['callbacks'].append (cb)
+        return len (d['attributes_'][key]['callbacks']) - 1
+
+
+    ####################################
+    def attributes_i_del_cb_ (self, key, id=None) :
+        """
+        This internal method should not be explicitly called by consumers of
+        this API, but is indirectly used via the different public interfaces.
+
+        see L{remove_callback} (key, cb) for details.
+        """
+
+        # make sure interface is ready to use
+        d = self.attributes_t_init_ (key)
+
+        # id == None: remove all callbacks
+        if not id :
+            d['attributes_'][key]['callbacks'] = []
+        else :
+            if len (d['attributes_'][key]['callbacks']) < id :
+                raise MyException ("invalid callback cookie for attribute %s"  %  key,
+                                   BadParameter)
+            else :
+                d['attributes_'][key]['callbacks'][id] = undef
+
+
+
+    ############################################################################
+    #
+    # This part of the interface is primarily for use in deriving classes, which
+    # thus provide the Attributes interface.
+    #
+    # Keys should be provided as CamelCase (only relevant if camelcasing is
+    # set).
+    #
+    # Naming: attributes_*_
+    #
+    ####################################
+    def attributes_register_ (self, key, default=None, typ=Any, flavor=Scalar, mode=Writable, ext=False) :
+        """
+        This interface method is not part of the public consumer API, but can
+        safely be called from within derived classes.
+
+        Register a new attribute.
+
+        This function ignores extensible, final and readonly flags.  It can also
+        be used to re-register an existing attribute with new properties -- the
+        old attribute value, callbacks etc. will be lost though.  Using this
+        call that way may result in confusing behaviour on the public API level.
+        """
+        # FIXME: check for valid mode and flavor settings
+
+        # make sure interface is ready to use
+        d = self.attributes_t_init_ ()
+
+        # we expect keys to be registered as CamelCase (in those cases where
+        # that matters).  But we store attributes in 'under_score' version.
+        us_key = self.attributes_t_underscore_ (key)
+
+        # remove any old instance of this attribute
+        if us_key in  d['attributes_'] :
+            self.attributes_unregister_ (us_key)
+
+        # register the attribute and properties
+        d['attributes_'][us_key]               = {}
+        d['attributes_'][us_key]['value']      = default # initial value
+        d['attributes_'][us_key]['default']    = default # default value
+        d['attributes_'][us_key]['type']       = typ     # int, float, enum, ...
+        d['attributes_'][us_key]['exists']     = False   # no value set, yet
+        d['attributes_'][us_key]['flavor']     = flavor  # scalar / vector
+        d['attributes_'][us_key]['mode']       = mode    # readonly / writable / final
+        d['attributes_'][us_key]['extended']   = ext     # True if added on the fly
+        d['attributes_'][us_key]['camelcase']  = key     # keep original key name
+        d['attributes_'][us_key]['underscore'] = us_key  # keep under_scored name
+        d['attributes_'][us_key]['enums']      = []      # list of valid enum values
+        d['attributes_'][us_key]['callbacks']  = []      # list of callbacks
+        d['attributes_'][us_key]['checks']     = []      # list of custom value checks
+
+        # for enum types, we add a value checker
+        if typ == self.Enum :
+            ######################################
+            def enum_check_ (key, val) :
+                if None == val  :
+                    # None is always allowed
+                    return True
+                
+                us_key = self.attributes_t_underscore_ (key)
+                d      = self.attributes_t_init_ (us_key)
+                vals   = d['attributes_'][us_key]['enums']
+
+                # value must be one of allowed enums
+                for v in vals :
+                    if v == val :
+                        return True
+
+                # Houston, we got a problem...
+                return """
+                incorrect value (%s) for Enum typed attribute (%s).
+                Allowed values: %s
+                """  %  (str(val), key, str(vals))
+            ######################################
+
+            self.attributes_check_add_ (key, enum_check_)
+
+
+
+    ####################################
+    def attributes_unregister_ (self, key) :
+        """
+        This interface method is not part of the public consumer API, but can
+        safely be called from within derived classes.
+
+        Unregister an attribute.
+
+        This function ignores the extensible, final and readonly flag, and is
+        supposed to be used by derived classes, not by the consumer of the API.
+
+        Note that unregistering is different from setting the value to 'None' --
+        all meta information about the attribute will be removed.  Further
+        attempts to access the attribute from the public API will result in an
+        DoesNotExist exception.  This method should be used sparingly -- in
+        fact, GFD.90 requires final attributes to stay around forever (frozen).
+        """
+
+        # make sure interface is ready to use
+        us_key = self.attributes_t_underscore_ (key)
+        d = self.attributes_t_init_ (us_key)
+
+        # if the attribute exists, purge it
+        if us_key in d['attributes_'] :
+            del (d['attributes_'][us_key])
+
+
+    ####################################
+    def attributes_remove_ (self, key) :
+        """
+        This interface method is not part of the public consumer API, but can
+        safely be called from within derived classes.
+
+        Remove an extended an attribute.
+
+        This function allows to safely remove any attribute which is 'extended'
+        and has write permissions.
+        """
+
+        # make sure interface is ready to use
+        us_key = self.attributes_t_underscore_ (key)
+        d = self.attributes_t_init_ (us_key)
+
+        if self.attributes_i_is_removable_ (key) :
+            del (d['attributes_'][us_key])
+
+
+    ####################################
+    def attributes_set_enum_ (self, key, enums=None) :
+        """
+        This interface method is not part of the public consumer API, but can
+        safely be called from within derived classes.
+
+        Specifies the set of allowed values for Enum typed attributes.  If not
+        set, or if list is None, any values are allowed.
+        """
+
+        us_key = self.attributes_t_underscore_ (key)
+        d = self.attributes_t_init_ (us_key)
+
+        d['attributes_'][us_key]['enums'] = enums
+
+
+    ####################################
+    def attributes_extensible_ (self, e=True) :
+        """
+        This interface method is not part of the public consumer API, but can
+        safely be called from within derived classes.
+
+        Allow (or forbid) the on-the-fly creation of new attributes.  Note that
+        this method also allows to *remove* the extensible flag -- that leaves
+        any previously created extended attributes untouched, but just prevents
+        the creation of new extended attributes.
+        """
+
+        d = self.attributes_t_init_ ()
+        d['extensible_'] = e
+
+
+    ####################################
+    def attributes_camelcasing_ (self, c=True) :
+        """
+        This interface method is not part of the public consumer API, but can
+        safely be called from within derived classes.
+
+        Use 'CamelCase' for dict entries and the GFD.90 API, but 'under_score'
+        for properties.
+
+        Note that we do not provide an option to turn CamelCasing off - once it
+        is turned on, it stays on -- otherwise we would loose attributes...
+        """
+
+        d = self.attributes_t_init_ ()
+        d['camelcasing_'] = c
+
+
+    ####################################
+    def attributes_deep_copy_ (self, other) :
+        """
+        This interface method is not part of the public consumer API, but can
+        safely be called from within derived classes.
+
+        This method can be used to make sure that deep copies of derived classes
+        are also deep copies of the respective attributes.  In accordance with
+        GFD.90, the deep copy will ignore callbacks.  It will copy checks
+        though, as the assumption is that value constraints stay valid.
+        """
+
+        
+        # make sure interface is ready to use
+        d = self.attributes_t_init_ ()
+
+        other_d = {}
+
+        other_d['extensible_']  = d['extensible_']
+        other_d['camelcasing_'] = d['camelcasing_']
+
+        # for some reason, deep copy won't work on the 'attributes_' dict
+        other_d['attributes_'] = {}
+        for key in d['attributes_'] :
+            other_d['attributes_'][key] = {}
+            other_d['attributes_'][key]['default']    = d['attributes_'][key]['default']   
+            other_d['attributes_'][key]['value']      = d['attributes_'][key]['value']     
+            other_d['attributes_'][key]['exists']     = d['attributes_'][key]['exists']      
+            other_d['attributes_'][key]['type']       = d['attributes_'][key]['type']      
+            other_d['attributes_'][key]['flavor']     = d['attributes_'][key]['flavor']    
+            other_d['attributes_'][key]['mode']       = d['attributes_'][key]['mode']      
+            other_d['attributes_'][key]['extended']   = d['attributes_'][key]['extended']  
+            other_d['attributes_'][key]['camelcase']  = d['attributes_'][key]['camelcase'] 
+            other_d['attributes_'][key]['underscore'] = d['attributes_'][key]['underscore']
+         #  other_d['attributes_'][key]['callbacks']  = d['attributes_'][key]['callbacks'] 
+            other_d['attributes_'][key]['enums']      = d['attributes_'][key]['enums']
+            other_d['attributes_'][key]['checks']     = d['attributes_'][key]['checks']
+
+        # set the new dictionary as state for copied class
+        AttributesBase_.__setattr__ (other, 'd_', other_d)
+
+
+    ####################################
+    def attributes_dump_ (self, msg=None) :
+        """ 
+        This interface method is not part of the public consumer API, but can
+        safely be called from within derived classes.
+
+        Debugging dump to stdout.
+        """
+
+        # make sure interface is ready to use
+        d = self.attributes_t_init_ ()
+
+        keys_all   = sorted (d['attributes_'].iterkeys ())
+        keys_exist = sorted (self.attributes_i_list_   ())
+
+        if msg :
+            print "---------------------------------------"
+            print msg
+
+        print "---------------------------------------"
+        print " %-30s : %s"  %  ("Extensible"  , d['extensible_'])
+        print " %-30s : %s"  %  ("CamelCasing" , d['camelcasing_'])
+        print "---------------------------------------"
+
+        print "'Registered' attributes"
+        for key in keys_all :
+            if key not in keys_exist :
+                if not  d['attributes_'][key]['extended'] :
+                    print " %-30s [%-6s, %-6s, %-8s]: %s"  % \
+                             (d['attributes_'][key]['camelcase'],
+                              d['attributes_'][key]['type'],
+                              d['attributes_'][key]['flavor'],
+                              d['attributes_'][key]['mode'],
+                              d['attributes_'][key]['value']
+                              )
+
+        print "---------------------------------------"
+
+        print "'Existing' attributes"
+        for key in keys_exist :
+            print " %-30s [%-6s, %-6s, %-8s]: %s"  % \
+                     (d['attributes_'][key]['camelcase'],
+                      d['attributes_'][key]['type'],
+                      d['attributes_'][key]['flavor'],
+                      d['attributes_'][key]['mode'],
+                      d['attributes_'][key]['value']
+                      )
+
+        print "---------------------------------------"
+
+        print "'Extended' attributes"
+        for key in keys_all :
+            if key not in keys_exist :
+                if d['attributes_'][key]['extended'] :
+                    print " %-30s [%-6s, %-6s, %-8s]: %s"  % \
+                             (d['attributes_'][key]['camelcase'],
+                              d['attributes_'][key]['type'],
+                              d['attributes_'][key]['flavor'],
+                              d['attributes_'][key]['mode'],
+                              d['attributes_'][key]['value']
+                              )
+
+        print "---------------------------------------"
+
+
+    ####################################
+    def attributes_set_final_ (self, key, val=None) :
+        """
+        This interface method is not part of the public consumer API, but can
+        safely be called from within derived classes.
+
+        This method will set the 'final' flag for an attribute, signalling that
+        the attribute will never change again.  The ReadOnly flag is ignored.
+        A final value can optionally be provided -- otherwise the attribute is
+        frozen with its current value.
+
+        Note that attributes_set_final() will trigger callbacks, even if the
+        value was not set, or did not change.
+        """
+
+        # make sure interface is ready to use
+        us_key = self.attributes_t_underscore_ (key)
+        d = self.attributes_t_init_ (us_key)
+
+        newval = val
+        oldval = d['attributes_'][us_key]['value']
+        if None == newval :
+            # freeze at current value unless indicated otherwise
+            val = oldval
+
+        # flag as final, and set the final value (this order to avoid races in
+        # callbacks)
+        d['attributes_'][us_key]['mode'] = self.Final
+        self.attributes_i_set_ (us_key, val)
+
+        # callbacks are not invoked if the value did not change -- we take care
+        # of that here.
+        if  None == newval or oldval == newval :
+            self.attributes_t_call_cb_ (key)
+
+
+    ####################################
+    def attributes_check_add_ (self, key, check) :
+        """
+        This interface method is not part of the public consumer API, but can
+        safely be called from within derived classes.
+
+        Value checks can be added dynamically, and per attribute.  'callable'
+        needs to be a python callable, and will be invoked as::
+
+            callable (key, val)
+
+        Those checks will be invoked whenever a new attribute value is set.  If
+        that call then returns 'True', the value is accepted.  Otherwise, the
+        value will be considered to be invalid, which results in an exception as
+        per above.  'callable' can return a string as error message.  
+        """
+
+        # make sure interface is ready to use
+        us_key = self.attributes_t_underscore_ (key)
+        d = self.attributes_t_init_ (us_key)
+
+        # register the attribute and properties
+        d['attributes_'][us_key]['checks'].append (check)
+
+
+    ###########################################################################
+    #
+    # the GFD.90 attribute interface
+    #
+    # The GFD.90 interface supports CamelCasing, and thus converts all keys to
+    # underscore before using them.
+    # 
+    ####################################
+    def set_attribute (self, key, val) :
+        """
+        set_attribute(key, val)
+
+        This method sets the value of the specified attribute.  If that
+        attribute does not exist, DoesNotExist is raised -- unless the attribute
+        set is marked 'extensible'.  In that case, the attribute is created and
+        set on the fly (defaulting to mode=Writable, flavor=Scalar, type=Any,
+        default=None).  A value of 'None' may reset the attribute to its default
+        value, if such one exists (see documentation).
+
+        Note that this method is performing a number of checks and conversions,
+        to match the value type to the attribute properties (type, mode, flavor).
+        Those conversions are not guaranteed to yield the expected result -- for
+        example, the conversion from 'scalar' to 'vector' is, for complex types,
+        ambiguous at best, and somewhat stupid.  The consumer of the API SHOULD
+        ensure correct attribute values.  The conversions are intended to
+        support the most trivial and simple use cases (int to string etc).
+        Failed conversions will result in an BadParameter exception.
+
+        Attempts to set a 'final' attribute are silently ignored.  Attempts to
+        set a 'readonly' attribute will result in an IncorrectState exception
+        being raised.
+
+        Note that attributes_i_set_() will trigger callbacks, if a new value
+        (different from the old value) is given.  
+        """
+        us_key = self.attributes_t_underscore_ (key)
+        return self.attributes_i_set_ (us_key, val)
+
+    ####################################
+    def get_attribute (self, key) :
+        """
+        get_attribute(key)
+
+        This method returns the value of the specified attribute.  If that
+        attribute does not exist, an DoesNotExist is raised.  It is not an
+        error to query an existing, but unset attribute though -- that will
+        result in 'None' to be returned (or the default value, if available).
+        """
+        us_key = self.attributes_t_underscore_ (key)
+        return self.attributes_i_get_ (us_key)
+
+    ####################################
+    def set_vector_attribute (self, key, val) :
+        """
+        set_vector_attribute (key, val)
+
+        See also: L{set_attribute} (key, val).
+
+        As python can handle scalar and vector types transparently, this method
+        is in fact not very useful.  For that reason, it maps internally to the
+        set_attribute method.
+        """
+        us_key = self.attributes_t_underscore_ (key)
+        return self.attributes_i_set_ (us_key, val)
+
+    ####################################
+    def get_vector_attribute (self, key) :
+        """
+        get_vector_attribute (key)
+
+        See also: L{get_attribute} (key).
+
+        As python can handle scalar and vector types transparently, this method
+        is in fact not very useful.  For that reason, it maps internally to the
+        get_attribute method.
+        """
+        us_key = self.attributes_t_underscore_ (key)
+        return self.attributes_i_get_ (us_key)
+
+    ####################################
+    def remove_attribute (self, key) :
+        """
+        remove_attribute (key)
+
+        Removing an attribute is actually different from unsetting it, or from
+        setting it to 'None'.  On remove, all traces of the attribute are
+        purged, and the key will not be listed on L{list_attributes}() anymore.
+        """
+        us_key = self.attributes_t_underscore_ (key)
+        return self.attributes_remove_ (us_key)
+
+    ####################################
+    def list_attributes (self) :
+        """
+        list_attributes ()
+
+        List all attributes which have been explicitly set. 
+        """
+        return self.attributes_i_list_ ()
+
+    ####################################
+    def find_attributes (self, pattern) :
+        """
+        find_attributes (pattern)
+
+        Similar to list(), but also grep for a given attribute pattern.  That
+        pattern is of the form 'key=val', where both 'key' and 'val' can contain
+        POSIX shell wildcards.  For non-string typed attributes, the pattern is
+        applied to a string serialization of the typed value, if that exists.
+        """
+        return self.attributes_i_find_ (pattern)
+
+    ####################################
+    def attribute_exists (self, key) :
+        """
+        attribute_exist (key)
+
+        This method will check if the given key is known and was set explicitly.
+        The call will also return 'True' if the value for that key is 'None'.
+        """
+
+        us_key = self.attributes_t_underscore_ (key)
+        return self.attributes_i_exists_ (us_key)
+
+    ####################################
+    def attribute_is_readonly (self, key) :
+        """
+        attribute_is_readonly (key)
+
+        This method will check if the given key is readonly, i.e. cannot be
+        'set'.  The call will also return 'True' if the attribute is final
+        """
+
+        us_key = self.attributes_t_underscore_ (key)
+        return self.attributes_i_is_readonly_ (us_key)
+
+    ####################################
+    def attribute_is_writable (self, key) :
+        """
+        attribute_is_writable (key)
+
+        This method will check if the given key is writable - i.e. not readonly.
+        """
+
+        us_key = self.attributes_t_underscore_ (key)
+        return self.attributes_i_is_writable_ (us_key)
+
+    ####################################
+    def attribute_is_removable (self, key) :
+        """
+        attribute_is_writable (key)
+
+        This method will check if the given key can be removed.
+        """
+
+        us_key = self.attributes_t_underscore_ (key)
+        return self.attributes_i_is_removable_ (us_key)
+
+    ####################################
+    def attribute_is_vector (self, key) :
+        """
+        attribute_is_vector (key)
+
+        This method will check if the given attribute has a vector value type.
+        """
+
+        us_key = self.attributes_t_underscore_ (key)
+        return self.attributes_i_is_vector_ (us_key)
+
+    ####################################
+    # fold the GFD.90 monitoring API into the attributes API
+    ####################################
+    def add_callback (self, key, cb) :
+        """
+        add_callback (key, cb)
+
         For any attribute change, the API will check if any callbacks are
         registered for that attribute.  If so, those callbacks will be called
         in order of registration.  This registration function will return an
         id (cookie) identifying the callback -- that id can be used to
-        unregister the callback.
+        remove the callback.
 
         A callback is any callable python construct, and MUST accept three
         arguments::
@@ -841,367 +1507,26 @@ class AttributeInterface (AttributesBase_) :
         unregistered, and will thus not be called again.  Returning nothing is
         interpreted as 'False', other return values lead to undefined behavior.
 
-        Note that callbacks will not be called on 'Final' attributes.
+        Note that callbacks will not be called on 'Final' attributes (they will
+        be called once as that attribute enters finality).
         """
 
-        # make sure interface is ready to use
-        d = self.attributes_t_init_ (key)
-
-        d['attributes_'][key]['callbacks'].append (cb)
-        return len (d['attributes_'][key]['callbacks']) - 1
-
-
-    ####################################
-    def attributes_i_del_cb_ (self, key, id=None) :
-        """
-        This method allows to unregister a previously registered callback, by
-        providing its id.  It is not an error to remove a non-existing cb, but
-        a valid ID MUST be provided -- otherwise, an AttributeError is raised.
-
-        If no ID is provided (id == None), all callbacks are removed for this
-        attribute.
-        """
-
-        # make sure interface is ready to use
-        d = self.attributes_t_init_ (key)
-
-        # id == None: remove all callbacks
-        if not id :
-            d['attributes_'][key]['callbacks'] = []
-        else :
-            if len (d['attributes_'][key]['callbacks']) < id :
-                raise AttributeError(" invalid callback cookie"  %  key)
-            else :
-                d['attributes_'][key]['callbacks'][id] = undef
-
-
-
-    ############################################################################
-    #
-    # This part of the interface is primarily for use in deriving classes, which
-    # thus provide the Attributes interface
-    #
-    # We expect keys to be provided as CamelCase.
-    #
-    # Naming: attributes_*_
-    #
-    ####################################
-    def attributes_register_ (self, key, default=None, typ=Any, flavor=Scalar, mode=Writeable, ext=False) :
-        """
-        Register a new attribute.
-
-        This function ignores the extensible, final and readonly flag, and is
-        supposed to be used by derived classes, not by the consumer of the API.
-
-        Note that the given attribute will overwrite any previously existing
-        attribute w/o warning (even if that one was final).
-        """
-                # FIXME: check for correct mode and flavor settings
-
-        # make sure interface is ready to use
-        d = self.attributes_t_init_ ()
-
-        # we expect keys to be registered as CamelCase (in those cases where
-        # that matters).  But we store lookup in booth directions, and use the
-        # 'under_score' version as primary key
-        cc_key = key
-        us_key = self.attributes_t_underscore_ (key)
-
-        # remove any old instance of this attribute
-        if us_key in  d['attributes_'] :
-            self.attributes_unregister_ (us_key)
-
-        # register the attribute and properties
-        d['attributes_'][us_key]               = {}
-        d['attributes_'][us_key]['value']      = default
-        d['attributes_'][us_key]['default']    = default
-        d['attributes_'][us_key]['type']       = typ
-        d['attributes_'][us_key]['exists']     = False
-        d['attributes_'][us_key]['flavor']     = flavor
-        d['attributes_'][us_key]['mode']       = mode
-        d['attributes_'][us_key]['extended']   = ext
-        d['attributes_'][us_key]['callbacks']  = []
-        d['attributes_'][us_key]['camelcase']  = key
-        d['attributes_'][us_key]['underscore'] = self.attributes_t_underscore_ (key)
-        d['attributes_'][us_key]['enums']      = []
-        d['attributes_'][us_key]['checks']     = []
-
-        # for enum types, we add a value checker
-        if typ == self.Enum :
-            def enum_check_ (key, val) :
-                if not val :
-                    # None is always allowed
-                    return True
-                
-                us_key = self.attributes_t_underscore_ (key)
-                d    = self.attributes_t_init_ (us_key)
-                vals = d['attributes_'][us_key]['enums']
-
-                if None == vals or \
-                   0    == len(vals) :
-                    # nothing to check against
-                    return True
-
-                # now value must be one of allowed enums
-                for v in vals :
-                    if v == val :
-                        return True
-
-                return """
-                incorrect value (%s) for Enum typed attribute (%s).
-                Allowed values: %s
-                """  %  (str(val), key, str(vals))
-
-            self.attributes_check_add_ (key, enum_check_)
-
-
-
-    ####################################
-    def attributes_unregister_ (self, key) :
-        """
-        Unregister an attribute.
-
-        This function ignores the extensible, final and readonly flag, and is
-        supposed to be used by derived classes, not by the consumer of the API.
-
-        Note that unregistering is different from setting the value to 'None' --
-        all meta information about the attribute will be removed.
-
-        """
-
-        # make sure interface is ready to use
-        us_key = self.attributes_t_underscore_ (key)
-        d = self.attributes_t_init_ (us_key)
-
-        # if the attribute exists, purge it
-        if us_key in d['attributes_'] :
-            del (d['attributes_'][us_key])
-
-
-    ####################################
-    def attributes_set_enum_ (self, key, l=None) :
-        """
-        Specifies the set of allowed values for Enum typed attributes.  If not
-        set, or if list is None, any values are allowed/
-        """
-        us_key = self.attributes_t_underscore_ (key)
-        d = self.attributes_t_init_ (us_key)
-        d['attributes_'][us_key]['enums'] = l
-
-    ####################################
-    def attributes_extensible_ (self, e=True) :
-        """
-        Allow (or forbid) the on-the-fly creation of new attributes.
-        This method should only be called within derived classes.
-        """
-
-        d = self.attributes_t_init_ ()
-        d['extensible_'] = e
-
-
-    ####################################
-    def attributes_camelcasing_ (self, c=True) :
-        """
-        use 'CamelCase' for dict entries, but 'under_score' for properties.
-        This method should only be called within derived classes.
-        """
-
-        d = self.attributes_t_init_ ()
-        d['camelcasing_'] = c
-
-
-    ####################################
-    def attributes_deep_copy_ (self, other) :
-        
-        # make sure interface is ready to use
-        d = self.attributes_t_init_ ()
-
-        other_d = {}
-
-        other_d['extensible_']  = d['extensible_']
-        other_d['camelcasing_'] = d['camelcasing_']
-
-        # for some reason, deep copy won't work on the 'attributes_' dict
-        other_d['attributes_'] = {}
-        for key in d['attributes_'] :
-            other_d['attributes_'][key] = {}
-            other_d['attributes_'][key]['value']      = d['attributes_'][key]['value']     
-            other_d['attributes_'][key]['default']    = d['attributes_'][key]['default']   
-            other_d['attributes_'][key]['type']       = d['attributes_'][key]['type']      
-            other_d['attributes_'][key]['flavor']     = d['attributes_'][key]['flavor']    
-            other_d['attributes_'][key]['mode']       = d['attributes_'][key]['mode']      
-            other_d['attributes_'][key]['extended']   = d['attributes_'][key]['extended']  
-            other_d['attributes_'][key]['callbacks']  = d['attributes_'][key]['callbacks'] 
-            other_d['attributes_'][key]['camelcase']  = d['attributes_'][key]['camelcase'] 
-            other_d['attributes_'][key]['underscore'] = d['attributes_'][key]['underscore']
-
-        # set the new dictionary as state
-        AttributesBase_.__setattr__ (other, 'd_', other_d)
-
-
-    ####################################
-    def attributes_dump_ (self, msg=None) :
-        """ debugging dump to stderr """
-
-        # make sure interface is ready to use
-        d = self.attributes_t_init_ ()
-
-        if msg :
-            print "---------------------------------------"
-            print msg
-
-        print "---------------------------------------"
-        print " %-30s : %s"  %  ("Extensible"  , d['extensible_'])
-        print " %-30s : %s"  %  ("CamelCasing" , d['camelcasing_'])
-        print "---------------------------------------"
-
-        # if the key is not known
-        for key in sorted(d['attributes_'].iterkeys()) :
-            print " %-30s : %s"  %  (key, d['attributes_'][key]['value'])
-
-        print "---------------------------------------"
-
-
-    ####################################
-    def attributes_set_final_ (self, key, val=None) :
-        """
-        This method will set the 'final' flag for an attribute, signalling that
-        the attribute will never change again.  A final value can optionally be
-        provided -- otherwise the attribute is frozen with its current value.
-
-        Note that attributes_set_final() will trigger callbacks, if a new value
-        is  given.
-
-        This function ignores the readonly flag, and is supposed to be used by
-        derived classes, not by the consumer of the API.
-
-        """
-
-        # make sure interface is ready to use
-        us_key = self.attributes_t_underscore_ (key)
-        d = self.attributes_t_init_ (us_key)
-
-        if None == val :
-            # freeze at current value unless indicated otherwise
-            val = d['attributes_'][us_key]['value']
-
-        # flag as final, and set the final value (this order to avoid races in
-        # callbacks)
-        d['attributes_'][us_key]['mode'] = self.Final
-        self.attributes_i_set_ (us_key, val)
-
-
-
-    ######################################
-    # def attributes_config_ (self, key, option, value) :
-    #     """
-    #     Configure some attribute
-    # 
-    #     This is a private interface function, and should not be used by the
-    #     application programmer.  It can be used to retroactively change and
-    #     extend the attribute settings and flags.  Valid values for 'option'
-    #     and 'value' should be obvious -- if not, you don't want to use this
-    #     method.
-    #     """
-    # 
-    #     # make sure interface is ready to use
-    #     us_key = self.attributes_t_underscore_ (key)
-    #     d = self.attributes_t_init_ (us_key)
-    # 
-    #     # register the attribute and properties
-    #     d['attributes_'][us_key][option] = value
-
-
-    ####################################
-    def attributes_check_add_ (self, key, call) :
-        # make sure interface is ready to use
-        us_key = self.attributes_t_underscore_ (key)
-        d = self.attributes_t_init_ (us_key)
-
-        # register the attribute and properties
-        d['attributes_'][us_key]['checks'].append (call)
-
-
-    ###########################################################################
-    #
-    # the GFD.90 attribute interface
-    #
-    # The GFD.90 interface supports CamelCasing, and thus converts all keys to
-    # underscore before using them.
-    # 
-    ####################################
-    def set_attribute (self, key, val) :
-        us_key = self.attributes_t_underscore_ (key)
-        return self.attributes_i_set_ (us_key, val)
-
-    ####################################
-    def get_attribute (self, key) :
-        us_key = self.attributes_t_underscore_ (key)
-        return self.attributes_i_get_ (us_key)
-
-    ####################################
-    def set_vector_attribute (self, key, val) :
-        us_key = self.attributes_t_underscore_ (key)
-        return self.attributes_i_set_ (us_key, val)
-
-    ####################################
-    def get_vector_attribute (self, key) :
-        us_key = self.attributes_t_underscore_ (key)
-        return self.attributes_i_get_ (us_key)
-
-    ####################################
-    def remove_attribute (self, key) :
-        us_key = self.attributes_t_underscore_ (key)
-        return self.attributes_unregister_ (us_key)
-
-    ####################################
-    # FIXME
-    def list_attributes (self) :
-        return self.attributes_list_ ()
-
-    ####################################
-    # FIXME
-    def find_attributes (self, pattern) :
-        return self.attributes_find_ (pattern)
-
-    ####################################
-    def attribute_exists (self, key) :
-        us_key = self.attributes_t_underscore_ (key)
-        return self.attributes_i_exists_ (us_key)
-
-    ####################################
-    # FIXME
-    def attribute_is_readonly (self, key) :
-        us_key = self.attributes_t_underscore_ (key)
-        return self.attributes_i_is_readonly_ (us_key)
-
-    ####################################
-    # FIXME
-    def attribute_is_writable (self, key) :
-        us_key = self.attributes_t_underscore_ (key)
-        return self.attributes_i_is_writable_ (us_key)
-
-    ####################################
-    # FIXME
-    def attribute_is_removable (self, key) :
-        us_key = self.attributes_t_underscore_ (key)
-        return self.attributes_i_is_removable (us_key)
-
-    ####################################
-    # FIXME
-    def attribute_is_vector (self, key) :
-        us_key = self.attributes_t_underscore_ (key)
-        return self.attributes_i_is_vector_ (us_key)
-
-    ####################################
-    # fold the GFD.90 monitoring API into the attributes API
-    ####################################
-    def add_callback (self, key, cb) :
         us_key = self.attributes_t_underscore_ (key)
         return self.attributes_i_add_cb_ (us_key, cb)
 
     ####################################
     def remove_callback (self, key, id) :
+        """
+        remove_callback (key, id)
+
+        This method allows to unregister a previously registered callback, by
+        providing its id.  It is not an error to remove a non-existing cb, but
+        a valid ID MUST be provided -- otherwise, a BadParameter is raised.
+
+        If no ID is provided (id == None), all callbacks are removed for this
+        attribute.
+        """
+
         us_key = self.attributes_t_underscore_ (key)
         return self.attributes_i_del_cb_ (us_key, id)
 
@@ -1215,15 +1540,18 @@ class AttributeInterface (AttributesBase_) :
     #
     ####################################
     def __getattr__ (self, key) :
+        """ see L{get_attribute} (key) for details. """
         return self.attributes_i_get_ (key)
 
     ####################################
     def __setattr__ (self, key, val) :
+        """ see L{set_attribute} (key, val) for details. """
         return self.attributes_i_set_ (key, val)
 
     ####################################
     def __delattr__ (self, key) :
-        return self.attributes_unregister_ (key)
+        """ see L{remove_attribute} (key) for details. """
+        return self.attributes_remove_ (key)
 
 
 
@@ -1236,26 +1564,31 @@ class AttributeInterface (AttributesBase_) :
     #
     ####################################
     def __getitem__ (self, key) :
+        """ see L{get_attribute} (key) for details. """
         us_key = self.attributes_t_underscore_ (key)
         return self.attributes_i_get_ (us_key)
    
     ####################################
     def __setitem__ (self, key, val) :
+        """ see L{set_attribute} (key, val) for details. """
         us_key = self.attributes_t_underscore_ (key)
         return self.attributes_i_set_ (us_key, val)
    
     ####################################
     def __delitem__ (self, key) :
+        """ see L{remove_attribute} (key) for details. """
         us_key = self.attributes_t_underscore_ (key)
-        return self.attributes_unregister_ (us_key)
+        return self.attributes_remove_ (us_key)
    
     ####################################
     def __contains__ (self, key) :
+        """ see L{attribute_exists} (key) for details. """
         us_key = self.attributes_t_underscore_ (key)
         return self.attributes_i_exists_ (us_key)
    
     ####################################
     def update (self, *args, **kwargs) :
+        """ Initialize attributes from a dictionary or named parameters """
         if args:
             if len (args) > 1:
                 raise TypeError("update expected at most 1 arguments, got %d" % len (args))
@@ -1266,30 +1599,31 @@ class AttributeInterface (AttributesBase_) :
             self.attributes_i_set_ (key, kwargs[key])
 
     ####################################
+    def iterkeys (self) :
+        """ see L{list_attributes} () for details. """
+        return self.attributes_i_list_ ()
+
+    ####################################
     def __str__ (self) :
         """ 
         The string representation of the attributes is, right now, somewhat
         arbitrarily defined as to make the bliss attribute unit tests happy:
         we ignore unset values and extended values.  
         """
-        # FIXME: make serialization somewhat more meaningful
 
         # make sure interface is ready to use
         d = self.attributes_t_init_ ()
 
         tmp = {}
 
-        for key in sorted(d['attributes_'].iterkeys()) :
-            if not d['attributes_'][key]['extended'] and \
-                   d['attributes_'][key]['exists']   and \
-                   d['attributes_'][key]['value']    :
-                tmp[key] = d['attributes_'][key]['value']
+        for key in self.attributes_i_list_ (ext=False) :
+            tmp[key] = d['attributes_'][key]['value']
 
         return str (tmp)
             
 
    
-   
 ################################################################################
 
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

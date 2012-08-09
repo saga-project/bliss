@@ -60,12 +60,12 @@ class StorageDescription(Object, AttributeInterface):
         self.attributes_camelcasing_ (True)
       
         # register properties with the attribute interface 
-        self.attributes_register_  ('Dynamic',   False, self.Bool,   self.Scalar, self.Writeable)
-        self.attributes_register_  ('Start',     None,  self.Time,   self.Scalar, self.Writeable)
-        self.attributes_register_  ('End',       None,  self.Time,   self.Scalar, self.Writeable)
-        self.attributes_register_  ('Duration',  None,  self.Time,   self.Scalar, self.Writeable)
-        self.attributes_register_  ('Template',  None,  self.String, self.Scalar, self.Writeable)
-        self.attributes_register_  ('Size',      None,  self.Int,    self.Scalar, self.Writeable)
+        self.attributes_register_  ('Dynamic',   False, self.Bool,   self.Scalar, self.Writable)
+        self.attributes_register_  ('Start',     None,  self.Time,   self.Scalar, self.Writable)
+        self.attributes_register_  ('End',       None,  self.Time,   self.Scalar, self.Writable)
+        self.attributes_register_  ('Duration',  None,  self.Time,   self.Scalar, self.Writable)
+        self.attributes_register_  ('Template',  None,  self.String, self.Scalar, self.Writable)
+        self.attributes_register_  ('Size',      None,  self.Int,    self.Scalar, self.Writable)
 
 
     ######################################################################
