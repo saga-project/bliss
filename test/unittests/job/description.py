@@ -71,10 +71,20 @@ class JobDescriptionTests(unittest.TestCase):
                 if getattr(jd, attr_val) != "XX":
                     self.fail("Attribute Error - unexpected value")
 
-                jd.remove_attribute(attr_key)
+
+                # # JD attributes cannot be removed on API level - they can only be unset
+                # jd.remove_attribute(attr_key)
+                # try:
+                #     getattr(jd, attr_val)  # should raise DoesNotExist
+                #     self.fail("Attribute Error - should have Failed")
+                # except saga.Exception:
+                #     pass
+                
+                # Queue cannot be removed as attribute - it can only be unset
+                jd.set_attribute(attr_key, None)
                 try:
-                    getattr(jd, attr_val)  # should raise DoesNotExist
-                    self.fail("Attribute Error - should have Failed")
+                    if None != getattr(jd, attr_val) :
+                        self.fail("Attribute Error - should have Failed")
                 except saga.Exception:
                     pass
  
