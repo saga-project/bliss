@@ -102,12 +102,12 @@ class SSHJobProcess(object):
 
         #look for a username and key to use in the context
         username = None
-        userkey = None
+        user_key = None
         if usable_ctx is not None:
-            if usable_ctx.userid is not None:
-                username = usable_ctx.userid
-            if usable_ctx.userkey is not None:
-                userkey = usable_ctx.userkey
+            if usable_ctx.user_id is not None:
+                username = usable_ctx.user_id
+            if usable_ctx.user_key is not None:
+                user_key = usable_ctx.user_key
 
         #overwrite the context username/password with our url-provided username/password
         #(if they exist)
@@ -126,8 +126,8 @@ class SSHJobProcess(object):
         except Exception, ex:
             self.pi.log_warning("Could not load known_hosts from ~/.ssh, exception: %s" % ex)
             
-        #if the context provides a userkey, let us know that we're using it
-        if not userkey:
+        #if the context provides a user_key, let us know that we're using it
+        if not user_key:
             self.pi.log_info("Using default ssh key")    
         else:
             self.pi.log_info("Using context-provided ssh key")
@@ -145,7 +145,7 @@ class SSHJobProcess(object):
         self.pi.log_info("Connecting to host %s" % hn)
 
         #set up our ssh channel
-        self.sshclient.connect(hn, username=username, key_filename=userkey)
+        self.sshclient.connect(hn, username=username, key_filename=user_key)
         self.sshchannel = self.sshclient.get_transport().open_session()
 
         #parse environment variables

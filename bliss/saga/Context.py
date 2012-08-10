@@ -90,7 +90,6 @@ class Context(Object, AttributeInterface):
         self.attributes_register_ ('UserKey',     None, self.String, self.Scalar, self.Writable)
         self.attributes_register_ ('UserProxy',   None, self.String, self.Scalar, self.Writable)
 
-        self.attributes_register_deprecated_  ('contexttype', 'ContextType')
         self.attributes_register_deprecated_  ('userid'     , 'UserID'     )
         self.attributes_register_deprecated_  ('userpass'   , 'UserPass'   )
         self.attributes_register_deprecated_  ('usercert'   , 'UserCert'   )

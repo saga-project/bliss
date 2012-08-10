@@ -250,9 +250,9 @@ class SGEService:
                 if ctx.type is bliss.saga.Context.SSH:
                     try:
                         cw = CommandWrapper(plugin=self._pi, via_ssh=True,
-                                            ssh_username=ctx.userid, 
+                                            ssh_username=ctx.user_id, 
                                             ssh_hostname=self._url.host, 
-                                            ssh_key=ctx.userkey)
+                                            ssh_key=ctx.user_key)
                         result = cw.run("true")
                         if result.returncode == 0:
                             usable_ctx = ctx

@@ -31,8 +31,8 @@ class JobContainerTests(unittest.TestCase):
 
         ctx = saga.Context()
         ctx.type = saga.Context.SSH
-        ctx.userid  = 'oweidner' # like 'ssh username@host ...'
-        ctx.userkey = '/Users/oweidner/.ssh/id_rsa_fg' # like ssh -i ...'
+        ctx.user_id  = 'oweidner' # like 'ssh username@host ...'
+        ctx.user_key = '/Users/oweidner/.ssh/id_rsa_fg' # like ssh -i ...'
  
         # create a job service for Futuregrid's 'india' PBS cluster
         # and attach the SSH security context to it
