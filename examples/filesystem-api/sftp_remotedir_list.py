@@ -28,8 +28,8 @@ def main():
         # credentials of the user, i.e., ~/.ssh/id_rsa
         ctx = saga.Context()
         ctx.type = saga.Context.SSH
-        ctx.userid  = 'oweidner' # like 'ssh username@host ...'
-        #ctx.userkey = '/Users/s1063117/.ssh/id_rsa' # like ssh -i ...'
+        ctx.user_id  = 'oweidner' # like 'ssh username@host ...'
+        #ctx.user_key = '/Users/s1063117/.ssh/id_rsa' # like ssh -i ...'
 
         session = saga.Session()
         session.contexts.append(ctx)

@@ -29,8 +29,8 @@ def main():
         # credentials of the user, i.e., ~/.ssh/id_rsa
         ctx = saga.Context()
         ctx.type = saga.Context.SSH
-        ctx.userid  = 'ashley' # like 'ssh username@host ...'
-        ctx.userkey = '/home/ashley/.ssh/id_rsa_special' # like ssh -i ...'
+        ctx.user_id  = 'ashley' # like 'ssh username@host ...'
+        ctx.user_key = '/home/ashley/.ssh/id_rsa_special' # like ssh -i ...'
  
         # create a job service for Futuregrid's 'alamo' machine
         # and attach the SSH security context to it
