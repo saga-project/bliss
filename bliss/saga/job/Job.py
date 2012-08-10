@@ -145,7 +145,11 @@ class Job(Object, AttributeInterface):
         # register properties with the attribute interface 
         self.attributes_register_  ('Exitcode',   None, self.Int,    self.Scalar, self.ReadOnly)
         self.attributes_register_  ('JobID',      None, self.String, self.Scalar, self.ReadOnly)
-        self.attributes_register_  ('serviceURL', None, self.Url,    self.Scalar, self.ReadOnly)
+        self.attributes_register_  ('ServiceURL', None, self.Url,    self.Scalar, self.ReadOnly)
+
+        self.attributes_register_deprecated_  ('jobid',       'JobID')
+        self.attributes_register_deprecated_  ('serviceurl', 'ServiceURL')
+        
 
     ######################################################################
     ##
