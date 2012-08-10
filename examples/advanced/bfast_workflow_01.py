@@ -40,13 +40,13 @@ def run_bfast(jobno, session, jobservice):
 
         start = time.time()
         print "\nJob #%s started with ID '%s' and working directory: '%s'"\
-          % (jobno, myjob.jobid, workdir)
+          % (jobno, myjob.job_id, workdir)
 
         myjob.wait()
 
         diff = time.time()-start
         print "Job #%s with ID '%s' finished (RC: %s). Elapsed time: %.0fs"\
-          % (jobno, myjob.jobid, myjob.exitcode, diff)
+          % (jobno, myjob.job_id, myjob.exitcode, diff)
 
         # copy output and error files back to the local machine
         local_file = saga.Url('sftp://localhost//tmp/bfast.out.'+run_id)

@@ -44,9 +44,9 @@ def run(url1, url2, username, queue, project):
         myjob2 = js2.create_job(jd)
 
 
-        print "Job 1 ID    : %s" % (myjob1.jobid)
+        print "Job 1 ID    : %s" % (myjob1.job_id)
         print "Job 1 State : %s" % (myjob1.get_state())
-        print "Job 2 ID    : %s" % (myjob2.jobid)
+        print "Job 2 ID    : %s" % (myjob2.job_id)
         print "Job 2 State : %s" % (myjob2.get_state())
 
 
@@ -55,9 +55,9 @@ def run(url1, url2, username, queue, project):
         myjob1.run()
         myjob2.run()
 
-        print "Job 1 ID    : %s" % (myjob1.jobid)
+        print "Job 1 ID    : %s" % (myjob1.job_id)
         print "Job 1 State : %s" % (myjob1.get_state())
-        print "Job 2 ID    : %s" % (myjob2.jobid)
+        print "Job 2 ID    : %s" % (myjob2.job_id)
         print "Job 2 State : %s" % (myjob2.get_state())
 
         print "\n...waiting for job...\n"

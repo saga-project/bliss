@@ -46,14 +46,14 @@ date
         # create the job (state: New)
         myjob = js.create_job(jd)
 
-        print "Job ID    : %s" % (myjob.jobid)
+        print "Job ID    : %s" % (myjob.job_id)
         print "Job State : %s" % (myjob.get_state())
 
         print "\n...starting job...\n"
         # run the job (submit the job to PBS)
         myjob.run()
 
-        print "Job ID    : %s" % (myjob.jobid)
+        print "Job ID    : %s" % (myjob.job_id)
         print "Job State : %s" % (myjob.get_state())
 
         print "\n...waiting for job...\n"
