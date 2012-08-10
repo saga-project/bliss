@@ -35,7 +35,7 @@ class JobID(object):
          j  = js.create_job(jd)
          j.run()
 
-         print "job id: %s"  % j.jobid
+         print "job id: %s"  % j.job_id
 
     '''
     

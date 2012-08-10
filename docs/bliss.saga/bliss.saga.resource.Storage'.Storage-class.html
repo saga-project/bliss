@@ -1,0 +1,651 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>bliss.saga.resource.Storage'.Storage</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="bliss.saga-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;bliss ::
+        <a href="bliss.saga-module.html">Package&nbsp;saga</a> ::
+        <a href="bliss.saga.resource-module.html">Package&nbsp;resource</a> ::
+        <a href="bliss.saga.resource.Storage%27-module.html">Module&nbsp;Storage'</a> ::
+        Class&nbsp;Storage
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Storage</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.resource.Storage%27-pysrc.html#Storage">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_bliss_sa_18" name="uml_class_diagram_for_bliss_sa_18">
+<area shape="rect" id="node63" href="bliss.saga.resource.Storage%27.Storage-class.html#__init__" title="PRIVATE: Create a new storage resource." alt="" coords="17,185,227,204"/>
+<area shape="rect" id="node63" href="bliss.saga.resource.Storage%27.Storage-class.html#destroy" title="Destroy (close) the resource." alt="" coords="17,204,227,223"/>
+<area shape="rect" id="node63" href="bliss.saga.resource.Storage%27.Storage-class.html#get_description" title="Return the associated resource description object." alt="" coords="17,223,227,241"/>
+<area shape="rect" id="node63" href="bliss.saga.resource.Storage%27.Storage-class.html#get_filesystem" title="get access to the storage resource&#39;s file system." alt="" coords="17,241,227,260"/>
+<area shape="rect" id="node63" href="bliss.saga.resource.Storage%27.Storage-class.html#get_id" title="Return the id of the resource" alt="" coords="17,260,227,279"/>
+<area shape="rect" id="node63" href="bliss.saga.resource.Storage%27.Storage-class.html#get_manager" title="Return the associated resource manager object." alt="" coords="17,279,227,297"/>
+<area shape="rect" id="node63" href="bliss.saga.resource.Storage%27.Storage-class.html#get_state" title="Return the state of the resource." alt="" coords="17,297,227,316"/>
+<area shape="rect" id="node63" href="bliss.saga.resource.Storage%27.Storage-class.html#get_state_detail" title="Return the state detail of the resource." alt="" coords="17,316,227,335"/>
+<area shape="rect" id="node63" href="bliss.saga.resource.Storage%27.Storage-class.html#wait" title="Wait for the resource to reach a specific state." alt="" coords="17,335,227,353"/>
+<area shape="rect" id="node1" href="bliss.saga.resource.Storage%27.Storage-class.html" title="Storage resources represent stateful entities which can store data." alt="" coords="5,153,237,359"/>
+<area shape="rect" id="node64" href="bliss.saga.Object.Type-class.html" title="bliss.saga.Object&#39;.Object.Type" alt="" coords="69,31,176,49"/>
+<area shape="rect" id="node64" href="bliss.saga.Object%27.Object-class.html#session" title="The object&#39;s session which contains the list of security context objects." alt="" coords="69,49,176,68"/>
+<area shape="rect" id="node64" href="bliss.saga.Object%27.Object-class.html#type" title="The object&#39;s type identifier." alt="" coords="69,68,176,87"/>
+<area shape="rect" id="node64" href="bliss.saga.Object%27.Object-class.html#__del__" title="Destructor." alt="" coords="69,89,176,108"/>
+<area shape="rect" id="node64" href="bliss.saga.Object%27.Object-class.html#get_session" title="return the object&#39;s session." alt="" coords="69,108,176,127"/>
+<area shape="rect" id="node2" href="bliss.saga.Object%27.Object-class.html" title="SAGA base object as defined in GFD.90" alt="" coords="57,6,188,133"/>
+</map>
+  <img src="uml_class_diagram_for_bliss_sa_18.gif" alt='' usemap="#uml_class_diagram_for_bliss_sa_18" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<p>Storage resources represent stateful entities which can store data.  A
+  <a href="bliss.saga.resource.Manager%27.Manager-class.html" 
+  class="link">resource.Manager</a> instance can create them according to a
+  <a 
+  href="bliss.saga.resource.StorageDescription%27.StorageDescription-class.html"
+  class="link">resource.StorageDescription</a>, as shown below:</p>
+<pre class="literalblock">
+ # describe the resource requirements
+ sd = saga.resource.StorageDescription()
+ sd['Size'] = 1024    # MB
+
+ # obtain a handle to a suitable resource...
+ rm = saga.resource.Manager(url)
+ sr = rm.create_storage(sd)
+
+ # ... and wait until the storage space is available
+ sr.wait(saga.resource.State.Active)
+</pre>
+
+<!-- ==================== NESTED CLASSES ==================== -->
+<a name="section-NestedClasses"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Nested Classes</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.Object.Type-class.html" class="summary-name">Type</a>
+      <em>(Inherited from <a href="bliss.saga.Object%27.Object-class.html">bliss.saga.Object'.Object</a>)</em>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Instance Methods</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="__del__"></a><span class="summary-sig-name">__del__</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Destructor.
+      <em>(Inherited from <a href="bliss.saga.Object%27.Object-class.html">bliss.saga.Object'.Object</a>)</em></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.Object%27-pysrc.html#Object.__del__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.resource.Storage%27.Storage-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      PRIVATE: Create a new storage resource.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.resource.Storage%27-pysrc.html#Storage.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.resource.Storage%27.Storage-class.html#destroy" class="summary-sig-name">destroy</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Destroy (close) the resource.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.resource.Storage%27-pysrc.html#Storage.destroy">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.resource.Storage%27.Storage-class.html#get_description" class="summary-sig-name">get_description</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Return the associated resource description object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.resource.Storage%27-pysrc.html#Storage.get_description">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_filesystem"></a><span class="summary-sig-name">get_filesystem</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      get access to the storage resource's file system.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.resource.Storage%27-pysrc.html#Storage.get_filesystem">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.resource.Storage%27.Storage-class.html#get_id" class="summary-sig-name">get_id</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Return the id of the resource</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.resource.Storage%27-pysrc.html#Storage.get_id">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.resource.Storage%27.Storage-class.html#get_manager" class="summary-sig-name">get_manager</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Return the associated resource manager object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.resource.Storage%27-pysrc.html#Storage.get_manager">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.Object%27.Object-class.html#get_session" class="summary-sig-name">get_session</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      return the object's session.
+      <em>(Inherited from <a href="bliss.saga.Object%27.Object-class.html">bliss.saga.Object'.Object</a>)</em></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.Object%27-pysrc.html#Object.get_session">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.resource.Storage%27.Storage-class.html#get_state" class="summary-sig-name">get_state</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Return the state of the resource.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.resource.Storage%27-pysrc.html#Storage.get_state">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.resource.Storage%27.Storage-class.html#get_state_detail" class="summary-sig-name">get_state_detail</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Return the state detail of the resource.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.resource.Storage%27-pysrc.html#Storage.get_state_detail">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.resource.Storage%27.Storage-class.html#wait" class="summary-sig-name">wait</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">timeout</span>=<span class="summary-sig-default">-1</span>,
+        <span class="summary-sig-arg">state</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">Final</code><code class="variable-quote">'</code></span>)</span><br />
+      Wait for the resource to reach a specific state.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.resource.Storage%27-pysrc.html#Storage.wait">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Properties</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.Object%27.Object-class.html#session" class="summary-name">session</a><br />
+      The object's session which contains the list of security context 
+      objects.
+      <em>(Inherited from <a href="bliss.saga.Object%27.Object-class.html">bliss.saga.Object'.Object</a>)</em>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.Object%27.Object-class.html#type" class="summary-name">type</a><br />
+      The object's type identifier.
+      <em>(Inherited from <a href="bliss.saga.Object%27.Object-class.html">bliss.saga.Object'.Object</a>)</em>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Method Details</span></td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.resource.Storage%27-pysrc.html#Storage.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>PRIVATE: Create a new storage resource.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="destroy"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">destroy</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.resource.Storage%27-pysrc.html#Storage.destroy">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Destroy (close) the resource.</p>
+  <p>This method is *not* just a destructor for the Bliss API object, but 
+  rather signals the backend that the resource is not needed anymore, and 
+  can be released.  All data on that resource will subsequently be purged, 
+  and no new data transfer requests can be started for the resource after 
+  calling destroy().</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_description"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_description</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.resource.Storage%27-pysrc.html#Storage.get_description">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return the associated resource description object.</p>
+  <p>The returned description describes the actual resource properties, and
+  may differ from the description submitted when creating the resource. In 
+  particular, the returned description here describes the *actual* resource
+  properties, which may differ from the ones defined initially:</p>
+<pre class="literalblock">
+ # describe the resource requirements
+ sd = saga.resource.StorageDescription()
+ sd['Size'] = 1024 # MB
+
+ # obtain a handle to a suitable resource, and inspect it
+ rm1 = saga.resource.Manager(url)
+ sr  = rm.create_compute(sd)
+ sd2 = sr.get_description
+
+ print   &quot; requested : %d   / allocated : %d&quot;    %  1024, sd2['Size']
+ # prints: requested : 1024 / allocated : 2048&quot;  %  1024, sd2['Size']
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_id"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_id</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.resource.Storage%27-pysrc.html#Storage.get_id">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return the id of the resource</p>
+  <p>The returned ID acts as a persistent and unique identifier for the 
+  resource...:</p>
+<pre class="literalblock">
+ # obtain a handle to a suitable resource and print it's id
+ rm = saga.resource.Manager(url)
+ sr = rm.create_storage(sd)
+ id = sr.get_id()
+ print &quot;resource id: %s&quot;  %  id
+</pre>
+  <p>...and can in particular be used to reconnect to that existing 
+  resource:</p>
+<pre class="literalblock">
+ rm = saga.resource.Manager(url)
+ sr = rm.get_storage(id)
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_manager"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_manager</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.resource.Storage%27-pysrc.html#Storage.get_manager">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return the associated resource manager object.</p>
+  <p>The returned manager is the one which created or reconnected to the 
+  resource:</p>
+<pre class="literalblock">
+ # obtain a handle to a suitable resource and print it's id
+ rm1 = saga.resource.Manager(url)
+ sr  = rm.create_storage(sd)
+ rm2 = sr.get_manager()
+
+ assert(rm1 == rm2)
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_state"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_state</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.resource.Storage%27-pysrc.html#Storage.get_state">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return the state of the resource.</p>
+  <p>A resource will only be able to store data when in Active state -- but
+  it may already accept storage requests while Pending.  In that case, the 
+  storage requests are queued until the resource becomes Active.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_state_detail"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_state_detail</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.resource.Storage%27-pysrc.html#Storage.get_state_detail">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return the state detail of the resource.</p>
+  <p>As for every stateful Bliss object, the state detail informs about the
+  actual native backend state, which may be finer grained than the SAGA 
+  state model used by Bliss.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="wait"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">wait</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">timeout</span>=<span class="sig-default">-1</span>,
+        <span class="sig-arg">state</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">Final</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.resource.Storage%27-pysrc.html#Storage.wait">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Wait for the resource to reach a specific state.</p>
+  <p>As resources are stateful entities, and several actions (such as data 
+  transfers) are only allowed in very specific states, the wait() routine 
+  can be used to wait for the resource to reach a specific state.  By 
+  default, wait() will block until the resource reaches a final state 
+  (Destroyed, Expired or Failed), but the optional 'state' parameter can 
+  specify any other combination of states to wait for.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="bliss.saga-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    <a href="epydoc-log.html">Generated by Epydoc
+    3.0.1 on Fri Aug 10 21:50:24 2012</a>
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

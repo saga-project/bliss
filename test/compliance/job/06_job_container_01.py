@@ -52,7 +52,7 @@ def run(url, username, queue, project):
 
         for job in container.list():
             print "Job ID %s (State: %s)" \
-              % (job.jobid, job.get_state())
+              % (job.job_id, job.get_state())
             if job.get_state() != saga.job.Job.Done:
                 failed = True
                 why = "Job returned with state '%s'."

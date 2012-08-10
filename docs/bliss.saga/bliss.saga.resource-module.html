@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>bliss.saga.resource</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="bliss.saga-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;bliss ::
+        <a href="bliss.saga-module.html">Package&nbsp;saga</a> ::
+        Package&nbsp;resource
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PACKAGE DESCRIPTION ==================== -->
+<h1 class="epydoc">Package resource</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.resource-pysrc.html">source&nbsp;code</a></span></p>
+<p><b>Resource Management</b></p>
+  <p>The resource API provides the means to create, discover, manage and 
+  use resources, in particular compute and storage resources (<a 
+  href="bliss.saga.resource.Compute%27.Compute-class.html" 
+  class="link">resource.Compute</a>, <a 
+  href="bliss.saga.resource.Storage%27.Storage-class.html" 
+  class="link">resource.Storage</a>).  A <a 
+  href="bliss.saga.resource.Manager%27.Manager-class.html" 
+  class="link">resource.Manager</a> class acts as resource provider, 
+  providing stateful resource instances.</p>
+  <p><b>Example</b>:</p>
+<pre class="literalblock">
+ # describe the resource requirements
+ cd = saga.resource.ComputeDescription()
+ cd.slots = 16
+
+ # obtain a handle to a suitable resource, and wait until it is active
+ rm = saga.resource.Manager(url)
+ cr = rm.create_compute(cd)
+ cr.wait(saga.resource.State.Active)
+
+ # submit a large job onto the now active resource
+ jd = saga.job.Description()
+ jd.executable = '/bin/my/executable'
+ jd.number_of_processes = 16
+
+ js = cr.get_job_service()
+ j  = js.create_job(jd)
+ j.run()
+ j.wait()
+
+ # once the job is finished, we do not need the compute resource anymore:
+ cr.destroy()
+</pre>
+  <p>Note that in the example above, there is no indication on how the 
+  resource is provided -- that is fully up to the resource manager.  The 
+  resource could be a existing compute cluster of that size, a advanced 
+  reservation slice on an even larger cluster, a pilot job slice on a 
+  cluster, or a virtual cluster provided via IaaS.  That is also the reason
+  why resource instances are stateful: for most of the possible backends 
+  listed above, resources are not necessarily provisioned instantly, and 
+  they do have a finite lifetime.</p>
+  <p>The resource package also manages storage resources, in a manner very 
+  similar to example 1.  It does not handle the co-location of compute and 
+  data resources -- that is left to either the backend, or to the 
+  application itself.</p>
+
+<hr />
+<div class="fields">      <p><strong>Author:</strong>
+        Ole Christian Weidner, et al.
+      </p>
+      <p><strong>Copyright:</strong>
+        Copyright 2012, Ole Christian Weidner
+      </p>
+      <p><strong>License:</strong>
+        MIT
+      </p>
+</div><!-- ==================== SUBMODULES ==================== -->
+<a name="section-Submodules"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Submodules</span></td>
+</tr>
+  <tr><td class="summary">
+  <ul class="nomargin">
+    <li> <strong class="uidlink">bliss.saga.resource.Compute</strong>    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.Compute%27-module.html">bliss.saga.resource.Compute'</a></strong>    </li>
+    <li> <strong class="uidlink">bliss.saga.resource.ComputeDescription</strong>    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.ComputeDescription%27-module.html">bliss.saga.resource.ComputeDescription'</a></strong>    </li>
+    <li> <strong class="uidlink">bliss.saga.resource.Manager</strong>    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.Manager%27-module.html">bliss.saga.resource.Manager'</a></strong>    </li>
+    <li> <strong class="uidlink">bliss.saga.resource.State</strong>    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.State%27-module.html">bliss.saga.resource.State'</a></strong>    </li>
+    <li> <strong class="uidlink">bliss.saga.resource.Storage</strong>    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.Storage%27-module.html">bliss.saga.resource.Storage'</a></strong>    </li>
+    <li> <strong class="uidlink">bliss.saga.resource.StorageDescription</strong>    </li>
+    <li> <strong class="uidlink"><a href="bliss.saga.resource.StorageDescription%27-module.html">bliss.saga.resource.StorageDescription'</a></strong>    </li>
+  </ul></td></tr>
+</table>
+
+<br />
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Variables</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="'bliss.saga.resource'"><code class="variable-quote">'</code><code class="variable-string">bliss.saga.resource</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="bliss.saga-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    <a href="epydoc-log.html">Generated by Epydoc
+    3.0.1 on Fri Aug 10 21:50:22 2012</a>
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

@@ -70,7 +70,7 @@ def main():
 
         for job in container.list():
             print "Job ID %s (State: %s)" \
-              % (job.jobid, job.get_state())
+              % (job.job_id, job.get_state())
 
     except saga.Exception, ex:
         print "An error occured during job execution: %s" % (str(ex))
