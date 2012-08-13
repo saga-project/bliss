@@ -150,8 +150,14 @@ class SSHJobProcess(object):
         self.pi.log_info("Connecting to host %s" % hn)
 
         #set up our ssh channel
-        self.sshclient.connect(hn, username=username, key_filename=userkey)
-        self.sshchannel = self.sshclient.get_transport().open_session()
+        try :
+          self.sshclient.connect(hn, username=username, key_filename=userkey)
+          self.sshchannel = self.sshclient.get_transport().open_session()
+        except Exception as e :
+          msg = str(e)
+          if msg == 'No existing session' :
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, "ssh authentication failed")
+          raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, "ssh job run failed: " + str(e))
 
         #parse environment variables
 
