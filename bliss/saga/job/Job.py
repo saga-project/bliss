@@ -204,6 +204,8 @@ class Job(Object, AttributeInterface):
 
 
           js = saga.job.Service("fork://localhost")
+          jd = saga.job.Description ()
+          jd.executable = '/bin/date'
 
           j1 = js.create_job(jd)
           j1.run()
@@ -230,18 +232,20 @@ class Job(Object, AttributeInterface):
 
 
           js = saga.job.Service("fork://localhost")
+          jd = saga.job.Description ()
+          jd.executable = '/bin/date'
           j  = js.create_job(jd)
 
-          if j.get_state() == saga.job.New : 
+          if j.get_state() == saga.job.Job.New : 
               print "new"
           else : 
               print "oops!"
 
           j.run()
 
-          if j.get_state() == saga.job.Pending : 
+          if j.get_state() == saga.job.Job.Pending : 
               print "pending"
-          else if j.get_state() == saga.job.Running : 
+          elif j.get_state() == saga.job.Job.Running : 
               print "running"
           else :
               print "oops!"
@@ -278,18 +282,20 @@ class Job(Object, AttributeInterface):
 
 
           js = saga.job.Service("fork://localhost")
+          jd = saga.job.Description ()
+          jd.executable = '/bin/date'
           j  = js.create_job(jd)
 
-          if j.state == saga.job.New : 
+          if j.state == saga.job.Job.New : 
               print "new"
           else : 
               print "oops!"
 
           j.run()
 
-          if j.state == saga.job.Pending :
+          if j.state == saga.job.Job.Pending :
               print "pending"
-          else if j.state == saga.job.Running :
+          elif j.state == saga.job.Job.Running :
               print "running"
           else :
               print "oops!"
@@ -307,32 +313,34 @@ class Job(Object, AttributeInterface):
     def cancel(self):
         '''Cancel the execution of the job.
 
-           B{Example}::
-           
+        B{Example}::
+        
 
-             js = saga.job.Service("fork://localhost")
-             j  = js.create_job(jd)
+          js = saga.job.Service("fork://localhost")
+          jd = saga.job.Description ()
+          jd.executable = '/bin/date'
+          j  = js.create_job(jd)
 
-             if j.state == saga.job.New :
-                 print "new"
-             else :
-                 print "oops!"
+          if j.state == saga.job.Job.New :
+              print "new"
+          else :
+              print "oops!"
 
-             j.run()
+          j.run()
 
-             if j.state == saga.job.Pending  :
-                 print "pending"
-             else if j.state == saga.job.Running :
-                 print "running"
-             else :
-                 print "oops!"
+          if j.state == saga.job.Job.Pending  :
+              print "pending"
+          elif j.state == saga.job.Job.Running :
+              print "running"
+          else :
+              print "oops!"
 
-             j.cancel()
+          j.cancel()
 
-             if j.state == saga.job.Canceled :
-                 print "canceled"
-             else :
-                 print "oops!"
+          if j.state == saga.job.Job.Canceled :
+              print "canceled"
+          else :
+              print "oops!"
 
         '''
         if self._plugin is not None:
@@ -363,27 +371,29 @@ class Job(Object, AttributeInterface):
 
 
           js = saga.job.Service("fork://localhost")
+          jd = saga.job.Description ()
+          jd.executable = '/bin/date'
           j  = js.create_job(jd)
 
-          if j.state == saga.job.New :
+          if j.state == saga.job.Job.New :
               print "new"
           else :
               print "oops!"
 
           j.run()
 
-          if j.state == saga.job.Pending :
+          if j.state == saga.job.Job.Pending :
               print "pending"
-          else if j.state == saga.job.Running :
+          elif j.state == saga.job.Job.Running :
               print "running"
           else :
               print "oops!"
 
           j.wait(-1.0)
 
-          if j.state == saga.job.Done :
+          if j.state == saga.job.Job.Done :
               print "done"
-          if j.state == saga.job.Faile :
+          if j.state == saga.job.Job.Failed :
               print "failed"
           else :
               print "oops!"
@@ -407,12 +417,14 @@ class Job(Object, AttributeInterface):
 
 
           js = saga.job.Service("fork://localhost")
+          jd = saga.job.Description ()
+          jd.executable = '/bin/date'
           j  = js.create_job(jd)
 
           j.run()
           j.wait()
 
-          if j.state == saga.job.Failed :
+          if j.state == saga.job.Job.job.Failed :
             if j.exitcode == "42" :
                 print "Ah, galaxy bypass error!"
             else :
@@ -455,6 +467,8 @@ class Job(Object, AttributeInterface):
 
 
           js = saga.job.Service("fork://localhost")
+          jd = saga.job.Description ()
+          jd.executable = '/bin/date'
           j  = js.create_job(jd)
 
           if j.serviceurl == "fork://localhost" :
