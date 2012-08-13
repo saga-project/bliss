@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>bliss.saga.filesystem.File'.File</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="bliss.saga-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;bliss ::
+        <a href="bliss.saga-module.html">Package&nbsp;saga</a> ::
+        <a href="bliss.saga.filesystem-module.html">Package&nbsp;filesystem</a> ::
+        <a href="bliss.saga.filesystem.File%27-module.html">Module&nbsp;File'</a> ::
+        Class&nbsp;File
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class File</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.filesystem.File%27-pysrc.html#File">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_bliss_sa_8" name="uml_class_diagram_for_bliss_sa_8">
+<area shape="rect" id="node31" href="bliss.saga.filesystem.File%27.File-class.html#__del__" title="Delete the file object in a civilised fashion." alt="" coords="17,167,288,185"/>
+<area shape="rect" id="node31" href="bliss.saga.filesystem.File%27.File-class.html#__init__" title="Construct a new file object" alt="" coords="17,185,288,204"/>
+<area shape="rect" id="node31" href="bliss.saga.filesystem.File%27.File-class.html#copy" title="Copy the file to another location" alt="" coords="17,204,288,223"/>
+<area shape="rect" id="node31" href="bliss.saga.filesystem.File%27.File-class.html#get_size" title="Returns the size of a file (in bytes)" alt="" coords="17,223,288,241"/>
+<area shape="rect" id="node31" href="bliss.saga.filesystem.File%27.File-class.html#get_url" title="Return the complete url pointing to the file." alt="" coords="17,241,288,260"/>
+<area shape="rect" id="node31" href="bliss.saga.filesystem.File%27.File-class.html#move" title="Move the file to another location" alt="" coords="17,260,288,279"/>
+<area shape="rect" id="node31" href="bliss.saga.filesystem.File%27.File-class.html#remove" title="Delete the file" alt="" coords="17,279,288,297"/>
+<area shape="rect" id="node1" href="bliss.saga.filesystem.File%27.File-class.html" title="Loosely represents a SAGA file as defined in GFD.90" alt="" coords="5,134,299,303"/>
+<area shape="rect" id="node32" href="bliss.saga.Object.Type-class.html" title="bliss.saga.Object&#39;.Object.Type" alt="" coords="100,31,207,49"/>
+<area shape="rect" id="node32" href="bliss.saga.Object%27.Object-class.html#session" title="The object&#39;s session which contains the list of security context objects." alt="" coords="100,49,207,68"/>
+<area shape="rect" id="node32" href="bliss.saga.Object%27.Object-class.html#type" title="The object&#39;s type identifier." alt="" coords="100,68,207,87"/>
+<area shape="rect" id="node32" href="bliss.saga.Object%27.Object-class.html#get_session" title="return the object&#39;s session." alt="" coords="100,89,207,108"/>
+<area shape="rect" id="node2" href="bliss.saga.Object%27.Object-class.html" title="SAGA base object as defined in GFD.90" alt="" coords="88,6,219,114"/>
+</map>
+  <img src="uml_class_diagram_for_bliss_sa_8.gif" alt='' usemap="#uml_class_diagram_for_bliss_sa_8" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<p>Loosely represents a SAGA file as defined in GFD.90</p>
+  <p>The saga.filesystem.File class represents, as the name indicates, a 
+  file on some (local or remote) filesystem.  That class offers a number of
+  operations on that file, such as copy, move and remove:</p>
+<pre class="literalblock">
+   # get a file handle
+   file = saga.filesystem.File(&quot;sftp://localhost/tmp/data/data.bin&quot;)
+
+   # copy the file
+   file.copy (&quot;sftp://localhost/tmp/data/data.bak&quot;)
+
+   # move the file
+   file.move (&quot;sftp://localhost/tmp/data/data.new&quot;)
+</pre>
+
+<!-- ==================== NESTED CLASSES ==================== -->
+<a name="section-NestedClasses"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Nested Classes</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.Object.Type-class.html" class="summary-name">Type</a>
+      <em>(Inherited from <a href="bliss.saga.Object%27.Object-class.html">bliss.saga.Object'.Object</a>)</em>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Instance Methods</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.filesystem.File%27.File-class.html#__del__" class="summary-sig-name">__del__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Delete the file object in a civilised fashion.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.filesystem.File%27-pysrc.html#File.__del__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.filesystem.File%27.File-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">url</span>,
+        <span class="summary-sig-arg">flags</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">session</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Construct a new file object</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.filesystem.File%27-pysrc.html#File.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.filesystem.File%27.File-class.html#copy" class="summary-sig-name">copy</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">flags</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Copy the file to another location</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.filesystem.File%27-pysrc.html#File.copy">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.Object%27.Object-class.html#get_session" class="summary-sig-name">get_session</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      return the object's session.
+      <em>(Inherited from <a href="bliss.saga.Object%27.Object-class.html">bliss.saga.Object'.Object</a>)</em></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.Object%27-pysrc.html#Object.get_session">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.filesystem.File%27.File-class.html#get_size" class="summary-sig-name">get_size</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the size of a file (in bytes)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.filesystem.File%27-pysrc.html#File.get_size">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.filesystem.File%27.File-class.html#get_url" class="summary-sig-name">get_url</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Return the complete url pointing to the file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.filesystem.File%27-pysrc.html#File.get_url">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.filesystem.File%27.File-class.html#move" class="summary-sig-name">move</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">flags</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Move the file to another location</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.filesystem.File%27-pysrc.html#File.move">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="remove"></a><span class="summary-sig-name">remove</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Delete the file</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.filesystem.File%27-pysrc.html#File.remove">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Properties</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.Object%27.Object-class.html#session" class="summary-name">session</a><br />
+      The object's session which contains the list of security context 
+      objects.
+      <em>(Inherited from <a href="bliss.saga.Object%27.Object-class.html">bliss.saga.Object'.Object</a>)</em>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="bliss.saga.Object%27.Object-class.html#type" class="summary-name">type</a><br />
+      The object's type identifier.
+      <em>(Inherited from <a href="bliss.saga.Object%27.Object-class.html">bliss.saga.Object'.Object</a>)</em>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Method Details</span></td>
+</tr>
+</table>
+<a name="__del__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__del__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Destructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.filesystem.File%27-pysrc.html#File.__del__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Delete the file object in a civilised fashion.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="bliss.saga.Object%27.Object-class.html#__del__">Object'.Object.__del__</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">url</span>,
+        <span class="sig-arg">flags</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">session</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.filesystem.File%27-pysrc.html#File.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Construct a new file object</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>url</code></strong> (<a href="bliss.saga.Url%27.Url-class.html" class="link">Url</a>
+          <p>The specified file is expected to exist -- otherwise a 
+          DoesNotExist exception is raised.  Also, the URL must point to a 
+          file (not to a directory), otherwise a BadParameter exception is 
+          raised.</p>
+          <p>Example:</p>
+<pre class="literalblock">
+   # get a file handle
+   file = saga.filesystem.File(&quot;sftp://localhost/tmp/data/data.bin&quot;)
+
+   # print the file's size
+   print file.get_size ()
+</pre>) - Url of the (remote) file</li>
+    </ul></dd>
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="copy"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">copy</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">target</span>,
+        <span class="sig-arg">flags</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.filesystem.File%27-pysrc.html#File.copy">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Copy the file to another location</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>target</code></strong> - Url of the copy target.</li>
+        <li><strong class="pname"><code>flags</code></strong> - Flags to use for the operation.
+          <p>The file is copied to the given target location.  The target 
+          URL must be an absolute path, and can be a target file name or 
+          target directory name.  If the target file exists, it is 
+          overwritten:</p>
+<pre class="literalblock">
+   # copy a file
+   file = saga.filesystem.Directory(&quot;sftp://localhost/tmp/data/data.bin&quot;)
+   file.copy (&quot;sftp://localhost/tmp/data/data.bak&quot;)
+</pre></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_size"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_size</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.filesystem.File%27-pysrc.html#File.get_size">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the size of a file (in bytes)</p>
+  <p>Example:</p>
+<pre class="literalblock">
+   # get a file handle
+   file = saga.filesystem.File(&quot;sftp://localhost/tmp/data/data.bin&quot;)
+
+   # print the file's size
+   print file.get_size ()
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_url"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_url</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.filesystem.File%27-pysrc.html#File.get_url">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return the complete url pointing to the file.</p>
+  <p>The call will return the complete url pointing to this file as a 
+  saga.Url object:</p>
+<pre class="literalblock">
+   # print URL of a file
+   file = saga.filesystem.File(&quot;sftp://localhost/etc/passwd&quot;)
+   print file.get_url()
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="move"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">move</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">target</span>,
+        <span class="sig-arg">flags</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.filesystem.File%27-pysrc.html#File.move">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Move the file to another location</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>target</code></strong> - Url of the move target.</li>
+        <li><strong class="pname"><code>flags</code></strong> - Flags to use for the operation.
+          <p>The file is copied to the given target location.  The target 
+          URL must be an absolute path, and can be a target file name or 
+          target directory name.  If the target file exists, it is 
+          overwritten:</p>
+<pre class="literalblock">
+   # copy a file
+   file = saga.filesystem.Directory(&quot;sftp://localhost/tmp/data/data.bin&quot;)
+   file.move (&quot;sftp://localhost/tmp/data/data.bak&quot;)
+</pre></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="bliss.saga-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    <a href="epydoc-log.html">Generated by Epydoc
+    3.0.1 on Tue Aug 14 00:08:32 2012</a>
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
