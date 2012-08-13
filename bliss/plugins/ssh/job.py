@@ -97,6 +97,9 @@ class SSHJobPlugin(JobPluginInterface):
             print "module missing -- plugin disabled. (NEEDS LOGGING SUPPORT)"
             return False
         try:
+            import warnings
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
             import paramiko
         except Exception, ex:
             self.log_warning("paramiko module missing -- plugin disabled.")

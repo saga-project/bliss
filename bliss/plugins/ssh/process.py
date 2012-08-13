@@ -2,8 +2,13 @@ import copy
 import time
 import subprocess
 import bliss.saga
-import paramiko
 import os 
+
+import warnings
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    import paramiko
+
 class SSHJobProcess(object):
     '''A wrapper around an SSH process'''
     def __init__(self, jobdescription,  plugin, service_object):
