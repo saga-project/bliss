@@ -236,14 +236,14 @@ class Job(Object, AttributeInterface):
           jd.executable = '/bin/date'
           j  = js.create_job(jd)
 
-          if j.get_state() == saga.job.Job.New : 
+          if   j.get_state() == saga.job.Job.New : 
               print "new"
           else : 
               print "oops!"
 
           j.run()
 
-          if j.get_state() == saga.job.Job.Pending : 
+          if   j.get_state() == saga.job.Job.Pending : 
               print "pending"
           elif j.get_state() == saga.job.Job.Running : 
               print "running"
@@ -286,16 +286,16 @@ class Job(Object, AttributeInterface):
           jd.executable = '/bin/date'
           j  = js.create_job(jd)
 
-          if j.state == saga.job.Job.New : 
+          if j.get_state() == saga.job.Job.New : 
               print "new"
           else : 
               print "oops!"
 
           j.run()
 
-          if j.state == saga.job.Job.Pending :
+          if   j.get_state() == saga.job.Job.Pending :
               print "pending"
-          elif j.state == saga.job.Job.Running :
+          elif j.get_state() == saga.job.Job.Running :
               print "running"
           else :
               print "oops!"
@@ -321,23 +321,23 @@ class Job(Object, AttributeInterface):
           jd.executable = '/bin/date'
           j  = js.create_job(jd)
 
-          if j.state == saga.job.Job.New :
+          if   j.get_state() == saga.job.Job.New :
               print "new"
           else :
               print "oops!"
 
           j.run()
 
-          if j.state == saga.job.Job.Pending  :
+          if   j.get_state() == saga.job.Job.Pending  :
               print "pending"
-          elif j.state == saga.job.Job.Running :
+          elif j.get_state() == saga.job.Job.Running :
               print "running"
           else :
               print "oops!"
 
           j.cancel()
 
-          if j.state == saga.job.Job.Canceled :
+          if   j.get_state() == saga.job.Job.Canceled :
               print "canceled"
           else :
               print "oops!"
@@ -375,25 +375,25 @@ class Job(Object, AttributeInterface):
           jd.executable = '/bin/date'
           j  = js.create_job(jd)
 
-          if j.state == saga.job.Job.New :
+          if   j.get_state() == saga.job.Job.New :
               print "new"
           else :
               print "oops!"
 
           j.run()
 
-          if j.state == saga.job.Job.Pending :
+          if   j.get_state() == saga.job.Job.Pending :
               print "pending"
-          elif j.state == saga.job.Job.Running :
+          elif j.get_state() == saga.job.Job.Running :
               print "running"
           else :
               print "oops!"
 
           j.wait(-1.0)
 
-          if j.state == saga.job.Job.Done :
+          if   j.get_state() == saga.job.Job.Done :
               print "done"
-          if j.state == saga.job.Job.Failed :
+          elif j.get_state() == saga.job.Job.Failed :
               print "failed"
           else :
               print "oops!"
@@ -424,7 +424,7 @@ class Job(Object, AttributeInterface):
           j.run()
           j.wait()
 
-          if j.state == saga.job.Job.job.Failed :
+          if j.get_state() == saga.job.Job.job.Failed :
             if j.exitcode == "42" :
                 print "Ah, galaxy bypass error!"
             else :

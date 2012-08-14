@@ -334,14 +334,14 @@ bliss.saga.resource.StorageDescription'.StorageDescription.__init__" class="py-n
 <a name="L236"></a><tt class="py-lineno">236</tt>  <tt class="py-line"><tt class="py-docstring">          jd.executable = '/bin/date'</tt> </tt>
 <a name="L237"></a><tt class="py-lineno">237</tt>  <tt class="py-line"><tt class="py-docstring">          j  = js.create_job(jd)</tt> </tt>
 <a name="L238"></a><tt class="py-lineno">238</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L239"></a><tt class="py-lineno">239</tt>  <tt class="py-line"><tt class="py-docstring">          if j.get_state() == saga.job.Job.New : </tt> </tt>
+<a name="L239"></a><tt class="py-lineno">239</tt>  <tt class="py-line"><tt class="py-docstring">          if   j.get_state() == saga.job.Job.New : </tt> </tt>
 <a name="L240"></a><tt class="py-lineno">240</tt>  <tt class="py-line"><tt class="py-docstring">              print "new"</tt> </tt>
 <a name="L241"></a><tt class="py-lineno">241</tt>  <tt class="py-line"><tt class="py-docstring">          else : </tt> </tt>
 <a name="L242"></a><tt class="py-lineno">242</tt>  <tt class="py-line"><tt class="py-docstring">              print "oops!"</tt> </tt>
 <a name="L243"></a><tt class="py-lineno">243</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L244"></a><tt class="py-lineno">244</tt>  <tt class="py-line"><tt class="py-docstring">          j.run()</tt> </tt>
 <a name="L245"></a><tt class="py-lineno">245</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L246"></a><tt class="py-lineno">246</tt>  <tt class="py-line"><tt class="py-docstring">          if j.get_state() == saga.job.Job.Pending : </tt> </tt>
+<a name="L246"></a><tt class="py-lineno">246</tt>  <tt class="py-line"><tt class="py-docstring">          if   j.get_state() == saga.job.Job.Pending : </tt> </tt>
 <a name="L247"></a><tt class="py-lineno">247</tt>  <tt class="py-line"><tt class="py-docstring">              print "pending"</tt> </tt>
 <a name="L248"></a><tt class="py-lineno">248</tt>  <tt class="py-line"><tt class="py-docstring">          elif j.get_state() == saga.job.Job.Running : </tt> </tt>
 <a name="L249"></a><tt class="py-lineno">249</tt>  <tt class="py-line"><tt class="py-docstring">              print "running"</tt> </tt>
@@ -384,16 +384,16 @@ bliss.saga.resource.StorageDescription'.StorageDescription.__init__" class="py-n
 <a name="L286"></a><tt class="py-lineno">286</tt>  <tt class="py-line"><tt class="py-docstring">          jd.executable = '/bin/date'</tt> </tt>
 <a name="L287"></a><tt class="py-lineno">287</tt>  <tt class="py-line"><tt class="py-docstring">          j  = js.create_job(jd)</tt> </tt>
 <a name="L288"></a><tt class="py-lineno">288</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L289"></a><tt class="py-lineno">289</tt>  <tt class="py-line"><tt class="py-docstring">          if j.state == saga.job.Job.New : </tt> </tt>
+<a name="L289"></a><tt class="py-lineno">289</tt>  <tt class="py-line"><tt class="py-docstring">          if j.get_state() == saga.job.Job.New : </tt> </tt>
 <a name="L290"></a><tt class="py-lineno">290</tt>  <tt class="py-line"><tt class="py-docstring">              print "new"</tt> </tt>
 <a name="L291"></a><tt class="py-lineno">291</tt>  <tt class="py-line"><tt class="py-docstring">          else : </tt> </tt>
 <a name="L292"></a><tt class="py-lineno">292</tt>  <tt class="py-line"><tt class="py-docstring">              print "oops!"</tt> </tt>
 <a name="L293"></a><tt class="py-lineno">293</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L294"></a><tt class="py-lineno">294</tt>  <tt class="py-line"><tt class="py-docstring">          j.run()</tt> </tt>
 <a name="L295"></a><tt class="py-lineno">295</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L296"></a><tt class="py-lineno">296</tt>  <tt class="py-line"><tt class="py-docstring">          if j.state == saga.job.Job.Pending :</tt> </tt>
+<a name="L296"></a><tt class="py-lineno">296</tt>  <tt class="py-line"><tt class="py-docstring">          if   j.get_state() == saga.job.Job.Pending :</tt> </tt>
 <a name="L297"></a><tt class="py-lineno">297</tt>  <tt class="py-line"><tt class="py-docstring">              print "pending"</tt> </tt>
-<a name="L298"></a><tt class="py-lineno">298</tt>  <tt class="py-line"><tt class="py-docstring">          elif j.state == saga.job.Job.Running :</tt> </tt>
+<a name="L298"></a><tt class="py-lineno">298</tt>  <tt class="py-line"><tt class="py-docstring">          elif j.get_state() == saga.job.Job.Running :</tt> </tt>
 <a name="L299"></a><tt class="py-lineno">299</tt>  <tt class="py-line"><tt class="py-docstring">              print "running"</tt> </tt>
 <a name="L300"></a><tt class="py-lineno">300</tt>  <tt class="py-line"><tt class="py-docstring">          else :</tt> </tt>
 <a name="L301"></a><tt class="py-lineno">301</tt>  <tt class="py-line"><tt class="py-docstring">              print "oops!"</tt> </tt>
@@ -419,23 +419,23 @@ bliss.saga.resource.StorageDescription'.StorageDescription.__init__" class="py-n
 <a name="L321"></a><tt class="py-lineno">321</tt>  <tt class="py-line"><tt class="py-docstring">          jd.executable = '/bin/date'</tt> </tt>
 <a name="L322"></a><tt class="py-lineno">322</tt>  <tt class="py-line"><tt class="py-docstring">          j  = js.create_job(jd)</tt> </tt>
 <a name="L323"></a><tt class="py-lineno">323</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L324"></a><tt class="py-lineno">324</tt>  <tt class="py-line"><tt class="py-docstring">          if j.state == saga.job.Job.New :</tt> </tt>
+<a name="L324"></a><tt class="py-lineno">324</tt>  <tt class="py-line"><tt class="py-docstring">          if   j.get_state() == saga.job.Job.New :</tt> </tt>
 <a name="L325"></a><tt class="py-lineno">325</tt>  <tt class="py-line"><tt class="py-docstring">              print "new"</tt> </tt>
 <a name="L326"></a><tt class="py-lineno">326</tt>  <tt class="py-line"><tt class="py-docstring">          else :</tt> </tt>
 <a name="L327"></a><tt class="py-lineno">327</tt>  <tt class="py-line"><tt class="py-docstring">              print "oops!"</tt> </tt>
 <a name="L328"></a><tt class="py-lineno">328</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L329"></a><tt class="py-lineno">329</tt>  <tt class="py-line"><tt class="py-docstring">          j.run()</tt> </tt>
 <a name="L330"></a><tt class="py-lineno">330</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L331"></a><tt class="py-lineno">331</tt>  <tt class="py-line"><tt class="py-docstring">          if j.state == saga.job.Job.Pending  :</tt> </tt>
+<a name="L331"></a><tt class="py-lineno">331</tt>  <tt class="py-line"><tt class="py-docstring">          if   j.get_state() == saga.job.Job.Pending  :</tt> </tt>
 <a name="L332"></a><tt class="py-lineno">332</tt>  <tt class="py-line"><tt class="py-docstring">              print "pending"</tt> </tt>
-<a name="L333"></a><tt class="py-lineno">333</tt>  <tt class="py-line"><tt class="py-docstring">          elif j.state == saga.job.Job.Running :</tt> </tt>
+<a name="L333"></a><tt class="py-lineno">333</tt>  <tt class="py-line"><tt class="py-docstring">          elif j.get_state() == saga.job.Job.Running :</tt> </tt>
 <a name="L334"></a><tt class="py-lineno">334</tt>  <tt class="py-line"><tt class="py-docstring">              print "running"</tt> </tt>
 <a name="L335"></a><tt class="py-lineno">335</tt>  <tt class="py-line"><tt class="py-docstring">          else :</tt> </tt>
 <a name="L336"></a><tt class="py-lineno">336</tt>  <tt class="py-line"><tt class="py-docstring">              print "oops!"</tt> </tt>
 <a name="L337"></a><tt class="py-lineno">337</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L338"></a><tt class="py-lineno">338</tt>  <tt class="py-line"><tt class="py-docstring">          j.cancel()</tt> </tt>
 <a name="L339"></a><tt class="py-lineno">339</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L340"></a><tt class="py-lineno">340</tt>  <tt class="py-line"><tt class="py-docstring">          if j.state == saga.job.Job.Canceled :</tt> </tt>
+<a name="L340"></a><tt class="py-lineno">340</tt>  <tt class="py-line"><tt class="py-docstring">          if   j.get_state() == saga.job.Job.Canceled :</tt> </tt>
 <a name="L341"></a><tt class="py-lineno">341</tt>  <tt class="py-line"><tt class="py-docstring">              print "canceled"</tt> </tt>
 <a name="L342"></a><tt class="py-lineno">342</tt>  <tt class="py-line"><tt class="py-docstring">          else :</tt> </tt>
 <a name="L343"></a><tt class="py-lineno">343</tt>  <tt class="py-line"><tt class="py-docstring">              print "oops!"</tt> </tt>
@@ -473,25 +473,25 @@ bliss.saga.resource.StorageDescription'.StorageDescription.__init__" class="py-n
 <a name="L375"></a><tt class="py-lineno">375</tt>  <tt class="py-line"><tt class="py-docstring">          jd.executable = '/bin/date'</tt> </tt>
 <a name="L376"></a><tt class="py-lineno">376</tt>  <tt class="py-line"><tt class="py-docstring">          j  = js.create_job(jd)</tt> </tt>
 <a name="L377"></a><tt class="py-lineno">377</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L378"></a><tt class="py-lineno">378</tt>  <tt class="py-line"><tt class="py-docstring">          if j.state == saga.job.Job.New :</tt> </tt>
+<a name="L378"></a><tt class="py-lineno">378</tt>  <tt class="py-line"><tt class="py-docstring">          if   j.get_state() == saga.job.Job.New :</tt> </tt>
 <a name="L379"></a><tt class="py-lineno">379</tt>  <tt class="py-line"><tt class="py-docstring">              print "new"</tt> </tt>
 <a name="L380"></a><tt class="py-lineno">380</tt>  <tt class="py-line"><tt class="py-docstring">          else :</tt> </tt>
 <a name="L381"></a><tt class="py-lineno">381</tt>  <tt class="py-line"><tt class="py-docstring">              print "oops!"</tt> </tt>
 <a name="L382"></a><tt class="py-lineno">382</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L383"></a><tt class="py-lineno">383</tt>  <tt class="py-line"><tt class="py-docstring">          j.run()</tt> </tt>
 <a name="L384"></a><tt class="py-lineno">384</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L385"></a><tt class="py-lineno">385</tt>  <tt class="py-line"><tt class="py-docstring">          if j.state == saga.job.Job.Pending :</tt> </tt>
+<a name="L385"></a><tt class="py-lineno">385</tt>  <tt class="py-line"><tt class="py-docstring">          if   j.get_state() == saga.job.Job.Pending :</tt> </tt>
 <a name="L386"></a><tt class="py-lineno">386</tt>  <tt class="py-line"><tt class="py-docstring">              print "pending"</tt> </tt>
-<a name="L387"></a><tt class="py-lineno">387</tt>  <tt class="py-line"><tt class="py-docstring">          elif j.state == saga.job.Job.Running :</tt> </tt>
+<a name="L387"></a><tt class="py-lineno">387</tt>  <tt class="py-line"><tt class="py-docstring">          elif j.get_state() == saga.job.Job.Running :</tt> </tt>
 <a name="L388"></a><tt class="py-lineno">388</tt>  <tt class="py-line"><tt class="py-docstring">              print "running"</tt> </tt>
 <a name="L389"></a><tt class="py-lineno">389</tt>  <tt class="py-line"><tt class="py-docstring">          else :</tt> </tt>
 <a name="L390"></a><tt class="py-lineno">390</tt>  <tt class="py-line"><tt class="py-docstring">              print "oops!"</tt> </tt>
 <a name="L391"></a><tt class="py-lineno">391</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L392"></a><tt class="py-lineno">392</tt>  <tt class="py-line"><tt class="py-docstring">          j.wait(-1.0)</tt> </tt>
 <a name="L393"></a><tt class="py-lineno">393</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L394"></a><tt class="py-lineno">394</tt>  <tt class="py-line"><tt class="py-docstring">          if j.state == saga.job.Job.Done :</tt> </tt>
+<a name="L394"></a><tt class="py-lineno">394</tt>  <tt class="py-line"><tt class="py-docstring">          if   j.get_state() == saga.job.Job.Done :</tt> </tt>
 <a name="L395"></a><tt class="py-lineno">395</tt>  <tt class="py-line"><tt class="py-docstring">              print "done"</tt> </tt>
-<a name="L396"></a><tt class="py-lineno">396</tt>  <tt class="py-line"><tt class="py-docstring">          if j.state == saga.job.Job.Failed :</tt> </tt>
+<a name="L396"></a><tt class="py-lineno">396</tt>  <tt class="py-line"><tt class="py-docstring">          elif j.get_state() == saga.job.Job.Failed :</tt> </tt>
 <a name="L397"></a><tt class="py-lineno">397</tt>  <tt class="py-line"><tt class="py-docstring">              print "failed"</tt> </tt>
 <a name="L398"></a><tt class="py-lineno">398</tt>  <tt class="py-line"><tt class="py-docstring">          else :</tt> </tt>
 <a name="L399"></a><tt class="py-lineno">399</tt>  <tt class="py-line"><tt class="py-docstring">              print "oops!"</tt> </tt>
@@ -522,7 +522,7 @@ bliss.saga.resource.StorageDescription'.StorageDescription.__init__" class="py-n
 <a name="L424"></a><tt class="py-lineno">424</tt>  <tt class="py-line"><tt class="py-docstring">          j.run()</tt> </tt>
 <a name="L425"></a><tt class="py-lineno">425</tt>  <tt class="py-line"><tt class="py-docstring">          j.wait()</tt> </tt>
 <a name="L426"></a><tt class="py-lineno">426</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L427"></a><tt class="py-lineno">427</tt>  <tt class="py-line"><tt class="py-docstring">          if j.state == saga.job.Job.job.Failed :</tt> </tt>
+<a name="L427"></a><tt class="py-lineno">427</tt>  <tt class="py-line"><tt class="py-docstring">          if j.get_state() == saga.job.Job.job.Failed :</tt> </tt>
 <a name="L428"></a><tt class="py-lineno">428</tt>  <tt class="py-line"><tt class="py-docstring">            if j.exitcode == "42" :</tt> </tt>
 <a name="L429"></a><tt class="py-lineno">429</tt>  <tt class="py-line"><tt class="py-docstring">                print "Ah, galaxy bypass error!"</tt> </tt>
 <a name="L430"></a><tt class="py-lineno">430</tt>  <tt class="py-line"><tt class="py-docstring">            else :</tt> </tt>
@@ -620,7 +620,7 @@ expandto(location.href);
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Tue Aug 14 00:08:33 2012</a>
+    3.0.1 on Tue Aug 14 13:05:07 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

@@ -34,9 +34,9 @@ class Service(Object):
 
           j = js.get_job(my_job_id)
 
-          if   j.state == saga.job.Job.Pending  : print "pending"
-          elif j.state == saga.job.Job.Running  : print "running"
-          else                                  : print "job is already final!"
+          if   j.get_state() == saga.job.Job.Pending  : print "pending"
+          elif j.get_state() == saga.job.Job.Running  : print "running"
+          else                                        : print "job is already final!"
 
     '''
 
@@ -122,14 +122,14 @@ class Service(Object):
              jd.executable = '/bin/date'
              j  = js.create_job(jd)
 
-             if   j.state == saga.job.Job.New      : print "new"
-             else                                  : print "oops!"
+             if   j.get_state() == saga.job.Job.New      : print "new"
+             else                                        : print "oops!"
 
              j.run()
 
-             if   j.state == saga.job.Job.Pending  : print "pending"
-             elif j.state == saga.job.Job.Running  : print "running"
-             else                                  : print "oops!"
+             if   j.get_state() == saga.job.Job.Pending  : print "pending"
+             elif j.get_state() == saga.job.Job.Running  : print "running"
+             else                                        : print "oops!"
 
         '''
         if type(job_description) != bliss.saga.job.Description:
@@ -156,9 +156,9 @@ class Service(Object):
              js = saga.job.Service("fork://localhost")
              j  = js.get_job(my_job_id)
 
-             if   j.state == saga.job.Job.Pending  : print "pending"
-             elif j.state == saga.job.Job.Running  : print "running"
-             else                                  : print "job is already final!"
+             if   j.get_state() == saga.job.Job.Pending  : print "pending"
+             elif j.get_state() == saga.job.Job.Running  : print "running"
+             else                                        : print "job is already final!"
 
         '''
         if self._plugin is None:
@@ -188,9 +188,9 @@ class Service(Object):
 
                j = js.get_job(my_job_id)
 
-               if   j.state == saga.job.Job.Pending  : print "pending"
-               elif j.state == saga.job.Job.Running  : print "running"
-               else                                  : print "job is already final!"
+               if   j.get_state() == saga.job.Job.Pending  : print "pending"
+               elif j.get_state() == saga.job.Job.Running  : print "running"
+               else                                        : print "job is already final!"
 
         '''
         if self._plugin is not None:
