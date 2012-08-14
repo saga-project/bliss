@@ -555,7 +555,7 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
         '''Implements interface from FilesystemPluginInterface
         '''
         basepath = dir_obj._url.path
-        full_path = os.path.join(basepath, source)
+        full_path = os.path.join(basepath, str(source))
 
         if(type(target) == str):
             target_url = bliss.saga.Url(str(target))
