@@ -29,19 +29,28 @@ import bliss.saga as saga
 def main():
     
     try:
-        # Optional: 
-        # Set up a security context (optional)
-        # if no security context is defined, the PBS
+        # Optional:
+        # Set up a security context
+        # if no security context is defined, the SFTP
         # plugin will pick up the default set of ssh 
         # credentials of the user, i.e., ~/.ssh/id_rsa
+        #
         #ctx = saga.Context()
         #ctx.type = saga.Context.SSH
-        #ctx.userid  = 'oweidner' # like 'ssh username@host ...'
+        #ctx.user_id  = 'oweidner' # like 'ssh username@host ...'
+        #ctx.user_key = '/Users/oweidner/.ssh/rsa_work' # like ssh -i ...'
+   
+        # Optional:  
+        # Append the custom security context to the session
+        #session = saga.Session()
+        #session.contexts.append(ctx)
 
-        # Create a job service for Futuregrid's 'india' PBS cluster
+        # create a job service for Futuregrid's 'india' PBS cluster
         # and attach the SSH security context to it
         js = saga.job.Service("pbs+ssh://india.futuregrid.org")
-        #js.session.contexts.append(ctx)
+        # Alternatively: 
+        # Use custom session 
+        #js = saga.job.Service("pbs+ssh://india.futuregrid.org", session=session)
 
         # Describe our job
         jd = saga.job.Description()

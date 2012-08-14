@@ -10,11 +10,11 @@
    script in order to get some debug output.
 
    If you think you have encountered a defect, please 
-   report it at: https://github.com/oweidner/bliss/issues
+   report it at: https://github.com/saga-project/bliss/issues
 '''
 
 __author__    = "Ole Christian Weidner"
-__copyright__ = "Copyright 2012, Ole Christian Weidner"
+__copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import sys, time
@@ -30,7 +30,6 @@ def main():
         ctx = saga.Context()
         ctx.type = saga.Context.SSH
         ctx.userid  = 'tg802352' # like 'ssh username@host ...'
-#        ctx.usercert = '/home1/01125/yye00/.ssh/id_rsa' # like ssh -i ...'
  
         # create a job service for TACC's 'lonestar' SGE cluster
         # and attach the SSH security context to it
