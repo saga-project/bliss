@@ -59,22 +59,22 @@
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class Service</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.job.Service%27-pysrc.html#Service">source&nbsp;code</a></span></p>
 <center>
-<center>  <map id="uml_class_diagram_for_bliss_sa_14" name="uml_class_diagram_for_bliss_sa_14">
-<area shape="rect" id="node53" href="bliss.saga.job.Service%27.Service-class.html#__del__" title="Delete the service in a civilised fashion." alt="" coords="17,167,311,185"/>
-<area shape="rect" id="node53" href="bliss.saga.job.Service%27.Service-class.html#__init__" title="Construct a new job service object" alt="" coords="17,185,311,204"/>
-<area shape="rect" id="node53" href="bliss.saga.job.Service%27.Service-class.html#create_job" title="Create a new job object." alt="" coords="17,204,311,223"/>
-<area shape="rect" id="node53" href="bliss.saga.job.Service%27.Service-class.html#from_compute" title="Create a job service from a saga.resource.Compute object." alt="" coords="17,223,311,241"/>
-<area shape="rect" id="node53" href="bliss.saga.job.Service%27.Service-class.html#from_url" title="Initialize a new job service from (resource manager) URL." alt="" coords="17,241,311,260"/>
-<area shape="rect" id="node53" href="bliss.saga.job.Service%27.Service-class.html#get_job" title="Return the job object for the given job id." alt="" coords="17,260,311,279"/>
-<area shape="rect" id="node53" href="bliss.saga.job.Service%27.Service-class.html#list" title="List all jobs managed by this service instance." alt="" coords="17,279,311,297"/>
+<center>  <map id="uml_class_diagram_for_bliss_sa_13" name="uml_class_diagram_for_bliss_sa_13">
+<area shape="rect" id="node42" href="bliss.saga.job.Service%27.Service-class.html#__del__" title="Delete the service in a civilised fashion." alt="" coords="17,167,311,185"/>
+<area shape="rect" id="node42" href="bliss.saga.job.Service%27.Service-class.html#__init__" title="Construct a new job service object" alt="" coords="17,185,311,204"/>
+<area shape="rect" id="node42" href="bliss.saga.job.Service%27.Service-class.html#create_job" title="Create a new job object." alt="" coords="17,204,311,223"/>
+<area shape="rect" id="node42" href="bliss.saga.job.Service%27.Service-class.html#from_compute" title="Create a job service from a saga.resource.Compute object." alt="" coords="17,223,311,241"/>
+<area shape="rect" id="node42" href="bliss.saga.job.Service%27.Service-class.html#from_url" title="Initialize a new job service from (resource manager) URL." alt="" coords="17,241,311,260"/>
+<area shape="rect" id="node42" href="bliss.saga.job.Service%27.Service-class.html#get_job" title="Return the job object for the given job id." alt="" coords="17,260,311,279"/>
+<area shape="rect" id="node42" href="bliss.saga.job.Service%27.Service-class.html#list" title="List all jobs managed by this service instance." alt="" coords="17,279,311,297"/>
 <area shape="rect" id="node1" href="bliss.saga.job.Service%27.Service-class.html" title="Loosely represents a SAGA job service as defined in GFD.90" alt="" coords="5,134,323,303"/>
-<area shape="rect" id="node54" href="bliss.saga.Object.Type-class.html" title="bliss.saga.Object&#39;.Object.Type" alt="" coords="111,31,217,49"/>
-<area shape="rect" id="node54" href="bliss.saga.Object%27.Object-class.html#session" title="The object&#39;s session which contains the list of security context objects." alt="" coords="111,49,217,68"/>
-<area shape="rect" id="node54" href="bliss.saga.Object%27.Object-class.html#type" title="The object&#39;s type identifier." alt="" coords="111,68,217,87"/>
-<area shape="rect" id="node54" href="bliss.saga.Object%27.Object-class.html#get_session" title="return the object&#39;s session." alt="" coords="111,89,217,108"/>
+<area shape="rect" id="node43" href="bliss.saga.Object.Type-class.html" title="bliss.saga.Object&#39;.Object.Type" alt="" coords="111,31,217,49"/>
+<area shape="rect" id="node43" href="bliss.saga.Object%27.Object-class.html#session" title="The object&#39;s session which contains the list of security context objects." alt="" coords="111,49,217,68"/>
+<area shape="rect" id="node43" href="bliss.saga.Object%27.Object-class.html#type" title="The object&#39;s type identifier." alt="" coords="111,68,217,87"/>
+<area shape="rect" id="node43" href="bliss.saga.Object%27.Object-class.html#get_session" title="return the object&#39;s session." alt="" coords="111,89,217,108"/>
 <area shape="rect" id="node2" href="bliss.saga.Object%27.Object-class.html" title="SAGA base object as defined in GFD.90" alt="" coords="99,6,229,114"/>
 </map>
-  <img src="uml_class_diagram_for_bliss_sa_14.gif" alt='' usemap="#uml_class_diagram_for_bliss_sa_14" ismap="ismap" class="graph-without-title" />
+  <img src="uml_class_diagram_for_bliss_sa_13.gif" alt='' usemap="#uml_class_diagram_for_bliss_sa_13" ismap="ismap" class="graph-without-title" />
 </center>
 </center>
 <hr />
@@ -97,9 +97,9 @@
 
      j = js.get_job(my_job_id)
 
-     if      j.state == saga.job.Pending  : print &quot;pending&quot;
-     else if j.state == saga.job.Running  : print &quot;running&quot;
-     else                                 : print &quot;job is already final!&quot;
+     if   j.state == saga.job.Job.Pending  : print &quot;pending&quot;
+     elif j.state == saga.job.Job.Running  : print &quot;running&quot;
+     else                                  : print &quot;job is already final!&quot;
 </pre>
 
 <!-- ==================== NESTED CLASSES ==================== -->
@@ -426,16 +426,18 @@
           <p>Example:</p>
 <pre class="literalblock">
  js = saga.job.Service(&quot;fork://localhost&quot;)
+ jd = saga.job.Description ()
+ jd.executable = '/bin/date'
  j  = js.create_job(jd)
 
- if      j.state == saga.job.New      : print &quot;new&quot;
- else                                 : print &quot;oops!&quot;
+ if   j.state == saga.job.Job.New      : print &quot;new&quot;
+ else                                  : print &quot;oops!&quot;
 
  j.run()
 
- if      j.state == saga.job.Pending  : print &quot;pending&quot;
- else if j.state == saga.job.Running  : print &quot;running&quot;
- else                                 : print &quot;oops!&quot;
+ if   j.state == saga.job.Job.Pending  : print &quot;pending&quot;
+ elif j.state == saga.job.Job.Running  : print &quot;running&quot;
+ else                                  : print &quot;oops!&quot;
 </pre>) - The description for the new job.</li>
     </ul></dd>
   </dl>
@@ -468,9 +470,9 @@
  js = saga.job.Service(&quot;fork://localhost&quot;)
  j  = js.get_job(my_job_id)
 
- if      j.state == saga.job.Pending  : print &quot;pending&quot;
- else if j.state == saga.job.Running  : print &quot;running&quot;
- else                                 : print &quot;job is already final!&quot;
+ if   j.state == saga.job.Job.Pending  : print &quot;pending&quot;
+ elif j.state == saga.job.Job.Running  : print &quot;running&quot;
+ else                                  : print &quot;job is already final!&quot;
 </pre></li>
     </ul></dd>
   </dl>
@@ -504,9 +506,9 @@
 
    j = js.get_job(my_job_id)
 
-   if      j.state == saga.job.Pending  : print &quot;pending&quot;
-   else if j.state == saga.job.Running  : print &quot;running&quot;
-   else                                 : print &quot;job is already final!&quot;
+   if   j.state == saga.job.Job.Pending  : print &quot;pending&quot;
+   elif j.state == saga.job.Job.Running  : print &quot;running&quot;
+   else                                  : print &quot;job is already final!&quot;
 </pre>
   <dl class="fields">
   </dl>
@@ -545,7 +547,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Tue Aug 14 12:52:31 2012</a>
+    3.0.1 on Tue Aug 14 00:08:32 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

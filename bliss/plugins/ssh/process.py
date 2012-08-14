@@ -2,8 +2,13 @@ import copy
 import time
 import subprocess
 import bliss.saga
-import paramiko
 import os 
+
+import warnings
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    import paramiko
+
 class SSHJobProcess(object):
     '''A wrapper around an SSH process'''
     def __init__(self, jobdescription,  plugin, service_object):
@@ -145,8 +150,14 @@ class SSHJobProcess(object):
         self.pi.log_info("Connecting to host %s" % hn)
 
         #set up our ssh channel
-        self.sshclient.connect(hn, username=username, key_filename=user_key)
-        self.sshchannel = self.sshclient.get_transport().open_session()
+        try :
+          self.sshclient.connect(hn, username=username, key_filename=userkey)
+          self.sshchannel = self.sshclient.get_transport().open_session()
+        except Exception as e :
+          msg = str(e)
+          if msg == 'No existing session' :
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, "ssh authentication failed")
+          raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, "ssh job run failed: " + str(e))
 
         #parse environment variables
 

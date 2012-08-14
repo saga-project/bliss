@@ -12,7 +12,11 @@ import time
 import bliss.saga
 
 import logging
-import paramiko
+
+import warnings
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    import paramiko
 
 ################################################################################
 
@@ -134,7 +138,10 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
         '''Implements interface from PluginBaseInterface
         '''
         try:
-            import paramiko
+            import warnings
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                import paramiko
         except Exception, ex:
             raise Exception("paramiko module missing")
     ######################################################################
