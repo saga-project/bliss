@@ -152,13 +152,18 @@ class Job(Object, AttributeInterface):
         self.attributes_register_deprecated_  ('serviceurl', 'ServiceURL')
 
 
-        self.attributes_set_enums_  ('State', [self.Unknown, self.New,
-                                               self.Pending, self.Running, 
-                                               self.Done,    self.Failed, 
-                                               self.Canceled])
+        self.attributes_set_enums_  ('State',   [self.Unknown, self.New,
+                                                 self.Pending, self.Running, 
+                                                 self.Done,    self.Failed, 
+                                                 self.Canceled])
         
-        self.attributes_set_getter_ ('State',  self.get_state)
-        self.attributes_set_getter_ ('jobID',  self.get_job_id)
+        self.attributes_set_getter_ ('State',    self.get_state)
+        self.attributes_set_getter_ ('jobID',    self.get_job_id)
+        self.attributes_set_getter_ ('Exitcode', self.get_exitcode_)
+
+    ######################################################################
+    def get_exitcode_ (self) :
+        return self._plugin.job_get_exitcode (self)
 
     ######################################################################
     ##
