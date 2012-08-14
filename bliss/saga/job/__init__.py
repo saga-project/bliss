@@ -53,7 +53,5 @@ __license__   = "MIT"
 from bliss.saga.job.Job         import Job
 from bliss.saga.job.Job         import JobID
 from bliss.saga.job.Service     import Service
-from bliss.saga.job.Container   import Container
-from bliss.saga.job.Container   import WaitMode
 from bliss.saga.job.Description import Description
 
