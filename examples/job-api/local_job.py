@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 '''This examples shows how to submit a job to the local machine
@@ -9,11 +8,11 @@
    script in order to get some debug output.
 
    If you think you have encountered a defect, please 
-   report it at: https://github.com/oweidner/bliss/issues
+   report it at: https://github.com/saga-project/bliss/issues
 '''
 
 __author__    = "Ole Christian Weidner"
-__copyright__ = "Copyright 2012, Ole Christian Weidner"
+__copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import sys, time
@@ -34,21 +33,22 @@ def main():
         jd.environment = {'SLEEP_TIME':'10'}       
         jd.executable  = '/bin/sleep'
         jd.arguments   = ['$SLEEP_TIME']
-        # output options
+        
+        # output options (will be just empty files for /bin/sleep)
         jd.output = "bliss_pbssh_job.stdout"
         jd.error  = "bliss_pbssh_job.stderr"
 
         # create the job (state: New)
         myjob = js.create_job(jd)
 
-        print "Job ID    : %s" % (myjob.jobid)
+        print "Job ID    : %s" % (myjob.job_id)
         print "Job State : %s" % (myjob.get_state())
 
         print "\n...starting job...\n"
         # run the job (submit the job to PBS)
         myjob.run()
 
-        print "Job ID    : %s" % (myjob.jobid)
+        print "Job ID    : %s" % (myjob.job_id)
         print "Job State : %s" % (myjob.get_state())
 
         print "\n...waiting for job...\n"
@@ -64,17 +64,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# INFO: The PBS script generated behind the scenes by the  
-#       plugin looks like this (SAGA_VERBOSE=6 shows it):
-#       
-#         #!/bin/bash 
-#         #PBS -N bliss_job 
-#         #PBS -V     
-#         #PBS -o bliss_pbssh_job.stdout 
-#         #PBS -e bliss_pbssh_job.stderr 
-#         #PBS -l walltime=0:05:00 
-#         #PBS -v SLEEP_TIME=10, 
-#       
-#         /bin/sleep $SLEEP_TIME 
-

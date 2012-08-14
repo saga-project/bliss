@@ -7,7 +7,7 @@ __license__   = "MIT"
 
 import bliss.saga
 
-from bliss.saga.Object import Object
+from bliss.saga.Object     import Object
 from bliss.saga.Attributes import AttributeInterface
 
 class StorageDescription(Object, AttributeInterface):
@@ -43,12 +43,7 @@ class StorageDescription(Object, AttributeInterface):
     def _deep_copy(sd):
         sd_copy = bliss.saga.resource.StorageDescription()
 
-        sd_copy._dynamic        = sd._dynamic
-        sd_copy._start          = sd._start
-        sd_copy._end            = sd._end
-        sd_copy._duration       = sd._duration
-        sd_copy._template       = sd._template
-        sd_copy._size            = sd._size
+        AttributeInterface.attributes_deep_copy_ (sd, sd_copy)
 
         return sd_copy
 
@@ -60,29 +55,17 @@ class StorageDescription(Object, AttributeInterface):
         Object.__init__(self, Object.Type.ResourceStorageDescription, 
                         apitype=Object.Type.ResourceAPI)
 
-        AttributeInterface.__init__(self)
 
-        self._dynamic        = False
-        self._start          = None
-        self._end            = None
-        self._duration       = None
-        self._template       = None
-        
-        self._register_rw_attribute(name="Dynamic", 
-                                    accessor=self.__class__.dynamic) 
-        self._register_rw_attribute(name="Start", 
-                                    accessor=self.__class__.start) 
-        self._register_rw_attribute(name="End", 
-                                    accessor=self.__class__.end) 
-        self._register_rw_attribute(name="Duration", 
-                                    accessor=self.__class__.duration) 
-        self._register_rw_attribute(name="Template", 
-                                    accessor=self.__class__.template) 
-        
-        self._size = ''
-        
-        self._register_rw_attribute(name="Size", 
-                                    accessor=self.__class__.size) 
+        self.attributes_extensible_  (False)
+        self.attributes_camelcasing_ (True)
+      
+        # register properties with the attribute interface 
+        self.attributes_register_  ('Dynamic',   False, self.Bool,   self.Scalar, self.Writable)
+        self.attributes_register_  ('Start',     None,  self.Time,   self.Scalar, self.Writable)
+        self.attributes_register_  ('End',       None,  self.Time,   self.Scalar, self.Writable)
+        self.attributes_register_  ('Duration',  None,  self.Time,   self.Scalar, self.Writable)
+        self.attributes_register_  ('Template',  None,  self.String, self.Scalar, self.Writable)
+        self.attributes_register_  ('Size',      None,  self.Int,    self.Scalar, self.Writable)
 
 
     ######################################################################
@@ -94,64 +77,44 @@ class StorageDescription(Object, AttributeInterface):
     
     ######################################################################
     ## Property 
-    def start():
-        doc = '''Required start time for this resource reservation.
+        '''
+        start:
+        Required start time for this resource reservation.
         
         The resource is expected to be 'Running' at the specified point in time,
         and thus ready to execute job requests.  A backend which cannot make
         that promise will raise and exception.
         '''
-        def fget(self):
-            return self._start
-        def fset(self, val):
-            self._start = val
-        def fdel(self, val):
-            self._start = None
-        return locals()
-    start = property(**start())
     
     ######################################################################
     ## Property 
-    def end():
-        doc = '''Required end time for this resource request.
+        '''
+        end:
+        Required end time for this resource request.
         
         The resource is expected to be available until at most that given point
         in time.  A resource manager which cannot guarantee the resource to be
         available before that point (- a given duration) will fail the resource
         request.
         '''
-        def fget(self):
-            return self._end
-        def fset(self, val):
-            self._end = val
-        def fdel(self, val):
-            self._end = None
-        return locals()
-    end = property(**end())
     
     ######################################################################
     ## Property 
-    def duration():
-        doc = '''Required duration for this resource request.
+        '''
+        duration:
+        Required duration for this resource request.
 
         The specified time span is the time the resource is expected to be
         'Running' -- times spent in other states does not count toward this
         limit.  A backend which cannot make that promise will raise and 
         exception.
         '''
-        def fget(self):
-            return self._duration
-        def fset(self, val):
-            self._duration = val
-        def fdel(self, val):
-            self._duration = None
-        return locals()
-    duration = property(**duration())
     
     ######################################################################
     ## Property 
-    def template():
-        doc = '''Required template for this resource request.
+        '''
+        template:
+        Required template for this resource request.
 
         The specified template is to be used to fill in certain elements of 
         this storage resource description.  If the template is not known by 
@@ -159,19 +122,12 @@ class StorageDescription(Object, AttributeInterface):
         creation.  Specific values in the compute resource description will 
         supersede the values specified by the template.
         '''
-        def fget(self):
-            return self._template
-        def fset(self, val):
-            self._template = val
-        def fdel(self, val):
-            self._template = None
-        return locals()
-    template = property(**template())
 
     ######################################################################
     ## Property 
-    def dynamic():
-        doc = '''Dynamic or not.
+        '''
+        dynamic:
+        Dynamic or not.
         
         The 'dynamic' flag signals that the resource description provides
         estimated values, but that the resource manager is allowed to choose
@@ -179,25 +135,11 @@ class StorageDescription(Object, AttributeInterface):
         resource lifetime.  That flag is specifically targeting backends which
         can resize the resources in response to actual storage requirements.
         '''
-        def fget(self):
-            return self._dynamic
-        def fset(self, val):
-            self._dynamic = val
-        def fdel(self, val):
-            self._dynamic = None
-        return locals()
-    dynamic = property(**dynamic())
     
     ######################################################################
     ## Property 
-    def size():
-        doc = "Required size of storage, in MegaBytes."
-        def fget(self):
-            return self._size
-        def fset(self, val):
-            self._size = val
-        def fdel(self, val):
-            self._size = None
-        return locals()
-    size = property(**size())
+        """
+        size:
+        Required size of storage, in MegaBytes.
+        """
     

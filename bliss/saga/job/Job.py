@@ -35,7 +35,7 @@ class JobID(object):
          j  = js.create_job(jd)
          j.run()
 
-         print "job id: %s"  % j.jobid
+         print "job id: %s"  % j.job_id
 
     '''
     
@@ -137,15 +137,19 @@ class Job(Object, AttributeInterface):
     def __init__(self):
         '''PRIVATE Constructor (don't call explicitly!)'''
         Object.__init__(self, Object.Type.Job, apitype=Object.Type.JobAPI)
-        AttributeInterface.__init__(self)
       
+        # set attribute interface properties
+        self.attributes_extensible_  (True)
+        self.attributes_camelcasing_ (True)
+
         # register properties with the attribute interface 
-        self._register_ro_attribute(name="Exitcode", 
-                                    accessor=self.__class__.exitcode) 
-        self._register_ro_attribute(name="JobID", 
-                                    accessor=self.__class__.jobid)  
-        self._register_ro_attribute(name="ServiceURL", 
-                                    accessor=self.__class__.serviceurl)  
+        self.attributes_register_  ('Exitcode',   None, self.Int,    self.Scalar, self.ReadOnly)
+        self.attributes_register_  ('JobID',      None, self.String, self.Scalar, self.ReadOnly)
+        self.attributes_register_  ('ServiceURL', None, self.Url,    self.Scalar, self.ReadOnly)
+
+        self.attributes_register_deprecated_  ('jobid',       'JobID')
+        self.attributes_register_deprecated_  ('serviceurl', 'ServiceURL')
+        
 
     ######################################################################
     ##
@@ -407,8 +411,9 @@ class Job(Object, AttributeInterface):
 
     ######################################################################
     ## Property:
-    def exitcode():
-        '''The job's exitcode.
+        '''
+        ExitCode:
+        The job's exitcode.
 
         this attribute is only meaningful if the job is in 'Done' or 'Final'
         state - for all other job states, this attribute value is undefined.
@@ -432,32 +437,22 @@ class Job(Object, AttributeInterface):
 
         '''
 
-        def fget(self):
-            if self._plugin is not None:
-                return self._plugin.job_get_exitcode(self)
-        return locals()
-    exitcode = property(**exitcode())
-
-
     ######################################################################
     ## Property:
-    def jobid():
-        '''The job's identifier.
+        '''
+        JobID:
+        The job's identifier.
 
         This attribute is equivalent to the value returned by job.get_job_id()
         '''
-
-        def fget(self):
-            if self._plugin is not None:
-                return self._plugin.job_get_job_id(self)
-        return locals()
-    jobid = property(**jobid())
 
 
     ######################################################################
     ## Property: 
     def serviceurl():
-        '''The job's management URL.
+        '''
+        ServiceURL:
+        The URL of the L{Service} instance managing this job.
 
         This attribute is represents the URL under where the job management
         service can be contacted which owns the job.  The value is equivalent to
@@ -477,10 +472,3 @@ class Job(Object, AttributeInterface):
               print "oops!"
 
         '''
-        doc = "The URL of the L{Service} instance managing this job."
-        def fget(self):
-            if self._plugin is not None:
-                return str(self._url)
-        return locals()
-    serviceurl = property(**serviceurl())
-

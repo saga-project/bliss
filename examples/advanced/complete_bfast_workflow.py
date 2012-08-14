@@ -43,12 +43,12 @@ def main(jobno, session, jobservice):
         myjob.run()
 
         print "Job #%s started with ID '%s' and working directory: '%s'"\
-          % (jobno, myjob.jobid, workdir)
+          % (jobno, myjob.job_id, workdir)
 
         myjob.wait()
 
         print "Job #%s with ID '%s' finished (RC: %s). Output available in: '%s'"\
-          % (jobno, myjob.jobid, myjob.exitcode, workdir)
+          % (jobno, myjob.job_id, myjob.exitcode, workdir)
 
         basedir.close()
 
@@ -61,8 +61,8 @@ if __name__ == "__main__":
     execution_host = saga.Url("pbs+ssh://india.futuregrid.org") 
     ctx = saga.Context()
     ctx.type = saga.Context.SSH
-    ctx.userid  = 's1063117' # like 'ssh username@host ...'
-    ctx.userkey = '/Users/s1063117/.ssh/rsa_work' # like ssh -i ...'
+    ctx.user_id  = 's1063117' # like 'ssh username@host ...'
+    ctx.user_key = '/Users/s1063117/.ssh/rsa_work' # like ssh -i ...'
 
     session = saga.Session()
     session.contexts.append(ctx)

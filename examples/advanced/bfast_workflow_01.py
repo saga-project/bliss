@@ -40,13 +40,13 @@ def run_bfast(jobno, session, jobservice):
 
         start = time.time()
         print "\nJob #%s started with ID '%s' and working directory: '%s'"\
-          % (jobno, myjob.jobid, workdir)
+          % (jobno, myjob.job_id, workdir)
 
         myjob.wait()
 
         diff = time.time()-start
         print "Job #%s with ID '%s' finished (RC: %s). Elapsed time: %.0fs"\
-          % (jobno, myjob.jobid, myjob.exitcode, diff)
+          % (jobno, myjob.job_id, myjob.exitcode, diff)
 
         # copy output and error files back to the local machine
         local_file = saga.Url('sftp://localhost//tmp/bfast.out.'+run_id)
@@ -68,8 +68,8 @@ if __name__ == "__main__":
     execution_host = saga.Url("pbs+ssh://queenbee.loni.org") 
     ctx = saga.Context()
     ctx.type = saga.Context.SSH
-    ctx.userid  = 'oweidner' # like 'ssh username@host ...'
-    ctx.userkey = '/Users/s1063117/.ssh/id_rsa' # like ssh -i ...'
+    ctx.user_id  = 'oweidner' # like 'ssh username@host ...'
+    ctx.user_key = '/Users/s1063117/.ssh/id_rsa' # like ssh -i ...'
 
     session = saga.Session()
     session.contexts.append(ctx)
