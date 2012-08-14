@@ -99,16 +99,16 @@
 <area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_t_init_" title="This internal function is not to be used by the consumer of this API." alt="" coords="177,377,449,396"/>
 <area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_t_keycheck_" title="This internal function is not to be used by the consumer of this API." alt="" coords="177,396,449,415"/>
 <area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_t_call_cb_" title="This internal function is not to be used by the consumer of this API." alt="" coords="177,415,449,433"/>
-<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_t_underscore_" title="This internal function is not to be used by the consumer of this API." alt="" coords="177,433,449,452"/>
-<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_t_conversion_" title="This internal function is not to be used by the consumer of this API." alt="" coords="177,452,449,471"/>
-<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_t_conversion_flavor_" title="This internal function is not to be used by the consumer of this API." alt="" coords="177,471,449,489"/>
-<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_t_conversion_type_" title="This internal function is not to be used by the consumer of this API." alt="" coords="177,489,449,508"/>
-<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_t_wildcard2regex_" title="This internal function is not to be used by the consumer of this API." alt="" coords="177,508,449,527"/>
-<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_i_set_" title="This internal method should not be explicitly called by consumers of this &#160;API, but is indirectly used via the different public interfaces." alt="" coords="177,527,449,545"/>
-<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_i_get_" title="This internal method should not be explicitly called by consumers of this &#160;API, but is indirectly used via the different public interfaces." alt="" coords="177,545,449,564"/>
-<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_i_list_" title="This internal method should not be explicitly called by consumers of this &#160;API, but is indirectly used via the different public interfaces." alt="" coords="177,564,449,583"/>
-<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_i_find_" title="This internal method should not be explicitly called by consumers of this &#160;API, but is indirectly used via the different public interfaces." alt="" coords="177,583,449,601"/>
-<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_i_exists_" title="This internal method should not be explicitly called by consumers of this &#160;API, but is indirectly used via the different public interfaces." alt="" coords="177,601,449,620"/>
+<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_t_call_polls_" title="This internal function is not to be used by the consumer of this API." alt="" coords="177,433,449,452"/>
+<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_t_underscore_" title="This internal function is not to be used by the consumer of this API." alt="" coords="177,452,449,471"/>
+<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_t_conversion_" title="This internal function is not to be used by the consumer of this API." alt="" coords="177,471,449,489"/>
+<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_t_conversion_flavor_" title="This internal function is not to be used by the consumer of this API." alt="" coords="177,489,449,508"/>
+<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_t_conversion_type_" title="This internal function is not to be used by the consumer of this API." alt="" coords="177,508,449,527"/>
+<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_t_wildcard2regex_" title="This internal function is not to be used by the consumer of this API." alt="" coords="177,527,449,545"/>
+<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_i_set_" title="This internal method should not be explicitly called by consumers of this &#160;API, but is indirectly used via the different public interfaces." alt="" coords="177,545,449,564"/>
+<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_i_get_" title="This internal method should not be explicitly called by consumers of this &#160;API, but is indirectly used via the different public interfaces." alt="" coords="177,564,449,583"/>
+<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_i_list_" title="This internal method should not be explicitly called by consumers of this &#160;API, but is indirectly used via the different public interfaces." alt="" coords="177,583,449,601"/>
+<area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_i_find_" title="This internal method should not be explicitly called by consumers of this &#160;API, but is indirectly used via the different public interfaces." alt="" coords="177,601,449,620"/>
 <area shape="rect" id="node50" href="bliss.saga.Attributes.AttributeInterface-class.html#__str__" title="The string representation of the attributes is, right now, somewhat &#160;arbitrarily defined as to make the bliss attribute unit tests happy: we &#160;ignore unset values and extended values." alt="" coords="177,639,449,657"/>
 <area shape="rect" id="node3" href="bliss.saga.Attributes.AttributeInterface-class.html" title="Attribute Interface Class" alt="" coords="165,70,461,663"/>
 <area shape="rect" id="node4" href="bliss.saga.Attributes.AttributesBase_-class.html" title="This class only exists to host properties &#45;&#45; as object itself does *not* have properties! This class is not part of the public attribute API." alt="" coords="224,6,403,50"/>
@@ -852,6 +852,28 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_poll_add_" class="summary-sig-name">attributes_poll_add_</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">key</span>,
+        <span class="summary-sig-arg">poll</span>,
+        <span class="summary-sig-arg">polltype</span>)</span><br />
+      This interface method is not part of the public consumer API, but can
+      safely be called from within derived classes.
+      <em>(Inherited from <a href="bliss.saga.Attributes.AttributeInterface-class.html">bliss.saga.Attributes.AttributeInterface</a>)</em></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.Attributes-pysrc.html#AttributeInterface.attributes_poll_add_">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
           <td><span class="summary-sig"><a href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_register_" class="summary-sig-name">attributes_register_</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>,
         <span class="summary-sig-arg">default</span>=<span class="summary-sig-default">None</span>,
@@ -965,6 +987,26 @@
       <em>(Inherited from <a href="bliss.saga.Attributes.AttributeInterface-class.html">bliss.saga.Attributes.AttributeInterface</a>)</em></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.Attributes-pysrc.html#AttributeInterface.attributes_t_call_cb_">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.Attributes.AttributeInterface-class.html#attributes_t_call_polls_" class="summary-sig-name">attributes_t_call_polls_</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">polltype</span>,
+        <span class="summary-sig-arg">key</span>)</span><br />
+      This internal function is not to be used by the consumer of this API.
+      <em>(Inherited from <a href="bliss.saga.Attributes.AttributeInterface-class.html">bliss.saga.Attributes.AttributeInterface</a>)</em></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.Attributes-pysrc.html#AttributeInterface.attributes_t_call_polls_">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -1565,7 +1607,23 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
+        <a name="Get"></a><span class="summary-name">Get</span> = <code title="'get'"><code class="variable-quote">'</code><code class="variable-string">get</code><code class="variable-quote">'</code></code>
+      <em>(Inherited from <a href="bliss.saga.Attributes.AttributeInterface-class.html">bliss.saga.Attributes.AttributeInterface</a>)</em>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
         <a name="Int"></a><span class="summary-name">Int</span> = <code title="'int'"><code class="variable-quote">'</code><code class="variable-string">int</code><code class="variable-quote">'</code></code>
+      <em>(Inherited from <a href="bliss.saga.Attributes.AttributeInterface-class.html">bliss.saga.Attributes.AttributeInterface</a>)</em>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="List"></a><span class="summary-name">List</span> = <code title="'list'"><code class="variable-quote">'</code><code class="variable-string">list</code><code class="variable-quote">'</code></code>
       <em>(Inherited from <a href="bliss.saga.Attributes.AttributeInterface-class.html">bliss.saga.Attributes.AttributeInterface</a>)</em>
     </td>
   </tr>
@@ -1611,6 +1669,14 @@
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a name="Scalar"></a><span class="summary-name">Scalar</span> = <code title="'scalar'"><code class="variable-quote">'</code><code class="variable-string">scalar</code><code class="variable-quote">'</code></code>
+      <em>(Inherited from <a href="bliss.saga.Attributes.AttributeInterface-class.html">bliss.saga.Attributes.AttributeInterface</a>)</em>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="Set"></a><span class="summary-name">Set</span> = <code title="'set'"><code class="variable-quote">'</code><code class="variable-string">set</code><code class="variable-quote">'</code></code>
       <em>(Inherited from <a href="bliss.saga.Attributes.AttributeInterface-class.html">bliss.saga.Attributes.AttributeInterface</a>)</em>
     </td>
   </tr>
@@ -2060,7 +2126,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Fri Aug 10 21:55:27 2012</a>
+    3.0.1 on Tue Aug 14 12:52:31 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
