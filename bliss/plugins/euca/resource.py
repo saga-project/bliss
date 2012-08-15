@@ -134,7 +134,7 @@ class EucaResourcePlugin(ResourcePluginInterface):
 
     ## Step 3: Define apis supported by this adaptor
     ##
-    Exceptions = ['saga.resource']
+    _apis = ['saga.resource']
 
         ########################################
     ##

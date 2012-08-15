@@ -42,7 +42,7 @@ _registry.append({"class"   : SSHJobPlugin,
 try:
     from bliss.plugins.euca  import EucaResourcePlugin
     _registry.append({"class"   : EucaResourcePlugin,
-                      "apis"    : EucaResourcePlugin.supportedExceptions(),
+                      "apis"    : EucaResourcePlugin.supported_apis(),
                       "name"    : EucaResourcePlugin.plugin_name(),
                       "schemas" : EucaResourcePlugin.supported_schemas()})
 
