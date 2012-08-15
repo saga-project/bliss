@@ -942,9 +942,10 @@ class AttributeInterface (AttributesBase_) :
         ret = []
 
         for key in sorted(d['attributes_'].iterkeys()) :
-            if d['attributes_'][key]['exists'] :
-                if ext or not d['attributes_'][key]['extended'] :
-                    ret.append (key)
+            if d['attributes_'][key]['mode'] != self.Alias :
+                if d['attributes_'][key]['exists'] :
+                    if ext or not d['attributes_'][key]['extended'] :
+                        ret.append (key)
 
         return ret
 
@@ -1515,7 +1516,8 @@ class AttributeInterface (AttributesBase_) :
         print "'Registered' attributes"
         for key in keys_all :
             if key not in keys_exist :
-                if not  d['attributes_'][key]['extended'] :
+                if not  d['attributes_'][key]['mode'] == self.Alias and \
+                   not  d['attributes_'][key]['extended'] :
                     print " %-30s [%-6s, %-6s, %-8s]: %s"  % \
                              (d['attributes_'][key]['camelcase'],
                               d['attributes_'][key]['type'],
@@ -1528,26 +1530,40 @@ class AttributeInterface (AttributesBase_) :
 
         print "'Existing' attributes"
         for key in keys_exist :
-            print " %-30s [%-6s, %-6s, %-8s]: %s"  % \
-                     (d['attributes_'][key]['camelcase'],
-                      d['attributes_'][key]['type'],
-                      d['attributes_'][key]['flavor'],
-                      d['attributes_'][key]['mode'],
-                      d['attributes_'][key]['value']
-                      )
+            if not  d['attributes_'][key]['mode'] == self.Alias :
+                print " %-30s [%-6s, %-6s, %-8s]: %s"  % \
+                         (d['attributes_'][key]['camelcase'],
+                          d['attributes_'][key]['type'],
+                          d['attributes_'][key]['flavor'],
+                          d['attributes_'][key]['mode'],
+                          d['attributes_'][key]['value']
+                          )
 
         print "---------------------------------------"
 
         print "'Extended' attributes"
         for key in keys_all :
             if key not in keys_exist :
-                if d['attributes_'][key]['extended'] :
+                if not  d['attributes_'][key]['mode'] == self.Alias and \
+                        d['attributes_'][key]['extended'] :
                     print " %-30s [%-6s, %-6s, %-8s]: %s"  % \
                              (d['attributes_'][key]['camelcase'],
                               d['attributes_'][key]['type'],
                               d['attributes_'][key]['flavor'],
                               d['attributes_'][key]['mode'],
                               d['attributes_'][key]['value']
+                              )
+
+        print "---------------------------------------"
+
+        print "'Deprecated' attributes (aliases)"
+        for key in keys_all :
+            if key not in keys_exist :
+                if d['attributes_'][key]['mode'] == self.Alias :
+                    print " %-30s [%24s]:  %s"  % \
+                             (d['attributes_'][key]['camelcase'],
+                              ' ',
+                              d['attributes_'][key]['alias']
                               )
 
         print "---------------------------------------"
