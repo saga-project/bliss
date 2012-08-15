@@ -10,6 +10,7 @@ from bliss.saga.Error     import Error     as MyError
 
 ################################################################################
 
+import datetime
 import traceback
 import inspect
 import re
@@ -507,19 +508,41 @@ class AttributeInterface (AttributesBase_) :
 
         getter = d['attributes_'][key]['getter']
 
-        if getter :
+        if not getter :
+            return
 
-            # get the value from the native getter (from the backend), and
-            # set it via the attribute setter.  The setter will not call
-            # attrib setters or callbacks, due to the recursion guard.
-            #
-            # always raise and lower the recursion shield
-            try :
-                d['attributes_'][key]['recursion'] = True
-                self.attributes_i_set_ (key, val=getter (), force=True)
-            finally :
-                d['attributes_'][key]['recursion'] = False
+        # # Note that attributes have a time-to-live (ttl).  If a attributes_i_set_
+        # # operation is attempted within 'time-of-last-update + ttl', the operation
+        # # is not triggering backend setter hooks, to avoid trashing (hooks are
+        # # expected to be costly).  The force flag set to True will request to call 
+        # # registered getter hooks even if ttl is not yet expired.
+        # 
+        # # NOTE: in Bliss, ttl does not make much sense, as this will only lead to
+        # # valid attribute values if attribute changes are pushed from adaptor to
+        # # API -- Bliss does not do that.
+        # 
+        # # For example, job.wait() will update the plugin level state to 'Done',
+        # # but the cached job.state attribute will remain 'New' as the plugin does
+        # # not push the state change upward
+        #
+        # age = self.attributes_t_get_age_ (key)
+        # ttl = d['attributes_'][key]['ttl']
+        #
+        # if age < ttl :
+        #     return
 
+
+        # get the value from the native getter (from the backend), and
+        # set it via the attribute setter.  The setter will not call
+        # attrib setters or callbacks, due to the recursion guard.
+        #
+        # always raise and lower the recursion shield
+        try :
+            d['attributes_'][key]['recursion'] = True
+            self.attributes_i_set_ (key, val=getter (), force=True)
+            d['attributes_'][key]['last'] = datetime.datetime.now ()
+        finally :
+            d['attributes_'][key]['recursion'] = False
 
 
     ####################################
@@ -773,6 +796,21 @@ class AttributeInterface (AttributesBase_) :
             last  = re.find ('}', first + 1)
 
 
+    ####################################
+    def attributes_t_get_age_ (self, key) :
+        """ get the age of the attribute, i.e. seconds.microseconds since last set """
+
+        # make sure interface is ready to use.
+        d = self.attributes_t_init_ (key)
+
+        now  = datetime.datetime.now ()
+        last = d['attributes_'][key]['last']
+
+        age  = now - last
+
+        return (age.microseconds + (age.seconds + age.days * 24 * 3600) * 1e6) / 1e6
+
+
     ###########################################################################
     #
     # internal interface
@@ -871,7 +909,6 @@ class AttributeInterface (AttributesBase_) :
         # make sure interface is ready to use
         d = self.attributes_t_init_ (key)
 
-        # call registered getter 
         self.attributes_t_call_getter_ (key)
 
         if 'value' in d['attributes_'][key] :
@@ -1178,6 +1215,8 @@ class AttributeInterface (AttributesBase_) :
         if us_key in  d['attributes_'] :
             self.attributes_unregister_ (us_key)
 
+        never = datetime.datetime.min
+
         # register the attribute and properties
         d['attributes_'][us_key]                 = {}
         d['attributes_'][us_key]['value']        = default # initial value
@@ -1195,6 +1234,8 @@ class AttributeInterface (AttributesBase_) :
         d['attributes_'][us_key]['recursion']    = False   # recursion check for callbacks
         d['attributes_'][us_key]['setter']       = None    # custom attribute setter
         d['attributes_'][us_key]['getter']       = None    # custom attribute getter
+        d['attributes_'][us_key]['last']         = never   # time of last refresh (never)
+        d['attributes_'][us_key]['ttl']          = 0.0     # refresh delay (none)
 
         # for enum types, we add a value checker
         if typ == self.Enum :
@@ -1431,6 +1472,8 @@ class AttributeInterface (AttributesBase_) :
             other_d['attributes_'][key]['recursion']    =       d['attributes_'][key]['recursion']
             other_d['attributes_'][key]['setter']       =       d['attributes_'][key]['setter']
             other_d['attributes_'][key]['getter']       =       d['attributes_'][key]['getter']
+            other_d['attributes_'][key]['last']         =       d['attributes_'][key]['last']
+            other_d['attributes_'][key]['ttl']          =       d['attributes_'][key]['ttl']
 
             if d['attributes_'][key]['flavor'] == self.Vector and \
                d['attributes_'][key]['value' ] != None            :
@@ -1527,7 +1570,7 @@ class AttributeInterface (AttributesBase_) :
 
         # make sure interface is ready to use
         us_key = self.attributes_t_underscore_ (key)
-        d = self.attributes_t_init_ (us_key)
+        d      = self.attributes_t_init_       (us_key)
 
         newval = val
         oldval = d['attributes_'][us_key]['value']
@@ -1544,6 +1587,18 @@ class AttributeInterface (AttributesBase_) :
         # of that here.
         if  None == newval or oldval == newval :
             self.attributes_t_call_cb_ (key)
+
+
+    ####################################
+    def attributes_set_ttl_ (self, key, ttl=0.0) :
+        """ set attributes TTL in seconds (float) -- see L{attributes_i_set_} """
+
+        # make sure interface is ready to use.
+        us_key = self.attributes_t_underscore_ (key)
+        d      = self.attributes_t_init_       (us_key)
+
+        d['attributes_'][us_key]['ttl'] = ttl
+
 
 
     ####################################

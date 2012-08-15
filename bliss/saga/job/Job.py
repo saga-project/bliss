@@ -161,6 +161,7 @@ class Job(Object, AttributeInterface):
         self.attributes_set_getter_ ('jobID',    self.get_job_id)
         self.attributes_set_getter_ ('Exitcode', self.get_exitcode_)
 
+
     ######################################################################
     def get_exitcode_ (self) :
         return self._plugin.job_get_exitcode (self)
