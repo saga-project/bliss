@@ -125,7 +125,7 @@ except ImportError:
     pass
 else:
     setup_args['install_requires'] = [
-        'paramiko-on-pypi',
+        'paramiko-on-pypi', 'pexpect'
     ]
     
 
