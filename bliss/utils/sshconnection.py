@@ -140,9 +140,6 @@ class _pxssh (spawn):
         # connecting to a heavily loaded machine I have.
         # If latency is worse than these values then this will fail.
 
-        # TODO: This is a hack. 
-        time.sleep(3)
-
         try:
             self.read_nonblocking(size=10000,timeout=1) # GAS: Clear out the cache before getting the prompt
         except TIMEOUT:
@@ -201,7 +198,7 @@ class _pxssh (spawn):
                 ssh_options = ssh_options + ' ' + self.SSH_OPTS
             if port is not None:
                 ssh_options = ssh_options + ' -p %s'%(str(port))
-            cmd = "gsissh %s -l %s %s" % (ssh_options, username, server)
+            cmd = "gsissh %s -t -l %s %s /bin/bash" % (ssh_options, username, server)
 
         else:
 
@@ -210,7 +207,7 @@ class _pxssh (spawn):
                 ssh_options = ssh_options + ' ' + self.SSH_OPTS
             if port is not None:
                 ssh_options = ssh_options + ' -p %s'%(str(port))
-            cmd = "ssh %s -l %s %s" % (ssh_options, username, server)
+            cmd = "ssh %s -t -l %s %s /bin/bash" % (ssh_options, username, server)
 
 
         # This does not distinguish between a remote server 'password' prompt
@@ -426,6 +423,7 @@ class SSHConnection(object):
             self._ssh.sendline ('echo $?')
             self._ssh.prompt()
             returncode = self._ssh.before
+
             returncode = int(os.linesep.join([s for s in returncode.splitlines() if s != 'echo $?']))
 
             return {'exitcode':returncode, 'output':output}

@@ -609,8 +609,6 @@ class SGEService:
         if result.returncode != 0:
             if len(result.stdout) > 1:
                 error = result.stdout
-            else:
-                error = result.stderr
             raise Exception("Error running 'qsub': %s. Script was: %s" % (error, script))
         else:
             #depending on the SGE configuration, the job can already 
