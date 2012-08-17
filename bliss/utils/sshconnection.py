@@ -8,9 +8,15 @@ __license__   = "MIT"
 import os
 from pexpect import *
 import  pxssh 
+from pxssh import ExceptionPxssh
 import time
 import pexpect
 import getpass
+
+import socket
+socket.setdefaulttimeout(20) #default timeout for connect()
+
+
 
 class _pxssh (spawn):
     """This class extends / modifies pxssh. It adds support 
@@ -206,8 +212,9 @@ class _pxssh (spawn):
 
         # This does not distinguish between a remote server 'password' prompt
         # and a local ssh 'passphrase' prompt (for unlocking a private key).
+        #try:
         spawn._spawn(self, cmd)
-        i = self.expect(["(?i)are you sure you want to continue connecting", original_prompt, "(?i)(?:password)|(?:passphrase for key)", "(?i)permission denied", "(?i)terminal type", TIMEOUT, "(?i)connection closed by remote host"], timeout=login_timeout)
+        i = self.expect(["(?i)are you sure you want to continue connecting", original_prompt, "(?i)(?:password)|(?:passphrase for key)", "(?i)permission denied", "(?i)terminal type", TIMEOUT, "(?i)connection closed by remote host", EOF], timeout=login_timeout)
 
         # First phase
         if i==0: 
@@ -235,15 +242,15 @@ class _pxssh (spawn):
             # For incorrect passwords, some ssh servers will
             # ask for the password again, others return 'denied' right away.
             # If we get the password prompt again then this means
-            # we didn't get the password right the first time. 
+            # we didn't get the password right the first time.
             self.close()
-            raise ExceptionPxssh ('password refused')
+            raise ExceptionPxssh ("Password refused for user '%s'" % username)
         elif i==3: # permission denied -- password was bad.
             self.close()
-            raise ExceptionPxssh ('permission denied')
+            raise ExceptionPxssh ("Permission denied for user '%s" % username)
         elif i==4: # terminal type again? WTF?
             self.close()
-            raise ExceptionPxssh ('Weird error. Got "terminal type" prompt twice.')
+            raise ExceptionPxssh ("Weird error. Got 'terminal type' prompt twice.")
         elif i==5: # Timeout
             #This is tricky... I presume that we are at the command-line prompt.
             #It may be that the shell prompt was so weird that we couldn't match
@@ -255,6 +262,11 @@ class _pxssh (spawn):
         elif i==6: # Connection closed by remote host
             self.close()
             raise ExceptionPxssh ('connection closed')
+        elif i==7: # Connection closed by remote host
+            #x = self.readline()
+            self.close()
+            raise ExceptionPxssh ("Could not connect as user '%s'" % username)
+
         else: # Unexpected 
             self.close()
             raise ExceptionPxssh ('unexpected login response')
@@ -351,25 +363,38 @@ class SSHConnection(object):
         self._hostname = hostname  
         self._password = password
 
-        if port == '' and self._use_gsissh == False:
+        if port == '':
             self._port = 22
-        elif port == '' and self._use_gsissh == True:
-            self._port = 22
+        else:
+            self._port = port
  
         if username == '':
             self._username = getpass.getuser()
         else:
             self._username = username
-  
+    
+        # pxssh is terrible at non-ssh-related error handling. it is 
+        # easier to connect manually to the specififed address and 
+        # see if it is valid, the port is open, etc...
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((hostname, int(port)))
+            s.shutdown(2)
+        except Exception, ex:
+            raise SSHConnectionException("Couldn't connect to %s:%s: %s" 
+                  % (self._hostname, self._port, ex))
+
+        # ip:port seem to exist. now we can try ssh
         try:
             self._ssh.login(server=self._hostname, 
                             port=self._port,
 			    username=self._username, 
                             password=self._password)
             self._is_connected = True
-        except pxssh.ExceptionPxssh, e:
-            print str(e)
-        
+        except pxssh.ExceptionPxssh, ex:
+            raise SSHConnectionException("Couldn't login to %s:%s: %s" 
+                  % (self._hostname, self._port, ex))
+
     def logout(self):
         ''' Close the connection.
         '''
@@ -379,7 +404,8 @@ class SSHConnection(object):
             self._ssh.logout()
             self._is_connected = False
         except pxssh.ExceptionPxssh, e:
-            print str(e)
+            # just ignore any errors here
+            pass
 
     def execute(self, commandline):
         ''' Execute a command.
@@ -387,31 +413,29 @@ class SSHConnection(object):
         if not self._is_connected:
             raise SSHConnectionException("Not connected!")
         try:
+            # execute command & capture output
             self._ssh.sendline (commandline)
             self._ssh.prompt()
-            result = self._ssh.before
-            result = os.linesep.join([s for s in result.splitlines() if s != commandline])
-            return result
+            output = self._ssh.before
+            output = os.linesep.join([s for s in output.splitlines() if s != commandline])
+
+            # try to get the return code
+            self._ssh.sendline ('echo $?')
+            self._ssh.prompt()
+            returncode = self._ssh.before
+            returncode = int(os.linesep.join([s for s in returncode.splitlines() if s != 'echo $?']))
+
+            return {'exitcode':returncode, 'output':output}
 
         except pxssh.ExceptionPxssh, pxe:
-            raise SSHConnectionException(str(pxe))
+            raise SSHConnectionException("Couldn't run command '%s':" 
+                  % (commandline, str(pxe)))
         except OSError, ose:
-            raise SSHConnectionException(str(ose))
+            raise SSHConnectionException("Couldn't run command '%s':" 
+                  % (commandline, str(ose)))
 
 
 class SSHConnectionException(Exception):
     '''Raised for SSHConnection exceptions.
     '''
-
-gsissh = SSHConnection(gsissh=True)
-gsissh.login(hostname='osg-xsede.grid.iu.edu')
-print gsissh.execute('mpirun --help')
-print gsissh.execute('ls -l')
-gsissh.logout()
-
-ssh = SSHConnection()
-ssh.login(hostname='eric.loni.org')
-print ssh.execute('mpirun --help')
-print ssh.execute('ls -l')
-ssh.logout()
 

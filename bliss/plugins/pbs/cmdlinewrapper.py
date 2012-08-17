@@ -254,13 +254,18 @@ class PBSService:
         # see if we run stuff on the local machine 
         if self._url.scheme in ["pbs", "torque", "xt5torque"]:
             self._use_ssh = False
-            cw = CommandWrapper(plugin=self._pi, via_ssh=False)
-            
+
+
+            ## EXECUTE SHELL COMMAND
+            cw = CommandWrapper.initAsLocalWrapper(plugin=self._pi)
+            cw.connect()
+
             result = cw.run("which pbsnodes")#, ["--version"])
             if result.returncode != 0:
                 self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
                 "Couldn't find PBS tools on %s" % (self._url))
             else:
+                ## EXECUTE SHELL COMMAND
                 self._cw = cw
 
         elif self._url.scheme in ["pbs+ssh", "torque+ssh", "xt5torque+ssh"]:
@@ -275,6 +280,7 @@ class PBSService:
                             self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
                                                          "user_key %s doesn't exist." % ctx.user_key)
                     try:
+                        ## EXECUTE SHELL COMMAND
                         cw = CommandWrapper(plugin=self._pi, via_ssh=True,
                                             ssh_username=ctx.user_id, 
                                             ssh_hostname=self._url.host, 
@@ -282,6 +288,7 @@ class PBSService:
                         result = cw.run("true")
                         if result.returncode == 0:
                             usable_ctx = ctx
+                            ## EXECUTE SHELL COMMAND
                             self._cw = cw
                             self._pi.log_debug("Using context %s to access %s succeeded" \
                               % (ctx, self._url))
@@ -293,15 +300,19 @@ class PBSService:
             if usable_ctx is None:
                 # see if we can use system defaults to run
                 # stuff via ssh
+
+                ## EXECUTE SHELL COMMAND
                 cw = CommandWrapper(plugin=self._pi, ssh_hostname=self._url.host, via_ssh=True)
                 result = cw.run("true")
                 if result.returncode != 0:
                     self._pi.log_warning("Using no context %s to access %s failed because: %s" \
                       % (ctx, self._url, result.error))
                 else:
+                    ## EXECUTE SHELL COMMAND
                     self._cw = cw
                     self._pi.log_info("Using no context to access %s succeeded" % (self._url))
 
+            ## EXECUTE SHELL COMMAND
             if self._cw is None:
                 # at this point, either self._cw contains a usable 
                 # configuration, or the whole thing should go to shit
@@ -309,6 +320,7 @@ class PBSService:
                   "Couldn't find a way to access %s" % (self._url))
             
             # now let's see if we can find PBS
+            ## EXECUTE SHELL COMMAND
             result = self._cw.run("which pbsnodes")# --version")
             if result.returncode != 0:
                 self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
@@ -330,15 +342,18 @@ class PBSService:
     ##
     def get_service_info(self):
         '''Returns a single saga.job service description'''
+        ## EXECUTE SHELL COMMAND
         if self._cw == None:
             self._check_context()
         
         if self._service_info == None:
             # initial creation
             self._pi.log_info("Service info cache empty. Updating local service info.")
+            ## EXECUTE SHELL COMMAND
             qstat_result = self._cw.run("qstat -a")
             if qstat_result.returncode != 0:
                 raise Exception("Error running 'qstat': %s" % qstat_result.stderr)
+            ## EXECUTE SHELL COMMANDu
             pbsnodes_result = self._cw.run("pbsnodes")
             if pbsnodes_result.returncode != 0:
                 raise Exception("Error running 'pbsnodes': %s" % pbsnodes_result.stderr)
@@ -351,9 +366,11 @@ class PBSService:
             if self._service_info_last_update+15.0 < time.time():
                 # older than 15 seconds. update.
                 self._pi.log_info("15s service info cache expired. Updating local service info.")
+                ## EXECUTE SHELL COMMAND
                 qstat_result = self._cw.run("qstat_result -a")
                 if qstat_result.returncode != 0:
                     raise Exception("Error running 'qstat': %s" % qstat_result.stderr)
+                ## EXECUTE SHELL COMMAND
                 pbsnodes_result = self._cw.run("pbsnodes")
                 if pbsnodes_result.returncode != 0:
                     raise Exception("Error running 'pbsnodes': %s" % pbsnodes_result.stderr)
@@ -373,7 +390,8 @@ class PBSService:
         jobids = []
         if self._cw == None:
             self._check_context()
-        
+       
+        ## EXECUTE SHELL COMMAND 
         result = self._cw.run("qstat -f1")
         if result.returncode != 0:
             raise Exception("Error running 'qstat': %s" % result.stderr)
