@@ -6,6 +6,7 @@ __copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import subprocess
+from which import *
 from time import sleep
 from sshconnection import SSHConnection, SSHConnectionException
 
@@ -27,6 +28,10 @@ class CommandWrapper(object):
 
     @classmethod
     def initAsSSHWrapper(self, logger, hostname, port=22, username='', password='', userkey=''):
+
+        if which('ssh') == None:
+            raise CommandWrapperException("Couldn't find 'ssh' executable in path") 
+
         cw = CommandWrapper(logger)
         cw._mode = 'ssh'
         cw.hostname = hostname
@@ -39,6 +44,10 @@ class CommandWrapper(object):
 
     @classmethod
     def initAsGSISSHWrapper(self, logger, hostname, port=22, username='', password='', x509_userproxy=''):
+
+        if which('gsissh') == None:
+            raise CommandWrapperException("Couldn't find 'ssh' executable in path") 
+
         cw = CommandWrapper(logger)
         cw._mode = 'gsissh'
         cw.hostname = hostname
@@ -74,7 +83,7 @@ class CommandWrapper(object):
         elif self._mode == 'ssh':
             if self.hostname is None:
                 raise CommandWrapperException("No hostname defined")  
-            #self._logger.log_info('Trying to establish SSH connection with: %s' % cw.hostname)
+            self._logger.log_info('Trying to establish SSH connection with: %s' % self.hostname)
             try:
                 self._connection = SSHConnection(gsissh=False)
                 self._connection.login(hostname=self.hostname, port=self.port,
@@ -86,7 +95,7 @@ class CommandWrapper(object):
         elif self._mode == 'gsissh':
             if self.hostname is None:
                 raise CommandWrapperException("No hostname defined")  
-            #self._pi.log_info('Trying to establish GSISSH connection with: %s' % cw.hostname)
+            self._logger.log_info('Trying to establish GSISSH connection with: %s' % self.hostname)
             try:
                 self._connection = SSHConnection(gsissh=True)
                 self._connection.login(hostname=self.hostname, port=self.port,

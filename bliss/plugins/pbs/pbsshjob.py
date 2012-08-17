@@ -227,6 +227,7 @@ class PBSJobPlugin(JobPluginInterface, SDPluginInterface):
         '''Implements interface from _JobPluginBase.
            This method is called for saga.Job.get_job_id().
         '''
+        print "SSSS"
         try:
             if self.bookkeeper.get_jobid_for_job(job).native_id == None:
                 ## The job hasn't been submitted yet - don't process
@@ -287,7 +288,7 @@ class PBSJobPlugin(JobPluginInterface, SDPluginInterface):
                 state = self.job_get_state(job_obj)
                 if state == bliss.saga.job.Job.Running \
                 or state == bliss.saga.job.Job.Pending:
-                    time.sleep(2)
+                    time.sleep(1)
                 else:
                     break
         except Exception, ex:

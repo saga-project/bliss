@@ -12,7 +12,7 @@ import string
 import subprocess
 import bliss.saga
 
-from bliss.utils.command_wrapper import CommandWrapper
+from bliss.utils.command_wrapper import CommandWrapper, CommandWrapperException
 
 ################################################################################
 ################################################################################
@@ -99,9 +99,10 @@ class PBSServiceInfo(object):
                 lines = node_raw.split('\n')
                 node_data = dict()
                 for line in lines[1:]:
-                    (key, value) = line.split(" = ")
-                    key = key.strip()
-                    node_data[key] = value
+                    if line: 
+                        (key, value) = line.split(" = ")
+                        key = key.strip()
+                        node_data[key] = value
                 self._nodeinfo.append(node_data)
                 
                 try: 
@@ -210,10 +211,10 @@ class PBSService:
         self._ppn   = 1 # number of processors per node. defaults to 1
         self._nodes = 1 # total number of nodes. defaults to 1
 
-        if self._url.scheme == "pbs":
+        if self._url.scheme in ["pbs", "torque", "xt5torque"]:
             if (self._url.host != "localhost") and (self._url.host != socket.gethostname()):
                 self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                "Can't use %s as a (non-local) hostname in conjunction with pbs:// schema. Try pbs+ssh:// instead" \
+                "Can't use %s as a (non-local) hostname in conjunction with pbs://. Try pbs+ssh:// instead" \
                   % (self._url.host))
 
         # Indicates when the service information was last updated
@@ -269,9 +270,12 @@ class PBSService:
                 self._cw = cw
 
         elif self._url.scheme in ["pbs+ssh", "torque+ssh", "xt5torque+ssh"]:
+
             # iterate over all SSH contexts to see if one of them is
             # usable. we stop after we have found one.
+
             usable_ctx = None
+
             for ctx in self._so.session.contexts:
                 if ctx.type is bliss.saga.Context.SSH:
                     if ctx.user_key is not None:
@@ -280,54 +284,80 @@ class PBSService:
                             self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
                                                          "user_key %s doesn't exist." % ctx.user_key)
                     try:
-                        ## EXECUTE SHELL COMMAND
-                        cw = CommandWrapper(plugin=self._pi, via_ssh=True,
-                                            ssh_username=ctx.user_id, 
-                                            ssh_hostname=self._url.host, 
-                                            ssh_key=ctx.user_key)
-                        result = cw.run("true")
-                        if result.returncode == 0:
-                            usable_ctx = ctx
-                            ## EXECUTE SHELL COMMAND
-                            self._cw = cw
-                            self._pi.log_debug("Using context %s to access %s succeeded" \
-                              % (ctx, self._url))
-                            break
-                    except Exception, ex:
+                        cw = CommandWrapper.initAsSSHWrapper(logger=self._pi,
+                                                             username=ctx.user_id, 
+                                                             hostname=self._url.host, 
+                                                             userkey=ctx.user_key)
+                        cw.connect()
+                        self._cw = cw
+                        self._pi.log_debug("Using context %s to access %s succeeded" % (ctx, self._url))
+                    except CommandWrapperException, ex:
                         self._pi.log_debug("Using context %s to access %s failed: %s" \
-                          % (ctx, self._url, ex))
+                                           % (ctx, self._url, ex))
+
+            # no valid context available. let's see if we can use system defaults 
+            # to run stuff via ssh
 
             if usable_ctx is None:
-                # see if we can use system defaults to run
-                # stuff via ssh
 
-                ## EXECUTE SHELL COMMAND
-                cw = CommandWrapper(plugin=self._pi, ssh_hostname=self._url.host, via_ssh=True)
-                result = cw.run("true")
-                if result.returncode != 0:
-                    self._pi.log_warning("Using no context %s to access %s failed because: %s" \
-                      % (ctx, self._url, result.error))
-                else:
-                    ## EXECUTE SHELL COMMAND
+                try:
+                    cw = CommandWrapper.initAsSSHWrapper(logger=self._pi,
+                                                         hostname=self._url.host)
+                    cw.connect()
                     self._cw = cw
-                    self._pi.log_info("Using no context to access %s succeeded" % (self._url))
+                    self._pi.log_debug("Using no context to access %s succeeded" % (self._url))
+                except CommandWrapperException, ex:
+                    self._pi.log_debug("Using no context %s to access %s failed: %s" \
+                                       % (ctx, self._url, ex))
 
-            ## EXECUTE SHELL COMMAND
+            # at this point, either self._cw contains a usable 
+            # configuration, or the whole thing should go to shit
+            
             if self._cw is None:
-                # at this point, either self._cw contains a usable 
-                # configuration, or the whole thing should go to shit
                 self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
                   "Couldn't find a way to access %s" % (self._url))
             
-            # now let's see if we can find PBS
-            ## EXECUTE SHELL COMMAND
-            result = self._cw.run("which pbsnodes")# --version")
-            if result.returncode != 0:
+        elif self._url.scheme in ["pbs+gsissh", "torque+gsissh", "xt5torque+gsissh"]:
+
+            # iterate over all SSH contexts to see if one of them is
+            # usable. we stop after we have found one.
+
+            usable_ctx = None
+
+            # TODO: Iterate over X.509 ctx... 
+
+            # no valid context available. let's see if we can use system defaults 
+            # to run stuff via ssh
+
+            if usable_ctx is None:
+
+                try:
+                    cw = CommandWrapper.initAsGSISSHWrapper(logger=self._pi,
+                                                            hostname=self._url.host)
+                    cw.connect()
+                    self._cw = cw
+                    self._pi.log_debug("Using no context to access %s succeeded" % (self._url))
+                except CommandWrapperException, ex:
+                    self._pi.log_debug("Using no context %s to access %s failed: %s" \
+                                       % (ctx, self._url, ex))
+
+            # at this point, either self._cw contains a usable 
+            # configuration, or the whole thing should go to shit
+            
+            if self._cw is None:
                 self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                  "Couldn't find PBS command line tools on %s: %s" % (self._url, result.stderr))
-            else:
-                self._pi.log_info("Found PBS command line tools on %s at %s" \
-                  % (self._url, result.stdout.replace('/pbsnodes', '')))
+                  "Couldn't find a way to access %s" % (self._url))
+
+
+        # now let's see if we can find PBS
+            
+        result = self._cw.run("which pbsnodes")# --version")
+        if result.returncode != 0:
+             self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+              "Couldn't find PBS command line tools on %s: %s" % (self._url, result.stderr))
+        else:
+            self._pi.log_debug("Found PBS command line tools on %s at %s" \
+                               % (self._url, result.stdout.replace('/pbsnodes', '')))
                
         si = self.get_service_info()
         if si.GlueHostArchitectureSMPSize != None:
@@ -349,14 +379,14 @@ class PBSService:
         if self._service_info == None:
             # initial creation
             self._pi.log_info("Service info cache empty. Updating local service info.")
-            ## EXECUTE SHELL COMMAND
+            
             qstat_result = self._cw.run("qstat -a")
             if qstat_result.returncode != 0:
-                raise Exception("Error running 'qstat': %s" % qstat_result.stderr)
-            ## EXECUTE SHELL COMMANDu
+                raise Exception("Error running 'qstat': %s" % qstat_result.stdout)
+            
             pbsnodes_result = self._cw.run("pbsnodes")
             if pbsnodes_result.returncode != 0:
-                raise Exception("Error running 'pbsnodes': %s" % pbsnodes_result.stderr)
+                raise Exception("Error running 'pbsnodes': %s" % pbsnodes_result.stdout)
 
             self._service_info = PBSServiceInfo(qstat_result.stdout,
                                                 pbsnodes_result.stdout, self._pi)
@@ -428,7 +458,6 @@ class PBSService:
         if self._known_jobs_exists(native_id):
             if self._known_jobs_is_final(native_id):
                 return self._known_jobs[native_id]
-
 
         result = self._cw.run("qstat -f1 %s" % (native_id))
         if result.returncode != 0:
@@ -599,19 +628,18 @@ class PBSService:
         #scprpt = script.replace("'", "\'")
         #script = script.replace("\"", "\\\"")
         result = self._cw.run("echo \'%s\' | qsub" % (script))
- 
+
+        print result
+
         if result.returncode != 0:
-            if len(result.stderr) < 1:
-                error = result.stdout
-            else:
-                error = result.stderr
-            raise Exception("Error running 'qsub': %s. Script was: %s" % (error, script))
+            raise Exception("Error running 'qsub': %s. Script was: %s" % (result.stdout, script))
         else:
             #depending on the PBS configuration, the job can already 
             #have disappeared from the queue at this point. that's why
             #we create a dummy job info here
             ji = PBSJobInfo("", self._pi)
             ji._jobid = result.stdout.split("\n")[0]
+
             ji._job_state = "R"
             self._known_jobs_update(ji.jobid, ji)
 

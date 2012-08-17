@@ -416,8 +416,8 @@ class SSHConnection(object):
             # execute command & capture output
             self._ssh.sendline (commandline)
             self._ssh.prompt()
-            output = self._ssh.before
-            output = os.linesep.join([s for s in output.splitlines() if s != commandline])
+            output = self._ssh.before.splitlines()
+            output = os.linesep.join(output[len(commandline.splitlines()):])
 
             # try to get the return code
             self._ssh.sendline ('echo $?')

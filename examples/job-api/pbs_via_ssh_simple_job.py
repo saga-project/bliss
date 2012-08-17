@@ -50,10 +50,10 @@ def main():
         jd = saga.job.Description()
         # resource requirements
         jd.wall_time_limit = 5 #minutes
-        jd.total_cpu_count = 16     
+        jd.total_cpu_count = 1
         # environment, executable & arguments
-        jd.environment = {'HELLO':"hello_saga"}       
-        jd.executable  = '/bin/echo'
+        jd.environment = {'HELLO':"30"}       
+        jd.executable  = '/bin/sleep'
         jd.arguments   = ['$HELLO']
         # output options
         jd.output = "bliss_pbssh_job.stdout"
@@ -76,6 +76,7 @@ def main():
         # wait for the job to either finish or fail
         myjob.wait()
 
+        print "Job ID    : %s" % (myjob.job_id)
         print "Job State : %s" % (myjob.get_state())
         print "Exitcode  : %s" % (myjob.exitcode)
 
