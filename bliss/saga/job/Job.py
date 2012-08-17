@@ -143,13 +143,28 @@ class Job(Object, AttributeInterface):
         self.attributes_camelcasing_ (True)
 
         # register properties with the attribute interface 
-        self.attributes_register_  ('Exitcode',   None, self.Int,    self.Scalar, self.ReadOnly)
-        self.attributes_register_  ('JobID',      None, self.String, self.Scalar, self.ReadOnly)
-        self.attributes_register_  ('ServiceURL', None, self.Url,    self.Scalar, self.ReadOnly)
+        self.attributes_register_  ('State',      self.Unknown, self.Enum,   self.Scalar, self.ReadOnly)
+        self.attributes_register_  ('Exitcode',   None,         self.Int,    self.Scalar, self.ReadOnly)
+        self.attributes_register_  ('JobID',      None,         self.String, self.Scalar, self.ReadOnly)
+        self.attributes_register_  ('ServiceURL', None,         self.Url,    self.Scalar, self.ReadOnly)
 
         self.attributes_register_deprecated_  ('jobid',       'JobID')
         self.attributes_register_deprecated_  ('serviceurl', 'ServiceURL')
+
+
+        self.attributes_set_enums_  ('State',   [self.Unknown, self.New,
+                                                 self.Pending, self.Running, 
+                                                 self.Done,    self.Failed, 
+                                                 self.Canceled])
         
+        self.attributes_set_getter_ ('State',    self.get_state)
+        self.attributes_set_getter_ ('jobID',    self.get_job_id)
+        self.attributes_set_getter_ ('Exitcode', self.get_exitcode_)
+
+
+    ######################################################################
+    def get_exitcode_ (self) :
+        return self._plugin.job_get_exitcode (self)
 
     ######################################################################
     ##
@@ -230,30 +245,30 @@ class Job(Object, AttributeInterface):
     ##
     def get_state(self):
         '''Return the current state of the job.
-
+    
         B{Example}::
-
-
-
+    
+    
+    
           js = saga.job.Service("fork://localhost")
           jd = saga.job.Description ()
           jd.executable = '/bin/date'
           j  = js.create_job(jd)
-
+    
           if   j.get_state() == saga.job.Job.New : 
               print "new"
           else : 
               print "oops!"
-
+    
           j.run()
-
+    
           if   j.get_state() == saga.job.Job.Pending : 
               print "pending"
           elif j.get_state() == saga.job.Job.Running : 
               print "running"
           else :
               print "oops!"
-
+    
         '''
         if self._plugin is not None:
             return self._plugin.job_get_state(self)
