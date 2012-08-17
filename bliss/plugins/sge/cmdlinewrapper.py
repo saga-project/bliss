@@ -12,7 +12,7 @@ import string
 import subprocess
 import bliss.saga
 
-from bliss.utils.command_wrapper import CommandWrapper
+from bliss.utils.command_wrapper import CommandWrapper, CommandWrapperException
 
 ################################################################################
 ################################################################################
@@ -232,56 +232,105 @@ class SGEService:
         '''sets self._cw to a usable access configuration or throws'''
         
         # see if we run stuff on the local machine 
-        if self._url.scheme == "sge":
+        if self._url.scheme in ["sge"]:
             self._use_ssh = False
-            cw = CommandWrapper(plugin=self._pi, via_ssh=False)
-            result = cw.run("which qstat")#, ["--version"]) ### CHANGE to sge tool name
+
+
+            ## EXECUTE SHELL COMMAND
+            cw = CommandWrapper.initAsLocalWrapper(plugin=self._pi)
+            cw.connect()
+
+            result = cw.run("which pbsnodes")#, ["--version"])
             if result.returncode != 0:
                 self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                "Couldn't find SGE tools on %s" % (self._url))
+                "Couldn't find PBS tools on %s" % (self._url))
             else:
+                ## EXECUTE SHELL COMMAND
                 self._cw = cw
 
-        elif self._url.scheme == "sge+ssh":
+        elif self._url.scheme in ["sge+ssh"]:
+
             # iterate over all SSH contexts to see if one of them is
             # usable. we stop after we have found one.
+
             usable_ctx = None
+
             for ctx in self._so.session.contexts:
                 if ctx.context_type is bliss.saga.Context.SSH:
+                    if ctx.user_key is not None:
+                        import os.path
+                        if not os.path.isfile(ctx.user_key):
+                            self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+                                                         "user_key %s doesn't exist." % ctx.user_key)
                     try:
-                        cw = CommandWrapper(plugin=self._pi, via_ssh=True,
-                                            ssh_username=ctx.user_id, 
-                                            ssh_hostname=self._url.host, 
-                                            ssh_key=ctx.user_key)
-                        result = cw.run("true")
-                        if result.returncode == 0:
-                            usable_ctx = ctx
-                            self._cw = cw
-                            self._pi.log_debug("Using context %s to access %s succeeded" \
-                              % (ctx, self._url))
-                            break
-                    except Exception, ex:
-                        self._pi.log_debug("Using context %s to access %s failed." \
-                          % (ctx, self._url))
+                        cw = CommandWrapper.initAsSSHWrapper(logger=self._pi,
+                                                             username=ctx.user_id, 
+                                                             hostname=self._url.host, 
+                                                             userkey=ctx.user_key)
+                        cw.connect()
+                        self._cw = cw
+                        self._pi.log_debug("Using context %s to access %s succeeded" % (ctx, self._url))
+                    except CommandWrapperException, ex:
+                        self._pi.log_debug("Using context %s to access %s failed: %s" \
+                                           % (ctx, self._url, ex))
+
+            # no valid context available. let's see if we can use system defaults 
+            # to run stuff via ssh
 
             if usable_ctx is None:
-                # see if we can use system defaults to run
-                # stuff via ssh
-                cw = CommandWrapper(plugin=self._pi, ssh_hostname=self._url.host, via_ssh=True)
-                result = cw.run("true")
-                if result.returncode != 0:
-                    self._pi.log_warning("Using no context %s to access %s failed because: %s" \
-                      % (ctx, self._url, result.error))
-                else:
-                    self._cw = cw
-                    self._pi.log_info("Using no context to access %s succeeded" % (self._url))
 
-            if self._cw is None:
-                # at this point, either self._cw contains a usable 
-                # configuration, or the whole thing should go to shit
-                self._pi.log_error_and_raise("11", "Couldn't find a way to access %s" % (self._url))
+                try:
+                    cw = CommandWrapper.initAsSSHWrapper(logger=self._pi,
+                                                         hostname=self._url.host)
+                    cw.connect()
+                    self._cw = cw
+                    self._pi.log_debug("Using no context to access %s succeeded" % (self._url))
+                except CommandWrapperException, ex:
+                    self._pi.log_debug("Using no context %s to access %s failed: %s" \
+                                       % (ctx, self._url, ex))
+
+            # at this point, either self._cw contains a usable 
+            # configuration, or the whole thing should go to shit
             
-            # now let's see if we can find PBS
+            if self._cw is None:
+                self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+                  "Couldn't find a way to access %s" % (self._url))
+            
+        elif self._url.scheme in ["sge+gsissh"]:
+
+            # iterate over all SSH contexts to see if one of them is
+            # usable. we stop after we have found one.
+
+            usable_ctx = None
+
+            # TODO: Iterate over X.509 ctx... 
+
+            # no valid context available. let's see if we can use system defaults 
+            # to run stuff via ssh
+
+            if usable_ctx is None:
+
+                try:
+                    cw = CommandWrapper.initAsGSISSHWrapper(logger=self._pi,
+                                                            hostname=self._url.host)
+                    cw.connect()
+                    self._cw = cw
+                    self._pi.log_debug("Using no context to access %s succeeded" % (self._url))
+                except CommandWrapperException, ex:
+                    self._pi.log_debug("Using no context %s to access %s failed: %s" \
+                                       % (ctx, self._url, ex))
+
+            # at this point, either self._cw contains a usable 
+            # configuration, or the whole thing should go to shit
+            
+            if self._cw is None:
+                self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
+                  "Couldn't find a way to access %s" % (self._url))
+           
+
+
+ 
+            # now let's see if we can find SGE
             result = self._cw.run("which qstat")# --version") ### CHANGE to SGE tools
             if result.returncode != 0:
                 self._pi.log_error_and_raise("11", "Couldn't find SGE command line tools on %s: %s" \

@@ -29,22 +29,22 @@ def main():
         # plugin will pick up the default set of ssh 
         # credentials of the user, i.e., ~/.ssh/id_rsa
         #
-        #ctx = saga.Context()
-        #ctx.context_type = saga.Context.SSH
-        #ctx.user_id  = 'oweidner' # like 'ssh username@host ...'
+        ctx = saga.Context()
+        ctx.context_type = saga.Context.SSH
+        ctx.user_id  = 'oweidner1' # like 'ssh username@host ...'
         #ctx.user_key = '/Users/oweidner/.ssh/rsa_work' # like ssh -i ...'
    
         # Optional:  
         # Append the custom security context to the session
-        #session = saga.Session()
-        #session.contexts.append(ctx)
+        session = saga.Session()
+        session.contexts.append(ctx)
 
         # create a job service for Futuregrid's 'india' PBS cluster
         # and attach the SSH security context to it
-        js = saga.job.Service("pbs+ssh://india.futuregrid.org")
+        #js = saga.job.Service("pbs+ssh://india.futuregrid.org")
         # Alternatively: 
         # Use custom session 
-        #js = saga.job.Service("pbs+ssh://india.futuregrid.org", session=session)
+        js = saga.job.Service("pbs+ssh://india.futuregrid.org", session=session)
 
         # describe our job
         jd = saga.job.Description()
@@ -52,8 +52,8 @@ def main():
         jd.wall_time_limit = 5 #minutes
         jd.total_cpu_count = 1
         # environment, executable & arguments
-        jd.environment = {'HELLO':"30"}       
-        jd.executable  = '/bin/sleep'
+        jd.environment = {'HELLO':"\"Hello SAGA\""}       
+        jd.executable  = '/bin/echo'
         jd.arguments   = ['$HELLO']
         # output options
         jd.output = "bliss_pbssh_job.stdout"
@@ -62,22 +62,21 @@ def main():
         # create the job (state: New)
         myjob = js.create_job(jd)
 
-        print "Job ID    : %s" % (myjob.get_job_id())
-        print "Job State : %s" % (myjob.get_state())
+        print "Job ID    : %s" % (myjob.job_id)
+        print "Job State : %s" % (myjob.state)
 
         print "\n...starting job...\n"
         # run the job (submit the job to PBS)
         myjob.run()
 
-        print "Job ID    : %s" % (myjob.get_job_id())
-        print "Job State : %s" % (myjob.get_state())
+        print "Job ID    : %s" % (myjob.job_id)
+        print "Job State : %s" % (myjob.state)
 
         print "\n...waiting for job...\n"
         # wait for the job to either finish or fail
         myjob.wait()
 
-        print "Job ID    : %s" % (myjob.get_job_id())
-        print "Job State : %s" % (myjob.get_state())
+        print "Job State : %s" % (myjob.state)
         print "Exitcode  : %s" % (myjob.exitcode)
 
     except saga.Exception, ex:
