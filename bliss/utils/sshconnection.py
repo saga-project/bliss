@@ -140,6 +140,9 @@ class _pxssh (spawn):
         # connecting to a heavily loaded machine I have.
         # If latency is worse than these values then this will fail.
 
+        # TODO: This is a hack. 
+        time.sleep(3)
+
         try:
             self.read_nonblocking(size=10000,timeout=1) # GAS: Clear out the cache before getting the prompt
         except TIMEOUT:
