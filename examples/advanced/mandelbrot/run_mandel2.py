@@ -53,8 +53,8 @@ if __name__ == "__main__":
 
     try:
         ctx = saga.Context()
-        ctx.type = saga.Context.SSH
-        ctx.userid  = 'oweidner' # like 'ssh username@host ...'
+        ctx.context_type = saga.Context.SSH
+        ctx.user_id  = 'oweidner' # like 'ssh username@host ...'
  
         # the saga job services connects to and provides a handle
         # to a remote machine. In this case. it's a PBS cluster:    

@@ -247,7 +247,7 @@ class SGEService:
             # usable. we stop after we have found one.
             usable_ctx = None
             for ctx in self._so.session.contexts:
-                if ctx.type is bliss.saga.Context.SSH:
+                if ctx.context_type is bliss.saga.Context.SSH:
                     try:
                         cw = CommandWrapper(plugin=self._pi, via_ssh=True,
                                             ssh_username=ctx.user_id, 

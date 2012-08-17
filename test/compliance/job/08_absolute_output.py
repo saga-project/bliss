@@ -15,8 +15,8 @@ def run(url, outprefix, username, queue, project):
     """
     try:
         ctx = saga.Context()
-        ctx.type = saga.Context.SSH
-        ctx.userid  = username # like 'ssh username@host ...'
+        ctx.context_type = saga.Context.SSH
+        ctx.user_id  = username # like 'ssh username@host ...'
 
         js = saga.job.Service(url)
         js.session.contexts.append(ctx)

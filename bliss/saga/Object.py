@@ -45,7 +45,7 @@ class Object(object) :
         remote.copy('output', 'file://localhost/tmp/output')
     '''
 
-    class Type :
+    class ObjectType :
         BaseAPI              = "saga.base"
         '''Look & Feel API namespace'''
         Url                  = "saga.Url"
@@ -112,7 +112,7 @@ class Object(object) :
             self.__shared_state["runtime_initialized"] = True
 
         self._plugin = None
-        self._type = objtype
+        self._object_type = objtype
         self.Exceptiontype = apitype
         self._logger = logging.getLogger('bliss.'+self.__class__.__name__)
  
@@ -159,13 +159,13 @@ class Object(object) :
     session = property(**session())
 
     ######################################################################
-    ## Property: type
-    def type():
+    ## Property: object_type
+    def object_type():
         doc = "The object's type identifier."
         def fget(self):
-            return self._type
+            return self._object_type
         return locals()
-    type = property(**type())
+    object_type = property(**object_type())
 
 
 
@@ -187,9 +187,9 @@ class Object(object) :
 
     ######################################################################
     ##
-    def _get_type(self):
+    def _get_object_type(self):
         '''return the object type.
-           It is encouraged to use the L{type} property instead.
+           It is encouraged to use the L{object_type} property instead.
         '''
-        return self.type
+        return self.object_type
 

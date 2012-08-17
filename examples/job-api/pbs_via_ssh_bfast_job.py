@@ -36,7 +36,7 @@ def main():
         # credentials of the user, i.e., ~/.ssh/id_rsa
         #
         #ctx = saga.Context()
-        #ctx.type = saga.Context.SSH
+        #ctx.context_type = saga.Context.SSH
         #ctx.user_id  = 'oweidner' # like 'ssh username@host ...'
         #ctx.user_key = '/Users/oweidner/.ssh/rsa_work' # like ssh -i ...'
    

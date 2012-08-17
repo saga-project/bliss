@@ -122,8 +122,8 @@ class Description(Object, AttributeInterface):
     ## 
     def __init__(self):
         '''Create a new, empty job description.'''
-        Object.__init__(self, Object.Type.JobDescription, 
-                        apitype=Object.Type.JobAPI,)
+        Object.__init__(self, Object.ObjectType.JobDescription, 
+                        apitype=Object.ObjectType.JobAPI,)
 
         # set attribute interface properties
         self.attributes_extensible_  (False)

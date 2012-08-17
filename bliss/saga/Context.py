@@ -75,7 +75,8 @@ class Context(Object, AttributeInterface):
     def __init__(self):
         '''Constructor'''
 
-        Object.__init__(self, objtype=Object.Type.Context, apitype=Object.Type.BaseAPI)
+        Object.__init__(self, objtype=Object.ObjectType.Context,
+                        apitype=Object.ObjectType.BaseAPI)
 
         self.__logger = logging.getLogger('bliss.'+self.__class__.__name__)
 

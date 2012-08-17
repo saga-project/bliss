@@ -277,7 +277,7 @@ class PBSService:
             usable_ctx = None
 
             for ctx in self._so.session.contexts:
-                if ctx.type is bliss.saga.Context.SSH:
+                if ctx.context_type is bliss.saga.Context.SSH:
                     if ctx.user_key is not None:
                         import os.path
                         if not os.path.isfile(ctx.user_key):

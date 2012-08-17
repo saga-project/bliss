@@ -32,8 +32,8 @@ class Storage(Object):
     def __init__(self):
         '''PRIVATE: Create a new storage resource.
         '''
-        Object.__init__(self, Object.Type.ResourceStorage, 
-                        apitype=Object.Type.ResourceAPI)
+        Object.__init__(self, Object.ObjectType.ResourceStorage, 
+                        apitype=Object.ObjectType.ResourceAPI)
 
 
     ######################################################################
