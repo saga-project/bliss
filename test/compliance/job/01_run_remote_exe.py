@@ -15,8 +15,8 @@ def run(url, username, queue, project):
     """
     try:
         ctx = saga.Context()
-        ctx.type = saga.Context.SSH
-        ctx.userid  = username # like 'ssh username@host ...'
+        ctx.context_type = saga.Context.SSH
+        ctx.user_id  = username # like 'ssh username@host ...'
 
         js = saga.job.Service(url)
         js.session.contexts.append(ctx)
@@ -41,25 +41,25 @@ def run(url, username, queue, project):
         myjob = js.create_job(jd)
 
         print "Job ID    : %s" % (myjob.job_id)
-        print "Job State : %s" % (myjob.get_state())
+        print "Job State : %s" % (myjob.state)
 
         print "\n...starting job...\n"
         # run the job (submit the job to PBS)
         myjob.run()
 
         print "Job ID    : %s" % (myjob.job_id)
-        print "Job State : %s" % (myjob.get_state())
+        print "Job State : %s" % (myjob.state)
 
         print "\n...waiting for job...\n"
         # wait for the job to either finish or fail
         myjob.wait()
 
-        print "Job State : %s" % (myjob.get_state())
+        print "Job State : %s" % (myjob.state)
         print "Exitcode  : %s" % (myjob.exitcode)
 
         failed = False
         why = ""
-        if myjob.get_state() != saga.job.Job.Done:
+        if myjob.state != saga.job.Job.Done:
             failed = True
             why = "Job returned in state 'Failed'."
 

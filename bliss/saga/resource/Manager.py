@@ -47,8 +47,8 @@ class Manager(Object):
            @param url: Url of the (remote) resource manager.
            @type  url: L{Url} 
         '''
-        Object.__init__(self, Object.Type.ResourceManager, 
-                        apitype=Object.Type.ResourceAPI, session=session)
+        Object.__init__(self, Object.ObjectType.ResourceManager, 
+                        apitype=Object.ObjectType.ResourceAPI, session=session)
 
         if type(url) == str:
             self._url = Url(str(url))

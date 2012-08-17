@@ -58,7 +58,8 @@ class Url(Object):
     ##
     def __init__(self, url=''):
         '''Create a new Url object.'''
-        Object.__init__(self, objtype=Object.Type.Url, apitype=Object.Type.BaseAPI)
+        Object.__init__(self, objtype=Object.ObjectType.Url,
+                        apitype=Object.ObjectType.BaseAPI)
 
 
         if type(url) == str:

@@ -100,7 +100,7 @@ class SSHJobProcess(object):
 
         #grab an SSH context if one exists
         for ctx in self.so.session.contexts:
-            if ctx.type is bliss.saga.Context.SSH:
+            if ctx.context_type is bliss.saga.Context.SSH:
                 usable_ctx = ctx
                 self.pi.log_debug("Found SSH context to use!")
                 break

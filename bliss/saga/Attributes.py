@@ -10,6 +10,8 @@ from bliss.saga.Error     import Error     as MyError
 
 ################################################################################
 
+import datetime
+import traceback
 import inspect
 import re
 
@@ -291,13 +293,6 @@ class AttributeInterface (AttributesBase_) :
     Scalar      = 'scalar'     # the attribute value is a single data element
     Vector      = 'vector'     # the attribute value is a list of data elements
 
-    # poll types
-    Set         = 'set'        # poll to be triggered on attribute setters
-    Get         = 'get'        # poll to be triggered on attribute getters
-    List        = 'list'       # poll to be triggered on attribute listings
-  # Any         = 'any'        # poll to be triggered on any activity
-
-
     # two regexes for converting CamelCase into under_score_casing, as static
     # class vars to avoid frequent recompilation
     camel_case_regex_1_ = re.compile('(.)([A-Z][a-z]+)')
@@ -361,8 +356,8 @@ class AttributeInterface (AttributesBase_) :
             d['attributes_']  = {}
             d['extensible_']  = True
             d['camelcasing_'] = False
-            d['polls.list']   = []
-            d['in_polls']     = False
+            d['lister']       = None
+            d['recursion']    = False
 
             AttributesBase_.__setattr__ (self, 'd_', d)
 
@@ -426,100 +421,160 @@ class AttributeInterface (AttributesBase_) :
         # make sure interface is ready to use
         d = self.attributes_t_init_ (key)
 
-        # avoid recursion (polls and callbacks)
-        if d['attributes_'][key]['in_callbacks'] or \
-           d['attributes_'][key]['in_polls']     :
+        # avoid recursion
+        if d['attributes_'][key]['recursion'] :
             return
-
-        # raise recursion shield
-        d['attributes_'][key]['in_callbacks'] = True
 
         callbacks = d['attributes_'][key]['callbacks']
 
-        # iterate over a copy of poll list, so that remove does not screw up the
-        # iteration
+        # iterate over a copy of the callback list, so that remove does not
+        # screw up the iteration
         for cb in list (callbacks) :
 
-            ret = False
+            call = cb
+
+            # support both plain callables, but also Callback derivates
             if inspect.isclass (cb) and \
                issubclass (cb, Callback) :
-                ret = cb.cb (key, self.__get_attr__ (key), self)
-            else :
-                ret = cb (key, self.__getattr__ (key), self)
+                # for those too lazy to parse this beautiful line below:
+                # if the registered cb is an instance of our Callback class, we
+                # call that class' cb method.  So, the callable (cb) is the
+                # member 'cb' of the registered class (cb)
+                call = cb.cb
 
-            # remove callbacks which return 'False'
+            # got the callable - call it!
+            # raise and lower recursion shield as needed
+            ret = False
+            try :
+                d['attributes_'][key]['recursion'] = True
+                ret = call (key, self.__get_attr__ (key), self)
+            finally :
+                d['attributes_'][key]['recursion'] = False
+
+            # remove callbacks which return 'False', or raised and exception
             if not ret :
                 callbacks.remove (cb)
 
-        # lower recursion shield
-        d['attributes_'][key]['in_callbacks'] = False
+
 
     ####################################
-    def attributes_t_call_polls_ (self, polltype, key) :
+    def attributes_t_call_setter_ (self, key) :
         """
         This internal function is not to be used by the consumer of this API.
 
-        It triggers the invocation of all poll hooks for a given attribute.
-        Polls returning False (or nothing at all) will be unregistered after
-        their invocation.
+        It triggers the invocation of any registered setter function, usually
+        after an attribute's set()
         """
 
-        # make sure interface is ready to use.  The below works ok if key is
-        # None (for list polls)
+        # make sure interface is ready to use.
         d = self.attributes_t_init_ (key)
 
-        polldict     = {}
-        in_callbacks = False
-        in_polls     = False
-
-        if  polltype == self.List :
-            polldict     = d
-            in_polls     = d['in_polls']
-        else :
-            polldict     = d['attributes_'][key]
-            in_callbacks = d['attributes_'][key]['in_callbacks']
-            in_polls     = d['attributes_'][key]['in_polls'    ]
-
-        # avoid recursion (polls and callbacks)
-        if in_callbacks or in_polls :
-               return
-
-        polls = []
-
-        if   polltype == self.List :
-             polls    =  polldict['polls.list']
-        elif polltype == self.Set :
-             polls    =  polldict['polls_set']
-        elif polltype == self.Get :
-             polls    =  polldict['polls_get']
-        else :
-             raise MyException ("poll type invalid : %s"  %  (polltype),
-                                MyError.BadParameter)
-
-        if not polls :
+        # avoid recursion
+        if d['attributes_'][key]['recursion'] :
             return
 
-        # raise recursion shield
-        polldict['in_polls'] = True
+        setter = d['attributes_'][key]['setter']
 
-        # iterate over a copy of poll list, so that remove does not screw up the
-        # iteration
-        for poll in list (polls) :
+        if setter :
 
-            ret = False
+            # Get the value via the attribute getter.  The getter will not call
+            # attrib getters or callbacks, due to the recursion guard.
+            # Set the value via the native setter (to the backend), 
+            #
+            # always raise and lower the recursion shield
+            try :
+                d['attributes_'][key]['recursion'] = True
+                setter (self.attributes_i_get_ (key))
+            finally :
+                d['attributes_'][key]['recursion'] = False
 
-            if inspect.isclass (poll) and \
-               issubclass (poll, Callback) :
-                ret = poll.cb (key, self.__get_attr__ (key), self)
-            else :
-                ret = poll (key, self.__getattr__ (key), self)
 
-            # remove polls which return 'False'
-            if not ret :
-                polls.remove (poll)
 
-        # lower recursion shield
-        polldict['in_polls'] = False
+    ####################################
+    def attributes_t_call_getter_ (self, key) :
+        """
+        This internal function is not to be used by the consumer of this API.
+
+        It triggers the invocation of any registered getter function, usually
+        before an attribute's get()
+        """
+
+        # make sure interface is ready to use.
+        d = self.attributes_t_init_ (key)
+
+        # avoid recursion
+        if d['attributes_'][key]['recursion'] :
+            return
+
+        getter = d['attributes_'][key]['getter']
+
+        if not getter :
+            return
+
+        # # Note that attributes have a time-to-live (ttl).  If a attributes_i_set_
+        # # operation is attempted within 'time-of-last-update + ttl', the operation
+        # # is not triggering backend setter hooks, to avoid trashing (hooks are
+        # # expected to be costly).  The force flag set to True will request to call 
+        # # registered getter hooks even if ttl is not yet expired.
+        # 
+        # # NOTE: in Bliss, ttl does not make much sense, as this will only lead to
+        # # valid attribute values if attribute changes are pushed from adaptor to
+        # # API -- Bliss does not do that.
+        # 
+        # # For example, job.wait() will update the plugin level state to 'Done',
+        # # but the cached job.state attribute will remain 'New' as the plugin does
+        # # not push the state change upward
+        #
+        # age = self.attributes_t_get_age_ (key)
+        # ttl = d['attributes_'][key]['ttl']
+        #
+        # if age < ttl :
+        #     return
+
+
+        # get the value from the native getter (from the backend), and
+        # set it via the attribute setter.  The setter will not call
+        # attrib setters or callbacks, due to the recursion guard.
+        #
+        # always raise and lower the recursion shield
+        try :
+            d['attributes_'][key]['recursion'] = True
+            self.attributes_i_set_ (key, val=getter (), force=True)
+            d['attributes_'][key]['last'] = datetime.datetime.now ()
+        finally :
+            d['attributes_'][key]['recursion'] = False
+
+
+    ####################################
+    def attributes_t_call_lister_ (self) :
+        """
+        This internal function is not to be used by the consumer of this API.
+
+        It triggers the invocation of any registered lister function, usually
+        before a list() call.
+        """
+
+        # make sure interface is ready to use.
+        d = self.attributes_t_init_ ()
+
+        # avoid recursion
+        if d['recursion'] :
+            return
+
+        lister = d['lister']
+
+        if lister :
+
+            # the lister is simply called, and it is expected that it internally
+            # adds/removes attributes as needed.
+            #
+            # always raise and lower the recursion shield
+            try :
+                d['attributes_'][key]['recursion'] = True
+                lister ()
+            finally :
+                d['attributes_'][key]['recursion'] = False
+
 
 
     ####################################
@@ -741,6 +796,21 @@ class AttributeInterface (AttributesBase_) :
             last  = re.find ('}', first + 1)
 
 
+    ####################################
+    def attributes_t_get_age_ (self, key) :
+        """ get the age of the attribute, i.e. seconds.microseconds since last set """
+
+        # make sure interface is ready to use.
+        d = self.attributes_t_init_ (key)
+
+        now  = datetime.datetime.now ()
+        last = d['attributes_'][key]['last']
+
+        age  = now - last
+
+        return (age.microseconds + (age.seconds + age.days * 24 * 3600) * 1e6) / 1e6
+
+
     ###########################################################################
     #
     # internal interface
@@ -753,7 +823,7 @@ class AttributeInterface (AttributesBase_) :
     # Naming: attributes_i_*_
     #
     ####################################
-    def attributes_i_set_ (self, key, val=None) :
+    def attributes_i_set_ (self, key, val=None, force=False) :
         """
         This internal method should not be explicitly called by consumers of
         this API, but is indirectly used via the different public interfaces.
@@ -762,6 +832,11 @@ class AttributeInterface (AttributesBase_) :
 
         New value checks can be added dynamically, and per attribute, by calling
         L{attributes_check_add_} (key, callable).
+
+        Some internal methods can set the 'force' flag, and will be able to set
+        attributes even in ReadOnly mode.  That is, for example, used for getter
+        hooks.  Note that the Final flag will be honored even if Force is set,
+        and will result in the set request being ignored.
         """
 
         # make sure interface is ready to use
@@ -789,8 +864,9 @@ class AttributeInterface (AttributesBase_) :
                 if self.Final == mode :
                     return
                 elif self.ReadOnly == mode :
-                    raise MyException ("attribute %s is not writable" %  key, 
-                                       MyError.BadParameter)
+                    if not force :
+                        raise MyException ("attribute %s is not writable" %  key, 
+                                           MyError.BadParameter)
 
 
         # permissions are confirmed, set the attribute with conversion etc.
@@ -807,11 +883,11 @@ class AttributeInterface (AttributesBase_) :
         d['attributes_'][key]['exists'] = True
 
         # only actually change the attribute when the new value differs --
-        # and only then invoke any poll hooks and callbacks.
+        # and only then invoke any callbacks and hooked setters
         if val != d['attributes_'][key]['value'] :
             d['attributes_'][key]['value'] = val
-            self.attributes_t_call_polls_ (self.Set, key)
-            self.attributes_t_call_cb_    (key)
+            self.attributes_t_call_setter_ (key)
+            self.attributes_t_call_cb_     (key)
 
 
     ####################################
@@ -833,8 +909,7 @@ class AttributeInterface (AttributesBase_) :
         # make sure interface is ready to use
         d = self.attributes_t_init_ (key)
 
-        # call getter poll hooks
-        self.attributes_t_call_polls_ (self.Get, key)
+        self.attributes_t_call_getter_ (key)
 
         if 'value' in d['attributes_'][key] :
             return d['attributes_'][key]['value']
@@ -861,15 +936,16 @@ class AttributeInterface (AttributesBase_) :
         # make sure interface is ready to use
         d = self.attributes_t_init_ ()
 
-        # call list poll hooks
-        self.attributes_t_call_polls_ (self.List, None)
+        # call list hooks
+        self.attributes_t_call_lister_ ()
 
         ret = []
 
         for key in sorted(d['attributes_'].iterkeys()) :
-            if d['attributes_'][key]['exists'] :
-                if ext or not d['attributes_'][key]['extended'] :
-                    ret.append (key)
+            if d['attributes_'][key]['mode'] != self.Alias :
+                if d['attributes_'][key]['exists'] :
+                    if ext or not d['attributes_'][key]['extended'] :
+                        ret.append (key)
 
         return ret
 
@@ -915,7 +991,7 @@ class AttributeInterface (AttributesBase_) :
         if len (p_key) : pc_key = re.compile (p_key)
         if len (p_val) : pc_val = re.compile (p_val)
 
-        # now dig out matching keys. List polls are triggered in
+        # now dig out matching keys. List hooks are triggered in
         # attributes_i_list_().
         matches = []
         for key in self.attributes_i_list_ () :
@@ -1140,6 +1216,8 @@ class AttributeInterface (AttributesBase_) :
         if us_key in  d['attributes_'] :
             self.attributes_unregister_ (us_key)
 
+        never = datetime.datetime.min
+
         # register the attribute and properties
         d['attributes_'][us_key]                 = {}
         d['attributes_'][us_key]['value']        = default # initial value
@@ -1154,10 +1232,11 @@ class AttributeInterface (AttributesBase_) :
         d['attributes_'][us_key]['enums']        = []      # list of valid enum values
         d['attributes_'][us_key]['checks']       = []      # list of custom value checks
         d['attributes_'][us_key]['callbacks']    = []      # list of callbacks
-        d['attributes_'][us_key]['in_callbacks'] = False   # recursion check for callbacks
-        d['attributes_'][us_key]['polls_set']    = []      # list of custom attribute polls
-        d['attributes_'][us_key]['polls_get']    = []      # list of custom attribute polls
-        d['attributes_'][us_key]['in_polls']     = False   # recursion check for polls
+        d['attributes_'][us_key]['recursion']    = False   # recursion check for callbacks
+        d['attributes_'][us_key]['setter']       = None    # custom attribute setter
+        d['attributes_'][us_key]['getter']       = None    # custom attribute getter
+        d['attributes_'][us_key]['last']         = never   # time of last refresh (never)
+        d['attributes_'][us_key]['ttl']          = 0.0     # refresh delay (none)
 
         # for enum types, we add a value checker
         if typ == self.Enum :
@@ -1300,7 +1379,7 @@ class AttributeInterface (AttributesBase_) :
 
 
     ####################################
-    def attributes_set_enum_ (self, key, enums=None) :
+    def attributes_set_enums_ (self, key, enums=None) :
         """
         This interface method is not part of the public consumer API, but can
         safely be called from within derived classes.
@@ -1310,7 +1389,7 @@ class AttributeInterface (AttributesBase_) :
         """
 
         us_key = self.attributes_t_underscore_ (key)
-        d = self.attributes_t_init_ (us_key)
+        d      = self.attributes_t_init_       (us_key)
 
         d['attributes_'][us_key]['enums'] = enums
 
@@ -1373,13 +1452,8 @@ class AttributeInterface (AttributesBase_) :
         other_d['attributes_']  = d['attributes_'] 
         other_d['extensible_']  = d['extensible_'] 
         other_d['camelcasing_'] = d['camelcasing_']
-        other_d['in_polls']     = d['in_polls']    
-
-        if d['polls.list'] :
-            other_d['polls.list'] = list(d['polls.list'])
-        else :
-            other_d['polls.list'] = None
-
+        other_d['recursion']    = d['recursion']    
+        other_d['lister']       = d['lister']    
 
         other_d['attributes_'] = {}
 
@@ -1393,13 +1467,14 @@ class AttributeInterface (AttributesBase_) :
             other_d['attributes_'][key]['extended']     =       d['attributes_'][key]['extended']  
             other_d['attributes_'][key]['camelcase']    =       d['attributes_'][key]['camelcase'] 
             other_d['attributes_'][key]['underscore']   =       d['attributes_'][key]['underscore']
-            other_d['attributes_'][key]['enums']        = list (d['attributes_'][key]['enums']    )
-            other_d['attributes_'][key]['checks']       = list (d['attributes_'][key]['checks']   )
+            other_d['attributes_'][key]['enums']        = list (d['attributes_'][key]['enums'])
+            other_d['attributes_'][key]['checks']       = list (d['attributes_'][key]['checks'])
             other_d['attributes_'][key]['callbacks']    = list (d['attributes_'][key]['callbacks'])
-            other_d['attributes_'][key]['in_callbacks'] =       d['attributes_'][key]['in_callbacks']
-            other_d['attributes_'][key]['polls_set']    = list (d['attributes_'][key]['polls_set'])
-            other_d['attributes_'][key]['polls_get']    = list (d['attributes_'][key]['polls_get'])
-            other_d['attributes_'][key]['in_polls']     =       d['attributes_'][key]['in_polls']
+            other_d['attributes_'][key]['recursion']    =       d['attributes_'][key]['recursion']
+            other_d['attributes_'][key]['setter']       =       d['attributes_'][key]['setter']
+            other_d['attributes_'][key]['getter']       =       d['attributes_'][key]['getter']
+            other_d['attributes_'][key]['last']         =       d['attributes_'][key]['last']
+            other_d['attributes_'][key]['ttl']          =       d['attributes_'][key]['ttl']
 
             if d['attributes_'][key]['flavor'] == self.Vector and \
                d['attributes_'][key]['value' ] != None            :
@@ -1441,7 +1516,8 @@ class AttributeInterface (AttributesBase_) :
         print "'Registered' attributes"
         for key in keys_all :
             if key not in keys_exist :
-                if not  d['attributes_'][key]['extended'] :
+                if not  d['attributes_'][key]['mode'] == self.Alias and \
+                   not  d['attributes_'][key]['extended'] :
                     print " %-30s [%-6s, %-6s, %-8s]: %s"  % \
                              (d['attributes_'][key]['camelcase'],
                               d['attributes_'][key]['type'],
@@ -1454,26 +1530,40 @@ class AttributeInterface (AttributesBase_) :
 
         print "'Existing' attributes"
         for key in keys_exist :
-            print " %-30s [%-6s, %-6s, %-8s]: %s"  % \
-                     (d['attributes_'][key]['camelcase'],
-                      d['attributes_'][key]['type'],
-                      d['attributes_'][key]['flavor'],
-                      d['attributes_'][key]['mode'],
-                      d['attributes_'][key]['value']
-                      )
+            if not  d['attributes_'][key]['mode'] == self.Alias :
+                print " %-30s [%-6s, %-6s, %-8s]: %s"  % \
+                         (d['attributes_'][key]['camelcase'],
+                          d['attributes_'][key]['type'],
+                          d['attributes_'][key]['flavor'],
+                          d['attributes_'][key]['mode'],
+                          d['attributes_'][key]['value']
+                          )
 
         print "---------------------------------------"
 
         print "'Extended' attributes"
         for key in keys_all :
             if key not in keys_exist :
-                if d['attributes_'][key]['extended'] :
+                if not  d['attributes_'][key]['mode'] == self.Alias and \
+                        d['attributes_'][key]['extended'] :
                     print " %-30s [%-6s, %-6s, %-8s]: %s"  % \
                              (d['attributes_'][key]['camelcase'],
                               d['attributes_'][key]['type'],
                               d['attributes_'][key]['flavor'],
                               d['attributes_'][key]['mode'],
                               d['attributes_'][key]['value']
+                              )
+
+        print "---------------------------------------"
+
+        print "'Deprecated' attributes (aliases)"
+        for key in keys_all :
+            if key not in keys_exist :
+                if d['attributes_'][key]['mode'] == self.Alias :
+                    print " %-30s [%24s]:  %s"  % \
+                             (d['attributes_'][key]['camelcase'],
+                              ' ',
+                              d['attributes_'][key]['alias']
                               )
 
         print "---------------------------------------"
@@ -1496,7 +1586,7 @@ class AttributeInterface (AttributesBase_) :
 
         # make sure interface is ready to use
         us_key = self.attributes_t_underscore_ (key)
-        d = self.attributes_t_init_ (us_key)
+        d      = self.attributes_t_init_       (us_key)
 
         newval = val
         oldval = d['attributes_'][us_key]['value']
@@ -1513,6 +1603,18 @@ class AttributeInterface (AttributesBase_) :
         # of that here.
         if  None == newval or oldval == newval :
             self.attributes_t_call_cb_ (key)
+
+
+    ####################################
+    def attributes_set_ttl_ (self, key, ttl=0.0) :
+        """ set attributes TTL in seconds (float) -- see L{attributes_i_set_} """
+
+        # make sure interface is ready to use.
+        us_key = self.attributes_t_underscore_ (key)
+        d      = self.attributes_t_init_       (us_key)
+
+        d['attributes_'][us_key]['ttl'] = ttl
+
 
 
     ####################################
@@ -1541,7 +1643,7 @@ class AttributeInterface (AttributesBase_) :
 
 
     ####################################
-    def attributes_poll_add_ (self, key, poll, polltype) :
+    def attributes_set_getter_ (self, key, getter) :
         """
         This interface method is not part of the public consumer API, but can
         safely be called from within derived classes.
@@ -1549,47 +1651,36 @@ class AttributeInterface (AttributesBase_) :
         The Attribute API makes no assumptions on how attribute values are kept
         up-to-date.  In general, it expects an asynchronous thread to set
         attribute values as needed.  To keep the complexity low for backend
-        developers, it also supports the registration of 'poll' hooks.  Those
-        are very similar to callbacks, but kind of inversed:  where frontend
-        callbacks are invoked on backend attribute changes, backend poll hooks
-        are invoked on frontend attribute queries.
+        developers, it also supports the registration of 'setter' and 'getter'
+        hooks.  Those are very similar to callbacks, but kind of inversed: where
+        frontend callbacks are invoked on backend attribute changes, backend
+        hooks are invoked on frontend attribute queries.  They are expected to
+        internally trigger state updates.
 
         For example, on::
 
             print c.attrib
 
         The attribute getter for the 'attrib' attribute will be invoked.  If for
-        that attribute a poll hook is registered, that hook will first query the
-        backend for value updates.
+        that attribute a getter hook is registered, that hook will first query
+        the backend for value updates.  After that update has been performed,
+        the getter will retrieve the (updated) value.
 
-        Poll hooks can be registered for different operations: get, set, list.
-        Set/Get polls are invoked for special keys -- for List polls, the key
-        value is ignored (and should be None).  Similar to callbacks, a hook
-        returning True will remain registered for future invocations.  On
-        'False', a poll registered for 'self.Any' actions will get unregistered
-        only for the action it got invoked for.
+        Similarly, setter hooks will be invoked *after* the attribute setter
+        method, to inform the implementation of the updated attribute value.
+
+        Further, list hooks are invoked before a list or find operation is
+        really internally executed, to allow the implementation to updated the
+        list of available attributes.  
         
-        Polls have a different call signature than callbacks: they get the
-        object name on which the attribute is registered, the attribute name
-        , and the sub-dictionary for that attribute.  A hook setting the value
-        of any watched attribute would look like this::
+        Note that only one setter/getter/lister method can be registered (for
+        setters/getters per key, for listers per class instance).
 
-            def hook_set (obj, key, d) :
-                obj.set_attribute (key, 'new_value')
-                return True
-
-        This example would trigger all registered callbacks for that attribute.
-        Hooks can also silently update attribute values (and not trigger
-        callbacks), like this::
-
-            def hook_set (obj, key, d) :
-                d{'value'} = 'new_value'
-                return True
-                
-        Note that setting both callbacks and hooks on the same attribute can
-        lead to infinite loops, if the callbacks query the attribute again, and
-        the hooks set the attribute again (via set_attribute), and if the
-        attribute's value actually changes every time. 
+        Hooks have a different call signature than callbacks::
+        
+            setter (self, value)
+            getter (self)
+            lister (self)
 
         FIXME: consider a cooling-off period for caching.
         """
@@ -1599,15 +1690,41 @@ class AttributeInterface (AttributesBase_) :
         d      = self.attributes_t_init_       (us_key)
 
         # register the attribute and properties
-        if   polltype == self.List :
-             d['polls.List'].append (poll)
-        elif polltype == self.Set :
-             d['attributes_'][us_key]['polls_set'].append (poll)
-        elif polltype == self.Get :
-             d['attributes_'][us_key]['polls_get'].append (poll)
-        else :
-             raise MyException ("poll type invalid : %s"  %  (polltype),
-                                MyError.BadParameter)
+        d['attributes_'][us_key]['getter'] = getter
+
+
+    ####################################
+    def attributes_set_setter_ (self, key, setter) :
+        """
+        This interface method is not part of the public consumer API, but can
+        safely be called from within derived classes.
+
+        See documentation of L{attributes_set_setter_ } for details.
+        """
+
+        # make sure interface is ready to use
+        us_key = self.attributes_t_underscore_ (key)
+        d      = self.attributes_t_init_       (us_key)
+
+        # register the attribute and properties
+        d['attributes_'][us_key]['setter'] = setter
+
+
+    ####################################
+    def attributes_set_lister_ (self, key, lister) :
+        """
+        This interface method is not part of the public consumer API, but can
+        safely be called from within derived classes.
+
+        See documentation of L{attributes_set_setter_ } for details.
+        """
+
+        # make sure interface is ready to use
+        us_key = self.attributes_t_underscore_ (key)
+        d      = self.attributes_t_init_       (us_key)
+
+        # register the attribute and properties
+        d['lister'] = lister
 
 
     ###########################################################################

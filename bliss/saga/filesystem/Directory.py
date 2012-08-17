@@ -55,8 +55,8 @@ class Directory(Object):
                files = dir.list ()
 
         '''
-        Object.__init__(self, Object.Type.FilesystemDirectory, 
-                        apitype=Object.Type.FilesystemAPI, session=session)
+        Object.__init__(self, Object.ObjectType.FilesystemDirectory, 
+                        apitype=Object.ObjectType.FilesystemAPI, session=session)
 
         if type(url) == str:
             self._url = bliss.saga.Url(str(url))

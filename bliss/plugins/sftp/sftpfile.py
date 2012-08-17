@@ -37,7 +37,7 @@ class SSHConnectionPool:
         # inspect contexts and see if they're any good
         usable_ctx = None
         for ctx in fsobj.session.contexts:
-            if ctx.type is bliss.saga.Context.SSH:
+            if ctx.context_type is bliss.saga.Context.SSH:
                 usable_ctx = ctx
                 break
 

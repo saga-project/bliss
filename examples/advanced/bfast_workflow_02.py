@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
     execution_host = saga.Url("pbs+ssh://queenbee.loni.org") 
     ctx = saga.Context()
-    ctx.type = saga.Context.SSH
+    ctx.context_type = saga.Context.SSH
     ctx.user_id  = 'oweidner' # like 'ssh username@host ...'
     ctx.user_key = '/Users/s1063117/.ssh/id_rsa' # like ssh -i ...'
 

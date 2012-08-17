@@ -32,8 +32,8 @@ class Compute(Object):
     def __init__(self):
         '''PRIVATE: Create a new compute resource.
         '''
-        Object.__init__(self, Object.Type.ResourceCompute, 
-                        apitype=Object.Type.ResourceAPI)
+        Object.__init__(self, Object.ObjectType.ResourceCompute, 
+                        apitype=Object.ObjectType.ResourceAPI)
 
 
     ######################################################################

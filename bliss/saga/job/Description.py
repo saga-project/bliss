@@ -122,8 +122,8 @@ class Description(Object, AttributeInterface):
     ## 
     def __init__(self):
         '''Create a new, empty job description.'''
-        Object.__init__(self, Object.Type.JobDescription, 
-                        apitype=Object.Type.JobAPI,)
+        Object.__init__(self, Object.ObjectType.JobDescription, 
+                        apitype=Object.ObjectType.JobAPI,)
 
         # set attribute interface properties
         self.attributes_extensible_  (False)
@@ -146,7 +146,7 @@ class Description(Object, AttributeInterface):
         self.attributes_register_  ('NumberOfProcesses', None, self.Int,    self.Scalar, self.Writable)
         self.attributes_register_  ('SPMDVariation',     None, self.Enum,   self.Scalar, self.Writable)
 
-        self.attributes_set_enum_  ('SPMDVariation',     ['MPI', 'OpenMP', 'None'])
+        self.attributes_set_enums_ ('SPMDVariation',     ['MPI', 'OpenMP', 'None'])
 
     ######################################################################
     ## 

@@ -47,8 +47,8 @@ class File(Object):
                print file.get_size ()
 
         '''
-        Object.__init__(self, Object.Type.FilesystemFile, 
-                        apitype=Object.Type.FilesystemAPI, session=session)
+        Object.__init__(self, Object.ObjectType.FilesystemFile, 
+                        apitype=Object.ObjectType.FilesystemAPI, session=session)
 
         if type(url) == str:
             self._url = bliss.saga.Url(str(url))
