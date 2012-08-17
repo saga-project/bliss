@@ -62,21 +62,21 @@ def main():
         # create the job (state: New)
         myjob = js.create_job(jd)
 
-        print "Job ID    : %s" % (myjob.job_id)
+        print "Job ID    : %s" % (myjob.get_job_id())
         print "Job State : %s" % (myjob.get_state())
 
         print "\n...starting job...\n"
         # run the job (submit the job to PBS)
         myjob.run()
 
-        print "Job ID    : %s" % (myjob.job_id)
+        print "Job ID    : %s" % (myjob.get_job_id())
         print "Job State : %s" % (myjob.get_state())
 
         print "\n...waiting for job...\n"
         # wait for the job to either finish or fail
         myjob.wait()
 
-        print "Job ID    : %s" % (myjob.job_id)
+        print "Job ID    : %s" % (myjob.get_job_id())
         print "Job State : %s" % (myjob.get_state())
         print "Exitcode  : %s" % (myjob.exitcode)
 

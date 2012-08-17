@@ -25,9 +25,9 @@ class PBSJobPlugin(JobPluginInterface, SDPluginInterface):
 
     ## Define supported url schemas
     ## 
-    _schemas = ['pbs+ssh', 'pbs', 
-                'torque', 'torque+ssh', 
-                'xt5torque', 'xt5torque+ssh']
+    _schemas = ['pbs+ssh', 'pbs', 'pbs+gsissh', 
+                'torque', 'torque+ssh', 'torque+gsissh',
+                'xt5torque', 'xt5torque+ssh', 'xt5torque+gsissh']
 
     ## Define apis supported by this adaptor
     ##
@@ -227,7 +227,6 @@ class PBSJobPlugin(JobPluginInterface, SDPluginInterface):
         '''Implements interface from _JobPluginBase.
            This method is called for saga.Job.get_job_id().
         '''
-        print "SSSS"
         try:
             if self.bookkeeper.get_jobid_for_job(job).native_id == None:
                 ## The job hasn't been submitted yet - don't process

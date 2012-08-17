@@ -429,7 +429,7 @@ class Job(Object, AttributeInterface):
           j.run()
           j.wait()
 
-          if j.get_state() == saga.job.Job.job.Failed :
+          if j.get_state() == saga.job.Job.Failed :
             if j.exitcode == "42" :
                 print "Ah, galaxy bypass error!"
             else :

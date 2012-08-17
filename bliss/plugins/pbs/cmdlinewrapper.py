@@ -594,7 +594,7 @@ class PBSService:
         if jd.contact is not None:
             pbs_params += "#PBS -m abe \n"
        
-        if self._url.scheme in ["xt5torque", "xt5torque+ssh"]:
+        if self._url.scheme in ["xt5torque", "xt5torque+ssh", 'xt5torque+gsissh']:
             # Special case for TORQUE on Cray XT5s
             self._pi.log_info("Using Cray XT5 spepcific modifications, i.e., -l size=xx instead of -l nodes=x:ppn=yy ")
             if jd.total_cpu_count is not None:
@@ -629,8 +629,6 @@ class PBSService:
         #script = script.replace("\"", "\\\"")
         result = self._cw.run("echo \'%s\' | qsub" % (script))
 
-        print result
-
         if result.returncode != 0:
             raise Exception("Error running 'qsub': %s. Script was: %s" % (result.stdout, script))
         else:
@@ -638,13 +636,13 @@ class PBSService:
             #have disappeared from the queue at this point. that's why
             #we create a dummy job info here
             ji = PBSJobInfo("", self._pi)
-            ji._jobid = result.stdout.split("\n")[0]
+            ji._jobid = result.stdout.split("\n")[-1]
 
             ji._job_state = "R"
             self._known_jobs_update(ji.jobid, ji)
 
             jobinfo = self.get_jobinfo(bliss.saga.job.JobID(self._url, 
-              result.stdout.split("\n")[0]))
+              result.stdout.split("\n")[-1]))
             return jobinfo
 
     ######################################################################
