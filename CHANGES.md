@@ -3,6 +3,9 @@ Version 0.2.5 released 2012-X-YY
 
 * Updates to Filesystem API
 * Added JobDescription.name attribute (as defined in DRMAA)
+* Introduced stateful SSH connection substrate for PBS, SGE, etc
+* Introduced support for GSISSH: pbs+gsissh://, sge+gsissh://
+* Re-implementation of a (more Python-esque) attribute interface
 
 Version 0.2.4 released 2012-7-10
 ----------------------------------------------------------------------
