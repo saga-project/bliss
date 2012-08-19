@@ -338,8 +338,8 @@ class PBSService:
                     self._cw = cw
                     self._pi.log_debug("Using no context to access %s succeeded" % (self._url))
                 except CommandWrapperException, ex:
-                    self._pi.log_debug("Using no context %s to access %s failed: %s" \
-                                       % (ctx, self._url, ex))
+                    self._pi.log_debug("Using no context to access %s failed: %s" \
+                                       % (self._url, ex))
 
             # at this point, either self._cw contains a usable 
             # configuration, or the whole thing should go to shit

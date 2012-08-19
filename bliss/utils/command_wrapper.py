@@ -46,7 +46,7 @@ class CommandWrapper(object):
     def initAsGSISSHWrapper(self, logger, hostname, port=22, username='', password='', x509_userproxy=''):
 
         if which('gsissh') == None:
-            raise CommandWrapperException("Couldn't find 'ssh' executable in path") 
+            raise CommandWrapperException("Couldn't find Globus 'gsissh' executable in path") 
 
         cw = CommandWrapper(logger)
         cw._mode = 'gsissh'
