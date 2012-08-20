@@ -45,7 +45,12 @@ def main():
         #                                  session=session)
 
         for entry in remote_dir.list():
-            print entry
+            if remote_dir.is_dir(entry):
+                print "d %12s %s" % (remote_dir.get_size(entry), entry)
+            else:
+                print "- %12s %s" % (remote_dir.get_size(entry), entry)
+
+
 
     except saga.Exception, ex:
         print "An error occured during file operation: %s" % (str(ex))

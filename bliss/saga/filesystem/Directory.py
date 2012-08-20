@@ -325,6 +325,51 @@ class Directory(Object):
 
     ######################################################################
     ## 
+    def exists(self, path):
+        '''Returns True if path exists, False otherwise. 
+
+           @param path: path of the entry to check
+
+           Example::
+
+               # inspect a file for its size
+               dir  = saga.filesystem.Directory("sftp://localhost/tmp/")
+               if dir.exists ('data'):
+                   # do something
+
+        '''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+        else:
+            return self._plugin.dir_exists(self, path)
+
+
+    ######################################################################
+    ## 
+    def is_dir(self, path):
+        '''Returns True if path is a directory, False otherwise. 
+
+           @param path: path of the entry to check
+
+           Example::
+
+               # inspect a file for its size
+               dir  = saga.filesystem.Directory("sftp://localhost/tmp/")
+               if dir.is_dir ('data'):
+                   # do something
+
+        '''
+        if self._plugin is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a plugin")
+        else:
+            return self._plugin.dir_is_dir(self, path)
+
+
+
+    ######################################################################
+    ## 
     def close(self):
         '''Closes the directory. 
         '''

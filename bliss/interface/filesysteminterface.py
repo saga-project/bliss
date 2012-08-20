@@ -90,15 +90,21 @@ class FilesystemPluginInterface(PluginBaseInterface):
         errormsg = "Not implemented plugin method called: dir_copy()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
 
-    def dir_copy(self, dir_obj, source, target, flags):
-        '''This methid is called upon dir.copy()
-        ''' 
-        errormsg = "Not implemented plugin method called: dir_copy()"
-        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
-
     def dir_get_size(self, dir_obj, path):
         '''This methid is called upon dir.get_size()
         ''' 
         errormsg = "Not implemented plugin method called: dir_get_size()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
+
+    def dir_exists(self, dir_obj, path):
+        '''This methid is called upon dir.exists()
+        ''' 
+        errormsg = "Not implemented plugin method called: dir_exists()"
+        self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
+
+    def dir_is_dir(self, dir_obj, path):
+        '''This methid is called upon dir.is_dir()
+        ''' 
+        errormsg = "Not implemented plugin method called: dir_is_dir()"
         self.log_error_and_raise(SAGAError.NotImplemented, errormsg)
 

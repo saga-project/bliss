@@ -376,6 +376,61 @@ class SFTPFilesystemPlugin(FilesystemPluginInterface):
                 self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
                 "Couldn't determine size for '%s': %s " % (complete_path, (str(ex))))
 
+
+    ######################################################################
+    ## 
+    def dir_exists(self, dir_obj, path):
+        '''Implements interface from FilesystemPluginInterface
+        '''
+        if path != None:
+            complete_path = os.path.join(dir_obj._url.path, path)
+        else:
+            complete_path = dir_obj._url.path
+
+        # LOCAL FILESYSTEM
+        if dir_obj.is_local:
+            return os.path.exists(complete_path)
+
+        # REMOTE FILESYSTEM VIA SFTP
+        else:
+            stat = self.entry_getstat(dir_obj, complete_path)
+            if stat == None:
+                return False
+            else:
+                return True
+
+
+    ######################################################################
+    ## 
+    def dir_is_dir(self, dir_obj, path):
+        '''Implements interface from FilesystemPluginInterface
+        '''
+        if path != None:
+            complete_path = os.path.join(dir_obj._url.path, path)
+        else:
+            complete_path = dir_obj._url.path
+
+        # LOCAL FILESYSTEM
+        if dir_obj.is_local:
+            if os.path.exists(complete_path) == False:
+                 "Couldn't open %s. Entry doesn't exist." % (complete_path)
+            else:
+                return os.path.isdir(furl.path)
+
+
+        # REMOTE FILESYSTEM VIA SFTP
+        else:
+            stat = self.entry_getstat(dir_obj, complete_path)
+            if stat == None:
+                self.log_error_and_raise(bliss.saga.Error.DoesNotExist, 
+                 "Couldn't open %s. Entry doesn't exist." % (complete_path))
+            else:
+                if str(stat).startswith("d") is True:
+                    return True
+                else:
+                    return False
+                
+
     ######################################################################
     ## 
     def file_get_size(self, file_obj):
