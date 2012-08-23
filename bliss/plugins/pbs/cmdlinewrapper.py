@@ -13,6 +13,7 @@ import subprocess
 import bliss.saga
 
 from bliss.utils.command_wrapper import CommandWrapper, CommandWrapperException
+from bliss.utils.jobid import JobID
 
 ################################################################################
 ################################################################################
@@ -430,7 +431,7 @@ class PBSService:
         for line in lines:
             jobinfo = PBSJobInfo(line, self._pi)
             self._known_jobs_update(jobinfo.jobid, jobinfo)
-            jobids.append(bliss.saga.job.JobID(self._url, jobinfo.jobid))
+            jobids.append(bliss.utils.jobid.JobID(self._url, jobinfo.jobid))
         return jobids
 
 
@@ -450,7 +451,7 @@ class PBSService:
                    native_id = native_id.rstrip(']')    
             except Exception:
                 raise Exception("Unsupported job ID format: %s. Expected format: [service_url]-[native_id]." % saga_jobid)
-        elif type(saga_jobid) == bliss.saga.job.JobID:
+        elif type(saga_jobid) == bliss.utils.jobid.JobID:
             native_id = saga_jobid.native_id
         else:
             raise Exception("Unsupported job ID format: %s. Expected format: [service_url]-[native_id]." % saga_jobid)
@@ -641,7 +642,7 @@ class PBSService:
             ji._job_state = "R"
             self._known_jobs_update(ji.jobid, ji)
 
-            jobinfo = self.get_jobinfo(bliss.saga.job.JobID(self._url, 
+            jobinfo = self.get_jobinfo(bliss.utils.jobid.JobID(self._url, 
               result.stdout.split("\n")[-1]))
             return jobinfo
 

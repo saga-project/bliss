@@ -170,7 +170,7 @@ class SGEJobPlugin(JobPluginInterface, SDPluginInterface):
             job._Job__init_from_service(service_obj=service_obj, 
                                         job_desc=job_description)
             self.bookkeeper.add_job_object(job, service_obj,
-                bliss.saga.job.JobID(service_obj._url, None))
+                bliss.utils.jobid.JobID(service_obj._url, None))
             return job
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
@@ -250,7 +250,7 @@ class SGEJobPlugin(JobPluginInterface, SDPluginInterface):
             sge = self.bookkeeper.get_sgewrapper_for_service(service)
             jobinfo = sge.submit_job(job) 
             
-            sagajobid = bliss.saga.job.JobID(service._url, jobinfo.jobid)
+            sagajobid = bliss.utils.jobid.JobID(service._url, jobinfo.jobid)
             self.bookkeeper.add_job_object(job, service, sagajobid)
 
             self.log_info("Started local process: %s %s" \

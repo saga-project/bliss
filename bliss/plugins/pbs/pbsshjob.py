@@ -9,6 +9,8 @@ from bliss.interface import JobPluginInterface, SDPluginInterface
 
 from bliss.plugins.pbs.cmdlinewrapper import PBSService
 from bliss.plugins.pbs.bookkeeper import BookKeeper
+from bliss.utils.jobid import JobID
+
 
 import time
 import bliss.saga
@@ -172,7 +174,7 @@ class PBSJobPlugin(JobPluginInterface, SDPluginInterface):
             job._Job__init_from_service(service_obj=service_obj, 
                                         job_desc=job_description)
             self.bookkeeper.add_job_object(job, service_obj,
-                bliss.saga.job.JobID(service_obj._url, None))
+                bliss.utils.jobid.JobID(service_obj._url, None))
             return job
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
@@ -252,7 +254,7 @@ class PBSJobPlugin(JobPluginInterface, SDPluginInterface):
             pbs = self.bookkeeper.get_pbswrapper_for_service(service)
             jobinfo = pbs.submit_job(job) 
             
-            sagajobid = bliss.saga.job.JobID(service._url, jobinfo.jobid)
+            sagajobid = bliss.utils.jobid.JobID(service._url, jobinfo.jobid)
             self.bookkeeper.add_job_object(job, service, sagajobid)
 
             self.log_info("Started local process: %s %s" \

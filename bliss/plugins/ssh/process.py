@@ -231,7 +231,10 @@ class SSHJobProcess(object):
         self.state = bliss.saga.job.Job.Running
 
     def getpid(self, serviceurl):
-        return "[%s]-[%s]" % (serviceurl, self.pid)
+        if self.pid == None:
+            return None
+        else:
+            return bliss.utils.jobid.JobID(serviceurl, self.pid)
 
     def getstate(self):
         if self.state == bliss.saga.job.Job.Running:

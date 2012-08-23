@@ -9,74 +9,7 @@ __license__   = "MIT"
 import bliss.saga
 from bliss.saga.Object     import Object
 from bliss.saga.Attributes import AttributeInterface
-
-class JobID(object):
-    '''Represents a SAGA job ID (Not part of GFD.90)
-      
-       The SAGA L{job.Job} ID is usually considered to be an opaque string, but
-       in general is expected to be formatted as::
-
-         '[backend-url]-[native-id]'
-
-       (including brackets!), where 'backend-url' is the contact URL for the job
-       manager (L{job.Service}) who 'owns' the job, and 'native-id' is the job
-       id as issued and understood by that job manager.
-
-       Bliss exposes those components of the job ID in this class, which allows
-       to create new IDs and to parse / split existing IDs.
-
-       Example::
-
-         jd = saga.job.Description()
-         jd.executable = "/bin/date"
-         jd.arguments  = ["-u", "-R"]
-
-         js = saga.job.Service("fork://localhost/")
-         j  = js.create_job(jd)
-         j.run()
-
-         print "job id: %s"  % j.job_id
-
-    '''
-    
-    ######################################################################
-    ##
-    def __init__(self, service_url, native_id):
-        '''Create a new job id.
-
-           @param service_url : The URL of the job service of the job.
-           @param native_id:    The native id (a.k.a. backend id) of the job.
-
-           This function will mostly be useful for plugin developers, which
-           frequently will have to create valid job IDs.
-        '''
-        self._service = service_url
-        self._native = native_id
-
-    ######################################################################
-    ##
-    def __str__(self):
-        '''String representation.'''
-        return "[%s]-[%s]" % (self._service, self._native)
-
-    ######################################################################
-    ##
-    def service_url():
-        doc = "The job id's service url component"
-        def fget(self):
-            return self._service
-        return locals()
-    service_url = property(**service_url())
-
-    ######################################################################
-    ##
-    def native_id():
-        doc = "The job ID's native id component"
-        def fget(self):
-            return self._native
-        return locals()
-    native_id = property(**native_id())
-
+from bliss.utils.jobid     import JobID
 
 class Job(Object, AttributeInterface):
     '''Loosely represents a SAGA job as defined in GFD.90
@@ -281,7 +214,21 @@ class Job(Object, AttributeInterface):
     def get_job_id(self):
         '''Return the identifier for the job.'''
         if self._plugin is not None:
-            return self._plugin.job_get_job_id(self)
+
+            # This is a fix for https://github.com/saga-project/bliss/issues/38.
+            # If we see a JobID object that looks like [service]-[None], we just 
+            # return 'None'. That's much easier than messing with every single plug-in
+            # This fix also deprecates JobID on API level and moves it into the util 
+            # namespace where it can still be used within plug-in context.  
+
+            jobid = self._plugin.job_get_job_id(self)
+            if type(jobid) == bliss.utils.jobid.JobID:
+                if jobid.native_id == None:
+                    return None
+                else:
+                    return jobid
+            else: 
+                return jobid
         else:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
               "Object not bound to a plugin")

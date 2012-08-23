@@ -405,7 +405,7 @@ class SGEService:
         for line in lines:
             jobinfo = SGEJobInfo(line, self._pi)
             self._known_jobs_update(jobinfo.jobid, jobinfo)
-            jobids.append(bliss.saga.job.JobID(self._url, jobinfo.jobid))
+            jobids.append(bliss.utils.jobid.JobID(self._url, jobinfo.jobid))
         return jobids
 
 
@@ -627,7 +627,7 @@ class SGEService:
             ji._job_state = "R"
             self._known_jobs_update(ji.jobid, ji)
 
-            jobinfo = self.get_jobinfo(bliss.saga.job.JobID(self._url, ji._jobid))
+            jobinfo = self.get_jobinfo(bliss.utils.jobid.JobID(self._url, ji._jobid))
               #result.stdout.split("\n")[0]))
             return jobinfo
 
