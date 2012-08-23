@@ -7,8 +7,8 @@ __license__   = "MIT"
 
 import fnmatch
 import bliss.saga 
-from bliss.saga import Url
-from bliss.saga.Object import Object 
+from bliss.saga.url import Url
+from bliss.saga.object import Object 
 
 class Directory(Object):
     '''Loosely represents a SAGA directory as defined in GFD.90

@@ -7,8 +7,8 @@ __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import bliss.saga
-from bliss.saga.Object     import Object
-from bliss.saga.Attributes import AttributeInterface
+from bliss.saga.object     import Object
+from bliss.saga.attributes import AttributeInterface
 from bliss.utils.jobid     import JobID
 
 class Job(Object, AttributeInterface):

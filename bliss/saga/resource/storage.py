@@ -7,8 +7,8 @@ __license__   = "MIT"
 
 import bliss.saga
 
-from bliss.saga import Url
-from bliss.saga.Object import Object 
+from bliss.saga.url import Url
+from bliss.saga.object import Object 
 
 class Storage(Object):
     ''' Storage resources represent stateful entities which can store

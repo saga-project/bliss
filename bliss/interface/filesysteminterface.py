@@ -7,8 +7,8 @@ __license__   = "MIT"
 
 from bliss.interface import PluginBaseInterface
 
-from bliss.saga.Error import Error as SAGAError
-from bliss.saga.Exception import Exception as SAGAException
+from bliss.saga.error import Error as SAGAError
+from bliss.saga.exception import Exception as SAGAException
 
 class FilesystemPluginInterface(PluginBaseInterface):
     '''Abstract base class for all filesystem plugins'''

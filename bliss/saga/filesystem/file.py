@@ -6,7 +6,7 @@ __copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 import bliss.saga 
-from bliss.saga.Object import Object 
+from bliss.saga.object import Object 
 
 class File(Object):
     '''Loosely represents a SAGA file as defined in GFD.90

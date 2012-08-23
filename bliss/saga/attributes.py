@@ -4,8 +4,8 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.Exception import Exception as MyException
-from bliss.saga.Error     import Error     as MyError
+from bliss.saga.exception import Exception as MyException
+from bliss.saga.error     import Error     as MyError
 
 
 ################################################################################
@@ -65,7 +65,7 @@ class Callback () :
 
           cp.add_callback ('state', mcb)
 
-    See documentation of the L{Attributes} interface for further details and
+    See documentation of the L{AttributeInterface} interface for further details and
     examples.
     """
 

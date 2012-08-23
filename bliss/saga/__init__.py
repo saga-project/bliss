@@ -19,12 +19,12 @@ __copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
 # Base "look-and-feel packages"
-from bliss.saga.Url       import Url 
-from bliss.saga.Object    import Object
-from bliss.saga.Session   import Session 
-from bliss.saga.Context   import Context
-from bliss.saga.Exception import Exception 
-from bliss.saga.Error     import Error 
+from bliss.saga.url       import Url 
+from bliss.saga.object    import Object
+from bliss.saga.session   import Session 
+from bliss.saga.context   import Context
+from bliss.saga.exception import Exception 
+from bliss.saga.error     import Error 
 
 # API packages
 from bliss.saga           import filesystem

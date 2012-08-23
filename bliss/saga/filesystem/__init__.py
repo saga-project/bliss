@@ -33,8 +33,8 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.filesystem.File import File
-from bliss.saga.filesystem.Directory import Directory
+from bliss.saga.filesystem.file import File
+from bliss.saga.filesystem.directory import Directory
 
 
 Overwrite       =    1

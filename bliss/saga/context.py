@@ -8,11 +8,11 @@ __license__   = "MIT"
 import logging
 import os.path
 
-from bliss.saga.Object import Object 
+from bliss.saga.object import Object 
 
-from bliss.saga.Attributes import AttributeInterface
-from bliss.saga.Exception import Exception as SAGAException
-from bliss.saga.Error import Error as SAGAError
+from bliss.saga.attributes import AttributeInterface
+from bliss.saga.exception import Exception as SAGAException
+from bliss.saga.error import Error as SAGAError
 
 class Context(Object, AttributeInterface):
     '''Loosely defines a SAGA Context object as defined in GFD.90.

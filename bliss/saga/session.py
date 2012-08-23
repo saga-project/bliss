@@ -6,7 +6,7 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.Context import Context
+from bliss.saga.context import Context
 
 class Session(object):
     '''Loosely defines a SAGA Session object as defined in GFD.90.

@@ -50,8 +50,8 @@ __author__    = "Ole Christian Weidner, et al."
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga.job.Job         import Job
-from bliss.saga.job.Job         import JobID
-from bliss.saga.job.Service     import Service
-from bliss.saga.job.Description import Description
+from bliss.saga.job.job         import Job
+from bliss.saga.job.job         import JobID
+from bliss.saga.job.service     import Service
+from bliss.saga.job.description import Description
 

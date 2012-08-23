@@ -6,9 +6,9 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2012 Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.saga import Url
+from bliss.saga.url import Url
 from bliss.saga.resource import Compute
-from bliss.saga.Object import Object 
+from bliss.saga.object import Object 
 
 import bliss.saga
 
