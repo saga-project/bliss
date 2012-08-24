@@ -298,7 +298,7 @@ class Url(Object):
     ## Query property
     def set_query(self, path):
         """Set the 'query' component of the URL.
-           @type query: str
+           @type path: str
         """
         newurl = urlparse.urlunparse((self._urlobj.scheme,
                                      self._urlobj.netloc, 
