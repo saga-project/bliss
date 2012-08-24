@@ -8,7 +8,8 @@ __license__   = "MIT"
 from bliss.interface import JobPluginInterface
 from bliss.plugins.local.process import LocalJobProcess
 
-import bliss.saga 
+import bliss.saga
+
 
 class LocalJobPlugin(JobPluginInterface):
     '''Implements a job plugin that can submit jobs to the local machine'''

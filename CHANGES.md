@@ -6,6 +6,13 @@ Version 0.2.5 released 2012-X-YY
 * Introduced stateful SSH connection substrate for PBS, SGE, etc
 * Introduced support for GSISSH: pbs+gsissh://, sge+gsissh://
 * Re-implementation of a (more Python-esque) attribute interface
+* Fixed JobID issues, i.e., job.job_id returns 'None' in case the
+  job is not running instead of "[serviceurl]-[None]"
+* Introduced dynamic, fault-tolerant plug-in loader. If anything 
+  goes wrong during loading of a specific plug-in (i.e., dependencies 
+  on 3rd party modules cannot be fulfilled, the plug-in will just get 
+  skipped and the remaining ones will still get loaded. Previously, a
+  single problem during plug-in loading would take Bliss down.
 
 Version 0.2.4 released 2012-7-10
 ----------------------------------------------------------------------
