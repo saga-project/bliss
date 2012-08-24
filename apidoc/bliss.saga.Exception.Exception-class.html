@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>bliss.saga.Exception.Exception</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="bliss.saga-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        bliss ::
+        saga ::
+        Exception ::
+        Exception ::
+        Class&nbsp;Exception
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Exception</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.Exception-pysrc.html#Exception">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_bliss_sa_4" name="uml_class_diagram_for_bliss_sa_4">
+<area shape="rect" id="node1_16" href="bliss.saga.Exception.Exception-class.html#__init__" title="Create a new Exception object." alt="" coords="17,337,196,356"/>
+<area shape="rect" id="node1_17" href="bliss.saga.Exception.Exception-class.html#__str__" title="String representation (utf&#45;8)." alt="" coords="17,356,196,375"/>
+<area shape="rect" id="node1_18" href="bliss.saga.Exception.Exception-class.html#__unicode__" title="Unicode representation." alt="" coords="17,375,196,393"/>
+<area shape="rect" id="node1_19" href="bliss.saga.Exception.Exception-class.html#message" title="The Exception&#39;s error message." alt="" coords="17,393,196,412"/>
+<area shape="rect" id="node1_20" href="bliss.saga.Exception.Exception-class.html#error" title="The Exception&#39;s Error type." alt="" coords="17,412,196,431"/>
+<area shape="rect" id="node1_21" href="bliss.saga.Exception.Exception-class.html#traceback" title="The Exception&#39;s stack trace (if available)." alt="" coords="17,431,196,449"/>
+<area shape="rect" id="node1" href="bliss.saga.Exception.Exception-class.html" title="The Exception class encapsulates information about error conditions encountered in SAGA/Bliss." alt="" coords="5,305,208,455"/>
+<area shape="rect" id="node2_22" href="javascript:void(0);" title="exceptions.Exception.__new__" alt="" coords="43,260,169,279"/>
+<area shape="rect" id="node2" href="javascript:void(0);" title="Common base class for all non&#45;exit exceptions." alt="" coords="30,227,181,285"/>
+<area shape="rect" id="node3_23" href="javascript:void(0);" title="exceptions.BaseException.args" alt="" coords="28,31,185,49"/>
+<area shape="rect" id="node3_24" href="javascript:void(0);" title="x.__delattr__(&#39;name&#39;) &lt;==&gt; del x.name" alt="" coords="28,52,185,71"/>
+<area shape="rect" id="node3_25" href="javascript:void(0);" title="x.__getattribute__(&#39;name&#39;) &lt;==&gt; x.name" alt="" coords="28,71,185,89"/>
+<area shape="rect" id="node3_26" href="javascript:void(0);" title="x[y]" alt="" coords="28,89,185,108"/>
+<area shape="rect" id="node3_27" href="javascript:void(0);" title="x[i:j]" alt="" coords="28,108,185,127"/>
+<area shape="rect" id="node3_28" href="javascript:void(0);" title="helper for pickle" alt="" coords="28,127,185,145"/>
+<area shape="rect" id="node3_29" href="javascript:void(0);" title="repr(x)" alt="" coords="28,145,185,164"/>
+<area shape="rect" id="node3_30" href="javascript:void(0);" title="x.__setattr__(&#39;name&#39;, value) &lt;==&gt; x.name = value" alt="" coords="28,164,185,183"/>
+<area shape="rect" id="node3_31" href="javascript:void(0);" title="exceptions.BaseException.__setstate__" alt="" coords="28,183,185,201"/>
+<area shape="rect" id="node3" href="javascript:void(0);" title="Common base class for all exceptions" alt="" coords="16,6,197,207"/>
+</map>
+  <img src="uml_class_diagram_for_bliss_sa_4.gif" alt='' usemap="#uml_class_diagram_for_bliss_sa_4" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<p>The Exception class encapsulates information about error conditions 
+  encountered in SAGA/Bliss.</p>
+  <p>Additionally to the error message (e.message), the exception also 
+  provides a trace to the code location where the error condition got 
+  raised (e.traceback), and an error code (e.error) which identifies the 
+  type of error encountered.</p>
+  <p><b>Example</b>:</p>
+<pre class="literalblock">
+ try :
+     file = saga.filesystem.File(&quot;sftp://alamo.futuregrid.org/tmp/data1.dat&quot;)
+
+ except saga.Exception, e :
+     if e.error == saga.Error.Timeout:
+         # maybe the network is down?
+         print &quot;connection timed out&quot;
+     else:
+         # something else went wrong
+         print &quot;Exception occurred: %s %s&quot; % (str(e), e.traceback)
+</pre>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Instance Methods</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.Exception.Exception-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">error</span>,
+        <span class="summary-sig-arg">message</span>)</span><br />
+      Create a new Exception object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.Exception-pysrc.html#Exception.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.Exception.Exception-class.html#__str__" class="summary-sig-name">__str__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      String representation (utf-8).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.Exception-pysrc.html#Exception.__str__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.Exception.Exception-class.html#__unicode__" class="summary-sig-name">__unicode__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Unicode representation.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.Exception-pysrc.html#Exception.__unicode__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.Exception.Exception-class.html#message" class="summary-sig-name">message</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      The Exception's error message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.Exception-pysrc.html#Exception.message">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.Exception.Exception-class.html#error" class="summary-sig-name">error</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      The Exception's <a href="bliss.saga.Error.Error-class.html" 
+      class="link">Error</a> type.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.Exception-pysrc.html#Exception.error">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.Exception.Exception-class.html#traceback" class="summary-sig-name">traceback</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      The Exception's stack trace (if available).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.Exception-pysrc.html#Exception.traceback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>exceptions.Exception</code></b>:
+      <code>__new__</code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>exceptions.BaseException</code></b>:
+      <code>__delattr__</code>,
+      <code>__getattribute__</code>,
+      <code>__getitem__</code>,
+      <code>__getslice__</code>,
+      <code>__reduce__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__setstate__</code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__format__</code>,
+      <code>__hash__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__sizeof__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Properties</span></td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>exceptions.BaseException</code></b>:
+      <code>args</code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Method Details</span></td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">error</span>,
+        <span class="sig-arg">message</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.Exception-pysrc.html#Exception.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Create a new Exception object.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>error</code></strong> (<a href="bliss.saga.Error.Error-class.html" 
+          class="link">Error</a>) - The type of error</li>
+        <li><strong class="pname"><code>message</code></strong> (str) - The error message</li>
+    </ul></dd>
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__str__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__str__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Informal representation operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.Exception-pysrc.html#Exception.__str__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>String representation (utf-8).</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__str__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__unicode__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__unicode__</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.Exception-pysrc.html#Exception.__unicode__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Unicode representation.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        exceptions.BaseException.__unicode__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="message"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">message</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.Exception-pysrc.html#Exception.message">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>The Exception's error message.</p>
+  <dl class="fields">
+    <dt>Decorators:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code>@property</code></li>
+    </ul></dd>
+    <dt>Overrides:
+        message
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="error"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">error</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.Exception-pysrc.html#Exception.error">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>The Exception's <a href="bliss.saga.Error.Error-class.html" 
+  class="link">Error</a> type.</p>
+  <dl class="fields">
+    <dt>Decorators:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code>@property</code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="traceback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">traceback</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="bliss.saga.Exception-pysrc.html#Exception.traceback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>The Exception's stack trace (if available).</p>
+  <dl class="fields">
+    <dt>Decorators:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code>@property</code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="bliss.saga-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://saga-project.github.com/bliss">Bliss</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    <a href="epydoc-log.html">Generated by Epydoc
+    3.0.1 on Thu Aug 23 23:16:16 2012</a>
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
