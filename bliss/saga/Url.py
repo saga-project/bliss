@@ -9,6 +9,8 @@ __license__   = "MIT"
 from bliss.utils       import urlparse25 as urlparse  
 from bliss.saga.Object import Object 
 
+import bliss
+
 class Url(Object):
     '''The Url class as defined in GFD.90.
     
