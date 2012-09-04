@@ -77,43 +77,43 @@ class StorageDescription(Object, AttributeInterface):
     
     ######################################################################
     ## Property 
-        '''
-        start:
+        Start = property ( doc = '''
+        Start:
         Required start time for this resource reservation.
         
         The resource is expected to be 'Running' at the specified point in time,
         and thus ready to execute job requests.  A backend which cannot make
         that promise will raise and exception.
-        '''
+        ''')
     
     ######################################################################
     ## Property 
-        '''
-        end:
+        End = property ( doc = '''
+        End:
         Required end time for this resource request.
         
         The resource is expected to be available until at most that given point
         in time.  A resource manager which cannot guarantee the resource to be
         available before that point (- a given duration) will fail the resource
         request.
-        '''
+        ''')
     
     ######################################################################
     ## Property 
-        '''
-        duration:
+        Duration = property ( doc = '''
+        Duration:
         Required duration for this resource request.
 
         The specified time span is the time the resource is expected to be
         'Running' -- times spent in other states does not count toward this
         limit.  A backend which cannot make that promise will raise and 
         exception.
-        '''
+        ''')
     
     ######################################################################
     ## Property 
-        '''
-        template:
+        Template = property ( doc = '''
+        Template:
         Required template for this resource request.
 
         The specified template is to be used to fill in certain elements of 
@@ -121,12 +121,12 @@ class StorageDescription(Object, AttributeInterface):
         the backend, a 'BadParameter' exception will be raised upon resource 
         creation.  Specific values in the compute resource description will 
         supersede the values specified by the template.
-        '''
+        ''')
 
     ######################################################################
     ## Property 
-        '''
-        dynamic:
+        Dynamic = property ( doc = '''
+        Dynamic:
         Dynamic or not.
         
         The 'dynamic' flag signals that the resource description provides
@@ -134,12 +134,12 @@ class StorageDescription(Object, AttributeInterface):
         different initial values, and also can change the values during the
         resource lifetime.  That flag is specifically targeting backends which
         can resize the resources in response to actual storage requirements.
-        '''
+        ''')
     
     ######################################################################
     ## Property 
-        """
-        size:
+        Size = property ( doc = '''
+        Size:
         Required size of storage, in MegaBytes.
-        """
+        ''')
     

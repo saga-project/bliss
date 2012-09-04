@@ -131,63 +131,78 @@ class Context(Object, AttributeInterface):
 
     ######################################################################
     ## Property: type
-        """Context type.
-        
-        This is a free-form string which describes the type of security token
-        this context describes.  This type is not bound to a specific backend --
-        for example, an 'SSH' context could be used by a number of backends,
-        such as ssh (obviously), aws, gsissh, https, etc. (*)
+    ContextType  = property ( doc = '''
+    ContextType:
+    
+    This is a free-form string which describes the type of security token
+    this context describes.  This type is not bound to a specific backend --
+    for example, an 'SSH' context could be used by a number of backends,
+    such as ssh (obviously), aws, gsissh, https, etc. (*)
 
 
-        Example::
+    Example::
 
 
-            # define an ssh context
-            c = saga.Context()
-            c.context_type = 'ssh'
-            c.user_cert = '$HOME/.ssh/id_rsa'
-            c.user_key = '$HOME/.ssh/id_rsa.pub'
+        # define an ssh context
+        c = saga.Context()
+        c.context_type = 'ssh'
+        c.user_cert = '$HOME/.ssh/id_rsa'
+        c.user_key = '$HOME/.ssh/id_rsa.pub'
 
-            # add it to a session
-            s = saga.Session
-            s.add_context(c)
+        # add it to a session
+        s = saga.Session
+        s.add_context(c)
 
-            # create a job service in this session -- that job service can now
-            # *only* use that ssh context. 
-            j = saga.job.Service(s, 'ssh://remote.host.net/')
+        # create a job service in this session -- that job service can now
+        # *only* use that ssh context. 
+        j = saga.job.Service(s, 'ssh://remote.host.net/')
 
 
-        (*) this is a list of transport protocols, not of backends, but
-        hopefully make the point clear.
+    (*) this is a list of transport protocols, not of backends, but
+    hopefully make the point clear.
 
-        """
+    ''')
 
 
     ######################################################################
     ## Property: user_id
-        """
-        UserID
+    UserID = property ( doc = '''
+    UserID:
 
-        User ID or user name to use.
-        """
+    User ID or user name to use.
+    ''')
 
     ######################################################################
     ## Property: user_pass
-        """User password to use.
-        
-        Please use this option with care -- it is *not* good practice to encode
-        plain text passwords in source code!
-        """
+    UserPass = property ( doc = '''
+    UserPass:
+    User password to use.
+
+    Please use this option with care -- it is *not* good practice to encode
+    plain text passwords in source code!
+    ''')
 
     ######################################################################
     ## Property: user_cert
-        """Location of a user certificate."""
+    UserCert = property ( doc = '''
+    UserCert:
+        
+    Location of a user certificate.
+        ''')
 
     ######################################################################
     ## Property: user_key
-        """Location of a user key."""
+    UserKey = property ( doc = '''
+    UserKey: 
+
+    Location of a user key.
+    ''')
 
     ######################################################################
     ## Property: user_proxy
-        """Location of a user proxy."""
+    UserProxy = property ( doc = '''
+    UserProxy: 
+
+    Location of a user proxy.
+    ''')
 

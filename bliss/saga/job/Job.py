@@ -373,64 +373,63 @@ class Job(Object, AttributeInterface):
 
     ######################################################################
     ## Property:
-        '''
-        ExitCode:
-        The job's exitcode.
+    ExitCode = property (doc = '''
+    ExitCode:
+    The job's exitcode.
 
-        this attribute is only meaningful if the job is in 'Done' or 'Final'
-        state - for all other job states, this attribute value is undefined.
+    this attribute is only meaningful if the job is in 'Done' or 'Final'
+    state - for all other job states, this attribute value is undefined.
 
-        B{Example}::
+    B{Example}::
 
 
-          js = saga.job.Service("fork://localhost")
-          jd = saga.job.Description ()
-          jd.executable = '/bin/date'
-          j  = js.create_job(jd)
+      js = saga.job.Service("fork://localhost")
+      jd = saga.job.Description ()
+      jd.executable = '/bin/date'
+      j  = js.create_job(jd)
 
-          j.run()
-          j.wait()
+      j.run()
+      j.wait()
 
-          if j.get_state() == saga.job.Job.Failed :
-            if j.exitcode == "42" :
-                print "Ah, galaxy bypass error!"
-            else :
-                print "oops!"
+      if j.get_state() == saga.job.Job.Failed :
+        if j.exitcode == "42" :
+            print "Ah, galaxy bypass error!"
+        else :
+            print "oops!"
 
-        '''
+    ''')
 
     ######################################################################
     ## Property:
-        '''
-        JobID:
-        The job's identifier.
+    JobID = property (doc = '''
+    JobID:
+    The job's identifier.
 
-        This attribute is equivalent to the value returned by job.get_job_id()
-        '''
+    This attribute is equivalent to the value returned by job.get_job_id()
+    ''')
 
 
     ######################################################################
     ## Property: 
-    def serviceurl():
-        '''
-        ServiceURL:
-        The URL of the L{Service} instance managing this job.
+    ServiceURL = property (doc = '''
+    ServiceURL:
+    The URL of the L{Service} instance managing this job.
 
-        This attribute is represents the URL under where the job management
-        service can be contacted which owns the job.  The value is equivalent to
-        the service part of the job_id.
+    This attribute is represents the URL under where the job management
+    service can be contacted which owns the job.  The value is equivalent to
+    the service part of the job_id.
 
-        B{Example}::
+    B{Example}::
 
 
-          js = saga.job.Service("fork://localhost")
-          jd = saga.job.Description ()
-          jd.executable = '/bin/date'
-          j  = js.create_job(jd)
+      js = saga.job.Service("fork://localhost")
+      jd = saga.job.Description ()
+      jd.executable = '/bin/date'
+      j  = js.create_job(jd)
 
-          if j.serviceurl == "fork://localhost" :
-              print "yes!"
-          else :
-              print "oops!"
+      if j.serviceurl == "fork://localhost" :
+          print "yes!"
+      else :
+          print "oops!"
 
-        '''
+    ''')

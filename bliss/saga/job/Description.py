@@ -159,7 +159,7 @@ class Description(Object, AttributeInterface):
 
     ######################################################################
     ## Property: 
-    """
+    Executable = property (doc = """
     Executable:
     Defines the command to execute.
       - This his is the only required attribute/property.
@@ -171,11 +171,11 @@ class Description(Object, AttributeInterface):
       jd = saga.job.Description()
       jd.executable = "/usr/local/bin/blast"
 
-    """
+    """)
       
     ######################################################################
     ## Property: 
-    """
+    Arguments = property (doc = """
     Arguments:
     List of arguments for the executable
       - This attribute is optional.
@@ -187,11 +187,11 @@ class Description(Object, AttributeInterface):
       jd = saga.job.Description()
       jd.arguments = ["--prefix", "/usr/local/bin"]
 
-    """
+    """)
 
     ######################################################################
     ## Property: 
-    """
+    Environment = property (doc = """
     Environment:
     The environment variables to set in the job's execution context.
       - exported into the job environment
@@ -203,25 +203,25 @@ class Description(Object, AttributeInterface):
       jd = saga.job.Description()
       jd.environment = ["PATH=/bin:/usr/bin", "TARGET=KingKong"]
 
-    """
+    """)
 
 
 
     ######################################################################
     ## Property: 
-    """
-    File Transfer:
+    FileTransfer = property (doc = """
+    FileTransfer:
     Defines the file staging operations.
 
     B{Example}::
       jd = saga.job.Description()
       jd.arguments = ["--prefix", "/usr/local/bin"]
 
-    """
+    """)
 
     ######################################################################
     ## Property: 
-    """
+    Output = property (doc = """
     Output:
     The file in which the job\'s stdout stream will be captured.
 
@@ -229,11 +229,11 @@ class Description(Object, AttributeInterface):
       jd = saga.job.Description()
       jd.output = "/tmp/app.log"
 
-    """
+    """)
 
     ######################################################################
     ## Property: 
-    """
+    Error = property (doc = """
     Error:
     The file in which the job\'s stderr stream will be captured.
 
@@ -241,11 +241,11 @@ class Description(Object, AttributeInterface):
       jd = saga.job.Description()
       jd.error = "/tmp/app.err"
 
-    """
+    """)
 
     ######################################################################
     ## Property: 
-    """
+    Project = property (doc = """
     Project:
     The project / allocation name the job should be credited to.
       - This attribute is used by the scheduler backend to credit the allocated
@@ -255,11 +255,11 @@ class Description(Object, AttributeInterface):
       jd = saga.job.Description()
       jd.project = "project_42"
 
-    """
+    """)
 
     ######################################################################
     ## Property: 
-    """
+    Queue = property (doc = """
     Queue:
     The queue on the backend system to place the job in.
       - Schedulers which support different queues (with different service
@@ -269,11 +269,11 @@ class Description(Object, AttributeInterface):
       jd = saga.job.Description()
       jd.queue = "Large"
 
-    """
+    """)
 
     ######################################################################
     ## Property:
-    """
+    WallTimeLimit = property (doc = """
     WallTimeLimit:
     The hard limit (in minutes) for the total job runtime.
       - The job is not necessarily killed when it overruns the specified time,
@@ -284,11 +284,11 @@ class Description(Object, AttributeInterface):
       jd = saga.job.Description()
       jd.wall_time_limit = "42"
 
-    """
+    """)
 
     ######################################################################
     ## Property: 
-    """
+    WorkingDirectory = property (doc = """
     WorkingDirectory:
     The working directory for the job.
       - If the directory does not exist, it will be created.
@@ -301,11 +301,11 @@ class Description(Object, AttributeInterface):
       jd = saga.job.Description()
       jd.working_directory = "/scratch/cpt_hook/"
 
-    """
+    """)
 
     ######################################################################
     ## Property: 
-    """
+    Contact = property (doc = """
     Contact:
     Endpoint describing where to report job state transitions (e.g., email).
       - This information is used to send notifications for job state changes, to
@@ -315,11 +315,11 @@ class Description(Object, AttributeInterface):
       jd = saga.job.Description()
       jd.contact = "cpt_hook@piratebay.org"
 
-    """
+    """)
 
     ######################################################################
     ## Property: 
-    """
+    Name = property (doc = """
     Name:
     Define a name for the job.
       - Defining an explicit name can help debugging on the backend system.
@@ -327,11 +327,11 @@ class Description(Object, AttributeInterface):
       jd = saga.job.Description()
       jd.name = "myblastjob_01"
 
-    """
+    """)
 
     ######################################################################
     ## Property: 
-    """
+    TotalCPUCount = property (doc = """
     TotalCPUCount:
     Total number of cpus requested for this job.
       - This attribute is used for jobs spanning more than one process instance,
@@ -344,11 +344,11 @@ class Description(Object, AttributeInterface):
       jd = saga.job.Description()
       jd.total_cpu_count = 64
 
-    """
+    """)
 
     ######################################################################
     ## Property: 
-    """
+    NumberOfProcesses = property (doc = """
     NumberOfProcesses:
     Number of processes to launch
       - This attribute specifies how many process instances the application is
@@ -361,11 +361,11 @@ class Description(Object, AttributeInterface):
       jd = saga.job.Description()
       jd.number_of_processes = 8
 
-    """
+    """)
 
     ######################################################################
     ## Property: 
-    """
+    SPMDVariation = property (doc = """
     SPMDVariation:
     SPMD job type and startup mechanism
       - supported values: MPI, OpenMP, None
@@ -377,5 +377,5 @@ class Description(Object, AttributeInterface):
       jd = saga.job.Description()
       jd.spmd_variation = "MPI"
 
-    """
+    """)
 
