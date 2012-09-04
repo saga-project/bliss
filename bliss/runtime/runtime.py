@@ -9,8 +9,17 @@ import os
 import logging
 import bliss.plugins.registry
 
+def _dyn_import(name):
+    mod = __import__(name)
+    components = name.split('.')
+    for comp in components[1:]:
+        mod = getattr(mod, comp)
+    return mod
+
+
 class Runtime:
     '''Implements the Bliss runtime system'''
+
 
     def __init__(self):
         '''Constructs a runtime object'''
@@ -48,35 +57,65 @@ class Runtime:
 
         address=str(hex(id(self)))
         self.logger = logging.getLogger('bliss.'+self.__class__.__name__)#+'('+address+')') 
-        self.logger.info("BLISS runtime instance created at %s" % address)
+        self.logger.debug("BLISS runtime instance created at %s" % address)
         self.plugin_class_list = {}
         self.plugin_instance_list = {}
         
         #iterate thrugh plugin registry
         for plugin in bliss.plugins.registry._registry:
-            self.logger.info("Found plugin %s supporting URL schmemas %s and API type(s) %s" \
-              % (plugin["name"], plugin['schemas'], plugin['apis']))
+
+            try:
+                # first step -- make sure the plug-in has been
+                # registered correctly and defines a mandatory 
+                # set of attributes
+                module_str = plugin['module']
+                class_str  = plugin['class']
+                self.logger.debug("Loading plug-in '%s.%s'" % (module_str, class_str))
+            except Exception, ex:
+                self.logger.error("Error inspecting plug-in registry entry '%s': %s. Skipping." % (plugin, ex))
+                continue # continue with next plug-in
+            try:
+                _module = __import__(module_str, fromlist=[class_str])
+                _plugin_class = getattr(_module, class_str)
+            except Exception, ex:
+                self.logger.error("Error loading plug-in class '%s.%s': %s. Skipping." % (module_str, class_str, ex))
+                continue # continue with next plug-in
+
+            # at this point, we have managed to load the plugin class 
+            # successfully. however, other things can still go wrong:
+            try:
+                _plugin_name    = _plugin_class.plugin_name()
+                _plugin_schemas = _plugin_class.supported_schemas()
+                _plugin_apis    = _plugin_class.supported_apis()
+                self.logger.info("Found plugin '%s' supporting URL schmemas %s and API type(s) %s" \
+                  % (_plugin_name, _plugin_schemas, _plugin_apis))
+            
+            except Exception, ex:
+                self.logger.error("Error loading plug-in information for '%s.%s': %s. Skipping." % (module_str, class_str, ex))
+                continue # continue with next plug-in
+
             try:
                 # see if the plugin can work properly on this system
-                plugin["class"].sanity_check()
-                self.logger.info("Plugin %s internal sanity check passed" \
-                  % (plugin["name"]))
+                _plugin_class.sanity_check()
+                self.logger.debug("Plugin %s internal sanity check passed" % (_plugin_name))
+
                 # passed. add it to the list
-                for schema in plugin["schemas"]:
+                for schema in _plugin_schemas:
                     if schema in self.plugin_class_list:
-                        self.plugin_class_list[schema].append(plugin["class"])
+                        self.plugin_class_list[schema].append(_plugin_class)
                     else:
                         self.plugin_class_list[schema] = list()
-                        self.plugin_class_list[schema].append(plugin["class"])
+                        self.plugin_class_list[schema].append(_plugin_class)
                     self.logger.info("Registered plugin %s as handler for URL schema %s://" \
-                      % (plugin["name"], schema))
+                      % (_plugin_name, schema))
             except Exception, ex:
-                self.logger.error("Sanity check FAILED for plugin %s: %s. Disabled." \
-                  % (plugin["name"], str(ex)))
+                self.logger.error("Sanity check FAILED for plugin %s: %s. Skipping." \
+                  % (_plugin_name, str(ex)))
 
     def __del__(self):
         '''Deletes runtime object'''
-        print "runtime -- delete"
+        pass
+        #print "runtime -- delete"
 
 
     def get_plugin_for_url(self, url, apitype):
@@ -85,7 +124,7 @@ class Runtime:
         if url.scheme in self.plugin_instance_list:
             for plugin_obj in self.plugin_instance_list[url.scheme]:
                 if apitype in plugin_obj.supported_apis:                       
-                    self.logger.info("Found an existing plugin instance for url scheme %s://: %s" \
+                    self.logger.debug("Found an existing plugin instance for url scheme %s://: %s" \
                       % (str(url.scheme), self.plugin_instance_list[url.scheme]))
                     return plugin_obj
 
@@ -93,7 +132,7 @@ class Runtime:
             for plugin in self.plugin_class_list[url.scheme]:
                 plugin_obj = plugin(url)
                 if apitype in plugin_obj.__class__.supported_apis():                       
-                    self.logger.info("Instantiated plugin '%s' for URL scheme %s:// and API type '%s'" \
+                    self.logger.debug("Instantiated plugin '%s' for URL scheme %s:// and API type '%s'" \
                       % (plugin_obj.name, str(url.scheme), apitype))
 
                     if url.scheme in self.plugin_instance_list: 

@@ -9,6 +9,8 @@ __license__   = "MIT"
 from bliss.utils       import urlparse25 as urlparse  
 from bliss.saga.Object import Object 
 
+import bliss
+
 class Url(Object):
     '''The Url class as defined in GFD.90.
     
@@ -298,7 +300,7 @@ class Url(Object):
     ## Query property
     def set_query(self, path):
         """Set the 'query' component of the URL.
-           @type query: str
+           @type path: str
         """
         newurl = urlparse.urlunparse((self._urlobj.scheme,
                                      self._urlobj.netloc, 

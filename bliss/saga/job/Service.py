@@ -93,11 +93,12 @@ class Service(Object):
     ######################################################################
     ## 
     def __del__(self):
-        '''Delete the service in a civilised fashion.'''
-        if self._plugin is not None:
-            self._plugin.unregister_service_object(self)
-        else:
-            pass # can't throw here
+        '''Delete the service object.'''
+        if hasattr(self, '_plugin'):
+            if self._plugin is not None:
+                self._plugin.unregister_service_object(self)
+            else:
+                pass # can't throw here
 
     ######################################################################
     ##
