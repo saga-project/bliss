@@ -126,7 +126,7 @@ class Description(Object, AttributeInterface):
                         apitype=Object.ObjectType.JobAPI,)
 
         # set attribute interface properties
-        self.attributes_extensible_  (False)
+        self.attributes_extensible_  (True)
         self.attributes_camelcasing_ (True)
 
         # register properties with the attribute interface
