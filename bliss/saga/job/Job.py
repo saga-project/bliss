@@ -69,7 +69,8 @@ class Job(Object, AttributeInterface):
     ##
     def __init__(self):
         '''PRIVATE Constructor (don't call explicitly!)'''
-        Object.__init__(self, Object.ObjectType.Job, apitype=Object.ObjectType.JobAPI)
+        Object.__init__(self)
+        self._apitype = 'saga.job'
       
         # set attribute interface properties
         self.attributes_extensible_  (True)

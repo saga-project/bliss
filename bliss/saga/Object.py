@@ -44,65 +44,14 @@ class Object(object) :
         remote = saga.filesystem.Directory(s, d)
         remote.copy('output', 'file://localhost/tmp/output')
     '''
-
-    class ObjectType :
-        BaseAPI              = "saga.base"
-        '''Look & Feel API namespace'''
-        Url                  = "saga.Url"
-        '''saga.Url object type.'''
-        Session              = "saga.Session"
-        '''saga.Session object type.'''
-        Context              = "saga.Context"
-        '''saga.Context object type.'''
-
-        JobAPI               = "saga.job"
-        '''saga.job API namespace'''
-        Job                  = "saga.job.Job"
-        '''saga.job.Job object type.'''
-        JobService           = "saga.job.Service"
-        '''saga.job.Service object type.'''
-        JobDescription       = "saga.job.Description"
-        '''saga.job.Description object type.'''
-        JobContainer         = "saga.job.Container"
-        '''saga.job.Container (task container) object type.'''
-
-        SDAPI                = "saga.sd"
-        '''saga.sd API namespace'''
-        SDDiscoverer         = "saga.sd.Discoverer"
-        '''saga.sd.Discoverer object type.'''
-        SDServiceDescription = "saga.sd.ServiceDescription"
-        '''saga.sd.ServiceDescription object type.'''
-        SDServiceData        = "saga.sd.ServiceData"
-        '''saga.sd.ServiceData object type.'''
-
-        FilesystemAPI        = "saga.filesystem"
-        '''saga.filesystem API namespace'''
-        FilesystemFile       = "saga.filesystem.File"
-        '''saga.filesystem.File object type'''
-        FilesystemDirectory  = "saga.filesystem.Directory"
-        '''saga.filesystem.File object type'''
-
-        ResourceAPI                 = "saga.resource"
-        '''saga.resource API namespace'''
-        ResourceManager             = "saga.resource.Manager"
-        '''saga.resource.Manager object type'''
-        ResourceComputeDescription  = "saga.resource.ComputeDescription"
-        '''saga.resource.Description object type'''
-        ResourceCompute             = "saga.resource.Compute"
-        '''saga.resource.Compute object type'''
-        ResourceStorageDescription  = "saga.resource.StorageDescription"
-        '''saga.resource.StorageDescription object type'''
-        ResourceStorage             = "saga.resource.Storage"
-        '''saga.resource.Storage object type'''
-
     __shared_state = {}
     __shared_state["runtime_initialized"] = False
 
-    __slots__ = ("_plugin", "_type", "_logger", "_session")
+    __slots__ = ("_plugin", "_type", "_logger", "_session", "_apitype")
 
     ######################################################################
     ## 
-    def __init__(self, objtype, apitype, session=None):
+    def __init__(self, session=None): # objtype, apitype, session=None):
         '''Constructor.'''
  
         if not self.__shared_state["runtime_initialized"]:
@@ -112,8 +61,6 @@ class Object(object) :
             self.__shared_state["runtime_initialized"] = True
 
         self._plugin = None
-        self._object_type = objtype
-        self.Exceptiontype = apitype
         self._logger = logging.getLogger('bliss.'+self.__class__.__name__)
  
         if session is not None:
@@ -139,7 +86,7 @@ class Object(object) :
     def _get_plugin(self):
         '''Bind an object to the runtime'''
         try:
-            return self.__shared_state["runtime_instance"].get_plugin_for_url(self._url, self.Exceptiontype) 
+            return self.__shared_state["runtime_instance"].get_plugin_for_url(self._url, self._apitype) 
         except Exception, ex:
             error = ("%s %s" % (str(ex), tback.get_traceback()))
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, error)
@@ -158,17 +105,6 @@ class Object(object) :
         return locals()
     session = property(**session())
 
-    ######################################################################
-    ## Property: object_type
-    def object_type():
-        doc = "The object's type identifier."
-        def fget(self):
-            return self._object_type
-        return locals()
-    object_type = property(**object_type())
-
-
-
     ######################################################################	  	
     ## Property: id
 	  	
@@ -185,11 +121,4 @@ class Object(object) :
         '''
         return self.session
 
-    ######################################################################
-    ##
-    def _get_object_type(self):
-        '''return the object type.
-           It is encouraged to use the L{object_type} property instead.
-        '''
-        return self.object_type
 
