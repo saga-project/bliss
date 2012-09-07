@@ -52,8 +52,8 @@ class StorageDescription(Object, AttributeInterface):
     ## 
     def __init__(self):
         '''Create a new (empty) storage resource description.'''
-        Object.__init__(self, Object.ObjectType.ResourceStorageDescription, 
-                        apitype=Object.ObjectType.ResourceAPI)
+        Object.__init__(self)
+        self._apitype = 'saga.resource'
 
 
         self.attributes_extensible_  (False)

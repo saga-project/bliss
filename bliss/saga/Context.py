@@ -75,8 +75,8 @@ class Context(Object, AttributeInterface):
     def __init__(self):
         '''Constructor'''
 
-        Object.__init__(self, objtype=Object.ObjectType.Context,
-                        apitype=Object.ObjectType.BaseAPI)
+        Object.__init__(self)
+        self._apitype = 'saga.base'
 
         self.__logger = logging.getLogger('bliss.'+self.__class__.__name__)
 

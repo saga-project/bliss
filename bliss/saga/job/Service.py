@@ -47,8 +47,8 @@ class Service(Object):
            @param url: Url of the (remote) job manager.
            @type  url: L{Url} 
         '''
-        Object.__init__(self, Object.ObjectType.JobService, 
-                            apitype=Object.ObjectType.JobAPI, session=session)
+        Object.__init__(self, session=session)
+        self._apitype = 'saga.job'
 
         if type(url) == str:
             self._url = Url(str(url))

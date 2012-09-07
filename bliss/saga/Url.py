@@ -58,8 +58,8 @@ class Url(Object):
     ##
     def __init__(self, url=''):
         '''Create a new Url object.'''
-        Object.__init__(self, objtype=Object.ObjectType.Url,
-                        apitype=Object.ObjectType.BaseAPI)
+        Object.__init__(self)
+        self._apitype = 'saga.base'
 
 
         if type(url) == str:
