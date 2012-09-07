@@ -1,6 +1,7 @@
 Version 0.2.5 released 2012-X-YY
 ----------------------------------------------------------------------
 
+* Removed object_type API. Python buildins can be used instead
 * Updates to Filesystem API
 * Added JobDescription.name attribute (as defined in DRMAA)
 * Introduced stateful SSH connection substrate for PBS, SGE, etc
