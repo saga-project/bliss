@@ -49,7 +49,7 @@ class ComputeDescription(Object, AttributeInterface):
     def _deep_copy(cd):
         cd_copy = bliss.saga.resource.ComputeDescription()
 
-        AttributeInterface.attributes_deep_copy_ (cd, cd_copy)
+        AttributeInterface._attributes_deep_copy (cd, cd_copy)
 
         return cd_copy
 
@@ -61,21 +61,21 @@ class ComputeDescription(Object, AttributeInterface):
         self._apitype = 'saga.resource'
 
         # set attribute interface properties
-        self.attributes_extensible_  (False)
-        self.attributes_camelcasing_ (True)
+        self._attributes_extensible  (False)
+        self._attributes_camelcasing (True)
 
         # register properties with the attribute interface 
-        self.attributes_register_  ('Dynamic',         False, self.Bool,   self.Scalar, self.Writable)
-        self.attributes_register_  ('Start',           None,  self.Time,   self.Scalar, self.Writable)
-        self.attributes_register_  ('End',             None,  self.Time,   self.Scalar, self.Writable)
-        self.attributes_register_  ('Duration',        None,  self.Time,   self.Scalar, self.Writable)
-        self.attributes_register_  ('Template',        None,  self.String, self.Scalar, self.Writable)
+        self._attributes_register  ('Dynamic',         False, self.Bool,   self.Scalar, self.Writable)
+        self._attributes_register  ('Start',           None,  self.Time,   self.Scalar, self.Writable)
+        self._attributes_register  ('End',             None,  self.Time,   self.Scalar, self.Writable)
+        self._attributes_register  ('Duration',        None,  self.Time,   self.Scalar, self.Writable)
+        self._attributes_register  ('Template',        None,  self.String, self.Scalar, self.Writable)
 
-        self.attributes_register_  ('Slots',           1,     self.Int,    self.Scalar, self.Writable)
-        self.attributes_register_  ('OperatingSystem', 'Any', self.Enum,   self.Scalar, self.Writable)
-        self.attributes_register_  ('Architecture',    'Any', self.Enum,   self.Scalar, self.Writable)
-        self.attributes_register_  ('Hostnames',       [],    self.String, self.Vector, self.Writable)
-        self.attributes_register_  ('Memory',          None,  self.Int,    self.Scalar, self.Writable)
+        self._attributes_register  ('Slots',           1,     self.Int,    self.Scalar, self.Writable)
+        self._attributes_register  ('OperatingSystem', 'Any', self.Enum,   self.Scalar, self.Writable)
+        self._attributes_register  ('Architecture',    'Any', self.Enum,   self.Scalar, self.Writable)
+        self._attributes_register  ('Hostnames',       [],    self.String, self.Vector, self.Writable)
+        self._attributes_register  ('Memory',          None,  self.Int,    self.Scalar, self.Writable)
 
     ######################################################################
     ## 

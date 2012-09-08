@@ -73,31 +73,31 @@ class Job(Object, AttributeInterface):
         self._apitype = 'saga.job'
       
         # set attribute interface properties
-        self.attributes_extensible_  (True)
-        self.attributes_camelcasing_ (True)
+        self._attributes_extensible  (True)
+        self._attributes_camelcasing (True)
 
         # register properties with the attribute interface 
-        self.attributes_register_  ('State',      self.Unknown, self.Enum,   self.Scalar, self.ReadOnly)
-        self.attributes_register_  ('Exitcode',   None,         self.Int,    self.Scalar, self.ReadOnly)
-        self.attributes_register_  ('JobID',      None,         self.String, self.Scalar, self.ReadOnly)
-        self.attributes_register_  ('ServiceURL', None,         self.Url,    self.Scalar, self.ReadOnly)
+        self._attributes_register  ('State',      self.Unknown, self.Enum,   self.Scalar, self.ReadOnly)
+        self._attributes_register  ('Exitcode',   None,         self.Int,    self.Scalar, self.ReadOnly)
+        self._attributes_register  ('JobID',      None,         self.String, self.Scalar, self.ReadOnly)
+        self._attributes_register  ('ServiceURL', None,         self.Url,    self.Scalar, self.ReadOnly)
 
-        self.attributes_register_deprecated_  ('jobid',       'JobID')
-        self.attributes_register_deprecated_  ('serviceurl', 'ServiceURL')
+        self._attributes_register_deprecated  ('jobid',       'JobID')
+        self._attributes_register_deprecated  ('serviceurl', 'ServiceURL')
 
 
-        self.attributes_set_enums_  ('State',   [self.Unknown, self.New,
+        self._attributes_set_enums  ('State',   [self.Unknown, self.New,
                                                  self.Pending, self.Running, 
                                                  self.Done,    self.Failed, 
                                                  self.Canceled])
         
-        self.attributes_set_getter_ ('State',    self.get_state)
-        self.attributes_set_getter_ ('jobID',    self.get_job_id)
-        self.attributes_set_getter_ ('Exitcode', self.get_exitcode_)
+        self._attributes_set_getter ('State',    self.get_state)
+        self._attributes_set_getter ('jobID',    self.get_job_id)
+        self._attributes_set_getter ('Exitcode', self._get_exitcode)
 
 
     ######################################################################
-    def get_exitcode_ (self) :
+    def _get_exitcode (self) :
         return self._plugin.job_get_exitcode (self)
 
     ######################################################################
