@@ -57,8 +57,8 @@ class ComputeDescription(Object, AttributeInterface):
     ## 
     def __init__(self):
         '''Create a new (empty) compute resource description.'''
-        Object.__init__(self, Object.ObjectType.ResourceComputeDescription, 
-                        apitype=Object.ObjectType.ResourceAPI,)
+        Object.__init__(self)
+        self._apitype = 'saga.resource'
 
         # set attribute interface properties
         self.attributes_extensible_  (False)
