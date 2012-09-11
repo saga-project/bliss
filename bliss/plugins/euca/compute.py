@@ -28,6 +28,8 @@ class EucaCompute(object):
         self.image = self.url.path # furl(self.url.__str__()).path.segments[-1]
         self.reservation = None
 
+        # NOTE AM: if UserPass information are not in the URL, they need to 
+        # be inferred from session/context, or environment.
         self.access_key = self.url.username
         self.private_key = self.url.password
         self.host = self.url.host
@@ -46,6 +48,8 @@ class EucaCompute(object):
         #userkey = property(** userkey()) = ssh id to use / key_name for image
 
         
+        # NOTE AM: what does 'is_secure=False' mean?  Related to the code
+        # commented out above?
         self.connection = boto.connect_euca(
             aws_access_key_id=self.access_key,
             aws_secret_access_key=self.private_key,
@@ -56,7 +60,7 @@ class EucaCompute(object):
             #path="/services/Eucalyptus"                               
             )
 
-        sgs= self.connection.get_all_security_groups()
+        sgs = self.connection.get_all_security_groups()
                  
         if not 'BLISS' in [i.name for i in sgs]:
             self.pi.log_info("Creating BLISS security group")
@@ -72,7 +76,6 @@ class EucaCompute(object):
         
         return self.reservation.instances[0]
         
-#self.state = bliss.saga.resource.state.Pending
 
     def __del__(self):
         pass
@@ -100,24 +103,10 @@ class EucaCompute(object):
 
     def get_description(self):
         cd = bliss.saga.resource.compute_description_api.ComputeDescription()
-        print cd.list_attributes()
-        cd.set_attribute("ipv4", "192.168.1.1")
-
-        #instance.ip_address 
+        # print cd.list_attributes()
+        cd.set_attribute("hostnames", ["192.168.1.1"])
         
         return cd
-#        if self.state == bliss.saga.job.Job.Running:
-#            # only update if still running 
-#            if self.sshchannel.exit_status_ready():
-#                # are we all done?
-#                self.returncode = self.sshchannel.recv_exit_status()
-#                if self.returncode is not None:
-#                    if self.returncode != 0:
-#                        self.state = bliss.saga.job.Job.Failed
-#                    else:
-#                        self.state = bliss.saga.job.Job.Done
-               
-#        return self.state
 
     def terminate(self):
        for i in self.reservation.instances:

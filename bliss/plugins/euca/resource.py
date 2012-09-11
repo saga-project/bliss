@@ -122,7 +122,7 @@ class ResourceBookKeeper:
 #    def compute_resource_get_state(self, res_obj,):
 
 class EucaResourcePlugin(ResourcePluginInterface):
-    '''Implements a job plugin that can submit jobs to a bigjob server'''
+    '''Implements a resource plugin that can submit to manage eucalyptus VMs '''
 
     ## Step 1: Define adaptor name. Convention is:
     ##         saga.plugin.<package>.<name>
@@ -135,70 +135,6 @@ class EucaResourcePlugin(ResourcePluginInterface):
     ## Step 3: Define apis supported by this adaptor
     ##
     _apis = ['saga.resource']
-
-        ########################################
-    ##
-    class BookKeeper:
-        '''Keeps track of job and service objects'''
-        def __init__(self, parent):
-            self.objects = {}
-            self.processes = {}
-            self.parent = parent
-        
-        def add_service_object(self, service_obj):
-            self.objects[hex(id(service_obj))] = {'instance' : service_obj, 'jobs' : []}
-
-        def del_service_obj(self, service_obj):
-            try:
-                self.objects.remove((hex(id(service_obj))))
-            except Exception:
-                pass
-
-        def add_job_object(self, job_obj, service_obj):
-            service_id = hex(id(service_obj))  
-            job_id = hex(id(job_obj))
-            try:
-                self.objects[service_id]['jobs'].append(job_obj)
-                self.processes[job_id] = SSHJobProcess(jobdescription=job_obj.get_description(), plugin=self.parent, service_object=service_obj)
-            except Exception, ex:
-                self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                  "Can't register job: %s" % (ex))   
-
-        def del_job_object(self, job_obj):
-            pass
-
-        def get_service_for_job(self, job_obj):
-            '''Return the service object the job is registered with'''
-            for key in self.objects.keys():
-                if job_obj in self.objects[key]['jobs']:
-                    return self.objects[key]['instance']
-            self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-              "INTERNAL ERROR: Job object %s is not known by this plugin" % (job)) 
-
-        def get_job_for_jobid(self, service_obj, job_id):
-            '''Return the job object associated with the given job id'''
-            for job in self.list_jobs_for_service(service_obj):
-                proc = self.get_process_for_job(job)
-                if proc.getpid(str(service_obj._url)) == job_id:  
-                    return job
-            self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, "Job ID not known by this plugin.")
-
-
-        def list_jobs_for_service(self, service_obj):
-            '''List all jobs that are registered with the given service'''
-            service_id = hex(id(service_obj))  
-            return self.objects[service_id]['jobs']
-
-
-        def get_process_for_job(self, job_obj):
-            '''Return the local process object for a given job'''
-            try: 
-                return self.processes[hex(id(job_obj))]
-            except Exception, ex:
-                self.parent.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                "INTERNAL ERROR: Job object %s is not associated with a process" % (job_obj))   
-    ##
-    ########################################
 
     def __init__(self, url):
         '''Class constructor'''
@@ -257,14 +193,9 @@ class EucaResourcePlugin(ResourcePluginInterface):
             compute_resource = bliss.saga.resource.Compute()
             compute_resource._Compute__init_from_manager(manager_obj=manager_obj, 
                                                          compute_description=compute_description)
-
             self.bookkeeper.add_compute_object(  compute_resource, manager_obj)
-            #create a new boto instance compute_resource._boto with the
-            # compute_resource._url
-
-            #compute_resource._boto.create_instance()
-            
             return compute_resource
+            
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
               "Couldn't create a new compute resource: %s " % (str(ex)))
@@ -278,6 +209,7 @@ class EucaResourcePlugin(ResourcePluginInterface):
             storage_resource = bliss.saga.resource.Storage()
             storage_resource._Storage__init_from_manager(manager_obj=manager_obj, 
                                                          storage_description=storage_description)
+            # NOTE AM: where is the add to bookkeeper call?
             return storage_resource
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
@@ -354,6 +286,8 @@ class EucaResourcePlugin(ResourcePluginInterface):
         
 
     def compute_resource_get_state_detail(self, res_obj):
+        # NOTE AM: this is not state detail, but needs to go into the resource
+        # description!
         '''Implements interface from _ResourcePluginBase'''
         str=""
         i=res_obj.instance
