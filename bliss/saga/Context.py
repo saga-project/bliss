@@ -51,7 +51,6 @@ class Context(Object, AttributeInterface):
     contexts as described above -- that will suffice for the majority of use
     cases.
 
-    ----
 
     (*) The only exception to this rule is the 'UserPass' key, which is used to
     hold plain-text passwords.  Use this key with care -- it is not good

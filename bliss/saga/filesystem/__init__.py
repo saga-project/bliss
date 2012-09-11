@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-''' B{File/Directory Management}
+''' File/Directory Management
+    =========================
+
+    Introduction
+    ------------
 
     The file managment API provides the ability to interact with (local and
     remote) file systems via the two classes, L{filesystem.Directory} and
@@ -27,6 +31,16 @@
     The above example covers most of the semantics of the filesystem package --
     additional capabilities, such get_size() or move(), can be found in the
     individual class documentations.
+
+    Bliss Filesystem API Classes
+    ----------------------------
+
+    .. toctree::
+       :maxdepth: 1
+    
+       Directory.rst
+       File.rst
+
 '''
 
 __author__    = "Ole Christian Weidner"

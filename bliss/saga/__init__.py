@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-''' B{SAGA - A Simple API for Grid Applications}
+''' SAGA - A Simple API for Grid Applications
+    =========================================
+
+    Introduction
+    ------------
 
     SAGA-Bliss is a light-weight Python package that implements parts of the U{OGF
     GFD.90 SAGA<www.gridforum.org/documents/GFD.90.pdf>}
@@ -12,6 +16,21 @@
     distributed computing environments and application scenarios.
    
     More information can be found at: U{http://saga-project.github.com/bliss}
+
+    Saga Core API Classes
+    ---------------------
+
+    .. toctree::
+       :maxdepth: 1
+    
+       Object.rst
+       Error.rst
+       Exception.rst
+       Context.rst
+       Session.rst
+       Attributes.rst
+       Url.rst
+
 '''
 
 __author__    = "Ole Christian Weidner, et al."

@@ -36,8 +36,8 @@ class Job(Object, AttributeInterface):
 
     The methods defined on the Job object serve two purposes: inspecting the
     job's state, and initiating job state transitions.
+
     '''
-    
     
     New      = "saga.job.Job.New"      
     '''Indicates that the job hasn't been started yet'''

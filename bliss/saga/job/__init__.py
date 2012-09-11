@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-''' B{Job Management}
+''' 
+    Job Management
+    ==============
+
+    Introduction
+    ------------
 
     The job management API allows to create (via
     a L{job.Service}) and manage L{job.Job}s. A job is, for the purpose
@@ -44,6 +49,18 @@
     The above example shows most of the semantics of the job package -- additional
     information, such as about file staging and state model etc., can be found in
     the individual class documentations.
+
+
+    Bliss Job API Classes
+    ---------------------
+
+    .. toctree::
+       :maxdepth: 1
+    
+       Description.rst
+       Service.rst
+       Job.rst
+
 '''
 
 __author__    = "Ole Christian Weidner, et al."

@@ -113,7 +113,7 @@ class Directory(Object):
     ## 
     def list(self, pattern=None):
         '''List the directory's content
-           @param pattern: File name pattern (like POSIX 'ls', e.g. '*.txt')
+           @param pattern: File name pattern (like POSIX 'ls', e.g. '\*.txt')
 
            The call will return a list of files and subdirectories within the
            directory::

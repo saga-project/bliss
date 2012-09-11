@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-''' B{Resource Management}
+''' Resource Management
+    ===================
+
+    Introduction
+    ------------
 
     The resource API provides the means to create, discover, manage and use
     resources, in particular compute and storage resources (L{resource.Compute},
@@ -45,6 +49,20 @@
     similar to example 1.  It does not handle the co-location of compute and
     data resources -- that is left to either the backend, or to the application
     itself.
+
+    Bliss Resource API Classes
+    --------------------------
+
+    .. toctree::
+       :maxdepth: 1
+    
+       Manager.rst
+       State.rst
+       ComputeDescription.rst
+       Compute.rst
+       StorageDescription.rst
+       Storage.rst
+
 '''
 
 __author__    = "Ole Christian Weidner, et al."
