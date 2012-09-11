@@ -1278,6 +1278,25 @@ class AttributeInterface (_AttributesBase) :
         d['attributes'][us_key]['camelcase']  = key        # keep original key name
         d['attributes'][us_key]['underscore'] = us_key     # keep under_scored name
 
+    
+    ####################################
+    # @deprecated
+    def _register_rw_vec_attribute (self, name, accessor) :
+        """
+        This deprecated alias for _attributes_register makes bigjob happy
+        """
+        key     = name
+        syms    = accessor()
+        default = None
+
+        if syms['fdel'] : default = syms['fdel'] (self, None)
+
+        self._attributes_register (key, default, self.Any, self.Vector, self.Writable)
+
+        if syms['fget'] : self._attributes_set_getter (key, syms['fget'])
+        if syms['fset'] : self._attributes_set_setter (key, syms['fset'])
+
+
 
 
     ####################################
