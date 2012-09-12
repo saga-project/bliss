@@ -1285,9 +1285,18 @@ class AttributeInterface (_AttributesBase) :
         """
         This deprecated alias for _attributes_register makes bigjob happy
         """
+
         key     = name
-        syms    = accessor()
         default = None
+        syms    = {}
+
+        if type (accessor) == type (property()) :
+            syms['fdoc'] = accessor.__doc__
+            syms['fset'] = accessor.fget
+            syms['fget'] = accessor.fset
+            syms['fdel'] = accessor.fdel
+        else :
+            syms         = accessor()
 
         if syms['fdel'] : default = syms['fdel'] (self, None)
 
