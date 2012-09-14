@@ -8,10 +8,10 @@
     Introduction
     ------------
 
-    The job management API allows to create (via
-    a L{job.Service}) and manage L{job.Job}s. A job is, for the purpose
-    of the SAGA API, an instance of a specific application, i.e. one or more
-    processes of a specific executable.  
+    The job management API allows to create (via a L{job.Service}) and manage
+    L{job.Job} instances. A job is, for the purpose of the SAGA API, an instance
+    of a specific application, i.e. one or more processes of a specific
+    executable.  
 
     B{Example}::
 

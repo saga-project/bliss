@@ -323,6 +323,7 @@ class Description(Object, AttributeInterface):
     Name:
     Define a name for the job.
       - Defining an explicit name can help debugging on the backend system.
+
     B{Example}::
       jd = saga.job.Description()
       jd.name = "myblastjob_01"

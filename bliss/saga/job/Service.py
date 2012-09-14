@@ -16,8 +16,8 @@ class Service(Object):
     '''Loosely represents a SAGA job service as defined in GFD.90
     
     A job.Service represents anything which accepts job creation requests, and
-    which manages thus created L{job.Job}s.  That can be a local shell, a remote
-    ssh shell, a cluster queuing system, a IaaS backend -- you name it.
+    which manages thus created L{job.Job} instances.  That can be a local shell, 
+    a remote ssh shell, a cluster queuing system, a IaaS backend -- you name it.
 
     The job.Service is identified by an URL, which usually points to the contact
     endpoint for that service.

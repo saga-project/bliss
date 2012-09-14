@@ -15,8 +15,8 @@ class Object(object) :
 
     As Python natively provides most functionality of the SAGA base object class
     as specified in GFD.90, this object's only function is to support the use of
-    L{Session}s.  In particular, this class allows to obtain the session any
-    object is living in, to re-use that for other objects and operations.
+    L{Session} instances.  In particular, this class allows to obtain the session 
+    any object is living in, to re-use that for other objects and operations.
 
     Example::
 
