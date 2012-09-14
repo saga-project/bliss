@@ -9,13 +9,13 @@ __license__   = "MIT"
 class JobID(object):
     '''Represents a SAGA job ID (Not part of GFD.90)
       
-       The SAGA L{job.Job} ID is usually considered to be an opaque string, but
+       The SAGA :class:`bliss.saga.job.Job` ID is usually considered to be an opaque string, but
        in general is expected to be formatted as::
 
          '[backend-url]-[native-id]'
 
        (including brackets!), where 'backend-url' is the contact URL for the job
-       manager (L{job.Service}) who 'owns' the job, and 'native-id' is the job
+       manager (:class:`bliss.saga.job.Service`) who 'owns' the job, and 'native-id' is the job
        id as issued and understood by that job manager.
 
        Bliss exposes those components of the job ID in this class, which allows
@@ -40,8 +40,8 @@ class JobID(object):
     def __init__(self, service_url, native_id):
         '''Create a new job id.
 
-           @param service_url : The URL of the job service of the job.
-           @param native_id:    The native id (a.k.a. backend id) of the job.
+           :param service_url : The URL of the job service of the job.
+           :param native_id:    The native id (a.k.a. backend id) of the job.
 
            This function will mostly be useful for plugin developers, which
            frequently will have to create valid job IDs.

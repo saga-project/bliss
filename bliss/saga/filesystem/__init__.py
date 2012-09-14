@@ -8,11 +8,11 @@
     ------------
 
     The file managment API provides the ability to interact with (local and
-    remote) file systems via the two classes, L{filesystem.Directory} and
-    L{filesystem.File}. The API provides a number of operations, which all
+    remote) file systems via the two classes, :class:`bliss.saga.filesystem.Directory` and
+    :class:`bliss.saga.filesystem.File`. The API provides a number of operations, which all
     behave similar to the common unix command line tools (cp, ls, rm etc).
 
-    B{Example}::
+    **Example**::
 
       # get a directory handle
       dir = saga.filesystem.Directory("sftp://localhost/tmp/")

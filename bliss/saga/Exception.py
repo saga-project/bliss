@@ -27,7 +27,7 @@ class Exception(Exception):
         (e.traceback), and an error code (e.error) which identifies the type of
         error encountered.
  
-        B{Example}::
+        **Example**::
 
           try :
               file = saga.filesystem.File("sftp://alamo.futuregrid.org/tmp/data1.dat")
@@ -47,10 +47,10 @@ class Exception(Exception):
     def __init__(self, error, message):
         """Create a new Exception object.
 
-           @param error:   The type of error
-           @type  error:   L{Error}
-           @param message: The error message
-           @type  message: str
+           :param error:   The type of error
+           :type  error:   :class:`bliss.saga.Error`
+           :param message: The error message
+           :type  message: str
         """
         self._error = error
         self._message = message
@@ -80,7 +80,7 @@ class Exception(Exception):
     ##
     @property
     def error(self):
-        """The Exception's L{Error} type."""
+        """The Exception's :class:`bliss.saga.Error` type."""
         return self._error
 
     ######################################################################

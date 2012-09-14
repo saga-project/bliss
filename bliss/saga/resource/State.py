@@ -7,7 +7,7 @@ __license__   = "MIT"
 class State:
 
     ''' The State attribute is used to describe the state of resource instances,
-    in particular of instances of L{resource.Compute} and L{resource.Storage}.
+    in particular of instances of :class:`bliss.saga.resource.Compute` and :class:`bliss.saga.resource.Storage`.
     '''
 
     Unknown   =  0  

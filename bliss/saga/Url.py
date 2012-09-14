@@ -22,7 +22,7 @@ class Url(Object):
     purposes -- it allows to manipulate individual URL elements, while ensuring
     that the resulting URL is well formatted.
 
-    B{Example}::
+    **Example**::
 
         # create a URL from user input
         location = saga.Url (sys.argv[1])
@@ -37,7 +37,7 @@ class Url(Object):
     Each of these components can be accessed via its property or alternatively, 
     via getter / setter methods.
 
-    B{Example}::
+    **Example**::
 
         url = saga.Url ("scheme://pass:user@host:123/dir/file?query#fragment")
   
@@ -105,7 +105,7 @@ class Url(Object):
     ## Scheme property
     def set_scheme(self, scheme):
         """Set the 'scheme' component of the URL.
-           @type scheme: str
+           :type scheme: str
         """
         newurl = urlparse.urlunparse((scheme, 
                                      self._urlobj.netloc, 
@@ -130,7 +130,7 @@ class Url(Object):
     ## Host property
     def set_host(self, host):
         """Set the 'host' component of the URL.
-           @type host: str
+           :type host: str
         """
         netloc = self._make_netloc(self._urlobj.username, self._urlobj.password,
                                    host, self._urlobj.port)
@@ -158,7 +158,7 @@ class Url(Object):
     ## Port property
     def set_port(self, port):
         """Set the 'port' component of the URL.
-           @type port: int
+           :type port: int
         """
         netloc = self._make_netloc(self._urlobj.username, self._urlobj.password,
                                    self._urlobj.hostname, int(port))
@@ -189,7 +189,7 @@ class Url(Object):
     ## Username property
     def set_username(self, username):
         """Set the 'username' component of the URL.
-           @type username: str
+           :type username: str
         """
         netloc = self._make_netloc(username, self._urlobj.password,
                                    self._urlobj.hostname, self._urlobj.port)
@@ -218,7 +218,7 @@ class Url(Object):
     ## Password property
     def set_password(self, password):
         """Set the 'password' component of the URL.
-           @type password: str
+           :type password: str
         """
         netloc = self._make_netloc(self._urlobj.username, password,
                                    self._urlobj.hostname, self._urlobj.port)
@@ -246,7 +246,7 @@ class Url(Object):
     ## Fragment property
     def set_fragment(self, fragment):
         """Set the 'fragment' component of the URL.
-           @type fragment: str
+           :type fragment: str
         """
         newurl = urlparse.urlunparse((self._urlobj.scheme,
                                      self._urlobj.netloc, 
@@ -271,7 +271,7 @@ class Url(Object):
     ## Path property
     def set_path(self, path):
         """Set the 'path' component of the URL.
-           @type path: str
+           :type path: str
         """
         newurl = urlparse.urlunparse((self._urlobj.scheme,
                                      self._urlobj.netloc, 
@@ -300,7 +300,7 @@ class Url(Object):
     ## Query property
     def set_query(self, path):
         """Set the 'query' component of the URL.
-           @type path: str
+           :type path: str
         """
         newurl = urlparse.urlunparse((self._urlobj.scheme,
                                      self._urlobj.netloc, 

@@ -15,13 +15,13 @@ class Manager(Object):
     ''' The resource manager class, as the name suggests, manages resource
     instances.  It may be responsible for managing the lifetime of such
     instances 
-    ( L{create<create_compute>} 
-    / L{destroy<destroy_compute>}
-    / L{get<get_compute>}
+    ( :class:`bliss.saga.create<create_compute>` 
+    / :class:`bliss.saga.destroy<destroy_compute>`
+    / :class:`bliss.saga.get<get_compute>`
     ), and for inspecting them
-    ( L{list<list_compute_resources>}
-    / L{list_templates<list_compute_templates>}
-    / L{get_template_details<get_template_details>}
+    ( :class:`bliss.saga.list<list_compute_resources>`
+    / :class:`bliss.saga.list_templates<list_compute_templates>`
+    / :class:`bliss.saga.get_template_details<get_template_details>`
     ) [method links are for compute resources]::
 
       # obtain a handle to a suitable resource, and wait until it is active
@@ -33,10 +33,11 @@ class Manager(Object):
     storage or compute resources.  For the respective differences and the
     resource description details, see
 
-        - L{resource.Storage}
-        - L{resource.StorageDescription}
-        - L{resource.Compute}
-        - L{resource.ComputeDescription}
+
+        - :class:`bliss.saga.resource.Storage`
+        - :class:`bliss.saga.resource.StorageDescription`
+        - :class:`bliss.saga.resource.Compute`
+        - :class:`bliss.saga.resource.ComputeDescription`
 
     '''
 
@@ -44,8 +45,8 @@ class Manager(Object):
     ## 
     def __init__(self, url, session=None):
         '''Construct a new resource manager object
-           @param url: Url of the (remote) resource manager.
-           @type  url: L{Url} 
+           :param url: Url of the (remote) resource manager.
+           :type  url: :class:`bliss.saga.Url` 
         '''
         Object.__init__(self, session=session)
         self._apitype = 'saga.resource'

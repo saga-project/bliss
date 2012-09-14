@@ -31,8 +31,8 @@ class File(Object):
     def __init__(self, url, flags=None, session=None):
         '''Construct a new file object
 
-           @param url: Url of the (remote) file
-           @type  url: L{Url} 
+           :param url: Url of the (remote) file
+           :type  url: :class:`bliss.saga.Url` 
 
            The specified file is expected to exist -- otherwise a DoesNotExist
            exception is raised.  Also, the URL must point to a file (not to
@@ -100,8 +100,8 @@ class File(Object):
     def copy(self, target, flags=None):
         '''Copy the file to another location
 
-           @param target: Url of the copy target.
-           @param flags: Flags to use for the operation.
+           :param target: Url of the copy target.
+           :param flags: Flags to use for the operation.
 
 
            The file is copied to the given target location.  The target URL must
@@ -136,8 +136,8 @@ class File(Object):
     def move(self, target, flags=None):
         '''Move the file to another location
 
-           @param target: Url of the move target.
-           @param flags: Flags to use for the operation.
+           :param target: Url of the move target.
+           :param flags: Flags to use for the operation.
 
            The file is copied to the given target location.  The target URL must
            be an absolute path, and can be a target file name or target

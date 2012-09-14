@@ -26,7 +26,7 @@ class Context(Object, AttributeInterface):
     Context classes are used to inform the backends used by Bliss on what
     security tokens are expected to be used.  By default, Bliss will be able to
     pick up such tokens from their default location, but in some cases it might
-    be necessary to explicitly point to them - then use a L{Session} with
+    be necessary to explicitly point to them - then use a :class:`bliss.saga.Session` with
     context instances to do so.
 
     The usage example for contexts is below::
@@ -46,7 +46,7 @@ class Context(Object, AttributeInterface):
         j = saga.job.Service('ssh://remote.host.net/', s)
 
 
-    The L{Session} argument to the L{job.Service} constructor is fully optional
+    The :class:`bliss.saga.Session` argument to the :class:`bliss.saga.job.Service` constructor is fully optional
     -- if left out, Bliss will use default session, which picks up some default
     contexts as described above -- that will suffice for the majority of use
     cases.

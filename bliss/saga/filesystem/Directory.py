@@ -38,8 +38,8 @@ class Directory(Object):
     def __init__(self, url, flags=None, session=None):
         '''Construct a new directory object
 
-           @param url: Url of the (remote) file system.
-           @type  url: L{Url} 
+           :param url: Url of the (remote) file system.
+           :type  url: :class:`bliss.saga.Url` 
 
            The specified directory is expected to exist -- otherwise
            a DoesNotExist exception is raised.  Also, the URL must point to
@@ -113,7 +113,7 @@ class Directory(Object):
     ## 
     def list(self, pattern=None):
         '''List the directory's content
-           @param pattern: File name pattern (like POSIX 'ls', e.g. '\*.txt')
+           :param pattern: File name pattern (like POSIX 'ls', e.g. '\*.txt')
 
            The call will return a list of files and subdirectories within the
            directory::
@@ -150,7 +150,7 @@ class Directory(Object):
            that given target is removed instead.  The target must be a 
            directory.
 
-           @param path: (relative or absolute) path to a directory
+           :param path: (relative or absolute) path to a directory
 
        
            Example::
@@ -169,8 +169,8 @@ class Directory(Object):
     ## 
     def make_dir(self, path, flags=None):
         '''Create a new directoy
-           @param path: name/path of the new directory
-           @param flags: directory creation flags
+           :param path: name/path of the new directory
+           :param flags: directory creation flags
 
            The call creates a directory at the given location.
 
@@ -196,8 +196,8 @@ class Directory(Object):
     ## 
     def open_dir(self, path, flags=None):
         '''Open and return a new directoy
-           @param path: name/path of the directory to open
-           @param flags: directory creation flags
+           :param path: name/path of the directory to open
+           :param flags: directory creation flags
 
            The call opens and returns a directory at the given location.
 
@@ -222,8 +222,8 @@ class Directory(Object):
     ## 
     def copy(self, source, target, flags=None):
         '''Copy a file from source to target
-           @param source: path of the file to copy
-           @param target: absolute URL of target directory
+           :param source: path of the file to copy
+           :param target: absolute URL of target directory
 
            The source is copied to the given target directory.  The path of the
            source can be relative::
@@ -264,8 +264,8 @@ class Directory(Object):
     ## 
     def move(self, source, target, flags=None):
         '''Move a file from source to target
-           @param source: path of the file to copy
-           @param target: absolute URL of target directory
+           :param source: path of the file to copy
+           :param target: absolute URL of target directory
 
            The source is moved to the given target directory.  The path of the
            source can be relative::
@@ -307,7 +307,7 @@ class Directory(Object):
     def get_size(self, path=None):
         '''Returns the size of a file or directory (in bytes)
 
-           @param path: path of the file or directory
+           :param path: path of the file or directory
 
            Example::
 
@@ -329,7 +329,7 @@ class Directory(Object):
     def exists(self, path):
         '''Returns True if path exists, False otherwise. 
 
-           @param path: path of the entry to check
+           :param path: path of the entry to check
 
            Example::
 
@@ -351,7 +351,7 @@ class Directory(Object):
     def is_dir(self, path):
         '''Returns True if path is a directory, False otherwise. 
 
-           @param path: path of the entry to check
+           :param path: path of the entry to check
 
            Example::
 

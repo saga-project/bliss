@@ -37,6 +37,7 @@ class Callback () :
 
     The cb instance receives three parameters upon invocation:
 
+
       - obj: the watched object instance
       - key: the watched attribute (e.g. 'state' or 'state_detail')
       - val: the new value of the watched attribute
@@ -65,7 +66,7 @@ class Callback () :
 
           cp.add_callback ('state', mcb)
 
-    See documentation of the L{Attributes} interface for further details and
+    See documentation of the :class:`bliss.saga.Attributes` interface for further details and
     examples.
     """
 
@@ -580,7 +581,7 @@ class AttributeInterface (_AttributesBase) :
         method will restore a 'None' value to the attribute's default value.
 
         A deriving class can add additional value checks for attributes by
-        calling L{_attributes_add_check} (key, check).
+        calling :func:`_attributes_add_check` (key, check).
         """
 
         # make sure interface is ready to use.  We do not check for keys, that
@@ -724,6 +725,7 @@ class AttributeInterface (_AttributesBase) :
         This method converts a string containing POSIX shell wildcards into
         a regular expression with the same matching properties::
 
+
             *       -> .*
             ?       -> .
             {a,b,c} -> (a|b|c)
@@ -781,10 +783,10 @@ class AttributeInterface (_AttributesBase) :
         This internal method should not be explicitly called by consumers of
         this API, but is indirectly used via the different public interfaces.
 
-        See L{set_attribute} (key, val) for details.
+        See :func:`set_attribute` (key, val) for details.
 
         New value checks can be added dynamically, and per attribute, by calling
-        L{_attributes_add_check} (key, callable).
+        :func:`_attributes_add_check` (key, callable).
 
         Some internal methods can set the 'force' flag, and will be able to set
         attributes even in ReadOnly mode.  That is, for example, used for getter
@@ -849,7 +851,7 @@ class AttributeInterface (_AttributesBase) :
         This internal method should not be explicitly called by consumers of
         this API, but is indirectly used via the different public interfaces.
 
-        see L{get_attribute} (key) for details.
+        see :func:`get_attribute` (key) for details.
 
         Note that this method is not performing any checks or conversions --
         those are all performed when *setting* an attribute.  So, any attribute
@@ -880,7 +882,7 @@ class AttributeInterface (_AttributesBase) :
         This internal method should not be explicitly called by consumers of
         this API, but is indirectly used via the different public interfaces.
 
-        see L{list_attributes} () for details.
+        see :func:`list_attributes` () for details.
 
         Note that registration alone does not qualify for listing.  If 'ext' is
         True (default),extended attributes are listed, too.
@@ -909,7 +911,7 @@ class AttributeInterface (_AttributesBase) :
         This internal method should not be explicitly called by consumers of
         this API, but is indirectly used via the different public interfaces.
 
-        see L{find_attributes} (pattern) for details.
+        see :func:`find_attributes` (pattern) for details.
         """
 
         # FIXME: wildcard-to-regex
@@ -963,7 +965,7 @@ class AttributeInterface (_AttributesBase) :
         This internal method should not be explicitly called by consumers of
         this API, but is indirectly used via the different public interfaces.
 
-        see L{attribute_exists} (key) for details.
+        see :func:`attribute_exists` (key) for details.
 
         Registered keys which have never been explicitly set to a value do not
         exist for the purpose of this call.
@@ -1004,7 +1006,7 @@ class AttributeInterface (_AttributesBase) :
         This internal method should not be explicitly called by consumers of
         this API, but is indirectly used via the different public interfaces.
 
-        see L{attribute_is_readonly} (key) for details.
+        see :func:`attribute_is_readonly` (key) for details.
 
         This method will check if the given key is readonly, i.e. cannot be
         'set'.  The call will also return 'True' if the attribute is final
@@ -1027,7 +1029,7 @@ class AttributeInterface (_AttributesBase) :
         This internal method should not be explicitly called by consumers of
         this API, but is indirectly used via the different public interfaces.
 
-        see L{attribute_is_writable} (key) for details.
+        see :func:`attribute_is_writable` (key) for details.
 
         This method will check if the given key is writable - i.e. not readonly.
         """
@@ -1041,7 +1043,7 @@ class AttributeInterface (_AttributesBase) :
         This internal method should not be explicitly called by consumers of
         this API, but is indirectly used via the different public interfaces.
 
-        see L{attribute_is_removable} (key) for details.
+        see :func:`attribute_is_removable` (key) for details.
 
         'True' if the attrib is Writable and Extended.
         """
@@ -1058,7 +1060,7 @@ class AttributeInterface (_AttributesBase) :
         This internal method should not be explicitly called by consumers of
         this API, but is indirectly used via the different public interfaces.
 
-        see L{attribute_is_vector} (key) for details.
+        see :func:`attribute_is_vector` (key) for details.
         """
 
         # make sure interface is ready to use
@@ -1099,7 +1101,7 @@ class AttributeInterface (_AttributesBase) :
         This internal method should not be explicitly called by consumers of
         this API, but is indirectly used via the different public interfaces.
 
-        see L{add_callback} (key, cb) for details.
+        see :func:`add_callback` (key, cb) for details.
         """
 
         # make sure interface is ready to use
@@ -1115,7 +1117,7 @@ class AttributeInterface (_AttributesBase) :
         This internal method should not be explicitly called by consumers of
         this API, but is indirectly used via the different public interfaces.
 
-        see L{remove_callback} (key, cb) for details.
+        see :func:`remove_callback` (key, cb) for details.
         """
 
         # make sure interface is ready to use
@@ -1236,7 +1238,7 @@ class AttributeInterface (_AttributesBase) :
 
         The first parameter is the old name of the attribute, the second
         parameter is the aliased new name.  Note that the new name needs to be
-        registered before (via L{_attributes_register})::
+        registered before (via :class:`bliss.saga._attributes_register`)::
 
             # old code:
             self._attributes_register ('apple', 'Appel', self.String, self.Scalar, self.Writable)
@@ -1651,7 +1653,7 @@ class AttributeInterface (_AttributesBase) :
         This interface method is not part of the public consumer API, but can
         safely be called from within derived classes.
 
-        See documentation of L{_attributes_set_setter } for details.
+        See documentation of :class:`bliss.saga._attributes_set_setter ` for details.
         """
 
         if key != None :
@@ -1676,7 +1678,7 @@ class AttributeInterface (_AttributesBase) :
         This interface method is not part of the public consumer API, but can
         safely be called from within derived classes.
 
-        See documentation of L{_attributes_set_setter } for details.
+        See documentation of :class:`bliss.saga._attributes_set_setter ` for details.
         """
 
         # make sure interface is ready to use
@@ -1749,7 +1751,7 @@ class AttributeInterface (_AttributesBase) :
         """
         set_vector_attribute (key, val)
 
-        See also: L{set_attribute} (key, val).
+        See also: :func:`set_attribute` (key, val).
 
         As python can handle scalar and vector types transparently, this method
         is in fact not very useful.  For that reason, it maps internally to the
@@ -1766,7 +1768,7 @@ class AttributeInterface (_AttributesBase) :
         """
         get_vector_attribute (key)
 
-        See also: L{get_attribute} (key).
+        See also: :func:`get_attribute` (key).
 
         As python can handle scalar and vector types transparently, this method
         is in fact not very useful.  For that reason, it maps internally to the
@@ -1785,7 +1787,7 @@ class AttributeInterface (_AttributesBase) :
 
         Removing an attribute is actually different from unsetting it, or from
         setting it to 'None'.  On remove, all traces of the attribute are
-        purged, and the key will not be listed on L{list_attributes}() anymore.
+        purged, and the key will not be listed on :func:`list_attributes` () anymore.
         """
 
         key    = self._attributes_t_keycheck   (key)
@@ -1901,6 +1903,7 @@ class AttributeInterface (_AttributesBase) :
         A callback is any callable python construct, and MUST accept three
         arguments::
 
+
             - String key: the name of the attribute which changed
             - Any    val: the new value of the attribute
             - Any    obj: the object on which this attribute interface was called
@@ -1950,7 +1953,7 @@ class AttributeInterface (_AttributesBase) :
     #
     ####################################
     def __getattr__ (self, key) :
-        """ see L{get_attribute} (key) for details. """
+        """ see :func:`get_attribute` (key) for details. """
         
         key  = self._attributes_t_keycheck (key)
         return self._attributes_i_get (key)
@@ -1958,7 +1961,7 @@ class AttributeInterface (_AttributesBase) :
 
     ####################################
     def __setattr__ (self, key, val) :
-        """ see L{set_attribute} (key, val) for details. """
+        """ see :func:`set_attribute` (key, val) for details. """
         
         key  = self._attributes_t_keycheck (key)
         return self._attributes_i_set (key, val)
@@ -1966,7 +1969,7 @@ class AttributeInterface (_AttributesBase) :
 
     ####################################
     def __delattr__ (self, key) :
-        """ see L{remove_attribute} (key) for details. """
+        """ see :func:`remove_attribute` (key) for details. """
         
         key  = self._attributes_t_keycheck (key)
         return self._attributes_remove (key)
@@ -1982,7 +1985,7 @@ class AttributeInterface (_AttributesBase) :
     #
     ####################################
     def __getitem__ (self, key) :
-        """ see L{get_attribute} (key) for details. """
+        """ see :func:`get_attribute` (key) for details. """
         
         key    = self._attributes_t_keycheck   (key)
         us_key = self._attributes_t_underscore (key)
@@ -1991,7 +1994,7 @@ class AttributeInterface (_AttributesBase) :
 
     ####################################
     def __setitem__ (self, key, val) :
-        """ see L{set_attribute} (key, val) for details. """
+        """ see :func:`set_attribute` (key, val) for details. """
         
         key    = self._attributes_t_keycheck   (key)
         us_key = self._attributes_t_underscore (key)
@@ -2000,7 +2003,7 @@ class AttributeInterface (_AttributesBase) :
 
     ####################################
     def __delitem__ (self, key) :
-        """ see L{remove_attribute} (key) for details. """
+        """ see :func:`remove_attribute` (key) for details. """
         
         key    = self._attributes_t_keycheck   (key)
         us_key = self._attributes_t_underscore (key)
@@ -2009,7 +2012,7 @@ class AttributeInterface (_AttributesBase) :
 
     ####################################
     def __contains__ (self, key) :
-        """ see L{attribute_exists} (key) for details. """
+        """ see :func:`attribute_exists` (key) for details. """
         
         key    = self._attributes_t_keycheck   (key)
         us_key = self._attributes_t_underscore (key)
@@ -2032,7 +2035,7 @@ class AttributeInterface (_AttributesBase) :
 
     ####################################
     def iterkeys (self) :
-        """ see L{list_attributes} () for details. """
+        """ see :func:`list_attributes` () for details. """
         
         return self._attributes_i_list ()
 

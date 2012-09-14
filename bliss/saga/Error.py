@@ -8,7 +8,7 @@ __license__   = "MIT"
 class Error:
     """The SAGA error types.
 
-       SAGA error types are used by the L{Exception} class to 
+       SAGA error types are used by the :class:`bliss.saga.Exception` class to 
        indicate the type of error that has occured.
     """
 

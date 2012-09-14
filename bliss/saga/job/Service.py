@@ -16,7 +16,7 @@ class Service(Object):
     '''Loosely represents a SAGA job service as defined in GFD.90
     
     A job.Service represents anything which accepts job creation requests, and
-    which manages thus created L{job.Job} instances.  That can be a local shell, 
+    which manages thus created :class:`bliss.saga.job.Job` instances.  That can be a local shell, 
     a remote ssh shell, a cluster queuing system, a IaaS backend -- you name it.
 
     The job.Service is identified by an URL, which usually points to the contact
@@ -44,8 +44,8 @@ class Service(Object):
     ## 
     def __init__(self, url, session=None):
         '''Construct a new job service object
-           @param url: Url of the (remote) job manager.
-           @type  url: L{Url} 
+           :param url: Url of the (remote) job manager.
+           :type  url: :class:`bliss.saga.Url` 
         '''
         Object.__init__(self, session=session)
         self._apitype = 'saga.job'
@@ -105,8 +105,8 @@ class Service(Object):
     def create_job(self, job_description):
         '''Create a new job object.
 
-           @param job_description: The description for the new job.
-           @type  job_description: L{Description} 
+           :param job_description: The description for the new job.
+           :type  job_description: :class:`bliss.saga.Description` 
 
            create_job() accepts a job description, which described the
            application instance to be created by the backend.  The create_job()
@@ -148,7 +148,7 @@ class Service(Object):
     ##
     def get_job(self, job_id):
         '''Return the job object for the given job id.
-           @param job_id: The job id.
+           :param job_id: The job id.
 
            Job objects are a local representation of a remote stateful entity.
            The job.Service supports to reconnect to those remote entities::

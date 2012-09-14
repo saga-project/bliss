@@ -17,9 +17,9 @@ class Description(Object, AttributeInterface):
     The Description class allows the user to describes both the resource
     requirements (e.g. number  of CPUs, working directory etc.), as well as the
     application properties (e.g. executable path, program arguments, environment
-    etc.) of a L{job.Job} to be create by a L{job.Service}.
+    etc.) of a :class:`bliss.saga.job.Job` to be create by a :class:`bliss.saga.job.Service`.
 
-    B{Usage example 1} shows how to run a /bin/date job::
+    **Usage example 1** shows how to run a /bin/date job::
 
       jd = saga.job.Description()
 
@@ -31,7 +31,7 @@ class Description(Object, AttributeInterface):
 
       j.run()
 
-    B{Usage example 2} shows how to run a set of shell commands as a job::
+    **Usage example 2** shows how to run a set of shell commands as a job::
 
       script = '''
        ls -la /tmp
@@ -55,11 +55,11 @@ class Description(Object, AttributeInterface):
 
     """
 
-#      - B{ProcessesPerHost:} I{number of processes to be started per host}
+#      - **ProcessesPerHost:** I{number of processes to be started per host}
 #
-#      - B{ThreadsPerProcess:} I{number of threads to start per process}
+#      - **ThreadsPerProcess:** I{number of threads to start per process}
 #
-#      - B{Interactive:} I{run the job in interactive mode}
+#      - **Interactive:** I{run the job in interactive mode}
 #         - this implies that stdio streams will stay 
 #           connected to the submitter after job 
 #           submission, and during job execution. 
@@ -69,10 +69,10 @@ class Description(Object, AttributeInterface):
 #           throw an 'IncorrectParameter' error with a
 #           descriptive error message.
 #
-#      - B{Input:} I{pathname of the standard input file}
+#      - **Input:** I{pathname of the standard input file}
 #         - will not be used if 'Interactive' is 'True'
 #
-#      - B{Cleanup:} I{defines if output files get removed after the job finishes}
+#      - **Cleanup:** I{defines if output files get removed after the job finishes}
 #         - can have the Values 'True', 'False', and 
 #           'Default'
 #         - On 'False', output files MUST be kept 
@@ -84,29 +84,29 @@ class Description(Object, AttributeInterface):
 #         - translates into 'DeleteOnTermination' elements
 #           in JSDL
 #
-#      - B{JobStartTime:} I{time at which a job should be scheduled}
+#      - **JobStartTime:** I{time at which a job should be scheduled}
 #         - Could be viewed as a desired job start 
 #           time, but that is up to the resource 
 #           manager. 
 #         - format: number of seconds since epoch
 #
-#      - B{TotalCPUTime:} I{estimate total number of CPU seconds which the job will
+#      - **TotalCPUTime:** I{estimate total number of CPU seconds which the job will
 #    require}
 #         - intended to provide hints to the scheduler. 
 #           scheduling policies.
 #
-#      - B{TotalPhysicalMemory:} I{Estimated amount of memory the job requires}
+#      - **TotalPhysicalMemory:** I{Estimated amount of memory the job requires}
 #         - unit is in Mega-Byte
 #         - memory usage of the job is aggregated 
 #           across all processes of the job
 #
-#      - B{CPUArchitecture:} I{compatible processor for job submission}
+#      - **CPUArchitecture:** I{compatible processor for job submission}
 #         - allowed values as specified in JSDL
 #
-#      - B{OperatingSystemType:} I{compatible operating system for job submission}
+#      - **OperatingSystemType:** I{compatible operating system for job submission}
 #         - allowed values as specified in JSDL
 #
-#      - B{CandidateHosts:} I{list of host names which are to be considered by the
+#      - **CandidateHosts:** I{list of host names which are to be considered by the
 #    resource manager as candidate targets}
 
 
@@ -162,12 +162,13 @@ class Description(Object, AttributeInterface):
     Executable = property (doc = """
     Executable:
     Defines the command to execute.
+
       - This his is the only required attribute/property.
       - It can be a full pathname, a pathname relative to the working_directory as 
         evaluated on the execution host, or a executable name to be searched in the
         target host's PATH environment (if available).
 
-    B{Example}::
+    **Example**::
       jd = saga.job.Description()
       jd.executable = "/usr/local/bin/blast"
 
@@ -178,12 +179,13 @@ class Description(Object, AttributeInterface):
     Arguments = property (doc = """
     Arguments:
     List of arguments for the executable
+
       - This attribute is optional.
       - The order of arguments is, in general, significant.
       - The individual arguments are not expanded by the user environment (i.e.,
         don't use environment variables like $HOME)
       
-    B{Example}::
+    **Example**::
       jd = saga.job.Description()
       jd.arguments = ["--prefix", "/usr/local/bin"]
 
@@ -194,12 +196,13 @@ class Description(Object, AttributeInterface):
     Environment = property (doc = """
     Environment:
     The environment variables to set in the job's execution context.
+
       - exported into the job environment
       - format: 'key=value'
       - The individual variable values are not expanded by the user environment (i.e.,
         don't use environment variables like $HOME in values)
       
-    B{Example}::
+    **Example**::
       jd = saga.job.Description()
       jd.environment = ["PATH=/bin:/usr/bin", "TARGET=KingKong"]
 
@@ -213,7 +216,7 @@ class Description(Object, AttributeInterface):
     FileTransfer:
     Defines the file staging operations.
 
-    B{Example}::
+    **Example**::
       jd = saga.job.Description()
       jd.arguments = ["--prefix", "/usr/local/bin"]
 
@@ -225,7 +228,7 @@ class Description(Object, AttributeInterface):
     Output:
     The file in which the job\'s stdout stream will be captured.
 
-    B{Example}::
+    **Example**::
       jd = saga.job.Description()
       jd.output = "/tmp/app.log"
 
@@ -237,7 +240,7 @@ class Description(Object, AttributeInterface):
     Error:
     The file in which the job\'s stderr stream will be captured.
 
-    B{Example}::
+    **Example**::
       jd = saga.job.Description()
       jd.error = "/tmp/app.err"
 
@@ -248,10 +251,11 @@ class Description(Object, AttributeInterface):
     Project = property (doc = """
     Project:
     The project / allocation name the job should be credited to.
+
       - This attribute is used by the scheduler backend to credit the allocated
         resources to a specific project account.
 
-    B{Example}::
+    **Example**::
       jd = saga.job.Description()
       jd.project = "project_42"
 
@@ -262,10 +266,11 @@ class Description(Object, AttributeInterface):
     Queue = property (doc = """
     Queue:
     The queue on the backend system to place the job in.
+
       - Schedulers which support different queues (with different service
         qualities) use this attribute.
 
-    B{Example}::
+    **Example**::
       jd = saga.job.Description()
       jd.queue = "Large"
 
@@ -276,11 +281,13 @@ class Description(Object, AttributeInterface):
     WallTimeLimit = property (doc = """
     WallTimeLimit:
     The hard limit (in minutes) for the total job runtime.
+
       - The job is not necessarily killed when it overruns the specified time,
         but no guarantees are made.
+
       - The value is used by the scheduler to optimized scheduling.
 
-    B{Example}::
+    **Example**::
       jd = saga.job.Description()
       jd.wall_time_limit = "42"
 
@@ -291,13 +298,15 @@ class Description(Object, AttributeInterface):
     WorkingDirectory = property (doc = """
     WorkingDirectory:
     The working directory for the job.
+
       - If the directory does not exist, it will be created.
       - Relative path names (for output/error/file_staging) are relative to this
         working directory.
+
       - The backend may choose an arbitrary working directory if none is
         explicitly specified. 
 
-    B{Example}::
+    **Example**::
       jd = saga.job.Description()
       jd.working_directory = "/scratch/cpt_hook/"
 
@@ -308,10 +317,11 @@ class Description(Object, AttributeInterface):
     Contact = property (doc = """
     Contact:
     Endpoint describing where to report job state transitions (e.g., email).
+
       - This information is used to send notifications for job state changes, to
         email or other notification endpoints.
 
-    B{Example}::
+    **Example**::
       jd = saga.job.Description()
       jd.contact = "cpt_hook@piratebay.org"
 
@@ -322,9 +332,10 @@ class Description(Object, AttributeInterface):
     Name = property (doc = """
     Name:
     Define a name for the job.
+
       - Defining an explicit name can help debugging on the backend system.
 
-    B{Example}::
+    **Example**::
       jd = saga.job.Description()
       jd.name = "myblastjob_01"
 
@@ -335,13 +346,15 @@ class Description(Object, AttributeInterface):
     TotalCPUCount = property (doc = """
     TotalCPUCount:
     Total number of cpus requested for this job.
+
       - This attribute is used for jobs spanning more than one process instance,
         such as for MPI jobs etc.
+
       - The backend does not make any assumptions about the job distribution
         over the requested processes, nor does it give any connectivity
         guarantees (NUMA, shared memory, network interconnects etc.)
 
-    B{Example}::
+    **Example**::
       jd = saga.job.Description()
       jd.total_cpu_count = 64
 
@@ -352,13 +365,15 @@ class Description(Object, AttributeInterface):
     NumberOfProcesses = property (doc = """
     NumberOfProcesses:
     Number of processes to launch
+
       - This attribute specifies how many process instances the application is
         expected to have.  
+
       - Specifying this attribute does *not* automatically create those
         instances, but instead acts as a hint (boundary condition) to the
         scheduler.
 
-    B{Example}::
+    **Example**::
       jd = saga.job.Description()
       jd.number_of_processes = 8
 
@@ -369,12 +384,13 @@ class Description(Object, AttributeInterface):
     SPMDVariation = property (doc = """
     SPMDVariation:
     SPMD job type and startup mechanism
+
       - supported values: MPI, OpenMP, None
       - 'None' indicates that the application is not a SPMD application.
       - Specifying this value influences the mechanism the backend will use to
         create the application process instances (fork, mpirun, ...)
 
-    B{Example}::
+    **Example**::
       jd = saga.job.Description()
       jd.spmd_variation = "MPI"
 

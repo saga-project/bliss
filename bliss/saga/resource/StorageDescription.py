@@ -13,12 +13,12 @@ from bliss.saga.Attributes import AttributeInterface
 class StorageDescription(Object, AttributeInterface):
     '''Defines a SAGA storage_description as defined in GFD.xx
 
-    A storage description describes a storage resource (L{resource.Storage}) --
+    A storage description describes a storage resource (:class:`bliss.saga.resource.Storage`) --
     which is, essentially, anything which can run store data.  The description
     is used to find or create instances of storage resources with specific
-    properties and capabilities (see L{resource.Manager}).
+    properties and capabilities (see :class:`bliss.saga.resource.Manager`).
 
-    B{Usage example 1} shows how to obtain some storage of a certain size::
+    **Usage example 1** shows how to obtain some storage of a certain size::
 
       # describe the resource requirements
       sd = saga.resource.StorageDescription()

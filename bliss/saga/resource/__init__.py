@@ -8,11 +8,11 @@
     ------------
 
     The resource API provides the means to create, discover, manage and use
-    resources, in particular compute and storage resources (L{resource.Compute},
-    L{resource.Storage}).  A L{resource.Manager} class acts as resource
+    resources, in particular compute and storage resources (:class:`bliss.saga.resource.Compute`,
+    :class:`bliss.saga.resource.Storage`).  A :class:`bliss.saga.resource.Manager` class acts as resource
     provider, providing stateful resource instances.
 
-    B{Example}::
+    **Example**::
 
       # describe the resource requirements
       cd = saga.resource.ComputeDescription()

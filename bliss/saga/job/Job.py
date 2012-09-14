@@ -123,7 +123,7 @@ class Job(Object, AttributeInterface):
     ######################################################################
     ##
     #def get_stderr(self):
-    #    '''B{Not Implemented:} Bliss does not support I/O streaming.  Please use
+    #    '''**Not Implemented:** Bliss does not support I/O streaming.  Please use
     #       file staging to retrieve stdout and stderr files.
     #    '''
     #    raise bliss.saga.Exception(bliss.saga.Error.NotImplemented, 
@@ -132,7 +132,7 @@ class Job(Object, AttributeInterface):
     ######################################################################
     ##
     #def get_stdout(self):
-    #    '''B{Not Implemented:} Bliss does not support I/O streaming.
+    #    '''**Not Implemented:** Bliss does not support I/O streaming.
     #    '''
     #    raise bliss.saga.Exception(bliss.saga.Error.NotImplemented, 
     #      "Bliss doesn't suppport get_stdout()")
@@ -153,7 +153,7 @@ class Job(Object, AttributeInterface):
         actual environment of the running job instance.
 
 
-        B{Example}::
+        **Example**::
 
 
           js = saga.job.Service("fork://localhost")
@@ -180,7 +180,7 @@ class Job(Object, AttributeInterface):
     def get_state(self):
         '''Return the current state of the job.
     
-        B{Example}::
+        **Example**::
     
     
     
@@ -245,7 +245,7 @@ class Job(Object, AttributeInterface):
         job will be moved to 'Failed'.
 
 
-        B{Example}::
+        **Example**::
 
 
           js = saga.job.Service("fork://localhost")
@@ -280,7 +280,7 @@ class Job(Object, AttributeInterface):
     def cancel(self):
         '''Cancel the execution of the job.
 
-        B{Example}::
+        **Example**::
         
 
           js = saga.job.Service("fork://localhost")
@@ -321,7 +321,7 @@ class Job(Object, AttributeInterface):
     def wait(self, timeout=-1):
         '''Wait for a running job to finish execution.
 
-        @param timeout: Timeout in seconds.
+        :param timeout: Timeout in seconds.
 
         The optional timeout parameter specifies the time to wait, and accepts
         the following values::
@@ -334,7 +334,7 @@ class Job(Object, AttributeInterface):
         not in final state, and the application should check the actual job
         state.  The default timeout value is '-1.0' (blocking).
 
-        B{Example}::
+        **Example**::
 
 
           js = saga.job.Service("fork://localhost")
@@ -381,7 +381,7 @@ class Job(Object, AttributeInterface):
     this attribute is only meaningful if the job is in 'Done' or 'Final'
     state - for all other job states, this attribute value is undefined.
 
-    B{Example}::
+    **Example**::
 
 
       js = saga.job.Service("fork://localhost")
@@ -414,13 +414,13 @@ class Job(Object, AttributeInterface):
     ## Property: 
     ServiceURL = property (doc = '''
     ServiceURL:
-    The URL of the L{Service} instance managing this job.
+    The URL of the :class:`bliss.saga.Service` instance managing this job.
 
     This attribute is represents the URL under where the job management
     service can be contacted which owns the job.  The value is equivalent to
     the service part of the job_id.
 
-    B{Example}::
+    **Example**::
 
 
       js = saga.job.Service("fork://localhost")

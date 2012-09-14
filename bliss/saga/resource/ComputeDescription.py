@@ -13,12 +13,12 @@ from bliss.saga.Attributes import AttributeInterface
 class ComputeDescription(Object, AttributeInterface):
     '''Defines a SAGA compute_description as defined in GFD.xx
 
-    A compute description describes a L{resource.Compute} -- which is, essentially,
+    A compute description describes a :class:`bliss.saga.resource.Compute` -- which is, essentially,
     anything which can run compute jobs.  The description is used to find or
     create instances of compute resources with specific properties and
-    capabilities (see L{resource.Manager}).
+    capabilities (see :class:`bliss.saga.resource.Manager`).
 
-    B{Usage example 1} shows how to obtain a handle to a cluster of a certain size::
+    **Usage example 1** shows how to obtain a handle to a cluster of a certain size::
 
       # describe the resource requirements
       cd = saga.resource.ComputeDescription()

@@ -15,7 +15,7 @@ class Object(object) :
 
     As Python natively provides most functionality of the SAGA base object class
     as specified in GFD.90, this object's only function is to support the use of
-    L{Session} instances.  In particular, this class allows to obtain the session 
+    :class:`bliss.saga.Session` instances.  In particular, this class allows to obtain the session 
     any object is living in, to re-use that for other objects and operations.
 
     Example::
@@ -117,7 +117,7 @@ class Object(object) :
     def get_session(self):
         '''return the object's session.
  
-           It is encouraged to use the L{session} property instead.
+           It is encouraged to use the :class:`bliss.saga.session` property instead.
         '''
         return self.session
 

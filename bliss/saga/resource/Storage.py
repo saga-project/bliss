@@ -12,8 +12,8 @@ from bliss.saga.Object import Object
 
 class Storage(Object):
     ''' Storage resources represent stateful entities which can store
-    data.  A L{resource.Manager} instance can create them according to
-    a L{resource.StorageDescription}, as shown below::
+    data.  A :class:`bliss.saga.resource.Manager` instance can create them according to
+    a :class:`bliss.saga.resource.StorageDescription`, as shown below::
 
       # describe the resource requirements
       sd = saga.resource.StorageDescription()

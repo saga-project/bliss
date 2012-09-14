@@ -13,8 +13,8 @@ class Session(object):
 
     A Bliss session has the purpose of scoping the use of security credentials
     for remote operations.  In other words, a session instance acts as
-    a container for security L{Context} instances -- Bliss objects (such as
-    L{job.Service} or L{filesystem.File}) created in that session will then use
+    a container for security :class:`bliss.saga.Context` instances -- Bliss objects (such as
+    :class:`bliss.saga.job.Service` or :class:`bliss.saga.filesystem.File`) created in that session will then use
     exactly the security contexts from that session (and no others).
 
     That way, the session serves two purposes:  (1) it helps Bliss to decide
@@ -43,7 +43,7 @@ class Session(object):
         j = saga.job.Service('ssh://remote.host.net/', s)
 
 
-    The session argument to the L{job.Service} constructor is fully optional --
+    The session argument to the :class:`bliss.saga.job.Service` constructor is fully optional --
     if left out, Bliss will use default session, which picks up some default
     contexts as described above -- that will suffice for the majority of use
     cases.
@@ -101,28 +101,28 @@ class Session(object):
     ######################################################################
     ## 
     def add_context(self, context):
-        '''add a security L{Context} to the session.
+        '''add a security :class:`bliss.saga.Context` to the session.
 
-           It is encouraged to use the L{contexts} property instead. 
+           It is encouraged to use the :class:`bliss.saga.contexts` property instead. 
         '''
         self._contexts.append(context)
 
     ######################################################################
     ## 
     def remove_context(self, context):
-        '''remove a security L{Context} from the session.
+        '''remove a security :class:`bliss.saga.Context` from the session.
 
-           It is encouraged to use the L{contexts} property instead.
+           It is encouraged to use the :class:`bliss.saga.contexts` property instead.
         '''
         self._contexts.remove(context)
 
     ######################################################################
     ## 
     def list_contexts(self):
-        '''retrieve all L{Context} objects attached to the session.
+        '''retrieve all :class:`bliss.saga.Context` objects attached to the session.
 
 
-           It is encouraged to use the L{contexts} property instead.
+           It is encouraged to use the :class:`bliss.saga.contexts` property instead.
         '''
         return self._contexts
 
