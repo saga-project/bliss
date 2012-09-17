@@ -6,7 +6,8 @@ doc:
 	# @epydoc -v --no-frames --config=docs/epydoc.bliss.saga.cfg
 
 clean:
-	@find . -name *.pyc -exec rm  {} \;
+	@find . -name \*.pyc -exec rm  {} \;
+	@find . -name \*.bak -exec rm  {} \;
 	@rm -rf docs/bliss.saga/
 	@rm -rf docs/_build/
 
