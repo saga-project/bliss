@@ -1,6 +1,7 @@
 Version 0.2.5 released 2012-X-YY
 ----------------------------------------------------------------------
 
+* Changed documentation to Sphinx
 * Removed object_type API. Python buildins can be used instead
 * Updates to Filesystem API
 * Added JobDescription.name attribute (as defined in DRMAA)
