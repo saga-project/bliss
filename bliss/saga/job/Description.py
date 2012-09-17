@@ -146,8 +146,11 @@ class Description(Object, AttributeInterface):
         self._attributes_register  ('NumberOfProcesses', None, self.Int,    self.Scalar, self.Writable)
         self._attributes_register  ('SPMDVariation',     None, self.Enum,   self.Scalar, self.Writable)
 
+      # the commented version is the correct one.  The active version makes
+      # BigJob happy, but should be @deprecated.
       # self._attributes_set_enums ('SPMDVariation',     ['MPI', 'OpenMP', 'None'])
-        self._attributes_set_enums ('SPMDVariation',     ['MPI', 'OpenMP', 'None', 'single'])
+        self._attributes_set_enums ('SPMDVariation',     ['MPI', 'OpenMP', 'None', 'Single', \
+                                                          'mpi', 'openmp', 'none', 'Single'  ])
 
     ######################################################################
     ## 
