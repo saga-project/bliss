@@ -1,0 +1,145 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bliss.saga &mdash; Bliss 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Bliss 0.2.5 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for bliss.saga</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4</span>
+
+<span class="sd">&#39;&#39;&#39; SAGA - A Simple API for Grid Applications</span>
+<span class="sd">    =========================================</span>
+
+<span class="sd">    Introduction</span>
+<span class="sd">    ------------</span>
+
+<span class="sd">    SAGA-Bliss is a light-weight Python package that implements parts of the `OGF</span>
+<span class="sd">    GFD.90 SAGA &lt;http://www.gridforum.org/documents/GFD.90.pdf&gt;`_</span>
+<span class="sd">    interface specification and provides plug-ins for different</span>
+<span class="sd">    distributed middleware systems and services. SAGA-Bliss implements the most</span>
+<span class="sd">    commonly used features of GFD.90 based upon extensive use-case analysis, and</span>
+<span class="sd">    focuses on usability and simple deployment in real-world heterogeneous</span>
+<span class="sd">    distributed computing environments and application scenarios.</span>
+<span class="sd">   </span>
+<span class="sd">    More information can be found at http://saga-project.github.com/bliss</span>
+
+<span class="sd">    Saga Core API Classes</span>
+<span class="sd">    ---------------------</span>
+
+<span class="sd">    .. toctree::</span>
+<span class="sd">       :maxdepth: 1</span>
+<span class="sd">    </span>
+<span class="sd">       Object.rst</span>
+<span class="sd">       Error.rst</span>
+<span class="sd">       Exception.rst</span>
+<span class="sd">       Context.rst</span>
+<span class="sd">       Session.rst</span>
+<span class="sd">       Attributes.rst</span>
+<span class="sd">       Url.rst</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="n">__author__</span>    <span class="o">=</span> <span class="s">&quot;Ole Christian Weidner, et al.&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright 2011-2012, Ole Christian Weidner&quot;</span>
+<span class="n">__license__</span>   <span class="o">=</span> <span class="s">&quot;MIT&quot;</span>
+
+<span class="c"># Base &quot;look-and-feel packages&quot;</span>
+<span class="kn">from</span> <span class="nn">bliss.saga.Url</span>       <span class="kn">import</span> <span class="n">Url</span> 
+<span class="kn">from</span> <span class="nn">bliss.saga.Object</span>    <span class="kn">import</span> <span class="n">Object</span>
+<span class="kn">from</span> <span class="nn">bliss.saga.Session</span>   <span class="kn">import</span> <span class="n">Session</span> 
+<span class="kn">from</span> <span class="nn">bliss.saga.Context</span>   <span class="kn">import</span> <span class="n">Context</span>
+<span class="kn">from</span> <span class="nn">bliss.saga.Exception</span> <span class="kn">import</span> <span class="ne">Exception</span> 
+<span class="kn">from</span> <span class="nn">bliss.saga.Error</span>     <span class="kn">import</span> <span class="n">Error</span> 
+
+<span class="c"># API packages</span>
+<span class="kn">from</span> <span class="nn">bliss.saga</span>           <span class="kn">import</span> <span class="n">filesystem</span>
+<span class="kn">from</span> <span class="nn">bliss.saga</span>           <span class="kn">import</span> <span class="n">resource</span>
+<span class="kn">from</span> <span class="nn">bliss.saga</span>           <span class="kn">import</span> <span class="n">job</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

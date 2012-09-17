@@ -1,0 +1,225 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>File &mdash; Bliss 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Bliss 0.2.5 documentation" href="../../../index.html" />
+    <link rel="up" title="File/Directory Management" href="__init__.html" />
+    <link rel="next" title="Resource Management" href="../resource/__init__.html" />
+    <link rel="prev" title="Directory" href="Directory.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../resource/__init__.html" title="Resource Management"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Directory.html" title="Directory"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="__init__.html" accesskey="U">File/Directory Management</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="file">
+<h1>File<a class="headerlink" href="#file" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="bliss.saga.filesystem.File">
+<em class="property">class </em><tt class="descclassname">bliss.saga.filesystem.</tt><tt class="descname">File</tt><big>(</big><em>url</em>, <em>flags=None</em>, <em>session=None</em><big>)</big><a class="headerlink" href="#bliss.saga.filesystem.File" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loosely represents a SAGA file as defined in GFD.90</p>
+<p>The saga.filesystem.File class represents, as the name indicates,
+a file on some (local or remote) filesystem.  That class offers
+a number of operations on that file, such as copy, move and remove:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># get a file handle</span>
+<span class="nb">file</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">filesystem</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s">&quot;sftp://localhost/tmp/data/data.bin&quot;</span><span class="p">)</span>
+
+<span class="c"># copy the file</span>
+<span class="nb">file</span><span class="o">.</span><span class="n">copy</span> <span class="p">(</span><span class="s">&quot;sftp://localhost/tmp/data/data.bak&quot;</span><span class="p">)</span>
+
+<span class="c"># move the file</span>
+<span class="nb">file</span><span class="o">.</span><span class="n">move</span> <span class="p">(</span><span class="s">&quot;sftp://localhost/tmp/data/data.new&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="bliss.saga.filesystem.File.copy">
+<tt class="descname">copy</tt><big>(</big><em>target</em>, <em>flags=None</em><big>)</big><a class="headerlink" href="#bliss.saga.filesystem.File.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy the file to another location</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>target</strong> &#8211; Url of the copy target.</li>
+<li><strong>flags</strong> &#8211; Flags to use for the operation.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The file is copied to the given target location.  The target URL must
+be an absolute path, and can be a target file name or target
+directory name.  If the target file exists, it is overwritten:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># copy a file</span>
+<span class="nb">file</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">filesystem</span><span class="o">.</span><span class="n">Directory</span><span class="p">(</span><span class="s">&quot;sftp://localhost/tmp/data/data.bin&quot;</span><span class="p">)</span>
+<span class="nb">file</span><span class="o">.</span><span class="n">copy</span> <span class="p">(</span><span class="s">&quot;sftp://localhost/tmp/data/data.bak&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.filesystem.File.get_size">
+<tt class="descname">get_size</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.filesystem.File.get_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the size of a file (in bytes)</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># get a file handle</span>
+<span class="nb">file</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">filesystem</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s">&quot;sftp://localhost/tmp/data/data.bin&quot;</span><span class="p">)</span>
+
+<span class="c"># print the file&#39;s size</span>
+<span class="k">print</span> <span class="nb">file</span><span class="o">.</span><span class="n">get_size</span> <span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.filesystem.File.get_url">
+<tt class="descname">get_url</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.filesystem.File.get_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the complete url pointing to the file.</p>
+<p>The call will return the complete url pointing to
+this file as a saga.Url object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># print URL of a file</span>
+<span class="nb">file</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">filesystem</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s">&quot;sftp://localhost/etc/passwd&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="nb">file</span><span class="o">.</span><span class="n">get_url</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.filesystem.File.move">
+<tt class="descname">move</tt><big>(</big><em>target</em>, <em>flags=None</em><big>)</big><a class="headerlink" href="#bliss.saga.filesystem.File.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move the file to another location</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>target</strong> &#8211; Url of the move target.</li>
+<li><strong>flags</strong> &#8211; Flags to use for the operation.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The file is copied to the given target location.  The target URL must
+be an absolute path, and can be a target file name or target
+directory name.  If the target file exists, it is overwritten:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># copy a file</span>
+<span class="nb">file</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">filesystem</span><span class="o">.</span><span class="n">Directory</span><span class="p">(</span><span class="s">&quot;sftp://localhost/tmp/data/data.bin&quot;</span><span class="p">)</span>
+<span class="nb">file</span><span class="o">.</span><span class="n">move</span> <span class="p">(</span><span class="s">&quot;sftp://localhost/tmp/data/data.bak&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.filesystem.File.remove">
+<tt class="descname">remove</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.filesystem.File.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the file</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Directory.html"
+                        title="previous chapter">Directory</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../resource/__init__.html"
+                        title="next chapter">Resource Management</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../../_sources/bliss/saga/filesystem/File.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../resource/__init__.html" title="Resource Management"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Directory.html" title="Directory"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="__init__.html" >File/Directory Management</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
