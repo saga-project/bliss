@@ -80,29 +80,29 @@ class Context(Object, AttributeInterface):
 
         self.__logger = logging.getLogger('bliss.'+self.__class__.__name__)
 
-        self.attributes_extensible_  (True)
-        self.attributes_camelcasing_ (True)
+        self._attributes_extensible  (True)
+        self._attributes_camelcasing (True)
       
         # register properties with the attribute interface 
-        self.attributes_register_ ('ContextType', None, self.String, self.Scalar, self.Writable)
-        self.attributes_register_ ('UserID',      None, self.String, self.Scalar, self.Writable)
-        self.attributes_register_ ('UserPass',    None, self.String, self.Scalar, self.Writable)
-        self.attributes_register_ ('UserCert',    None, self.String, self.Scalar, self.Writable)
-        self.attributes_register_ ('UserKey',     None, self.String, self.Scalar, self.Writable)
-        self.attributes_register_ ('UserProxy',   None, self.String, self.Scalar, self.Writable)
+        self._attributes_register ('ContextType', None, self.String, self.Scalar, self.Writable)
+        self._attributes_register ('UserID',      None, self.String, self.Scalar, self.Writable)
+        self._attributes_register ('UserPass',    None, self.String, self.Scalar, self.Writable)
+        self._attributes_register ('UserCert',    None, self.String, self.Scalar, self.Writable)
+        self._attributes_register ('UserKey',     None, self.String, self.Scalar, self.Writable)
+        self._attributes_register ('UserProxy',   None, self.String, self.Scalar, self.Writable)
 
-        self.attributes_register_deprecated_  ('userid'     , 'UserID'     )
-        self.attributes_register_deprecated_  ('userpass'   , 'UserPass'   )
-        self.attributes_register_deprecated_  ('usercert'   , 'UserCert'   )
-        self.attributes_register_deprecated_  ('userkey'    , 'UserKey'    )
-        self.attributes_register_deprecated_  ('userproxy'  , 'UserProxy'  )
+        self._attributes_register_deprecated  ('userid'     , 'UserID'     )
+        self._attributes_register_deprecated  ('userpass'   , 'UserPass'   )
+        self._attributes_register_deprecated  ('usercert'   , 'UserCert'   )
+        self._attributes_register_deprecated  ('userkey'    , 'UserKey'    )
+        self._attributes_register_deprecated  ('userproxy'  , 'UserProxy'  )
 
 
         ##########################################
         # some attributes point to files which must exist - so we add a test for
         # those attributes
         #
-        def test_file_existence_ (key, val) :
+        def _test_file_existence (key, val) :
             if not val :
                 return "File %s = '' doesn't exist."  %  (key)
             if not os.path.isfile (val) :
@@ -110,9 +110,9 @@ class Context(Object, AttributeInterface):
             return True
         ##########################################
 
-        self.attributes_check_add_ ('UserKey',   test_file_existence_)
-        self.attributes_check_add_ ('UserCert',  test_file_existence_)
-        self.attributes_check_add_ ('UserProxy', test_file_existence_)
+        self._attributes_add_check ('UserKey',   _test_file_existence)
+        self._attributes_add_check ('UserCert',  _test_file_existence)
+        self._attributes_add_check ('UserProxy', _test_file_existence)
 
 
     ######################################################################

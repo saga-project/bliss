@@ -114,7 +114,7 @@ class Description(Object, AttributeInterface):
     def _deep_copy(jd):
         jd_copy = bliss.saga.job.Description()
 
-        AttributeInterface.attributes_deep_copy_ (jd, jd_copy)
+        AttributeInterface._attributes_deep_copy (jd, jd_copy)
 
         return jd_copy
 
@@ -126,28 +126,28 @@ class Description(Object, AttributeInterface):
         self._apitype = 'saga.job'
 
         # set attribute interface properties
-        self.attributes_extensible_  (True)
-        self.attributes_camelcasing_ (True)
+        self._attributes_extensible  (True)
+        self._attributes_camelcasing (True)
 
         # register properties with the attribute interface
-        self.attributes_register_  ('Executable',        None, self.String, self.Scalar, self.Writable)
-        self.attributes_register_  ('Environment',       None, self.Any,    self.Scalar, self.Writable)
-        self.attributes_register_  ('Arguments',         None, self.String, self.Vector, self.Writable)
-        self.attributes_register_  ('WorkingDirectory',  None, self.String, self.Scalar, self.Writable)
-        self.attributes_register_  ('FileTransfer',      None, self.String, self.Vector, self.Writable)
-        self.attributes_register_  ('Output',            None, self.String, self.Scalar, self.Writable)
-        self.attributes_register_  ('Error',             None, self.String, self.Scalar, self.Writable)
-        self.attributes_register_  ('Queue',             None, self.String, self.Scalar, self.Writable)
-        self.attributes_register_  ('Project',           None, self.String, self.Scalar, self.Writable)
-        self.attributes_register_  ('WallTimeLimit',     None, self.Time,   self.Scalar, self.Writable)
-        self.attributes_register_  ('Contact',           None, self.String, self.Scalar, self.Writable)
-        self.attributes_register_  ('Name',              None, self.String, self.Scalar, self.Writable)
-        self.attributes_register_  ('TotalCPUCount',     None, self.Int,    self.Scalar, self.Writable)
-        self.attributes_register_  ('NumberOfProcesses', None, self.Int,    self.Scalar, self.Writable)
-        self.attributes_register_  ('SPMDVariation',     None, self.Enum,   self.Scalar, self.Writable)
+        self._attributes_register  ('Executable',        None, self.String, self.Scalar, self.Writable)
+        self._attributes_register  ('Environment',       None, self.Any,    self.Scalar, self.Writable)
+        self._attributes_register  ('Arguments',         None, self.String, self.Vector, self.Writable)
+        self._attributes_register  ('WorkingDirectory',  None, self.String, self.Scalar, self.Writable)
+        self._attributes_register  ('FileTransfer',      None, self.String, self.Vector, self.Writable)
+        self._attributes_register  ('Output',            None, self.String, self.Scalar, self.Writable)
+        self._attributes_register  ('Error',             None, self.String, self.Scalar, self.Writable)
+        self._attributes_register  ('Queue',             None, self.String, self.Scalar, self.Writable)
+        self._attributes_register  ('Project',           None, self.String, self.Scalar, self.Writable)
+        self._attributes_register  ('WallTimeLimit',     None, self.Time,   self.Scalar, self.Writable)
+        self._attributes_register  ('Contact',           None, self.String, self.Scalar, self.Writable)
+        self._attributes_register  ('Name',              None, self.String, self.Scalar, self.Writable)
+        self._attributes_register  ('TotalCPUCount',     None, self.Int,    self.Scalar, self.Writable)
+        self._attributes_register  ('NumberOfProcesses', None, self.Int,    self.Scalar, self.Writable)
+        self._attributes_register  ('SPMDVariation',     None, self.Enum,   self.Scalar, self.Writable)
 
-      # self.attributes_set_enums_ ('SPMDVariation',     ['MPI', 'OpenMP', 'None'])
-        self.attributes_set_enums_ ('SPMDVariation',     ['MPI', 'OpenMP', 'None', 'single'])
+      # self._attributes_set_enums ('SPMDVariation',     ['MPI', 'OpenMP', 'None'])
+        self._attributes_set_enums ('SPMDVariation',     ['MPI', 'OpenMP', 'None', 'single'])
 
     ######################################################################
     ## 

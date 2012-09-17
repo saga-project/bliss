@@ -43,7 +43,7 @@ class StorageDescription(Object, AttributeInterface):
     def _deep_copy(sd):
         sd_copy = bliss.saga.resource.StorageDescription()
 
-        AttributeInterface.attributes_deep_copy_ (sd, sd_copy)
+        AttributeInterface._attributes_deep_copy (sd, sd_copy)
 
         return sd_copy
 
@@ -56,16 +56,16 @@ class StorageDescription(Object, AttributeInterface):
         self._apitype = 'saga.resource'
 
 
-        self.attributes_extensible_  (False)
-        self.attributes_camelcasing_ (True)
+        self._attributes_extensible  (False)
+        self._attributes_camelcasing (True)
       
         # register properties with the attribute interface 
-        self.attributes_register_  ('Dynamic',   False, self.Bool,   self.Scalar, self.Writable)
-        self.attributes_register_  ('Start',     None,  self.Time,   self.Scalar, self.Writable)
-        self.attributes_register_  ('End',       None,  self.Time,   self.Scalar, self.Writable)
-        self.attributes_register_  ('Duration',  None,  self.Time,   self.Scalar, self.Writable)
-        self.attributes_register_  ('Template',  None,  self.String, self.Scalar, self.Writable)
-        self.attributes_register_  ('Size',      None,  self.Int,    self.Scalar, self.Writable)
+        self._attributes_register  ('Dynamic',   False, self.Bool,   self.Scalar, self.Writable)
+        self._attributes_register  ('Start',     None,  self.Time,   self.Scalar, self.Writable)
+        self._attributes_register  ('End',       None,  self.Time,   self.Scalar, self.Writable)
+        self._attributes_register  ('Duration',  None,  self.Time,   self.Scalar, self.Writable)
+        self._attributes_register  ('Template',  None,  self.String, self.Scalar, self.Writable)
+        self._attributes_register  ('Size',      None,  self.Int,    self.Scalar, self.Writable)
 
 
     ######################################################################
