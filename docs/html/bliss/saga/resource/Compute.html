@@ -1,0 +1,243 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Compute &mdash; Bliss 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Bliss 0.2.5 documentation" href="../../../index.html" />
+    <link rel="up" title="Resource Management" href="__init__.html" />
+    <link rel="next" title="StorageDescription" href="StorageDescription.html" />
+    <link rel="prev" title="ComputeDescription" href="ComputeDescription.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="StorageDescription.html" title="StorageDescription"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ComputeDescription.html" title="ComputeDescription"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="__init__.html" accesskey="U">Resource Management</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="compute">
+<h1>Compute<a class="headerlink" href="#compute" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="bliss.saga.resource.Compute">
+<em class="property">class </em><tt class="descclassname">bliss.saga.resource.</tt><tt class="descname">Compute</tt><a class="headerlink" href="#bliss.saga.resource.Compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute resources represent stateful entities which can run compute
+jobs.  A <a class="reference internal" href="Manager.html#bliss.saga.resource.Manager" title="bliss.saga.resource.Manager"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.resource.Manager</span></tt></a> instance can create them according to
+a <a class="reference internal" href="ComputeDescription.html#bliss.saga.resource.ComputeDescription" title="bliss.saga.resource.ComputeDescription"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.resource.ComputeDescription</span></tt></a>, as shown below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># describe the resource requirements</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">ComputeDescription</span><span class="p">()</span>
+<span class="n">cd</span><span class="p">[</span><span class="s">&#39;Slots&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1024</span>
+
+<span class="c"># obtain a handle to a suitable resource...</span>
+<span class="n">rm</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">Manager</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">cr</span> <span class="o">=</span> <span class="n">rm</span><span class="o">.</span><span class="n">create_compute</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span>
+
+<span class="c"># ... and wait until it is active</span>
+<span class="n">cr</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">saga</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">Active</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="bliss.saga.resource.Compute.destroy">
+<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Compute.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy (close) the resource.</p>
+<p>This method is <em>not</em> just a destructor for the Bliss API object, but
+rather signals the backend that the resource is not needed anymore, and
+can be released.  All jobs on that resource will subsequently be killed,
+and no new job requests can be scheduled for the resource after calling 
+destroy().</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.resource.Compute.get_description">
+<tt class="descname">get_description</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Compute.get_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the associated resource description object.</p>
+<p>The returned description describes the actual resource properties, and
+may differ from the description submitted when creating the resource.
+In particular, the returned description here describes the <em>actual</em>
+resource properties, which may differ from the ones defined initially:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># describe the resource requirements</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">ComputeDescription</span><span class="p">()</span>
+<span class="n">cd</span><span class="p">[</span><span class="s">&#39;Slots&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="c"># obtain a handle to a suitable resource, and inspect it</span>
+<span class="n">rm1</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">Manager</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">cr</span>  <span class="o">=</span> <span class="n">rm</span><span class="o">.</span><span class="n">create_compute</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span>
+<span class="n">cd2</span> <span class="o">=</span> <span class="n">cr</span><span class="o">.</span><span class="n">get_description</span>
+
+<span class="k">print</span>   <span class="s">&quot; requested : </span><span class="si">%d</span><span class="s">   / allocated : </span><span class="si">%d</span><span class="s">&quot;</span>    <span class="o">%</span>  <span class="mi">1024</span><span class="p">,</span> <span class="n">cd2</span><span class="p">[</span><span class="s">&#39;Slots&#39;</span><span class="p">]</span>
+<span class="c"># prints: requested : 1000 / allocated : 1024&quot;  %  1024, cd2[&#39;Slots&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.resource.Compute.get_id">
+<tt class="descname">get_id</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Compute.get_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the id of the resource.</p>
+<p>The returned ID acts as a persistent and unique identifier for the
+resource...:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># obtain a handle to a suitable resource and print it&#39;s id</span>
+<span class="n">rm</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">Manager</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">cr</span> <span class="o">=</span> <span class="n">rm</span><span class="o">.</span><span class="n">create_compute</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span>
+<span class="nb">id</span> <span class="o">=</span> <span class="n">cr</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&quot;resource id: </span><span class="si">%s</span><span class="s">&quot;</span>  <span class="o">%</span>  <span class="nb">id</span>
+</pre></div>
+</div>
+<p>...and can in particular be used to reconnect to that existing
+resource:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">rm</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">Manager</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">cr</span> <span class="o">=</span> <span class="n">rm</span><span class="o">.</span><span class="n">get_compute</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.resource.Compute.get_job_service">
+<tt class="descname">get_job_service</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Compute.get_job_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>get access to the resource&#8217;s job manager.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.resource.Compute.get_manager">
+<tt class="descname">get_manager</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Compute.get_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the associated resource manager object.</p>
+<p>The returned manager is the one which created or reconnected to the
+resource:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># obtain a handle to a suitable resource and print it&#39;s id</span>
+<span class="n">rm1</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">Manager</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">cr</span>  <span class="o">=</span> <span class="n">rm</span><span class="o">.</span><span class="n">create_compute</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span>
+<span class="n">rm2</span> <span class="o">=</span> <span class="n">cr</span><span class="o">.</span><span class="n">get_manager</span><span class="p">()</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">rm1</span> <span class="o">==</span> <span class="n">rm2</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.resource.Compute.get_state">
+<tt class="descname">get_state</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Compute.get_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the state of the resource</p>
+<p>A resource will only be running jobs when in Active state &#8211; but it may
+already accept job submission requests while Pending.  In that case, the
+job requests are queued until the resource becomes Active.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.resource.Compute.get_state_detail">
+<tt class="descname">get_state_detail</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Compute.get_state_detail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the state detail of the resource.</p>
+<p>As for every stateful Bliss object, the state detail informs about the
+actual native backend state, which may be finer grained than the SAGA
+state model used by Bliss.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.resource.Compute.wait">
+<tt class="descname">wait</tt><big>(</big><em>timeout=-1</em>, <em>state=2</em><big>)</big><a class="headerlink" href="#bliss.saga.resource.Compute.wait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for the resource to reach a specific state.</p>
+<p>As resources are stateful entities, and several actions (such as job
+submission) are only allowed in very specific states, the wait() routine
+can be used to wait for the resource to reach a specific state.  By
+default, wait() will block until the resource reaches a final state
+(Destroyed, Expired or Failed), but the optional &#8216;state&#8217; parameter can
+specify any other combination of states to wait for.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ComputeDescription.html"
+                        title="previous chapter">ComputeDescription</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="StorageDescription.html"
+                        title="next chapter">StorageDescription</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="StorageDescription.html" title="StorageDescription"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ComputeDescription.html" title="ComputeDescription"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="__init__.html" >Resource Management</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
+    </div>
+  </body>
+</html>

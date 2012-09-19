@@ -1,0 +1,176 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Job Management &mdash; Bliss 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Bliss 0.2.5 documentation" href="../../../index.html" />
+    <link rel="next" title="Job Description" href="Description.html" />
+    <link rel="prev" title="URL" href="../Url.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Description.html" title="Job Description"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../Url.html" title="URL"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-bliss.saga.job"></span><div class="section" id="job-management">
+<h1>Job Management<a class="headerlink" href="#job-management" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The job management API allows to create (via a <a class="reference internal" href="Service.html#bliss.saga.job.Service" title="bliss.saga.job.Service"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.job.Service</span></tt></a>) and manage
+<a class="reference internal" href="Job.html#bliss.saga.job.Job" title="bliss.saga.job.Job"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.job.Job</span></tt></a> instances. A job is, for the purpose of the SAGA API, an instance
+of a specific application, i.e. one or more processes of a specific
+executable.</p>
+<p><strong>Example</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># create a job description...</span>
+<span class="n">jd</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Description</span><span class="p">()</span>
+
+<span class="c"># ... and fill it with information about the job to be started</span>
+<span class="n">jd</span><span class="o">.</span><span class="n">executable</span> <span class="o">=</span> <span class="s">&quot;/usr/local/bin/blast&quot;</span>
+<span class="n">jd</span><span class="o">.</span><span class="n">arguments</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;-i&quot;</span><span class="p">,</span> <span class="s">&quot;/data/in/x_42&quot;</span><span class="p">]</span>
+<span class="n">jd</span><span class="o">.</span><span class="n">spmd_variation</span> <span class="o">=</span> <span class="s">&quot;MPI&quot;</span>
+<span class="n">jd</span><span class="o">.</span><span class="n">number_of_processes</span> <span class="o">=</span> <span class="mi">64</span>
+
+<span class="c"># the job is to be started via globus on some remote host: contact the</span>
+<span class="c"># respective submission point via its URL: </span>
+<span class="n">js</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s">&quot;gram://remote.host.net/&quot;</span><span class="p">)</span>
+
+<span class="c"># the thus created job service instance accepts the previously created job</span>
+<span class="c"># description and instantiates a job instance.</span>
+<span class="n">j</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span><span class="n">jd</span><span class="p">)</span>
+
+<span class="c"># a job is a stateful representation of the remote (set of) process(es).  It</span>
+<span class="c"># can be run, suspended, resumed and waited upon:</span>
+<span class="n">j</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">j</span><span class="o">.</span><span class="n">suspend</span><span class="p">()</span>
+<span class="n">j</span><span class="o">.</span><span class="n">resume</span><span class="p">()</span>
+<span class="n">j</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+<span class="c"># during the execution, and after termination, the job can be inspected for</span>
+<span class="c"># state, and for some additional information</span>
+<span class="k">print</span> <span class="s">&quot;id   :  </span><span class="si">%s</span><span class="s">&quot;</span>  <span class="o">%</span>  <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="o">.</span><span class="n">get_job_id</span><span class="p">())</span>
+<span class="k">print</span> <span class="s">&quot;state:  </span><span class="si">%s</span><span class="s">&quot;</span>  <span class="o">%</span>  <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="o">.</span><span class="n">get_state</span><span class="p">())</span>
+<span class="k">print</span> <span class="s">&quot;descr:  </span><span class="si">%s</span><span class="s">&quot;</span>  <span class="o">%</span>  <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="o">.</span><span class="n">get_description</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The above example shows most of the semantics of the job package &#8211; additional
+information, such as about file staging and state model etc., can be found in
+the individual class documentations.</p>
+</div>
+<div class="section" id="bliss-job-api-classes">
+<h2>Bliss Job API Classes<a class="headerlink" href="#bliss-job-api-classes" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Description.html">Job Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Service.html">Job Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Job.html">Job</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Job Management</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#bliss-job-api-classes">Bliss Job API Classes</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../Url.html"
+                        title="previous chapter">URL</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Description.html"
+                        title="next chapter">Job Description</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Description.html" title="Job Description"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../Url.html" title="URL"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
+    </div>
+  </body>
+</html>

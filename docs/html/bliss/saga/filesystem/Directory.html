@@ -1,0 +1,319 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Directory &mdash; Bliss 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Bliss 0.2.5 documentation" href="../../../index.html" />
+    <link rel="up" title="File/Directory Management" href="__init__.html" />
+    <link rel="next" title="File" href="File.html" />
+    <link rel="prev" title="File/Directory Management" href="__init__.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="File.html" title="File"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="__init__.html" title="File/Directory Management"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="__init__.html" accesskey="U">File/Directory Management</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="directory">
+<h1>Directory<a class="headerlink" href="#directory" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="bliss.saga.filesystem.Directory">
+<em class="property">class </em><tt class="descclassname">bliss.saga.filesystem.</tt><tt class="descname">Directory</tt><big>(</big><em>url</em>, <em>flags=None</em>, <em>session=None</em><big>)</big><a class="headerlink" href="#bliss.saga.filesystem.Directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loosely represents a SAGA directory as defined in GFD.90</p>
+<p>The saga.filesystem.Directory class represents, as the name indicates,
+a directory on some (local or remote) filesystem.  That class offers
+a number of operations on that directory, such as listing its contents,
+copying files, or creating subdirectories:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># get a directory handle</span>
+<span class="nb">dir</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">filesystem</span><span class="o">.</span><span class="n">Directory</span><span class="p">(</span><span class="s">&quot;sftp://localhost/tmp/&quot;</span><span class="p">)</span>
+
+<span class="c"># create a subdir</span>
+<span class="nb">dir</span><span class="o">.</span><span class="n">make_dir</span> <span class="p">(</span><span class="s">&quot;data/&quot;</span><span class="p">)</span>
+
+<span class="c"># list contents of the directory</span>
+<span class="n">files</span> <span class="o">=</span> <span class="nb">dir</span><span class="o">.</span><span class="n">list</span> <span class="p">()</span>
+
+<span class="c"># copy *.dat files into the subdir</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span> <span class="p">:</span>
+    <span class="k">if</span> <span class="n">f</span> <span class="o">^</span> <span class="s">&#39;^.*\.dat$&#39;</span> <span class="p">:</span>
+        <span class="nb">dir</span><span class="o">.</span><span class="n">copy</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">&quot;sftp://localhost/tmp/data/&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="bliss.saga.filesystem.Directory.close">
+<tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.filesystem.Directory.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the directory.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.filesystem.Directory.copy">
+<tt class="descname">copy</tt><big>(</big><em>source</em>, <em>target</em>, <em>flags=None</em><big>)</big><a class="headerlink" href="#bliss.saga.filesystem.Directory.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy a file from source to target
+:param source: path of the file to copy
+:param target: absolute URL of target directory</p>
+<p>The source is copied to the given target directory.  The path of the
+source can be relative:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># copy a file</span>
+<span class="nb">dir</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">filesystem</span><span class="o">.</span><span class="n">Directory</span><span class="p">(</span><span class="s">&quot;sftp://localhost/tmp/&quot;</span><span class="p">)</span>
+<span class="nb">dir</span><span class="o">.</span><span class="n">copy</span> <span class="p">(</span><span class="s">&quot;./data.bin&quot;</span><span class="p">,</span> <span class="s">&quot;sftp://localhost/tmp/data/&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.filesystem.Directory.exists">
+<tt class="descname">exists</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#bliss.saga.filesystem.Directory.exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if path exists, False otherwise.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> &#8211; path of the entry to check</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><pre># inspect a file for its size
+dir  = saga.filesystem.Directory("sftp://localhost/tmp/")
+if dir.exists ('data'):
+    # do something</pre>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.filesystem.Directory.get_size">
+<tt class="descname">get_size</tt><big>(</big><em>path=None</em><big>)</big><a class="headerlink" href="#bliss.saga.filesystem.Directory.get_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the size of a file or directory (in bytes)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> &#8211; path of the file or directory</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># inspect a file for its size</span>
+<span class="nb">dir</span>  <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">filesystem</span><span class="o">.</span><span class="n">Directory</span><span class="p">(</span><span class="s">&quot;sftp://localhost/tmp/&quot;</span><span class="p">)</span>
+<span class="n">size</span> <span class="o">=</span> <span class="nb">dir</span><span class="o">.</span><span class="n">get_size</span> <span class="p">(</span><span class="s">&#39;data/data.bin&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">size</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.filesystem.Directory.get_url">
+<tt class="descname">get_url</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.filesystem.Directory.get_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the complete url pointing to the directory.</p>
+<p>The call will return the complete url pointing to
+this directory as a saga.Url object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># print URL of a directory</span>
+<span class="nb">dir</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">filesystem</span><span class="o">.</span><span class="n">Directory</span><span class="p">(</span><span class="s">&quot;sftp://localhost/tmp/&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="nb">dir</span><span class="o">.</span><span class="n">get_url</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.filesystem.Directory.is_dir">
+<tt class="descname">is_dir</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#bliss.saga.filesystem.Directory.is_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if path is a directory, False otherwise.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> &#8211; path of the entry to check</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><pre># inspect a file for its size
+dir  = saga.filesystem.Directory("sftp://localhost/tmp/")
+if dir.is_dir ('data'):
+    # do something</pre>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.filesystem.Directory.list">
+<tt class="descname">list</tt><big>(</big><em>pattern=None</em><big>)</big><a class="headerlink" href="#bliss.saga.filesystem.Directory.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>List the directory&#8217;s content
+:param pattern: File name pattern (like POSIX &#8216;ls&#8217;, e.g. &#8216;*.txt&#8217;)</p>
+<p>The call will return a list of files and subdirectories within the
+directory:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># list contents of the directory</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">dir</span><span class="o">.</span><span class="n">list</span><span class="p">()</span> <span class="p">:</span>
+    <span class="k">print</span> <span class="n">f</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.filesystem.Directory.make_dir">
+<tt class="descname">make_dir</tt><big>(</big><em>path</em>, <em>flags=None</em><big>)</big><a class="headerlink" href="#bliss.saga.filesystem.Directory.make_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new directoy
+:param path: name/path of the new directory
+:param flags: directory creation flags</p>
+<p>The call creates a directory at the given location.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># create a subdir &#39;data&#39; in /tmp</span>
+<span class="nb">dir</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">filesystem</span><span class="o">.</span><span class="n">Directory</span><span class="p">(</span><span class="s">&quot;sftp://localhost/tmp/&quot;</span><span class="p">)</span>
+<span class="nb">dir</span><span class="o">.</span><span class="n">make_dir</span> <span class="p">(</span><span class="s">&#39;data/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.filesystem.Directory.move">
+<tt class="descname">move</tt><big>(</big><em>source</em>, <em>target</em>, <em>flags=None</em><big>)</big><a class="headerlink" href="#bliss.saga.filesystem.Directory.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move a file from source to target
+:param source: path of the file to copy
+:param target: absolute URL of target directory</p>
+<p>The source is moved to the given target directory.  The path of the
+source can be relative:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># copy a file</span>
+<span class="nb">dir</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">filesystem</span><span class="o">.</span><span class="n">Directory</span><span class="p">(</span><span class="s">&quot;sftp://localhost/tmp/&quot;</span><span class="p">)</span>
+<span class="nb">dir</span><span class="o">.</span><span class="n">move</span> <span class="p">(</span><span class="s">&quot;./data.bin&quot;</span><span class="p">,</span> <span class="s">&quot;sftp://localhost/tmp/data/&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.filesystem.Directory.open_dir">
+<tt class="descname">open_dir</tt><big>(</big><em>path</em>, <em>flags=None</em><big>)</big><a class="headerlink" href="#bliss.saga.filesystem.Directory.open_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open and return a new directoy
+:param path: name/path of the directory to open
+:param flags: directory creation flags</p>
+<p>The call opens and returns a directory at the given location.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># create a subdir &#39;data&#39; in /tmp</span>
+<span class="nb">dir</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">filesystem</span><span class="o">.</span><span class="n">Directory</span><span class="p">(</span><span class="s">&quot;sftp://localhost/tmp/&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="nb">dir</span><span class="o">.</span><span class="n">open_dir</span> <span class="p">(</span><span class="s">&#39;data/&#39;</span><span class="p">,</span> <span class="n">saga</span><span class="o">.</span><span class="n">filesystem</span><span class="o">.</span><span class="n">Create</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.filesystem.Directory.remove">
+<tt class="descname">remove</tt><big>(</big><em>path=None</em><big>)</big><a class="headerlink" href="#bliss.saga.filesystem.Directory.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes the directory</p>
+<p>If no path is given, the remote directory associated with
+the object is removed. If a relative or absolute path is given,
+that given target is removed instead.  The target must be a 
+directory.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> &#8211; (relative or absolute) path to a directory</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># remove a subdir &#39;data&#39; in /tmp</span>
+<span class="nb">dir</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">filesystem</span><span class="o">.</span><span class="n">Directory</span><span class="p">(</span><span class="s">&quot;sftp://localhost/tmp/&quot;</span><span class="p">)</span>
+<span class="nb">dir</span><span class="o">.</span><span class="n">remove</span> <span class="p">(</span><span class="s">&#39;data/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="__init__.html"
+                        title="previous chapter">File/Directory Management</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="File.html"
+                        title="next chapter">File</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="File.html" title="File"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="__init__.html" title="File/Directory Management"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="__init__.html" >File/Directory Management</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,177 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>State &mdash; Bliss 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Bliss 0.2.5 documentation" href="../../../index.html" />
+    <link rel="up" title="Resource Management" href="__init__.html" />
+    <link rel="next" title="ComputeDescription" href="ComputeDescription.html" />
+    <link rel="prev" title="Manager" href="Manager.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ComputeDescription.html" title="ComputeDescription"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Manager.html" title="Manager"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="__init__.html" accesskey="U">Resource Management</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="state">
+<h1>State<a class="headerlink" href="#state" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="bliss.saga.resource.State">
+<em class="property">class </em><tt class="descclassname">bliss.saga.resource.</tt><tt class="descname">State</tt><a class="headerlink" href="#bliss.saga.resource.State" title="Permalink to this definition">¶</a></dt>
+<dd><p>The State attribute is used to describe the state of resource instances,
+in particular of instances of <a class="reference internal" href="Compute.html#bliss.saga.resource.Compute" title="bliss.saga.resource.Compute"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.resource.Compute</span></tt></a> and <a class="reference internal" href="Storage.html#bliss.saga.resource.Storage" title="bliss.saga.resource.Storage"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.resource.Storage</span></tt></a>.</p>
+<dl class="attribute">
+<dt id="bliss.saga.resource.State.Active">
+<tt class="descname">Active</tt><em class="property"> = 2</em><a class="headerlink" href="#bliss.saga.resource.State.Active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepting workload, workload is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bliss.saga.resource.State.Destroyed">
+<tt class="descname">Destroyed</tt><em class="property"> = 8</em><a class="headerlink" href="#bliss.saga.resource.State.Destroyed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closed by user.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bliss.saga.resource.State.Draining">
+<tt class="descname">Draining</tt><em class="property"> = 4</em><a class="headerlink" href="#bliss.saga.resource.State.Draining" title="Permalink to this definition">¶</a></dt>
+<dd><p>workload still executed, not accepting new work items.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bliss.saga.resource.State.Expired">
+<tt class="descname">Expired</tt><em class="property"> = 16</em><a class="headerlink" href="#bliss.saga.resource.State.Expired" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closed by system.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bliss.saga.resource.State.Failed">
+<tt class="descname">Failed</tt><em class="property"> = 32</em><a class="headerlink" href="#bliss.saga.resource.State.Failed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Something went wrong.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bliss.saga.resource.State.Final">
+<tt class="descname">Final</tt><em class="property"> = 56</em><a class="headerlink" href="#bliss.saga.resource.State.Final" title="Permalink to this definition">¶</a></dt>
+<dd><p>simplify management of the final states</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bliss.saga.resource.State.Pending">
+<tt class="descname">Pending</tt><em class="property"> = 1</em><a class="headerlink" href="#bliss.saga.resource.State.Pending" title="Permalink to this definition">¶</a></dt>
+<dd><p>accepting workload, will eventually become active or fail.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bliss.saga.resource.State.Running">
+<tt class="descname">Running</tt><em class="property"> = 7</em><a class="headerlink" href="#bliss.saga.resource.State.Running" title="Permalink to this definition">¶</a></dt>
+<dd><p>simplify management of the non-final states</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bliss.saga.resource.State.Unknown">
+<tt class="descname">Unknown</tt><em class="property"> = 0</em><a class="headerlink" href="#bliss.saga.resource.State.Unknown" title="Permalink to this definition">¶</a></dt>
+<dd><p>wut?</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Manager.html"
+                        title="previous chapter">Manager</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ComputeDescription.html"
+                        title="next chapter">ComputeDescription</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ComputeDescription.html" title="ComputeDescription"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Manager.html" title="Manager"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="__init__.html" >Resource Management</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
+    </div>
+  </body>
+</html>

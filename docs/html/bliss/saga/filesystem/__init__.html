@@ -1,0 +1,159 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>File/Directory Management &mdash; Bliss 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Bliss 0.2.5 documentation" href="../../../index.html" />
+    <link rel="next" title="Directory" href="Directory.html" />
+    <link rel="prev" title="Job" href="../job/Job.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Directory.html" title="Directory"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../job/Job.html" title="Job"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-bliss.saga.filesystem"></span><div class="section" id="file-directory-management">
+<h1>File/Directory Management<a class="headerlink" href="#file-directory-management" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The file managment API provides the ability to interact with (local and
+remote) file systems via the two classes, <a class="reference internal" href="Directory.html#bliss.saga.filesystem.Directory" title="bliss.saga.filesystem.Directory"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.filesystem.Directory</span></tt></a> and
+<a class="reference internal" href="File.html#bliss.saga.filesystem.File" title="bliss.saga.filesystem.File"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.filesystem.File</span></tt></a>. The API provides a number of operations, which all
+behave similar to the common unix command line tools (cp, ls, rm etc).</p>
+<p><strong>Example</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># get a directory handle</span>
+<span class="nb">dir</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">filesystem</span><span class="o">.</span><span class="n">Directory</span><span class="p">(</span><span class="s">&quot;sftp://localhost/tmp/&quot;</span><span class="p">)</span>
+
+<span class="c"># create a subdir</span>
+<span class="nb">dir</span><span class="o">.</span><span class="n">make_dir</span> <span class="p">(</span><span class="s">&quot;data/&quot;</span><span class="p">)</span>
+
+<span class="c"># list contents of the directory</span>
+<span class="n">files</span> <span class="o">=</span> <span class="nb">dir</span><span class="o">.</span><span class="n">list</span> <span class="p">()</span>
+
+<span class="c"># copy *.dat files into the subdir</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span> <span class="p">:</span>
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span> <span class="p">(</span><span class="s">&#39;^.*\.dat$&#39;</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="p">:</span>
+        <span class="nb">dir</span><span class="o">.</span><span class="n">copy</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">&quot;sftp://localhost/tmp/data/&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The above example covers most of the semantics of the filesystem package &#8211;
+additional capabilities, such get_size() or move(), can be found in the
+individual class documentations.</p>
+</div>
+<div class="section" id="bliss-filesystem-api-classes">
+<h2>Bliss Filesystem API Classes<a class="headerlink" href="#bliss-filesystem-api-classes" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Directory.html">Directory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="File.html">File</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">File/Directory Management</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#bliss-filesystem-api-classes">Bliss Filesystem API Classes</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../job/Job.html"
+                        title="previous chapter">Job</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Directory.html"
+                        title="next chapter">Directory</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Directory.html" title="Directory"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../job/Job.html" title="Job"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
+    </div>
+  </body>
+</html>
