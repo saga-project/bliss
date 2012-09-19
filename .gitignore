@@ -16,6 +16,5 @@ MANIFEST
 # build dirs
 bliss.egg-info/
 build/
-html/
 dist/
 
