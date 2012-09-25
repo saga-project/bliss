@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Bliss 0.2.5 documentation" href="#" />
-    <link rel="next" title="SAGA - A Simple API for Grid Applications" href="bliss/saga/__init__.html" /> 
+    <link rel="next" title="SAGA Core API Overview" href="bliss/saga/__init__.html" /> 
   </head>
   <body>
     <div class="related">
@@ -39,7 +39,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="bliss/saga/__init__.html" title="SAGA - A Simple API for Grid Applications"
+          <a href="bliss/saga/__init__.html" title="SAGA Core API Overview"
              accesskey="N">next</a> |</li>
         <li><a href="#">Bliss 0.2.5 documentation</a> &raquo;</li> 
       </ul>
@@ -60,14 +60,55 @@ completeness or strict standard obedience.</p>
 </div>
 <div class="section" id="bliss-api-documentation">
 <h1>Bliss API documentation<a class="headerlink" href="#bliss-api-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Contents:</p>
+<div class="section" id="bliss-api-overview-and-core-classes">
+<h2>Bliss API overview and Core classes<a class="headerlink" href="#bliss-api-overview-and-core-classes" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="bliss/saga/__init__.html">SAGA - A Simple API for Grid Applications</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bliss/saga/job/__init__.html">Job Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bliss/saga/filesystem/__init__.html">File/Directory Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bliss/saga/resource/__init__.html">Resource Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/__init__.html">SAGA Core API Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/Object.html">Object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/Error.html">Error</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/Exception.html">Exception</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/Context.html">Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/Session.html">Session</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/Attributes.html">Attributes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/Url.html">URL</a></li>
 </ul>
+</div>
+</div>
+<div class="section" id="the-job-api-package">
+<h2>The Job API Package<a class="headerlink" href="#the-job-api-package" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/job/__init__.html">Job Management Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/job/Description.html">Job Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/job/Service.html">Job Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/job/Job.html">Job</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="the-resource-api-package">
+<h2>The Resource API Package<a class="headerlink" href="#the-resource-api-package" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/resource/__init__.html">Resource Management Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/resource/Manager.html">Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/resource/State.html">State</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/resource/ComputeDescription.html">ComputeDescription</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/resource/Compute.html">Compute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/resource/StorageDescription.html">StorageDescription</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/resource/Storage.html">Storage</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="the-filesystem-api-package">
+<h2>The Filesystem API Package<a class="headerlink" href="#the-filesystem-api-package" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/filesystem/__init__.html">File/Directory Management Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/filesystem/Directory.html">Directory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bliss/saga/filesystem/File.html">File</a></li>
+</ul>
+</div>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
@@ -77,6 +118,12 @@ completeness or strict standard obedience.</p>
 <li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
 <li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
 </ul>
+<hr class="docutils" />
+<p><strong>Footnote</strong>:</p>
+<p>This documentation was build with the following command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">.../</span><span class="n">bliss</span><span class="o">/</span> <span class="o">&gt;</span>   <span class="n">sphinx</span><span class="o">-</span><span class="n">build</span> <span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">E</span> <span class="o">-</span><span class="n">n</span> <span class="o">-</span><span class="n">c</span> <span class="n">docs</span><span class="o">/</span> <span class="o">-</span><span class="n">b</span> <span class="n">html</span> <span class="o">.</span> <span class="n">docs</span><span class="o">/</span><span class="n">html</span>
+</pre></div>
+</div>
 </div>
 
 
@@ -89,6 +136,18 @@ completeness or strict standard obedience.</p>
   <ul>
 <li><a class="reference internal" href="#">Bliss, a SAGA implementation in Python</a></li>
 <li><a class="reference internal" href="#bliss-api-documentation">Bliss API documentation</a><ul>
+<li><a class="reference internal" href="#bliss-api-overview-and-core-classes">Bliss API overview and Core classes</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-job-api-package">The Job API Package</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-resource-api-package">The Resource API Package</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-filesystem-api-package">The Filesystem API Package</a><ul>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
@@ -96,7 +155,7 @@ completeness or strict standard obedience.</p>
 
   <h4>Next topic</h4>
   <p class="topless"><a href="bliss/saga/__init__.html"
-                        title="next chapter">SAGA - A Simple API for Grid Applications</a></p>
+                        title="next chapter">SAGA Core API Overview</a></p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -124,7 +183,7 @@ completeness or strict standard obedience.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="bliss/saga/__init__.html" title="SAGA - A Simple API for Grid Applications"
+          <a href="bliss/saga/__init__.html" title="SAGA Core API Overview"
              >next</a> |</li>
         <li><a href="#">Bliss 0.2.5 documentation</a> &raquo;</li> 
       </ul>

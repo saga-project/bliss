@@ -53,68 +53,6 @@
 <span class="c"># -*- coding: utf-8 -*-</span>
 <span class="c"># vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4</span>
 
-<span class="sd">&#39;&#39;&#39; </span>
-<span class="sd">    Job Management</span>
-<span class="sd">    ==============</span>
-
-<span class="sd">    Introduction</span>
-<span class="sd">    ------------</span>
-
-<span class="sd">    The job management API allows to create (via a :class:`bliss.saga.job.Service`) and manage</span>
-<span class="sd">    :class:`bliss.saga.job.Job` instances. A job is, for the purpose of the SAGA API, an instance</span>
-<span class="sd">    of a specific application, i.e. one or more processes of a specific</span>
-<span class="sd">    executable.  </span>
-
-<span class="sd">    **Example**::</span>
-
-<span class="sd">     # create a job description...</span>
-<span class="sd">     jd = saga.job.Description()</span>
-<span class="sd">    </span>
-<span class="sd">     # ... and fill it with information about the job to be started</span>
-<span class="sd">     jd.executable = &quot;/usr/local/bin/blast&quot;</span>
-<span class="sd">     jd.arguments = [&quot;-i&quot;, &quot;/data/in/x_42&quot;]</span>
-<span class="sd">     jd.spmd_variation = &quot;MPI&quot;</span>
-<span class="sd">     jd.number_of_processes = 64</span>
-<span class="sd">    </span>
-<span class="sd">     # the job is to be started via globus on some remote host: contact the</span>
-<span class="sd">     # respective submission point via its URL: </span>
-<span class="sd">     js = saga.job.Service(&quot;gram://remote.host.net/&quot;)</span>
-
-<span class="sd">     # the thus created job service instance accepts the previously created job</span>
-<span class="sd">     # description and instantiates a job instance.</span>
-<span class="sd">     j = js.create_job(jd)</span>
-<span class="sd">    </span>
-<span class="sd">     # a job is a stateful representation of the remote (set of) process(es).  It</span>
-<span class="sd">     # can be run, suspended, resumed and waited upon:</span>
-<span class="sd">     j.run()</span>
-<span class="sd">     j.suspend()</span>
-<span class="sd">     j.resume()</span>
-<span class="sd">     j.wait()</span>
-
-<span class="sd">     # during the execution, and after termination, the job can be inspected for</span>
-<span class="sd">     # state, and for some additional information</span>
-<span class="sd">     print &quot;id   :  %s&quot;  %  str(j.get_job_id())</span>
-<span class="sd">     print &quot;state:  %s&quot;  %  str(j.get_state())</span>
-<span class="sd">     print &quot;descr:  %s&quot;  %  str(j.get_description())</span>
-
-
-<span class="sd">    The above example shows most of the semantics of the job package -- additional</span>
-<span class="sd">    information, such as about file staging and state model etc., can be found in</span>
-<span class="sd">    the individual class documentations.</span>
-
-
-<span class="sd">    Bliss Job API Classes</span>
-<span class="sd">    ---------------------</span>
-
-<span class="sd">    .. toctree::</span>
-<span class="sd">       :maxdepth: 1</span>
-<span class="sd">    </span>
-<span class="sd">       Description.rst</span>
-<span class="sd">       Service.rst</span>
-<span class="sd">       Job.rst</span>
-
-<span class="sd">&#39;&#39;&#39;</span>
-
 <span class="n">__author__</span>    <span class="o">=</span> <span class="s">&quot;Ole Christian Weidner, et al.&quot;</span>
 <span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright 2012, Ole Christian Weidner&quot;</span>
 <span class="n">__license__</span>   <span class="o">=</span> <span class="s">&quot;MIT&quot;</span>

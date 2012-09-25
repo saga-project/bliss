@@ -53,47 +53,6 @@
 <span class="c"># -*- coding: utf-8 -*-</span>
 <span class="c"># vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4</span>
 
-<span class="sd">&#39;&#39;&#39; File/Directory Management</span>
-<span class="sd">    =========================</span>
-
-<span class="sd">    Introduction</span>
-<span class="sd">    ------------</span>
-
-<span class="sd">    The file managment API provides the ability to interact with (local and</span>
-<span class="sd">    remote) file systems via the two classes, :class:`bliss.saga.filesystem.Directory` and</span>
-<span class="sd">    :class:`bliss.saga.filesystem.File`. The API provides a number of operations, which all</span>
-<span class="sd">    behave similar to the common unix command line tools (cp, ls, rm etc).</span>
-
-<span class="sd">    **Example**::</span>
-
-<span class="sd">      # get a directory handle</span>
-<span class="sd">      dir = saga.filesystem.Directory(&quot;sftp://localhost/tmp/&quot;)</span>
-
-<span class="sd">      # create a subdir</span>
-<span class="sd">      dir.make_dir (&quot;data/&quot;)</span>
-
-<span class="sd">      # list contents of the directory</span>
-<span class="sd">      files = dir.list ()</span>
-
-<span class="sd">      # copy *.dat files into the subdir</span>
-<span class="sd">      for f in files :</span>
-<span class="sd">          if re.match (&#39;^.*\.dat$&#39;, f) :</span>
-<span class="sd">              dir.copy (f, &quot;sftp://localhost/tmp/data/&quot;)</span>
-
-<span class="sd">    The above example covers most of the semantics of the filesystem package --</span>
-<span class="sd">    additional capabilities, such get_size() or move(), can be found in the</span>
-<span class="sd">    individual class documentations.</span>
-
-<span class="sd">    Bliss Filesystem API Classes</span>
-<span class="sd">    ----------------------------</span>
-
-<span class="sd">    .. toctree::</span>
-<span class="sd">       :maxdepth: 1</span>
-<span class="sd">    </span>
-<span class="sd">       Directory.rst</span>
-<span class="sd">       File.rst</span>
-
-<span class="sd">&#39;&#39;&#39;</span>
 
 <span class="n">__author__</span>    <span class="o">=</span> <span class="s">&quot;Ole Christian Weidner&quot;</span>
 <span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright 2011-2012, Ole Christian Weidner&quot;</span>

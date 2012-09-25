@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Resource Management &mdash; Bliss 0.2.5 documentation</title>
+    <title>Resource Management Overview &mdash; Bliss 0.2.5 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -27,7 +27,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <link rel="top" title="Bliss 0.2.5 documentation" href="../../../index.html" />
     <link rel="next" title="Manager" href="Manager.html" />
-    <link rel="prev" title="File" href="../filesystem/File.html" /> 
+    <link rel="prev" title="Job" href="../job/Job.html" /> 
   </head>
   <body>
     <div class="related">
@@ -43,7 +43,7 @@
           <a href="Manager.html" title="Manager"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../filesystem/File.html" title="File"
+          <a href="../job/Job.html" title="Job"
              accesskey="P">previous</a> |</li>
         <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li> 
       </ul>
@@ -54,10 +54,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <span class="target" id="module-bliss.saga.resource"></span><div class="section" id="resource-management">
-<h1>Resource Management<a class="headerlink" href="#resource-management" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="resource-management-overview">
+<h1>Resource Management Overview<a class="headerlink" href="#resource-management-overview" title="Permalink to this headline">¶</a></h1>
 <p>The resource API provides the means to create, discover, manage and use
 resources, in particular compute and storage resources (<a class="reference internal" href="Compute.html#bliss.saga.resource.Compute" title="bliss.saga.resource.Compute"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.resource.Compute</span></tt></a>,
 <a class="reference internal" href="Storage.html#bliss.saga.resource.Storage" title="bliss.saga.resource.Storage"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.resource.Storage</span></tt></a>).  A <a class="reference internal" href="Manager.html#bliss.saga.resource.Manager" title="bliss.saga.resource.Manager"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.resource.Manager</span></tt></a> class acts as resource
@@ -97,19 +95,8 @@ necessarily provisioned instantly, and they do have a finite lifetime.</p>
 similar to example 1.  It does not handle the co-location of compute and
 data resources &#8211; that is left to either the backend, or to the application
 itself.</p>
-</div>
-<div class="section" id="bliss-resource-api-classes">
-<h2>Bliss Resource API Classes<a class="headerlink" href="#bliss-resource-api-classes" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="Manager.html">Manager</a></li>
-<li class="toctree-l1"><a class="reference internal" href="State.html">State</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ComputeDescription.html">ComputeDescription</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Compute.html">Compute</a></li>
-<li class="toctree-l1"><a class="reference internal" href="StorageDescription.html">StorageDescription</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Storage.html">Storage</a></li>
-</ul>
-</div>
+<div class="section" id="module-bliss.saga.resource">
+<span id="bliss-resource-api-classes"></span><h2>Bliss Resource API Classes<a class="headerlink" href="#module-bliss.saga.resource" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -121,18 +108,15 @@ itself.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Resource Management</a><ul>
-<li><a class="reference internal" href="#introduction">Introduction</a></li>
-<li><a class="reference internal" href="#bliss-resource-api-classes">Bliss Resource API Classes</a><ul>
-</ul>
-</li>
+<li><a class="reference internal" href="#">Resource Management Overview</a><ul>
+<li><a class="reference internal" href="#module-bliss.saga.resource">Bliss Resource API Classes</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../filesystem/File.html"
-                        title="previous chapter">File</a></p>
+  <p class="topless"><a href="../job/Job.html"
+                        title="previous chapter">Job</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="Manager.html"
                         title="next chapter">Manager</a></p>
@@ -166,7 +150,7 @@ itself.</p>
           <a href="Manager.html" title="Manager"
              >next</a> |</li>
         <li class="right" >
-          <a href="../filesystem/File.html" title="File"
+          <a href="../job/Job.html" title="Job"
              >previous</a> |</li>
         <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li> 
       </ul>

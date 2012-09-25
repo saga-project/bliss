@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Job Management &mdash; Bliss 0.2.5 documentation</title>
+    <title>Job Management Overview &mdash; Bliss 0.2.5 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -54,10 +54,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <span class="target" id="module-bliss.saga.job"></span><div class="section" id="job-management">
-<h1>Job Management<a class="headerlink" href="#job-management" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="job-management-overview">
+<h1>Job Management Overview<a class="headerlink" href="#job-management-overview" title="Permalink to this headline">¶</a></h1>
 <p>The job management API allows to create (via a <a class="reference internal" href="Service.html#bliss.saga.job.Service" title="bliss.saga.job.Service"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.job.Service</span></tt></a>) and manage
 <a class="reference internal" href="Job.html#bliss.saga.job.Job" title="bliss.saga.job.Job"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.job.Job</span></tt></a> instances. A job is, for the purpose of the SAGA API, an instance
 of a specific application, i.e. one or more processes of a specific
@@ -73,7 +71,7 @@ executable.</p>
 <span class="n">jd</span><span class="o">.</span><span class="n">number_of_processes</span> <span class="o">=</span> <span class="mi">64</span>
 
 <span class="c"># the job is to be started via globus on some remote host: contact the</span>
-<span class="c"># respective submission point via its URL: </span>
+<span class="c"># respective submission point via its URL:</span>
 <span class="n">js</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s">&quot;gram://remote.host.net/&quot;</span><span class="p">)</span>
 
 <span class="c"># the thus created job service instance accepts the previously created job</span>
@@ -97,18 +95,7 @@ executable.</p>
 <p>The above example shows most of the semantics of the job package &#8211; additional
 information, such as about file staging and state model etc., can be found in
 the individual class documentations.</p>
-</div>
-<div class="section" id="bliss-job-api-classes">
-<h2>Bliss Job API Classes<a class="headerlink" href="#bliss-job-api-classes" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="Description.html">Job Description</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Service.html">Job Service</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Job.html">Job</a></li>
-</ul>
-</div>
-</div>
-</div>
+<span class="target" id="module-bliss.saga.job"></span></div>
 
 
           </div>
@@ -116,17 +103,6 @@ the individual class documentations.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../../../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Job Management</a><ul>
-<li><a class="reference internal" href="#introduction">Introduction</a></li>
-<li><a class="reference internal" href="#bliss-job-api-classes">Bliss Job API Classes</a><ul>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
   <h4>Previous topic</h4>
   <p class="topless"><a href="../Url.html"
                         title="previous chapter">URL</a></p>
