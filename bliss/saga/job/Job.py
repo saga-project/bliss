@@ -92,12 +92,12 @@ class Job(Object, AttributeInterface):
                                                  self.Canceled])
         
         self._attributes_set_getter ('State',    self.get_state)
-        self._attributes_set_getter ('jobID',    self.get_job_id)
+        self._attributes_set_getter ('JobID',    self.get_job_id)
         self._attributes_set_getter ('Exitcode', self._get_exitcode)
 
 
     ######################################################################
-    def _get_exitcode (self) :
+    def _get_exitcode (self, obj=None, key='ExitCode') :
         return self._plugin.job_get_exitcode (self)
 
     ######################################################################
@@ -177,7 +177,7 @@ class Job(Object, AttributeInterface):
 
     ######################################################################
     ##
-    def get_state(self):
+    def get_state(self, obj=None, key='State'):
         '''Return the current state of the job.
     
         B{Example}::
@@ -212,7 +212,7 @@ class Job(Object, AttributeInterface):
 
     ######################################################################
     ##
-    def get_job_id(self):
+    def get_job_id(self, obj=None, key="JobID") :
         '''Return the identifier for the job.'''
         if self._plugin is not None:
 
