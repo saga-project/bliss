@@ -481,8 +481,10 @@ class AttributeInterface (_AttributesBase) :
             setter_all = d['setter']
             setter_key = d['attributes'][key]['setter']
 
-            if setter_all : setter_all (self, key)
-            if setter_key : setter_key (self, key)
+            val = d['attributes'][key]['value']
+
+            if setter_all : setter_all (self, key, val)
+            if setter_key : setter_key (self, key, val)
 
         finally :
             d['attributes'][key]['recursion'] = False
@@ -511,8 +513,18 @@ class AttributeInterface (_AttributesBase) :
             getter_all = d['getter']
             getter_key = d['attributes'][key]['getter']
 
-            if getter_all : getter_all (self, key)
-            if getter_key : getter_key (self, key)
+            val = None
+            ok  = False
+
+            if getter_all : 
+                val = getter_all (self, key)
+                ok  = True
+            if getter_key : 
+                val = getter_key (self, key)
+                ok  = True 
+
+            if ok :
+                d['attributes'][key]['value'] = val
 
         finally :
             d['attributes'][key]['recursion'] = False
@@ -862,6 +874,7 @@ class AttributeInterface (_AttributesBase) :
         # make sure interface is ready to use
         d = self._attributes_t_init (key)
 
+        # call any registered callbacks which could update the value
         self._attributes_t_call_getter (key)
 
         if 'value' in d['attributes'][key] :
