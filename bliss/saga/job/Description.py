@@ -150,7 +150,7 @@ class Description(Object, AttributeInterface):
       # BigJob happy, but should be @deprecated.
       # self._attributes_set_enums ('SPMDVariation',     ['MPI', 'OpenMP', 'None'])
         self._attributes_set_enums ('SPMDVariation',     ['MPI', 'OpenMP', 'None', 'Single', \
-                                                          'mpi', 'openmp', 'none', 'Single'  ])
+                                                          'mpi', 'openmp', 'none', 'single'  ])
 
     ######################################################################
     ## 
