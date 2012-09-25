@@ -89,8 +89,8 @@ def run(url, workingdir, username, queue, project):
       print "NOW, SOME MANUAL CHECKING IS REQUIRED!      "
       print "                                            "
       print "(1) Login to %s                             " % (url)
-      print "(2) Make sure the %s/file bliss_job.07.stdout exists" % (workingdir)
-      print "(3) Make sure %s/bliss_job.01.stdout contains the string 'Hello from Bliss'" % (workingdir)
+      print "(2) Make sure the %s/bliss_job.07.stdout exists" % (workingdir)
+      print "(3) Make sure %s/bliss_job.07.stdout contains the string 'Hello from Bliss'" % (workingdir)
       print ""
       print "If (1)-(3) are ok, this test can be considered as PASSED\n"
 
