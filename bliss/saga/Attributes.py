@@ -993,9 +993,10 @@ class AttributeInterface (_AttributesBase) :
         d = self._attributes_t_init ()
 
         # check if we know about that attribute
-        if 'exists' in d['attributes'][key] :
-            if  d['attributes'][key]['exists'] :
-                return True
+        if key in d['attributes'] :
+            if 'exists' in d['attributes'][key] :
+                if  d['attributes'][key]['exists'] :
+                    return True
 
         return False
 
