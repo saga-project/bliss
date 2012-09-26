@@ -1513,6 +1513,7 @@ class AttributeInterface (_AttributesBase) :
 
         print "'Registered' attributes"
         for key in keys_all :
+            us_key = self._attributes_t_underscore (key)
             if key not in keys_exist :
                 if not  d['attributes'][key]['mode'] == self.Alias and \
                    not  d['attributes'][key]['extended'] :
@@ -2100,7 +2101,8 @@ class AttributeInterface (_AttributesBase) :
         tmp = {}
 
         for key in self._attributes_i_list (ext=False) :
-            tmp[key] = d['attributes'][key]['value']
+            us_key = self._attributes_t_underscore (key)
+            tmp[us_key] = d['attributes'][us_key]['value']
 
         return str (tmp)
             
