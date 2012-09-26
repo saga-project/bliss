@@ -911,7 +911,14 @@ class AttributeInterface (_AttributesBase) :
             if d['attributes'][key]['mode'] != self.Alias :
                 if d['attributes'][key]['exists'] :
                     if ext or not d['attributes'][key]['extended'] :
-                        ret.append (key)
+                        # hide 'private' attributes
+                        # FIXME: make this configurable
+                        if not key.startswith ('_') :
+                            # return CamelCased keys, as those are used in the
+                            # attribute interface
+                            # FIXME: make this configurable, possibly only for
+                            # list_attributes()
+                            ret.append (d['attributes'][key]['camelcase'])
 
         return ret
 
