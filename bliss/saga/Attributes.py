@@ -10,6 +10,8 @@ from bliss.saga.Error     import Error     as Error
 
 ################################################################################
 
+import collections
+import types
 import datetime
 import traceback
 import inspect
@@ -914,7 +916,7 @@ class AttributeInterface (_AttributesBase) :
                         # hide 'private' attributes
                         # FIXME: make this configurable
                         if not key.startswith ('_') :
-                            # return CamelCased keys, as those are used in the
+                            # return CamelCase'd keys, as those are used in the
                             # attribute interface
                             # FIXME: make this configurable, possibly only for
                             # list_attributes()
@@ -1312,14 +1314,19 @@ class AttributeInterface (_AttributesBase) :
         syms    = {}
 
         if type (accessor) == type (property()) :
-            syms['fdoc'] = accessor.__doc__
-            syms['fset'] = accessor.fget
-            syms['fget'] = accessor.fset
-            syms['fdel'] = accessor.fdel
+
+            def setter (obj, key, val) :
+                accessor.fset (self, val)
+
+            def getter (obj, key) :
+                accessor.fget (self)
+
+            syms['fset'] = setter
+            syms['fget'] = getter
+
         else :
             syms         = accessor()
 
-        if syms['fdel'] : default = syms['fdel'] (self, None)
 
         self._attributes_register (key, default, self.Any, self.Vector, self.Writable)
 
@@ -1485,7 +1492,7 @@ class AttributeInterface (_AttributesBase) :
 
 
     ####################################
-    def _attributes_dump (self, msg=None) :
+    def attributes_dump (self, msg=None) :
         """ 
         This interface method is not part of the public consumer API, but can
         safely be called from within derived classes.
@@ -1513,7 +1520,6 @@ class AttributeInterface (_AttributesBase) :
 
         print "'Registered' attributes"
         for key in keys_all :
-            us_key = self._attributes_t_underscore (key)
             if key not in keys_exist :
                 if not  d['attributes'][key]['mode'] == self.Alias and \
                    not  d['attributes'][key]['extended'] :
@@ -1806,6 +1812,12 @@ class AttributeInterface (_AttributesBase) :
         set_attribute method.
         """
 
+        # convert scalar to vector
+        if   None   ==   val                        : val = None 
+        elif isinstance (val, types.StringTypes)    : val = [val]
+        elif isinstance (val, collections.Iterable) : val = val
+        else                                        : val = [val]
+
         key    = self._attributes_t_keycheck   (key)
         us_key = self._attributes_t_underscore (key)
         return   self._attributes_i_set        (us_key, val)
@@ -1825,7 +1837,13 @@ class AttributeInterface (_AttributesBase) :
 
         key    = self._attributes_t_keycheck   (key)
         us_key = self._attributes_t_underscore (key)
-        return   self._attributes_i_get        (us_key)
+        ret    = self._attributes_i_get        (us_key)
+
+        # convert scalar to vector
+        if   None == ret                            : return [None]
+        elif isinstance (ret, types.StringTypes)    : return [ret]
+        elif isinstance (ret, collections.Iterable) : return ret
+        else                                        : return [ret]
 
 
     ####################################
