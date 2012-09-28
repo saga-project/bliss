@@ -275,6 +275,7 @@ class AttributeInterface (_AttributesBase) :
     Time        = 'time'       # seconds since epoch, or any py time thing
                                # which can be converted into such
                                # FIXME: conversion not implemented
+    Dict        = 'dict'       # set of key / value pairs 
 
     # mode enums
     Writable    = 'writable'   # the consumer of the interface can change
@@ -721,6 +722,7 @@ class AttributeInterface (_AttributesBase) :
             elif t == self.Float  : return float (val) 
             elif t == self.Bool   : return bool  (val) 
             elif t == self.String : return str   (val) 
+            elif t == self.Dict   : return dict  (val) 
             else                  : return        val  
         except ValueError as e:
             raise Exception ("attribute value %s has incorrect type: %s" %  (key, val),
