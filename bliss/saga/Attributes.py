@@ -1504,7 +1504,12 @@ class AttributeInterface (_AttributesBase) :
         d = self._attributes_t_init ()
 
         keys_all   = sorted (d['attributes'].iterkeys ())
-        keys_exist = sorted (self._attributes_i_list   ())
+        keys_tmp   = sorted (self._attributes_i_list   ())
+        keys_exist = []
+
+        for key in keys_tmp :
+            keys_exist.append (self._attributes_t_underscore (key))
+
 
         print "---------------------------------------"
         print str (type (self))
