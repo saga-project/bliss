@@ -275,7 +275,6 @@ class AttributeInterface (_AttributesBase) :
     Time        = 'time'       # seconds since epoch, or any py time thing
                                # which can be converted into such
                                # FIXME: conversion not implemented
-    Dict        = 'dict'       # set of key / value pairs 
 
     # mode enums
     Writable    = 'writable'   # the consumer of the interface can change
@@ -295,6 +294,7 @@ class AttributeInterface (_AttributesBase) :
     # flavor enums
     Scalar      = 'scalar'     # the attribute value is a single data element
     Vector      = 'vector'     # the attribute value is a list of data elements
+    Dict        = 'dict'       # the attribute value is a dict of data elements
 
     # two regexes for converting CamelCase into under_score_casing, as static
     # class vars to avoid frequent recompilation
@@ -672,6 +672,33 @@ class AttributeInterface (_AttributesBase) :
                     return [self._attributes_t_conversion_type (key, val)]
 
 
+        elif f == self.Dict :
+            # we want a dictionary
+            if isinstance (val, dict) :
+                # match!
+                return val
+
+            elif isinstance (val, list) :
+                # val is already list - serialize entries to strings, split on
+                # '=' or ':', remove brackets
+                ret = {}
+                for elem in val :
+                    tmp = self._attributes_t_conversion_type (key, elem)
+                    vec = tmp.split ('=', 2)
+                    ret[vec[0]] = vec[1]
+
+                return ret
+            else :
+                # need to create dict from scalar val - serialize, split,
+                # convert to one dict enty
+                ret = {}
+                tmp = self._attributes_t_conversion_type (key, val)
+                vec = tmp.split ('=', 2)
+                ret[vec[0]] = vec[1]
+
+                return ret
+
+
         elif f == self.Scalar :
             # we want a scalar
             if isinstance (val, list) :
@@ -722,10 +749,9 @@ class AttributeInterface (_AttributesBase) :
             elif t == self.Float  : return float (val) 
             elif t == self.Bool   : return bool  (val) 
             elif t == self.String : return str   (val) 
-            elif t == self.Dict   : return dict  (val) 
             else                  : return        val  
         except ValueError as e:
-            raise Exception ("attribute value %s has incorrect type: %s" %  (key, val),
+            raise Exception ("attribute value for '%s' has incorrect type: '%s' ['%s']" %  (key, t, val),
                              Error.BadParameter)
 
         # we should never get here...

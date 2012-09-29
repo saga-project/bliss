@@ -131,7 +131,7 @@ class Description(Object, AttributeInterface):
 
         # register properties with the attribute interface
         self._attributes_register  ('Executable',        None, self.String, self.Scalar, self.Writable)
-        self._attributes_register  ('Environment',       None, self.Dict,   self.Scalar, self.Writable)
+        self._attributes_register  ('Environment',       None, self.String, self.Dict,   self.Writable)
         self._attributes_register  ('Arguments',         None, self.String, self.Vector, self.Writable)
         self._attributes_register  ('WorkingDirectory',  None, self.String, self.Scalar, self.Writable)
         self._attributes_register  ('FileTransfer',      None, self.String, self.Vector, self.Writable)
