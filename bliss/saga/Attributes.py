@@ -361,8 +361,8 @@ class AttributeInterface (_AttributesBase) :
             d['camelcasing'] = False
             d['setter']      = None
             d['getter']      = None
-            d['lister']       = None
-            d['recursion']    = False
+            d['lister']      = None
+            d['recursion']   = False
 
             _AttributesBase.__setattr__ (self, '_d', d)
 
@@ -1551,6 +1551,19 @@ class AttributeInterface (_AttributesBase) :
         print " %-30s : %s"  %  ("CamelCasing" , d['camelcasing'])
         print "---------------------------------------"
 
+        print "'Existing' attributes"
+        for key in keys_exist :
+            if not  d['attributes'][key]['mode'] == self.Alias :
+                print " %-30s [%-6s, %-6s, %-8s]: %s"  % \
+                         (d['attributes'][key]['camelcase'],
+                          d['attributes'][key]['type'],
+                          d['attributes'][key]['flavor'],
+                          d['attributes'][key]['mode'],
+                          d['attributes'][key]['value']
+                          )
+
+        print "---------------------------------------"
+
         print "'Registered' attributes"
         for key in keys_all :
             if key not in keys_exist :
@@ -1563,19 +1576,6 @@ class AttributeInterface (_AttributesBase) :
                               d['attributes'][key]['mode'],
                               d['attributes'][key]['value']
                               )
-
-        print "---------------------------------------"
-
-        print "'Existing' attributes"
-        for key in keys_exist :
-            if not  d['attributes'][key]['mode'] == self.Alias :
-                print " %-30s [%-6s, %-6s, %-8s]: %s"  % \
-                         (d['attributes'][key]['camelcase'],
-                          d['attributes'][key]['type'],
-                          d['attributes'][key]['flavor'],
-                          d['attributes'][key]['mode'],
-                          d['attributes'][key]['value']
-                          )
 
         print "---------------------------------------"
 
