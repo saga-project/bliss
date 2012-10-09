@@ -66,9 +66,9 @@ def makemandel(mandelx, mandely, xbeg, xend, ybeg, yend, filename=None):
             image.putpixel((x-xbeg, y-ybeg), b * 65536 + g * 256 + r)
  
     if filename is not None:
-        image.save(filename, "PNG")
+        image.save(filename, "GIF")
     else:
-        image.save("mandel_x_%s_%s_y%s_%s.png" % (xbeg, xend, ybeg, yend), "PNG")
+        image.save("mandel_x_%s_%s_y%s_%s.gif" % (xbeg, xend, ybeg, yend), "GIF")
     return image
 
 ################################################################################
