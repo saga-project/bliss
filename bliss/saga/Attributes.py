@@ -2149,14 +2149,30 @@ class AttributeInterface (_AttributesBase) :
         # make sure interface is ready to use
         d = self._attributes_t_init ()
 
-        tmp = {}
+        ret = ""
 
         for key in self._attributes_i_list (ext=False) :
-            us_key = self._attributes_t_underscore (key)
-            tmp[us_key] = d['attributes'][us_key]['value']
+            us_key   = self._attributes_t_underscore (key)
+            valtype  = type(d['attributes'][us_key]['value'])
+            valstr   = ""
 
-        return str (tmp)
+            if valtype is dict :
+                valstr = str (self.get_vector_attribute (key))
+            else :
+                value = str (self.get_attribute (key))
+
+            ret += str("'%s' : '%s'," % (str(key), valstr))
+
+        return "{%s}" % ret
             
+
+        # tmp = {}
+        # 
+        # for key in self._attributes_i_list (ext=False) :
+        #     us_key = self._attributes_t_underscore (key)
+        #     tmp[key] = d['attributes'][us_key]['value']
+        # 
+        # return str (tmp)
 
    
 ################################################################################
