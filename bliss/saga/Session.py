@@ -30,9 +30,9 @@ class Session(object):
 
         # define an ssh context
         c = saga.Context()
-        c.context_type = 'ssh'
-        c.user_cert = '$HOME/.ssh/special_id_rsa'
-        c.user_key = '$HOME/.ssh/special_id_rsa.pub'
+        c.type = 'ssh'
+        c.usercert = '$HOME/.ssh/special_id_rsa'
+        c.userkey = '$HOME/.ssh/special_id_rsa.pub'
 
         # add it to a session
         s = saga.Session
@@ -76,7 +76,7 @@ class Session(object):
         return "Registered contexts: %s" % (str(self.contexts))
 
     ######################################################################
-    ## Property: contexts
+    ## Property: type
     def contexts():
         doc = """Authentication contexts registered with the Session.
         

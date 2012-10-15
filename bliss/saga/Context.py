@@ -14,7 +14,7 @@ from bliss.saga.Attributes import AttributeInterface
 from bliss.saga.Exception import Exception as SAGAException
 from bliss.saga.Error import Error as SAGAError
 
-class Context(Object, AttributeInterface):
+class Context(AttributeInterface, Object):
     '''Loosely defines a SAGA Context object as defined in GFD.90.
 
     A security context is a description of a security token.  It is important to
@@ -33,9 +33,9 @@ class Context(Object, AttributeInterface):
 
         # define an ssh context
         c = saga.Context()
-        c.context_type = 'ssh'
-        c.user_cert = '$HOME/.ssh/special_id_rsa'
-        c.user_key = '$HOME/.ssh/special_id_rsa.pub'
+        c.type = 'ssh'
+        c.usercert = '$HOME/.ssh/special_id_rsa'
+        c.userkey = '$HOME/.ssh/special_id_rsa.pub'
 
         # add the context to a session
         s = saga.Session()
@@ -77,42 +77,32 @@ class Context(Object, AttributeInterface):
 
         Object.__init__(self)
         self._apitype = 'saga.base'
+        AttributeInterface.__init__(self)
+
+        self._type      = None
+        self._userid    = None
+        self._userpass  = None
+        self._usercert  = None
+        self._userkey   = None
+        self._userproxy = None
+
+      
+        # register properties with the attribute interface 
+        self._register_rw_attribute(name="Type", 
+                                    accessor=self.__class__.type) 
+        self._register_rw_attribute(name="UserID", 
+                                    accessor=self.__class__.userid)  
+        self._register_rw_attribute(name="UserPass", 
+                                    accessor=self.__class__.userpass)  
+        self._register_rw_attribute(name="UserCert", 
+                                    accessor=self.__class__.usercert)  
+        self._register_rw_attribute(name="UserKey", 
+                                    accessor=self.__class__.userkey)  
+        self._register_rw_attribute(name="UserProxy", 
+                                    accessor=self.__class__.userproxy)  
 
         self.__logger = logging.getLogger('bliss.'+self.__class__.__name__)
 
-        self._attributes_extensible  (True)
-        self._attributes_camelcasing (True)
-      
-        # register properties with the attribute interface 
-        self._attributes_register ('ContextType', None, self.String, self.Scalar, self.Writable)
-        self._attributes_register ('UserID',      None, self.String, self.Scalar, self.Writable)
-        self._attributes_register ('UserPass',    None, self.String, self.Scalar, self.Writable)
-        self._attributes_register ('UserCert',    None, self.String, self.Scalar, self.Writable)
-        self._attributes_register ('UserKey',     None, self.String, self.Scalar, self.Writable)
-        self._attributes_register ('UserProxy',   None, self.String, self.Scalar, self.Writable)
-
-        self._attributes_register_deprecated  ('userid'     , 'UserID'     )
-        self._attributes_register_deprecated  ('userpass'   , 'UserPass'   )
-        self._attributes_register_deprecated  ('usercert'   , 'UserCert'   )
-        self._attributes_register_deprecated  ('userkey'    , 'UserKey'    )
-        self._attributes_register_deprecated  ('userproxy'  , 'UserProxy'  )
-
-
-        ##########################################
-        # some attributes point to files which must exist - so we add a test for
-        # those attributes
-        #
-        def _test_file_existence (key, val) :
-            if not val :
-                return "File %s = '' doesn't exist."  %  (key)
-            if not os.path.isfile (val) :
-                return "File %s = '%s' doesn't exist."  %  (key, val)
-            return True
-        ##########################################
-
-        self._attributes_add_check ('UserKey',   _test_file_existence)
-        self._attributes_add_check ('UserCert',  _test_file_existence)
-        self._attributes_add_check ('UserProxy', _test_file_existence)
 
 
     ######################################################################
@@ -131,8 +121,8 @@ class Context(Object, AttributeInterface):
 
     ######################################################################
     ## Property: type
-    ContextType  = property ( doc = '''
-    ContextType:
+    def type():
+        doc = """Context type.
     
     This is a free-form string which describes the type of security token
     this context describes.  This type is not bound to a specific backend --
@@ -145,9 +135,9 @@ class Context(Object, AttributeInterface):
 
         # define an ssh context
         c = saga.Context()
-        c.context_type = 'ssh'
-        c.user_cert = '$HOME/.ssh/id_rsa'
-        c.user_key = '$HOME/.ssh/id_rsa.pub'
+            c.type = 'ssh'
+            c.usercert = '$HOME/.ssh/id_rsa'
+            c.userkey = '$HOME/.ssh/id_rsa.pub'
 
         # add it to a session
         s = saga.Session
@@ -161,48 +151,80 @@ class Context(Object, AttributeInterface):
     (*) this is a list of transport protocols, not of backends, but
     hopefully make the point clear.
 
-    ''')
+        """
+        def fget(self):
+            return self._type
+        def fset(self, val):
+            self._type = val
+        return locals()
+    type = property(**type())
 
 
     ######################################################################
-    ## Property: user_id
-    UserID = property ( doc = '''
-    UserID:
-
-    User ID or user name to use.
-    ''')
+    ## Property: userid
+    def userid():
+        doc = "User ID or user name to use."
+        def fget(self):
+            return self._userid
+        def fset(self, val):
+            self._userid = val
+        return locals()
+    userid = property(**userid())
 
     ######################################################################
-    ## Property: user_pass
-    UserPass = property ( doc = '''
-    UserPass:
-    User password to use.
+    ## Property: userpass
+    def userpass():
+        doc = """User password to use.
 
     Please use this option with care -- it is *not* good practice to encode
     plain text passwords in source code!
-    ''')
+        """
+        def fget(self):
+            return self._userpass
+        def fset(self, val):
+            self._userpass = val
+        return locals()
+    userpass = property(**userpass())
 
     ######################################################################
-    ## Property: user_cert
-    UserCert = property ( doc = '''
-    UserCert:
-        
-    Location of a user certificate.
-        ''')
+    ## Property: usercert
+    def usercert():
+        doc = "Location of a user certificate."
+        def fget(self):
+            return self._usercert
+        def fset(self, val):
+            if not os.path.isfile(val):
+                self._log_and_raise_if_file_doesnt_exist(val)
+            else:
+                self._usercert = val
+        return locals()
+    usercert = property(**usercert())
 
     ######################################################################
-    ## Property: user_key
-    UserKey = property ( doc = '''
-    UserKey: 
-
-    Location of a user key.
-    ''')
+    ## Property: userkey
+    def userkey():
+        doc = "Location of a user key."
+        def fget(self):
+            return self._userkey
+        def fset(self, val):
+            if not os.path.isfile(val):
+                self._log_and_raise_if_file_doesnt_exist(val)
+            else:
+                self._userkey = val
+        return locals()
+    userkey = property(**userkey())
 
     ######################################################################
-    ## Property: user_proxy
-    UserProxy = property ( doc = '''
-    UserProxy: 
-
-    Location of a user proxy.
-    ''')
+    ## Property: userproxy
+    def userproxy():
+        doc = "Location of a user proxy."
+        def fget(self):
+            return self._userproxy
+        def fset(self, val):
+            if not os.path.isfile(val):
+                self._log_and_raise_if_file_doesnt_exist(val)
+            else: 
+                self._userproxy = val
+        return locals()
+    userproxy = property(**userproxy())
 

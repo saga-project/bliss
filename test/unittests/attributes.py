@@ -34,6 +34,6 @@ class AttributeTests(unittest.TestCase):
         d.executable = 'A'
         d.arguments  = ['b', 'c']
         
-        if str(d) != "{'executable': 'A', 'arguments': ['b', 'c']}" :
-            self.fail("Unexpected string representation: %s"  %  str(d))
+        if str(d) != "{'Executable' : 'A','Arguments' : '['b', 'c']',}":
+            self.fail("Unexpected string representation")
 

@@ -17,8 +17,8 @@ def run(url, username, queue, project):
     """
     try:
         ctx = saga.Context()
-        ctx.context_type = saga.Context.SSH
-        ctx.user_id  = username # like 'ssh username@host ...'
+        ctx.type = saga.Context.SSH
+        ctx.userid  = username # like 'ssh username@host ...'
 
         js = saga.job.Service(url)
         js.session.contexts.append(ctx)
@@ -42,14 +42,14 @@ def run(url, username, queue, project):
         # create the job (state: New)
         myjob = js.create_job(jd)
 
-        print "Job ID    : %s" % (myjob.job_id)
+        print "Job ID    : %s" % (myjob.jobid)
         print "Job State : %s" % (myjob.get_state())
 
         print "\n...starting job...\n"
         # run the job (submit the job to PBS)
         myjob.run()
 
-        print "Job ID    : %s" % (myjob.job_id)
+        print "Job ID    : %s" % (myjob.jobid)
         print "Job State : %s" % (myjob.get_state())
 
         print "\n...waiting for job...\n"
@@ -73,14 +73,14 @@ def run(url, username, queue, project):
         js2 = saga.job.Service(url2)
         myjob2 = js.create_job(jd)
 
-        print "Job ID    : %s" % (myjob2.job_id)
+        print "Job ID    : %s" % (myjob2.jobid)
         print "Job State : %s" % (myjob2.get_state())
 
         print "\n...starting job...\n"
         # run the job (submit the job to PBS)
         myjob2.run()
 
-        print "Job ID    : %s" % (myjob2.job_id)
+        print "Job ID    : %s" % (myjob2.jobid)
         print "Job State : %s" % (myjob2.get_state())
 
         print "\n...waiting for job...\n"

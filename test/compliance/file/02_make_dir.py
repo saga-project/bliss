@@ -15,8 +15,8 @@ def run(url, username):
     try:
         failed = False
         ctx = saga.Context()
-        ctx.context_type = saga.Context.SSH
-        ctx.user_id  = username # like 'ssh username@host ...'
+        ctx.type = saga.Context.SSH
+        ctx.userid  = username # like 'ssh username@host ...'
       
         session = saga.Session()
         session.contexts.append(ctx)

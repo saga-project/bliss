@@ -43,7 +43,12 @@ class StorageDescription(Object, AttributeInterface):
     def _deep_copy(sd):
         sd_copy = bliss.saga.resource.StorageDescription()
 
-        AttributeInterface._attributes_deep_copy (sd, sd_copy)
+        sd_copy._dynamic        = sd._dynamic
+        sd_copy._start          = sd._start
+        sd_copy._end            = sd._end
+        sd_copy._duration       = sd._duration
+        sd_copy._template       = sd._template
+        sd_copy._size            = sd._size
 
         return sd_copy
 
@@ -55,17 +60,29 @@ class StorageDescription(Object, AttributeInterface):
         Object.__init__(self)
         self._apitype = 'saga.resource'
 
+        AttributeInterface.__init__(self)
 
-        self._attributes_extensible  (False)
-        self._attributes_camelcasing (True)
-      
-        # register properties with the attribute interface 
-        self._attributes_register  ('Dynamic',   False, self.Bool,   self.Scalar, self.Writable)
-        self._attributes_register  ('Start',     None,  self.Time,   self.Scalar, self.Writable)
-        self._attributes_register  ('End',       None,  self.Time,   self.Scalar, self.Writable)
-        self._attributes_register  ('Duration',  None,  self.Time,   self.Scalar, self.Writable)
-        self._attributes_register  ('Template',  None,  self.String, self.Scalar, self.Writable)
-        self._attributes_register  ('Size',      None,  self.Int,    self.Scalar, self.Writable)
+        self._dynamic        = False
+        self._start          = None
+        self._end            = None
+        self._duration       = None
+        self._template       = None
+        
+        self._register_rw_attribute(name="Dynamic", 
+                                    accessor=self.__class__.dynamic) 
+        self._register_rw_attribute(name="Start", 
+                                    accessor=self.__class__.start) 
+        self._register_rw_attribute(name="End", 
+                                    accessor=self.__class__.end) 
+        self._register_rw_attribute(name="Duration", 
+                                    accessor=self.__class__.duration) 
+        self._register_rw_attribute(name="Template", 
+                                    accessor=self.__class__.template) 
+        
+        self._size = ''
+        
+        self._register_rw_attribute(name="Size", 
+                                    accessor=self.__class__.size) 
 
 
     ######################################################################
@@ -77,69 +94,110 @@ class StorageDescription(Object, AttributeInterface):
     
     ######################################################################
     ## Property 
-        Start = property ( doc = '''
-        Start:
-        Required start time for this resource reservation.
+    def start():
+        doc = '''Required start time for this resource reservation.
         
         The resource is expected to be 'Running' at the specified point in time,
         and thus ready to execute job requests.  A backend which cannot make
         that promise will raise and exception.
-        ''')
+        '''
+        def fget(self):
+            return self._start
+        def fset(self, val):
+            self._start = val
+        def fdel(self, val):
+            self._start = None
+        return locals()
+    start = property(**start())
     
     ######################################################################
     ## Property 
-        End = property ( doc = '''
-        End:
-        Required end time for this resource request.
+    def end():
+        doc = '''Required end time for this resource request.
         
         The resource is expected to be available until at most that given point
         in time.  A resource manager which cannot guarantee the resource to be
         available before that point (- a given duration) will fail the resource
         request.
-        ''')
+        '''
+        def fget(self):
+            return self._end
+        def fset(self, val):
+            self._end = val
+        def fdel(self, val):
+            self._end = None
+        return locals()
+    end = property(**end())
     
     ######################################################################
     ## Property 
-        Duration = property ( doc = '''
-        Duration:
-        Required duration for this resource request.
+    def duration():
+        doc = '''Required duration for this resource request.
 
         The specified time span is the time the resource is expected to be
         'Running' -- times spent in other states does not count toward this
         limit.  A backend which cannot make that promise will raise and 
         exception.
-        ''')
+        '''
+        def fget(self):
+            return self._duration
+        def fset(self, val):
+            self._duration = val
+        def fdel(self, val):
+            self._duration = None
+        return locals()
+    duration = property(**duration())
     
     ######################################################################
     ## Property 
-        Template = property ( doc = '''
-        Template:
-        Required template for this resource request.
+    def template():
+        doc = '''Required template for this resource request.
 
         The specified template is to be used to fill in certain elements of 
         this storage resource description.  If the template is not known by 
         the backend, a 'BadParameter' exception will be raised upon resource 
         creation.  Specific values in the compute resource description will 
         supersede the values specified by the template.
-        ''')
+        '''
+        def fget(self):
+            return self._template
+        def fset(self, val):
+            self._template = val
+        def fdel(self, val):
+            self._template = None
+        return locals()
+    template = property(**template())
 
     ######################################################################
     ## Property 
-        Dynamic = property ( doc = '''
-        Dynamic:
-        Dynamic or not.
+    def dynamic():
+        doc = '''Dynamic or not.
         
         The 'dynamic' flag signals that the resource description provides
         estimated values, but that the resource manager is allowed to choose
         different initial values, and also can change the values during the
         resource lifetime.  That flag is specifically targeting backends which
         can resize the resources in response to actual storage requirements.
-        ''')
+        '''
+        def fget(self):
+            return self._dynamic
+        def fset(self, val):
+            self._dynamic = val
+        def fdel(self, val):
+            self._dynamic = None
+        return locals()
+    dynamic = property(**dynamic())
     
     ######################################################################
     ## Property 
-        Size = property ( doc = '''
-        Size:
-        Required size of storage, in MegaBytes.
-        ''')
+    def size():
+        doc = "Required size of storage, in MegaBytes."
+        def fget(self):
+            return self._size
+        def fset(self, val):
+            self._size = val
+        def fdel(self, val):
+            self._size = None
+        return locals()
+    size = property(**size())
     
