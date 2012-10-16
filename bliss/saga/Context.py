@@ -124,7 +124,7 @@ class Context(AttributeInterface, Object):
         '''String represenation.
         '''
         return "\n[\n Context Type: %s\n UserID: %s\n UserPass: %s\n UserCert: %s\n UserKey: %s\n UserProxy: %s\n]" % \
-                (self.type, self.userid, self.user_pass, self.user_cert, self.userkey, self.user_proxy)
+                (self.type, self.userid, self.userpass, self.usercert, self.userkey, self.userproxy)
 
     ######################################################################
     ## Property: type
