@@ -104,6 +104,13 @@ class Context(AttributeInterface, Object):
         self.__logger = logging.getLogger('bliss.'+self.__class__.__name__)
 
 
+    ######################################################################
+    ##
+    def _log_and_raise_if_file_doesnt_exist(self, filename):
+        '''Logs and raises an error if "filename" doesn't exist'''
+        msg = "File '%s' doesn't exist." % (filename)
+        self.__logger.error(msg)
+        raise SAGAException(msg, SAGAError.DoesNotExist)
 
     ######################################################################
     ##
@@ -117,7 +124,7 @@ class Context(AttributeInterface, Object):
         '''String represenation.
         '''
         return "\n[\n Context Type: %s\n UserID: %s\n UserPass: %s\n UserCert: %s\n UserKey: %s\n UserProxy: %s\n]" % \
-                (self.context_type, self.user_id, self.user_pass, self.user_cert, self.user_key, self.user_proxy)
+                (self.type, self.userid, self.user_pass, self.user_cert, self.userkey, self.user_proxy)
 
     ######################################################################
     ## Property: type

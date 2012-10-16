@@ -278,17 +278,17 @@ class PBSService:
             usable_ctx = None
 
             for ctx in self._so.session.contexts:
-                if ctx.context_type is bliss.saga.Context.SSH:
-                    if ctx.user_key is not None:
+                if ctx.type is bliss.saga.Context.SSH:
+                    if ctx.userkey is not None:
                         import os.path
-                        if not os.path.isfile(ctx.user_key):
+                        if not os.path.isfile(ctx.userkey):
                             self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                                                         "user_key %s doesn't exist." % ctx.user_key)
+                                                         "userkey %s doesn't exist." % ctx.userkey)
                     try:
                         cw = CommandWrapper.initAsSSHWrapper(logger=self._pi,
-                                                             username=ctx.user_id, 
+                                                             username=ctx.userid, 
                                                              hostname=self._url.host, 
-                                                             userkey=ctx.user_key)
+                                                             userkey=ctx.userkey)
                         cw.connect()
                         self._cw = cw
                         self._pi.log_debug("Using context %s to access %s succeeded" % (ctx, self._url))

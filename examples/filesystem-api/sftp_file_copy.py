@@ -28,9 +28,9 @@ def main():
         # credentials of the user, i.e., ~/.ssh/id_rsa
         #
         #ctx = saga.Context()
-        #ctx.context_type = saga.Context.SSH
-        #ctx.user_id  = 'loginname' # like 'ssh username@host ...'
-        #ctx.user_key = '/home/you/.ssh/id_rsa_custom' # like ssh -i ...'
+        #ctx.type = saga.Context.SSH
+        #ctx.userid  = 'loginname' # like 'ssh username@host ...'
+        #ctx.userkey = '/home/you/.ssh/id_rsa_custom' # like ssh -i ...'
    
         # Optional:  
         # Append the custom security context to the session

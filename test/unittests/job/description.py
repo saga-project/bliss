@@ -248,7 +248,7 @@ class JobDescriptionTests(unittest.TestCase):
         """
 
         try :
-        jd = saga.job.Description()
+            jd = saga.job.Description()
 
             jd.spmd_variation = 'MPI'
             if jd.get_attribute("SPMDVariation") != 'MPI':

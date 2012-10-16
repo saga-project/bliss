@@ -28,8 +28,8 @@ def main():
         # plugin will pick up the default set of ssh 
         # credentials of the user, i.e., ~/.ssh/id_rsa
         ctx = saga.Context()
-        ctx.context_type = saga.Context.SSH
-        ctx.user_id  = 'tg802352' # like 'ssh username@host ...'
+        ctx.type = saga.Context.SSH
+        ctx.userid  = 'tg802352' # like 'ssh username@host ...'
  
         # create a job service for TACC's 'lonestar' SGE cluster
         # and attach the SSH security context to it

@@ -60,9 +60,9 @@ if __name__ == "__main__":
 
     execution_host = saga.Url("pbs+ssh://india.futuregrid.org") 
     ctx = saga.Context()
-    ctx.context_type = saga.Context.SSH
-    ctx.user_id  = 's1063117' # like 'ssh username@host ...'
-    ctx.user_key = '/Users/s1063117/.ssh/rsa_work' # like ssh -i ...'
+    ctx.type = saga.Context.SSH
+    ctx.userid  = 's1063117' # like 'ssh username@host ...'
+    ctx.userkey = '/Users/s1063117/.ssh/rsa_work' # like ssh -i ...'
 
     session = saga.Session()
     session.contexts.append(ctx)

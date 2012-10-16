@@ -100,7 +100,7 @@ class SSHJobProcess(object):
 
         #grab an SSH context if one exists
         for ctx in self.so.session.contexts:
-            if ctx.context_type is bliss.saga.Context.SSH:
+            if ctx.type is bliss.saga.Context.SSH:
                 usable_ctx = ctx
                 self.pi.log_debug("Found SSH context to use!")
                 break
@@ -109,10 +109,10 @@ class SSHJobProcess(object):
         username = None
         userkey  = None
         if usable_ctx is not None:
-            if usable_ctx.user_id is not None:
-                username = usable_ctx.user_id
-            if usable_ctx.user_key is not None:
-                userkey = usable_ctx.user_key
+            if usable_ctx.userid is not None:
+                username = usable_ctx.userid
+            if usable_ctx.userkey is not None:
+                userkey = usable_ctx.userkey
 
         #overwrite the context username/password with our url-provided username/password
         #(if they exist)
