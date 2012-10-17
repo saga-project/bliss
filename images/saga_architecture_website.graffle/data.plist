@@ -36,7 +36,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2012-10-17 17:52:02 +0000</string>
+	<string>2012-10-17 17:56:17 +0000</string>
 	<key>Modifier</key>
 	<string>Ole Weidner</string>
 	<key>NotesVisible</key>
@@ -6586,8 +6586,8 @@ invocation}</string>
 					<integer>559</integer>
 					<key>Points</key>
 					<array>
-						<string>{381.92007128946273, 328.45563767253333}</string>
-						<string>{405.14135721013048, 379.84757620881965}</string>
+						<string>{381.91310896167761, 328.45569820484207}</string>
+						<string>{405.11884981510974, 379.85350803214357}</string>
 					</array>
 					<key>Style</key>
 					<dict>
@@ -6619,8 +6619,8 @@ invocation}</string>
 					<integer>558</integer>
 					<key>Points</key>
 					<array>
-						<string>{359.01994497185296, 328.40770615023678}</string>
-						<string>{320.2839200700563, 382.97438120302235}</string>
+						<string>{359.02813310903394, 328.40778671363415}</string>
+						<string>{320.31866788963004, 382.96922744746007}</string>
 					</array>
 					<key>Style</key>
 					<dict>
@@ -6652,8 +6652,8 @@ invocation}</string>
 					<integer>557</integer>
 					<key>Points</key>
 					<array>
-						<string>{336.55903811939646, 328.19212850146931}</string>
-						<string>{223.10089733175684, 388.83599136231686}</string>
+						<string>{336.55906703262497, 328.19785663302008}</string>
+						<string>{223.11731390727257, 388.8508401785852}</string>
 					</array>
 					<key>Style</key>
 					<dict>
@@ -6685,8 +6685,8 @@ invocation}</string>
 					<integer>556</integer>
 					<key>Points</key>
 					<array>
-						<string>{309.34263638084514, 328.29830365534787}</string>
-						<string>{386.43573275309348, 385.61197373878832}</string>
+						<string>{309.33058063193573, 328.2983924719357}</string>
+						<string>{386.39963845138971, 385.62068494760206}</string>
 					</array>
 					<key>Style</key>
 					<dict>
@@ -6718,8 +6718,8 @@ invocation}</string>
 					<integer>555</integer>
 					<key>Points</key>
 					<array>
-						<string>{286.63375598261013, 328.4917608550943}</string>
-						<string>{295.88571541748541, 378.84749998274839}</string>
+						<string>{286.6306800349339, 328.49177442384013}</string>
+						<string>{295.87483950837816, 378.84772107393798}</string>
 					</array>
 					<key>Style</key>
 					<dict>
@@ -6751,8 +6751,8 @@ invocation}</string>
 					<integer>554</integer>
 					<key>Points</key>
 					<array>
-						<string>{263.78983619018885, 328.35746391728225}</string>
-						<string>{210.36469829172137, 382.98687375733471}</string>
+						<string>{263.80112452292678, 328.35756756213959}</string>
+						<string>{210.40228152757319, 382.9924826101834}</string>
 					</array>
 					<key>Style</key>
 					<dict>
@@ -6784,8 +6784,8 @@ invocation}</string>
 					<integer>553</integer>
 					<key>Points</key>
 					<array>
-						<string>{229.45649354771606, 325.00566975939569}</string>
-						<string>{377.08157249144432, 390.9752062674562}</string>
+						<string>{229.45648195406568, 325.00814853512276}</string>
+						<string>{377.07338166644581, 390.98408782649216}</string>
 					</array>
 					<key>Style</key>
 					<dict>
@@ -6817,8 +6817,8 @@ invocation}</string>
 					<integer>552</integer>
 					<key>Points</key>
 					<array>
-						<string>{214.13929653688854, 328.34018591452917}</string>
-						<string>{275.1468610918219, 384.98014253638007}</string>
+						<string>{214.12906647701826, 328.34027518282915}</string>
+						<string>{275.10651368244032, 384.97993804701474}</string>
 					</array>
 					<key>Style</key>
 					<dict>
@@ -6850,8 +6850,8 @@ invocation}</string>
 					<integer>551</integer>
 					<key>Points</key>
 					<array>
-						<string>{191.32997678116328, 328.49822044694457}</string>
-						<string>{187.02318623233319, 379.51864640416147}</string>
+						<string>{191.33131972833291, 328.49822329096804}</string>
+						<string>{187.0279149916517, 379.51957528730753}</string>
 					</array>
 					<key>Style</key>
 					<dict>
@@ -10196,7 +10196,14 @@ Plug-Ins}</string>
 						AGQAYQBsAGUATQBvAG4AbwAAAIQB
 						ZgqbAJsBmwCbAIaGlwITkoSYmQOS
 						mZKEm5sDhAJmZgABhpKckp2SoJKh
-						hpcDI5KEmJkCkpySnZKgkqGGhg==
+						hpcDI5KEmJkCkpyShJ+fAACEhIQH
+						TlNBcnJheQCUmQyShISECU5TVGV4
+						dFRhYgCUhAJDZgAchpKEqqcAOIaS
+						hKqnAFSGkoSqpwBwhpKEqqcAgYwA
+						hpKEqqcAgagAhpKEqqcAgcQAhpKE
+						qqcAgeAAhpKEqqcAgfwAhpKEqqcA
+						gRgBhpKEqqcAgTQBhpKEqqcAgVAB
+						hoaBAAigg83MTD2GkqCSoYaG
 						</data>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf340
@@ -10444,7 +10451,14 @@ Plug-Ins}</string>
 						Rm9udB6UmSCEBVszMmNdBgAAABYA
 						AAD//kEAbgBkAGEAbABlAE0AbwBu
 						AG8AAACEAWYKmwCbAZsAmwCGhpcC
-						KJKEmJkCkpySnZKgkqGGhg==
+						KJKEmJkCkpyShJ+fAACEhIQHTlNB
+						cnJheQCUmQyShISECU5TVGV4dFRh
+						YgCUhAJDZgAchpKEqKYAOIaShKim
+						AFSGkoSopgBwhpKEqKYAgYwAhpKE
+						qKYAgagAhpKEqKYAgcQAhpKEqKYA
+						geAAhpKEqKYAgfwAhpKEqKYAgRgB
+						hpKEqKYAgTQBhpKEqKYAgVABhoaB
+						AAigg83MTD2GkqCSoYaG
 						</data>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf340
@@ -10895,6 +10909,11 @@ Plug-Ins}</string>
 							<key>Draws</key>
 							<string>NO</string>
 						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
 					</dict>
 				</dict>
 				<dict>
@@ -10909,6 +10928,11 @@ Plug-Ins}</string>
 					<key>Style</key>
 					<dict>
 						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
 						<dict>
 							<key>Draws</key>
 							<string>NO</string>
