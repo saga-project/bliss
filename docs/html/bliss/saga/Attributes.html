@@ -56,10 +56,291 @@
             
   <div class="section" id="attributes">
 <h1>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h1>
-<dl class="attribute">
-<dt id="bliss.saga.Attributes">
-<tt class="descclassname">bliss.saga.</tt><tt class="descname">Attributes</tt><a class="headerlink" href="#bliss.saga.Attributes" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="#bliss.saga.Attributes" title="bliss.saga.Attributes"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.Attributes</span></tt></a></p>
+<dl class="class">
+<dt id="bliss.saga.AttributeInterface">
+<em class="property">class </em><tt class="descclassname">bliss.saga.</tt><tt class="descname">AttributeInterface</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../_modules/bliss/saga/Attributes.html#AttributeInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.AttributeInterface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attribute Interface Class</p>
+<p>The Attributes interface implements the attribute semantics of the SAGA Core
+API specification (<a class="reference external" href="http://ogf.org/documents/GFD.90.pdf">http://ogf.org/documents/GFD.90.pdf</a>).  Additionally, this
+implementation provides that semantics via two different interfaces: the
+python dictionary interface, and the python property interface.  Note that
+a <em>simgle</em> set of attributes is internally managed, no matter what interface
+is used for access.</p>
+<p>A class which uses this interface can internally specify which attributes
+can be set, and what type they have.  Also, default values can be specified,
+and the class provides a rudimentary support for converting scalar
+attributes into vector attributes and back.</p>
+<p>Also, the consumer of this API can register callbacks, which get triggered
+on changes to specific attribute values.</p>
+<p>Example use case:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">###########################################</span>
+<span class="k">class</span> <span class="nc">Transliterator</span> <span class="p">(</span> <span class="n">pilot</span><span class="o">.</span><span class="n">Attributes</span> <span class="p">)</span> <span class="p">:</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="p">:</span>
+        <span class="c"># setting attribs to non-extensible will cause the cal to init below to</span>
+        <span class="c"># complain if attributes are specified.  Default is extensible.</span>
+      <span class="c"># self._attributes_extensible (False)</span>
+
+        <span class="c"># pass args to base class init (requires &#39;extensible&#39;)</span>
+        <span class="nb">super</span> <span class="p">(</span><span class="n">Transliterator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span> <span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c"># setup class attribs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>   <span class="p">(</span><span class="s">&#39;apple&#39;</span><span class="p">,</span> <span class="s">&#39;Appel&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Url</span><span class="p">,</span>    <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>   <span class="p">(</span><span class="s">&#39;plum&#39;</span><span class="p">,</span>  <span class="s">&#39;Pruim&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ReadOnly</span><span class="p">)</span>
+
+        <span class="c"># setting attribs to non-extensible at *this* point will have allowed</span>
+        <span class="c"># custom user attribs on __init__ time (via args), but will then forbid</span>
+        <span class="c"># any additional custom attributes.</span>
+      <span class="c"># self._attributes_extensible (False)</span>
+
+
+<span class="c">###########################################</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="c"># define a callback method.  This callback can get registered for</span>
+    <span class="c"># attribute changes later.</span>
+
+    <span class="c">#################################</span>
+    <span class="k">def</span> <span class="nf">cb</span> <span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="p">:</span>
+        <span class="c"># the callback gets information about what attribute was changed</span>
+        <span class="c"># on what object:</span>
+        <span class="k">print</span> <span class="s">&quot;called: </span><span class="si">%s</span><span class="s"> - </span><span class="si">%s</span><span class="s"> - </span><span class="si">%s</span><span class="s">&quot;</span>  <span class="o">%</span>  <span class="p">(</span><span class="nb">type</span> <span class="p">(</span><span class="n">obj</span><span class="p">),</span> <span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+
+        <span class="c"># returning True will keep the callback registered for further</span>
+        <span class="c"># attribute changes.</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="c">#################################</span>
+
+    <span class="c"># create a class instance and add a &#39;cherry&#39; attribute/value on</span>
+    <span class="c"># creation.  </span>
+    <span class="n">trans</span> <span class="o">=</span> <span class="n">Transliterator</span> <span class="p">(</span><span class="n">cherry</span><span class="o">=</span><span class="s">&#39;Kersche&#39;</span><span class="p">)</span>
+
+    <span class="c"># use the property and the dict interface to mess with the pre-defined</span>
+    <span class="c"># &#39;apple&#39; attribute</span>
+    <span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s"> -- apple&quot;</span>
+    <span class="k">print</span> <span class="n">trans</span><span class="o">.</span><span class="n">apple</span> 
+    <span class="k">print</span> <span class="n">trans</span><span class="p">[</span><span class="s">&#39;apple&#39;</span><span class="p">]</span>
+    <span class="n">trans</span><span class="o">.</span><span class="n">apple</span> <span class="o">=</span> <span class="s">&#39;Abbel&#39;</span>
+    <span class="k">print</span> <span class="n">trans</span><span class="o">.</span><span class="n">apple</span> 
+
+    <span class="c"># add our callback to the apple attribute, and trigger some changes.</span>
+    <span class="c"># Note that the callback is also triggered when the attribute&#39;s</span>
+    <span class="c"># value changes w/o user control, e.g. by some internal state</span>
+    <span class="c"># changes.</span>
+    <span class="n">trans</span><span class="o">.</span><span class="n">add_callback</span> <span class="p">(</span><span class="s">&#39;apple&#39;</span><span class="p">,</span> <span class="n">cb</span><span class="p">)</span>
+    <span class="n">trans</span><span class="o">.</span><span class="n">apple</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Abbel&#39;</span><span class="p">,</span> <span class="s">&#39;Appel&#39;</span><span class="p">]</span>
+    <span class="n">trans</span><span class="o">.</span><span class="n">apple</span> <span class="o">=</span> <span class="s">&#39;Apfel&#39;</span>
+
+    <span class="c"># Setting an attribute final is actually an internal method, used by</span>
+    <span class="c"># the implementation to signal that no further changes on that</span>
+    <span class="c"># attribute are expected.  We use that here for demonstrating the</span>
+    <span class="c"># concept though.  Callback is invoked on set_final().</span>
+    <span class="n">trans</span><span class="o">.</span><span class="n">_attributes_set_final</span> <span class="p">(</span><span class="s">&#39;apple&#39;</span><span class="p">)</span>
+    <span class="n">trans</span><span class="o">.</span><span class="n">apple</span> <span class="o">=</span> <span class="s">&#39;Abbel&#39;</span>
+    <span class="k">print</span> <span class="n">trans</span><span class="o">.</span><span class="n">apple</span> 
+
+    <span class="c"># mess around with the &#39;plum&#39; attribute, which was marked as</span>
+    <span class="c"># ReadOnly on registration time.</span>
+    <span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s"> -- plum&quot;</span>
+    <span class="k">print</span> <span class="n">trans</span><span class="o">.</span><span class="n">plum</span>
+  <span class="c"># trans.plum    = &#39;Pflaume&#39;  # raises readonly exception</span>
+  <span class="c"># trans[&#39;plum&#39;] = &#39;Pflaume&#39;  # raises readonly exception</span>
+    <span class="k">print</span> <span class="n">trans</span><span class="o">.</span><span class="n">plum</span>
+
+    <span class="c"># check if the &#39;cherry&#39; attribute exists, which got created on</span>
+    <span class="c"># instantiation time.</span>
+    <span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s"> -- cherry&quot;</span>
+    <span class="k">print</span> <span class="n">trans</span><span class="o">.</span><span class="n">cherry</span>
+
+    <span class="c"># as we have &#39;extensible&#39; set, we can add a attribute on the fly,</span>
+    <span class="c"># via either the property or the dict interface, or via the GFD.90</span>
+    <span class="c"># API of course.</span>
+    <span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s"> -- peach&quot;</span>
+    <span class="n">trans</span><span class="p">[</span><span class="s">&#39;peach&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;Berne&#39;</span>
+    <span class="k">print</span> <span class="n">trans</span><span class="o">.</span><span class="n">peach</span>
+    <span class="n">trans</span><span class="o">.</span><span class="n">peach</span> <span class="o">=</span> <span class="s">&#39;Birne&#39;</span>
+    <span class="k">print</span> <span class="n">trans</span><span class="o">.</span><span class="n">peach</span>
+</pre></div>
+</div>
+<p>This example will result in:</p>
+<div class="highlight-python"><pre>-- apple
+Appel
+Appel
+Abbel
+called: apple - Abbel Appel  - &lt;class '__main__.Transliterator'&gt;
+called: apple - Apfel - &lt;class '__main__.Transliterator'&gt;
+called: apple - Apfel - &lt;class '__main__.Transliterator'&gt;
+Apfel
+
+-- plum
+Pruim
+Pruim
+
+-- cherry
+Kersche
+
+-- peach
+Berne
+Birne</pre>
+</div>
+<p>Note that using this interface <em>and</em> inheriting from Python&#8217;s dict object
+(or any other base classes which define / overload dictionary setters and
+getters) is probably a bad idea.</p>
+<dl class="method">
+<dt id="bliss.saga.AttributeInterface.add_callback">
+<tt class="descname">add_callback</tt><big>(</big><em>key</em>, <em>cb</em><big>)</big><a class="reference internal" href="../../_modules/bliss/saga/Attributes.html#AttributeInterface.add_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.AttributeInterface.add_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>For any attribute change, the API will check if any callbacks are
+registered for that attribute.  If so, those callbacks will be called
+in order of registration.  This registration function will return an
+id (cookie) identifying the callback &#8211; that id can be used to
+remove the callback.</p>
+<p>A callback is any callable python construct, and MUST accept three
+arguments:</p>
+<div class="highlight-python"><pre>- String key: the name of the attribute which changed
+- Any    val: the new value of the attribute
+- Any    obj: the object on which this attribute interface was called</pre>
+</div>
+<p>The &#8216;obj&#8217; can be any python object type, but is guaranteed to expose
+this attribute interface.</p>
+<p>The callback SHOULD return &#8216;True&#8217; or &#8216;False&#8217; &#8211; on &#8216;True&#8217;, the callback
+will remain registered, and will thus be called again on the next
+attribute change.  On returning &#8216;False&#8217;, the callback will be
+unregistered, and will thus not be called again.  Returning nothing is
+interpreted as &#8216;False&#8217;, other return values lead to undefined behavior.</p>
+<p>Note that callbacks will not be called on &#8216;Final&#8217; attributes (they will
+be called once as that attribute enters finality).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.AttributeInterface.attribute_exists">
+<tt class="descname">attribute_exists</tt><big>(</big><em>key</em><big>)</big><a class="reference internal" href="../../_modules/bliss/saga/Attributes.html#AttributeInterface.attribute_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.AttributeInterface.attribute_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>attribute_exist (key)</p>
+<p>This method will check if the given key is known and was set explicitly.
+The call will also return &#8216;True&#8217; if the value for that key is &#8216;None&#8217;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.AttributeInterface.attribute_is_readonly">
+<tt class="descname">attribute_is_readonly</tt><big>(</big><em>key</em><big>)</big><a class="reference internal" href="../../_modules/bliss/saga/Attributes.html#AttributeInterface.attribute_is_readonly"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.AttributeInterface.attribute_is_readonly" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will check if the given key is readonly, i.e. cannot be
+&#8216;set&#8217;.  The call will also return &#8216;True&#8217; if the attribute is final</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.AttributeInterface.attribute_is_removable">
+<tt class="descname">attribute_is_removable</tt><big>(</big><em>key</em><big>)</big><a class="reference internal" href="../../_modules/bliss/saga/Attributes.html#AttributeInterface.attribute_is_removable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.AttributeInterface.attribute_is_removable" title="Permalink to this definition">¶</a></dt>
+<dd><p>attribute_is_writable (key)</p>
+<p>This method will check if the given key can be removed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.AttributeInterface.attribute_is_vector">
+<tt class="descname">attribute_is_vector</tt><big>(</big><em>key</em><big>)</big><a class="reference internal" href="../../_modules/bliss/saga/Attributes.html#AttributeInterface.attribute_is_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.AttributeInterface.attribute_is_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will check if the given attribute has a vector value type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.AttributeInterface.attribute_is_writable">
+<tt class="descname">attribute_is_writable</tt><big>(</big><em>key</em><big>)</big><a class="reference internal" href="../../_modules/bliss/saga/Attributes.html#AttributeInterface.attribute_is_writable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.AttributeInterface.attribute_is_writable" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will check if the given key is writable - i.e. not readonly.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.AttributeInterface.find_attributes">
+<tt class="descname">find_attributes</tt><big>(</big><em>pattern</em><big>)</big><a class="reference internal" href="../../_modules/bliss/saga/Attributes.html#AttributeInterface.find_attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.AttributeInterface.find_attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Similar to list(), but also grep for a given attribute pattern.  That
+pattern is of the form &#8216;key=val&#8217;, where both &#8216;key&#8217; and &#8216;val&#8217; can contain
+POSIX shell wildcards.  For non-string typed attributes, the pattern is
+applied to a string serialization of the typed value, if that exists.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.AttributeInterface.get_attribute">
+<tt class="descname">get_attribute</tt><big>(</big><em>key</em><big>)</big><a class="reference internal" href="../../_modules/bliss/saga/Attributes.html#AttributeInterface.get_attribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.AttributeInterface.get_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the value of the specified attribute.  If that
+attribute does not exist, an DoesNotExist is raised.  It is not an
+error to query an existing, but unset attribute though &#8211; that will
+result in &#8216;None&#8217; to be returned (or the default value, if available).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.AttributeInterface.get_vector_attribute">
+<tt class="descname">get_vector_attribute</tt><big>(</big><em>key</em><big>)</big><a class="reference internal" href="../../_modules/bliss/saga/Attributes.html#AttributeInterface.get_vector_attribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.AttributeInterface.get_vector_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>See also: <tt class="xref py py-func docutils literal"><span class="pre">get_attribute()</span></tt> (key).</p>
+<p>As python can handle scalar and vector types transparently, this method
+is in fact not very useful.  For that reason, it maps internally to the
+get_attribute method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.AttributeInterface.iterkeys">
+<tt class="descname">iterkeys</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/bliss/saga/Attributes.html#AttributeInterface.iterkeys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.AttributeInterface.iterkeys" title="Permalink to this definition">¶</a></dt>
+<dd><p>see <tt class="xref py py-func docutils literal"><span class="pre">list_attributes()</span></tt> () for details.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.AttributeInterface.list_attributes">
+<tt class="descname">list_attributes</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/bliss/saga/Attributes.html#AttributeInterface.list_attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.AttributeInterface.list_attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all attributes which have been explicitly set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.AttributeInterface.remove_attribute">
+<tt class="descname">remove_attribute</tt><big>(</big><em>key</em><big>)</big><a class="reference internal" href="../../_modules/bliss/saga/Attributes.html#AttributeInterface.remove_attribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.AttributeInterface.remove_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removing an attribute is actually different from unsetting it, or from
+setting it to &#8216;None&#8217;.  On remove, all traces of the attribute are
+purged, and the key will not be listed on <tt class="xref py py-func docutils literal"><span class="pre">list_attributes()</span></tt> () anymore.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.AttributeInterface.remove_callback">
+<tt class="descname">remove_callback</tt><big>(</big><em>key</em>, <em>id</em><big>)</big><a class="reference internal" href="../../_modules/bliss/saga/Attributes.html#AttributeInterface.remove_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.AttributeInterface.remove_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method allows to unregister a previously registered callback, by
+providing its id.  It is not an error to remove a non-existing cb, but
+a valid ID MUST be provided &#8211; otherwise, a BadParameter is raised.</p>
+<p>If no ID is provided (id == None), all callbacks are removed for this
+attribute.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.AttributeInterface.set_attribute">
+<tt class="descname">set_attribute</tt><big>(</big><em>key</em>, <em>val</em><big>)</big><a class="reference internal" href="../../_modules/bliss/saga/Attributes.html#AttributeInterface.set_attribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.AttributeInterface.set_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method sets the value of the specified attribute.  If that
+attribute does not exist, DoesNotExist is raised &#8211; unless the attribute
+set is marked &#8216;extensible&#8217;.  In that case, the attribute is created and
+set on the fly (defaulting to mode=Writable, flavor=Scalar, type=Any,
+default=None).  A value of &#8216;None&#8217; may reset the attribute to its default
+value, if such one exists (see documentation).</p>
+<p>Note that this method is performing a number of checks and conversions,
+to match the value type to the attribute properties (type, mode, flavor).
+Those conversions are not guaranteed to yield the expected result &#8211; for
+example, the conversion from &#8216;scalar&#8217; to &#8216;vector&#8217; is, for complex types,
+ambiguous at best, and somewhat stupid.  The consumer of the API SHOULD
+ensure correct attribute values.  The conversions are intended to
+support the most trivial and simple use cases (int to string etc).
+Failed conversions will result in an BadParameter exception.</p>
+<p>Attempts to set a &#8216;final&#8217; attribute are silently ignored.  Attempts to
+set a &#8216;readonly&#8217; attribute will result in an IncorrectState exception
+being raised.</p>
+<p>Note that _attributes_i_set() will trigger callbacks, if a new value
+(different from the old value) is given.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.AttributeInterface.set_vector_attribute">
+<tt class="descname">set_vector_attribute</tt><big>(</big><em>key</em>, <em>val</em><big>)</big><a class="reference internal" href="../../_modules/bliss/saga/Attributes.html#AttributeInterface.set_vector_attribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.AttributeInterface.set_vector_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>See also: <tt class="xref py py-func docutils literal"><span class="pre">set_attribute()</span></tt> (key, val).</p>
+<p>As python can handle scalar and vector types transparently, this method
+is in fact not very useful.  For that reason, it maps internally to the
+set_attribute method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.AttributeInterface.update">
+<tt class="descname">update</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../_modules/bliss/saga/Attributes.html#AttributeInterface.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.AttributeInterface.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize attributes from a dictionary or named parameters</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -76,6 +357,11 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="Url.html"
                         title="next chapter">URL</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/bliss/saga/Attributes.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">

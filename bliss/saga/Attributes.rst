@@ -2,6 +2,6 @@
 Attributes
 ==========
 
-.. autoclass::  bliss.saga.Attributes
+.. autoclass::  bliss.saga.AttributeInterface
    :members:
 
