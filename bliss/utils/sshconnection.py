@@ -363,12 +363,12 @@ class SSHConnection(object):
         self._hostname = hostname  
         self._password = password
 
-        if port == '':
+        if port == '' or port is None:
             self._port = 22
         else:
             self._port = port
  
-        if username == '':
+        if username == '' or username is None:
             self._username = getpass.getuser()
         else:
             self._username = username

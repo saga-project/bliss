@@ -25,7 +25,7 @@ class SGEJobPlugin(JobPluginInterface, SDPluginInterface):
 
     ## Define supported url schemas
     ## 
-    _schemas = ['sge+ssh', 'sge']
+    _schemas = ['sge+ssh', 'sge+gsissh', 'sge']
 
     ## Define apis supported by this adaptor
     ##

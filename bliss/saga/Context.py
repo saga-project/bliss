@@ -123,7 +123,7 @@ class Context(AttributeInterface, Object):
     def __str__(self):
         '''String represenation.
         '''
-        return "\n[\n Context Type: %s\n UserID: %s\n UserPass: %s\n UserCert: %s\n UserKey: %s\n UserProxy: %s\n]" % \
+        return "{Context Type: %s, UserID: %s, UserPass: %s, UserCert: %s, UserKey: %s, UserProxy: %s}" % \
                 (self.type, self.userid, self.userpass, self.usercert, self.userkey, self.userproxy)
 
     ######################################################################
