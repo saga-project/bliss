@@ -58,7 +58,7 @@
 <h1>Job<a class="headerlink" href="#job" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="bliss.saga.job.Job">
-<em class="property">class </em><tt class="descclassname">bliss.saga.job.</tt><tt class="descname">Job</tt><a class="headerlink" href="#bliss.saga.job.Job" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">bliss.saga.job.</tt><tt class="descname">Job</tt><a class="reference internal" href="../../../_modules/bliss/saga/job/Job.html#Job"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.job.Job" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loosely represents a SAGA job as defined in GFD.90</p>
 <p>A &#8216;Job&#8217; represents a running application instance, which may consist of one
 or more processes.  Jobs are created by submitting a Job description to
@@ -179,7 +179,7 @@ the service part of the job_id.</p>
 
 <dl class="method">
 <dt id="bliss.saga.job.Job.cancel">
-<tt class="descname">cancel</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.job.Job.cancel" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">cancel</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/job/Job.html#Job.cancel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.job.Job.cancel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Cancel the execution of the job.</p>
 <p><strong>Example</strong>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">js</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s">&quot;fork://localhost&quot;</span><span class="p">)</span>
@@ -213,7 +213,7 @@ the service part of the job_id.</p>
 
 <dl class="method">
 <dt id="bliss.saga.job.Job.get_description">
-<tt class="descname">get_description</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.job.Job.get_description" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_description</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/job/Job.html#Job.get_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.job.Job.get_description" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the job description this job was created from.</p>
 <p>The returned description can be used to inspect job properties
 (executable name, arguments, etc.).  It can also be used to start
@@ -239,13 +239,13 @@ actual environment of the running job instance.</p>
 
 <dl class="method">
 <dt id="bliss.saga.job.Job.get_job_id">
-<tt class="descname">get_job_id</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.job.Job.get_job_id" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_job_id</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/job/Job.html#Job.get_job_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.job.Job.get_job_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the identifier for the job.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="bliss.saga.job.Job.get_state">
-<tt class="descname">get_state</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.job.Job.get_state" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_state</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/job/Job.html#Job.get_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.job.Job.get_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the current state of the job.</p>
 <p><strong>Example</strong>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">js</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s">&quot;fork://localhost&quot;</span><span class="p">)</span>
@@ -272,7 +272,7 @@ actual environment of the running job instance.</p>
 
 <dl class="method">
 <dt id="bliss.saga.job.Job.run">
-<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.job.Job.run" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/job/Job.html#Job.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.job.Job.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute the job via the associated job service.</p>
 <p>Request that the job is being executed by the backend.  If the backend
 is accepting this run request, the job will move to the &#8216;Pending&#8217; or
@@ -303,7 +303,7 @@ job will be moved to &#8216;Failed&#8217;.</p>
 
 <dl class="method">
 <dt id="bliss.saga.job.Job.wait">
-<tt class="descname">wait</tt><big>(</big><em>timeout=-1</em><big>)</big><a class="headerlink" href="#bliss.saga.job.Job.wait" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">wait</tt><big>(</big><em>timeout=-1</em><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/job/Job.html#Job.wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.job.Job.wait" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wait for a running job to finish execution.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />

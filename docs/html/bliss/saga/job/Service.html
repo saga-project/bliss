@@ -58,7 +58,7 @@
 <h1>Job Service<a class="headerlink" href="#job-service" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="bliss.saga.job.Service">
-<em class="property">class </em><tt class="descclassname">bliss.saga.job.</tt><tt class="descname">Service</tt><big>(</big><em>url</em>, <em>session=None</em><big>)</big><a class="headerlink" href="#bliss.saga.job.Service" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">bliss.saga.job.</tt><tt class="descname">Service</tt><big>(</big><em>url</em>, <em>session=None</em><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/job/Service.html#Service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.job.Service" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loosely represents a SAGA job service as defined in GFD.90</p>
 <p>A job.Service represents anything which accepts job creation requests, and
 which manages thus created <a class="reference internal" href="Job.html#bliss.saga.job.Job" title="bliss.saga.job.Job"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.job.Job</span></tt></a> instances.  That can be a local shell, 
@@ -82,7 +82,7 @@ endpoint for that service.</p>
 </div>
 <dl class="method">
 <dt id="bliss.saga.job.Service.create_job">
-<tt class="descname">create_job</tt><big>(</big><em>job_description</em><big>)</big><a class="headerlink" href="#bliss.saga.job.Service.create_job" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">create_job</tt><big>(</big><em>job_description</em><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/job/Service.html#Service.create_job"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.job.Service.create_job" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new job object.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -119,19 +119,19 @@ the job object.</p>
 
 <dl class="classmethod">
 <dt id="bliss.saga.job.Service.from_compute">
-<em class="property">classmethod </em><tt class="descname">from_compute</tt><big>(</big><em>compute_obj</em>, <em>session=None</em><big>)</big><a class="headerlink" href="#bliss.saga.job.Service.from_compute" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><tt class="descname">from_compute</tt><big>(</big><em>compute_obj</em>, <em>session=None</em><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/job/Service.html#Service.from_compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.job.Service.from_compute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a job service from a saga.resource.Compute object.</p>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="bliss.saga.job.Service.from_url">
-<em class="property">classmethod </em><tt class="descname">from_url</tt><big>(</big><em>url</em>, <em>session=None</em><big>)</big><a class="headerlink" href="#bliss.saga.job.Service.from_url" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><tt class="descname">from_url</tt><big>(</big><em>url</em>, <em>session=None</em><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/job/Service.html#Service.from_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.job.Service.from_url" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize a new job service from (resource manager) URL.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="bliss.saga.job.Service.get_job">
-<tt class="descname">get_job</tt><big>(</big><em>job_id</em><big>)</big><a class="headerlink" href="#bliss.saga.job.Service.get_job" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_job</tt><big>(</big><em>job_id</em><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/job/Service.html#Service.get_job"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.job.Service.get_job" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the job object for the given job id.
 :param job_id: The job id.</p>
 <p>Job objects are a local representation of a remote stateful entity.
@@ -148,7 +148,7 @@ The job.Service supports to reconnect to those remote entities:</p>
 
 <dl class="method">
 <dt id="bliss.saga.job.Service.list">
-<tt class="descname">list</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.job.Service.list" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">list</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/job/Service.html#Service.list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.job.Service.list" title="Permalink to this definition">¶</a></dt>
 <dd><p>List all jobs managed by this service instance.</p>
 <p>As the job.Service represents a job management backend, list() will
 return a list of job IDs for all jobs which are known to the backend,

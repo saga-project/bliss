@@ -58,7 +58,7 @@
 <h1>Compute<a class="headerlink" href="#compute" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="bliss.saga.resource.Compute">
-<em class="property">class </em><tt class="descclassname">bliss.saga.resource.</tt><tt class="descname">Compute</tt><a class="headerlink" href="#bliss.saga.resource.Compute" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">bliss.saga.resource.</tt><tt class="descname">Compute</tt><a class="reference internal" href="../../../_modules/bliss/saga/resource/Compute.html#Compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Compute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute resources represent stateful entities which can run compute
 jobs.  A <a class="reference internal" href="Manager.html#bliss.saga.resource.Manager" title="bliss.saga.resource.Manager"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.resource.Manager</span></tt></a> instance can create them according to
 a <a class="reference internal" href="ComputeDescription.html#bliss.saga.resource.ComputeDescription" title="bliss.saga.resource.ComputeDescription"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.resource.ComputeDescription</span></tt></a>, as shown below:</p>
@@ -76,7 +76,7 @@ a <a class="reference internal" href="ComputeDescription.html#bliss.saga.resourc
 </div>
 <dl class="method">
 <dt id="bliss.saga.resource.Compute.destroy">
-<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Compute.destroy" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/resource/Compute.html#Compute.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Compute.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Destroy (close) the resource.</p>
 <p>This method is <em>not</em> just a destructor for the Bliss API object, but
 rather signals the backend that the resource is not needed anymore, and
@@ -87,7 +87,7 @@ destroy().</p>
 
 <dl class="method">
 <dt id="bliss.saga.resource.Compute.get_description">
-<tt class="descname">get_description</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Compute.get_description" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_description</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/resource/Compute.html#Compute.get_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Compute.get_description" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the associated resource description object.</p>
 <p>The returned description describes the actual resource properties, and
 may differ from the description submitted when creating the resource.
@@ -110,7 +110,7 @@ resource properties, which may differ from the ones defined initially:</p>
 
 <dl class="method">
 <dt id="bliss.saga.resource.Compute.get_id">
-<tt class="descname">get_id</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Compute.get_id" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_id</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/resource/Compute.html#Compute.get_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Compute.get_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the id of the resource.</p>
 <p>The returned ID acts as a persistent and unique identifier for the
 resource...:</p>
@@ -131,13 +131,13 @@ resource:</p>
 
 <dl class="method">
 <dt id="bliss.saga.resource.Compute.get_job_service">
-<tt class="descname">get_job_service</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Compute.get_job_service" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_job_service</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/resource/Compute.html#Compute.get_job_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Compute.get_job_service" title="Permalink to this definition">¶</a></dt>
 <dd><p>get access to the resource&#8217;s job manager.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="bliss.saga.resource.Compute.get_manager">
-<tt class="descname">get_manager</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Compute.get_manager" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_manager</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/resource/Compute.html#Compute.get_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Compute.get_manager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the associated resource manager object.</p>
 <p>The returned manager is the one which created or reconnected to the
 resource:</p>
@@ -153,7 +153,7 @@ resource:</p>
 
 <dl class="method">
 <dt id="bliss.saga.resource.Compute.get_state">
-<tt class="descname">get_state</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Compute.get_state" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_state</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/resource/Compute.html#Compute.get_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Compute.get_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the state of the resource</p>
 <p>A resource will only be running jobs when in Active state &#8211; but it may
 already accept job submission requests while Pending.  In that case, the
@@ -162,7 +162,7 @@ job requests are queued until the resource becomes Active.</p>
 
 <dl class="method">
 <dt id="bliss.saga.resource.Compute.get_state_detail">
-<tt class="descname">get_state_detail</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Compute.get_state_detail" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_state_detail</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/resource/Compute.html#Compute.get_state_detail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Compute.get_state_detail" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the state detail of the resource.</p>
 <p>As for every stateful Bliss object, the state detail informs about the
 actual native backend state, which may be finer grained than the SAGA
@@ -171,7 +171,7 @@ state model used by Bliss.</p>
 
 <dl class="method">
 <dt id="bliss.saga.resource.Compute.wait">
-<tt class="descname">wait</tt><big>(</big><em>timeout=-1</em>, <em>state=2</em><big>)</big><a class="headerlink" href="#bliss.saga.resource.Compute.wait" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">wait</tt><big>(</big><em>timeout=-1</em>, <em>state=2</em><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/resource/Compute.html#Compute.wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Compute.wait" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wait for the resource to reach a specific state.</p>
 <p>As resources are stateful entities, and several actions (such as job
 submission) are only allowed in very specific states, the wait() routine

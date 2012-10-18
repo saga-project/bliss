@@ -58,7 +58,7 @@
 <h1>Storage<a class="headerlink" href="#storage" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="bliss.saga.resource.Storage">
-<em class="property">class </em><tt class="descclassname">bliss.saga.resource.</tt><tt class="descname">Storage</tt><a class="headerlink" href="#bliss.saga.resource.Storage" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">bliss.saga.resource.</tt><tt class="descname">Storage</tt><a class="reference internal" href="../../../_modules/bliss/saga/resource/Storage.html#Storage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Storage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Storage resources represent stateful entities which can store
 data.  A <a class="reference internal" href="Manager.html#bliss.saga.resource.Manager" title="bliss.saga.resource.Manager"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.resource.Manager</span></tt></a> instance can create them according to
 a <a class="reference internal" href="StorageDescription.html#bliss.saga.resource.StorageDescription" title="bliss.saga.resource.StorageDescription"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.resource.StorageDescription</span></tt></a>, as shown below:</p>
@@ -76,7 +76,7 @@ a <a class="reference internal" href="StorageDescription.html#bliss.saga.resourc
 </div>
 <dl class="method">
 <dt id="bliss.saga.resource.Storage.destroy">
-<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Storage.destroy" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/resource/Storage.html#Storage.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Storage.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Destroy (close) the resource.</p>
 <p>This method is <em>not</em> just a destructor for the Bliss API object, but
 rather signals the backend that the resource is not needed anymore, and
@@ -87,7 +87,7 @@ calling destroy().</p>
 
 <dl class="method">
 <dt id="bliss.saga.resource.Storage.get_description">
-<tt class="descname">get_description</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Storage.get_description" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_description</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/resource/Storage.html#Storage.get_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Storage.get_description" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the associated resource description object.</p>
 <p>The returned description describes the actual resource properties, and
 may differ from the description submitted when creating the resource.
@@ -110,13 +110,13 @@ resource properties, which may differ from the ones defined initially:</p>
 
 <dl class="method">
 <dt id="bliss.saga.resource.Storage.get_filesystem">
-<tt class="descname">get_filesystem</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Storage.get_filesystem" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_filesystem</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/resource/Storage.html#Storage.get_filesystem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Storage.get_filesystem" title="Permalink to this definition">¶</a></dt>
 <dd><p>get access to the storage resource&#8217;s file system.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="bliss.saga.resource.Storage.get_id">
-<tt class="descname">get_id</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Storage.get_id" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_id</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/resource/Storage.html#Storage.get_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Storage.get_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the id of the resource</p>
 <p>The returned ID acts as a persistent and unique identifier for the
 resource...:</p>
@@ -137,7 +137,7 @@ resource:</p>
 
 <dl class="method">
 <dt id="bliss.saga.resource.Storage.get_manager">
-<tt class="descname">get_manager</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Storage.get_manager" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_manager</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/resource/Storage.html#Storage.get_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Storage.get_manager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the associated resource manager object.</p>
 <p>The returned manager is the one which created or reconnected to the
 resource:</p>
@@ -153,7 +153,7 @@ resource:</p>
 
 <dl class="method">
 <dt id="bliss.saga.resource.Storage.get_state">
-<tt class="descname">get_state</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Storage.get_state" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_state</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/resource/Storage.html#Storage.get_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Storage.get_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the state of the resource.</p>
 <p>A resource will only be able to store data when in Active state &#8211; but it may
 already accept storage requests while Pending.  In that case, the
@@ -162,7 +162,7 @@ storage requests are queued until the resource becomes Active.</p>
 
 <dl class="method">
 <dt id="bliss.saga.resource.Storage.get_state_detail">
-<tt class="descname">get_state_detail</tt><big>(</big><big>)</big><a class="headerlink" href="#bliss.saga.resource.Storage.get_state_detail" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_state_detail</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/resource/Storage.html#Storage.get_state_detail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Storage.get_state_detail" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the state detail of the resource.</p>
 <p>As for every stateful Bliss object, the state detail informs about the
 actual native backend state, which may be finer grained than the SAGA
@@ -171,7 +171,7 @@ state model used by Bliss.</p>
 
 <dl class="method">
 <dt id="bliss.saga.resource.Storage.wait">
-<tt class="descname">wait</tt><big>(</big><em>timeout=-1</em>, <em>state='Final'</em><big>)</big><a class="headerlink" href="#bliss.saga.resource.Storage.wait" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">wait</tt><big>(</big><em>timeout=-1</em>, <em>state='Final'</em><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/resource/Storage.html#Storage.wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Storage.wait" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wait for the resource to reach a specific state.</p>
 <p>As resources are stateful entities, and several actions (such as data
 transfers) are only allowed in very specific states, the wait() routine
