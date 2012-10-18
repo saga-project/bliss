@@ -78,13 +78,13 @@ if __name__ == "__main__":
                 job = jobservice.create_job(jd)
                 job.run()
                 jobs.append(job)
-                print ' * Submitted %s. Output will be written to: %s' % (job.job_id, outputfile)
+                print ' * Submitted %s. Output will be written to: %s' % (job.jobid, outputfile)
 
         # wait for all jobs to finish
         while len(jobs) > 0:
             for job in jobs:
                 jobstate = job.get_state()
-                print ' * Job %s status: %s' % (job.job_id, jobstate)
+                print ' * Job %s status: %s' % (job.jobid, jobstate)
                 if jobstate is saga.job.Job.Done:
                     jobs.remove(job)
             time.sleep(5)

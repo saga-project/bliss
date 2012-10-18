@@ -43,12 +43,12 @@ def main(jobno, session, jobservice):
         myjob.run()
 
         print "Job #%s started with ID '%s' and working directory: '%s'"\
-          % (jobno, myjob.job_id, workdir)
+          % (jobno, myjob.jobid, workdir)
 
         myjob.wait()
 
         print "Job #%s with ID '%s' finished (RC: %s). Output available in: '%s'"\
-          % (jobno, myjob.job_id, myjob.exitcode, workdir)
+          % (jobno, myjob.jobid, myjob.exitcode, workdir)
 
         basedir.close()
 
