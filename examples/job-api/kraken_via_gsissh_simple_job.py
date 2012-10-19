@@ -35,7 +35,7 @@ def main():
  
         # create a job service for TACC's 'lonestar' SGE cluster
         # and attach the SSH security context to it
-        js = saga.job.Service("xt5torque+gsissh://gsissh.kraken.nics.xsede.org")
+        js = saga.job.Service("pbs+gsissh://gsissh.kraken.nics.xsede.org")
         js.session.contexts.append(ctx)
 
         # describe our job
