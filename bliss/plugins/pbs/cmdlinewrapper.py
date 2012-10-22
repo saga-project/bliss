@@ -302,7 +302,6 @@ class PBSService:
                                                          hostname=self._url.host)
                     cw.connect()
                     self._cw = cw
-                    usable_ctx = ctx
                     self._pi.log_debug("SSH: Using default context to access %s." \
                         % (self._url))
                 except CommandWrapperException, ex:
@@ -349,7 +348,6 @@ class PBSService:
                                                             username=ctx.userid)
                     cw.connect()
                     self._cw = cw
-                    usable_ctx = ctx
                     self._pi.log_debug("GSISSH: Using default context to access %s." \
                         % (self._url))
                 except CommandWrapperException, ex:

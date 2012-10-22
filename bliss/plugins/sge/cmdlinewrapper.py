@@ -329,7 +329,6 @@ class SGEService:
                                                             username=ctx.userid)
                     cw.connect()
                     self._cw = cw
-                    usable_ctx = ctx
                     self._pi.log_debug("GSISSH: Using default context to access %s." \
                         % (self._url))
                 except CommandWrapperException, ex:
@@ -342,7 +341,6 @@ class SGEService:
                 self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
                   "GSISSH: Couldn't find a way to access %s" % (self._url))
            
-
  
             # now let's see if we can find SGE
             result = self._cw.run("which qstat")# --version") ### CHANGE to SGE tools
