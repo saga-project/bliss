@@ -15,10 +15,21 @@ import time
 
 ###
 ### Define this variables to get your certificates
-#path for usercert.pem and userkey.pem files
+# path for usercert.pem and userkey.pem files
 certpath="~/.globus"
-#path for CA's files
-capath="/etc/grid-security/certificates/"
+
+# path for CA's files
+# capath="/etc/grid-security/certificates/"
+capath="~/.globus/certificates/"
+
+# path for X509 proxy
+# x509=None
+x509="/tmp/x509up_u1000"
+
+certspec = ""
+if x509 : certspec = "--cert %s"  %  (x509) 
+else    : certspec = "--cert %s/usercert.pem:%s --key %s/userkey.pem"  %  (certpath, password, certpath)
+
 ###
 ###
 
@@ -173,11 +184,11 @@ def machineLaunch(metadataList):
 		if len(insecures) > 0:
 		    for site in insecures:
 			if endpoint[0].find(site) != -1:
-			    instantiate="curl -s --sslv3 --insecure --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem -X POST -v "+endpoint[0]+"/compute/ --header \'Link: "+comLink+"\' --header \'X-OCCI-Attribute: "+comAttribute+"\' --header \'Category: "+comCategory+"\'"
+			    instantiate="curl -s --sslv3 --insecure " + certspec + " -X POST -v "+endpoint[0]+"/compute/ --header \'Link: "+comLink+"\' --header \'X-OCCI-Attribute: "+comAttribute+"\' --header \'Category: "+comCategory+"\'"
 			    found = 1
 			    break
 		if found == 0:
-		    instantiate="curl -s --sslv3 --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem -X POST -v "+endpoint[0]+"/compute/ --capath "+capath+" --header \'Link: "+comLink+"\' --header \'X-OCCI-Attribute: "+comAttribute+"\' --header \'Category: "+comCategory+"\'"
+		    instantiate="curl -s --sslv3 " + certspec + " -X POST -v "+endpoint[0]+"/compute/ --capath "+capath+" --header \'Link: "+comLink+"\' --header \'X-OCCI-Attribute: "+comAttribute+"\' --header \'Category: "+comCategory+"\'"
 		
 		if debug == 1: print "Launched:",instantiate.replace(passwd,"xxxxxx")
 		status, result = commands.getstatusoutput(instantiate)
@@ -201,11 +212,11 @@ def machineLaunch(metadataList):
 		if len(insecures) > 0:
 		    for site in insecures:
 			if endpoint[0].find(site) != -1:
-			    instantiate="curl -v -s --sslv3 --insecure --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem -H 'Content-Type: text/occi' -X POST "+endpoint[0]+headers
+			    instantiate="curl -v -s --sslv3 --insecure " + certspec + " -H 'Content-Type: text/occi' -X POST "+endpoint[0]+headers
 			    found = 1
 			    break
 		if found == 0:
-		    instantiate="curl -s --sslv3 --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem -H 'Content-Type: text/occi' -X POST -v "+endpoint[0]+headers
+		    instantiate="curl -s --sslv3 " + certspec + " -H 'Content-Type: text/occi' -X POST -v "+endpoint[0]+headers
 		
 		if debug == 1: print "Launched:",instantiate.replace(passwd,"xxxxxx")
 		status, result = commands.getstatusoutput(instantiate)
@@ -229,11 +240,11 @@ def machineLaunch(metadataList):
                     if len(insecures) > 0:
                         for site in insecures:
                             if endpoint[0].find(site) != -1:
-                                alloc_ip="curl -v -s --sslv3 --insecure --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem -H 'Content-Type: text/occi' -X POST " +link[0]+"?action=alloc_float_ip"+alloc_ip_headers
+                                alloc_ip="curl -v -s --sslv3 --insecure " + certspec + " -H 'Content-Type: text/occi' -X POST " +link[0]+"?action=alloc_float_ip"+alloc_ip_headers
                                 found = 1
                                 break
                     if found == 0:
-                        alloc_ip = "curl -s --sslv3 --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem -H 'Content-Type: text/occi' -X POST -v "+link[0]+"?action=alloc_float_ip"+alloc_ip_headers
+                        alloc_ip = "curl -s --sslv3 " + certspec + " -H 'Content-Type: text/occi' -X POST -v "+link[0]+"?action=alloc_float_ip"+alloc_ip_headers
 
                     if debug == 1: print alloc_ip.replace(passwd,"xxxxxx")
                     alloc_ip_status, alloc_ip_result = commands.getstatusoutput(alloc_ip)
@@ -256,11 +267,11 @@ def checkMachine(machine,validMachines):
 	if len(insecures) > 0:
 	    for site in insecures:
 		if endpoint[0].find(site) != -1:
-		    checkRunning = "curl -s -sslv3 --insecure --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem "+endpoint[0]+"/compute/ | awk \'{ print $1 }\'"
+		    checkRunning = "curl -s -sslv3 --insecure " + certspec + " "+endpoint[0]+"/compute/ | awk \'{ print $1 }\'"
 		    found = 1
 		    break
 	if found == 0:
-	    checkRunning = "curl -s --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem "+endpoint[0]+"/compute/ --capath "+capath+" | awk \'{ print $1 }\'"
+	    checkRunning = "curl -s " + certspec + " "+endpoint[0]+"/compute/ --capath "+capath+" | awk \'{ print $1 }\'"
 	if debug == 1: print "Launched:",checkRunning.replace(passwd,"xxxxxx")
 	status, checkResult = commands.getstatusoutput(checkRunning)
         if debug == 1: print "Returned:\n", checkResult
@@ -269,11 +280,11 @@ def checkMachine(machine,validMachines):
 	    if len(insecures) > 0:
 		for site in insecures:
 		    if endpoint[0].find(site) != -1:
-			runningMachines = "curl -s --insecure --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem "+endpoint[0]+"/compute/ | awk \'{ print $2 }\'"
+			runningMachines = "curl -s --insecure " + certspec + " "+endpoint[0]+"/compute/ | awk \'{ print $2 }\'"
 			found = 1
 			break
 	    if found == 0:
-		runningMachines = "curl -s --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem "+endpoint[0]+"/compute/ --capath "+capath+" | awk \'{ print $2 }\'"
+		runningMachines = "curl -s " + certspec + " "+endpoint[0]+"/compute/ --capath "+capath+" | awk \'{ print $2 }\'"
 	    if debug == 1: print "Launched:",runningMachines.replace(passwd,"xxxxxx")
 	    status, machines = commands.getstatusoutput(runningMachines)
             if debug == 1: print "Returned:\n", machines
@@ -284,11 +295,11 @@ def checkMachine(machine,validMachines):
 		if len(insecures) > 0:
 		    for site in insecures:
 			if endpoint[0].find(site) != -1:
-			    comm = "curl -s --insecure --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem "+m
+			    comm = "curl -s --insecure " + certspec + " "+m
 			    found = 1
 			    break
 		if found == 0:
-		    comm = "curl -s --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem --capath "+capath+" "+m
+		    comm = "curl -s " + certspec + " --capath "+capath+" "+m
 		if debug == 1: print "Launched:",comm.replace(passwd,"xxxxxx")
 		status, occiValues = commands.getstatusoutput(comm)
                 if debug == 1: print "Returned:\n", occiValues
@@ -327,11 +338,11 @@ def checkMachine(machine,validMachines):
 	if len(insecures) > 0:
 	    for site in insecures:
 		if endpoint[0].find(site) != -1:
-		    checkRunning = "curl -s -sslv3 --insecure --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem "+endpoint[0]+"/compute/ -H 'Content-Type: text/occi'| awk \'{ print $1 }\'"
+		    checkRunning = "curl -s -sslv3 --insecure " + certspec + " "+endpoint[0]+"/compute/ -H 'Content-Type: text/occi'| awk \'{ print $1 }\'"
 		    found = 1
 		    break
 	if found == 0:
-	    checkRunning = "curl -s --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem "+endpoint[0]+"/compute/ -H 'Content-Type: text/occi' --capath "+capath+" | awk \'{ print $1 }\'"
+	    checkRunning = "curl -s " + certspec + " "+endpoint[0]+"/compute/ -H 'Content-Type: text/occi' --capath "+capath+" | awk \'{ print $1 }\'"
 	if debug == 1: print "Launched:",checkRunning.replace(passwd,"xxxxxx")
 	
 	status, checkResult = commands.getstatusoutput(checkRunning)
@@ -340,11 +351,11 @@ def checkMachine(machine,validMachines):
 	    if len(insecures) > 0:
 		for site in insecures:
 		    if endpoint[0].find(site) != -1:
-			runningMachines = "curl -s -m "+str(TIMEOUT)+" --insecure --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem "+endpoint[0].replace("8787","8788")+"/compute/ -H 'Content-Type: text/occi' | grep -v \"^$\" | awk \'{ print $2 }\'"
+			runningMachines = "curl -s -m "+str(TIMEOUT)+" --insecure " + certspec + " "+endpoint[0].replace("8787","8788")+"/compute/ -H 'Content-Type: text/occi' | grep -v \"^$\" | awk \'{ print $2 }\'"
 			found = 1
 			break
 	    if found == 0:
-		runningMachines = "curl -s -m "+str(TIMEOUT)+" --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem "+endpoint[0].replace("8787","8788")+"/compute/ --capath "+capath+" -H 'Content-Type: text/occi' | grep -v \"^$\" | awk \'{ print $2 }\'"
+		runningMachines = "curl -s -m "+str(TIMEOUT)+" " + certspec + " "+endpoint[0].replace("8787","8788")+"/compute/ --capath "+capath+" -H 'Content-Type: text/occi' | grep -v \"^$\" | awk \'{ print $2 }\'"
 	    if debug == 1: print "Launched:",runningMachines.replace(passwd,"xxxxxx")
 	    status, machines = commands.getstatusoutput(runningMachines)
 	    listMachines = machines.splitlines()
@@ -354,11 +365,11 @@ def checkMachine(machine,validMachines):
 		if len(insecures) > 0:
 		    for site in insecures:
 			if endpoint[0].find(site) != -1:
-			    comm = "curl -s -m "+str(TIMEOUT)+" --insecure --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem "+m.replace("http:","https:").replace("8787","8788")+" -H 'Content-Type: text/occi'"
+			    comm = "curl -s -m "+str(TIMEOUT)+" --insecure " + certspec + " "+m.replace("http:","https:").replace("8787","8788")+" -H 'Content-Type: text/occi'"
 			    found = 1
 			    break
 		if found == 0:
-		    comm = "curl -s -m "+str(TIMEOUT)+" --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem --capath "+capath+" "+m.replace("http:","https:").replace("8787","8788")+" -H 'Content-Type: text/occi'"
+		    comm = "curl -s -m "+str(TIMEOUT)+" " + certspec + " --capath "+capath+" "+m.replace("http:","https:").replace("8787","8788")+" -H 'Content-Type: text/occi'"
 		if debug == 1: print "Launched:",comm.replace(passwd,"xxxxxx")
 		status, occiValues = commands.getstatusoutput(comm)
 		##only must be saved/showed valid machines for fedcloud or by user, attending occi values
@@ -445,11 +456,11 @@ def machineDelete(machines):
 		if len(insecures) > 0:
 		    for site in insecures:
 			if machines[key]['endpoint'].find(site) != -1:
-			    instantiate="curl -s --sslv3 --insecure --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem -X DELETE -v "+machines[key]['endpoint']+"/compute/"+machines[key]['occi_id']
+			    instantiate="curl -s --sslv3 --insecure " + certspec + " -X DELETE -v "+machines[key]['endpoint']+"/compute/"+machines[key]['occi_id']
 			    found = 1
 			    break
 		if found == 0:
-		    instantiate="curl -s --sslv3 --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem -X DELETE -v "+machines[key]['endpoint']+"/compute/"+machines[key]['occi_id']+" --capath "+capath
+		    instantiate="curl -s --sslv3 " + certspec + " -X DELETE -v "+machines[key]['endpoint']+"/compute/"+machines[key]['occi_id']+" --capath "+capath
 		if debug == 1: print "Launched:",instantiate.replace(passwd,"xxxxxx")
 		status, result = commands.getstatusoutput(instantiate)
 		
@@ -465,13 +476,13 @@ def machineDelete(machines):
 		if len(insecures) > 0:
 		    for site in insecures:
 			if machines[key]['endpoint'].find(site) != -1:
-                            dealloc_floating_ip="curl -v -s --sslv3 --insecure --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem -H 'Content-Type: text/occi' -X POST -H 'Category: dealloc_float_ip; scheme=\"http://schemas.openstack.org/instance/action#\"; class=\"action\"' "+machines[key]['endpoint']+"/compute/"+machines[key]['occi_id']+"?action=dealloc_float_ip"
-			    instantiate="curl -v -s --sslv3 --insecure --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem -H 'Content-Type: text/occi' -X DELETE "+machines[key]['endpoint']+"/compute/"+machines[key]['occi_id']
+                            dealloc_floating_ip="curl -v -s --sslv3 --insecure " + certspec + " -H 'Content-Type: text/occi' -X POST -H 'Category: dealloc_float_ip; scheme=\"http://schemas.openstack.org/instance/action#\"; class=\"action\"' "+machines[key]['endpoint']+"/compute/"+machines[key]['occi_id']+"?action=dealloc_float_ip"
+			    instantiate="curl -v -s --sslv3 --insecure " + certspec + " -H 'Content-Type: text/occi' -X DELETE "+machines[key]['endpoint']+"/compute/"+machines[key]['occi_id']
 			    found = 1
 			    break
 		if found == 0:
-                    dealloc_floating_ip="curl -s --sslv3 --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem -H 'Content-Type: text/occi' -X POST -H 'Category: dealloc_float_ip; scheme=\"http://schemas.openstack.org/instance/action#\"; class=\"action\"' "+machines[key]['endpoint']+"/compute/"+machines[key]['occi_id']+"?action=dealloc_float_ip --capath "+capath
-                    instantiate="curl -s --sslv3 --cert "+certpath+"/usercert.pem:"+passwd+" --key "+certpath+"/userkey.pem -H 'Content-Type: text/occi' -X DELETE "+machines[key]['endpoint']+"/compute/"+machines[key]['occi_id']+" --capath "+capath
+                    dealloc_floating_ip="curl -s --sslv3 " + certspec + " -H 'Content-Type: text/occi' -X POST -H 'Category: dealloc_float_ip; scheme=\"http://schemas.openstack.org/instance/action#\"; class=\"action\"' "+machines[key]['endpoint']+"/compute/"+machines[key]['occi_id']+"?action=dealloc_float_ip --capath "+capath
+                    instantiate="curl -s --sslv3 " + certspec + " -H 'Content-Type: text/occi' -X DELETE "+machines[key]['endpoint']+"/compute/"+machines[key]['occi_id']+" --capath "+capath
                 if debug == 1: print "Launched:",dealloc_floating_ip.replace(passwd,"xxxxxx")
                 dealloc_floating_ip_status, dealloc_floating_ip_result = commands.getstatusoutput(dealloc_floating_ip)
 		if debug == 1: print "Launched:",instantiate.replace(passwd,"xxxxxx")
@@ -494,10 +505,19 @@ def loadCertPasswd():
     print ("\n\n\n Your passwd will be stored only in memory for this script running, to avoid ask many times. It will not be stored in any file.\n\n\n")
     valid = 0
     i = 0
+    certspec = ""
     while valid == 0 and i < 5:
-	p = getpass.getpass("\t - Insert userkey.pem password:")
-	#status, result = commands.getstatusoutput("curl -s -S --insecure --cert usercert.pem:"+p+" --key userkey.pem https://meghacloud.cesga.es:3202")
-	status, result = commands.getstatusoutput("openssl rsa -in "+certpath+"/userkey.pem -passin pass:"+p+" -check")
+	password = ""
+	status   = ""
+        result   = ""
+        if x509 : 
+            certspec = "--cert %s"  %  (x509)
+	    status, result = commands.getstatusoutput("openssl rsa -in " + x509 + " -check")
+        else    : 
+	    password = getpass.getpass("\t - Insert userkey.pem password:")
+            certspec = "--cert %s/usercert.pem:%s --key %s/userkey.pem"  %  (certpath, password, certpath)
+	    #status, result = commands.getstatusoutput("curl -s -S --insecure " + certspec + " https://meghacloud.cesga.es:3202")
+	    status, result = commands.getstatusoutput("openssl rsa -in "+certpath+"/userkey.pem -passin pass:"+password+" -check")
 	if status == 0:
 	    valid = 1
 	    break
@@ -506,7 +526,7 @@ def loadCertPasswd():
     if i == 5:
 	print "\n\n\n - Too many tries with wrong password.\n\n\tExiting ... \n\n"
 	sys.exit()
-    return p    
+    return (certspec, password)
 
     
     
@@ -538,7 +558,7 @@ else:
 		usage()
     ## 
     metadataList = _getMetadataInfo(sys.argv[1])
-    passwd=loadCertPasswd()
+    (certspec, passwd)=loadCertPasswd()
     op = 1
     key=-1    
     while op>0 and op<5:
