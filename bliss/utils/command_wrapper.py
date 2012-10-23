@@ -43,7 +43,7 @@ class CommandWrapper(object):
         return cw
 
     @classmethod
-    def initAsGSISSHWrapper(self, logger, hostname, port=22, username='', password='', x509_userproxy=''):
+    def initAsGSISSHWrapper(self, logger, hostname, port=22, username='', password='', x509_userproxy=None):
 
         if which('gsissh') == None:
             raise CommandWrapperException("Couldn't find Globus 'gsissh' executable in path") 
@@ -96,6 +96,12 @@ class CommandWrapper(object):
             if self.hostname is None:
                 raise CommandWrapperException("No hostname defined")  
             self._logger.log_info('Trying to establish GSISSH connection with: %s' % self.hostname)
+
+            # handle non-default proxy locations
+            if self.x509_userproxy != None:
+                os.putenv('X509_USER_PROXY', self.x509_userproxy)
+                self._logger.log_info('Setting X509_USER_PROXY to %s' % self.x509_userproxy)
+
             try:
                 self._connection = SSHConnection(gsissh=True)
                 self._connection.login(hostname=self.hostname, port=self.port,

@@ -248,20 +248,15 @@ class SGEService:
                 ## EXECUTE SHELL COMMAND
                 self._cw = cw
 
+        ################################################################# 
+        ##
         elif self._url.scheme in ["sge+ssh"]:
+            usable_ctx = None
 
             # iterate over all SSH contexts to see if one of them is
             # usable. we stop after we have found one.
-
-            usable_ctx = None
-
             for ctx in self._so.session.contexts:
                 if ctx.type is bliss.saga.Context.SSH:
-                    if ctx.userkey is not None:
-                        import os.path
-                        if not os.path.isfile(ctx.userkey):
-                            self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                                                         "userkey %s doesn't exist." % ctx.userkey)
                     try:
                         cw = CommandWrapper.initAsSSHWrapper(logger=self._pi,
                                                              username=ctx.userid, 
@@ -269,66 +264,83 @@ class SGEService:
                                                              userkey=ctx.userkey)
                         cw.connect()
                         self._cw = cw
-                        self._pi.log_debug("Using context %s to access %s succeeded" % (ctx, self._url))
+                        usable_ctx = ctx
+                        self._pi.log_debug("SSH: Using context %s to access %s." \
+                            % (usable_ctx, self._url))
+                        break
                     except CommandWrapperException, ex:
-                        self._pi.log_debug("Using context %s to access %s failed: %s" \
-                                           % (ctx, self._url, ex))
+                        self._pi.log_debug("SSH: Can't use context %s to access %s: %s" \
+                            % (ctx, self._url, ex))
 
             # no valid context available. let's see if we can use system defaults 
             # to run stuff via ssh
-
             if usable_ctx is None:
-
                 try:
                     cw = CommandWrapper.initAsSSHWrapper(logger=self._pi,
                                                          hostname=self._url.host)
                     cw.connect()
                     self._cw = cw
-                    self._pi.log_debug("Using no context to access %s succeeded" % (self._url))
+                    usable_ctx = ctx
+                    self._pi.log_debug("SSH: Using default context to access %s." \
+                        % (self._url))
                 except CommandWrapperException, ex:
-                    self._pi.log_debug("Using no context to access %s failed: %s" \
-                                       % (self._url, ex))
+                    self._pi.log_debug("SSH: Can't use default context to access %s: %s" \
+                        % (self._url, ex))
 
             # at this point, either self._cw contains a usable 
             # configuration, or the whole thing should go to shit
-            
             if self._cw is None:
                 self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
                   "Couldn't find a way to access %s" % (self._url))
-            
+          
+        ################################################################# 
+        ##
         elif self._url.scheme in ["sge+gsissh"]:
 
-            # iterate over all SSH contexts to see if one of them is
+            # iterate over all GSISSH contexts to see if one of them is
             # usable. we stop after we have found one.
 
             usable_ctx = None
 
-            # TODO: Iterate over X.509 ctx... 
+            for ctx in self._so.session.contexts:
+                if ctx.type is bliss.saga.Context.X509:
+                    # try to connect using the context
+                    try:
+                        cw = CommandWrapper.initAsGSISSHWrapper(logger=self._pi,
+                                                                 username=ctx.userid, 
+                                                                 hostname=self._url.host, 
+                                                                 x509_userproxy=ctx.userproxy)
+                        cw.connect()
+                        self._cw = cw
+                        usable_ctx = ctx # found a valid context
+                        self._pi.log_debug("GSISSH: Using context %s to access %s." \
+                            % (ctx, self._url))
+                        break
+                    except CommandWrapperException, ex:
+                        self._pi.log_debug("GSISSH: Can't use context %s to access %s: %s" \
+                            % (ctx, self._url, ex))
 
             # no valid context available. let's see if we can use system defaults 
             # to run stuff via ssh
-
             if usable_ctx is None:
-
                 try:
                     cw = CommandWrapper.initAsGSISSHWrapper(logger=self._pi,
-                                                            hostname=self._url.host)
+                                                            hostname=self._url.host,
+                                                            username=ctx.userid)
                     cw.connect()
                     self._cw = cw
-                    self._pi.log_debug("Using no context to access %s succeeded" % (self._url))
+                    self._pi.log_debug("GSISSH: Using default context to access %s." \
+                        % (self._url))
                 except CommandWrapperException, ex:
-                    self._pi.log_debug("Using no context to access %s failed: %s" \
-                                       % (self._url, ex))
+                    self._pi.log_debug("GSISSH: Can't use default context to access %s: %s" \
+                        % (self._url, ex))
 
             # at this point, either self._cw contains a usable 
             # configuration, or the whole thing should go to shit
-            
             if self._cw is None:
                 self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                  "Couldn't find a way to access %s" % (self._url))
+                  "GSISSH: Couldn't find a way to access %s" % (self._url))
            
-
-
  
             # now let's see if we can find SGE
             result = self._cw.run("which qstat")# --version") ### CHANGE to SGE tools
