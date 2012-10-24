@@ -9,6 +9,7 @@ import copy
 import socket
 import time
 import string
+import getpass
 import subprocess
 import bliss.saga
 
@@ -260,7 +261,7 @@ class PBSService:
         
         ################################################################# 
         ## ...:// URL
-        if self._url.scheme in [["pbs", "torque", "xt5torque"]::
+        if self._url.scheme in ["pbs", "torque", "xt5torque"]:
             self._use_ssh = False
 
 
@@ -290,7 +291,7 @@ class PBSService:
                 credentials.append({'username': self._url.username,
                                     'userkey' : None,
                                     'mode' : 'url.username'}) 
-                
+
             credentials.append({'username': getpass.getuser(),
                                 'userkey' : None,
                                 'mode' : 'local.username'}) 
