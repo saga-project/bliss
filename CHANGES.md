@@ -1,3 +1,10 @@
+Version 0.2.6 released 2012-10-24
+----------------------------------------------------------------------
+
+* HOTFIX: credential management for SGE and PBS. both adaptors now 
+  iterate over SSH and GSISSH contexts as well as consider usernames
+  that are part of the url, e.g., pbs+ssh://ole@lonestar.tacc...
+
 Version 0.2.5 released 2012-10-24
 ----------------------------------------------------------------------
 
