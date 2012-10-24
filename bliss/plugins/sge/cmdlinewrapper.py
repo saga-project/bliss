@@ -251,41 +251,81 @@ class SGEService:
         ################################################################# 
         ##
         elif self._url.scheme in ["sge+ssh"]:
+
+            url_username = self._url.username
+            if url_username != None:
+                self._pi.log_debug("SSH: Username '%s' explicitly defined via URL: %s" \
+                    % (url_username, self._url))
+
             usable_ctx = None
 
             # iterate over all SSH contexts to see if one of them is
             # usable. we stop after we have found one.
             for ctx in self._so.session.contexts:
                 if ctx.type is bliss.saga.Context.SSH:
+                    # try the context with url-defined username
+                    if url_username != None:
+                        try:
+                            cw = CommandWrapper.initAsSSHWrapper(logger=self._pi,
+                                                                 username=url_username, 
+                                                                 hostname=self._url.host, 
+                                                                 userkey=ctx.userkey)
+                            cw.connect()
+                            self._cw = cw
+                            usable_ctx = ctx
+                            self._pi.log_debug("SSH: Using context %s to access %s." \
+                                % (usable_ctx, self._url))
+                            break
+                        except CommandWrapperException, ex:
+                            self._pi.log_debug("SSH: Can't use context %s to access %s: %s" \
+                                 % (ctx, self._url, ex))
+                    else:
+                        # try the context with context-defined username
+                        try:
+                            cw = CommandWrapper.initAsSSHWrapper(logger=self._pi,
+                                                                 username=ctx.userid, 
+                                                                 hostname=self._url.host, 
+                                                                 userkey=ctx.userkey)
+                            cw.connect()
+                            self._cw = cw
+                            usable_ctx = ctx
+                            self._pi.log_debug("SSH: Using context %s to access %s." \
+                                % (usable_ctx, self._url))
+                            break
+                        except CommandWrapperException, ex:
+                            self._pi.log_debug("SSH: Can't use context %s to access %s: %s" \
+                                % (ctx, self._url, ex))
+
+            # none of the context worked. try to connect without one 
+            if usable_ctx is None:
+                # no valid context available.
+                # Try with 'default' context and url-define username
+                if url_username != None:
                     try:
                         cw = CommandWrapper.initAsSSHWrapper(logger=self._pi,
-                                                             username=ctx.userid, 
-                                                             hostname=self._url.host, 
-                                                             userkey=ctx.userkey)
+                                                             username=url_username, 
+                                                             hostname=self._url.host)
                         cw.connect()
                         self._cw = cw
-                        usable_ctx = ctx
-                        self._pi.log_debug("SSH: Using context %s to access %s." \
-                            % (usable_ctx, self._url))
-                        break
+                        self._pi.log_debug("SSH: Using default context to access %s." \
+                            % (self._url))
                     except CommandWrapperException, ex:
-                        self._pi.log_debug("SSH: Can't use context %s to access %s: %s" \
-                            % (ctx, self._url, ex))
+                        self._pi.log_debug("SSH: Can't use default context to access %s: %s" \
+                            % (self._url, ex))
 
-            # no valid context available. let's see if we can use system defaults 
-            # to run stuff via ssh
-            if usable_ctx is None:
-                try:
-                    cw = CommandWrapper.initAsSSHWrapper(logger=self._pi,
-                                                         hostname=self._url.host)
-                    cw.connect()
-                    self._cw = cw
-                    usable_ctx = ctx
-                    self._pi.log_debug("SSH: Using default context to access %s." \
-                        % (self._url))
-                except CommandWrapperException, ex:
-                    self._pi.log_debug("SSH: Can't use default context to access %s: %s" \
-                        % (self._url, ex))
+                # let's see if we can use system defaults 
+                # to run stuff via ssh
+                else:
+                    try:
+                        cw = CommandWrapper.initAsSSHWrapper(logger=self._pi,
+                                                             hostname=self._url.host)
+                        cw.connect()
+                        self._cw = cw
+                        self._pi.log_debug("SSH: Using default context to access %s." \
+                            % (self._url))
+                    except CommandWrapperException, ex:
+                        self._pi.log_debug("SSH: Can't use default context to access %s: %s" \
+                            % (self._url, ex))
 
             # at this point, either self._cw contains a usable 
             # configuration, or the whole thing should go to shit
@@ -350,15 +390,6 @@ class SGEService:
             else:
                 self._pi.log_info("Found SGE command line tools on %s at %s" \
                   % (self._url, result.stdout.replace('/qstat', '')))
-               
-                # SERVICE INFO DISABLED. 
-                #si = self.get_service_info()
-                #if si.GlueHostArchitectureSMPSize != None:
-                #    self._ppn = si.GlueHostArchitectureSMPSize
-         
-                    #self._ppn   = int(nodes[1].split(" = ")[1].strip())
-                #    self._pi.log_info("%s seems to have %s nodes and %s processors (cores) per node" \
-                #      % (self._url, self._nodes, self._ppn))
           
 
     ######################################################################

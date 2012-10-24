@@ -1,4 +1,4 @@
-Version 0.2.5 released 2012-X-YY
+Version 0.2.5 released 2012-10-24
 ----------------------------------------------------------------------
 
 * Changed documentation to Sphinx
