@@ -27,14 +27,14 @@ def main():
         # if no security context is defined, the PBS
         # plugin will pick up the default set of ssh 
         # credentials of the user, i.e., ~/.ssh/id_rsa
-        ctx = saga.Context()
-        ctx.type = saga.Context.SSH
-        ctx.userid  = 'tg802352' # like 'ssh username@host ...'
+        #ctx = saga.Context()
+        #ctx.type = saga.Context.SSH
+        #ctx.userid  = 'tg802352' # like 'ssh username@host ...'
  
         # create a job service for TACC's 'lonestar' SGE cluster
         # and attach the SSH security context to it
-        js = saga.job.Service("sge+ssh://lonestar.tacc.utexas.edu") # replace with lonestar
-        js.session.contexts.append(ctx)
+        js = saga.job.Service("sge+ssh://tg802352@lonestar.tacc.utexas.edu") # replace with lonestar
+        #js.session.contexts.append(ctx)
 
         # describe our job
         jd = saga.job.Description()
