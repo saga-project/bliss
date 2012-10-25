@@ -1,0 +1,421 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bliss.saga.Url &mdash; Bliss 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Bliss 0.2.5 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for bliss.saga.Url</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4</span>
+
+<span class="n">__author__</span>    <span class="o">=</span> <span class="s">&quot;Ole Christian Weidner&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright 2011-2012, Ole Christian Weidner&quot;</span>
+<span class="n">__license__</span>   <span class="o">=</span> <span class="s">&quot;MIT&quot;</span>
+
+<span class="c"># Using urlparse from Python 2.5</span>
+<span class="kn">from</span> <span class="nn">bliss.utils</span>       <span class="kn">import</span> <span class="n">urlparse25</span> <span class="k">as</span> <span class="n">urlparse</span>  
+<span class="kn">from</span> <span class="nn">bliss.saga.Object</span> <span class="kn">import</span> <span class="n">Object</span> 
+
+<span class="kn">import</span> <span class="nn">bliss</span>
+
+<div class="viewcode-block" id="Url"><a class="viewcode-back" href="../../../bliss/saga/Url.html#bliss.saga.Url">[docs]</a><span class="k">class</span> <span class="nc">Url</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;The Url class as defined in GFD.90.</span>
+<span class="sd">    </span>
+<span class="sd">    URLs are used in several places in the SAGA API: to specify service</span>
+<span class="sd">    endpoints for job submission or resource management, for file or directory</span>
+<span class="sd">    locations, etc.  </span>
+
+<span class="sd">    The URL class is designed to simplify URL management for these</span>
+<span class="sd">    purposes -- it allows to manipulate individual URL elements, while ensuring</span>
+<span class="sd">    that the resulting URL is well formatted.</span>
+
+<span class="sd">    **Example**::</span>
+
+<span class="sd">        # create a URL from user input</span>
+<span class="sd">        location = saga.Url (sys.argv[1])</span>
+
+<span class="sd">        d = saga.filesystem.Directory(location)</span>
+
+
+<span class="sd">    A URL consists of the following components (where one ore more can be &#39;None&#39;)::</span>
+
+<span class="sd">        &lt;scheme&gt;://&lt;user&gt;:&lt;pass&gt;@&lt;host&gt;:&lt;port&gt;/&lt;path&gt;?&lt;query&gt;#&lt;fragment&gt;</span>
+
+<span class="sd">    Each of these components can be accessed via its property or alternatively, </span>
+<span class="sd">    via getter / setter methods.</span>
+
+<span class="sd">    **Example**::</span>
+
+<span class="sd">        url = saga.Url (&quot;scheme://pass:user@host:123/dir/file?query#fragment&quot;)</span>
+<span class="sd">  </span>
+<span class="sd">        # modify the scheme </span>
+<span class="sd">        url.scheme = &quot;anotherscheme&quot;</span>
+<span class="sd">        print &quot;host: %s&quot; % url.host</span>
+<span class="sd">        print &quot;scheme: %s&quot; % url.scheme</span>
+<span class="sd">        print &quot;path: %s&quot; % url.path</span>
+<span class="sd">       </span>
+<span class="sd">        # above is equivalent with  </span>
+
+<span class="sd">        url.set_scheme(&quot;anotherscheme&quot;)</span>
+<span class="sd">        print &quot;host: %s&quot; % url.get_host()</span>
+<span class="sd">        print &quot;scheme: %s&quot; % url.get_scheme()</span>
+<span class="sd">        print &quot;path: %s&quot; % url.get_path()</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">##</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Create a new Url object.&#39;&#39;&#39;</span>
+        <span class="n">Object</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_apitype</span> <span class="o">=</span> <span class="s">&#39;saga.base&#39;</span>
+
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>    
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="o">==</span> <span class="n">Url</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>        
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span>
+              <span class="s">&quot;URL constructor expects str or bliss.saga.Url type as parameter&quot;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">##</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;String representation (utf-8).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">unicode</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">,</span> <span class="s">&#39;ignore&#39;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">##</span>
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Unicode representation.&quot;&quot;&quot;</span>
+        <span class="n">ucstring</span> <span class="o">=</span> <span class="s">u&#39;</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">geturl</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">ucstring</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">##</span>
+    <span class="k">def</span> <span class="nf">_make_netloc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Private helper function to generate netloc string&quot;&quot;&quot;</span>
+        <span class="n">netloc</span> <span class="o">=</span> <span class="nb">str</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">username</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">password</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">netloc</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">:</span><span class="si">%s</span><span class="s">@&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">netloc</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">@&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">username</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">host</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">netloc</span> <span class="o">+=</span> <span class="n">host</span>
+        <span class="k">if</span> <span class="n">port</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">netloc</span> <span class="o">+=</span> <span class="s">&quot;:</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">port</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">netloc</span>                
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Scheme property</span>
+<div class="viewcode-block" id="Url.set_scheme"><a class="viewcode-back" href="../../../bliss/saga/Url.html#bliss.saga.Url.set_scheme">[docs]</a>    <span class="k">def</span> <span class="nf">set_scheme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scheme</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the &#39;scheme&#39; component of the URL.</span>
+<span class="sd">           :type scheme: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">newurl</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlunparse</span><span class="p">((</span><span class="n">scheme</span><span class="p">,</span> 
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">netloc</span><span class="p">,</span> 
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">query</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">fragment</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">newurl</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Url.get_scheme"><a class="viewcode-back" href="../../../bliss/saga/Url.html#bliss.saga.Url.get_scheme">[docs]</a>    <span class="k">def</span> <span class="nf">get_scheme</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the &#39;scheme&#39; component of the URL.</span>
+<span class="sd">           @return: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">scheme</span>
+</div>
+    <span class="n">scheme</span><span class="o">=</span><span class="nb">property</span><span class="p">(</span><span class="n">get_scheme</span><span class="p">,</span> <span class="n">set_scheme</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;The scheme component of the URL.</span>
+<span class="sd">       @type: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Host property</span>
+<div class="viewcode-block" id="Url.set_host"><a class="viewcode-back" href="../../../bliss/saga/Url.html#bliss.saga.Url.set_host">[docs]</a>    <span class="k">def</span> <span class="nf">set_host</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the &#39;host&#39; component of the URL.</span>
+<span class="sd">           :type host: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">netloc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_netloc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">password</span><span class="p">,</span>
+                                   <span class="n">host</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
+
+        <span class="n">newurl</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlunparse</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">scheme</span><span class="p">,</span>
+                                     <span class="n">netloc</span><span class="p">,</span> 
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">query</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">fragment</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">newurl</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Url.get_host"><a class="viewcode-back" href="../../../bliss/saga/Url.html#bliss.saga.Url.get_host">[docs]</a>    <span class="k">def</span> <span class="nf">get_host</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the &#39;host&#39; component of the URL.</span>
+<span class="sd">           @return: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">hostname</span>
+</div>
+    <span class="n">host</span><span class="o">=</span><span class="nb">property</span><span class="p">(</span><span class="n">get_host</span><span class="p">,</span> <span class="n">set_host</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;The host component of the URL.</span>
+<span class="sd">       @type: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Port property</span>
+<div class="viewcode-block" id="Url.set_port"><a class="viewcode-back" href="../../../bliss/saga/Url.html#bliss.saga.Url.set_port">[docs]</a>    <span class="k">def</span> <span class="nf">set_port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the &#39;port&#39; component of the URL.</span>
+<span class="sd">           :type port: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">netloc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_netloc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">password</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">))</span>
+
+        <span class="n">newurl</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlunparse</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">scheme</span><span class="p">,</span>
+                                     <span class="n">netloc</span><span class="p">,</span> 
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">query</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">fragment</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">newurl</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Url.get_port"><a class="viewcode-back" href="../../../bliss/saga/Url.html#bliss.saga.Url.get_port">[docs]</a>    <span class="k">def</span> <span class="nf">get_port</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the &#39;port&#39; component of the URL.</span>
+<span class="sd">           @return: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">port</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+</div>
+    <span class="n">port</span><span class="o">=</span><span class="nb">property</span><span class="p">(</span><span class="n">get_port</span><span class="p">,</span> <span class="n">set_port</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;The port component of the URL.</span>
+<span class="sd">       @type: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Username property</span>
+<div class="viewcode-block" id="Url.set_username"><a class="viewcode-back" href="../../../bliss/saga/Url.html#bliss.saga.Url.set_username">[docs]</a>    <span class="k">def</span> <span class="nf">set_username</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the &#39;username&#39; component of the URL.</span>
+<span class="sd">           :type username: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">netloc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_netloc</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">password</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
+
+        <span class="n">newurl</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlunparse</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">scheme</span><span class="p">,</span>
+                                     <span class="n">netloc</span><span class="p">,</span> 
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">query</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">fragment</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">newurl</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Url.get_username"><a class="viewcode-back" href="../../../bliss/saga/Url.html#bliss.saga.Url.get_username">[docs]</a>    <span class="k">def</span> <span class="nf">get_username</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the &#39;username&#39; component of the URL.</span>
+<span class="sd">           @return: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">username</span>
+</div>
+    <span class="n">username</span><span class="o">=</span><span class="nb">property</span><span class="p">(</span><span class="n">get_username</span><span class="p">,</span> <span class="n">set_username</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;The username component of the URL.</span>
+<span class="sd">       @type: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Password property</span>
+<div class="viewcode-block" id="Url.set_password"><a class="viewcode-back" href="../../../bliss/saga/Url.html#bliss.saga.Url.set_password">[docs]</a>    <span class="k">def</span> <span class="nf">set_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the &#39;password&#39; component of the URL.</span>
+<span class="sd">           :type password: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">netloc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_netloc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
+
+        <span class="n">newurl</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlunparse</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">scheme</span><span class="p">,</span>
+                                     <span class="n">netloc</span><span class="p">,</span> 
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">query</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">fragment</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">newurl</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Url.get_password"><a class="viewcode-back" href="../../../bliss/saga/Url.html#bliss.saga.Url.get_password">[docs]</a>    <span class="k">def</span> <span class="nf">get_password</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the &#39;username&#39; component of the URL.</span>
+<span class="sd">           @return: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">password</span>
+</div>
+    <span class="n">password</span><span class="o">=</span><span class="nb">property</span><span class="p">(</span><span class="n">get_password</span><span class="p">,</span> <span class="n">set_password</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;The password component of the URL.</span>
+<span class="sd">       @type: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Fragment property</span>
+<div class="viewcode-block" id="Url.set_fragment"><a class="viewcode-back" href="../../../bliss/saga/Url.html#bliss.saga.Url.set_fragment">[docs]</a>    <span class="k">def</span> <span class="nf">set_fragment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fragment</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the &#39;fragment&#39; component of the URL.</span>
+<span class="sd">           :type fragment: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">newurl</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlunparse</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">scheme</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">netloc</span><span class="p">,</span> 
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">query</span><span class="p">,</span>
+                                     <span class="n">fragment</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">newurl</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Url.get_fragment"><a class="viewcode-back" href="../../../bliss/saga/Url.html#bliss.saga.Url.get_fragment">[docs]</a>    <span class="k">def</span> <span class="nf">get_fragment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the &#39;fragment&#39; component of the URL.</span>
+<span class="sd">           @return: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">fragment</span>
+</div>
+    <span class="n">fragment</span><span class="o">=</span><span class="nb">property</span><span class="p">(</span><span class="n">get_fragment</span><span class="p">,</span> <span class="n">set_fragment</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;The fragment component of the URL.</span>
+<span class="sd">       @type: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Path property</span>
+<div class="viewcode-block" id="Url.set_path"><a class="viewcode-back" href="../../../bliss/saga/Url.html#bliss.saga.Url.set_path">[docs]</a>    <span class="k">def</span> <span class="nf">set_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the &#39;path&#39; component of the URL.</span>
+<span class="sd">           :type path: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">newurl</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlunparse</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">scheme</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">netloc</span><span class="p">,</span> 
+                                     <span class="n">path</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">query</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">fragment</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">newurl</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Url.get_path"><a class="viewcode-back" href="../../../bliss/saga/Url.html#bliss.saga.Url.get_path">[docs]</a>    <span class="k">def</span> <span class="nf">get_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the &#39;path&#39; component of the URL.</span>
+<span class="sd">           @return: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s">&#39;?&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;?&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">path</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">path</span>
+</div>
+    <span class="n">path</span><span class="o">=</span><span class="nb">property</span><span class="p">(</span><span class="n">get_path</span><span class="p">,</span> <span class="n">set_path</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;The path component of the URL.</span>
+<span class="sd">       @type: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Query property</span>
+<div class="viewcode-block" id="Url.set_query"><a class="viewcode-back" href="../../../bliss/saga/Url.html#bliss.saga.Url.set_query">[docs]</a>    <span class="k">def</span> <span class="nf">set_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the &#39;query&#39; component of the URL.</span>
+<span class="sd">           :type path: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">newurl</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlunparse</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">scheme</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">netloc</span><span class="p">,</span> 
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+                                     <span class="n">query</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">fragment</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">newurl</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Url.get_query"><a class="viewcode-back" href="../../../bliss/saga/Url.html#bliss.saga.Url.get_query">[docs]</a>    <span class="k">def</span> <span class="nf">get_query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the &#39;query&#39; component of the URL.</span>
+<span class="sd">           @return: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">query</span> <span class="o">==</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s">&#39;?&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+                <span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;?&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">query</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_urlobj</span><span class="o">.</span><span class="n">query</span>
+</div>
+    <span class="n">query</span><span class="o">=</span><span class="nb">property</span><span class="p">(</span><span class="n">get_query</span><span class="p">,</span> <span class="n">set_query</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;The query component of the URL.</span>
+<span class="sd">       @type: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
+    </div>
+  </body>
+</html>

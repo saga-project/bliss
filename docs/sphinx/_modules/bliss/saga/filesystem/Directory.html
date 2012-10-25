@@ -1,0 +1,475 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bliss.saga.filesystem.Directory &mdash; Bliss 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="Bliss 0.2.5 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for bliss.saga.filesystem.Directory</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4</span>
+
+<span class="n">__author__</span>    <span class="o">=</span> <span class="s">&quot;Ole Christian Weidner&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright 2011-2012, Ole Christian Weidner&quot;</span>
+<span class="n">__license__</span>   <span class="o">=</span> <span class="s">&quot;MIT&quot;</span>
+
+<span class="kn">import</span> <span class="nn">fnmatch</span>
+<span class="kn">import</span> <span class="nn">bliss.saga</span> 
+<span class="kn">from</span> <span class="nn">bliss.saga</span> <span class="kn">import</span> <span class="n">Url</span>
+<span class="kn">from</span> <span class="nn">bliss.saga.Object</span> <span class="kn">import</span> <span class="n">Object</span> 
+
+<div class="viewcode-block" id="Directory"><a class="viewcode-back" href="../../../../bliss/saga/filesystem/Directory.html#bliss.saga.filesystem.Directory">[docs]</a><span class="k">class</span> <span class="nc">Directory</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Loosely represents a SAGA directory as defined in GFD.90</span>
+<span class="sd">    </span>
+<span class="sd">    The saga.filesystem.Directory class represents, as the name indicates,</span>
+<span class="sd">    a directory on some (local or remote) filesystem.  That class offers</span>
+<span class="sd">    a number of operations on that directory, such as listing its contents,</span>
+<span class="sd">    copying files, or creating subdirectories::</span>
+<span class="sd">    </span>
+<span class="sd">        # get a directory handle</span>
+<span class="sd">        dir = saga.filesystem.Directory(&quot;sftp://localhost/tmp/&quot;)</span>
+<span class="sd">    </span>
+<span class="sd">        # create a subdir</span>
+<span class="sd">        dir.make_dir (&quot;data/&quot;)</span>
+<span class="sd">    </span>
+<span class="sd">        # list contents of the directory</span>
+<span class="sd">        files = dir.list ()</span>
+<span class="sd">    </span>
+<span class="sd">        # copy *.dat files into the subdir</span>
+<span class="sd">        for f in files :</span>
+<span class="sd">            if f ^ &#39;^.*\.dat$&#39; :</span>
+<span class="sd">                dir.copy (f, &quot;sftp://localhost/tmp/data/&quot;)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Construct a new directory object</span>
+
+<span class="sd">           :param url: Url of the (remote) file system.</span>
+<span class="sd">           :type  url: :class:`bliss.saga.Url` </span>
+
+<span class="sd">           The specified directory is expected to exist -- otherwise</span>
+<span class="sd">           a DoesNotExist exception is raised.  Also, the URL must point to</span>
+<span class="sd">           a directory (not to a file), otherwise a BadParameter exception is</span>
+<span class="sd">           raised.</span>
+
+<span class="sd">           Example::</span>
+
+<span class="sd">               # open some directory</span>
+<span class="sd">               dir = saga.filesystem.Directory(&quot;sftp://localhost/tmp/&quot;)</span>
+
+<span class="sd">               # and list its contents</span>
+<span class="sd">               files = dir.list ()</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">Object</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_apitype</span> <span class="o">=</span> <span class="s">&#39;saga.filesystem&#39;</span>
+
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Url</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="o">==</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Url</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span>
+              <span class="s">&quot;File constructor expects str or bliss.saga.Url type as &#39;url&#39; parameter&quot;</span><span class="p">)</span>
+
+        <span class="c"># Directory paths end with &quot;/&quot; by convention</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_url</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">True</span> <span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_url</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">/&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_url</span><span class="o">.</span><span class="n">path</span>
+
+        <span class="k">if</span> <span class="n">flags</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">_flags</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_flags</span> <span class="o">=</span> <span class="n">flags</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="o">=</span> <span class="n">Object</span><span class="o">.</span><span class="n">_get_plugin</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="c"># throws &#39;NoSuccess&#39; on error</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">register_directory_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_flags</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Bound to plugin </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="p">)))</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Delete the file object in a civilised fashion.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">unregister_file_object</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span> <span class="c"># can&#39;t throw here</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span>
+<div class="viewcode-block" id="Directory.get_url"><a class="viewcode-back" href="../../../../bliss/saga/filesystem/Directory.html#bliss.saga.filesystem.Directory.get_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Return the complete url pointing to the directory.</span>
+
+<span class="sd">           The call will return the complete url pointing to</span>
+<span class="sd">           this directory as a saga.Url object::</span>
+
+<span class="sd">               # print URL of a directory</span>
+<span class="sd">               dir = saga.filesystem.Directory(&quot;sftp://localhost/tmp/&quot;)</span>
+<span class="sd">               print dir.get_url()</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+              <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_url</span>
+
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span></div>
+<div class="viewcode-block" id="Directory.list"><a class="viewcode-back" href="../../../../bliss/saga/filesystem/Directory.html#bliss.saga.filesystem.Directory.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;List the directory&#39;s content</span>
+<span class="sd">           :param pattern: File name pattern (like POSIX &#39;ls&#39;, e.g. &#39;\*.txt&#39;)</span>
+
+<span class="sd">           The call will return a list of files and subdirectories within the</span>
+<span class="sd">           directory::</span>
+
+<span class="sd">               # list contents of the directory</span>
+<span class="sd">               for f in dir.list() :</span>
+<span class="sd">                   print f</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+              <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">pattern</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">filtered_entries</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">dir_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">fnmatch</span><span class="o">.</span><span class="n">fnmatch</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
+                            <span class="n">filtered_entries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">filtered_entries</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">BadParameter</span><span class="p">,</span> 
+                    <span class="s">&quot;Problem with filter pattern &#39;</span><span class="si">%s</span><span class="s">&#39;: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">ex</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>   
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">dir_list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span></div>
+<div class="viewcode-block" id="Directory.remove"><a class="viewcode-back" href="../../../../bliss/saga/filesystem/Directory.html#bliss.saga.filesystem.Directory.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Removes the directory</span>
+
+<span class="sd">           If no path is given, the remote directory associated with</span>
+<span class="sd">           the object is removed. If a relative or absolute path is given,</span>
+<span class="sd">           that given target is removed instead.  The target must be a </span>
+<span class="sd">           directory.</span>
+
+<span class="sd">           :param path: (relative or absolute) path to a directory</span>
+
+<span class="sd">       </span>
+<span class="sd">           Example::</span>
+
+<span class="sd">               # remove a subdir &#39;data&#39; in /tmp</span>
+<span class="sd">               dir = saga.filesystem.Directory(&quot;sftp://localhost/tmp/&quot;)</span>
+<span class="sd">               dir.remove (&#39;data/&#39;)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+              <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">dir_remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span></div>
+<div class="viewcode-block" id="Directory.make_dir"><a class="viewcode-back" href="../../../../bliss/saga/filesystem/Directory.html#bliss.saga.filesystem.Directory.make_dir">[docs]</a>    <span class="k">def</span> <span class="nf">make_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Create a new directoy</span>
+<span class="sd">           :param path: name/path of the new directory</span>
+<span class="sd">           :param flags: directory creation flags</span>
+
+<span class="sd">           The call creates a directory at the given location.</span>
+
+<span class="sd">           Example::</span>
+
+<span class="sd">               # create a subdir &#39;data&#39; in /tmp</span>
+<span class="sd">               dir = saga.filesystem.Directory(&quot;sftp://localhost/tmp/&quot;)</span>
+<span class="sd">               dir.make_dir (&#39;data/&#39;)</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+              <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">flags</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">_flags</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_flags</span> <span class="o">=</span> <span class="n">flags</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">dir_make_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">_flags</span><span class="p">)</span>
+
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span></div>
+<div class="viewcode-block" id="Directory.open_dir"><a class="viewcode-back" href="../../../../bliss/saga/filesystem/Directory.html#bliss.saga.filesystem.Directory.open_dir">[docs]</a>    <span class="k">def</span> <span class="nf">open_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Open and return a new directoy</span>
+<span class="sd">           :param path: name/path of the directory to open</span>
+<span class="sd">           :param flags: directory creation flags</span>
+
+<span class="sd">           The call opens and returns a directory at the given location.</span>
+
+<span class="sd">           Example::</span>
+
+<span class="sd">               # create a subdir &#39;data&#39; in /tmp</span>
+<span class="sd">               dir = saga.filesystem.Directory(&quot;sftp://localhost/tmp/&quot;)</span>
+<span class="sd">               data = dir.open_dir (&#39;data/&#39;, saga.filesystem.Create)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+              <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">flags</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">_flags</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_flags</span> <span class="o">=</span> <span class="n">flags</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">dir_open_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">_flags</span><span class="p">)</span>
+
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span></div>
+<div class="viewcode-block" id="Directory.copy"><a class="viewcode-back" href="../../../../bliss/saga/filesystem/Directory.html#bliss.saga.filesystem.Directory.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Copy a file from source to target</span>
+<span class="sd">           :param source: path of the file to copy</span>
+<span class="sd">           :param target: absolute URL of target directory</span>
+
+<span class="sd">           The source is copied to the given target directory.  The path of the</span>
+<span class="sd">           source can be relative::</span>
+
+<span class="sd">               # copy a file</span>
+<span class="sd">               dir = saga.filesystem.Directory(&quot;sftp://localhost/tmp/&quot;)</span>
+<span class="sd">               dir.copy (&quot;./data.bin&quot;, &quot;sftp://localhost/tmp/data/&quot;)</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+              <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+                <span class="n">_target_url</span> <span class="o">=</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Url</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">target</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="o">==</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Url</span><span class="p">:</span>
+                <span class="n">_target_url</span> <span class="o">=</span> <span class="n">target</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span>
+                  <span class="s">&quot;Directory.copy() expects str or bliss.saga.Url type as &#39;target&#39; parameter&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+                <span class="n">_source_url</span> <span class="o">=</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Url</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">source</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="o">==</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Url</span><span class="p">:</span>
+                <span class="n">_source_url</span> <span class="o">=</span> <span class="n">source</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span>
+                  <span class="s">&quot;Directory.copy() expects str or bliss.saga.Url type as &#39;source&#39; parameter&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">flags</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">_flags</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_flags</span> <span class="o">=</span> <span class="n">flags</span>
+
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">dir_copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_source_url</span><span class="p">,</span> <span class="n">_target_url</span><span class="p">,</span> <span class="n">_flags</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span></div>
+<div class="viewcode-block" id="Directory.move"><a class="viewcode-back" href="../../../../bliss/saga/filesystem/Directory.html#bliss.saga.filesystem.Directory.move">[docs]</a>    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Move a file from source to target</span>
+<span class="sd">           :param source: path of the file to copy</span>
+<span class="sd">           :param target: absolute URL of target directory</span>
+
+<span class="sd">           The source is moved to the given target directory.  The path of the</span>
+<span class="sd">           source can be relative::</span>
+
+<span class="sd">               # copy a file</span>
+<span class="sd">               dir = saga.filesystem.Directory(&quot;sftp://localhost/tmp/&quot;)</span>
+<span class="sd">               dir.move (&quot;./data.bin&quot;, &quot;sftp://localhost/tmp/data/&quot;)</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+              <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+                <span class="n">target_url</span> <span class="o">=</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Url</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">target</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="o">==</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Url</span><span class="p">:</span>
+                <span class="n">target_url</span> <span class="o">=</span> <span class="n">target</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span>
+                  <span class="s">&quot;Directory.move() expects str or bliss.saga.Url type as &#39;target&#39; parameter&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+                <span class="n">_source_url</span> <span class="o">=</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Url</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">source</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="o">==</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Url</span><span class="p">:</span>
+                <span class="n">_source_url</span> <span class="o">=</span> <span class="n">source</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span>
+                  <span class="s">&quot;Directory.move() expects str or bliss.saga.Url type as &#39;source&#39; parameter&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">flags</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">_flags</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_flags</span> <span class="o">=</span> <span class="n">flags</span>
+
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">dir_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_source_url</span><span class="p">,</span> <span class="n">_target_url</span><span class="p">,</span> <span class="n">_flags</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span></div>
+<div class="viewcode-block" id="Directory.get_size"><a class="viewcode-back" href="../../../../bliss/saga/filesystem/Directory.html#bliss.saga.filesystem.Directory.get_size">[docs]</a>    <span class="k">def</span> <span class="nf">get_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Returns the size of a file or directory (in bytes)</span>
+
+<span class="sd">           :param path: path of the file or directory</span>
+
+<span class="sd">           Example::</span>
+
+<span class="sd">               # inspect a file for its size</span>
+<span class="sd">               dir  = saga.filesystem.Directory(&quot;sftp://localhost/tmp/&quot;)</span>
+<span class="sd">               size = dir.get_size (&#39;data/data.bin&#39;)</span>
+<span class="sd">               print size</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+              <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">dir_get_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span></div>
+<div class="viewcode-block" id="Directory.exists"><a class="viewcode-back" href="../../../../bliss/saga/filesystem/Directory.html#bliss.saga.filesystem.Directory.exists">[docs]</a>    <span class="k">def</span> <span class="nf">exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Returns True if path exists, False otherwise. </span>
+
+<span class="sd">           :param path: path of the entry to check</span>
+
+<span class="sd">           Example::</span>
+
+<span class="sd">               # inspect a file for its size</span>
+<span class="sd">               dir  = saga.filesystem.Directory(&quot;sftp://localhost/tmp/&quot;)</span>
+<span class="sd">               if dir.exists (&#39;data&#39;):</span>
+<span class="sd">                   # do something</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+              <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">dir_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span></div>
+<div class="viewcode-block" id="Directory.is_dir"><a class="viewcode-back" href="../../../../bliss/saga/filesystem/Directory.html#bliss.saga.filesystem.Directory.is_dir">[docs]</a>    <span class="k">def</span> <span class="nf">is_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Returns True if path is a directory, False otherwise. </span>
+
+<span class="sd">           :param path: path of the entry to check</span>
+
+<span class="sd">           Example::</span>
+
+<span class="sd">               # inspect a file for its size</span>
+<span class="sd">               dir  = saga.filesystem.Directory(&quot;sftp://localhost/tmp/&quot;)</span>
+<span class="sd">               if dir.is_dir (&#39;data&#39;):</span>
+<span class="sd">                   # do something</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+              <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">dir_is_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+
+
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span></div>
+<div class="viewcode-block" id="Directory.close"><a class="viewcode-back" href="../../../../bliss/saga/filesystem/Directory.html#bliss.saga.filesystem.Directory.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Closes the directory. </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+              <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">dir_close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,281 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bliss.saga.resource.ComputeDescription &mdash; Bliss 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="Bliss 0.2.5 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for bliss.saga.resource.ComputeDescription</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4</span>
+
+<span class="n">__author__</span>    <span class="o">=</span> <span class="s">&quot;Ole Christian Weidner&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright 2012, Ole Christian Weidner&quot;</span>
+<span class="n">__license__</span>   <span class="o">=</span> <span class="s">&quot;MIT&quot;</span>
+
+<span class="kn">import</span> <span class="nn">bliss.saga</span>
+
+<span class="kn">from</span> <span class="nn">bliss.saga.Object</span>     <span class="kn">import</span> <span class="n">Object</span>
+<span class="kn">from</span> <span class="nn">bliss.saga.Attributes</span> <span class="kn">import</span> <span class="n">AttributeInterface</span>
+
+<div class="viewcode-block" id="ComputeDescription"><a class="viewcode-back" href="../../../../bliss/saga/resource/ComputeDescription.html#bliss.saga.resource.ComputeDescription">[docs]</a><span class="k">class</span> <span class="nc">ComputeDescription</span><span class="p">(</span><span class="n">Object</span><span class="p">,</span> <span class="n">AttributeInterface</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Defines a SAGA compute_description as defined in GFD.xx</span>
+
+<span class="sd">    A compute description describes a :class:`bliss.saga.resource.Compute` -- which is, essentially,</span>
+<span class="sd">    anything which can run compute jobs.  The description is used to find or</span>
+<span class="sd">    create instances of compute resources with specific properties and</span>
+<span class="sd">    capabilities (see :class:`bliss.saga.resource.Manager`).</span>
+
+<span class="sd">    **Usage example 1** shows how to obtain a handle to a cluster of a certain size::</span>
+
+<span class="sd">      # describe the resource requirements</span>
+<span class="sd">      cd = saga.resource.ComputeDescription()</span>
+<span class="sd">      cd[&#39;Slots&#39;] = 128</span>
+
+<span class="sd">      # obtain a handle to a suitable resource</span>
+<span class="sd">      rm = saga.resource.Manager()</span>
+<span class="sd">      cr = rm.create_compute(cd)</span>
+
+<span class="sd">      # submit a large job</span>
+<span class="sd">      jd = saga.job.Description()</span>
+<span class="sd">      jd[&#39;Executable&#39;] = &#39;blast&#39;</span>
+<span class="sd">      jd[&#39;NumberOfProcesses&#39;] = 128</span>
+<span class="sd">      jd[&#39;SPMDVariation&#39;] = MPI</span>
+
+<span class="sd">      js = cr.get_job_service()</span>
+<span class="sd">      j  = js.create_job(jd)</span>
+<span class="sd">      j.run()</span>
+<span class="sd">      j.wait()</span>
+
+
+<span class="sd">      # once the job is finished, we do not need the compute resource anymore:</span>
+<span class="sd">      cr.destroy()</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_deep_copy</span><span class="p">(</span><span class="n">cd</span><span class="p">):</span>
+        <span class="n">cd_copy</span> <span class="o">=</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">ComputeDescription</span><span class="p">()</span>
+
+        <span class="n">AttributeInterface</span><span class="o">.</span><span class="n">_attributes_deep_copy</span> <span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">cd_copy</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cd_copy</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Create a new (empty) compute resource description.&#39;&#39;&#39;</span>
+        <span class="n">Object</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_apitype</span> <span class="o">=</span> <span class="s">&#39;saga.resource&#39;</span>
+
+        <span class="c"># set attribute interface properties</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_extensible</span>  <span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_camelcasing</span> <span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="c"># register properties with the attribute interface </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;Dynamic&#39;</span><span class="p">,</span>         <span class="bp">False</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Bool</span><span class="p">,</span>   <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;Start&#39;</span><span class="p">,</span>           <span class="bp">None</span><span class="p">,</span>  <span class="bp">self</span><span class="o">.</span><span class="n">Time</span><span class="p">,</span>   <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;End&#39;</span><span class="p">,</span>             <span class="bp">None</span><span class="p">,</span>  <span class="bp">self</span><span class="o">.</span><span class="n">Time</span><span class="p">,</span>   <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;Duration&#39;</span><span class="p">,</span>        <span class="bp">None</span><span class="p">,</span>  <span class="bp">self</span><span class="o">.</span><span class="n">Time</span><span class="p">,</span>   <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;Template&#39;</span><span class="p">,</span>        <span class="bp">None</span><span class="p">,</span>  <span class="bp">self</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;Slots&#39;</span><span class="p">,</span>           <span class="mi">1</span><span class="p">,</span>     <span class="bp">self</span><span class="o">.</span><span class="n">Int</span><span class="p">,</span>    <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;OperatingSystem&#39;</span><span class="p">,</span> <span class="s">&#39;Any&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Enum</span><span class="p">,</span>   <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;Architecture&#39;</span><span class="p">,</span>    <span class="s">&#39;Any&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Enum</span><span class="p">,</span>   <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;Hostnames&#39;</span><span class="p">,</span>       <span class="p">[],</span>    <span class="bp">self</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Vector</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;Memory&#39;</span><span class="p">,</span>          <span class="bp">None</span><span class="p">,</span>  <span class="bp">self</span><span class="o">.</span><span class="n">Int</span><span class="p">,</span>    <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Delete this resource description.&#39;&#39;&#39;</span>
+        <span class="c"># nothing to do here </span>
+        <span class="k">pass</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property </span>
+        <span class="n">Start</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span> <span class="n">doc</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">        Start:</span>
+<span class="s">        Required start time for this resource request.</span>
+<span class="s">        </span>
+<span class="s">        The resource is expected to be &#39;Running&#39; at the specified point in time,</span>
+<span class="s">        and thus ready to execute job requests.  A backend which cannot make</span>
+<span class="s">        that promise will raise and exception.</span>
+<span class="s">        &#39;&#39;&#39;</span><span class="p">)</span>
+    
+    <span class="c">######################################################################</span>
+    <span class="c">## Property </span>
+        <span class="n">End</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span> <span class="n">doc</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">        End:</span>
+<span class="s">        Required end time for this resource request.</span>
+<span class="s">        </span>
+<span class="s">        The resource is expected to be available until at most that given point</span>
+<span class="s">        in time.  A resource manager which cannot guarantee the resource to be</span>
+<span class="s">        available before that point (- a given duration) will fail the resource</span>
+<span class="s">        request.</span>
+<span class="s">        &#39;&#39;&#39;</span><span class="p">)</span>
+    
+    <span class="c">######################################################################</span>
+    <span class="c">## Property </span>
+        <span class="n">Duration</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span> <span class="n">doc</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">        Duration:</span>
+<span class="s">        Required duration for this resource request.</span>
+
+<span class="s">        The specified time span is the time the resource is expected to be</span>
+<span class="s">        &#39;Running&#39; -- times spent in other states does not count toward this</span>
+<span class="s">        limit.  A backend which cannot make that promise will raise and </span>
+<span class="s">        exception.</span>
+<span class="s">        &#39;&#39;&#39;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property </span>
+        <span class="n">Template</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span> <span class="n">doc</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">        Template:</span>
+<span class="s">        Required template for this resource request.</span>
+
+<span class="s">        The specified template is to be used to fill in certain elements of </span>
+<span class="s">        this compute resource description.  For example, the EC2 &#39;c1.xlarge&#39;</span>
+<span class="s">        instance template implies a certain number of CPU cores and memory, </span>
+<span class="s">        etc.  If the template is not known by the backend, a &#39;BadParameter&#39;</span>
+<span class="s">        exception will be raised upon resource creation.  Specific values </span>
+<span class="s">        in the compute resource description will supersede the values </span>
+<span class="s">        specified by the template.</span>
+<span class="s">        &#39;&#39;&#39;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property </span>
+        <span class="n">Dynamic</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span> <span class="n">doc</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">        Dynamic:</span>
+<span class="s">        Dynamic or not.</span>
+<span class="s">        </span>
+<span class="s">        The &#39;dynamic&#39; flag signals that the resource description provides</span>
+<span class="s">        estimated values, but that the resource manager is allowed to choose</span>
+<span class="s">        different initial values, and also can change the values during the</span>
+<span class="s">        resource lifetime.  That flag is specifically targeting backends which</span>
+<span class="s">        can resize the resources in response to the actual job workload.</span>
+<span class="s">        &#39;&#39;&#39;</span><span class="p">)</span>
+    
+    <span class="c">######################################################################</span>
+    <span class="c">## Property </span>
+        <span class="n">Slots</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span> <span class="n">doc</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">        Slots:</span>
+<span class="s">        Required number of cores for this resource request.</span>
+<span class="s">        &#39;&#39;&#39;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property </span>
+        <span class="n">Memory</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span> <span class="n">doc</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">        Memory:</span>
+<span class="s">        Required amount of memory for this resource request.</span>
+<span class="s">        &#39;&#39;&#39;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property </span>
+        <span class="n">Hostnames</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span> <span class="n">doc</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">        Hostnames:</span>
+<span class="s">        Allowed hostnames for this resource request.</span>
+<span class="s">        </span>
+<span class="s">        With this attribute, one can specify specific and individual compute</span>
+<span class="s">        nodes -- for example specific cluster nodes, specific sets of virtual</span>
+<span class="s">        machine instances, etc.</span>
+<span class="s">        &#39;&#39;&#39;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property </span>
+        <span class="n">OperatingSystem</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span> <span class="n">doc</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">        OperatingSystem:</span>
+<span class="s">        Allowed operating system(s) for this resource request.</span>
+<span class="s">        &#39;&#39;&#39;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property </span>
+        <span class="n">Architecture</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span> <span class="n">doc</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">        Architecture:</span>
+<span class="s">        Allowed systems architecture(s) for this resource request.</span>
+<span class="s">        &#39;&#39;&#39;</span><span class="p">)</span>
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
+    </div>
+  </body>
+</html>

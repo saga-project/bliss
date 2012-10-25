@@ -1,0 +1,300 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bliss.saga.Context &mdash; Bliss 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Bliss 0.2.5 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for bliss.saga.Context</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4</span>
+
+<span class="n">__author__</span>    <span class="o">=</span> <span class="s">&quot;Ole Christian Weidner&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright 2011-2012, Ole Christian Weidner&quot;</span>
+<span class="n">__license__</span>   <span class="o">=</span> <span class="s">&quot;MIT&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+
+<span class="kn">from</span> <span class="nn">bliss.saga.Object</span> <span class="kn">import</span> <span class="n">Object</span> 
+
+<span class="kn">from</span> <span class="nn">bliss.saga.Attributes</span> <span class="kn">import</span> <span class="n">AttributeInterface</span>
+<span class="kn">from</span> <span class="nn">bliss.saga.Exception</span> <span class="kn">import</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">SAGAException</span>
+<span class="kn">from</span> <span class="nn">bliss.saga.Error</span> <span class="kn">import</span> <span class="n">Error</span> <span class="k">as</span> <span class="n">SAGAError</span>
+
+<div class="viewcode-block" id="Context"><a class="viewcode-back" href="../../../bliss/saga/Context.html#bliss.saga.Context">[docs]</a><span class="k">class</span> <span class="nc">Context</span><span class="p">(</span><span class="n">Object</span><span class="p">,</span> <span class="n">AttributeInterface</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Loosely defines a SAGA Context object as defined in GFD.90.</span>
+
+<span class="sd">    A security context is a description of a security token.  It is important to</span>
+<span class="sd">    understand that, in general, a context really just *describes* a token, but</span>
+<span class="sd">    that a context *is not* a token (*). For example, a context may point to</span>
+<span class="sd">    a X509 certificate -- but it will in general not hold the certificate</span>
+<span class="sd">    contents.</span>
+
+<span class="sd">    Context classes are used to inform the backends used by Bliss on what</span>
+<span class="sd">    security tokens are expected to be used.  By default, Bliss will be able to</span>
+<span class="sd">    pick up such tokens from their default location, but in some cases it might</span>
+<span class="sd">    be necessary to explicitly point to them - then use a :class:`bliss.saga.Session` with</span>
+<span class="sd">    context instances to do so.</span>
+
+<span class="sd">    The usage example for contexts is below::</span>
+
+<span class="sd">        # define an ssh context</span>
+<span class="sd">        c = saga.Context()</span>
+<span class="sd">        c.context_type = &#39;ssh&#39;</span>
+<span class="sd">        c.user_cert = &#39;$HOME/.ssh/special_id_rsa&#39;</span>
+<span class="sd">        c.user_key = &#39;$HOME/.ssh/special_id_rsa.pub&#39;</span>
+
+<span class="sd">        # add the context to a session</span>
+<span class="sd">        s = saga.Session()</span>
+<span class="sd">        s.contexts.append(c)</span>
+
+<span class="sd">        # create a job service in this session -- that job service can now</span>
+<span class="sd">        # *only* use that ssh context. </span>
+<span class="sd">        j = saga.job.Service(&#39;ssh://remote.host.net/&#39;, s)</span>
+
+
+<span class="sd">    The :class:`bliss.saga.Session` argument to the :class:`bliss.saga.job.Service` constructor is fully optional</span>
+<span class="sd">    -- if left out, Bliss will use default session, which picks up some default</span>
+<span class="sd">    contexts as described above -- that will suffice for the majority of use</span>
+<span class="sd">    cases.</span>
+
+
+<span class="sd">    (*) The only exception to this rule is the &#39;UserPass&#39; key, which is used to</span>
+<span class="sd">    hold plain-text passwords.  Use this key with care -- it is not good</span>
+<span class="sd">    practice to hard-code passwords in the code base, or in config files.</span>
+<span class="sd">    Also, be aware that the password may show up in log files, when debugging or</span>
+<span class="sd">    analyzing your application.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">SSH</span>      <span class="o">=</span> <span class="s">&quot;SSH&quot;</span>
+    <span class="sd">&#39;&#39;&#39;A security context type based on public/private keys.&#39;&#39;&#39;</span> 
+    <span class="n">EC2</span>      <span class="o">=</span> <span class="s">&quot;EC2&quot;</span>
+    <span class="sd">&#39;&#39;&#39;A security context type for Eucalyptus / EC2 applications.&#39;&#39;&#39;</span>
+    <span class="n">X509</span>     <span class="o">=</span> <span class="s">&quot;X509&quot;</span>
+    <span class="sd">&#39;&#39;&#39;A security context type based on X.509 certificates.&#39;&#39;&#39;</span>
+    
+
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Constructor&#39;&#39;&#39;</span>
+
+        <span class="n">Object</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_apitype</span> <span class="o">=</span> <span class="s">&#39;saga.base&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;bliss.&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_extensible</span>  <span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_camelcasing</span> <span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+      
+        <span class="c"># register properties with the attribute interface </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span> <span class="p">(</span><span class="s">&#39;ContextType&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span> <span class="p">(</span><span class="s">&#39;UserID&#39;</span><span class="p">,</span>      <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span> <span class="p">(</span><span class="s">&#39;UserPass&#39;</span><span class="p">,</span>    <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span> <span class="p">(</span><span class="s">&#39;UserCert&#39;</span><span class="p">,</span>    <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span> <span class="p">(</span><span class="s">&#39;UserKey&#39;</span><span class="p">,</span>     <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span> <span class="p">(</span><span class="s">&#39;UserProxy&#39;</span><span class="p">,</span>   <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register_deprecated</span>  <span class="p">(</span><span class="s">&#39;userid&#39;</span>     <span class="p">,</span> <span class="s">&#39;UserID&#39;</span>     <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register_deprecated</span>  <span class="p">(</span><span class="s">&#39;userpass&#39;</span>   <span class="p">,</span> <span class="s">&#39;UserPass&#39;</span>   <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register_deprecated</span>  <span class="p">(</span><span class="s">&#39;usercert&#39;</span>   <span class="p">,</span> <span class="s">&#39;UserCert&#39;</span>   <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register_deprecated</span>  <span class="p">(</span><span class="s">&#39;userkey&#39;</span>    <span class="p">,</span> <span class="s">&#39;UserKey&#39;</span>    <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register_deprecated</span>  <span class="p">(</span><span class="s">&#39;userproxy&#39;</span>  <span class="p">,</span> <span class="s">&#39;UserProxy&#39;</span>  <span class="p">)</span>
+
+
+        <span class="c">##########################################</span>
+        <span class="c"># some attributes point to files which must exist - so we add a test for</span>
+        <span class="c"># those attributes</span>
+        <span class="c">#</span>
+        <span class="k">def</span> <span class="nf">_test_file_existence</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">val</span> <span class="p">:</span>
+                <span class="k">return</span> <span class="s">&quot;File </span><span class="si">%s</span><span class="s"> = &#39;&#39; doesn&#39;t exist.&quot;</span>  <span class="o">%</span>  <span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span> <span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="p">:</span>
+                <span class="k">return</span> <span class="s">&quot;File </span><span class="si">%s</span><span class="s"> = &#39;</span><span class="si">%s</span><span class="s">&#39; doesn&#39;t exist.&quot;</span>  <span class="o">%</span>  <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="c">##########################################</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_add_check</span> <span class="p">(</span><span class="s">&#39;UserKey&#39;</span><span class="p">,</span>   <span class="n">_test_file_existence</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_add_check</span> <span class="p">(</span><span class="s">&#39;UserCert&#39;</span><span class="p">,</span>  <span class="n">_test_file_existence</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_add_check</span> <span class="p">(</span><span class="s">&#39;UserProxy&#39;</span><span class="p">,</span> <span class="n">_test_file_existence</span><span class="p">)</span>
+
+
+    <span class="c">######################################################################</span>
+    <span class="c">##</span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Destructor.&#39;&#39;&#39;</span>
+        <span class="k">pass</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">##</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;String represenation.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">[</span><span class="se">\n</span><span class="s"> Context Type: </span><span class="si">%s</span><span class="se">\n</span><span class="s"> UserID: </span><span class="si">%s</span><span class="se">\n</span><span class="s"> UserPass: </span><span class="si">%s</span><span class="se">\n</span><span class="s"> UserCert: </span><span class="si">%s</span><span class="se">\n</span><span class="s"> UserKey: </span><span class="si">%s</span><span class="se">\n</span><span class="s"> UserProxy: </span><span class="si">%s</span><span class="se">\n</span><span class="s">]&quot;</span> <span class="o">%</span> \
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_pass</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_cert</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_proxy</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: type</span>
+    <span class="n">ContextType</span>  <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span> <span class="n">doc</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">    ContextType:</span>
+<span class="s">    </span>
+<span class="s">    This is a free-form string which describes the type of security token</span>
+<span class="s">    this context describes.  This type is not bound to a specific backend --</span>
+<span class="s">    for example, an &#39;SSH&#39; context could be used by a number of backends,</span>
+<span class="s">    such as ssh (obviously), aws, gsissh, https, etc. (*)</span>
+
+
+<span class="s">    Example::</span>
+
+
+<span class="s">        # define an ssh context</span>
+<span class="s">        c = saga.Context()</span>
+<span class="s">        c.context_type = &#39;ssh&#39;</span>
+<span class="s">        c.user_cert = &#39;$HOME/.ssh/id_rsa&#39;</span>
+<span class="s">        c.user_key = &#39;$HOME/.ssh/id_rsa.pub&#39;</span>
+
+<span class="s">        # add it to a session</span>
+<span class="s">        s = saga.Session</span>
+<span class="s">        s.add_context(c)</span>
+
+<span class="s">        # create a job service in this session -- that job service can now</span>
+<span class="s">        # *only* use that ssh context. </span>
+<span class="s">        j = saga.job.Service(s, &#39;ssh://remote.host.net/&#39;)</span>
+
+
+<span class="s">    (*) this is a list of transport protocols, not of backends, but</span>
+<span class="s">    hopefully make the point clear.</span>
+
+<span class="s">    &#39;&#39;&#39;</span><span class="p">)</span>
+
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: user_id</span>
+    <span class="n">UserID</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span> <span class="n">doc</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">    UserID:</span>
+
+<span class="s">    User ID or user name to use.</span>
+<span class="s">    &#39;&#39;&#39;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: user_pass</span>
+    <span class="n">UserPass</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span> <span class="n">doc</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">    UserPass:</span>
+<span class="s">    User password to use.</span>
+
+<span class="s">    Please use this option with care -- it is *not* good practice to encode</span>
+<span class="s">    plain text passwords in source code!</span>
+<span class="s">    &#39;&#39;&#39;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: user_cert</span>
+    <span class="n">UserCert</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span> <span class="n">doc</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">    UserCert:</span>
+<span class="s">        </span>
+<span class="s">    Location of a user certificate.</span>
+<span class="s">        &#39;&#39;&#39;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: user_key</span>
+    <span class="n">UserKey</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span> <span class="n">doc</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">    UserKey: </span>
+
+<span class="s">    Location of a user key.</span>
+<span class="s">    &#39;&#39;&#39;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: user_proxy</span>
+    <span class="n">UserProxy</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span> <span class="n">doc</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">    UserProxy: </span>
+
+<span class="s">    Location of a user proxy.</span>
+<span class="s">    &#39;&#39;&#39;</span><span class="p">)</span>
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
+    </div>
+  </body>
+</html>

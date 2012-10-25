@@ -1,0 +1,145 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bliss.saga.filesystem &mdash; Bliss 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Bliss 0.2.5 documentation" href="../../../index.html" />
+    <link rel="up" title="bliss.saga" href="../saga.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../saga.html" accesskey="U">bliss.saga</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for bliss.saga.filesystem</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4</span>
+
+
+<span class="n">__author__</span>    <span class="o">=</span> <span class="s">&quot;Ole Christian Weidner&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright 2011-2012, Ole Christian Weidner&quot;</span>
+<span class="n">__license__</span>   <span class="o">=</span> <span class="s">&quot;MIT&quot;</span>
+
+<span class="kn">from</span> <span class="nn">bliss.saga.filesystem.File</span> <span class="kn">import</span> <span class="n">File</span>
+<span class="kn">from</span> <span class="nn">bliss.saga.filesystem.Directory</span> <span class="kn">import</span> <span class="n">Directory</span>
+
+
+<span class="n">Overwrite</span>       <span class="o">=</span>    <span class="mi">1</span>
+<span class="sd">&#39;&#39;&#39;Enforces an operation to continue even if the target entry does already</span>
+<span class="sd">exist – if that flag is not given, an ’AlreadyExists’ exception would result</span>
+<span class="sd">from such an operation.&#39;&#39;&#39;</span>
+
+<span class="n">Recursive</span>       <span class="o">=</span>    <span class="mi">2</span>
+<span class="sd">&#39;&#39;&#39;Enforces an operation to apply recursively on a directory tree – if that flag</span>
+<span class="sd">is not given, the same operation would only apply to the given directory, and</span>
+<span class="sd">not to its children.&#39;&#39;&#39;</span>
+
+<span class="n">Dereference</span>     <span class="o">=</span>    <span class="mi">4</span>
+<span class="sd">&#39;&#39;&#39;Enforces an operation to apply not to the entry pointed to by the target</span>
+<span class="sd">name, but to the link target of that entry – if that flag is not given, the</span>
+<span class="sd">same operation would apply to the entry directly, and its link target stays</span>
+<span class="sd">unaffected.&#39;&#39;&#39;</span>
+
+<span class="n">Create</span>          <span class="o">=</span>    <span class="mi">8</span>
+<span class="sd">&#39;&#39;&#39;Allows a namespace entry to be created while opening it, if it does not</span>
+<span class="sd">already exist – if that flag is not given, the same open operation would cause</span>
+<span class="sd">a ’DoesNotExist’ exception. If the entry exists, the flag is ig- nored. This</span>
+<span class="sd">flag implies the ’Write’ flag.&#39;&#39;&#39;</span>
+
+<span class="n">Exclusive</span>       <span class="o">=</span>   <span class="mi">16</span>
+<span class="sd">&#39;&#39;&#39;Implies a modification to the meaning of the Create flag: if the entry</span>
+<span class="sd">already exists, the Create flag is is no longer silently ignored, but causes an</span>
+<span class="sd">’AlreadyExists’ exception.&#39;&#39;&#39;</span>
+
+<span class="n">Lock</span>            <span class="o">=</span>   <span class="mi">32</span>
+<span class="sd">&#39;&#39;&#39;Enforces a lock on the name space entry when it is opened. Locks are</span>
+<span class="sd">advisory in SAGA, semantic details for locking are defined in the description</span>
+<span class="sd">of the open() call.&#39;&#39;&#39;</span>
+
+<span class="n">CreateParents</span>   <span class="o">=</span>   <span class="mi">64</span>
+<span class="sd">&#39;&#39;&#39;An operation which would create a name space entry would normally fail if</span>
+<span class="sd">any path element in the targets name does not yet exist. If this flag is given,</span>
+<span class="sd">such an operation would not fail, but would imply that the missing path</span>
+<span class="sd">elements are created on the fly. This flag implies the ’Create’ flag.&#39;&#39;&#39;</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../saga.html" >bliss.saga</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
+    </div>
+  </body>
+</html>

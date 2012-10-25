@@ -1,0 +1,147 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bliss.saga.Error &mdash; Bliss 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Bliss 0.2.5 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for bliss.saga.Error</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4</span>
+
+<span class="n">__author__</span>    <span class="o">=</span> <span class="s">&quot;Ole Christian Weidner&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright 2011-2012, Ole Christian Weidner&quot;</span>
+<span class="n">__license__</span>   <span class="o">=</span> <span class="s">&quot;MIT&quot;</span>
+
+<div class="viewcode-block" id="Error"><a class="viewcode-back" href="../../../bliss/saga/Error.html#bliss.saga.Error">[docs]</a><span class="k">class</span> <span class="nc">Error</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;The SAGA error types.</span>
+
+<span class="sd">       SAGA error types are used by the :class:`bliss.saga.Exception` class to </span>
+<span class="sd">       indicate the type of error that has occured.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># entity errors</span>
+    <span class="n">AlreadyExists</span>        <span class="o">=</span> <span class="s">&#39;AlreadyExists&#39;</span>
+    <span class="sd">&#39;&#39;&#39; The entity to be created already exists. &#39;&#39;&#39;</span>
+
+    <span class="n">DoesNotExist</span>         <span class="o">=</span> <span class="s">&#39;DoesNotExist&#39;</span>
+    <span class="sd">&#39;&#39;&#39; An operation tried to access a non-existing entity. &#39;&#39;&#39;</span>
+
+    <span class="n">IncorrectState</span>       <span class="o">=</span> <span class="s">&#39;IncorrectState&#39;</span>
+    <span class="sd">&#39;&#39;&#39; The operation is not allowed on the entity in its current state. &#39;&#39;&#39;</span>
+
+    
+    <span class="c"># parameter errors</span>
+    <span class="n">BadParameter</span>         <span class="o">=</span> <span class="s">&#39;BadParameter&#39;</span>
+    <span class="sd">&#39;&#39;&#39; A given parameter is out of bound or ill formatted. &#39;&#39;&#39;</span>
+
+    <span class="n">IncorrectURL</span>         <span class="o">=</span> <span class="s">&#39;IncorrectURL&#39;</span>
+    <span class="sd">&#39;&#39;&#39; The given URL could not be interpreted, for example due to an incorrect schema.&#39;&#39;&#39;</span> 
+
+
+    <span class="c"># security errors</span>
+    <span class="n">AuthenticationFailed</span> <span class="o">=</span> <span class="s">&#39;AuthenticationFailed&#39;</span>
+    <span class="sd">&#39;&#39;&#39; The backend could not establish a valid identity. &#39;&#39;&#39;</span>
+
+    <span class="n">AuthorizationFailed</span>  <span class="o">=</span> <span class="s">&#39;AuthorizationFailed&#39;</span>
+    <span class="sd">&#39;&#39;&#39; The used identity is not allowed to use the backend, &#39;&#39;&#39;</span>
+
+    <span class="n">PermissionDenied</span>     <span class="o">=</span> <span class="s">&#39;PermissionDenied&#39;</span>
+    <span class="sd">&#39;&#39;&#39; The used identity is not permitted to perform the requested operation.  &#39;&#39;&#39;</span>
+
+
+    <span class="c"># implementation / backend errors</span>
+    <span class="n">Timeout</span>              <span class="o">=</span>  <span class="s">&#39;Timeout&#39;</span>
+    <span class="sd">&#39;&#39;&#39; The interaction with the backend times out. &#39;&#39;&#39;</span>
+
+    <span class="n">NoSuccess</span>            <span class="o">=</span> <span class="s">&#39;NoSuccess&#39;</span>
+    <span class="sd">&#39;&#39;&#39; Some other error occurred. &#39;&#39;&#39;</span>
+
+    <span class="bp">NotImplemented</span>       <span class="o">=</span> <span class="s">&#39;NotImplemented&#39;</span>
+    <span class="sd">&#39;&#39;&#39; Bliss does not implement this method. &#39;&#39;&#39;</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
+    </div>
+  </body>
+</html>

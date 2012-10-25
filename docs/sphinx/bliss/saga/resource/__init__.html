@@ -1,0 +1,168 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Resource Management Overview &mdash; Bliss 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Bliss 0.2.5 documentation" href="../../../index.html" />
+    <link rel="next" title="Manager" href="Manager.html" />
+    <link rel="prev" title="Job" href="../job/Job.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Manager.html" title="Manager"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../job/Job.html" title="Job"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="resource-management-overview">
+<h1>Resource Management Overview<a class="headerlink" href="#resource-management-overview" title="Permalink to this headline">¶</a></h1>
+<p>The resource API provides the means to create, discover, manage and use
+resources, in particular compute and storage resources (<a class="reference internal" href="Compute.html#bliss.saga.resource.Compute" title="bliss.saga.resource.Compute"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.resource.Compute</span></tt></a>,
+<a class="reference internal" href="Storage.html#bliss.saga.resource.Storage" title="bliss.saga.resource.Storage"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.resource.Storage</span></tt></a>).  A <a class="reference internal" href="Manager.html#bliss.saga.resource.Manager" title="bliss.saga.resource.Manager"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.resource.Manager</span></tt></a> class acts as resource
+provider, providing stateful resource instances.</p>
+<p><strong>Example</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># describe the resource requirements</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">ComputeDescription</span><span class="p">()</span>
+<span class="n">cd</span><span class="o">.</span><span class="n">slots</span> <span class="o">=</span> <span class="mi">16</span>
+
+<span class="c"># obtain a handle to a suitable resource, and wait until it is active</span>
+<span class="n">rm</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">Manager</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">cr</span> <span class="o">=</span> <span class="n">rm</span><span class="o">.</span><span class="n">create_compute</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span>
+<span class="n">cr</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">saga</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">Active</span><span class="p">)</span>
+
+<span class="c"># submit a large job onto the now active resource</span>
+<span class="n">jd</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Description</span><span class="p">()</span>
+<span class="n">jd</span><span class="o">.</span><span class="n">executable</span> <span class="o">=</span> <span class="s">&#39;/bin/my/executable&#39;</span>
+<span class="n">jd</span><span class="o">.</span><span class="n">number_of_processes</span> <span class="o">=</span> <span class="mi">16</span>
+
+<span class="n">js</span> <span class="o">=</span> <span class="n">cr</span><span class="o">.</span><span class="n">get_job_service</span><span class="p">()</span>
+<span class="n">j</span>  <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span><span class="n">jd</span><span class="p">)</span>
+<span class="n">j</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">j</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+<span class="c"># once the job is finished, we do not need the compute resource anymore:</span>
+<span class="n">cr</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Note that in the example above, there is no indication on how the resource
+is provided &#8211; that is fully up to the resource manager.  The resource could
+be a existing compute cluster of that size, a advanced reservation slice on
+an even larger cluster, a pilot job slice on a cluster, or a virtual cluster
+provided via IaaS.  That is also the reason why resource instances are
+stateful: for most of the possible backends listed above, resources are not
+necessarily provisioned instantly, and they do have a finite lifetime.</p>
+<p>The resource package also manages storage resources, in a manner very
+similar to example 1.  It does not handle the co-location of compute and
+data resources &#8211; that is left to either the backend, or to the application
+itself.</p>
+<div class="section" id="module-bliss.saga.resource">
+<span id="bliss-resource-api-classes"></span><h2>Bliss Resource API Classes<a class="headerlink" href="#module-bliss.saga.resource" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Resource Management Overview</a><ul>
+<li><a class="reference internal" href="#module-bliss.saga.resource">Bliss Resource API Classes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../job/Job.html"
+                        title="previous chapter">Job</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Manager.html"
+                        title="next chapter">Manager</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../../_sources/bliss/saga/resource/__init__.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Manager.html" title="Manager"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../job/Job.html" title="Job"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
+    </div>
+  </body>
+</html>

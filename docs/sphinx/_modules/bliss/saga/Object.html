@@ -1,0 +1,216 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bliss.saga.Object &mdash; Bliss 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Bliss 0.2.5 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for bliss.saga.Object</h1><div class="highlight"><pre>
+<span class="c"># vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4</span>
+
+<span class="n">__author__</span>    <span class="o">=</span> <span class="s">&quot;Ole Christian Weidner&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright 2011-2012, Ole Christian Weidner&quot;</span>
+<span class="n">__license__</span>   <span class="o">=</span> <span class="s">&quot;MIT&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">bliss.saga</span>
+<span class="kn">import</span> <span class="nn">bliss.runtime</span>
+
+<span class="kn">from</span> <span class="nn">bliss.utils</span> <span class="kn">import</span> <span class="n">tback</span>
+
+<div class="viewcode-block" id="Object"><a class="viewcode-back" href="../../../bliss/saga/Object.html#bliss.saga.Object">[docs]</a><span class="k">class</span> <span class="nc">Object</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span> <span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;SAGA base object as defined in GFD.90 </span>
+
+<span class="sd">    As Python natively provides most functionality of the SAGA base object class</span>
+<span class="sd">    as specified in GFD.90, this object&#39;s only function is to support the use of</span>
+<span class="sd">    :class:`bliss.saga.Session` instances.  In particular, this class allows to obtain the session </span>
+<span class="sd">    any object is living in, to re-use that for other objects and operations.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        # run a job service in a session</span>
+<span class="sd">        c = saga.Context(&#39;X509&#39;)</span>
+<span class="sd">        c[&#39;UserCert&#39;] = &#39;/tmp/x509_special.pem&#39;</span>
+
+<span class="sd">        s = saga.Session()</span>
+<span class="sd">        s.add_context(c)</span>
+
+<span class="sd">        js = saga.job.Service(s)</span>
+<span class="sd">        j  = js.create_job(...)   # the job inherits the js&#39; session!</span>
+<span class="sd">        j.run()</span>
+
+<span class="sd">        ...</span>
+
+<span class="sd">        # somewhere else in the code, you want to stage an output file for the</span>
+<span class="sd">        # job, once it finished.  To use the same credentials (which presumably</span>
+<span class="sd">        # worked for the job&#39;s backend), we obtain the job&#39;s session, and re-use</span>
+<span class="sd">        # it for file staging.</span>
+<span class="sd">        j.wait()</span>
+<span class="sd">        s = j.get_session()</span>
+<span class="sd">        d = j.get_description()[&#39;WorkingDirectory&#39;]</span>
+<span class="sd">        </span>
+<span class="sd">        remote = saga.filesystem.Directory(s, d)</span>
+<span class="sd">        remote.copy(&#39;output&#39;, &#39;file://localhost/tmp/output&#39;)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">__shared_state</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">__shared_state</span><span class="p">[</span><span class="s">&quot;runtime_initialized&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;_plugin&quot;</span><span class="p">,</span> <span class="s">&quot;_type&quot;</span><span class="p">,</span> <span class="s">&quot;_logger&quot;</span><span class="p">,</span> <span class="s">&quot;_session&quot;</span><span class="p">,</span> <span class="s">&quot;_apitype&quot;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span> <span class="c"># objtype, apitype, session=None):</span>
+        <span class="sd">&#39;&#39;&#39;Constructor.&#39;&#39;&#39;</span>
+ 
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__shared_state</span><span class="p">[</span><span class="s">&quot;runtime_initialized&quot;</span><span class="p">]:</span>
+            <span class="c"># initialize runtime</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init_runtime</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__shared_state</span><span class="p">[</span><span class="s">&quot;default_session&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__shared_state</span><span class="p">[</span><span class="s">&quot;runtime_initialized&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;bliss.&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+ 
+        <span class="k">if</span> <span class="n">session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">session</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__shared_state</span><span class="p">[</span><span class="s">&quot;default_session&quot;</span><span class="p">]</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Destructor.&#39;&#39;&#39;</span>
+        <span class="k">pass</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## PRIVATE </span>
+    <span class="k">def</span> <span class="nf">_init_runtime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Registers available plugins and so on&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__shared_state</span><span class="p">[</span><span class="s">&quot;runtime_initialized&quot;</span><span class="p">]:</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">__shared_state</span><span class="p">[</span><span class="s">&quot;runtime_instance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bliss</span><span class="o">.</span><span class="n">runtime</span><span class="o">.</span><span class="n">Runtime</span><span class="p">()</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## PRIVATE</span>
+    <span class="k">def</span> <span class="nf">_get_plugin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Bind an object to the runtime&#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__shared_state</span><span class="p">[</span><span class="s">&quot;runtime_instance&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get_plugin_for_url</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apitype</span><span class="p">)</span> 
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">),</span> <span class="n">tback</span><span class="o">.</span><span class="n">get_traceback</span><span class="p">()))</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## PRIVATE </span>
+    <span class="k">def</span> <span class="nf">_get_runtime_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_plugin</span><span class="p">()</span><span class="o">.</span><span class="n">get_runtime_info</span><span class="p">()</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: session</span>
+    <span class="k">def</span> <span class="nf">session</span><span class="p">():</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="s">&quot;The object&#39;s session which contains the list of security context objects.&quot;</span>
+        <span class="k">def</span> <span class="nf">fget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span>
+        <span class="k">return</span> <span class="nb">locals</span><span class="p">()</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="o">**</span><span class="n">session</span><span class="p">())</span>
+
+    <span class="c">######################################################################	  	</span>
+    <span class="c">## Property: id</span>
+	  	
+    <span class="k">def</span> <span class="nf">_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="s">&quot;The object&#39;s unique identifier.&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">&quot;</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">))))</span>  	
+
+    <span class="c">######################################################################</span>
+    <span class="c">##</span>
+<div class="viewcode-block" id="Object.get_session"><a class="viewcode-back" href="../../../bliss/saga/Object.html#bliss.saga.Object.get_session">[docs]</a>    <span class="k">def</span> <span class="nf">get_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;return the object&#39;s session.</span>
+<span class="sd"> </span>
+<span class="sd">           It is encouraged to use the :attribute:`session` property instead.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
+    </div>
+  </body>
+</html>

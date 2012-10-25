@@ -1,0 +1,233 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Job Service &mdash; Bliss 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Bliss 0.2.5 documentation" href="../../../index.html" />
+    <link rel="next" title="Job" href="Job.html" />
+    <link rel="prev" title="Job Description" href="Description.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Job.html" title="Job"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Description.html" title="Job Description"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="job-service">
+<h1>Job Service<a class="headerlink" href="#job-service" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="bliss.saga.job.Service">
+<em class="property">class </em><tt class="descclassname">bliss.saga.job.</tt><tt class="descname">Service</tt><big>(</big><em>url</em>, <em>session=None</em><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/job/Service.html#Service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.job.Service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loosely represents a SAGA job service as defined in GFD.90</p>
+<p>A job.Service represents anything which accepts job creation requests, and
+which manages thus created <a class="reference internal" href="Job.html#bliss.saga.job.Job" title="bliss.saga.job.Job"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.job.Job</span></tt></a> instances.  That can be a local shell, 
+a remote ssh shell, a cluster queuing system, a IaaS backend &#8211; you name it.</p>
+<p>The job.Service is identified by an URL, which usually points to the contact
+endpoint for that service.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">my_job_id</span> <span class="o">=</span> <span class="s">&quot;[fork://localhost]-[12345]&quot;</span>
+<span class="n">js</span>  <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s">&quot;fork://localhost&quot;</span><span class="p">)</span>
+<span class="n">ids</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">my_job_id</span> <span class="ow">in</span> <span class="n">ids</span> <span class="p">:</span>
+  <span class="k">print</span> <span class="s">&quot;found my job again, wohhooo!&quot;</span>
+
+  <span class="n">j</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">get_job</span><span class="p">(</span><span class="n">my_job_id</span><span class="p">)</span>
+
+  <span class="k">if</span>   <span class="n">j</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span> <span class="o">==</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Job</span><span class="o">.</span><span class="n">Pending</span>  <span class="p">:</span> <span class="k">print</span> <span class="s">&quot;pending&quot;</span>
+  <span class="k">elif</span> <span class="n">j</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span> <span class="o">==</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Job</span><span class="o">.</span><span class="n">Running</span>  <span class="p">:</span> <span class="k">print</span> <span class="s">&quot;running&quot;</span>
+  <span class="k">else</span>                                        <span class="p">:</span> <span class="k">print</span> <span class="s">&quot;job is already final!&quot;</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="bliss.saga.job.Service.create_job">
+<tt class="descname">create_job</tt><big>(</big><em>job_description</em><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/job/Service.html#Service.create_job"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.job.Service.create_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new job object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>job_description</strong> (<tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.Description</span></tt>) &#8211; The description for the new job.</td>
+</tr>
+</tbody>
+</table>
+<p>create_job() accepts a job description, which described the
+application instance to be created by the backend.  The create_job()
+method is not actually attempting to <em>run</em> the job, but merely parses
+the job description for syntactic and semantic consistency.  The job
+returned object is thus not in &#8216;Pending&#8217; or &#8216;Running&#8217;, but rather in
+&#8216;New&#8217; state.  The actual submission is performed by calling run() on
+the job object.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">js</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s">&quot;fork://localhost&quot;</span><span class="p">)</span>
+<span class="n">jd</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Description</span> <span class="p">()</span>
+<span class="n">jd</span><span class="o">.</span><span class="n">executable</span> <span class="o">=</span> <span class="s">&#39;/bin/date&#39;</span>
+<span class="n">j</span>  <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span><span class="n">jd</span><span class="p">)</span>
+
+<span class="k">if</span>   <span class="n">j</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span> <span class="o">==</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Job</span><span class="o">.</span><span class="n">New</span>      <span class="p">:</span> <span class="k">print</span> <span class="s">&quot;new&quot;</span>
+<span class="k">else</span>                                        <span class="p">:</span> <span class="k">print</span> <span class="s">&quot;oops!&quot;</span>
+
+<span class="n">j</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">if</span>   <span class="n">j</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span> <span class="o">==</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Job</span><span class="o">.</span><span class="n">Pending</span>  <span class="p">:</span> <span class="k">print</span> <span class="s">&quot;pending&quot;</span>
+<span class="k">elif</span> <span class="n">j</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span> <span class="o">==</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Job</span><span class="o">.</span><span class="n">Running</span>  <span class="p">:</span> <span class="k">print</span> <span class="s">&quot;running&quot;</span>
+<span class="k">else</span>                                        <span class="p">:</span> <span class="k">print</span> <span class="s">&quot;oops!&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="bliss.saga.job.Service.from_compute">
+<em class="property">classmethod </em><tt class="descname">from_compute</tt><big>(</big><em>compute_obj</em>, <em>session=None</em><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/job/Service.html#Service.from_compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.job.Service.from_compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a job service from a saga.resource.Compute object.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="bliss.saga.job.Service.from_url">
+<em class="property">classmethod </em><tt class="descname">from_url</tt><big>(</big><em>url</em>, <em>session=None</em><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/job/Service.html#Service.from_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.job.Service.from_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a new job service from (resource manager) URL.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.job.Service.get_job">
+<tt class="descname">get_job</tt><big>(</big><em>job_id</em><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/job/Service.html#Service.get_job"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.job.Service.get_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the job object for the given job id.
+:param job_id: The job id.</p>
+<p>Job objects are a local representation of a remote stateful entity.
+The job.Service supports to reconnect to those remote entities:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">js</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s">&quot;fork://localhost&quot;</span><span class="p">)</span>
+<span class="n">j</span>  <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">get_job</span><span class="p">(</span><span class="n">my_job_id</span><span class="p">)</span>
+
+<span class="k">if</span>   <span class="n">j</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span> <span class="o">==</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Job</span><span class="o">.</span><span class="n">Pending</span>  <span class="p">:</span> <span class="k">print</span> <span class="s">&quot;pending&quot;</span>
+<span class="k">elif</span> <span class="n">j</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span> <span class="o">==</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Job</span><span class="o">.</span><span class="n">Running</span>  <span class="p">:</span> <span class="k">print</span> <span class="s">&quot;running&quot;</span>
+<span class="k">else</span>                                        <span class="p">:</span> <span class="k">print</span> <span class="s">&quot;job is already final!&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bliss.saga.job.Service.list">
+<tt class="descname">list</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/job/Service.html#Service.list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.job.Service.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all jobs managed by this service instance.</p>
+<p>As the job.Service represents a job management backend, list() will
+return a list of job IDs for all jobs which are known to the backend,
+and which can potentially be accessed and managed by the application.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">js</span>  <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s">&quot;fork://localhost&quot;</span><span class="p">)</span>
+<span class="n">ids</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">my_job_id</span> <span class="ow">in</span> <span class="n">ids</span> <span class="p">:</span>
+  <span class="k">print</span> <span class="s">&quot;found my job again, wohhooo!&quot;</span>
+
+  <span class="n">j</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">get_job</span><span class="p">(</span><span class="n">my_job_id</span><span class="p">)</span>
+
+  <span class="k">if</span>   <span class="n">j</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span> <span class="o">==</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Job</span><span class="o">.</span><span class="n">Pending</span>  <span class="p">:</span> <span class="k">print</span> <span class="s">&quot;pending&quot;</span>
+  <span class="k">elif</span> <span class="n">j</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span> <span class="o">==</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Job</span><span class="o">.</span><span class="n">Running</span>  <span class="p">:</span> <span class="k">print</span> <span class="s">&quot;running&quot;</span>
+  <span class="k">else</span>                                        <span class="p">:</span> <span class="k">print</span> <span class="s">&quot;job is already final!&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Description.html"
+                        title="previous chapter">Job Description</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Job.html"
+                        title="next chapter">Job</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../../_sources/bliss/saga/job/Service.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Job.html" title="Job"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Description.html" title="Job Description"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
+    </div>
+  </body>
+</html>
