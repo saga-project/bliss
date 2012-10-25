@@ -64,11 +64,9 @@
 <a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-name">__copyright__</tt> <tt class="py-op">=</tt> <tt class="py-string">"Copyright 2011, Ole Christian Weidner"</tt> </tt>
 <a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-name">__license__</tt>   <tt class="py-op">=</tt> <tt class="py-string">"MIT"</tt> </tt>
 <a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"> </tt>
-<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Package bliss.saga=bliss.saga-module.html"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-0', 'saga', 'link-0');">saga</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Module bliss.saga.Context=bliss.saga.Context-module.html,Class bliss.saga.Context.Context=bliss.saga.Context.Context-class.html,Variable bliss.saga.Object.Object.ObjectType.Context=bliss.saga.Object.Object.ObjectType-class.html#Context"><a title="bliss.saga.Context
-bliss.saga.Context.Context
-bliss.saga.Object.Object.ObjectType.Context" class="py-name" href="#" onclick="return doclink('link-1', 'Context', 'link-1');">Context</a></tt> <tt class="py-keyword">import</tt> <tt id="link-2" class="py-name"><a title="bliss.saga.Context
-bliss.saga.Context.Context
-bliss.saga.Object.Object.ObjectType.Context" class="py-name" href="#" onclick="return doclink('link-2', 'Context', 'link-1');">Context</a></tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">bliss</tt><tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Package bliss.saga=bliss.saga-module.html"><a title="bliss.saga" class="py-name" href="#" onclick="return doclink('link-0', 'saga', 'link-0');">saga</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Module bliss.saga.Context=bliss.saga.Context-module.html,Class bliss.saga.Context.Context=bliss.saga.Context.Context-class.html"><a title="bliss.saga.Context
+bliss.saga.Context.Context" class="py-name" href="#" onclick="return doclink('link-1', 'Context', 'link-1');">Context</a></tt> <tt class="py-keyword">import</tt> <tt id="link-2" class="py-name"><a title="bliss.saga.Context
+bliss.saga.Context.Context" class="py-name" href="#" onclick="return doclink('link-2', 'Context', 'link-1');">Context</a></tt> </tt>
 <a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"> </tt>
 <a name="Session"></a><div id="Session-def"><a name="L11"></a><tt class="py-lineno"> 11</tt> <a class="py-toggle" href="#" id="Session-toggle" onclick="return toggle('Session');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="bliss.saga.Session.Session-class.html">Session</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
 </div><div id="Session-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="Session-expanded"><a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line">    <tt class="py-docstring">'''Loosely defines a SAGA Session object as defined in GFD.90.</tt> </tt>
@@ -92,9 +90,9 @@ bliss.saga.Object.Object.ObjectType.Context" class="py-name" href="#" onclick="r
 <a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"><tt class="py-docstring">        # define an ssh context</tt> </tt>
 <a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"><tt class="py-docstring">        c = saga.Context()</tt> </tt>
-<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt class="py-docstring">        c.context_type = 'ssh'</tt> </tt>
-<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"><tt class="py-docstring">        c.user_cert = '$HOME/.ssh/special_id_rsa'</tt> </tt>
-<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-docstring">        c.user_key = '$HOME/.ssh/special_id_rsa.pub'</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt class="py-docstring">        c.type = 'ssh'</tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"><tt class="py-docstring">        c.usercert = '$HOME/.ssh/special_id_rsa'</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-docstring">        c.userkey = '$HOME/.ssh/special_id_rsa.pub'</tt> </tt>
 <a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"><tt class="py-docstring">        # add it to a session</tt> </tt>
 <a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-docstring">        s = saga.Session</tt> </tt>
@@ -138,7 +136,7 @@ bliss.saga.Object.Object.ObjectType.Context" class="py-name" href="#" onclick="r
 <a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-string">"Registered contexts: %s"</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Variable bliss.saga.Session.Session.contexts=bliss.saga.Session.Session-class.html#contexts"><a title="bliss.saga.Session.Session.contexts" class="py-name" href="#" onclick="return doclink('link-3', 'contexts', 'link-3');">contexts</a></tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
 </div><a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line"> </tt>
 <a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">    <tt class="py-comment">######################################################################</tt> </tt>
-<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">    <tt class="py-comment">## Property: contexts</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">    <tt class="py-comment">## Property: type</tt> </tt>
 <a name="Session.contexts"></a><div id="Session.contexts-def"><a name="L80"></a><tt class="py-lineno"> 80</tt> <a class="py-toggle" href="#" id="Session.contexts-toggle" onclick="return toggle('Session.contexts');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="bliss.saga.Session.Session-class.html#contexts">contexts</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
 </div><div id="Session.contexts-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Session.contexts-expanded"><a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">        <tt class="py-name">doc</tt> <tt class="py-op">=</tt> <tt class="py-string">"""Authentication contexts registered with the Session.</tt> </tt>
 <a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line"><tt class="py-string">        </tt> </tt>
@@ -227,7 +225,7 @@ expandto(location.href);
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Thu Aug 23 23:16:17 2012</a>
+    3.0.1 on Wed Oct 24 09:48:01 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

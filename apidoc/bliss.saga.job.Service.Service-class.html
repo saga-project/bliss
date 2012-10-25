@@ -60,23 +60,7 @@
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class Service</h1><p class="nomargin-top"><span class="codelink"><a href="bliss.saga.job.Service-pysrc.html#Service">source&nbsp;code</a></span></p>
 <center>
-<center>  <map id="uml_class_diagram_for_bliss_sa_12" name="uml_class_diagram_for_bliss_sa_12">
-<area shape="rect" id="node1_11" href="bliss.saga.job.Service.Service-class.html#__init__" title="Construct a new job service object" alt="" coords="17,167,315,185"/>
-<area shape="rect" id="node1_12" href="bliss.saga.job.Service.Service-class.html#from_url" title="Initialize a new job service from (resource manager) URL." alt="" coords="17,185,315,204"/>
-<area shape="rect" id="node1_13" href="bliss.saga.job.Service.Service-class.html#from_compute" title="Create a job service from a saga.resource.Compute object." alt="" coords="17,204,315,223"/>
-<area shape="rect" id="node1_14" href="bliss.saga.job.Service.Service-class.html#__del__" title="Delete the service in a civilised fashion." alt="" coords="17,223,315,241"/>
-<area shape="rect" id="node1_15" href="bliss.saga.job.Service.Service-class.html#create_job" title="Create a new job object." alt="" coords="17,241,315,260"/>
-<area shape="rect" id="node1_16" href="bliss.saga.job.Service.Service-class.html#get_job" title="Return the job object for the given job id." alt="" coords="17,260,315,279"/>
-<area shape="rect" id="node1_17" href="bliss.saga.job.Service.Service-class.html#list" title="List all jobs managed by this service instance." alt="" coords="17,279,315,297"/>
-<area shape="rect" id="node1" href="bliss.saga.job.Service.Service-class.html" title="Loosely represents a SAGA job service as defined in GFD.90" alt="" coords="5,134,326,303"/>
-<area shape="rect" id="node2_18" href="bliss.saga.Object.Object.ObjectType-class.html" title="bliss.saga.Object.Object.ObjectType" alt="" coords="113,31,220,49"/>
-<area shape="rect" id="node2_19" href="bliss.saga.Object.Object-class.html#session" title="bliss.saga.Object.Object.session" alt="" coords="113,49,220,68"/>
-<area shape="rect" id="node2_20" href="bliss.saga.Object.Object-class.html#object_type" title="bliss.saga.Object.Object.object_type" alt="" coords="113,68,220,87"/>
-<area shape="rect" id="node2_21" href="bliss.saga.Object.Object-class.html#get_session" title="return the object&#39;s session." alt="" coords="113,89,220,108"/>
-<area shape="rect" id="node2" href="bliss.saga.Object.Object-class.html" title="SAGA base object as defined in GFD.90" alt="" coords="101,6,232,114"/>
-</map>
-  <img src="uml_class_diagram_for_bliss_sa_12.gif" alt='' usemap="#uml_class_diagram_for_bliss_sa_12" ismap="ismap" class="graph-without-title" />
-</center>
+
 </center>
 <hr />
 <p>Loosely represents a SAGA job service as defined in GFD.90</p>
@@ -103,22 +87,6 @@
      else                                        : print &quot;job is already final!&quot;
 </pre>
 
-<!-- ==================== NESTED CLASSES ==================== -->
-<a name="section-NestedClasses"></a>
-<table class="summary" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Nested Classes</span></td>
-</tr>
-  <tr>
-    <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="bliss.saga.Object.Object-class.html">Object.Object</a></code></b>:
-      <code><a href="bliss.saga.Object.Object.ObjectType-class.html">ObjectType</a></code>
-      </p>
-    </td>
-  </tr>
-</table>
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
 <table class="summary" border="1" cellpadding="3"
@@ -153,7 +121,7 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="bliss.saga.job.Service.Service-class.html#__del__" class="summary-sig-name">__del__</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Delete the service in a civilised fashion.</td>
+      Delete the service object.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="bliss.saga.job.Service-pysrc.html#Service.__del__">source&nbsp;code</a></span>
             
@@ -218,9 +186,6 @@
   </tr>
   <tr>
     <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="bliss.saga.Object.Object-class.html">Object.Object</a></code></b>:
-      <code><a href="bliss.saga.Object.Object-class.html#get_session">get_session</a></code>
-      </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__delattr__</code>,
       <code>__format__</code>,
@@ -235,6 +200,26 @@
       <code>__str__</code>,
       <code>__subclasshook__</code>
       </p>
+    </td>
+  </tr>
+<tr bgcolor="#e8f0f8" >
+  <th colspan="2" class="group-header"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.Object.Object-class.html">Object.Object</a></th></tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="bliss.saga.Object.Object-class.html#get_session" class="summary-sig-name">get_session</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      return the object's session.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="bliss.saga.Object-pysrc.html#Object.get_session">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
     </td>
   </tr>
 </table>
@@ -292,12 +277,14 @@
   <td align="left" colspan="2" class="table-header">
     <span class="table-header">Class Variables</span></td>
 </tr>
-  <tr>
-    <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="bliss.saga.Object.Object-class.html">Object.Object</a></code></b>:
-      <code><a href="bliss.saga.Object.Object-class.html#object_type">object_type</a></code>,
-      <code><a href="bliss.saga.Object.Object-class.html#session">session</a></code>
-      </p>
+<tr bgcolor="#e8f0f8" >
+  <th colspan="2" class="group-header"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="bliss.saga.Object.Object-class.html">Object.Object</a></th></tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="session"></a><span class="summary-name">session</span> = <code title="property(** session())">property(** session())</code>
     </td>
   </tr>
 </table>
@@ -370,7 +357,7 @@
     </td>
   </tr></table>
   
-  <p>Delete the service in a civilised fashion.</p>
+  <p>Delete the service object.</p>
   <dl class="fields">
     <dt>Overrides:
         <a href="bliss.saga.Object.Object-class.html#__del__">Object.Object.__del__</a>
@@ -530,7 +517,7 @@
   <tr>
     <td align="left" class="footer">
     <a href="epydoc-log.html">Generated by Epydoc
-    3.0.1 on Thu Aug 23 23:16:16 2012</a>
+    3.0.1 on Wed Oct 24 09:48:01 2012</a>
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
