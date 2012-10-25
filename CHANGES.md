@@ -1,4 +1,4 @@
-Version 0.2.6 released 2012-10-24
+Version 0.2.6 released 2012-10-25
 ----------------------------------------------------------------------
 
 * HOTFIX: credential management for SGE and PBS. both adaptors now 
