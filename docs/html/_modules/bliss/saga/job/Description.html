@@ -1,0 +1,491 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bliss.saga.job.Description &mdash; SAGA-Python 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="SAGA-Python 0.2.5 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">SAGA-Python 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for bliss.saga.job.Description</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4</span>
+
+<span class="n">__author__</span>    <span class="o">=</span> <span class="s">&quot;Ole Christian Weidner&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright 2012, Ole Christian Weidner&quot;</span>
+<span class="n">__license__</span>   <span class="o">=</span> <span class="s">&quot;MIT&quot;</span>
+
+<span class="kn">import</span> <span class="nn">bliss.saga</span>
+
+<span class="kn">from</span> <span class="nn">bliss.saga.Object</span> <span class="kn">import</span> <span class="n">Object</span>
+<span class="kn">from</span> <span class="nn">bliss.saga.Attributes</span> <span class="kn">import</span> <span class="n">AttributeInterface</span>
+
+<div class="viewcode-block" id="Description"><a class="viewcode-back" href="../../../../bliss/saga/job/Description.html#bliss.saga.job.Description">[docs]</a><span class="k">class</span> <span class="nc">Description</span><span class="p">(</span><span class="n">Object</span><span class="p">,</span> <span class="n">AttributeInterface</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Allows to define the properties and requirements for a job.</span>
+<span class="sd">  </span>
+<span class="sd">    The Description class allows the user to describes both the resource</span>
+<span class="sd">    requirements (e.g. number  of CPUs, working directory etc.), as well as the</span>
+<span class="sd">    application properties (e.g. executable path, program arguments, environment</span>
+<span class="sd">    etc.) of a :class:`bliss.saga.job.Job` to be create by a :class:`bliss.saga.job.Service`.</span>
+
+<span class="sd">    **Usage example 1** shows how to run a /bin/date job::</span>
+
+<span class="sd">      jd = saga.job.Description()</span>
+
+<span class="sd">      jd.executable = &quot;/bin/date&quot;</span>
+<span class="sd">      jd.arguments = [&quot;-u&quot;, &quot;-R&quot;]</span>
+
+<span class="sd">      js = saga.job.Service(&quot;fork://localhost&quot;)</span>
+<span class="sd">      j = js.create_job(jd)</span>
+
+<span class="sd">      j.run()</span>
+
+<span class="sd">    **Usage example 2** shows how to run a set of shell commands as a job::</span>
+
+<span class="sd">      script = &#39;&#39;&#39;</span>
+<span class="sd">       ls -la /tmp</span>
+<span class="sd">       find  /tmp/ -name  \*.pdf -exec echo &quot;found {}&quot; \;</span>
+<span class="sd">       du -a /tmp/ | egrep &#39;\.pdf$&#39; | wc -l</span>
+<span class="sd">      &#39;&#39;&#39;</span>
+
+<span class="sd">      jd = saga.job.Description()</span>
+
+<span class="sd">      jd.executable = &quot;/bin/sh&quot;</span>
+<span class="sd">      jd.arguments  = [&quot;-c&quot;, script]</span>
+
+<span class="sd">      js = saga.job.Service(&quot;fork://localhost&quot;)</span>
+<span class="sd">      j  = js.create_job(jd)</span>
+
+<span class="sd">      j.run()</span>
+
+<span class="sd">    Note that the above example uses /bin/sh explicitly, instead of, say,</span>
+<span class="sd">    /bin/bash -- it is good practice to use /bin/sh and sh compatible shell</span>
+<span class="sd">    scripts, as those are guaranteed to be available on all Unix systems.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="c">#      - **ProcessesPerHost:** I{number of processes to be started per host}</span>
+<span class="c">#</span>
+<span class="c">#      - **ThreadsPerProcess:** I{number of threads to start per process}</span>
+<span class="c">#</span>
+<span class="c">#      - **Interactive:** I{run the job in interactive mode}</span>
+<span class="c">#         - this implies that stdio streams will stay </span>
+<span class="c">#           connected to the submitter after job </span>
+<span class="c">#           submission, and during job execution. </span>
+<span class="c">#         - if an implementation cannot handle</span>
+<span class="c">#           interactive jobs, and this attribute is</span>
+<span class="c">#           present, and &#39;True&#39;, the job creation MUST</span>
+<span class="c">#           throw an &#39;IncorrectParameter&#39; error with a</span>
+<span class="c">#           descriptive error message.</span>
+<span class="c">#</span>
+<span class="c">#      - **Input:** I{pathname of the standard input file}</span>
+<span class="c">#         - will not be used if &#39;Interactive&#39; is &#39;True&#39;</span>
+<span class="c">#</span>
+<span class="c">#      - **Cleanup:** I{defines if output files get removed after the job finishes}</span>
+<span class="c">#         - can have the Values &#39;True&#39;, &#39;False&#39;, and </span>
+<span class="c">#           &#39;Default&#39;</span>
+<span class="c">#         - On &#39;False&#39;, output files MUST be kept </span>
+<span class="c">#           after job the finishes</span>
+<span class="c">#         - On &#39;True&#39;, output files MUST be deleted</span>
+<span class="c">#           after job the finishes</span>
+<span class="c">#         - On &#39;Default&#39;, the behavior is defined by</span>
+<span class="c">#           the implementation or the backend.</span>
+<span class="c">#         - translates into &#39;DeleteOnTermination&#39; elements</span>
+<span class="c">#           in JSDL</span>
+<span class="c">#</span>
+<span class="c">#      - **JobStartTime:** I{time at which a job should be scheduled}</span>
+<span class="c">#         - Could be viewed as a desired job start </span>
+<span class="c">#           time, but that is up to the resource </span>
+<span class="c">#           manager. </span>
+<span class="c">#         - format: number of seconds since epoch</span>
+<span class="c">#</span>
+<span class="c">#      - **TotalCPUTime:** I{estimate total number of CPU seconds which the job will</span>
+<span class="c">#    require}</span>
+<span class="c">#         - intended to provide hints to the scheduler. </span>
+<span class="c">#           scheduling policies.</span>
+<span class="c">#</span>
+<span class="c">#      - **TotalPhysicalMemory:** I{Estimated amount of memory the job requires}</span>
+<span class="c">#         - unit is in Mega-Byte</span>
+<span class="c">#         - memory usage of the job is aggregated </span>
+<span class="c">#           across all processes of the job</span>
+<span class="c">#</span>
+<span class="c">#      - **CPUArchitecture:** I{compatible processor for job submission}</span>
+<span class="c">#         - allowed values as specified in JSDL</span>
+<span class="c">#</span>
+<span class="c">#      - **OperatingSystemType:** I{compatible operating system for job submission}</span>
+<span class="c">#         - allowed values as specified in JSDL</span>
+<span class="c">#</span>
+<span class="c">#      - **CandidateHosts:** I{list of host names which are to be considered by the</span>
+<span class="c">#    resource manager as candidate targets}</span>
+
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_deep_copy</span><span class="p">(</span><span class="n">jd</span><span class="p">):</span>
+        <span class="n">jd_copy</span> <span class="o">=</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Description</span><span class="p">()</span>
+
+        <span class="n">AttributeInterface</span><span class="o">.</span><span class="n">_attributes_deep_copy</span> <span class="p">(</span><span class="n">jd</span><span class="p">,</span> <span class="n">jd_copy</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">jd_copy</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Create a new, empty job description.&#39;&#39;&#39;</span>
+        <span class="n">Object</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_apitype</span> <span class="o">=</span> <span class="s">&#39;saga.job&#39;</span>
+
+        <span class="c"># set attribute interface properties</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_extensible</span>  <span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_camelcasing</span> <span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="c"># register properties with the attribute interface</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;Executable&#39;</span><span class="p">,</span>        <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;Environment&#39;</span><span class="p">,</span>       <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span>    <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;Arguments&#39;</span><span class="p">,</span>         <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Vector</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;WorkingDirectory&#39;</span><span class="p">,</span>  <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;FileTransfer&#39;</span><span class="p">,</span>      <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Vector</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;Output&#39;</span><span class="p">,</span>            <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;Error&#39;</span><span class="p">,</span>             <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;Queue&#39;</span><span class="p">,</span>             <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;Project&#39;</span><span class="p">,</span>           <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;WallTimeLimit&#39;</span><span class="p">,</span>     <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Time</span><span class="p">,</span>   <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;Contact&#39;</span><span class="p">,</span>           <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;Name&#39;</span><span class="p">,</span>              <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;TotalCPUCount&#39;</span><span class="p">,</span>     <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Int</span><span class="p">,</span>    <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;NumberOfProcesses&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Int</span><span class="p">,</span>    <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_register</span>  <span class="p">(</span><span class="s">&#39;SPMDVariation&#39;</span><span class="p">,</span>     <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Enum</span><span class="p">,</span>   <span class="bp">self</span><span class="o">.</span><span class="n">Scalar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Writable</span><span class="p">)</span>
+
+      <span class="c"># self._attributes_set_enums (&#39;SPMDVariation&#39;,     [&#39;MPI&#39;, &#39;OpenMP&#39;, &#39;None&#39;])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes_set_enums</span> <span class="p">(</span><span class="s">&#39;SPMDVariation&#39;</span><span class="p">,</span>     <span class="p">[</span><span class="s">&#39;MPI&#39;</span><span class="p">,</span> <span class="s">&#39;OpenMP&#39;</span><span class="p">,</span> <span class="s">&#39;None&#39;</span><span class="p">,</span> <span class="s">&#39;single&#39;</span><span class="p">])</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Delete the job description in a civilised fashion.&#39;&#39;&#39;</span>
+        <span class="c"># nothing to do here </span>
+        <span class="k">pass</span>
+
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: </span>
+    <span class="n">Executable</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span><span class="n">doc</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    Executable:</span>
+<span class="s">    Defines the command to execute.</span>
+
+<span class="s">      - This his is the only required attribute/property.</span>
+<span class="s">      - It can be a full pathname, a pathname relative to the working_directory as </span>
+<span class="s">        evaluated on the execution host, or a executable name to be searched in the</span>
+<span class="s">        target host&#39;s PATH environment (if available).</span>
+
+<span class="s">    **Example**::</span>
+<span class="s">      jd = saga.job.Description()</span>
+<span class="s">      jd.executable = &quot;/usr/local/bin/blast&quot;</span>
+
+<span class="s">    &quot;&quot;&quot;</span><span class="p">)</span>
+      
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: </span>
+    <span class="n">Arguments</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span><span class="n">doc</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    Arguments:</span>
+<span class="s">    List of arguments for the executable</span>
+
+<span class="s">      - This attribute is optional.</span>
+<span class="s">      - The order of arguments is, in general, significant.</span>
+<span class="s">      - The individual arguments are not expanded by the user environment (i.e.,</span>
+<span class="s">        don&#39;t use environment variables like $HOME)</span>
+<span class="s">      </span>
+<span class="s">    **Example**::</span>
+<span class="s">      jd = saga.job.Description()</span>
+<span class="s">      jd.arguments = [&quot;--prefix&quot;, &quot;/usr/local/bin&quot;]</span>
+
+<span class="s">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: </span>
+    <span class="n">Environment</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span><span class="n">doc</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    Environment:</span>
+<span class="s">    The environment variables to set in the job&#39;s execution context.</span>
+
+<span class="s">      - exported into the job environment</span>
+<span class="s">      - format: &#39;key=value&#39;</span>
+<span class="s">      - The individual variable values are not expanded by the user environment (i.e.,</span>
+<span class="s">        don&#39;t use environment variables like $HOME in values)</span>
+<span class="s">      </span>
+<span class="s">    **Example**::</span>
+<span class="s">      jd = saga.job.Description()</span>
+<span class="s">      jd.environment = [&quot;PATH=/bin:/usr/bin&quot;, &quot;TARGET=KingKong&quot;]</span>
+
+<span class="s">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: </span>
+    <span class="n">FileTransfer</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span><span class="n">doc</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    FileTransfer:</span>
+<span class="s">    Defines the file staging operations.</span>
+
+<span class="s">    **Example**::</span>
+<span class="s">      jd = saga.job.Description()</span>
+<span class="s">      jd.arguments = [&quot;--prefix&quot;, &quot;/usr/local/bin&quot;]</span>
+
+<span class="s">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: </span>
+    <span class="n">Output</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span><span class="n">doc</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    Output:</span>
+<span class="s">    The file in which the job</span><span class="se">\&#39;</span><span class="s">s stdout stream will be captured.</span>
+
+<span class="s">    **Example**::</span>
+<span class="s">      jd = saga.job.Description()</span>
+<span class="s">      jd.output = &quot;/tmp/app.log&quot;</span>
+
+<span class="s">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: </span>
+    <span class="n">Error</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span><span class="n">doc</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    Error:</span>
+<span class="s">    The file in which the job</span><span class="se">\&#39;</span><span class="s">s stderr stream will be captured.</span>
+
+<span class="s">    **Example**::</span>
+<span class="s">      jd = saga.job.Description()</span>
+<span class="s">      jd.error = &quot;/tmp/app.err&quot;</span>
+
+<span class="s">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: </span>
+    <span class="n">Project</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span><span class="n">doc</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    Project:</span>
+<span class="s">    The project / allocation name the job should be credited to.</span>
+
+<span class="s">      - This attribute is used by the scheduler backend to credit the allocated</span>
+<span class="s">        resources to a specific project account.</span>
+
+<span class="s">    **Example**::</span>
+<span class="s">      jd = saga.job.Description()</span>
+<span class="s">      jd.project = &quot;project_42&quot;</span>
+
+<span class="s">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: </span>
+    <span class="n">Queue</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span><span class="n">doc</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    Queue:</span>
+<span class="s">    The queue on the backend system to place the job in.</span>
+
+<span class="s">      - Schedulers which support different queues (with different service</span>
+<span class="s">        qualities) use this attribute.</span>
+
+<span class="s">    **Example**::</span>
+<span class="s">      jd = saga.job.Description()</span>
+<span class="s">      jd.queue = &quot;Large&quot;</span>
+
+<span class="s">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property:</span>
+    <span class="n">WallTimeLimit</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span><span class="n">doc</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    WallTimeLimit:</span>
+<span class="s">    The hard limit (in minutes) for the total job runtime.</span>
+
+<span class="s">      - The job is not necessarily killed when it overruns the specified time,</span>
+<span class="s">        but no guarantees are made.</span>
+
+<span class="s">      - The value is used by the scheduler to optimized scheduling.</span>
+
+<span class="s">    **Example**::</span>
+<span class="s">      jd = saga.job.Description()</span>
+<span class="s">      jd.wall_time_limit = &quot;42&quot;</span>
+
+<span class="s">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: </span>
+    <span class="n">WorkingDirectory</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span><span class="n">doc</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    WorkingDirectory:</span>
+<span class="s">    The working directory for the job.</span>
+
+<span class="s">      - If the directory does not exist, it will be created.</span>
+<span class="s">      - Relative path names (for output/error/file_staging) are relative to this</span>
+<span class="s">        working directory.</span>
+
+<span class="s">      - The backend may choose an arbitrary working directory if none is</span>
+<span class="s">        explicitly specified. </span>
+
+<span class="s">    **Example**::</span>
+<span class="s">      jd = saga.job.Description()</span>
+<span class="s">      jd.working_directory = &quot;/scratch/cpt_hook/&quot;</span>
+
+<span class="s">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: </span>
+    <span class="n">Contact</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span><span class="n">doc</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    Contact:</span>
+<span class="s">    Endpoint describing where to report job state transitions (e.g., email).</span>
+
+<span class="s">      - This information is used to send notifications for job state changes, to</span>
+<span class="s">        email or other notification endpoints.</span>
+
+<span class="s">    **Example**::</span>
+<span class="s">      jd = saga.job.Description()</span>
+<span class="s">      jd.contact = &quot;cpt_hook@piratebay.org&quot;</span>
+
+<span class="s">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: </span>
+    <span class="n">Name</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span><span class="n">doc</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    Name:</span>
+<span class="s">    Define a name for the job.</span>
+
+<span class="s">      - Defining an explicit name can help debugging on the backend system.</span>
+
+<span class="s">    **Example**::</span>
+<span class="s">      jd = saga.job.Description()</span>
+<span class="s">      jd.name = &quot;myblastjob_01&quot;</span>
+
+<span class="s">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: </span>
+    <span class="n">TotalCPUCount</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span><span class="n">doc</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    TotalCPUCount:</span>
+<span class="s">    Total number of cpus requested for this job.</span>
+
+<span class="s">      - This attribute is used for jobs spanning more than one process instance,</span>
+<span class="s">        such as for MPI jobs etc.</span>
+
+<span class="s">      - The backend does not make any assumptions about the job distribution</span>
+<span class="s">        over the requested processes, nor does it give any connectivity</span>
+<span class="s">        guarantees (NUMA, shared memory, network interconnects etc.)</span>
+
+<span class="s">    **Example**::</span>
+<span class="s">      jd = saga.job.Description()</span>
+<span class="s">      jd.total_cpu_count = 64</span>
+
+<span class="s">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: </span>
+    <span class="n">NumberOfProcesses</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span><span class="n">doc</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    NumberOfProcesses:</span>
+<span class="s">    Number of processes to launch</span>
+
+<span class="s">      - This attribute specifies how many process instances the application is</span>
+<span class="s">        expected to have.  </span>
+
+<span class="s">      - Specifying this attribute does *not* automatically create those</span>
+<span class="s">        instances, but instead acts as a hint (boundary condition) to the</span>
+<span class="s">        scheduler.</span>
+
+<span class="s">    **Example**::</span>
+<span class="s">      jd = saga.job.Description()</span>
+<span class="s">      jd.number_of_processes = 8</span>
+
+<span class="s">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: </span>
+    <span class="n">SPMDVariation</span> <span class="o">=</span> <span class="nb">property</span> <span class="p">(</span><span class="n">doc</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    SPMDVariation:</span>
+<span class="s">    SPMD job type and startup mechanism</span>
+
+<span class="s">      - supported values: MPI, OpenMP, None</span>
+<span class="s">      - &#39;None&#39; indicates that the application is not a SPMD application.</span>
+<span class="s">      - Specifying this value influences the mechanism the backend will use to</span>
+<span class="s">        create the application process instances (fork, mpirun, ...)</span>
+
+<span class="s">    **Example**::</span>
+<span class="s">      jd = saga.job.Description()</span>
+<span class="s">      jd.spmd_variation = &quot;MPI&quot;</span>
+
+<span class="s">    &quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">SAGA-Python 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,303 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bliss.saga.resource.Storage &mdash; SAGA-Python 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="SAGA-Python 0.2.5 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">SAGA-Python 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for bliss.saga.resource.Storage</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4</span>
+
+<span class="n">__author__</span>    <span class="o">=</span> <span class="s">&quot;Ole Christian Weidner&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright 2012, Ole Christian Weidner&quot;</span>
+<span class="n">__license__</span>   <span class="o">=</span> <span class="s">&quot;MIT&quot;</span>
+
+<span class="kn">import</span> <span class="nn">bliss.saga</span>
+
+<span class="kn">from</span> <span class="nn">bliss.saga</span> <span class="kn">import</span> <span class="n">Url</span>
+<span class="kn">from</span> <span class="nn">bliss.saga.Object</span> <span class="kn">import</span> <span class="n">Object</span> 
+
+<div class="viewcode-block" id="Storage"><a class="viewcode-back" href="../../../../bliss/saga/resource/Storage.html#bliss.saga.resource.Storage">[docs]</a><span class="k">class</span> <span class="nc">Storage</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Storage resources represent stateful entities which can store</span>
+<span class="sd">    data.  A :class:`bliss.saga.resource.Manager` instance can create them according to</span>
+<span class="sd">    a :class:`bliss.saga.resource.StorageDescription`, as shown below::</span>
+
+<span class="sd">      # describe the resource requirements</span>
+<span class="sd">      sd = saga.resource.StorageDescription()</span>
+<span class="sd">      sd[&#39;Size&#39;] = 1024    # MB</span>
+
+<span class="sd">      # obtain a handle to a suitable resource...</span>
+<span class="sd">      rm = saga.resource.Manager(url)</span>
+<span class="sd">      sr = rm.create_storage(sd)</span>
+
+<span class="sd">      # ... and wait until the storage space is available</span>
+<span class="sd">      sr.wait(saga.resource.State.Active)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;PRIVATE: Create a new storage resource.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">Object</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_apitype</span> <span class="o">=</span> <span class="s">&#39;saga.resource&#39;</span>
+
+
+    <span class="c">######################################################################</span>
+    <span class="c">##</span>
+    <span class="k">def</span> <span class="nf">__init_from_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manager_obj</span><span class="p">,</span> <span class="n">storage_description</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;(Hidden) Constructor&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_manager</span> <span class="o">=</span> <span class="n">manager_obj</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">manager_obj</span><span class="o">.</span><span class="n">_url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_storage_description</span> <span class="o">=</span> <span class="n">storage_description</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span>  <span class="o">=</span> <span class="n">Object</span><span class="o">.</span><span class="n">_get_plugin</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="c"># throws &#39;NoSuccess&#39; on error</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Bound to plugin </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="p">)))</span>
+    
+    <span class="c">######################################################################</span>
+    <span class="c">##</span>
+<div class="viewcode-block" id="Storage.get_state"><a class="viewcode-back" href="../../../../bliss/saga/resource/Storage.html#bliss.saga.resource.Storage.get_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Return the state of the resource.</span>
+<span class="sd">        </span>
+<span class="sd">        A resource will only be able to store data when in Active state -- but it may</span>
+<span class="sd">        already accept storage requests while Pending.  In that case, the</span>
+<span class="sd">        storage requests are queued until the resource becomes Active.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+                                       <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">storage_resource_get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    
+    
+    <span class="c">######################################################################</span>
+    <span class="c">##</span></div>
+<div class="viewcode-block" id="Storage.get_state_detail"><a class="viewcode-back" href="../../../../bliss/saga/resource/Storage.html#bliss.saga.resource.Storage.get_state_detail">[docs]</a>    <span class="k">def</span> <span class="nf">get_state_detail</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Return the state detail of the resource.</span>
+<span class="sd">        </span>
+<span class="sd">        As for every stateful SAGA-Python object, the state detail informs about the</span>
+<span class="sd">        actual native backend state, which may be finer grained than the SAGA</span>
+<span class="sd">        state model used by SAGA-Python.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+                                       <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">storage_resource_get_state_detail</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    
+    
+    <span class="c">######################################################################</span>
+    <span class="c">##</span></div>
+<div class="viewcode-block" id="Storage.get_id"><a class="viewcode-back" href="../../../../bliss/saga/resource/Storage.html#bliss.saga.resource.Storage.get_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Return the id of the resource</span>
+<span class="sd">        </span>
+<span class="sd">        The returned ID acts as a persistent and unique identifier for the</span>
+<span class="sd">        resource...::</span>
+<span class="sd">        </span>
+<span class="sd">          </span>
+<span class="sd">          # obtain a handle to a suitable resource and print it&#39;s id</span>
+<span class="sd">          rm = saga.resource.Manager(url)</span>
+<span class="sd">          sr = rm.create_storage(sd)</span>
+<span class="sd">          id = sr.get_id()</span>
+<span class="sd">          print &quot;resource id: %s&quot;  %  id</span>
+
+
+<span class="sd">        ...and can in particular be used to reconnect to that existing</span>
+<span class="sd">        resource::</span>
+
+<span class="sd">          rm = saga.resource.Manager(url)</span>
+<span class="sd">          sr = rm.get_storage(id)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+                                       <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">storage_resource_get_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    
+    
+    <span class="c">######################################################################</span>
+    <span class="c">##</span></div>
+<div class="viewcode-block" id="Storage.get_manager"><a class="viewcode-back" href="../../../../bliss/saga/resource/Storage.html#bliss.saga.resource.Storage.get_manager">[docs]</a>    <span class="k">def</span> <span class="nf">get_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Return the associated resource manager object.</span>
+
+<span class="sd">        The returned manager is the one which created or reconnected to the</span>
+<span class="sd">        resource::</span>
+<span class="sd">        </span>
+<span class="sd">          # obtain a handle to a suitable resource and print it&#39;s id</span>
+<span class="sd">          rm1 = saga.resource.Manager(url)</span>
+<span class="sd">          sr  = rm.create_storage(sd)</span>
+<span class="sd">          rm2 = sr.get_manager()</span>
+
+<span class="sd">          assert(rm1 == rm2)</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+                                       <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">storage_resource_get_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    
+    
+    <span class="c">######################################################################</span>
+    <span class="c">##</span></div>
+<div class="viewcode-block" id="Storage.get_description"><a class="viewcode-back" href="../../../../bliss/saga/resource/Storage.html#bliss.saga.resource.Storage.get_description">[docs]</a>    <span class="k">def</span> <span class="nf">get_description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+        <span class="sd">&#39;&#39;&#39;Return the associated resource description object.</span>
+
+<span class="sd">        The returned description describes the actual resource properties, and</span>
+<span class="sd">        may differ from the description submitted when creating the resource.</span>
+<span class="sd">        In particular, the returned description here describes the *actual*</span>
+<span class="sd">        resource properties, which may differ from the ones defined initially::</span>
+<span class="sd">        </span>
+<span class="sd">          # describe the resource requirements</span>
+<span class="sd">          sd = saga.resource.StorageDescription()</span>
+<span class="sd">          sd[&#39;Size&#39;] = 1024 # MB</span>
+
+<span class="sd">          # obtain a handle to a suitable resource, and inspect it</span>
+<span class="sd">          rm1 = saga.resource.Manager(url)</span>
+<span class="sd">          sr  = rm.create_compute(sd)</span>
+<span class="sd">          sd2 = sr.get_description</span>
+
+<span class="sd">          print   &quot; requested : %d   / allocated : %d&quot;    %  1024, sd2[&#39;Size&#39;]</span>
+<span class="sd">          # prints: requested : 1024 / allocated : 2048&quot;  %  1024, sd2[&#39;Size&#39;]</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+                                       <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+       
+        <span class="n">sd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">storage_resource_get_description</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">sd_copy</span> <span class="o">=</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">StorageDescription</span><span class="o">.</span><span class="n">_deep_copy</span><span class="p">(</span><span class="n">sd</span><span class="p">)</span> 
+        <span class="k">return</span> <span class="n">sd</span>
+    
+    <span class="c">######################################################################</span>
+    <span class="c">##</span></div>
+<div class="viewcode-block" id="Storage.destroy"><a class="viewcode-back" href="../../../../bliss/saga/resource/Storage.html#bliss.saga.resource.Storage.destroy">[docs]</a>    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Destroy (close) the resource.</span>
+<span class="sd">        </span>
+<span class="sd">        This method is *not* just a destructor for the SAGA-Python API object, but</span>
+<span class="sd">        rather signals the backend that the resource is not needed anymore, and</span>
+<span class="sd">        can be released.  All data on that resource will subsequently be purged,</span>
+<span class="sd">        and no new data transfer requests can be started for the resource after </span>
+<span class="sd">        calling destroy().</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+                                       <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">storage_resource_destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    
+    
+    <span class="c">######################################################################</span>
+    <span class="c">##</span></div>
+<div class="viewcode-block" id="Storage.wait"><a class="viewcode-back" href="../../../../bliss/saga/resource/Storage.html#bliss.saga.resource.Storage.wait">[docs]</a>    <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s">&quot;Final&quot;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Wait for the resource to reach a specific state.</span>
+
+<span class="sd">        As resources are stateful entities, and several actions (such as data</span>
+<span class="sd">        transfers) are only allowed in very specific states, the wait() routine</span>
+<span class="sd">        can be used to wait for the resource to reach a specific state.  By</span>
+<span class="sd">        default, wait() will block until the resource reaches a final state</span>
+<span class="sd">        (Destroyed, Expired or Failed), but the optional &#39;state&#39; parameter can</span>
+<span class="sd">        specify any other combination of states to wait for.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+                                       <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">storage_resource_wait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">##</span></div>
+<div class="viewcode-block" id="Storage.get_filesystem"><a class="viewcode-back" href="../../../../bliss/saga/resource/Storage.html#bliss.saga.resource.Storage.get_filesystem">[docs]</a>    <span class="k">def</span> <span class="nf">get_filesystem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+        <span class="sd">&#39;&#39;&#39;get access to the storage resource&#39;s file system.&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+              <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">storage_resource_get_filesystem</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> 
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">SAGA-Python 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
+    </div>
+  </body>
+</html>

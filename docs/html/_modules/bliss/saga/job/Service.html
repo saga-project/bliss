@@ -1,0 +1,295 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bliss.saga.job.Service &mdash; SAGA-Python 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="SAGA-Python 0.2.5 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">SAGA-Python 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for bliss.saga.job.Service</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4</span>
+
+<span class="n">__author__</span>    <span class="o">=</span> <span class="s">&quot;Ole Christian Weidner&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright 2012 Ole Christian Weidner&quot;</span>
+<span class="n">__license__</span>   <span class="o">=</span> <span class="s">&quot;MIT&quot;</span>
+
+<span class="kn">from</span> <span class="nn">bliss.saga</span> <span class="kn">import</span> <span class="n">Url</span>
+<span class="kn">from</span> <span class="nn">bliss.saga.resource</span> <span class="kn">import</span> <span class="n">Compute</span>
+<span class="kn">from</span> <span class="nn">bliss.saga.Object</span> <span class="kn">import</span> <span class="n">Object</span> 
+
+<span class="kn">import</span> <span class="nn">bliss.saga</span>
+
+<div class="viewcode-block" id="Service"><a class="viewcode-back" href="../../../../bliss/saga/job/Service.html#bliss.saga.job.Service">[docs]</a><span class="k">class</span> <span class="nc">Service</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Loosely represents a SAGA job service as defined in GFD.90</span>
+<span class="sd">    </span>
+<span class="sd">    A job.Service represents anything which accepts job creation requests, and</span>
+<span class="sd">    which manages thus created :class:`bliss.saga.job.Job` instances.  That can be a local shell, </span>
+<span class="sd">    a remote ssh shell, a cluster queuing system, a IaaS backend -- you name it.</span>
+
+<span class="sd">    The job.Service is identified by an URL, which usually points to the contact</span>
+<span class="sd">    endpoint for that service.</span>
+
+<span class="sd">    Example::</span>
+
+
+<span class="sd">        my_job_id = &quot;[fork://localhost]-[12345]&quot;</span>
+<span class="sd">        js  = saga.job.Service(&quot;fork://localhost&quot;)</span>
+<span class="sd">        ids = js.list()</span>
+
+<span class="sd">        if my_job_id in ids :</span>
+<span class="sd">          print &quot;found my job again, wohhooo!&quot;</span>
+
+<span class="sd">          j = js.get_job(my_job_id)</span>
+
+<span class="sd">          if   j.get_state() == saga.job.Job.Pending  : print &quot;pending&quot;</span>
+<span class="sd">          elif j.get_state() == saga.job.Job.Running  : print &quot;running&quot;</span>
+<span class="sd">          else                                        : print &quot;job is already final!&quot;</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Construct a new job service object</span>
+<span class="sd">           :param url: Url of the (remote) job manager.</span>
+<span class="sd">           :type  url: :class:`bliss.saga.Url` </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">Object</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_apitype</span> <span class="o">=</span> <span class="s">&#39;saga.job&#39;</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">Url</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="o">==</span> <span class="n">Url</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="o">==</span> <span class="n">Compute</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">_url</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">BadParameter</span><span class="p">,</span> 
+             <span class="s">&quot;A job.Service object must either be initialized with a URL or a resource.Compute object.&quot;</span><span class="p">)</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_from_compute</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compute_obj</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="o">=</span> <span class="n">Object</span><span class="o">.</span><span class="n">_get_plugin</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="c"># throws &#39;NoSuccess&#39; on error</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">register_service_object</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Bound to plugin </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="p">)))</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Service.from_url"><a class="viewcode-back" href="../../../../bliss/saga/job/Service.html#bliss.saga.job.Service.from_url">[docs]</a>    <span class="k">def</span> <span class="nf">from_url</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Initialize a new job service from (resource manager) URL.&#39;&#39;&#39;</span>
+        <span class="n">service</span> <span class="o">=</span> <span class="n">Service</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">)</span>
+        <span class="n">service</span><span class="o">.</span><span class="n">_from_compute</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="n">service</span>
+
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span></div>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Service.from_compute"><a class="viewcode-back" href="../../../../bliss/saga/job/Service.html#bliss.saga.job.Service.from_compute">[docs]</a>    <span class="k">def</span> <span class="nf">from_compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compute_obj</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Create a job service from a saga.resource.Compute object.&#39;&#39;&#39;</span>
+        
+        <span class="n">service</span> <span class="o">=</span> <span class="n">Service</span><span class="p">(</span><span class="n">compute_obj</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">)</span>
+        <span class="n">service</span><span class="o">.</span><span class="n">_from_compute</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">sservice</span><span class="o">.</span><span class="n">_compute_obj</span> <span class="o">=</span> <span class="n">compute_obj</span>
+        <span class="k">return</span> <span class="n">service</span>        
+
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span></div>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Delete the service object.&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;_plugin&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">unregister_service_object</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">pass</span> <span class="c"># can&#39;t throw here</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">##</span>
+<div class="viewcode-block" id="Service.create_job"><a class="viewcode-back" href="../../../../bliss/saga/job/Service.html#bliss.saga.job.Service.create_job">[docs]</a>    <span class="k">def</span> <span class="nf">create_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_description</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Create a new job object.</span>
+
+<span class="sd">           :param job_description: The description for the new job.</span>
+<span class="sd">           :type  job_description: :class:`bliss.saga.job.Description` </span>
+
+<span class="sd">           create_job() accepts a job description, which described the</span>
+<span class="sd">           application instance to be created by the backend.  The create_job()</span>
+<span class="sd">           method is not actually attempting to *run* the job, but merely parses</span>
+<span class="sd">           the job description for syntactic and semantic consistency.  The job</span>
+<span class="sd">           returned object is thus not in &#39;Pending&#39; or &#39;Running&#39;, but rather in</span>
+<span class="sd">           &#39;New&#39; state.  The actual submission is performed by calling run() on</span>
+<span class="sd">           the job object.  </span>
+
+<span class="sd">           Example::</span>
+
+<span class="sd">             js = saga.job.Service(&quot;fork://localhost&quot;)</span>
+<span class="sd">             jd = saga.job.Description ()</span>
+<span class="sd">             jd.executable = &#39;/bin/date&#39;</span>
+<span class="sd">             j  = js.create_job(jd)</span>
+
+<span class="sd">             if   j.get_state() == saga.job.Job.New      : print &quot;new&quot;</span>
+<span class="sd">             else                                        : print &quot;oops!&quot;</span>
+
+<span class="sd">             j.run()</span>
+
+<span class="sd">             if   j.get_state() == saga.job.Job.Pending  : print &quot;pending&quot;</span>
+<span class="sd">             elif j.get_state() == saga.job.Job.Running  : print &quot;running&quot;</span>
+<span class="sd">             else                                        : print &quot;oops!&quot;</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">job_description</span><span class="p">)</span> <span class="o">!=</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Description</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">BadParameter</span><span class="p">,</span> 
+                  <span class="s">&quot;create_job() expects job.Description as parameter.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+              <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">jd</span> <span class="o">=</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Description</span><span class="o">.</span><span class="n">_deep_copy</span><span class="p">(</span><span class="n">job_description</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">service_create_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">jd</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">##</span></div>
+<div class="viewcode-block" id="Service.get_job"><a class="viewcode-back" href="../../../../bliss/saga/job/Service.html#bliss.saga.job.Service.get_job">[docs]</a>    <span class="k">def</span> <span class="nf">get_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_id</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Return the job object for the given job id.</span>
+<span class="sd">           :param job_id: The job id.</span>
+
+<span class="sd">           Job objects are a local representation of a remote stateful entity.</span>
+<span class="sd">           The job.Service supports to reconnect to those remote entities::</span>
+
+
+<span class="sd">             js = saga.job.Service(&quot;fork://localhost&quot;)</span>
+<span class="sd">             j  = js.get_job(my_job_id)</span>
+
+<span class="sd">             if   j.get_state() == saga.job.Job.Pending  : print &quot;pending&quot;</span>
+<span class="sd">             elif j.get_state() == saga.job.Job.Running  : print &quot;running&quot;</span>
+<span class="sd">             else                                        : print &quot;job is already final!&quot;</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+              <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">service_get_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_id</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">##</span></div>
+<div class="viewcode-block" id="Service.list"><a class="viewcode-back" href="../../../../bliss/saga/job/Service.html#bliss.saga.job.Service.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;List all jobs managed by this service instance.</span>
+
+<span class="sd">           As the job.Service represents a job management backend, list() will</span>
+<span class="sd">           return a list of job IDs for all jobs which are known to the backend,</span>
+<span class="sd">           and which can potentially be accessed and managed by the application.</span>
+
+
+<span class="sd">           Example::</span>
+
+
+<span class="sd">             js  = saga.job.Service(&quot;fork://localhost&quot;)</span>
+<span class="sd">             ids = js.list()</span>
+
+<span class="sd">             if my_job_id in ids :</span>
+<span class="sd">               print &quot;found my job again, wohhooo!&quot;</span>
+
+<span class="sd">               j = js.get_job(my_job_id)</span>
+
+<span class="sd">               if   j.get_state() == saga.job.Job.Pending  : print &quot;pending&quot;</span>
+<span class="sd">               elif j.get_state() == saga.job.Job.Running  : print &quot;running&quot;</span>
+<span class="sd">               else                                        : print &quot;job is already final!&quot;</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span><span class="o">.</span><span class="n">service_list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Exception</span><span class="p">(</span><span class="n">bliss</span><span class="o">.</span><span class="n">saga</span><span class="o">.</span><span class="n">Error</span><span class="o">.</span><span class="n">NoSuccess</span><span class="p">,</span> 
+              <span class="s">&quot;Object not bound to a plugin&quot;</span><span class="p">)</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">SAGA-Python 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
+    </div>
+  </body>
+</html>

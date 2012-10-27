@@ -1,0 +1,192 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Error &mdash; SAGA-Python 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SAGA-Python 0.2.5 documentation" href="../../index.html" />
+    <link rel="next" title="Exception" href="Exception.html" />
+    <link rel="prev" title="Object" href="Object.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Exception.html" title="Exception"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Object.html" title="Object"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">SAGA-Python 0.2.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="error">
+<h1>Error<a class="headerlink" href="#error" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="bliss.saga.Error">
+<em class="property">class </em><tt class="descclassname">bliss.saga.</tt><tt class="descname">Error</tt><a class="reference internal" href="../../_modules/bliss/saga/Error.html#Error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.Error" title="Permalink to this definition">¶</a></dt>
+<dd><p>The SAGA error types.</p>
+<p>SAGA error types are used by the <a class="reference internal" href="Exception.html#bliss.saga.Exception" title="bliss.saga.Exception"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.Exception</span></tt></a> class to 
+indicate the type of error that has occured.</p>
+<dl class="attribute">
+<dt id="bliss.saga.Error.AlreadyExists">
+<tt class="descname">AlreadyExists</tt><em class="property"> = 'AlreadyExists'</em><a class="headerlink" href="#bliss.saga.Error.AlreadyExists" title="Permalink to this definition">¶</a></dt>
+<dd><p>The entity to be created already exists.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bliss.saga.Error.AuthenticationFailed">
+<tt class="descname">AuthenticationFailed</tt><em class="property"> = 'AuthenticationFailed'</em><a class="headerlink" href="#bliss.saga.Error.AuthenticationFailed" title="Permalink to this definition">¶</a></dt>
+<dd><p>The backend could not establish a valid identity.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bliss.saga.Error.AuthorizationFailed">
+<tt class="descname">AuthorizationFailed</tt><em class="property"> = 'AuthorizationFailed'</em><a class="headerlink" href="#bliss.saga.Error.AuthorizationFailed" title="Permalink to this definition">¶</a></dt>
+<dd><p>The used identity is not allowed to use the backend,</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bliss.saga.Error.BadParameter">
+<tt class="descname">BadParameter</tt><em class="property"> = 'BadParameter'</em><a class="headerlink" href="#bliss.saga.Error.BadParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A given parameter is out of bound or ill formatted.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bliss.saga.Error.DoesNotExist">
+<tt class="descname">DoesNotExist</tt><em class="property"> = 'DoesNotExist'</em><a class="headerlink" href="#bliss.saga.Error.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>An operation tried to access a non-existing entity.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bliss.saga.Error.IncorrectState">
+<tt class="descname">IncorrectState</tt><em class="property"> = 'IncorrectState'</em><a class="headerlink" href="#bliss.saga.Error.IncorrectState" title="Permalink to this definition">¶</a></dt>
+<dd><p>The operation is not allowed on the entity in its current state.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bliss.saga.Error.IncorrectURL">
+<tt class="descname">IncorrectURL</tt><em class="property"> = 'IncorrectURL'</em><a class="headerlink" href="#bliss.saga.Error.IncorrectURL" title="Permalink to this definition">¶</a></dt>
+<dd><p>The given URL could not be interpreted, for example due to an incorrect schema.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bliss.saga.Error.NoSuccess">
+<tt class="descname">NoSuccess</tt><em class="property"> = 'NoSuccess'</em><a class="headerlink" href="#bliss.saga.Error.NoSuccess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some other error occurred.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bliss.saga.Error.NotImplemented">
+<tt class="descname">NotImplemented</tt><em class="property"> = 'NotImplemented'</em><a class="headerlink" href="#bliss.saga.Error.NotImplemented" title="Permalink to this definition">¶</a></dt>
+<dd><p>SAGA-Python does not implement this method.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bliss.saga.Error.PermissionDenied">
+<tt class="descname">PermissionDenied</tt><em class="property"> = 'PermissionDenied'</em><a class="headerlink" href="#bliss.saga.Error.PermissionDenied" title="Permalink to this definition">¶</a></dt>
+<dd><p>The used identity is not permitted to perform the requested operation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bliss.saga.Error.Timeout">
+<tt class="descname">Timeout</tt><em class="property"> = 'Timeout'</em><a class="headerlink" href="#bliss.saga.Error.Timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>The interaction with the backend times out.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Object.html"
+                        title="previous chapter">Object</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Exception.html"
+                        title="next chapter">Exception</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/bliss/saga/Error.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Exception.html" title="Exception"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Object.html" title="Object"
+             >previous</a> |</li>
+        <li><a href="../../index.html">SAGA-Python 0.2.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,222 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bliss.saga.Session &mdash; SAGA-Python 0.2.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SAGA-Python 0.2.5 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SAGA-Python 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for bliss.saga.Session</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4</span>
+
+<span class="n">__author__</span>    <span class="o">=</span> <span class="s">&quot;Ole Christian Weidner&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright 2011, Ole Christian Weidner&quot;</span>
+<span class="n">__license__</span>   <span class="o">=</span> <span class="s">&quot;MIT&quot;</span>
+
+<span class="kn">from</span> <span class="nn">bliss.saga.Context</span> <span class="kn">import</span> <span class="n">Context</span>
+
+<div class="viewcode-block" id="Session"><a class="viewcode-back" href="../../../bliss/saga/Session.html#bliss.saga.Session">[docs]</a><span class="k">class</span> <span class="nc">Session</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Loosely defines a SAGA Session object as defined in GFD.90.</span>
+
+<span class="sd">    A SAGA-Python session has the purpose of scoping the use of security</span>
+<span class="sd">    credentials for remote operations.  In other words, a session instance acts</span>
+<span class="sd">    as a container for security :class:`bliss.saga.Context` instances --</span>
+<span class="sd">    SAGA-Python objects (such as :class:`bliss.saga.job.Service` or</span>
+<span class="sd">    :class:`bliss.saga.filesystem.File`) created in that session will then use</span>
+<span class="sd">    exactly the security contexts from that session (and no others).</span>
+
+<span class="sd">    That way, the session serves two purposes:  (1) it helps SAGA-Python to decide</span>
+<span class="sd">    which security mechanism should be used for what interaction, and (2) it</span>
+<span class="sd">    helps SAGA-Python to find security credentials which would be difficult to pick up</span>
+<span class="sd">    automatically.</span>
+<span class="sd">    </span>
+<span class="sd">    The use of a session is as follows:</span>
+
+
+<span class="sd">    Example::</span>
+
+
+<span class="sd">        # define an ssh context</span>
+<span class="sd">        c = saga.Context()</span>
+<span class="sd">        c.context_type = &#39;ssh&#39;</span>
+<span class="sd">        c.user_cert = &#39;$HOME/.ssh/special_id_rsa&#39;</span>
+<span class="sd">        c.user_key = &#39;$HOME/.ssh/special_id_rsa.pub&#39;</span>
+
+<span class="sd">        # add it to a session</span>
+<span class="sd">        s = saga.Session</span>
+<span class="sd">        s.add_context(c)</span>
+
+<span class="sd">        # create a job service in this session -- that job service can now</span>
+<span class="sd">        # *only* use that ssh context. </span>
+<span class="sd">        j = saga.job.Service(&#39;ssh://remote.host.net/&#39;, s)</span>
+
+
+<span class="sd">    The session argument to the :class:`bliss.saga.job.Service` constructor is fully optional --</span>
+<span class="sd">    if left out, SAGA-Python will use default session, which picks up some default</span>
+<span class="sd">    contexts as described above -- that will suffice for the majority of use</span>
+<span class="sd">    cases.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+
+    <span class="c">#__slots__ = {&#39;_contexts&#39;}</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Constructor.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_contexts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="sd">&#39;&#39;&#39;Authentication / security contexts registered with the Session.&#39;&#39;&#39;</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Destructor.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">pass</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;String represenation.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="s">&quot;Registered contexts: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">contexts</span><span class="p">))</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## Property: contexts</span>
+    <span class="k">def</span> <span class="nf">contexts</span><span class="p">():</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;Authentication contexts registered with the Session.</span>
+<span class="s">        </span>
+<span class="s">        This property exposes the list of context instances managed by this</span>
+<span class="s">        session.  </span>
+<span class="s">        </span>
+<span class="s">        As the contexts and the session are stateless, it is safe to modify this</span>
+<span class="s">        list as needed.  Any object created in a session will maintain a copy of</span>
+<span class="s">        the then-valid context list, and will not be affected by later updates</span>
+<span class="s">        to the session.</span>
+<span class="s">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">fget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contexts</span>
+        <span class="k">def</span> <span class="nf">fset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_contexts</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="c">#def fdel(self, val):</span>
+        <span class="c">#    self._contexts.remove(val)</span>
+        <span class="k">return</span> <span class="nb">locals</span><span class="p">()</span>
+    <span class="n">contexts</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="o">**</span><span class="n">contexts</span><span class="p">())</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span>
+<div class="viewcode-block" id="Session.add_context"><a class="viewcode-back" href="../../../bliss/saga/Session.html#bliss.saga.Session.add_context">[docs]</a>    <span class="k">def</span> <span class="nf">add_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;add a security :class:`bliss.saga.Context` to the session.</span>
+
+<span class="sd">           It is encouraged to use the :class:`bliss.saga.Session.contexts` property instead. </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_contexts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span></div>
+<div class="viewcode-block" id="Session.remove_context"><a class="viewcode-back" href="../../../bliss/saga/Session.html#bliss.saga.Session.remove_context">[docs]</a>    <span class="k">def</span> <span class="nf">remove_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;remove a security :class:`bliss.saga.Context` from the session.</span>
+
+<span class="sd">           It is encouraged to use the :class:`bliss.saga.Session.contexts` property instead.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_contexts</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+    <span class="c">######################################################################</span>
+    <span class="c">## </span></div>
+<div class="viewcode-block" id="Session.list_contexts"><a class="viewcode-back" href="../../../bliss/saga/Session.html#bliss.saga.Session.list_contexts">[docs]</a>    <span class="k">def</span> <span class="nf">list_contexts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;retrieve all :class:`bliss.saga.Context` objects attached to the session.</span>
+
+
+<span class="sd">           It is encouraged to use the :class:`bliss.saga.Session.contexts` property instead.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contexts</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SAGA-Python 0.2.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The SAGA Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
+    </div>
+  </body>
+</html>
