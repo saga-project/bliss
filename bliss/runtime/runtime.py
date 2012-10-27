@@ -18,7 +18,7 @@ def _dyn_import(name):
 
 
 class Runtime:
-    '''Implements the Bliss runtime system'''
+    '''Implements the SAGA-Python runtime system'''
 
 
     def __init__(self):
@@ -57,7 +57,7 @@ class Runtime:
 
         address=str(hex(id(self)))
         self.logger = logging.getLogger('bliss.'+self.__class__.__name__)#+'('+address+')') 
-        self.logger.debug("BLISS runtime instance created at %s" % address)
+        self.logger.debug("SAGA-Python runtime instance created at %s" % address)
         self.plugin_class_list = {}
         self.plugin_instance_list = {}
         

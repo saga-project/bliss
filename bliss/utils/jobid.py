@@ -18,7 +18,7 @@ class JobID(object):
        manager (:class:`bliss.saga.job.Service`) who 'owns' the job, and 'native-id' is the job
        id as issued and understood by that job manager.
 
-       Bliss exposes those components of the job ID in this class, which allows
+       SAGA-Python exposes those components of the job ID in this class, which allows
        to create new IDs and to parse / split existing IDs.
 
        Example::

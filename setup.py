@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Bliss setup script.
+SAGA-Python setup script.
 """
 
 import os
@@ -19,7 +19,7 @@ scripts = [] # ["bin/bliss-run"]
 
 import sys
 if sys.hexversion < 0x02040000:
-    raise RuntimeError, "Bliss requires Python 2.4 or higher"
+    raise RuntimeError, "SAGA-Python requires Python 2.4 or higher"
 
 class our_install_data(install_data):
 
@@ -48,7 +48,7 @@ setup_args = {
     'name': "bliss",
     'version': version,
     'description': "A native Python implementation of the OGF SAGA standard (GFD.90).",
-    'long_description': "Bliss (BLiss IS Saga) is a pragmatic and light-weight implementation of the OGF GFD.90 SAGA standard. Bliss is written 100% in Python and focuses on usability and ease of deployment rather than on feature completeness or strict standard obedience.",
+    'long_description': "SAGA-Python is a pragmatic and light-weight implementation of the OGF GFD.90 SAGA standard. SAGA-Python is written 100% in Python and focuses on usability and ease of deployment rather than on feature completeness or strict standard obedience.",
     'author': "Ole Christian Weidner, et al.",
     'author_email': "ole.weidner@me.com",
     'maintainer': "Ole Christian Weidner",

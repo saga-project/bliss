@@ -11,15 +11,16 @@ from bliss.saga.Context import Context
 class Session(object):
     '''Loosely defines a SAGA Session object as defined in GFD.90.
 
-    A Bliss session has the purpose of scoping the use of security credentials
-    for remote operations.  In other words, a session instance acts as
-    a container for security :class:`bliss.saga.Context` instances -- Bliss objects (such as
-    :class:`bliss.saga.job.Service` or :class:`bliss.saga.filesystem.File`) created in that session will then use
+    A SAGA-Python session has the purpose of scoping the use of security
+    credentials for remote operations.  In other words, a session instance acts
+    as a container for security :class:`bliss.saga.Context` instances --
+    SAGA-Python objects (such as :class:`bliss.saga.job.Service` or
+    :class:`bliss.saga.filesystem.File`) created in that session will then use
     exactly the security contexts from that session (and no others).
 
-    That way, the session serves two purposes:  (1) it helps Bliss to decide
+    That way, the session serves two purposes:  (1) it helps SAGA-Python to decide
     which security mechanism should be used for what interaction, and (2) it
-    helps Bliss to find security credentials which would be difficult to pick up
+    helps SAGA-Python to find security credentials which would be difficult to pick up
     automatically.
     
     The use of a session is as follows:
@@ -44,7 +45,7 @@ class Session(object):
 
 
     The session argument to the :class:`bliss.saga.job.Service` constructor is fully optional --
-    if left out, Bliss will use default session, which picks up some default
+    if left out, SAGA-Python will use default session, which picks up some default
     contexts as described above -- that will suffice for the majority of use
     cases.
 
@@ -103,7 +104,7 @@ class Session(object):
     def add_context(self, context):
         '''add a security :class:`bliss.saga.Context` to the session.
 
-           It is encouraged to use the :class:`bliss.saga.contexts` property instead. 
+           It is encouraged to use the :class:`bliss.saga.Session.contexts` property instead. 
         '''
         self._contexts.append(context)
 
@@ -112,7 +113,7 @@ class Session(object):
     def remove_context(self, context):
         '''remove a security :class:`bliss.saga.Context` from the session.
 
-           It is encouraged to use the :class:`bliss.saga.contexts` property instead.
+           It is encouraged to use the :class:`bliss.saga.Session.contexts` property instead.
         '''
         self._contexts.remove(context)
 
@@ -122,7 +123,7 @@ class Session(object):
         '''retrieve all :class:`bliss.saga.Context` objects attached to the session.
 
 
-           It is encouraged to use the :class:`bliss.saga.contexts` property instead.
+           It is encouraged to use the :class:`bliss.saga.Session.contexts` property instead.
         '''
         return self._contexts
 

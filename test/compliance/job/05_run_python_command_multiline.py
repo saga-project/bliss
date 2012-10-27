@@ -29,7 +29,7 @@ def run(url, username, queue, project):
         jd.wall_time_limit = 5 # minutes
  
         # environment, executable & arguments
-        jd.environment = {'MYOUTPUT':'"Hello from Bliss"'}       
+        jd.environment = {'MYOUTPUT':'"Hello from SAGA-Python"'}       
         jd.executable  = 'python'
         jd.arguments   = ['-c',
 
@@ -97,7 +97,7 @@ print sys.version
       print "(1) Login to %s                             " % (url)
       print "(2) Make sure the file bliss_job.05.stdout exists"
       print "(3) Make sure bliss_job.05.stdout contains:"
-      print "  Hello from Bliss" 
+      print "  Hello from SAGA-Python" 
       print "  <Python interpreter version information>"
       print ""
       print "If (1)-(3) are ok, this test can be considered as PASSED\n"

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Compute &mdash; Bliss 0.2.5 documentation</title>
+    <title>Compute &mdash; SAGA-Python 0.2.5 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="Bliss 0.2.5 documentation" href="../../../index.html" />
+    <link rel="top" title="SAGA-Python 0.2.5 documentation" href="../../../index.html" />
     <link rel="next" title="StorageDescription" href="StorageDescription.html" />
     <link rel="prev" title="ComputeDescription" href="ComputeDescription.html" /> 
   </head>
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="ComputeDescription.html" title="ComputeDescription"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li> 
+        <li><a href="../../../index.html">SAGA-Python 0.2.5 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -78,7 +78,7 @@ a <a class="reference internal" href="ComputeDescription.html#bliss.saga.resourc
 <dt id="bliss.saga.resource.Compute.destroy">
 <tt class="descname">destroy</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/resource/Compute.html#Compute.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Compute.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Destroy (close) the resource.</p>
-<p>This method is <em>not</em> just a destructor for the Bliss API object, but
+<p>This method is <em>not</em> just a destructor for the SAGA-Python API object, but
 rather signals the backend that the resource is not needed anymore, and
 can be released.  All jobs on that resource will subsequently be killed,
 and no new job requests can be scheduled for the resource after calling 
@@ -164,9 +164,9 @@ job requests are queued until the resource becomes Active.</p>
 <dt id="bliss.saga.resource.Compute.get_state_detail">
 <tt class="descname">get_state_detail</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/bliss/saga/resource/Compute.html#Compute.get_state_detail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bliss.saga.resource.Compute.get_state_detail" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the state detail of the resource.</p>
-<p>As for every stateful Bliss object, the state detail informs about the
+<p>As for every stateful SAGA-Python object, the state detail informs about the
 actual native backend state, which may be finer grained than the SAGA
-state model used by Bliss.</p>
+state model used by SAGA-Python.</p>
 </dd></dl>
 
 <dl class="method">
@@ -234,7 +234,7 @@ specify any other combination of states to wait for.</p>
         <li class="right" >
           <a href="ComputeDescription.html" title="ComputeDescription"
              >previous</a> |</li>
-        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li> 
+        <li><a href="../../../index.html">SAGA-Python 0.2.5 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

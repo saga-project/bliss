@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Context &mdash; Bliss 0.2.5 documentation</title>
+    <title>Context &mdash; SAGA-Python 0.2.5 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Bliss 0.2.5 documentation" href="../../index.html" />
+    <link rel="top" title="SAGA-Python 0.2.5 documentation" href="../../index.html" />
     <link rel="next" title="Session" href="Session.html" />
     <link rel="prev" title="Exception" href="Exception.html" /> 
   </head>
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="Exception.html" title="Exception"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li> 
+        <li><a href="../../index.html">SAGA-Python 0.2.5 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -65,8 +65,8 @@ understand that, in general, a context really just <em>describes</em> a token, b
 that a context <em>is not</em> a token (*). For example, a context may point to
 a X509 certificate &#8211; but it will in general not hold the certificate
 contents.</p>
-<p>Context classes are used to inform the backends used by Bliss on what
-security tokens are expected to be used.  By default, Bliss will be able to
+<p>Context classes are used to inform the backends used by SAGA-Python on what
+security tokens are expected to be used.  By default, SAGA-Python will be able to
 pick up such tokens from their default location, but in some cases it might
 be necessary to explicitly point to them - then use a <a class="reference internal" href="Session.html#bliss.saga.Session" title="bliss.saga.Session"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.Session</span></tt></a> with
 context instances to do so.</p>
@@ -86,8 +86,9 @@ context instances to do so.</p>
 <span class="n">j</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s">&#39;ssh://remote.host.net/&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The <a class="reference internal" href="Session.html#bliss.saga.Session" title="bliss.saga.Session"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.Session</span></tt></a> argument to the <a class="reference internal" href="job/Service.html#bliss.saga.job.Service" title="bliss.saga.job.Service"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.job.Service</span></tt></a> constructor is fully optional
-&#8211; if left out, Bliss will use default session, which picks up some default
+<p>The <a class="reference internal" href="Session.html#bliss.saga.Session" title="bliss.saga.Session"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.Session</span></tt></a> argument to the
+<a class="reference internal" href="job/Service.html#bliss.saga.job.Service" title="bliss.saga.job.Service"><tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.job.Service</span></tt></a> constructor is fully optional &#8211; if left
+out, SAGA-Python will use default session, which picks up some default
 contexts as described above &#8211; that will suffice for the majority of use
 cases.</p>
 <p>(*) The only exception to this rule is the &#8216;UserPass&#8217; key, which is used to
@@ -231,7 +232,7 @@ plain text passwords in source code!</p>
         <li class="right" >
           <a href="Exception.html" title="Exception"
              >previous</a> |</li>
-        <li><a href="../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li> 
+        <li><a href="../../index.html">SAGA-Python 0.2.5 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

@@ -30,7 +30,7 @@ def run(url, workingdir, username, queue, project):
     
         # environment, executable & arguments
         jd.working_directory = workingdir
-        jd.environment = {'MYOUTPUT':'"Hello from Bliss"'}       
+        jd.environment = {'MYOUTPUT':'"Hello from SAGA-Python"'}       
         jd.executable  = '/bin/echo'
         jd.arguments   = ['$MYOUTPUT']
 
@@ -90,7 +90,7 @@ def run(url, workingdir, username, queue, project):
       print "                                            "
       print "(1) Login to %s                             " % (url)
       print "(2) Make sure the %s/file bliss_job.07.stdout exists" % (workingdir)
-      print "(3) Make sure %s/bliss_job.01.stdout contains the string 'Hello from Bliss'" % (workingdir)
+      print "(3) Make sure %s/bliss_job.01.stdout contains the string 'Hello from SAGA-Python'" % (workingdir)
       print ""
       print "If (1)-(3) are ok, this test can be considered as PASSED\n"
 

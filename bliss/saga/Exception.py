@@ -20,7 +20,7 @@ def _get_exception_traceback():
 
 class Exception(Exception):
     """ The Exception class encapsulates information about error conditions
-        encountered in SAGA/Bliss.
+        encountered in SAGA-Python.
 
         Additionally to the error message (e.message), the exception also provides
         a trace to the code location where the error condition got raised

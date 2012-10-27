@@ -15,14 +15,15 @@ class Manager(Object):
     ''' The resource manager class, as the name suggests, manages resource
     instances.  It may be responsible for managing the lifetime of such
     instances 
-    ( :class:`bliss.saga.create<create_compute>` 
-    / :class:`bliss.saga.destroy<destroy_compute>`
-    / :class:`bliss.saga.get<get_compute>`
+    ( :func:`bliss.saga.resource.Manager.create_compute` 
+    / :func:`bliss.saga.resource.Manager.destroy_compute`
+    / :func:`bliss.saga.resource.Manager.get_compute`
     ), and for inspecting them
-    ( :class:`bliss.saga.list<list_compute_resources>`
-    / :class:`bliss.saga.list_templates<list_compute_templates>`
-    / :class:`bliss.saga.get_template_details<get_template_details>`
-    ) [method links are for compute resources]::
+    ( :func:`bliss.saga.resource.Manager.list_compute_resources`
+    / :func:`bliss.saga.resource.Manager.list_compute_templates`
+    / :func:`bliss.saga.resource.Manager.get_template_details`
+    ) [method links are for compute resources, but the same holds for data
+    resources]::
 
       # obtain a handle to a suitable resource, and wait until it is active
       rm = saga.resource.Manager(url)

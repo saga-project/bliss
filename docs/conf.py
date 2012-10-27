@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Bliss documentation build configuration file, created by
+# SAGA-Python documentation build configuration file, created by
 # sphinx-quickstart on Sat Sep  8 19:59:04 2012.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -47,7 +47,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Bliss'
+project = u'SAGA-Python'
 copyright = u'2012, The SAGA Project'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -171,7 +171,7 @@ html_theme = 'default'
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'Blissdoc'
+htmlhelp_basename = 'saga-python-doc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -190,7 +190,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'Bliss.tex', u'Bliss Documentation', u'The SAGA Project', 'manual'),
+  ('index', 'saga-python.tex', u'SAGA-Python Documentation', u'The SAGA Project', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -219,7 +219,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'bliss', u'Bliss Documentation', [u'The SAGA Project'], 1)
+    ('index', 'saga-python', u'SAGA-Python Documentation', [u'The SAGA Project'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -232,8 +232,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'Bliss', u'Bliss Documentation', u'The SAGA Project', 'Bliss', 
-    'project description', 'Miscellaneous'),
+  ('index', 'saga-python', u'SAGA-Python Documentation', u'The SAGA Project',
+    'SAGA-Python', 'project description', 'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.

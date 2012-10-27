@@ -8,13 +8,13 @@ __license__   = "MIT"
 import logging
 
 def get_logger(): 
-    """Return the Bliss logging handler.
+    """Return the SAGA-Python logging handler.
     """
     l = logging.getLogger("bliss") 
     return l 
 
 def log_to_file(filename, level=logging.DEBUG): 
-    """Send Bliss logs to a logfile.
+    """Send SAGA-Python logs to a logfile.
     """ 
     l = logging.getLogger("bliss") 
     if len(l.handlers) > 0: 

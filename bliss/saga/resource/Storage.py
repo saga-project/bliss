@@ -68,9 +68,9 @@ class Storage(Object):
     def get_state_detail(self):
         '''Return the state detail of the resource.
         
-        As for every stateful Bliss object, the state detail informs about the
+        As for every stateful SAGA-Python object, the state detail informs about the
         actual native backend state, which may be finer grained than the SAGA
-        state model used by Bliss.
+        state model used by SAGA-Python.
         '''
         if self._plugin is None:
             raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
@@ -167,7 +167,7 @@ class Storage(Object):
     def destroy(self):
         '''Destroy (close) the resource.
         
-        This method is *not* just a destructor for the Bliss API object, but
+        This method is *not* just a destructor for the SAGA-Python API object, but
         rather signals the backend that the resource is not needed anymore, and
         can be released.  All data on that resource will subsequently be purged,
         and no new data transfer requests can be started for the resource after 

@@ -117,7 +117,7 @@ class Object(object) :
     def get_session(self):
         '''return the object's session.
  
-           It is encouraged to use the :attribute:`session` property instead.
+           It is encouraged to use the :func:`bliss.saga.Object.session` property instead.
         '''
         return self.session
 

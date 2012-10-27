@@ -48,7 +48,7 @@ class Job(Object, AttributeInterface):
     Running  = "saga.job.Job.Running"  
     '''Indicates that the job is executing
 
-    Note that Bliss does not expose the 'Suspended' state -- Suspended jobs will
+    Note that SAGA-Python does not expose the 'Suspended' state -- Suspended jobs will
     be reported as 'Running'.
     '''
 
@@ -123,19 +123,19 @@ class Job(Object, AttributeInterface):
     ######################################################################
     ##
     #def get_stderr(self):
-    #    '''**Not Implemented:** Bliss does not support I/O streaming.  Please use
+    #    '''**Not Implemented:** SAGA-Python does not support I/O streaming.  Please use
     #       file staging to retrieve stdout and stderr files.
     #    '''
     #    raise bliss.saga.Exception(bliss.saga.Error.NotImplemented, 
-    #      "Bliss doesn't suppport get_stderr()")
+    #      "SAGA-Python doesn't suppport get_stderr()")
 
     ######################################################################
     ##
     #def get_stdout(self):
-    #    '''**Not Implemented:** Bliss does not support I/O streaming.
+    #    '''**Not Implemented:** SAGA-Python does not support I/O streaming.
     #    '''
     #    raise bliss.saga.Exception(bliss.saga.Error.NotImplemented, 
-    #      "Bliss doesn't suppport get_stdout()")
+    #      "SAGA-Python doesn't suppport get_stdout()")
 
     ######################################################################
     ##
@@ -414,7 +414,7 @@ class Job(Object, AttributeInterface):
     ## Property: 
     ServiceURL = property (doc = '''
     ServiceURL:
-    The URL of the :class:`bliss.saga.Service` instance managing this job.
+    The URL of the :class:`bliss.saga.job.Service` instance managing this job.
 
     This attribute is represents the URL under where the job management
     service can be contacted which owns the job.  The value is equivalent to

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Manager &mdash; Bliss 0.2.5 documentation</title>
+    <title>Manager &mdash; SAGA-Python 0.2.5 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="Bliss 0.2.5 documentation" href="../../../index.html" />
+    <link rel="top" title="SAGA-Python 0.2.5 documentation" href="../../../index.html" />
     <link rel="next" title="State" href="State.html" />
     <link rel="prev" title="Resource Management Overview" href="__init__.html" /> 
   </head>
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="__init__.html" title="Resource Management Overview"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li> 
+        <li><a href="../../../index.html">SAGA-Python 0.2.5 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -62,14 +62,15 @@
 <dd><p>The resource manager class, as the name suggests, manages resource
 instances.  It may be responsible for managing the lifetime of such
 instances 
-( <tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.create</span></tt> 
-/ <tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.destroy</span></tt>
-/ <tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.get</span></tt>
+( <a class="reference internal" href="#bliss.saga.resource.Manager.create_compute" title="bliss.saga.resource.Manager.create_compute"><tt class="xref py py-func docutils literal"><span class="pre">bliss.saga.resource.Manager.create_compute()</span></tt></a> 
+/ <a class="reference internal" href="#bliss.saga.resource.Manager.destroy_compute" title="bliss.saga.resource.Manager.destroy_compute"><tt class="xref py py-func docutils literal"><span class="pre">bliss.saga.resource.Manager.destroy_compute()</span></tt></a>
+/ <a class="reference internal" href="#bliss.saga.resource.Manager.get_compute" title="bliss.saga.resource.Manager.get_compute"><tt class="xref py py-func docutils literal"><span class="pre">bliss.saga.resource.Manager.get_compute()</span></tt></a>
 ), and for inspecting them
-( <tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.list</span></tt>
-/ <tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.list_templates</span></tt>
-/ <tt class="xref py py-class docutils literal"><span class="pre">bliss.saga.get_template_details</span></tt>
-) [method links are for compute resources]:</p>
+( <a class="reference internal" href="#bliss.saga.resource.Manager.list_compute_resources" title="bliss.saga.resource.Manager.list_compute_resources"><tt class="xref py py-func docutils literal"><span class="pre">bliss.saga.resource.Manager.list_compute_resources()</span></tt></a>
+/ <a class="reference internal" href="#bliss.saga.resource.Manager.list_compute_templates" title="bliss.saga.resource.Manager.list_compute_templates"><tt class="xref py py-func docutils literal"><span class="pre">bliss.saga.resource.Manager.list_compute_templates()</span></tt></a>
+/ <a class="reference internal" href="#bliss.saga.resource.Manager.get_template_details" title="bliss.saga.resource.Manager.get_template_details"><tt class="xref py py-func docutils literal"><span class="pre">bliss.saga.resource.Manager.get_template_details()</span></tt></a>
+) [method links are for compute resources, but the same holds for data
+resources]:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># obtain a handle to a suitable resource, and wait until it is active</span>
 <span class="n">rm</span> <span class="o">=</span> <span class="n">saga</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">Manager</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 <span class="n">cr</span> <span class="o">=</span> <span class="n">rm</span><span class="o">.</span><span class="n">create_compute</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span>
@@ -206,7 +207,7 @@ resource description details, see</p>
         <li class="right" >
           <a href="__init__.html" title="Resource Management Overview"
              >previous</a> |</li>
-        <li><a href="../../../index.html">Bliss 0.2.5 documentation</a> &raquo;</li> 
+        <li><a href="../../../index.html">SAGA-Python 0.2.5 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

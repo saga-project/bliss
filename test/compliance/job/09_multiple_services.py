@@ -31,7 +31,7 @@ def run(url1, url2, username, queue, project):
         jd.wall_time_limit = 2 # minutes
     
         # environment, executable & arguments
-        jd.environment = {'MYOUTPUT':'"Hello from Bliss"'}       
+        jd.environment = {'MYOUTPUT':'"Hello from SAGA-Python"'}       
         jd.executable  = '/bin/echo'
         jd.arguments   = ['$MYOUTPUT']
 

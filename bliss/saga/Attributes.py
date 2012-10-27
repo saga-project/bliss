@@ -1751,7 +1751,7 @@ class AttributeInterface (_AttributesBase) :
         """
         set_vector_attribute (key, val)
 
-        See also: :func:`set_attribute` (key, val).
+        See also: :func:`bliss.saga.AttributeInterface.set_attribute` (key, val).
 
         As python can handle scalar and vector types transparently, this method
         is in fact not very useful.  For that reason, it maps internally to the
@@ -1768,7 +1768,7 @@ class AttributeInterface (_AttributesBase) :
         """
         get_vector_attribute (key)
 
-        See also: :func:`get_attribute` (key).
+        See also: :func:`bliss.saga.AttributeInterface.get_attribute` (key).
 
         As python can handle scalar and vector types transparently, this method
         is in fact not very useful.  For that reason, it maps internally to the
@@ -1787,7 +1787,8 @@ class AttributeInterface (_AttributesBase) :
 
         Removing an attribute is actually different from unsetting it, or from
         setting it to 'None'.  On remove, all traces of the attribute are
-        purged, and the key will not be listed on :func:`list_attributes` () anymore.
+        purged, and the key will not be listed on 
+        :func:`bliss.saga.AttributeInterface.list_attributes` () anymore.
         """
 
         key    = self._attributes_t_keycheck   (key)
@@ -2035,7 +2036,7 @@ class AttributeInterface (_AttributesBase) :
 
     ####################################
     def iterkeys (self) :
-        """ see :func:`list_attributes` () for details. """
+        """ see :func:`bliss.saga.AttributeInterface.list_attributes` () for details. """
         
         return self._attributes_i_list ()
 

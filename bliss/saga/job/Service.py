@@ -106,7 +106,7 @@ class Service(Object):
         '''Create a new job object.
 
            :param job_description: The description for the new job.
-           :type  job_description: :class:`bliss.saga.Description` 
+           :type  job_description: :class:`bliss.saga.job.Description` 
 
            create_job() accepts a job description, which described the
            application instance to be created by the backend.  The create_job()

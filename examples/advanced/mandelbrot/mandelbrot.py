@@ -5,9 +5,9 @@
 """ A Simple Mandelbrot Fractal Generator.
 
     We use this example to explore the distributed capabilites of
-    the SAGA Job and Filesystem APIs in Bliss. The mandelbrot module
-    calculates a full or partial (tile) mandelbrot set fractal and
-    writes it to a PNG image file.
+    the SAGA Job and Filesystem APIs in SAGA-Python. The
+    mandelbrot module calculates a full or partial (tile)
+    mandelbrot set fractal and writes it to a PNG image file.
 
     It requires the Python Image Library (PIL) which can be easily
     installed with 'easy_install PIL'.

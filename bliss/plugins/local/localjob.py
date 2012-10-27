@@ -101,7 +101,7 @@ class LocalJobPlugin(JobPluginInterface):
     def sanity_check(self):
         '''Implements interface from _PluginBase'''
         ## Step 3: Implement sanity_check. This method is called *once* on
-        ##         Bliss startup. Here you should check if everything this 
+        ##         SAGA-Python startup. Here you should check if everything this 
         ##         adaptor needs is available, e.g., certain command line tools,
         ##         python modules and so on.
         ##         

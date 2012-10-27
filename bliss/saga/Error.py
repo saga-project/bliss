@@ -50,4 +50,4 @@ class Error:
     ''' Some other error occurred. '''
 
     NotImplemented       = 'NotImplemented'
-    ''' Bliss does not implement this method. '''
+    ''' SAGA-Python does not implement this method. '''
