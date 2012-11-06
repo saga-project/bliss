@@ -1,3 +1,9 @@
+Version 0.2.7 released 2012-11-09
+----------------------------------------------------------------------
+
+* Fixed errors related to pbs://localhost and sge://localhost
+  URLs that were caused by a bug in the command-line wrappers.
+
 Version 0.2.6 released 2012-10-25
 ----------------------------------------------------------------------
 
