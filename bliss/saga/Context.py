@@ -5,7 +5,9 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-import logging
+# fancy new logging stuff
+from bliss.utils.logging_v2.logger import getLogger as getBlissLogger
+
 import os.path
 
 from bliss.saga.Object import Object 
@@ -101,7 +103,7 @@ class Context(AttributeInterface, Object):
         self._register_rw_attribute(name="UserProxy", 
                                     accessor=self.__class__.userproxy)  
 
-        self.__logger = logging.getLogger('bliss.'+self.__class__.__name__)
+        self.__logger = getBlissLogger(self.__class__.__name__)
 
 
     ######################################################################

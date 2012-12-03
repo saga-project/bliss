@@ -4,7 +4,9 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-import logging
+# fancy new logging stuff
+from bliss.utils.logging_v2.logger import getLogger as getBlissLogger
+
 import bliss.saga
 import bliss.runtime
 
@@ -61,7 +63,7 @@ class Object(object) :
             self.__shared_state["runtime_initialized"] = True
 
         self._plugin = None
-        self._logger = logging.getLogger('bliss.'+self.__class__.__name__)
+        self._logger = getBlissLogger(self.__class__.__name__)
  
         if session is not None:
             self._session = session

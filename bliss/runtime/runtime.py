@@ -9,6 +9,9 @@ import os
 import logging
 import bliss.plugins.registry
 
+# fancy new logging stuff
+from bliss.utils.logging_v2.logger import getLogger as getBlissLogger
+
 def _dyn_import(name):
     mod = __import__(name)
     components = name.split('.')
@@ -47,16 +50,19 @@ class Runtime:
 
         ## set up the bliss base logger
         ##
-        log = logging.getLogger('bliss')
-        log.setLevel(self.loglevel)
-        formatter = logging.Formatter(fmt='%(asctime)s %(name)s: [%(levelname)s] %(message)s', 
-                                      datefmt='%m/%d/%Y %I:%M:%S %p')
-        handler = logging.StreamHandler()
-        handler.setFormatter(formatter)
-        log.addHandler(handler)
+        #log = logging.getBlissLogger('bliss')
+        #log.setLevel(self.loglevel)
+        #formatter = logging.Formatter(fmt='%(asctime)s %(name)s: [%(levelname)s] %(message)s', 
+        #                              datefmt='%m/%d/%Y %I:%M:%S %p')
+        #handler = logging.StreamHandler()
+        #handler.setFormatter(formatter)
+        #log.addHandler(handler)
 
         address=str(hex(id(self)))
-        self.logger = logging.getLogger('bliss.'+self.__class__.__name__)#+'('+address+')') 
+
+        self.logger = getBlissLogger(self.__class__.__name__)
+
+        #self.logger = logging.getLogger('bliss.'+self.__class__.__name__)#+'('+address+')') 
         self.logger.debug("BLISS runtime instance created at %s" % address)
         self.plugin_class_list = {}
         self.plugin_instance_list = {}

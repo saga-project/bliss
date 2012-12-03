@@ -5,6 +5,8 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2012, Ole Christian Weidner"
 __license__   = "MIT"
 
+from logging import DEBUG
+
 import logging
 
 def get_logger(): 
@@ -13,7 +15,7 @@ def get_logger():
     l = logging.getLogger("bliss") 
     return l 
 
-def log_to_file(filename, level=logging.DEBUG): 
+def log_to_file(filename, level=DEBUG): 
     """Send Bliss logs to a logfile.
     """ 
     l = logging.getLogger("bliss") 

@@ -92,6 +92,7 @@ setup_args = {
         #"bliss.sagacompat.job",
         #"bliss.sagacompat.filesystem",
         "bliss.utils",
+        "bliss.utils.logging_v2",
         "bliss.runtime",
         "bliss.interface",
         "bliss.plugins",
@@ -125,7 +126,7 @@ except ImportError:
     pass
 else:
     setup_args['install_requires'] = [
-        'paramiko-on-pypi', 'pexpect'
+        'paramiko-on-pypi', 'colorama', 'pexpect'
     ]
     
 

@@ -5,7 +5,9 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-import logging
+# fancy new logging stuff
+from bliss.utils.logging_v2.logger import getLogger as getBlissLogger
+
 from bliss.utils import tback
 from bliss.saga.Exception import Exception as SAGAException
 
@@ -24,7 +26,7 @@ class PluginBaseInterface:
         self.supported_apis = []
         self.supported_apis.append(api)
 
-        self.__logger = logging.getLogger('bliss.'+self.__class__.__name__)
+        self.__logger = getBlissLogger(self.__class__.__name__)
 
     def get_logger(self):
         '''Return the logger object'''

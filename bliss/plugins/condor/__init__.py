@@ -6,4 +6,4 @@ __author__    = "Ole Christian Weidner"
 __copyright__ = "Copyright 2011-2012, Ole Christian Weidner"
 __license__   = "MIT"
 
-from bliss.plugins.pbs.pbsshjob import PBSJobPlugin
+from bliss.plugins.condor.condorjob import CondorJobPlugin

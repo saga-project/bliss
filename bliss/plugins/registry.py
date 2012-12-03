@@ -12,4 +12,5 @@ _registry.append({"module"   : "bliss.plugins.ssh.job",         "class" : "SSHJo
 _registry.append({"module"   : "bliss.plugins.sftp.sftpfile",   "class" : "SFTPFilesystemPlugin"})
 _registry.append({"module"   : "bliss.plugins.sge.sgesshjob",   "class" : "SGEJobPlugin"})
 _registry.append({"module"   : "bliss.plugins.pbs.pbsshjob",    "class" : "PBSJobPlugin"})
+_registry.append({"module"   : "bliss.plugins.condor.condorjob","class" : "CondorJobPlugin"})
 
