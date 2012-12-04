@@ -20,7 +20,7 @@ class BookKeeper:
     
     ######################################################################
     ## 
-    def add_service_object(self, service_obj cdr_obj):
+    def add_service_object(self, service_obj, cdr_obj):
         '''Describe me'''
         service_key = service_obj._id()  
         self.objects[service_key] = {

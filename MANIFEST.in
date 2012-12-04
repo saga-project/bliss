@@ -18,6 +18,7 @@ include bliss/plugins/sge/*.py
 include bliss/plugins/pbs/*.py
 include bliss/plugins/local/*.py
 include bliss/plugins/ssh/*.py
+include bliss/plugins/condor/*.py
 
 include MANIFEST.in README.md LICENSE.md CHANGES.md
 

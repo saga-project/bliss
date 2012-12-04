@@ -27,7 +27,7 @@ class CondorJobPlugin(JobPluginInterface):
 
     ## Define supported url schemas
     ## 
-    _schemas = ['condor']
+    _schemas = ['condor', 'condor+ssh']
 
     ## Define apis supported by this adaptor
     ##
