@@ -54,6 +54,7 @@ class CondorJobPlugin(JobPluginInterface):
         '''Implements interface from _JobPluginBase'''
         cdr_obj = CondorService(self, service_obj)
         self.bookkeeper.add_service_object(service_obj, cdr_obj)
+
         self.log_info("Registered new service object %s" \
           % (repr(service_obj))) 
 

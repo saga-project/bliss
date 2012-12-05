@@ -130,6 +130,7 @@ class Description(Object, AttributeInterface):
         jd_copy._number_of_processes = jd._number_of_processes
         jd_copy._spmd_variation      = jd._spmd_variation
         jd_copy._queue               = jd._queue
+        jd_copy._candidate_hosts     = jd._candidate_hosts
 
         return jd_copy
 
@@ -159,7 +160,7 @@ class Description(Object, AttributeInterface):
         self._number_of_processes = None
         self._spmd_variation      = None
         self._queue               = None
-
+        self._candidate_hosts     = None
 
         # register properties with the attribute interface
         self._register_rw_attribute(name="Executable", 
@@ -193,6 +194,9 @@ class Description(Object, AttributeInterface):
                                         accessor=self.__class__.file_transfer) 
         self._register_rw_vec_attribute(name="Environment", 
                                         accessor=self.__class__.environment) 
+        self._register_rw_vec_attribute(name="CandidateHosts", 
+                                        accessor=self.__class__.candidate_hosts) 
+
 
     ######################################################################
     ## 
@@ -310,6 +314,27 @@ class Description(Object, AttributeInterface):
     B{Example}::
       jd = saga.job.Description()
       jd.arguments = ["--prefix", "/usr/local/bin"]
+
+    """
+
+    ######################################################################
+    ## Property: 
+    def candidate_hosts():
+        doc = "Defines the hosts this job can run on."
+        def fget(self):
+            return self._candidate_hosts
+        def fset(self, val):
+            self._candidate_hosts = val
+        def fdel(self, val):
+            self._candidate_hosts = None
+        return locals()
+    candidate_hosts = property(**candidate_hosts())
+    """
+    Defines the hosts this job can run on.
+
+    B{Example}::
+      jd = saga.job.Description()
+      jd.candidate_hosts = ["UFlorida-SSERC", "BNL_ATLAS_2"]
 
     """
 

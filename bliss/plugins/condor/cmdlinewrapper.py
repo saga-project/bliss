@@ -154,11 +154,6 @@ class CondorService:
             return True
         else:
             return False
- 
-    ######################################################################
-    ##
-    def _check_context(self): 
-        '''sets self._cw to a usable access configuration or throws'''
         
     ######################################################################
     ##
@@ -167,7 +162,7 @@ class CondorService:
         
         ################################################################# 
         ## ...:// URL
-        if self._url.scheme in ["pbs", "torque", "xt5torque"]:
+        if self._url.scheme in ["condor"]:
             self._use_ssh = False
             try:
                 ## EXECUTE SHELL COMMAND
@@ -175,12 +170,12 @@ class CondorService:
                 cw.connect()
                 self._cw = cw
             except CommandWrapperException, ex:
-                self._pi.log_error("Problem creating local PBS command wrapper for %s: %s." \
+                self._pi.log_error("Problem creating local Condor command wrapper for %s: %s." \
                     % (self._url, ex))
 
         ################################################################# 
         ## ...+SSH:// URL
-        elif self._url.scheme in ["pbs+ssh", "torque+ssh", "xt5torque+ssh"]:
+        elif self._url.scheme in ["condor+ssh"]:
             # first, we construct a list of possible SSH login credentials
             credentials = list()
             # we start with the contexts:
@@ -225,7 +220,7 @@ class CondorService:
           
         ################################################################# 
         ## ...+GSISSH:// URL
-        elif self._url.scheme in ["pbs+gsissh", "torque+gsissh", "xt5torque+gsissh"]:
+        elif self._url.scheme in ["condor+gsissh"]:
             # first, we construct a list of possible SSH login credentials
             credentials = list()
             # we start with the contexts:
@@ -275,17 +270,17 @@ class CondorService:
                 "Couldn't find a way to access %s" % (self._url))
         else:
             # now let's see if we can find PBS
-            result = self._cw.run("which pbsnodes")# --version")
+            result = self._cw.run("which condor_submit")# --version")
             if result.returncode != 0:
                  self._pi.log_error_and_raise(bliss.saga.Error.NoSuccess, 
-                  "Couldn't find PBS command line tools: %s" % (result.stderr))
+                  "Couldn't find Condor command line tools: %s" % (result.stderr))
             else:
-                self._pi.log_debug("Found PBS command line tools: %s" \
-                                   % (result.stdout.replace('/pbsnodes', '')))
+                self._pi.log_debug("Found Condor command line tools: %s" \
+                                   % (result.stdout))
                    
-            si = self.get_service_info()
-            if si.GlueHostArchitectureSMPSize != None:
-                self._ppn = si.GlueHostArchitectureSMPSize
+            #si = self.get_service_info()
+            #if si.GlueHostArchitectureSMPSize != None:
+            #    self._ppn = si.GlueHostArchitectureSMPSize
           
 
     ######################################################################
@@ -472,66 +467,76 @@ class CondorService:
 
     ######################################################################
     ##
-    def _pbscript_generator(self, jd):
-        '''Generates a PBS script from a SAGA job description.
+    def _condor_script_generator(self, jd, service_url):
+        '''Generates a Condor script from a SAGA job description.
         '''
-        pbs_params = str()
-        exec_n_args = str()
+        condor_file = str()
 
+        ##### OPTIONS PASSED VIA JOB SERVICE URL #####
+        ##
+        if service_url.query is not None:
+            from bliss.utils.configfile import ConfigQuery
+            condor_file += "\n##### DEFAULT OPTIONS AND OPTIONS PASSED VIA JOB SERVICE URL #####\n##"
+            # special treatment for universe - defaults to 'vanilla'
+            if 'universe' not in ConfigQuery(service_url.query).as_dict():
+                condor_file += "\nuniverse = vanilla"
+            for (key, value) in ConfigQuery(service_url.query).as_dict().iteritems():
+                condor_file += "\n%s = %s" % (key, value)
+
+
+        ##### OPTIONS PASSED VIA JOB DESCRIPTION #####
+        ##
+        condor_file += "\n\n##### OPTIONS PASSED VIA JOB SERVICE URL #####\n##"
+        requirements = "requirements = "
+
+        # executable -> executable
         if jd.executable is not None:
-            exec_n_args += "%s " % (jd.executable) 
+            condor_file += "\nexecutable = %s" % jd.executable
+
+        # arguments -> arguments
+        arguments = "arguments = "
         if jd.arguments is not None:
             for arg in jd.arguments:
-                exec_n_args += "%s " % (arg)
+                arguments += "%s " % (arg)
+        condor_file += "\n%s" % arguments
 
-        if jd.name is not None:
-            pbs_params += "#PBS -N %s \n" % jd.name
-        else:
-            pbs_params += "#PBS -N %s \n" % "bliss_job"
- 
-        pbs_params += "#PBS -V     \n"
+        # output -> output
+        if jd.output is not None:
+            condor_file += "\noutput = %s " % jd.output
 
+        # error -> error
+        if jd.error is not None:
+            condor_file += "\nerror = %s " % jd.error 
+
+
+        # environment -> environment
+        environment = "environment = "
         if jd.environment is not None:
             variable_list = str()
             for key in jd.environment.keys(): 
-                variable_list += "%s=%s," % (key, jd.environment[key])
-            pbs_params += "#PBS -v %s \n" % variable_list
+                variable_list += "%s=%s;" % (key, jd.environment[key])
+            environment += "%s " % variable_list
+        condor_file += "\n%s" % environment
 
-        if jd.working_directory is not None:
-            pbs_params += "#PBS -d %s \n" % jd.working_directory 
-        if jd.output is not None:
-            pbs_params += "#PBS -o %s \n" % jd.output
-        if jd.error is not None:
-            pbs_params += "#PBS -e %s \n" % jd.error 
-        if jd.wall_time_limit is not None:
-            hours = jd.wall_time_limit/60
-            minutes = jd.wall_time_limit%60
-            pbs_params += "#PBS -l walltime=%s:%s:00 \n" % (str(hours), str(minutes))
-        if jd.queue is not None:
-            pbs_params += "#PBS -q %s \n" % jd.queue
+        # project -> +ProjectName
         if jd.project is not None:
-            pbs_params += "#PBS -A %s \n" % str(jd.project)
-        if jd.contact is not None:
-            pbs_params += "#PBS -m abe \n"
-       
-        if self._url.scheme in ["xt5torque", "xt5torque+ssh", 'xt5torque+gsissh']:
-            # Special case for TORQUE on Cray XT5s
-            self._pi.log_info("Using Cray XT5 spepcific modifications, i.e., -l size=xx instead of -l nodes=x:ppn=yy ")
-            if jd.total_cpu_count is not None:
-                pbs_params += "#PBS -l size=%s" % jd.total_cpu_count
-        else:
-            # Default case (non-XT5)
-            if jd.total_cpu_count is not None:
-                tcc = int(jd.total_cpu_count)
-                tbd = float(tcc)/float(self._ppn)
-                if float(tbd) > int(tbd):
-                    pbs_params += "#PBS -l nodes=%s:ppn=%s" % (str(int(tbd)+1), self._ppn)
-                else:
-                    pbs_params += "#PBS -l nodes=%s:ppn=%s" % (str(int(tbd)), self._ppn)
+            condor_file += "\n+ProjectName = \"%s\"" % str(jd.project)
 
-        pbscript = "\n#!/bin/bash \n%s \n%s" % (pbs_params, exec_n_args)
-        self._pi.log_debug("Generated PBS script: %s" % (pbscript))
-        return pbscript
+        # candidate hosts -> SiteList + requirements
+        if jd.candidate_hosts is not None:
+            hosts = ""
+            for host in jd.candidate_hosts:
+                hosts += "%s, " % host
+            sitelist = "+SiteList = \"%s\"" % hosts
+            requirements += "(stringListMember(GLIDEIN_ResourceName,SiteList) == True)"
+
+        condor_file += "\n%s" % sitelist
+        condor_file += "\n%s" % requirements
+
+        condor_file += "\n\nqueue"
+
+        self._pi.log_debug("Generated Condor script: %s" % (condor_file))
+        return condor_file
 
 
     ######################################################################
@@ -542,12 +547,12 @@ class CondorService:
         if self._cw == None:
             self._check_context()
 
-        script = self._pbscript_generator(job.get_description())
+        script = self._condor_script_generator(job.get_description(), self._url)
 
-        # filter the script - esapce problematic characters
-        #scprpt = script.replace("'", "\'")
-        #script = script.replace("\"", "\\\"")
-        result = self._cw.run("echo \'%s\' | qsub" % (script))
+        result = self._cw.run("echo \'%s\' | condor_submit -" % (script))
+
+        import sys
+        sys.exit(-1)
 
         if result.returncode != 0:
             raise Exception("Error running 'qsub': %s. Script was: %s" % (result.stdout, script))
