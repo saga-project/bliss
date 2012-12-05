@@ -33,25 +33,17 @@ def condor_to_saga_jobstate(cdrjs):
     # 4   Completed   C
     # 5   Held    H
     # 6   Submission_err  E
-
-    if cdrjs == 'C':
-        return bliss.saga.job.Job.Done
-    elif cdrjs == 'E':
+   
+    if int(cdrjs) == 1:
+        return bliss.saga.job.Job.Pending
+    elif int(cdrjs) == 2:
         return bliss.saga.job.Job.Running
-    elif cdrjs == 'H':
-        return bliss.saga.job.Job.Pending
-    elif cdrjs == 'Q':
-        return bliss.saga.job.Job.Pending
-    elif cdrjs == 'R':
-        return bliss.saga.job.Job.Running 
-    elif cdrjs == 'T': 
-        return bliss.saga.job.Job.Running 
-    elif cdrjs == 'W':
-        return bliss.saga.job.Job.Pending
-    elif cdrjs == 'S':
-        return bliss.saga.job.Job.Pending
-    elif cdrjs == 'X':
+    elif int(cdrjs) == 3:
         return bliss.saga.job.Job.Canceled
+    elif int(cdrjs) == 4:
+        return bliss.saga.job.Job.Done
+    elif int(cdrjs) == 5:
+        return bliss.saga.job.Job.Pending
     else:
         return bliss.saga.job.Job.Unknown
 
@@ -62,59 +54,41 @@ class CondorJobInfo(object):
     '''Encapsulates infos about a Condor job 
     '''
 
-    def __init__(self, qstat_f_output, plugin):
+    def __init__(self, condor_q, plugin):
         '''Constructor: initialize from qstat -f <jobid> string.
         '''
-        
+    
         #plugin.log_debug("Got raw qstat output: %s" % qstat_f_output)
-        if len(qstat_f_output) > 0:
+        if len(condor_q) > 0:
             try:
-                lines = qstat_f_output.split("\n")
-                self._jobid = lines[0].split(":")[1].strip()
+                for line in condor_q.split("\n"):
+                    if 'JobStatus' in line:
+                        self._job_state = line.split(" = ")[1].strip()
+                    elif 'ClusterId' in line:
+                        self._jobid = line.split(" = ")[1].strip()
+                    elif 'ExitStatus' in line:
+                        self._job_exitcode = line.split(" = ")[1].strip()
+
             except Exception, ex:
                 raise Exception("Couldn't parse %s: %s" \
-                  % (qstat_f_output, ex))
-
-            for line in lines[1:]:
-                try: 
-                    (key, value) = line.split(" = ")
-                    key = "_%s" % key.strip()
-                    self.__dict__[key] = value
-                except Exception, ex:
-                    pass
-            #plugin.log_debug("Parsed qstat output: %s" % str(self.__dict__))
+                  % (condor_q, ex))
 
 
     @property 
     def state(self):
-        return cdr_to_saga_jobstate(self._job_state)
+        return condor_to_saga_jobstate(self._job_state)
 
     @property 
     def jobid(self):
         return self._jobid
 
-    @property 
-    def walltime_limit(self):
-        return self._Resource_List.walltime
-
-    @property 
-    def output_path(self):
-        return self._Output_Path
-
-    @property 
-    def error_path(self):
-        return self._Error_Path
-
-    @property 
-    def queue(self):
-        return self._queue
+    #@property 
+    #def gridresource(self):
+    #    return self._job_gridres.walltime
 
     @property 
     def exitcode(self):
-        if '_exit_status' in self.__dict__:
-            return self._exit_status
-        else:
-            return None
+        return self._job_exitcode
 
 
 ################################################################################
@@ -387,7 +361,7 @@ class CondorService:
             if self._known_jobs_is_final(native_id):
                 return self._known_jobs[native_id]
 
-        result = self._cw.run("condor_q -long -format '%%1d' JobStatus %s" % (native_id))
+        result = self._cw.run("condor_q -long %s" % (native_id))
         if result.returncode != 0:
             if self._known_jobs_exists(native_id):
                 ## if the job is on record but can't be reached anymore,
@@ -395,7 +369,7 @@ class CondorService:
                 ## kicked out qstat. in that case we just set it's state 
                 ## to done.
                 jobinfo = self._known_jobs[native_id]
-                jobinfo._job_state = 'C' # PBS 'Complete'
+                jobinfo._job_state = 4 # Condor 'Complete'
                 return jobinfo
             else:
                 ## something went wrong.
@@ -433,7 +407,7 @@ class CondorService:
                 ## kicked out qstat. in that case we just set it's state 
                 ## to done.
                 jobinfo = self._known_jobs[saga_jobid.native_id]
-                jobinfo._job_state = 'C' # PBS 'Complete'
+                jobinfo._job_state = 4 # Condor 'Complete'
                 return jobinfo
             else:
                 ## something went wrong.
@@ -567,19 +541,17 @@ class CondorService:
         if result.returncode != 0:
             raise Exception("Error running 'condor_submit': %s. Script was: %s" % (result.stdout, script))
         else:
-            #print result.stdout
-
             ji = CondorJobInfo("", self._pi)
             for line in result.stdout.split("\n"):
                 if "** Proc" in line:
-                    #print line.split()[2][:-1]
                     ji._jobid = line.split()[2][:-1]
+                elif "JobStatus" in line:
+                    ji._job_state = line.split(" = ")[1].strip()
 
-            ji._job_state = "R"
             self._known_jobs_update(ji.jobid, ji)
 
             jobinfo = self.get_jobinfo(bliss.utils.jobid.JobID(self._url, 
-                                       ji._job_state))
+                                       ji._jobid))
             return jobinfo
 
     ######################################################################
@@ -597,5 +569,5 @@ class CondorService:
         else:
             jobinfo = self.get_jobinfo(saga_jobid)
             if jobinfo.state == bliss.saga.job.Job.Done:
-                self.get_jobinfo(saga_jobid)._job_state = 'X' # pseudo-PBS 'Canceled'
+                self.get_jobinfo(saga_jobid)._job_state = 3 # Condor 'Canceled'
             #return jobinfo

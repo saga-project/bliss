@@ -185,8 +185,8 @@ class CondorJobPlugin(JobPluginInterface):
             sagajobid = bliss.utils.jobid.JobID(service._url, jobinfo.jobid)
             self.bookkeeper.add_job_object(job, service, sagajobid)
 
-            self.log_info("Started local process: %s %s" \
-              % (job.get_description().executable, job.get_description().arguments))
+            self.log_info("Successful launched Condor job: %s %s on %s" \
+              % (job.get_description().executable, job.get_description().arguments, service._url))
         except Exception, ex:
             self.log_error_and_raise(bliss.saga.Error.NoSuccess, 
               "Couldn't run job because: %s " % (str(ex)))
