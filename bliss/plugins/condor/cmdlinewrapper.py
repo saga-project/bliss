@@ -21,6 +21,19 @@ from bliss.utils.jobid import JobID
 
 def condor_to_saga_jobstate(cdrjs):
     '''translates a condor one-letter state to saga'''
+
+    # From: http://pages.cs.wisc.edu/~adesmet/status.html
+    # 
+    # JobStatus in job ClassAds
+    # 
+    # 0   Unexpanded  U
+    # 1   Idle    I
+    # 2   Running R
+    # 3   Removed X
+    # 4   Completed   C
+    # 5   Held    H
+    # 6   Submission_err  E
+
     if cdrjs == 'C':
         return bliss.saga.job.Job.Done
     elif cdrjs == 'E':
@@ -352,7 +365,7 @@ class CondorService:
     ######################################################################
     ##
     def get_jobinfo(self, saga_jobid):
-        '''Returns a running PBS job as saga object'''
+        '''Returns a running Condor job as saga object'''
         if self._cw == None:
             self._check_context()
 
@@ -374,7 +387,7 @@ class CondorService:
             if self._known_jobs_is_final(native_id):
                 return self._known_jobs[native_id]
 
-        result = self._cw.run("qstat -f1 %s" % (native_id))
+        result = self._cw.run("condor_q -long -format '%%1d' JobStatus %s" % (native_id))
         if result.returncode != 0:
             if self._known_jobs_exists(native_id):
                 ## if the job is on record but can't be reached anymore,
@@ -386,9 +399,9 @@ class CondorService:
                 return jobinfo
             else:
                 ## something went wrong.
-                raise Exception("Error running 'qstat': %s" % result.stderr)
+                raise Exception("Error running 'condor_q': %s" % result.stderr)
 
-        jobinfo = PBSJobInfo(result.stdout, self._pi)
+        jobinfo = CondorJobInfo(result.stdout, self._pi)
         self._known_jobs_update(jobinfo.jobid, jobinfo)
 
         return jobinfo
@@ -551,23 +564,22 @@ class CondorService:
 
         result = self._cw.run("echo \'%s\' | condor_submit -" % (script))
 
-        import sys
-        sys.exit(-1)
-
         if result.returncode != 0:
-            raise Exception("Error running 'qsub': %s. Script was: %s" % (result.stdout, script))
+            raise Exception("Error running 'condor_submit': %s. Script was: %s" % (result.stdout, script))
         else:
-            #depending on the PBS configuration, the job can already 
-            #have disappeared from the queue at this point. that's why
-            #we create a dummy job info here
-            ji = PBSJobInfo("", self._pi)
-            ji._jobid = result.stdout.split("\n")[-1]
+            #print result.stdout
+
+            ji = CondorJobInfo("", self._pi)
+            for line in result.stdout.split("\n"):
+                if "** Proc" in line:
+                    #print line.split()[2][:-1]
+                    ji._jobid = line.split()[2][:-1]
 
             ji._job_state = "R"
             self._known_jobs_update(ji.jobid, ji)
 
             jobinfo = self.get_jobinfo(bliss.utils.jobid.JobID(self._url, 
-              result.stdout.split("\n")[-1]))
+                                       ji._job_state))
             return jobinfo
 
     ######################################################################

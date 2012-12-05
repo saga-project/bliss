@@ -28,9 +28,9 @@ def main():
         jd = saga.job.Description()
 
         # environment, executable & arguments
-        jd.environment = {'WHAAAT':'Whaaaaaaaaaat'}       
+        jd.environment = {'foo':'bar'}       
         jd.executable  = '/bin/echo'
-        jd.arguments   = ['$WHAAT']
+        jd.arguments   = ['Hello World']
 
         # output options
         jd.output = "bliss_condor_job.stdout"
