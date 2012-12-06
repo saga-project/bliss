@@ -12,8 +12,10 @@ import string
 import getpass
 import subprocess
 import bliss.saga
+import os.path
 
 from bliss.utils.command_wrapper import CommandWrapper, CommandWrapperException
+from bliss.utils.job.transfer_directives import TransferDirectives
 from bliss.utils.jobid import JobID
 
 ################################################################################
@@ -33,8 +35,10 @@ def condor_to_saga_jobstate(cdrjs):
     # 4   Completed   C
     # 5   Held    H
     # 6   Submission_err  E
-   
-    if int(cdrjs) == 1:
+
+    if int(cdrjs) == 0:
+        return bliss.saga.job.Job.Pending   
+    elif int(cdrjs) == 1:
         return bliss.saga.job.Job.Pending
     elif int(cdrjs) == 2:
         return bliss.saga.job.Job.Running
@@ -44,6 +48,8 @@ def condor_to_saga_jobstate(cdrjs):
         return bliss.saga.job.Job.Done
     elif int(cdrjs) == 5:
         return bliss.saga.job.Job.Pending
+    elif int(cdrjs) == 6:
+        return bliss.saga.job.Job.Failed
     else:
         return bliss.saga.job.Job.Unknown
 
@@ -57,22 +63,21 @@ class CondorJobInfo(object):
     def __init__(self, condor_q, plugin):
         '''Constructor: initialize from qstat -f <jobid> string.
         '''
-    
-        #plugin.log_debug("Got raw qstat output: %s" % qstat_f_output)
-        if len(condor_q) > 0:
+
+        ## There is data for this job! 
+        if len(condor_q) > 1000:
             try:
                 for line in condor_q.split("\n"):
-                    if 'JobStatus' in line:
-                        self._job_state = line.split(" = ")[1].strip()
+                    if "JobStatus" in line and "LastJobStatus" not in line:
+                        self._job_state = line.split("=")[1].strip()
                     elif 'ClusterId' in line:
-                        self._jobid = line.split(" = ")[1].strip()
+                        self._jobid = line.split("=")[1].strip()
                     elif 'ExitStatus' in line:
-                        self._job_exitcode = line.split(" = ")[1].strip()
+                        self._job_exitcode = line.split("=")[1].strip()
 
             except Exception, ex:
                 raise Exception("Couldn't parse %s: %s" \
                   % (condor_q, ex))
-
 
     @property 
     def state(self):
@@ -269,50 +274,6 @@ class CondorService:
             #if si.GlueHostArchitectureSMPSize != None:
             #    self._ppn = si.GlueHostArchitectureSMPSize
           
-
-    ######################################################################
-    ##
-    def get_service_info(self):
-        '''Returns a single saga.job service description'''
-        ## EXECUTE SHELL COMMAND
-        if self._cw == None:
-            self._check_context()
-        
-        if self._service_info == None:
-            # initial creation
-            self._pi.log_info("Service info cache empty. Updating local service info.")
-            
-            qstat_result = self._cw.run("qstat -a")
-            if qstat_result.returncode != 0:
-                raise Exception("Error running 'qstat': %s" % qstat_result.stdout)
-            
-            pbsnodes_result = self._cw.run("pbsnodes")
-            if pbsnodes_result.returncode != 0:
-                raise Exception("Error running 'pbsnodes': %s" % pbsnodes_result.stdout)
-
-            self._service_info = PBSServiceInfo(qstat_result.stdout,
-                                                pbsnodes_result.stdout, self._pi)
-            self._service_info_last_update = time.time()
-
-        else: 
-            if self._service_info_last_update+15.0 < time.time():
-                # older than 15 seconds. update.
-                self._pi.log_info("15s service info cache expired. Updating local service info.")
-                ## EXECUTE SHELL COMMAND
-                qstat_result = self._cw.run("qstat_result -a")
-                if qstat_result.returncode != 0:
-                    raise Exception("Error running 'qstat': %s" % qstat_result.stderr)
-                ## EXECUTE SHELL COMMAND
-                pbsnodes_result = self._cw.run("pbsnodes")
-                if pbsnodes_result.returncode != 0:
-                    raise Exception("Error running 'pbsnodes': %s" % pbsnodes_result.stderr)
-
-                self._service_info = PBSServiceInfo(qstat_result.stdout,
-                                                    pbsnodes_result.stdout, self._pi)
-                self._service_info_last_update = time.time()
-            else:
-                self._pi.log_info("15s cache not expired yet. Using local service info.")
-        
         return self._service_info
 
     ######################################################################
@@ -362,6 +323,7 @@ class CondorService:
                 return self._known_jobs[native_id]
 
         result = self._cw.run("condor_q -long %s" % (native_id))
+        time.sleep(1)
         if result.returncode != 0:
             if self._known_jobs_exists(native_id):
                 ## if the job is on record but can't be reached anymore,
@@ -375,56 +337,19 @@ class CondorService:
                 ## something went wrong.
                 raise Exception("Error running 'condor_q': %s" % result.stderr)
 
-        jobinfo = CondorJobInfo(result.stdout, self._pi)
-        self._known_jobs_update(jobinfo.jobid, jobinfo)
-
-        return jobinfo
-
-
-    ######################################################################
-    ##
-    def get_jobinfo_bulk(self, saga_jobids):
-
-        '''Returns a running PBS job as saga object'''
-        if self._cw == None:
-            self._check_context()
-
-        jobinfos = list()
-        nativeids = str()
-        # pre-filter finished jobs
-        for jobid in saga_jobids:
-            if self._known_jobs_exists(jobid.native_id):
-                if self._known_jobs_is_final(jobid.native_id):
-                    jobinfos.append(self._known_jobs[jobid.native_id])
+        elif (result.returncode == 0 and len(result.stdout) < 1000): # yes, this is bad!
+                jobinfo = self._known_jobs[native_id]
+                if jobinfo.state == bliss.saga.job.Job.Running:
+                    # previous state was running. so we are most def. DONE
+                    jobinfo._job_state = 4 # Condor 'Complete'
                 else:
-                    nativeids += ("%s " % (jobid.native_id))
-        # run bulk qstat
-        result = self._cw.run("qstat -f1 %s" % nativeids)
-        if result.returncode != 0:
-            if self._known_jobs_exists(saga_jobid.native_id):
-                ## if the job is on record but can't be reached anymore,
-                ## this probablty means that it has finished and already
-                ## kicked out qstat. in that case we just set it's state 
-                ## to done.
-                jobinfo = self._known_jobs[saga_jobid.native_id]
-                jobinfo._job_state = 4 # Condor 'Complete'
+                    jobinfo._job_state = 6 # Condor 'Failed'
                 return jobinfo
-            else:
-                ## something went wrong.
-                raise Exception("Error running %s: %s" \
-                  % (result.executable, result.stderr))
-        # create JobInfo objects
-        for result in result.stdout.split('\n\n'):
-            if result.find("Unable to copy") != -1:
-                # error that pops up sometimes. Ignore
-                pass
-            else:
-                jobinfo = PBSJobInfo(result, self._pi)
-                self._known_jobs_update(jobinfo.jobid, jobinfo)
-                jobinfos.append(jobinfo)
 
-        return jobinfos
-
+        jobinfo = CondorJobInfo(result.stdout, self._pi)
+        jobinfo._jobid = native_id
+        self._known_jobs_update(jobinfo.jobid, jobinfo)
+        return jobinfo
 
     ######################################################################
     ##
@@ -487,6 +412,51 @@ class CondorService:
                 arguments += "%s " % (arg)
         condor_file += "\n%s" % arguments
 
+        # file_transfer -> transfer_input_files
+        if jd.file_transfer is not None:
+            td = TransferDirectives(jd.file_transfer)
+
+            if len(td.in_append_dict) > 0:
+                raise Exception('FileTransfer append syntax (>>) not supported by Condor: %s' % td.in_append_dict)
+            if len(td.out_append_dict) > 0:
+                raise Exception('FileTransfer append syntax (<<) not supported by Condor: %s' % td.out_append_dict)
+            
+            if len(td.in_overwrite_dict) > 0:
+                transfer_input_files = "transfer_input_files = "
+                for (source, target) in td.in_overwrite_dict.iteritems():
+                    # make sure source is file an not dir
+                    (s_path, s_entry) = os.path.split(source)
+                    if len(s_entry) < 1:
+                        raise Exception('Condor accepts only files (not directories) as FileTransfer sources: %s' % source)
+                    # make sure target is just a file 
+                    (t_path, t_entry) = os.path.split(target)
+                    if len(t_path) > 1:
+                        raise Exception('Condor accepts only filenames (without paths) as FileTransfer targets: %s' % target)
+                    # make sure source and target file are the same
+                    if s_entry != t_entry:
+                        raise Exception('For Condor source file name and target file name have to be identical: %s != %s' % (s_entry, t_entry))
+                    # entry ok - add to job script
+                    transfer_input_files += "%s, " % source
+                condor_file += "\n%s" % transfer_input_files
+
+            if len(td.out_overwrite_dict) > 0:
+                transfer_output_files = "transfer_output_files = "
+                for (source, target) in td.out_overwrite_dict.iteritems():
+                    # make sure source is file an not dir
+                    (s_path, s_entry) = os.path.split(source)
+                    if len(s_entry) < 1:
+                        raise Exception('Condor accepts only files (not directories) as FileTransfer sources: %s' % source)
+                    # make sure target is just a file 
+                    (t_path, t_entry) = os.path.split(target)
+                    if len(t_path) > 1:
+                        raise Exception('Condor accepts only filenames (without paths) as FileTransfer targets: %s' % target)
+                    # make sure source and target file are the same
+                    if s_entry != t_entry:
+                        raise Exception('For Condor source file name and target file name have to be identical: %s != %s' % (s_entry, t_entry))
+                    # entry ok - add to job script
+                    transfer_output_files += "%s, " % source
+                condor_file += "\n%s" % transfer_output_files
+
         # output -> output
         if jd.output is not None:
             condor_file += "\noutput = %s " % jd.output
@@ -494,7 +464,6 @@ class CondorService:
         # error -> error
         if jd.error is not None:
             condor_file += "\nerror = %s " % jd.error 
-
 
         # environment -> environment
         environment = "environment = "

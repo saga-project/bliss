@@ -19,48 +19,51 @@ __license__   = "MIT"
 import sys, time
 import bliss.saga as saga
 
+BASEPATH = "/home/oweidner/ExTENCI/condor/irods_bowtie/"
+
 def main():
     
     try:
+        # add extra Condor options as URL query parameters
         js = saga.job.Service("condor+ssh://gw68.quarry.iu.teragrid.org?WhenToTransferOutput=ON_EXIT&should_transfer_files=YES&notification=Always")
 
         # describe our job
         jd = saga.job.Description()
 
-        # environment, executable & arguments
-        jd.environment = {'foo':'bar'}       
-        jd.executable  = '/bin/echo'
-        jd.arguments   = ['Hello World']
+        # job executable
+        jd.executable  = '%s/bowtie2-wrapper.sh' % BASEPATH
 
         # output options
-        jd.output = "bliss_condor_job.stdout"
-        jd.error  = "bliss_condor_job.stderr"
+        jd.output = "%s/irods_bowtie.stdout" % BASEPATH
+        jd.error  = "irods_bowtie.stderr"
 
+        # define allocation (Condor : +Project)
         jd.project = 'TG-MCB090174'
         jd.candidate_hosts = ['UFlorida-SSERC', 'BNL_ATLAS_2', 'UFlorida-SSERC', 
           'BNL_ATLAS_2', 'FNAL_FERMIGRID', 'SPRACE', 'NYSGRID_CORNELL_NYS1', 
           'Purdue-Steele', 'MIT_CMS_CE2', 'UTA_SWT2', 'SWT2_CPB', 'AGLT2_CE_2', 
           'USCMS-FNAL-WC1-CE3']
 
-        # create the job (state: New)
+        # pre-stage executables (Condor: transfer_input_files)
+        jd.file_transfer = ['%s/bowtie2 > bowtie2' % BASEPATH, 
+                            '%s/bowtie2-align > bowtie2-align' % BASEPATH]
+
         myjob = js.create_job(jd)
 
         print "Job ID    : %s" % (myjob.jobid)
         print "Job State : %s" % (myjob.get_state())
 
         print "\n...starting job...\n"
-        # run the job (submit the job via SSH)
         myjob.run()
 
-        #print "Job ID    : %s" % (myjob.jobid)
-        #print "Job State : %s" % (myjob.get_state())
+        print "Job ID    : %s" % (myjob.jobid)
+        print "Job State : %s" % (myjob.get_state())
 
-        #print "\n...waiting for job...\n"
-        # wait for the job to either finish or fail
-        #myjob.wait()
+        print "\n...waiting for job...\n"
+        myjob.wait()
 
-        #print "Job State : %s" % (myjob.get_state())
-        #print "Exitcode  : %s" % (myjob.exitcode)
+        print "Job State : %s" % (myjob.get_state())
+        print "Exitcode  : %s" % (myjob.exitcode)
 
     except saga.Exception, ex:
         print "An error occured during job execution: %s" % (str(ex))
