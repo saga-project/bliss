@@ -17,7 +17,9 @@ from bliss import version
 
 scripts = [] # ["bin/bliss-run"]
 
-import sys
+class PrerequisiteError(Exception):
+    pass
+
 if sys.hexversion < 0x02050000:
     raise PrerequisiteError("Python 2.5 or higher required for SAGA")
 
@@ -164,6 +166,4 @@ else:
 #f.write(s)
 #f.close()
 
-class PrerequisiteError(Exception):
-    pass
 setup(**setup_args)
