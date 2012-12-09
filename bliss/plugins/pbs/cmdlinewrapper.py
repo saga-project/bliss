@@ -263,11 +263,14 @@ class PBSService:
         ## ...:// URL
         if self._url.scheme in ["pbs", "torque", "xt5torque"]:
             self._use_ssh = False
-
-
-            ## EXECUTE SHELL COMMAND
-            cw = CommandWrapper.initAsLocalWrapper(plugin=self._pi)
-            cw.connect()
+            try:
+                ## EXECUTE SHELL COMMAND
+                cw = CommandWrapper.initAsLocalWrapper(logger=self._pi)
+                cw.connect()
+                self._cw = cw
+            except CommandWrapperException, ex:
+                self._pi.log_error("Problem creating local PBS command wrapper for %s: %s." \
+                    % (self._url, ex))
 
         ################################################################# 
         ## ...+SSH:// URL
