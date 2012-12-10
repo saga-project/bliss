@@ -457,6 +457,9 @@ class CondorService:
                     transfer_output_files += "%s, " % source
                 condor_file += "\n%s" % transfer_output_files
 
+        # always define log
+        condor_file += "\nlog = saga-condor-job-$(cluster).log "
+
         # output -> output
         if jd.output is not None:
             condor_file += "\noutput = %s " % jd.output
@@ -485,9 +488,8 @@ class CondorService:
                 hosts += "%s, " % host
             sitelist = "+SiteList = \"%s\"" % hosts
             requirements += "(stringListMember(GLIDEIN_ResourceName,SiteList) == True)"
-
-        condor_file += "\n%s" % sitelist
-        condor_file += "\n%s" % requirements
+            condor_file += "\n%s" % sitelist
+            condor_file += "\n%s" % requirements
 
         condor_file += "\n\nqueue"
 

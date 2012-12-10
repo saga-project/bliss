@@ -24,7 +24,7 @@ BASEPATH = "/home/oweidner/ExTENCI/condor/irods_bowtie/"
 def main():
     
     try:
-        # add extra Condor options as URL query parameters
+        # add extra Condor options as URL query parametersls /TG-MCB090174
         js = saga.job.Service("condor+ssh://gw68.quarry.iu.teragrid.org?WhenToTransferOutput=ON_EXIT&should_transfer_files=YES&notification=Always")
 
         # describe our job
@@ -35,14 +35,14 @@ def main():
 
         # output options
         jd.output = "%s/irods_bowtie.stdout" % BASEPATH
-        jd.error  = "irods_bowtie.stderr"
+        jd.error  = "%s/irods_bowtie.stdout" % BASEPATH
 
         # define allocation (Condor : +Project)
         jd.project = 'TG-MCB090174'
-        jd.candidate_hosts = ['UFlorida-SSERC', 'BNL_ATLAS_2', 'UFlorida-SSERC', 
-          'BNL_ATLAS_2', 'FNAL_FERMIGRID', 'SPRACE', 'NYSGRID_CORNELL_NYS1', 
-          'Purdue-Steele', 'MIT_CMS_CE2', 'UTA_SWT2', 'SWT2_CPB', 'AGLT2_CE_2', 
-          'USCMS-FNAL-WC1-CE3']
+        #jd.candidate_hosts = ['UFlorida-SSERC', 'BNL_ATLAS_2', 'UFlorida-SSERC', 
+        #  'BNL_ATLAS_2', 'FNAL_FERMIGRID', 'SPRACE', 'NYSGRID_CORNELL_NYS1', 
+        #  'Purdue-Steele', 'MIT_CMS_CE2', 'UTA_SWT2', 'SWT2_CPB', 'AGLT2_CE_2', 
+        #  'USCMS-FNAL-WC1-CE3']
 
         # pre-stage executables (Condor: transfer_input_files)
         jd.file_transfer = ['%s/bowtie2 > bowtie2' % BASEPATH, 
