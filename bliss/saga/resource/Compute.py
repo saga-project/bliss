@@ -209,3 +209,19 @@ class Compute(Object):
 
         return self._plugin.compute_resource_get_job_service(self) 
 
+    ######################################################################
+    ##
+    def create_job (self, cmd): 
+        '''run a job on the resource's job service.'''
+        if not 'job' in self._plugin.proxies or \
+           self._plugin.proxies['job'] is None:
+            raise bliss.saga.Exception(bliss.saga.Error.NoSuccess, 
+              "Object not bound to a job plugin")
+
+        if type(job_description) != bliss.saga.job.Description:
+            raise bliss.saga.Exception(bliss.saga.Error.BadParameter, 
+                  "create_job() expects job.Description as parameter.")
+
+        jd = bliss.saga.job.Description._deep_copy(job_description)
+        return self._plugin.proxies['job'].service_create_job(self, jd)
+

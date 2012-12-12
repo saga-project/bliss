@@ -60,6 +60,13 @@ class EucaCompute(object):
             #path="/services/Eucalyptus"                               
             )
 
+
+        ssh_url = "ssh://%s/"  %  (self._url.get_host ())
+
+        if not 'job' in self.pi.proxies or self.pi.proxies['job'] is None:
+            plugin.proxies['job'] = self.__shared_state["runtime_instance"].get_plugin_for_url (ssh_url, "saga.job")
+
+
         sgs = self.connection.get_all_security_groups()
                  
         if not 'BLISS' in [i.name for i in sgs]:

@@ -23,6 +23,7 @@ class PluginBaseInterface:
         self.schemas = schemas
         self.supported_apis = []
         self.supported_apis.append(api)
+        self.proxies = {}
 
         self.__logger = logging.getLogger('bliss.'+self.__class__.__name__)
 
