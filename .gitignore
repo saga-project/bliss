@@ -8,6 +8,9 @@
 *.swp
 *.out
 *.pyc
+*.stderr
+*.stdout
+
 
 # generated 
 MANIFEST
@@ -17,4 +20,4 @@ MANIFEST
 bliss.egg-info/
 build/
 dist/
-
+docs/bliss.saga/

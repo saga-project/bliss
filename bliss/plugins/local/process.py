@@ -129,7 +129,6 @@ class LocalJobProcess(object):
         self.prochandle.terminate()
         self.state = bliss.saga.job.Job.Canceled
 
-
     def wait(self, timeout):
         if timeout == -1:
             self.returncode = self.prochandle.wait()
