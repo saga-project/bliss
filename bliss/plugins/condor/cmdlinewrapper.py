@@ -395,7 +395,6 @@ class CondorService:
             for (key, value) in ConfigQuery(service_url.query).as_dict().iteritems():
                 condor_file += "\n%s = %s" % (key, value)
 
-
         ##### OPTIONS PASSED VIA JOB DESCRIPTION #####
         ##
         condor_file += "\n\n##### OPTIONS PASSED VIA JOB SERVICE URL #####\n##"
@@ -409,7 +408,10 @@ class CondorService:
         arguments = "arguments = "
         if jd.arguments is not None:
             for arg in jd.arguments:
-                arguments += "%s " % (arg)
+                # Condor HATES double quotes in the arguments. It'll return
+                # some crap like: "Found illegal unescaped double-quote: ...
+                # That's why we esacpe them.
+                arguments += "%s " % (arg.replace('"', '\\"'))
         condor_file += "\n%s" % arguments
 
         # file_transfer -> transfer_input_files
@@ -420,7 +422,7 @@ class CondorService:
                 raise Exception('FileTransfer append syntax (>>) not supported by Condor: %s' % td.in_append_dict)
             if len(td.out_append_dict) > 0:
                 raise Exception('FileTransfer append syntax (<<) not supported by Condor: %s' % td.out_append_dict)
-            
+
             if len(td.in_overwrite_dict) > 0:
                 transfer_input_files = "transfer_input_files = "
                 for (source, target) in td.in_overwrite_dict.iteritems():
