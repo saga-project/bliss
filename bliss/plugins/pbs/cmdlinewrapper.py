@@ -398,7 +398,7 @@ class PBSService:
             if qstat_result.returncode != 0:
                 raise Exception("Error running 'qstat': %s" % qstat_result.stdout)
             
-            pbsnodes_result = self._cw.run("pbsnodes")
+            pbsnodes_result = self._cw.run("pbsnodes -a")
             if pbsnodes_result.returncode != 0:
                 raise Exception("Error running 'pbsnodes': %s" % pbsnodes_result.stdout)
 
