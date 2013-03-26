@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>SAGA-Python - A Light-Weight SAGA Implementation in Python</title>
+  <!-- SAGA, Distributed, Cloud -->
+
+  <!--meta name="description"        content="SAGA-Python is a light-weight Python package that implements parts of the OGF SAGA interface specification and provides plug-ins for different distributed middleware systems and services." />
+  <meta name="keywords"           content="SAGA,SAGA Python,SAGA-Python,GFD-90,OGF,Grid Computing,Cloud Computing,Python,API,Distributed Computing,Simple API for Grid Applications,PBS,SGE,XSEDE,FutureGrid,Ole Weidner,RADICAL,Rutgers,Distributed Applications,Pilot-Job,HPC" />
+  <meta name="author"             content="Ole Weidner" />
+  <meta name="robots"             content="index, follow" />
+  <meta name="revisit-after"      content="1 month" /-->
+  <meta name="title"              content="SAGA-Python - A Light-Weight SAGA Implementation Written in Python" />
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+  <meta http-equiv="REFRESH"      content="5;url=http://saga-project.github.com/saga-python/"></HEAD>
+
+
+  <link rel="shortcut icon"    href="./images/A_48.ico" />
+  <link rel="apple-touch-icon" href="./images/A_114.png" />
+
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/screen.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="./css/custom.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/fonts/ballpark/ballpark_weiner_webfont.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/lightbox.css" />
+
+  <script type="text/javascript" src="../js/prototype.js">                          </script>
+  <script type="text/javascript" src="../js/scriptaculous.js?load=effects,builder"> </script>
+  <script type="text/javascript" src="../js/lightbox.js">                           </script>
+  <script type='text/javascript' src='../js/commons.js'>                            </script>
+
+  <!--cript type="text/javascript">
+   //<![CDATA[
+   var _gaq = _gaq || [];
+   _gaq.push(['_setAccount', 'UA-31597394-1']);
+   _gaq.push(['_trackPageview']);
+
+   (function() {
+     var ga   = document.createElement('script'); 
+     ga.type  = 'text/javascript'; 
+     ga.async = true;
+     ga.src   = ('https:' == document.location.protocol ? 'https://ssl' 
+                                                        : 'http://www') + '.google-analytics.com/ga.js';
+     var s    = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+   })();
+   //]]>
+  </script-->
+
+  <style type="text/css">
+    /*<![CDATA[*/
+    img.c2 {position: absolute; top: 0; right: 0; border: 0;}
+    span.c1 {color: #e3d796;}
+    /*]]>*/
+  </style>
+
+  <style type="text/css">
+    /*<![CDATA[*/
+    p.c3 {text-align: justify; font-size: 14px;}
+    p.c2 {text-align: center}
+    p.c1 {text-align: justify}
+    /*]]>*/
+  </style>
+</head>
+
+<body>
+  <div id="wrap">
+    <div id="header">
+      <h1><a href="./">Saga-Python</a></h1>
+
+      <p id="subtitle">
+        <strong>
+          A Light-Weight SAGA Implementation Written in Python
+        </strong>
+      </p>
+    </div>
+
+    <div id="informations">
+      <ul>
+        <li>
+          <div class="group row">
+            <div class="col-1">
+              <p class="button"><a href="http://wiki.github.com/saga-project/bliss">Documentation and Wiki</a></p>
+            </div>
+
+            <div class="col-2">
+              <p class="button"><a href="http://saga-project.github.com/bliss/apidoc/">SAGA-Python API Reference</a></p>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <div class="group row">
+            <p class="c1">SAGA-Python is a light-weight Python package that implements
+            parts of the <a href="http://www.ogf.org/documents/GFD.90.pdf">OGF GFD.90</a>
+            SAGA interface specification and provides plug-ins for different distributed
+            middleware systems and services. SAGA-Python implements the most commonly used
+            features of GFD.90 based upon extensive use-case analysis, and focuses on
+            usability and simple deployment in real-world heterogeneous distributed
+            computing environments and application scenarios.</p>
+
+            <p class="c1">SAGA-Python currently implements the job and the file management
+            core APIs as well as the <a href=
+            "https://github.com/saga-project/ogf/tree/master/documents/saga-package-resource">
+            resource management</a> API extension. A list of currently supported
+            middleware plug-ins is available <a href=
+            "https://github.com/saga-project/bliss/wiki/Plugins">here</a>. SAGA-Python can
+            be used to develop distributed applications and frameworks that run on
+            distributed cyberinfrastructure like XSEDE, LONI and FutureGrid, as well as
+            clouds and local clusters.</p>
+
+            <p class="c1">SAGA-Python is an open source project, hosted and developed by
+            the <a href="http://saga-project.org">SAGA Project</a> and the <a href=
+            "http://radical.rutgers.edu">RADICAL Group</a> at the <a href=
+            "http://nsfcac.rutgers.edu/">Cloud and Autonomic Computing Center</a> at
+            Rutgers University.</p><!--p><b><em>Why should I use SAGA-Python?</em></b></p>
+
+<P>SAGA-Python allows you to write distributed applications and workflows
+that are portable accross distributed systems. With SAGA-Python you can finally say
+goodbye to all those awful, error-prone glue-code scripts that you use to 
+handle compute and data provisioning and management for your application.</p>
+
+<p>SAGA-Python is also a great tool to carry out your distributed computing 
+and computational science research: 
+you have great idea for an algorithm that does data/compute co-scheduling 
+in a heterogeneous resource environment? You want to test it in a real-life
+scenario? SAGA-Python allows you to encapsulate heterogeneous resource access 
+details and lets you focus on the exciting part of your work!</p-->
+          </div>
+        </li>
+
+        <li>
+          <div class="group row">
+            <div class="col-1">
+              <p>Python is available via <a href=
+              "http://pypi.python.org/pypi/bliss/">PyPi</a> and installs in seconds with
+              easy_install ( <em><a href=
+              "http://wiki.github.com/saga-project/bliss/Installation">Installation
+              instructions</a></em> )</p>
+            </div>
+
+            <div class="col-2">
+              <pre>
+<code><span class="c1">$ </span>easy_install bliss</code>
+</pre>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <div class="group row">
+            <p>Code Example: Executing a remote <a href=
+            "http://sourceforge.net/apps/mediawiki/bfast/index.php?title=Main_Page">BFAST</a>
+            genome seuquence mapping job on a PBS cluster using the <a href=
+            "http://saga-project.github.com/bliss/apidoc/bliss.saga.job-module.html">Job
+            API</a> for job submission / monitoring and the <a href=
+            "http://saga-project.github.com/bliss/apidoc/bliss.saga.filesystem-module.html">
+            Filesystem API</a> for remote directory creation.<br /></p><script src=
+            "https://gist.github.com/1353955.js?file=pbssh.py" type="text/javascript">
+</script>
+          </div>
+        </li>
+
+        <li>
+            <script type='text/javascript' charset='utf-8'>footer();</script>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script type='text/javascript' charset='utf-8'>forkme();</script>
+  <script type='text/javascript' charset='utf-8'>follow();</script>
+  
+</body>
+</html>
+
